@@ -1,0 +1,109 @@
+global !p
+def env(name):
+    [x,y] = vim.eval("vimtex#env#is_inside('" + name + "')") 
+    return x != '0' and x != '0'
+def math():
+    return vim.eval('vimtex#syntax#in_mathzone()') == '1'
+
+def comment(): 
+    return vim.eval('vimtex#syntax#in_comment()') == '1'
+
+
+endglobal
+
+priority 10
+
+
+context "math() == 0"
+snippet fd "fd" wA
+finite dimensional 
+endsnippet
+
+context "math() == 0"
+snippet ifd "fd" wA
+infinite dimensional 
+endsnippet
+
+context "math() == 0"
+snippet vs "vs" wA
+vector space
+endsnippet
+
+context "math()"
+snippet '(A|B|C|T|M)_?([a-z]|[0-9]|\.)([a-z0-9]|\.)' "Aij" wrA
+`!p snip.rv=match.group(1) + "_{" + match.group(2) + "," +match.group(3) + "}"`
+endsnippet
+
+context "math()"
+snippet MM "matrix" wA
+\mathscr{M}
+endsnippet
+
+
+context "math()"
+snippet LL "Linear map" wA
+\mathscr{L}
+endsnippet
+
+context "math()"
+snippet '([a-z])th' "" wrA
+`!p snip.rv=match.group(1)`^\text{th}
+endsnippet
+
+context "math()"
+snippet '(tpm\.\.)([a-z])([a-z])' "pmatrix a.." brA
+\begin{pmatrix}
+`!p
+res = ""
+res += snip.v.text.replace("~","_{1,1}") + " & " + snip.v.text.replace("~","_{2,1}") + " & \\cdots & " + snip.v.text.replace("~","_{" + match.group(3) + ",1}") + "\\\\\n"
+res += snip.v.text.replace("~","_{1,2}") + " & " + snip.v.text.replace("~","_{2,2}") + " & \\cdots & " + snip.v.text.replace("~","_{" + match.group(3) + ",2}") + "\\\\\n"
+res += "\\vdots & \\vdots & \\ddots & \\vdots \\\\\n"
+res += snip.v.text.replace("~","_{1," + match.group(2) + "}") + " & " + snip.v.text.replace("~","_{2," + match.group(2) + "}") + " & \\cdots & " + snip.v.text.replace("~","_{" + match.group(2) + "," + match.group(3) + "}")
+snip.rv=res`
+\end{pmatrix}
+$0
+endsnippet
+
+context "math()"
+snippet '([a-z])([a-z])\\b' "basis" wrA
+`!p snip.rv = match.group(1) + "_1, \\ldots , " + match.group(1) + "_" + match.group(2)`
+endsnippet
+
+
+context "math()"
+snippet \vp "varphi" wA
+\varphi
+endsnippet
+
+context "math()"
+snippet rg "range" wA
+\range 
+endsnippet
+
+context "math()"
+snippet rk "rank" wA
+\rank 
+endsnippet
+
+context "math()"
+snippet nl "null" wA
+\snull 
+endsnippet
+
+
+context "math()"
+snippet pp "partial" wA
+\partial 
+endsnippet
+
+
+priority 10000
+context "math()"
+snippet \|| "|| ||" wA
+\\|$1\\|$0
+endsnippet
+
+context "math()"
+snippet oc "orthogonal complement" iA
+^{\\perp}
+endsnippet

@@ -1,0 +1,142 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\chapter{Continuous Mappings}
+
+\section{Continuous Mappings}
+We are already familiar with continuous mappings on $\mathbb{R}\rightarrow  \mathbb{R}$. We do this my the so called $\epsilon-\delta$ language. We shall generalize the concept without the definition of a metric.
+
+\begin{itemize}
+\item Let $f: \mathbb{R}\rightarrow \mathbb{R}$, then $f$ is continuous if and only if 
+\begin{equation*}
+$\forall a\in \mathbb{R}, \forall f(a)\in U\in \mathcal{T}, \exists a\in V\in \mathcal{T}, (f(V) \subseteq U)$
+\end{equation*}
+This change the way we say $f(a)-\epsilon$ to $f(a)+\epsilon$ to an open set containing $f(a)$.
+\end{itemize}
+
+We are tempted to define continuous from above pattern. But we have a more elegant equivalent condition as follows.
+\begin{lemma}{}{Equivalent Condition for Continuous Mappings}
+Let $f: (X,\mathcal{T})\rightarrow (Y,\mathcal{T}')$. Then the following are equivalent.
+\begin{enumerate}
+	\item $\forall U\in \mathcal{T}', f^{-1}(U)\in \mathcal{T}$.
+	\item $\forall a\in X,\forall U\in \mathcal{T}',f(a)\in U, \exists V\in \mathcal{T}( a\in V \land f(V) \subseteq U)$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+\begin{itemize}
+\item Form (1) to (2) is quite straightforward, taking $V = f^{-1}(U)$.
+\item Let $U\in \mathcal{T}'$, if $f^{-1}(U) = \emptyset $ then $f^{-1}(U)\in \mathcal{T}$.
+
+Otherwise, $\forall a\in f^{-1}(U)$, then $\exists V\in \mathcal{T}, a\in V, f(V) \subseteq U$, thus $V \subseteq f ^{-1}(U)$, so $f^{-1}(U)\in \mathcal{T}$.
+\end{itemize}
+\end{proof}
+
+\begin{definition}{Continuous Function}{Continuous Function}
+Let $(X,\mathcal{T})$ and $(Y\in \mathcal{T}_1)$ be topological spaces and $f:X \rightarrow Y$. Then $f:(X,\mathcal{T})\rightarrow (Y,\mathcal{T}_1)$ is said to be a continuous mapping if $\forall U\in \mathcal{T}_1, f^{-1}(U)\in \mathcal{T}$.
+\end{definition}
+
+\begin{proposition}{Composition of Continuous Mapping}{Composition of Continuous Mapping}
+$f,g$ are continuous mapping then $g \circ f$ is continuous.
+\end{proposition}
+
+The next result shows that we can also define continuous mapping via closed sets.
+\begin{theorem}{Continuity and Closed Sets}{Continuity and Closed Sets}
+Let $(X,\mathcal{T})$ and $(Y,\mathcal{T}_1)$ be topological spaces. Then $f: (X,\mathcal{T})\rightarrow (Y,\mathcal{T}_1)$ is continuous if and only if $\forall \text{ closed sets }S \subseteq Y$, we have $f^{-1}(S)$ is a closed subset of $X$.
+\end{theorem}
+\begin{proof}
+$f^{-1}(S^c) = f^{-1}(S)^c$.
+\end{proof}
+
+The next result illustrate the relation between continuous mappings and homeomorphisms.
+\begin{theorem}{Continuity and Homeomorphisms}{Continuity and Homeomorphisms}
+Let $(X,\mathcal{T})$ and $(Y,\mathcal{T}')$ be topological spaces and $f:X \rightarrow Y$. Then $f$ is a homeomorphism iff
+\begin{itemize}
+\item $f$ is continuous.
+\item  $f$ is a bijection.
+\item $f^{-1}$ is continuous.
+\end{itemize}
+\end{theorem}
+\begin{proof}
+This follows directly from the definition of continuity and homeomorphisms.
+\end{proof}
+\begin{remark}
+The need of $f^{-1}$ being continuous is that the domain may have ``more'' open sets. While $f^{-1}$ maps open sets to open set, $f$ may not. For example
+\begin{equation*}
+f: [0,1) \rightarrow S^1, f(t) = (\cos 2\pi t,\sin 2\pi t)
+\end{equation*}
+Where $f([0,\frac{1}{2}))$ is not open. ($[0,\frac{1}{2})$ is open)
+\end{remark}
+
+Also, the restriction of a continuous mapping is a continuous map.
+\begin{proposition}{Restriction of Continuous Mappings}{Restriction of Continuous Mappings}
+Let $(X,\mathcal{T})$ and $(Y,\mathcal{T}')$ be topological spaces, and $f:(X,\mathcal{T})\rightarrow (Y,\mathcal{T}_1)$ a continuous mapping, $A \subseteq X$, and $\mathcal{T}_2$ the induced topology on $A$. Then $f|_A$ is continuous.
+\end{proposition}
+
+\subsection{Coarser Topology and Finer Topology}
+\begin{definition}{Coarser and Finer Topology}{Coarser and Finer Topology}
+Let $\mathcal{T}_1, \mathcal{T}_2$ be two topologies on $X$. Then $\mathcal{T}_1$ is finer than $\mathcal{T}_2$ ($\mathcal{T}_2$ is coarser than $\mathcal{T}_1$ ) if $\mathcal{T}_2 \subseteq \mathcal{T}_1$.
+\end{definition}
+
+
+\section{Intermediate Value Theorem}
+\begin{proposition}{}{SC}
+Let $(X,\mathcal{T})$ and $(Y,\mathcal{T}_1)$ be topological space and $f: (X,\mathcal{T})\rightarrow (Y,\mathcal{T}_1)$ surjective and continuous. If $(X,\mathcal{T})$ is connected, then $(Y,\mathcal{T}_1)$ is connected.
+
+That is, any continuous image of a connected space is connected.
+\end{proposition}
+\begin{proof}
+$U\in Y$ is clopen then $f^{-1}(U)$ is clopen.
+\end{proof}
+\begin{remark}
+The surjectivity means that we cannnot freely modify $Y$.
+\end{remark}
+
+\begin{definition}{Path-Connected}{Path-Connected}
+	A topological space $(X,\mathcal{T})$ is path-connected if for each pair of distinct point $a,b\in X$, there exists a continuous mapping $f:[0,1]\rightarrow (X,\mathcal{T})$, such that $f(0)=a$ and $f(1)=b$.
+
+	$f$ is a path joining $a$ and $b$.
+\end{definition}
+\begin{proposition}{}{Path-connected to connected}
+Every path-connected space is connected.
+\end{proposition}
+\begin{proof}
+Let $(X,\mathcal{T})$ be a path-connected space and not connected. Then it has proper non-empty clopen subset $U$, let $a\in U$ and $b\in X-U$. $f$ be a path joining $a$ and $b$.
+
+$f^{-1}(U)$ is a clopen set of $[0,1]$ but it is neither $\emptyset $ nor $[0,1]$, contradicts.
+\end{proof}
+
+\begin{remark}
+The converse of the proposition is false. For example, Let
+\begin{equation*}
+X = \left\{ \left<x,y\right>: y=\sin \frac{1}{x}, 0<x\leq 1 \right\}\cup \left\{ \left<0,y\right>: -1\leq y\leq 1 \right\}
+\end{equation*}
+
+Then $X$ is connected but it is not path-connected.
+\end{remark}
+
+We can now show that $\mathbb{R}\ncong \mathbb{R}^2$. Clearly $\mathbb{R}^2 - \left\{ \left<0,0\right> \right\}$ is path connected and therefore is connected. But $\forall z\in \mathbb{R}, \mathbb{R}-\left\{ a \right\}$ is not connected.
+
+Similarly we have
+\begin{theorem}{Continuous Image of a path-connected space}{Continuous Image of a path-connected space}
+A continuous image of a path-connected space is path-connected.
+\end{theorem}
+\begin{proof}
+Composition of continuous mapping would produce a new path.
+\end{proof}
+
+The next is a beautiful application of continuous mappings.
+\begin{theorem}{the Weierstrass Intermediate Theorem}{the Weierstrass Intermediate Theorem}
+	Let $f:[a,b] \rightarrow \mathbb{R}$ be continuous and let $f(a)\neq f(b)$, then $\forall p$ between $f(a)$ and $f(b)$, $\exists c\in [a,b],f(c)=p$.
+\end{theorem}
+\begin{proof}
+	As $[a,b]$ is connected then $f([a,b])$ is connected, which is a interval. So $\forall p$ between $f(a)$ and $f(b)$ is in $f([a,b])$.
+\end{proof}
+
+\begin{corollary}{Fixed Point Theorem}{Fixed Point Theorem}
+	Let $f:[0,1]\rightarrow [0,1]$ be continuous. Then $\exists z\in [0,1]$ such that $f(z)=z$.
+
+	(This is a special case of the Brouwer Fixed Point Theorem, which deals with the $n$-dimensional cube)
+\end{corollary}
+
+\end{document}

@@ -1,0 +1,533 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\chapter{Metric Spaces}
+
+Now we have distances!
+
+\section{Metric Spaces}
+\begin{definition}{Metric Spaces}{Metric Spaces}
+Let $X$ be a non-empty set and $d: X \times X \rightarrow  \mathbb{R}$ that satisfies:
+\begin{itemize}
+\item $\forall a,b\in X, d(a,b)\geq 0$ and $d(a,b)=0 \leftrightarrow a=b$.
+\item $\forall a,b\in X,d(a,b) = d(b,a)$.
+\item $\forall a,b,c\in X, d(a,c) \leq d(a,b)+d(a,c)$.
+\end{itemize}
+Then $d$ is said to be a metric on $X$. $(X,d)$ is called a metric space.
+\end{definition}
+
+\begin{example}{Metrics}{Metrics}
+\begin{enumerate}
+	\item $d: \mathbb{R} \times \mathbb{R}\rightarrow \mathbb{R}, d(a,b) = \left|a-b\right|$.
+	\item The Euclidean metric $\displaystyle d: \mathbb{R}^n \times \mathbb{R}^n \rightarrow  \mathbb{R}, d(\boldsymbol{x},\boldsymbol{y}) = \sqrt{\sum_{i=1}^{n} (x_i-y_i)^2}$.
+	\item The discrete metric $d: X \times X \rightarrow \mathbb{R}$,
+		\begin{equation*}
+		d(a,b) = 
+		\begin{cases}
+			0, & a=b\\
+			1, & a\neq b
+		\end{cases}
+		\end{equation*}
+	\item Let $f,g\in C[0,1]$, then
+		\begin{equation*}
+		d_1(f,g) = \int _0^1 \left|f(x)-g(x)\right| \mathrm{d}x
+		\end{equation*}
+		\begin{equation*}
+			d_2(f,g) = \sup \left\{ \left|f(x)-g(x)\right|: x\in [0,1] \right\}
+		\end{equation*}
+\end{enumerate}
+\end{example}
+
+\begin{definition}{Open Ball}{Open Ball}
+Let $(X,d)$ be a metric space and $r\in \mathbb{R}_+$. Then the open ball at $a\in X$ of radius $r$ is that
+\begin{equation*}
+B_r(a) = \left\{ x\in X: d(a,x) <r \right\}.
+\end{equation*}
+\end{definition}
+
+\begin{theorem}{Metric Spaces and Topology}{Metric Spaces and Topology}
+Let $(X,d)$ be a metric space. Then the collection of open balls in $(X,d)$ is a basis of a topology $\mathcal{T}$ on $X$.
+\end{theorem}
+\begin{proof}
+Quite EASY.
+\end{proof}
+
+\begin{definition}{Equivalent Metrics}{Equivalent Metrics}
+Metrics on a set $X$ is said to be equivalent if they induce the same topology on $X$.
+\end{definition}
+It is easy to check that no matter the balls are disks (Euclidean metric) or squares (the absolute value sum) all induce the Euclidean topology on $\mathbb{R}^2$.
+
+This next result is a restatement of a previous theorem, but is also familiar to us in analysis, which gives the definition of open sets.
+\begin{proposition}{}{Identify Open Sets}
+Let $(X,d)$ be a metric space and $\mathcal{T}$ be the topology induced on $X$ by $d$. The $U \subseteq X$ is open in $(X,\mathcal{T})$ if and only if
+ \begin{equation*}
+\forall a\in U,\exists \epsilon>0,(B_{\epsilon}(a) \subseteq U).
+\end{equation*}
+\end{proposition}
+
+We shall see that though every metric can induce a topology, there are topology that cannot be formed by metric. We see this by the connection of metrics and Hausdorff Spaces.
+\begin{theorem}{Metric and Hausdorff Spaces}{Metric and Hausdorff Spaces}
+Let $(X,d)$ be ant metric spaces and $\mathcal{T}$ is a topology induced on $X$ by $d$. Then $(X,d)$ is a Hausdorff space.
+\end{theorem}
+\begin{proof}
+Let $a,b\in X, a\neq b$, then let $\epsilon=d(a,b)>0$. Consider the open balls $B_{\epsilon /2}(a)$ and $B_{\epsilon /2}(b)$. We prove that $B_{\epsilon /2}(a)\cap B_{\epsilon /2}(b) = \emptyset $, which is obvious for the triangle inequality.
+\end{proof}
+
+\begin{definition}{Metrizable}{Metrizable}
+A space $(X,\mathcal{T})$ is said to be metrizable if there exists a metric $d$ on a set $X$ with the property that $\mathcal{T}$ is the topology induced by $d$.
+\end{definition}
+
+It is obvious that every subspace of a metrizable space is metrizable.
+
+\subsection{Normal Spaces and $T_4$-space}
+\begin{definition}{Normal Space and $T_4$-space}{Normal Space and T4-space}
+A topological space $(X,\mathcal{T})$ is said to be normal space if for each pair of disjoint closed sets $A,B$, there exists disjoint open sets $U,V$ such that $A \subseteq U,B \subseteq V$.
+
+A Hausdorff Normal space is called $T_4$-space.
+\end{definition}
+\begin{proposition}{Normal Spaces}{Normal Spaces}
+Every metrizable space is a normal space.
+\end{proposition}
+\begin{proof}
+First define the distance of a point and a set. $d(x,A) = \inf\left\{ d(x,a) \mid a\in A \right\}$. Suppose $A$ and $B$ are disjoint closed sets, we let:
+\begin{itemize}
+\item $\forall a\in A, r = \frac{1}{3}d(a,B)$, and $\displaystyle U = \bigcup_{a\in A}B(a,r)$.
+\item $\forall b\in B, s = \frac{1}{3}d(b,A)$, and $\displaystyle V = \bigcup_{b\in B}B(b,s) $.
+\end{itemize}
+We shall prove $U\cap V = \emptyset $. If $\exists z\in U\cap V$, Then $\exists x\in A,y\in B$ such that $d(z,x) < \frac{1}{3}d(x, B)$ and $d(z,y) < \frac{1}{3}d(y,A)$. Then we have $d(z,x) < \frac{1}{3}d(x,y)$ and $d(z,x)<\frac{1}{3}d(y,x)$, which contradicts to the triangle inequality.
+\end{proof}
+
+\begin{proposition}{}{Normal T1 Hausdorff}
+Every $T_4$-space is Hausdorff.
+\end{proposition}
+\begin{proof}
+Using the fact that in $T_1$-space every singleton is closed.
+\end{proof}
+
+\subsection{Isometry}
+\begin{definition}{Isometric}{Isometric}
+Let $(X,d)$ and $(Y,d_1)$ be metric spaces. If there exists a surjective mapping $f: (X,d) \rightarrow (X,d_1)$ such that $\forall x_1,x_2\in X$
+\begin{equation}
+d(x_1,x_2) = d_1(f(x_1),f(x_2)).
+\end{equation}
+Then such a mapping is an isometry.
+\end{definition}
+
+\begin{proposition}{Isometric and Homeomorphic}{Isometric and Homeomorphic}
+Isometric metric spaces are homeomorphic. Every isometry is a homeomorphism.
+\end{proposition}
+
+\begin{definition}{Isometric Embedding}{Isometric Embedding}
+Let $(X,d)$ and $(Y,d_1)$ be metric space and $f: X \rightarrow Y$. Let $Z = f(X)$ and $d_2=d_1|_Z$. If $f: (X,d) \rightarrow (Z,d_2)$ is an isometry, then $f$ is said to be an isometric embedding of $(X,d)$ onto $(Y,d_1)$.
+\end{definition}
+
+\subsection{First Axiom of Countability}
+\begin{definition}{First Axiom of Countability}{First Axiom of Countability}
+A  topological space $(X,\mathcal{T})$ us said to satisfy the first axiom of countability if $\forall x\in X$ there is a countable family $\left\{ U_i(x) \right\} \subseteq \mathcal{T}$ of open sets containing $x$, such that $\forall x\in U \subseteq \mathcal{T}$, $U$ has at least one of $U_i$ as subsets.
+
+(We can assume $U_{k+1} \subseteq U_k$ as explained below).
+\end{definition}
+
+\begin{remark}
+This gives the notion that every point $x$ can be infinitely-small approached via a countable many of open sets.
+
+NOTE that we can choose another list $\left\{ V_n \right\}$ with $V_1=U_1$ and $V_n = \bigcap_{i=1}^{n} U_n$. Note that $\left\{ V_n \right\}$ also satisfies the first axiom of countability with $V_{k+1} \subseteq V_k$ for all $k\in \mathbb{Z}_+$.
+\end{remark}
+
+\begin{theorem}{Metrizable are First countable}{Metrizable are First countable}
+Every metrizable space satisfies the first axiom of countability.
+\end{theorem}
+\begin{proof}
+Let $U_n = B_{\frac{1}{n}}(x)$ would do.
+\end{proof}
+
+\begin{theorem}{Second Countable and First Countable}{Second Countable and First Countable}
+Every topological space that satisfies the second axiom of countability also satisfies the first axiom of countability.
+\end{theorem}
+\begin{proof}
+If $(X,\mathcal{T})$ has a countable basis $\mathcal{B}$, let $\mathcal{B}_x = \left\{ B\in \mathcal{B}: x\in B \right\}$, then $\mathcal{B}_x$ is countable. For all $x\in U \in \mathcal{T}$, we have $U = \bigcup_{\alpha} B_{\alpha} $ for some $B_{\alpha}\in \mathcal{B}$. Then $x\in B_{\alpha}\in B_x$ for some $\alpha$.
+\end{proof}
+
+\begin{remark}
+The first countability represents some sense of ``local countability''. It only needs a point can be countably approached. In fact, taking the countable sequence $\left\{ U_i \right\}$ as basis we can generate a ``neighborhood topology''. While the second countability represent ``global countability''.
+\end{remark}
+
+\subsection{Total Boundedness}
+\begin{definition}{Total Boundedness}{Total Boundedness}
+A subset $S$ of a metric space $(X,d)$ is totally bound iff
+\begin{equation*}
+\forall \epsilon>0, \exists x_1, \ldots ,x_n\in X, S \subseteq \bigcup_{i=1}^n B_{\epsilon}(x_i)
+\end{equation*}
+That is, $S$ can be written as a finite number of open balls of radius $\epsilon$.
+\end{definition}
+
+
+\subsection{Locally Euclidean Spaces and Topological Manifolds}
+\begin{definition}{Locally Euclidean}{Locally Euclidean}
+A topological space $(X,\mathcal{T})$ is said to be locally Euclidean if $\exists n\in \mathbb{Z}_+$ such that $\forall x\in X, \exists U(x) \in \mathcal{T}$, such that $x\in U(x)$ and $U(x)$ is homeomorphic to an open ball of $0$ in $\mathbb{R}^n$ with the Euclidean metric.
+
+A Hausdorff locally Euclidean space is said to be a topological manifold.
+\end{definition}
+
+
+\section{Convergence of Sequences}
+We are already very familiar of the notions of convergence.
+
+\begin{definition}{Convergence}{Convergence}
+Let $(X,d)$ be a metric space and $x_1, \ldots ,x_n, \ldots $ a sequence in $X$. Then the sequence converge to $x\in X$ iff
+\begin{equation*}
+\forall \epsilon>0, \exists N\in \mathbb{N}, \forall n\geq N,d(x,x_n)<\epsilon.
+\end{equation*}
+\end{definition}
+
+\begin{proposition}{Uniquely Convergence}{Uniquely Convergence}
+If $x_n \rightarrow x$ and $x_n \rightarrow y$ then $x=y$.
+\end{proposition}
+
+We can describe the topological structure solely by convergence.
+\begin{proposition}{Describe Topology with Convergence}{Describe Topology with Convergence}
+Let $(X,d)$ be a metric space. Then a subset $A \subseteq X$ is closed in $(X,d)$ iff every convergent sequence of points in $A$ converges to a point in $A$.
+\end{proposition}
+\begin{proof}
+\begin{itemize}
+\item Suppose  $A$ is closed and $x_n \rightarrow x$ with $x\notin A$. Then $\exists B_{\epsilon}(x) \cap A = \emptyset $, contradicts.
+\item If $X-A$ is not open, then $\exists x\in X-A$ such that $\forall \epsilon>0, \exists y\in A, d(x,y)<\epsilon$. Letting $\epsilon=\frac{1}{n}$ we have $y_n \rightarrow x$ which contradicts.
+\end{itemize}
+\end{proof}
+
+\begin{proposition}{Describe Continuous Function with Convergence}{Describe Continuous Function with Convergence}
+Let $(X,d)$ and $(Y,d_1)$ be metric spaces and $f$ a mapping of $X$ to $Y$. Let $\mathcal{T}$ and $\mathcal{T}_1$ be topologies determined by $d$ and $d_1$.
+
+Then $f$ is continuous iff $x_n \rightarrow x \Rightarrow f(x_n) \rightarrow f(x)$.
+\end{proposition}
+\begin{proof}
+To verify $f^{-1}:$ closed sets to closed sets would suffice. Let $A$ be a closed set in $X$, let $x_1, \ldots x_n, \ldots $ be a sequence in $f^{-1}(A)$. As $x_n \rightarrow x$, we have $f(x_n) \rightarrow f(x)$. But $f(x)\in A$, then $x\in f^{-1}(A)$, so $f^{-1}(A)$ is continuous.
+
+In the other direction, if $f$ is continuous and $x_n \rightarrow x$. Then $\forall \epsilon>0, \exists \delta>0$ such that
+\begin{equation*}
+x\in B_{\delta}(x) \subseteq f^{-1}(B_{\epsilon}(f(x))).
+\end{equation*}
+For $\exists N\in \mathbb{N}, \forall n>N, x_n \in B_{\delta}(x)$, then $f(x_n)\in B_{\epsilon}(f(x))$, then $f(x_n) \rightarrow f(x)$.
+\end{proof}
+
+\begin{corollary}{Continuous by $\epsilon-\delta$ language}{Continuous by epsilon-delta language}
+Let $(X,d)$ and $(Y,d_1)$ be metric spaces,  $f: X \rightarrow Y$ and $\mathcal{T},\mathcal{T}_1$are topologies determined by $d,d_1$. Then $f:(X,\mathcal{T}) \rightarrow  (Y,\mathcal{T}_1)$ is continuous iff
+\begin{equation*}
+\forall x_0\in X, d(x,x_0) <\delta \left(d_1(f(x),f(x_0))\right)<\epsilon.
+\end{equation*}
+\end{corollary}
+
+
+\subsection{Distance of two sets}
+\begin{definition}{Distance of two Sets}{Distance of two Sets}
+Let $A,B$ be nonempty sets in $(X,d)$. Define
+\begin{equation}
+\rho(A,B) = \inf \left\{ d(a,b)\mid a\in A,b\in B \right\}
+\end{equation}
+be the distance of $A$ and $B$.
+\end{definition}
+
+\begin{proposition}{Closure by Distance of Sets}{Closure by Distance of Sets}
+If $S$ is an nonempty subset of $(X,d)$, then $\overline{S} = \left\{ x\mid x\in X, \rho(\left\{ x \right\},S)=0 \right\}$.
+\end{proposition}
+
+\subsection{Convergence in a General Point of View}
+We now discuss convergence in an arbitrary topological space.
+
+\begin{definition}{Convergence in General}{Convergence in General}
+Let $(X,\mathcal{T})$ be a topological space and $x_1, \ldots ,x_n, \ldots $ be a sequence of $X$. We say that $x_n \rightarrow x$ if
+\begin{equation*}
+\forall U\in \mathcal{T},x\in U,\exists N\in \mathbb{Z}_+,\forall n>N, x_n\in U.
+\end{equation*}
+\end{definition}
+
+\subsection{Sequentially Closed Sets}
+\begin{definition}{Sequentially Closed}{Sequentially Closed}
+Let $S$ be a subset of topological space $(X,\mathcal{T})$, then $S$ is sequentially closed iff every convergent sequence in $S$ converge to a point in $S$.
+
+$S$ is sequentially open iff $X-S$ is sequentially closed.
+
+(Note that in a metric space, sequentially closed is just closed.)
+\end{definition}
+
+\begin{example}{Sequentially Closed and Closed}{Sequentially Closed and Closed}
+For the indiscrete topology on $\mathbb{R}$, every nontrivial subset is sequentially closed but not closed. (Just note that if $x\in U\in \mathcal{T}$ then $U=X$.)
+\end{example}
+
+\begin{definition}{Sequential Space}{Sequential Space}
+A topological space $(X,\mathcal{T})$ is a sequential space if every sequentially closed set is closed.
+\end{definition}
+
+\begin{definition}{Frechet-Urysohn Spaces}{Frechet-Urysohn Spaces}
+A topological space $(X,\mathcal{T})$ is a Frechet-Urysohn Space if $\forall S \subseteq X$, and $\forall a\in \overline{S}$, there is a sequence $s_n \rightarrow a$ in $S$.
+\end{definition}
+
+\begin{remark}
+The intuition here is that the boundary can be approached by sequences of points, apart from open sets, which is looser then the first axiom of countability.
+\end{remark}
+
+\begin{proposition}{About Frechet-Urysohn Space}{About Frechet-Urysohn Space}
+\begin{itemize}
+\item Every first countable space is Frechet-Urysohn Space. (So is every metric space)
+	\begin{proof}
+	If $X$ is first-countable, then $\forall S \subseteq X,a\in \overline{S}$, let $\left\{ U_i \right\}$ be a countable many of open sets that follows the first axiom of countability, and $U_{i+1} \subseteq U_i$, then $U_i \cap S\neq \emptyset $. So we let $x_i\in U_i\cap S$. To prove that $x_n \rightarrow a$, $\forall a\in V\in \mathcal{T}$, we have $V \subseteq U_N$ for some $N$, and $\forall n>N,x_n\in U_n \subseteq U_N$.
+	\end{proof}
+\item Every Frechet-Urysohn space is a sequential space.
+	\begin{proof}
+	For every sequentially closed set $S$ in a Frechet-Urysohn space, $\forall a\in \overline{S}$, there is a sequence $x_n \rightarrow a$ in $S$, so $a\in S$, thus is a closed set.
+	\end{proof}
+\item Every subspace of a Frechet-Urysohn space is a Frechet-Urysohn space.
+	\begin{proof}
+	For any $(Y,\mathcal{T}') \subseteq (X,\mathcal{T})$ is a subspace, Let $S \subseteq Y$, and $\overline{S}_Y \subseteq \overline{S}_X \subseteq X$. (We can do this for every closed set in subspace is obtained by intersection of $Y$ and a closed set in $X$.) then $\forall a\in \overline{S}_Y \subseteq Y, a\in \overline{S}_X \subseteq X$, applying Frechet-Urysohn on $X$ would do.
+	\end{proof}
+\end{itemize}
+\end{proposition}
+
+\subsection{Countable Tightness}
+\begin{definition}{Countable Tightness}{Countable Tightness}
+A topological space $(X,\mathcal{T})$ has countable tightness if for each $S \subseteq X, x\in \overline{S}$, there exists a countable $C \subseteq S$ such that $x\in \overline{C}$.
+\end{definition}
+
+\begin{proposition}{Countable Tightness and Sequential Space}{Countable Tightness and Sequential Space}
+If $(X,\mathcal{T})$ is a sequential space, then it has countable tightness.
+\end{proposition}
+\begin{proof}
+SORRY
+\end{proof}
+
+We have the following chain of implications:
+
+\begin{figure}[ht]
+    \centering
+    \incfig{implications}
+    \caption{Implications}
+    \label{fig:implications}
+\end{figure}
+
+\section{Completeness}
+Completeness is what we mean by every ``convergent'' sequence has a limit inside the range. 
+
+\begin{definition}{Cauchy Sequences}{Cauchy Sequences}
+A sequence $x_1, \ldots ,x_n, \ldots $ of points in a metric space $(X,d)$ is a Cauchy sequence if
+\begin{equation}
+\forall \epsilon>0,\exists N\in \mathbb{N}, \forall m,n \geq N, d(x_m,x_n) <\epsilon.
+\end{equation}
+\end{definition}
+
+It is well-known in analysis that every convergent sequence is a Cauchy sequence.
+\begin{proposition}{Convergence and Cauchy Sequence}{Convergence and Cauchy Sequence}
+Let $(X,d)$ be a metric space and $x_1, \ldots ,x_n, \ldots $ a sequence of $X$. If $\exists a\in X, x_n \rightarrow a$, then the sequence is a Cauchy sequence.
+\end{proposition}
+
+The other way around is not true: Think about $\mathbb{Q}$ in $\mathbb{R}$.
+
+\begin{definition}{Completeness}{Completeness}
+A metric space $(X,d)$ is complete if every Cauchy sequence converges to a point in $X$.
+\end{definition}
+
+Well $\mathbb{R}$ is complete in the Euclidean metric.
+
+\begin{lemma}{Monotonic Subsequence}{Monotonic Subsequence}
+Any sequence in $\mathbb{R}$ has a monotonic subsequence.
+\end{lemma}
+\begin{proof}
+We first define a peak point: Let $\left\{ x_n \right\}$ be a sequence, then $n_0$ is a peak point if $\forall n>n_0,x_n \leq x_{n_0}$.
+
+Assume $\left\{ x_n \right\}$ has infinite number of peak points. Then the subsequence of peak points is a decreasing sequence.
+
+Otherwise if there exists an $N\in \mathbb{N}$ such that $\forall n> N,n$ is not a peak point. Take $n_1>n_0$, take $n_2>n_1$ such that $x_{n_2}>x_{n_1}$ and so on, we get an increasing sequence.
+\end{proof}
+
+\begin{proposition}{Bounded Monotonic Sequence Converges}{Bounded Monotonic Sequence Converges}
+Let $\left\{ x_n \right\}$ be a monotonic sequence in $\mathbb{R}$ with the Euclidean metric. Then $\left\{ x_n \right\}$ converges to a point in $\mathbb{R}$ iff $\left\{ x_n \right\}$ is bounded.
+\end{proposition}
+\begin{proof}
+Suppose $\left\{ x_n \right\}$ is increasing. Clearly if $\left\{ x_n \right\}$ is not bounded then $\left\{ x_n \right\}$ diverges. Otherwise let $L = \sup \left\{ x_n \right\}$. Then  $\forall \epsilon>0 ,\exists x_n \in \left\{ L-\epsilon, L \right\}$. Then obviously $x_n \rightarrow L$.
+\end{proof}
+
+\begin{theorem}{Bolzano-Weiertrass Theorem}{Bolzano-Weiertrass Theorem}
+Every bounded sequence in $\mathbb{R}$ has a convergent subsequence.
+\end{theorem}
+
+\begin{corollary}{Completeness of $\mathbb{R}$}{Completeness of mathbbR}
+The metric space $\mathbb{R}$ with Euclidean metric is a complete metric space.
+
+Also the result is true for $\mathbb{R}^m$.
+\end{corollary}
+
+\begin{proposition}{Subspaces of Complete Spaces}{Subspaces of Complete Spaces}
+Let $(X,d)$ be a complete metric space, $Y$ a subset of $X$ and $d_1 = d|_Y$. Then
+\begin{equation*}
+Y \text{ is closed }\Leftrightarrow (Y,d_1) \text{ is complete }.
+\end{equation*}
+\end{proposition}
+\begin{proof}
+If $Y$ is closed, let $\left\{ x_n \right\}$ be a Cauchy sequence in $Y$. Then $x_n \rightarrow x$ for some $x\in X$, but as $Y$ is closed, the  $x\in Y$. The other way just use proposition \ref{prop:Describe Topology with Convergence}.
+\end{proof}
+
+\begin{remark}
+We we know, $\mathbb{R}$ is complete while $(0,1)$ is not. Therefore, completeness is not preserved by homeomorphisms. This is quite obvious since Cauchy sequences are based on metric which is not a topology property. So it is preserved by isometry.
+\end{remark}
+
+\begin{definition}{Completely Metrizable}{Completely Metrizable}
+A topology is said to completely metrizable if there exists a metric $d$ on $X$ such that $(X,d)$ is complete.
+\end{definition}
+
+\begin{definition}{Separable}{Separable}
+A topological space is separable if it has a countable dense subset.
+\end{definition}
+It is seen that  $\mathbb{R}$ and every countable topological space is separable.
+
+\begin{definition}{Polish Space}{Polish Space}
+A topological space $(X,\mathcal{T})$ is Polish space if it is separable and complete metrizable.
+\end{definition}
+It is shown that $\mathbb{R}^n$ is Polish space.
+
+\begin{definition}{Souslin Space}{Souslin Space}
+A  topological space $(X,\mathcal{T})$ is a Souslin space (Suslin Space) if it is Hausdorff and a continuous image of a Polish space.
+
+If $(Y, \mathcal{T}_1)$ is a topological space and $A \subseteq Y$. If $(A, \mathcal{T}_1|_A)$ is a Souslin space, then $A$ is said to be an analytic set.
+\end{definition}
+
+Back to isometry, we can think that $\mathbb{R}$ is a supplement of $\mathbb{Q}$ that mend the holes that are not limits of Cauchy sequences. We call such supplement a completion. We now give this intuition a formal definition.
+\begin{definition}{Completion}{Completion}
+Let $(X,d)$ and $(Y,d_1)$ be metric spaces and $f:X \rightarrow Y$. If $Y$ is a complete metric space, $f:(X,d) \rightarrow (Y,d_1)$ is an isometric embedding and $f(X)$ is dense in $Y$. Then $(Y,d_1)$ is said to be a completion of $(X,d)$.
+\end{definition}
+
+\begin{remark}
+The completion is a process of ``filling the loopholes''. Therefore some natural questions arouse: 
+\begin{itemize}
+\item Every metric space has a completion?
+\item Is there a ``smallest'' completion that fills just enough loopholes without introducing other points? Is the smallest filling unique?
+\end{itemize}
+The answer is yes.
+\end{remark}
+
+\begin{theorem}{Every Metric Space has a Completion}{Every Metric Space has a Completion}
+If $(X,d)$ is a metric space, then it has a completion.
+\end{theorem}
+\begin{proof}
+SORRY
+\end{proof}
+
+\begin{theorem}{Uniqueness of Completion}{Uniqueness of Completion}
+Let $(A,d_1)$ and $(B,d_2)$ be complete metric spaces. Let $(X,d_3) \subseteq (A,d_1), (Y,d_4)\subseteq (B,d_2)$. And $X$ dense in $A$ and $Y$ in $B$. If there is an isometry $f:(X,d_3)\rightarrow (Y,d_4)$ then there exists an isometry $g:(A,d_1)\rightarrow (B,d_2)$ such that $g(x)=f(x),\forall x\in X$.
+
+So we say that, up to isometry, the completion is unique.
+\end{theorem}
+
+Embedding the concept of complete metric space into normed vector spaces, we get what is called a Banach space.
+\begin{definition}{Banach space}{Banach space}
+Let $(N,\|\|)$ be a normed vector space and $d$ the associated metric on set $N$. Then $(N,\|\|)$ is said to be a Banach space if $(N,d)$ is a complete metric space.
+\end{definition}
+
+As we know that every incomplete normed vector space can be extended to a Banach space. And we are glad to say that the completion is also a Banach space.
+
+\begin{theorem}{The completion of a normed vector space is a Banach space}{The completion of a normed vector space is a Banach space}
+Let $X$ be any normed vector space. Then it is possible to put a normed vector space structure on $\tilde{X}$, the complete metric space constructed by $X$.
+\end{theorem}
+
+
+\section{Contraction Mapping}
+\begin{definition}{Fixed Point}{Fixed Point}
+let  $f: X \rightarrow X$. Then a point $x\in X$ is a fixed point iff $f(x)=x$.
+\end{definition}
+
+\begin{definition}{Contraction Mapping}{Contraction Mapping}
+Let $(X,d)$ be a metric space and $f:X \rightarrow X$. Then $f$ is a contraction mapping if $\exists r\in (0,1)$, such that
+\begin{equation}
+\forall x_1,x_2\in X,d(f(x_1),f(x_2)) \leq r \cdot d(x_1,x_2)
+\end{equation}
+\end{definition}
+This is Lipchistz Continuity.
+
+\begin{proposition}{Contraction Mapping is Continuous}{Contraction Mapping is Continuous}
+Let $f$ be a contraction mapping of $(X,d)$. Then $f$ is a continuous mapping.
+\end{proposition}
+
+\begin{theorem}{Contraction Mapping Theorem (Banach Fixed Point Theorem)}{Contraction Mapping Theorem Banach Fixed Point Theorem}
+Let  $(X,d)$ be a Banach space and $f:X \rightarrow X$ a contraction mapping. Then $f$ has precisely one fixed point.
+\end{theorem}
+\begin{proof}
+Let $x\in X$ be any point, then consider the sequence
+\begin{equation*}
+	x,f(x), f^{[2]}(x), \ldots ,f^{[n]}(x), \ldots 
+\end{equation*}
+This is a Cauchy sequence for $d(f(x),f(f(x))) \leq r\cdot d(x,f(x))$. Then
+\begin{equation*}
+\begin{aligned}
+	d(f^{[m]}(x),f^{[n]}(x)) &\leq r^m \cdot d(x,f^{[n-m]}(x))\\
+				 &\leq r^m \cdot \left(f(x,f(x)) + f(f(x),f^{[2]}(x)) +\ldots + d(f^{[n-m-1]}(x),f^{[n-m]}(x))\right)\\
+				 &\leq r^m \cdot d(x,f(x)) \left(1+r+r^2+\ldots +r^{n-m-1}\right)\\
+				 &\leq \frac{r^m f(x,f(x))}{1-r}
+\end{aligned}
+\end{equation*}
+Then the sequence tends to $z$, which is a fixed point.
+
+Uniqueness is proved by $d(t,z) = d(f(t),f(z)) \leq r\cdot d(t,z)$ making $t=z$, for fixed points $t,z$.
+\end{proof}
+
+
+\section{Baire Space}
+\begin{theorem}{Baire Category Theorem}{Baire Category Theorem}
+Let $(X,d)$ be a complete metric space. If $X_1, \ldots ,X_n, \ldots $ is a sequence of open dense subsets of $X$, then the set $\bigcap_{n=1}^{\infty } X_n$ is dense in $X$.
+\end{theorem}
+\begin{proof}
+It suffice to show that if $U$ is any non-empty open subset of $(X,d)$, then $U \cap \bigcup_{n=1}^{\infty } X_n \neq \emptyset $.
+
+As $X_1$ is open and dense in $X$, the  $U\cap X_1$ is an nonempty open subset of $(X,d)$. Let $U_1$ be an open ball of radius $\leq 1$ such that $\overline{U_1} \subseteq U\cap X_1$. Define inductively that $U_n$ is an open ball of radius $\leq \frac{1}{n}$ such that $\overline{U_n} \subseteq U_{n-1}\cap X_n$.
+
+Let $x_n\in U_n$, then the sequence $\left\{ x_n \right\}$ is a Cauchy sequence. Then we have $x_n \rightarrow x$ for some $x\in X$.
+
+Note that $\forall m\in \mathbb{Z}_+,\forall n>m, x_m\in \overline{U_m}$, therefore $x\in \overline{U_m}$. Therefore, $\forall n\in \mathbb{N}, x\in \overline{U_n}$, thus $x\in \bigcap_{n=1}^{\infty } \overline{U_n}$. Also we have $\bigcap_{i=1}^{\infty } \overline{U_i} \subseteq U \cap X_n, \forall n\in \mathbb{Z}_+$, then we have $x\in \bigcap_{n=1}^{\infty } \overline{U_n} \subseteq U\cap \bigcap_{n=1}^{\infty } X_n$.
+\end{proof}
+
+\begin{definition}{Interior, Boundary and Exterior Points}{Interior Boundary and Exterior Points}
+Let $(X,\mathcal{T})$ be any topological space and $A \subseteq X$.
+\begin{itemize}
+\item The largest open subset contained in $A$ is called the interior of $A$, denoted $\Int A$. Each point $x\in \Int A$ is called the interior point. 
+\item The set $\Int (X-A)$ is called the exterior of $A$, denoted $\Ext A$.
+\item Then set $\overline{A}-\Int A$ is called the boundary point of $A$.
+\end{itemize}
+\end{definition}
+\begin{remark}
+Well, we can see that:
+\begin{itemize}
+\item An interior point $x$, is that $\exists U\in \mathcal{T}, x\in U \subseteq A$.
+\item An exterior point is a interior point in  $X-A$.
+\item The other points are boundary points.
+\end{itemize}
+\end{remark}
+
+\begin{definition}{Nowhere dense}{Nowhere dense}
+A subset $A$ of a topological space $(X,\mathcal{T})$ is said to be nowhere dense if $\Int \overline{A} = \emptyset $.
+\end{definition}
+
+This formalize our intuition of not having a part that is dense.
+
+We'll rephrase the Baire category theorem.
+\begin{corollary}{Baire Category Theorem}{Baire Category Theorem (Rephrased)}
+Let $(X,d)$ is a complete metric space. If $X_1, \ldots ,X_n, \ldots $ is a sequence of subsets of $X$ such that $X = \bigcup_{n=1}^{\infty } X_n$. Then $\exists n\in \mathbb{Z}_+, X_n$ is not nowhere dense.
+\end{corollary}
+\begin{proof}
+SORRY
+\end{proof}
+
+\begin{definition}{Baire Space}{Baire Space}
+A topological space $(X,\mathcal{T})$ is said to be a Baire space if $\forall \left\{ X_n \right\}$ of open dense subsets of $X$, the set $\bigcap_{n=1}^{\infty } X_n$ is also dense in $X$.
+\end{definition}
+
+\begin{corollary}{}{Metrizable spaces and Baire spaces }
+Every complete metrizable spaces are Baire spaces.
+\end{corollary}
+\begin{remark}
+Note that the definition of Baire space do not depend on metric structure, it is a topological definition.
+
+The completeness is very important, the set $\mathbb{Q}$ is not a Baire space.
+\end{remark}
+
+\begin{definition}{First and Second Category}{First and Second Category}
+Let $Y$ be a subset of $(X,\mathcal{T})$. If $Y$ is a union of a countable many nowhere dense subsets of $X$, then $Y$ is said to be a set of the first category of meager in  $X,\mathcal{T})$. If $Y$ is not first category, then it is second category.
+\end{definition}
+
+\end{document}

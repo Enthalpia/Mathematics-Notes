@@ -1,0 +1,347 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+
+\chapter{Countability and Separation Axioms}
+
+The intuition of countability and separation axioms do not arise from the study of analysis like compactness and connectedness, but rather from the study of topology. The separation axioms are a set of conditions that describe how distinct points and sets can be separated by neighborhoods.
+
+\section{The Countability Axioms}
+
+Recall the definition earlier for the first countable space.
+\begin{definition}{First Countable}{First Countable}
+	A space $X$ has a countable basis at $x\in X$ iff there is a countable collection $\mathcal{B}$ of neighborhoods of $x$ such that for every neighborhood $U$ of $x$, there exists a $B\in\mathcal{B}$ such that $B\subseteq U$.
+
+	A space $X$ is \textbf{first countable} if every point $x\in X$ has a countable basis at $x$. This is called the \textbf{first countability axiom}.
+\end{definition}
+
+We've seen that every metric space is first countable, with balls as a countable basis at each point. In a first countable space, convergent sequences is adequate to detect limit points and continuity.
+
+\begin{theorem}{Sequence Detection of First Countable Spaces}{Sequence Detection of First Countable Spaces}
+Let $X$ be a topological space.
+\begin{itemize}
+\item Let $A \subseteq X$, then if there is a sequence of points converging to $x$, then $x\in \overline{A}$. The reverse holds if $X$ is first countable.
+\item Let $f: X \rightarrow Y$. If $f$ is continuous, then for every convergent sequence $x_n \rightarrow x$ in $X$, we have $f(x_n) \rightarrow f(x)$ in $Y$. The reverse holds if $X$ is first countable.
+\end{itemize}
+\end{theorem}
+\begin{proof}
+	The same as lemma \ref{lem:The Sequence Lemma} and theorem \ref{thm:Continuity and Convergence}.
+\end{proof}
+
+\begin{definition}{Second Countable}{Second Countable}
+	A topological space $X$ is \textbf{second countable} if it has a countable basis. This is called the \textbf{second countability axiom}.
+\end{definition}
+
+Obviously, every second countable space is first countable, but the reverse is not true. Second countability is so strong that not all metric spaces are second countable.
+
+\begin{example}{Second Countable Spaces}{Second Countable Spaces}
+	\begin{itemize}
+	\item $\mathbb{R}$ is second countable, with the collection of open intervals with rational endpoints as a countable basis.
+	\item $\mathbb{R}^{\mathbb{Z}_+}$ with the product topology is second countable, with the collection of open sets of the form $\prod U_n$, with finitely many $U_n$ are rational intevals and the rest are $\mathbb{R}$, as a countable basis.
+	\item In the uniform topology, $\mathbb{R}^{\mathbb{Z}_+}$ is first countable (being metrizable) but not second countable. We choose $A \subseteq R^{\mathbb{Z}_+}$ to be all sequences consisting of $0$ and $1$, then $A$ is discrete but uncountable, so it cannot be covered by a countable basis.
+	\end{itemize}
+\end{example}
+
+Countable axioms are well-behaved when taking subspaces and countable products.
+\begin{theorem}{Subspaces and Products of Countability Axioms}{Subspaces and Products of Countability Axioms}
+\begin{itemize}
+\item A subspace of a first countable space is first countable.
+\item A subspace of a second countable space is second countable.
+\item A countable product of first countable spaces is first countable.
+\item A countable product of second countable spaces is second countable.
+\end{itemize}
+\end{theorem}
+\begin{proof}
+	Consider the second countable case. If $\mathcal{B}$ is a countable basis of $X$, then $\left\{ B\cap A, B\in \mathcal{B} \right\}$ is a countable basis of $A \subseteq X$. If $\mathcal{B}_i$ is a countable basis of $X_i$ for each $i\in \mathbb{Z}_+$, then $\left\{ \prod U_i \right\}$, where $U_i \in \mathcal{B}_i$ for finitely many $i$, is a countable basis of $\prod X_i$.
+	The first countable case is similar, using countable bases at each point.
+\end{proof}
+
+\begin{definition}{Denseness}{Denseness}
+	A subset $A$ of a topological space $X$ is \textbf{dense} in $X$ if $\overline{A} = X$. This means that every point in $X$ is either in $A$ or is a limit point of $A$.
+\end{definition}
+
+\begin{theorem}{Second Countability and Denseness}{Second Countability and Denseness}
+Suppose $X$ is second countable.
+\begin{itemize}
+\item Every open covering of $X$ has a countable subcovering.
+\item There is a countable dense subset of $X$.
+\end{itemize}
+\end{theorem}
+\begin{proof}
+	Let $\mathcal{B}$ be a countable basis of $X$.
+	\begin{itemize}
+		\item Let $\mathcal{A}$ be a countable basis of $X$, then for every $n\in \mathbb{Z}_+$, choose $A_n\in \mathcal{A}$ that $B_n \subseteq A_n$. Then $A_n$ is a countable subcovering of $\mathcal{B}$.
+		\item For every $n\in \mathbb{Z}_+$, choose $x_n\in B_n$, then $D = \left\{ x_n \right\}$ is dense. $\forall x\in X$, every basis element containing $x$ intersects $D$, so $x\in \overline{D}$.
+	\end{itemize}
+\end{proof}
+
+\begin{remark}
+\begin{itemize}
+	\item A space for which every open cover has a countable subcover is called a \textbf{Lindel\"of space}.
+	\item A space that has a countable dense subset is called a \textbf{separable space}.
+\end{itemize}
+Each of the axioms is equivalent to the second countability axiom in metric spaces.
+\begin{proof}
+\begin{itemize}
+\item Let $\mathcal{B}_n = \left\{ B(x,1 / n):x\in X \right\}$, then it has a countable subcovering $\mathcal{B}_n'$, we let
+	\begin{equation*}
+		\mathcal{B} = \bigcup_{n=1}^{\infty} \mathcal{B}_n'.
+	\end{equation*}
+	which is also countable.
+\item Let $D$ be a countable dense subset. Let $\mathcal{B} = \left\{ B(x, r):x\in D, r\in \mathbb{Q}_+ \right\}$, then $\mathcal{B}$ is a countable basis.
+\end{itemize}
+\end{proof}
+\end{remark}
+
+\begin{example}{The Countability of $\mathbb{R}_l$}{The Countability of mathbbRl}
+	The space $\mathbb{R}_l$ satisfies all countability axioms except second countability.
+\end{example}
+
+\begin{example}{Sorgenfrey plane}{Sorgenfrey plane}
+	The Sorgenfrey plane is the product topology of $\mathbb{R}_l \times \mathbb{R}_l$. It is not Lindel\"of.
+\end{example}
+
+\section{The Separation Axioms}
+The separation axioms are a set of conditions that describe how distinct points and sets can be separated by neighborhoods.
+
+\begin{definition}{Separation Axioms}{Separation Axioms}
+	\begin{itemize}
+		\item A space $X$ is \textbf{T0} (Kolmogorov) if for every pair of distinct points $x,y\in X$, there exists an open set containing one but not the other.
+		\item A space $X$ is \textbf{T1} (Frechet) if for every pair of distinct points $x,y\in X$, there exists an open set containing $x$ but not $y$ and vice versa.
+		\item A space $X$ is \textbf{T2} (Hausdorff) if for every pair of distinct points $x,y\in X$, there exist disjoint open sets containing $x$ and $y$ respectively.
+		\item A space $X$ is \textbf{T3} (Regular) if it is T1 and for every closed set $F$ and point $x\notin F$, there exists disjoint open sets containing $x$ and $F$ respectively.
+		\item A space $X$ is 
+		\item A space $X$ is \textbf{T4} (Normal) if it is T1 and for every pair of disjoint closed sets, there exist disjoint open sets containing them.
+		\item A space $X$ is \textbf{T5} (completely normal) if it is T1 and for every pair of separated sets, there exist disjoint open sets containing them. Two sets $A,B$ are \textbf{separated} if $A\cap \overline{B} = \emptyset$ and $B\cap \overline{A} = \emptyset$.
+	\end{itemize}
+	We can write it in logical form:
+	\begin{itemize}
+		\item T0: $\forall x,y\in X, x\neq y \implies \exists U\in \mathcal{T}, (x\in U, y\notin U) \lor (y\in U, x\notin U)$.
+		\item T1: $\forall x,y\in X, x\neq y \implies \exists U,V\in \mathcal{T}, x\in U, y\notin U, y\in V, x\notin V$.
+		\item T2: $\forall x,y\in X, x\neq y \implies \exists U,V\in \mathcal{T}, x\in U, y\in V, U\cap V = \emptyset$.
+		\item T3: T1 and $\forall F$ closed, $\forall x\notin F \implies \exists U,V\in \mathcal{T}, x\in U, F\subseteq V, U\cap V = \emptyset$.
+		\item T4: T1 and $\forall F,G$ closed, $F\cap G = \emptyset \implies \exists U,V\in \mathcal{T}, F\subseteq U, G\subseteq V, U\cap V = \emptyset$.
+		\item T5: T1 and $\forall A,B,A\cap \overline{B} = \emptyset, B\cap \overline{A} = \emptyset \implies \exists U,V\in \mathcal{T}, A\subseteq U, B\subseteq V, U\cap V = \emptyset$.
+	\end{itemize}
+\end{definition}
+
+Another way to formulate $T_1$ is that every singleton set $\{x\}$ is closed. Using this property it is easy to see that
+\begin{equation*}
+	T_4 \implies T_3 \implies T_2 \implies T_1 \implies T_0.
+\end{equation*}
+
+There are other ways to formulate the separation axioms.
+\begin{lemma}{Another Formulation of T3 and T4}{Another Formulation of T3 and T4}
+Let $X$ be a $T_1$ space.
+\begin{itemize}
+	\item $X$ is regular iff $\forall x\in X, \forall U$ as neighborhood of $x$, there exists a neighborhood $V$ of $x$ such that $\overline{V} \subseteq U$.
+	\item $X$ is normal iff $\forall F$ closed, $\forall U\in \mathcal{T},F \subseteq U$, there exists an open set $V$ such that $F \subseteq V$ and $\overline{V} \subseteq U$.
+\end{itemize}
+\end{lemma}
+\begin{proof}
+Using $X-U$ as another closed set will do.
+\end{proof}
+
+\begin{theorem}{Subspaces and Products of T2 and T3}{Subspaces and Products of T2 and T3}
+\begin{itemize}
+\item A subspace of a Hausdorff space is Hausdorff. The product of Hausdorff spaces is Hausdorff.
+\item A subspace of a regular space is regular. The product of regular spaces is regular.
+\end{itemize}
+\end{theorem}
+\begin{proof}
+	Let $Y \subseteq X$.
+\begin{itemize}
+\item If $U,V$ are disjoint, so are $U\cap Y$ and $V\cap Y$.
+
+	Let $\left\{ X_{\alpha} \right\}$ be a family of Hausdorff spaces, and $x,y\in \prod X_{\alpha}$ be distinct points. There exists $\beta$ that $x_{\beta}\neq y_{\beta}$. Let $U,V \subseteq X_{\beta}$ be disjoint open sets containing $x_{\beta}$ and $y_{\beta}$ respectively. Taking $\pi_{\beta}^{-1}(U)$ and $\pi_{\beta}^{-1}(V)$, we have disjoint open sets containing $x$ and $y$ respectively.
+\item First $Y$ is $T_1$ for every singleton in $Y$ is closed. Let $x,B$ be the disjoint point and closed set. Then $B = \overline{B}\cap Y$, so $x\notin \overline{B}$. Using the regularity of $X$, we can find disjoint open sets $U,V$ such that $x\in U$ and $\overline{B} \subseteq V$. Then $U\cap Y$ and $V\cap Y$ are disjoint open sets containing $x$ and $B$ respectively.
+
+	Let $\left\{ X_{\alpha} \right\}$ be a family of regular spaces, and $X = \prod X_{\alpha}$, the previous statement shows that $X$ is Hausdorff so is $T_1$. Let $x = (x_{\alpha})\in X$, $U$ be its neighborhood. Choose a basis element $x\in \prod U_{\alpha} \subseteq U$. For the finite collection of $\alpha$ that $U_{\alpha}$ is not the whole space, we can find $x_{\alpha}\in V_{\alpha}$ and $\overline{V_{\alpha}}\subseteq U_{\alpha}$ for open $V_{\alpha}$. 
+	Then $\prod V_{\alpha}$ is a neighborhood of $x$ such that $\overline{\prod V_{\alpha}} \subseteq U$.
+\end{itemize}
+\end{proof}
+
+There is NO analogous statement for $T_4$ spaces. The subspace and product of normal spaces is not normal in general.
+
+\begin{example}{Separation Axioms and Real Spaces}{Separation Axioms and Real Spaces}
+\begin{itemize}
+\item The space $\mathbb{R}_K$ is Hausdorff but not regular.
+\item The space $\mathbb{R}_l$ is normal.
+\item The Sorgenfrey plane $\mathbb{R}_l^2$ is regular but not normal.
+\end{itemize}
+\end{example}
+
+\section{Normal Spaces}
+\begin{theorem}{Regular Second Countable Implies Normal}{Regular Second Countable Implies Normal}
+Let $X$ be a second countable regular space. Then $X$ is normal.
+\end{theorem}
+\begin{proof}
+Let $\mathcal{B}$ be a countable basis, and $A,B$ are disjoint closed set in $X$. $\forall x\in A$, there is a neighborhood $U_x$ that does not intersect $B$. Using regularity, let $V_x$ be a neighborhood that $\overline{V_x} \subseteq U$, and $B_x\in \mathcal{B}, x\in B_x \subseteq V_x$. So we construct a countable cover of $A$ by $B_x$, denoted $U = \bigcup_{n=1}^{\infty } U_n$.
+
+Similarly, we construct a countable cover $V = \bigcup_{n=1}^{\infty } V_n$ of $B$. Now we construct $U',V'$ that are disjoint.
+
+Define
+\begin{equation*}
+	U_n' = U_n - \bigcup_{i=1}^{n} \overline{V_i}, \qquad V_n' = V_n - \bigcup_{i=1}^{n} \overline{U_i}.
+\end{equation*}
+Then $U_n'$ and $V_n'$ are open. Let
+\begin{equation*}
+	U' = \bigcup_{n=1}^{\infty } U_n', \qquad V' = \bigcup_{n=1}^{\infty } V_n'.
+\end{equation*}
+Then if $x\in U'\cap V'$, then $x\in U_j'\cap V_k'$ for some $j,k\in \mathbb{Z}_+$. If $j\leq k$, then contradicts. So $U'$ and $V'$ are disjoint open sets containing $A$ and $B$ respectively. Thus $X$ is normal.
+\end{proof}
+
+\begin{figure}[ht]
+    \centering
+    \incfig{regular-second-countable-and-normal}
+    \caption{Regular Second Countable and Normal}
+    \label{fig:regular-second-countable-and-normal}
+\end{figure}
+
+\begin{theorem}{Metrizable Implies Normal}{Metrizable Implies Normal}
+Let $X$ be a metrizable space. Then $X$ is normal.
+\end{theorem}
+\begin{proof}
+	Let $d$ be a metric on $X$. Let $A,B$ be disjoint closed sets in $X$. For every $a\in A$, let $B(a,\epsilon_a)\cap B = \emptyset $, and for every $b\in B$, let $B(b,\epsilon_b)\cap A = \emptyset$. Then let
+	\begin{equation*}
+		U = \bigcup_{a\in A} B(a,\epsilon_a / 2), \qquad V = \bigcup_{b\in B} B(b,\epsilon_b / 2).
+	\end{equation*}
+	We shall see that $U$ and $V$ are disjoint open sets containing $A$ and $B$ respectively. If $x\in U\cap V$, then there exists $a\in A$ and $b\in B$ such that $d(x,a) < \epsilon_a / 2$ and $d(x,b) < \epsilon_b / 2$. Then the triangle inequality gives us
+	\begin{equation*}
+		d(a,b) \leq d(a,x) + d(x,b) < \epsilon_a / 2 + \epsilon_b / 2 \leq \max\left\{ \epsilon_a, \epsilon_b \right\}.
+	\end{equation*}
+	which is a contradiction.
+\end{proof}
+
+\begin{theorem}{Compact Hausdorff Implies Normal}{Compact Hausdorff Implies Normal}
+Let $X$ be a compact Hausdorff space. Then $X$ is normal.
+\end{theorem}
+\begin{proof}
+	First we prove $X$ is regular. For all $F$ closed and $x\notin F$, since $X$ is Hausdorff, there exist disjoint open sets $U_x,V_x$ such that $x\in U_x$ and $F\subseteq V_x$. There are finite $x$ that $\bigcup V_x $ covers $F$, taking the intersection of all $U_x$ would do. (Finiteness)
+
+	Similar argument applies to show that $X$ is normal.
+\end{proof}
+
+\begin{theorem}{Order Topology is Normal}{Order Topology is Normal}
+Let $X$ be a simply ordered set with the order topology. Then $X$ is normal.
+\end{theorem}
+
+We can prove a weaker statement:
+\begin{quote}
+	Every well-ordered set is normal in the order topology.
+\end{quote}
+
+\begin{example}{Spaces that are not Normal}{Spaces that are not Normal}
+\begin{itemize}
+\item If $J$ is uncountable, then $\mathbb{R}^J$ is not normal.
+\item The product space $S_{\Omega} \times \overline{S_{\Omega}}$ is not normal, where $S_{\Omega}$ is the minimal uncountable well-ordered set.
+\end{itemize}
+\end{example}
+
+\section{The Urysohn Lemma}
+
+\begin{theorem}{Urysohn Lemma}{Urysohn Lemma}
+	Let $X$ be a normal space, and $A,B$ be disjoint closed sets in $X$. Let $[a,b] \subseteq \mathbb{R}$, then there exists a continuous function $f: X \rightarrow [a,b]$ such that $f(x) = a$ for all $x\in A$ and $f(x) = b$ for all $x\in B$.
+\end{theorem}
+\begin{proof}
+	We shall only consider $[a,b] = [0,1]$.
+	\begin{itemize}
+		\item \textbf{Step 1: } Let $P = [0,1]\cap \mathbb{Q}$. $\forall p\in P$, we can find an open set $U_p$ such that $\forall p,q\in P, p < q \rightarrow \overline{U_p}\subseteq U_q$.
+
+		For $P$ being countable, we can use induction to define the $U_p$. Let $P = \left\{ p_n \right\}_{n=1}^{\infty }$. Assume $p_1 = 1,p_2=0$. Let $P_n = \left\{ p_1, \ldots ,p_n \right\}$.
+
+		Define $U_1 = X-B$, choose $U_0$ such that $A \subseteq U_0,\overline{U_0}\subseteq U_1$. (this is possible because $X$ is normal). Suppose $\forall p\in P_n$, we have $U_p$ defined such that $\forall p,q\in P_n, p<q \rightarrow \overline{U_p} \subseteq U_q$. Let $r = p_{n+1}$, and we need to define $U_r$.
+
+		In $P_{n+1} = P_n \cup \left\{ r \right\}$, it is a finite simply ordered set in $[0,1]$. Let $p$ be the immediate predecessor of $r$ in $P_{n+1}$, and $q$ the immediate successor. Then we define $U_r$ to be an open set
+		\begin{equation*}
+			\overline{U_p} \subseteq U_r, \qquad \overline{U_r} \subseteq U_q.
+		\end{equation*}
+		Then we say that the condition holds for $P_{n+1}$.
+	\item \textbf{Step 2: } We extend the definition of $U_p$ to $p\in \mathbb{Q}$.
+		\begin{equation*}
+		U_p = 
+		\begin{cases}
+			\emptyset , &\text{ if } p<0 \\
+			U_p \text{ defined above }, &\text{ if } 0\leq p \leq 1 \\			
+			X, &\text{ if } p>1
+		\end{cases}
+		,\qquad p\in \mathbb{Q}.
+		\end{equation*}
+		We still have $\forall p,q\in \mathbb{Q}, p<q \rightarrow \overline{U_p} \subseteq U_q$.
+	\item \textbf{Step 3: } Define
+		\begin{equation*}
+		Q(x) = \left\{ p\in \mathbb{Q}, x\in U_p \right\}.
+		\end{equation*}
+		It is clear that any $p<0$ is not in $Q(x)$, then $Q(x)$ is bounded below. Define $f(x) = \inf Q(x)$. Then we have $f(x)=0$ for all $x\in A$ and $f(x) = 1$ for all $x\in B$.
+	\item \textbf{Step 4: } We show that $f$ is continuous. First we have two results:
+		\begin{itemize}
+		\item $x\in \overline{U_r} \rightarrow f(x) \leq r$.
+		\item $x\notin U_r \rightarrow f(x) \geq r$.
+		\end{itemize}
+		These two results are obvious. Next $\forall x_0\in X, \forall (c,d) \subseteq \mathbb{R}, f(x_0) \in (c,d)$, we need to find a neighborhood $U$ of $x_0$ such that $f(U) \subseteq (c,d)$. Choose rational $p,q$ such that
+		\begin{equation*}
+		c<p<f(x_0)<q<d
+		\end{equation*}
+		Then we find $U = U_q-\overline{U_p}$ to be the desired neighborhood.
+	\end{itemize}
+\end{proof}
+
+\begin{definition}{Separation by Continuous Functions}{Separation by Continuous Functions}
+	If $A,B \subseteq X$, and $\exists $ a continuous function $f: X \rightarrow [0,1]$ such that $f(A) = \left\{ 0 \right\}$ and $f(B) = \left\{ 1 \right\}$, we say that $A$ and $B$ can be \textbf{separated by continuous functions}.
+\end{definition}
+
+In this way, the Urysohn lemma can be stated:
+\begin{quote}
+	If every pair of disjoint closed sets can be separated by disjoint open sets, then every such pair can be separated by continuous functions.
+\end{quote}
+
+\begin{remark}
+The regularity is not strong enough for the separation of a point and a closed set by a continuous function. (Similar proof fails at step 1, when we want to find a $U_r$ between $U_p$ and $U_q$.
+\end{remark}
+
+\begin{definition}{Completely Regular}{Completely Regular}
+	A space $X$ is completely regular if it is T1 and $\forall $ closed set $A$ and $\forall x_0\notin A$, there is a continuous function $f: X \rightarrow [0,1]$ such that $f(x_0)=1$ and $f(A) = 0$.
+\end{definition}
+
+Sometimes this is called T3.5. By Urysohn lemma, we have
+\begin{equation*}
+	T_4 \implies T_{3.5} \implies T_3
+\end{equation*}
+
+Completely regular spaces are well-behaved under subspaces and products.
+\begin{theorem}{Subspaces and Products of Completely Regular Spaces}{Subspaces and Products of Completely Regular Spaces}
+	A subspace of a completely regular space is completely regular, and a product of a completely regular space is completely regular.
+\end{theorem}
+\begin{proof}
+	Let $X$ be completely regular. Let $Y \subseteq X$, and $A$ is closed under $Y$, $x_0\in Y-A$. We choose $f:X \rightarrow [0,1]$ that $f(x_0)=1$ and $f(\overline{A}) = \left\{ 0 \right\}$. The restriction of $f$ onto $Y$ is what we want.
+	
+	Let $X = \prod X_{\alpha}$ be a product of completely regular spaces, and $b\in X$, $A$ be a closed set in $X$ disjoint from $b$. Let $\prod U_{\alpha}$ be a neighborhood of $b$ that does not intersect $A$. Then $U_{\alpha}\neq X_{\alpha}$ for finite many $\alpha_1, \ldots ,\alpha_n$. Choose continuous function:
+	\begin{equation*}
+		f_i : X_{\alpha_i} \rightarrow [0,1], \qquad f_i(b_{\alpha_i}) = 1, f_i(X-U_{\alpha_i}) = 0.
+	\end{equation*}
+	and $\phi_i(x) = f_i(\pi_{\alpha_i}(x))$. Then
+	\begin{equation*}
+		f(x) = \phi_1(x) \cdots \phi_n(x)
+	\end{equation*}
+	is the desired continuous function. It is clear that $f(b) = 1$ and $f(A) = 0$.
+\end{proof}
+
+\begin{example}{Completely regular and not Normal}{Completely regular and not Normal}
+The sets $\mathbb{R}_l^2$ and $S_{\Omega}\times \overline{S_{\Omega}}$ are completely regular but not normal.
+\end{example}
+
+\section{The Urysohn Metrization Theorem}
+
+We use two versions of proof here, both has generalizations.
+\begin{theorem}{Urysohn Metrization Theorem}{Urysohn Metrization Theorem}
+	Let $X$ be a second countable normal space. Then $X$ is metrizable.
+\end{theorem}
+
+\begin{theorem}{Imbedding Theorem}{Imbedding Theorem}
+	Let $X$ be a T1 space. Suppose $\left\{ f_{\alpha} \right\}_{\alpha\in J}$ is a family of continuous functions from $X$ to $\mathbb{R}$ such that
+	\begin{equation*}
+	\forall x_0\in X, \forall \text{ neighborhood $U$ of $x_0$, } 
+	\end{equation*}
+\end{theorem}
+
+\end{document}

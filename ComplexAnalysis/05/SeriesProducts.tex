@@ -1,0 +1,181 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\chapter{Series and Product Developments}
+
+A useful tool to explicitly represent an analytic function.
+
+\section{Power Series}
+\subsection{Weierstrass' Theorem}
+
+In analysis, uniform convergence is crucial for studying the regularity properties of a limit function.
+
+\paragraph{The Domain}
+We now have a sequence of analytic functions $\left\{ f_n \right\}$ defined on $\Omega_n$. As we want to consider the limit function $f$ in $\Omega$, it would make sense that
+\begin{equation*}
+	\forall z\in \Omega, \exists n_0\in \mathbb{N}, \forall n>n_0, z\in \Omega_n.
+\end{equation*}
+A typical case is that $\Omega_n \subsetneq \Omega_{n+1}$ for all $n\in \mathbb{Z}_+$ and $\Omega = \bigcup_{n=1}^{\infty} \Omega_n$. In this way, however, the convergence is not uniform as no $f_n$ is defined on $\Omega$. So we consider a weaker assumption, but still strong enough: The inner compact uniform convergence.
+
+\begin{theorem}{The Uniform Convergence Implies Analyticality}{The Uniform Convergence Implies Analyticality}
+	Let $\left\{ f_n \right\}$ be a sequence of analytic functions defined on regions $\Omega_n$ with limit function $f(z) = \lim_{n \to \infty } f_n(z)$ defined on $\Omega$. If for every compact set $K \subset \Omega$, $f_n$ is uniformly convergent on $K$, then $f$ is analytic on $\Omega$.
+
+	Moreover, $f_n'(z)$ converges uniformly to $f'(z)$ on every compact $K \subseteq \Omega$.
+\end{theorem}
+\begin{proof}
+	Let $\Delta: \left|z-a\right|\leq r$ be a closed disk in $\Omega$, then for enough large $n$, we have $\Delta \subseteq \Omega_n$, for any closed curve $\gamma$ in $\Delta$, we have
+	\begin{equation*}
+		\int_{\gamma} f(z) \mathrm{d} z = \lim_{n \to \infty} \int_{\gamma} f_n(z) \mathrm{d} z = 0.
+	\end{equation*}
+	due to uniform convergence. Thus, by Morera's theorem, $f$ is analytic on $\Delta$. Since $\Delta$ is arbitrary, we conclude that $f$ is analytic on $\Omega$.
+
+	Explicitly, we can write
+	\begin{equation*}
+		f_n(z) = \frac{1}{2 \pi i}\int_C \frac{f_n(\zeta)}{\zeta - z} \mathrm{d} \zeta,
+	\end{equation*}
+	where $C: \left|\zeta-a\right|=r$ and $\left|z-a\right|<r$. Due to uniform convergence, we can exchange the limit and the integral:
+	\begin{equation*}
+		f(z) = \lim_{n \to \infty} f_n(z) = \frac{1}{2 \pi i}\int_C \lim_{n \to \infty} \frac{f_n(\zeta)}{\zeta - z} \mathrm{d} \zeta = \frac{1}{2 \pi i}\int_C \frac{f(\zeta)}{\zeta - z} \mathrm{d} \zeta.
+	\end{equation*}
+	showing $f$ is analytic in the disk.
+Following the same route, we have
+\begin{equation*}
+	 f_n'(z) = \frac{1}{2 \pi i}\int_C \frac{f_n(\zeta)}{(\zeta - z)^2} \mathrm{d} \zeta,
+\end{equation*}
+So we have
+\begin{equation}
+ 	\lim_{n \to \infty } f_n'(z) = \frac{1}{2 \pi i}\int_C \frac{f(\zeta)}{(\zeta - z)^2} \mathrm{d} \zeta = f'(z).
+\end{equation}
+In a compact set, convergence is uniform, thus we have finished the proof.
+\end{proof}
+
+Repeated applications suggest that $f_n^{(k)}(z)$ converges uniformly to $f^{(k)}(z)$ on every compact set $K \subseteq \Omega$.
+
+Apply this to series, we naturally have the following theorem.
+\begin{theorem}{Weierstrass Theorem}{Weierstrass Theorem}
+	Let $\left\{ f_n \right\}$ be a sequence of analytic functions with limit function $f(z) = \sum_{n=1}^{\infty } f_n(z)$ defined on $\Omega$. If for every compact set $K \subseteq \Omega$, $\sum f_n$ is uniformly convergent on $K$, then $f$ is analytic on $\Omega$.
+
+	Moreover, $\sum f_n'(z)$ converges uniformly to $f'(z)$ on every compact $K \subseteq \Omega$.
+\end{theorem}
+
+\begin{proposition}{Uniform Convergence on Compact Sets}{Uniform Convergence on Compact Sets}
+	As $K$ is compact so is closed, then the maximum and minimum of $\left|f_n(z)-f_m(z)\right|$ is achieved on $\partial K$. So uniform convergence on $K$ is equivalent to uniform convergence on $\partial K$.
+\end{proposition}
+
+\begin{theorem}{Hurwitz Theorem}{Hurwitz Theorem}
+	Let $\left\{ f_n \right\}$ be a sequence of analytic functions defined on $\Omega$, $f_n(z)\neq 0$, with limit function $f(z) = \lim_{n \to \infty } f_n(z)$ defined on $\Omega$. If for every compact set $K \subset \Omega$, $\left\{ f_n \right\}$ converges uniformly to $f$, then $f=0$ or $\forall z\in \Omega, f(z)\neq 0$.
+\end{theorem}
+\begin{proof}
+Suppose $f$ is not identically zero, then the zeros are isolated. $\forall z_0\in \Omega$, let $r>0$ that $\forall 0<\left|z-z_0\right|\leq r, f(z) \neq 0$. Denote
+\begin{equation*}
+	C = \min \left\{ f(z): \left|z-z_0\right|=r \right\} >0
+\end{equation*}
+then $1 / f_n$ converges uniformly to $1 / f$ on $\left|z-z_0\right|=r$. Thus, there exists $n_0$ such that for all $n>n_0$, we have
+\begin{equation*}
+	\lim_{n \to \infty } \frac{1}{2 \pi i} \int_{C} \frac{f_n'(z)}{f_n'(z)} \mathrm{d} z = \frac{1}{2 \pi i} \int_{C} \frac{f'(z)}{f(z)} \mathrm{d} z = 0.
+\end{equation*}
+
+From theorem \ref{thm:Number of Zeros}, we know that the integral counts the number of zeros of $f_n$ in $\left|z-z_0\right|<r$, which is zero. So $f(z_0)\neq 0$. 
+\end{proof}
+
+\subsection{The Taylor Series}
+
+According to theorem \ref{thm:Taylors Theorem}, let $f$ be analytic in the region $\Omega$. For ant $z,z_0\in \Omega$ we have
+\begin{equation*}
+	f(z) = \sum_{k=0}^n \frac{f^{(k)}(z_0)}{k!} (z-z_0)^k + f_{n+1}(z)(z-z_0)^{n+1}.
+\end{equation*}
+
+Let $D \subseteq \Omega$ be a disk containing $z$ with center at $z_0$ and radius $\rho$. Then we have
+\begin{equation*}
+	f_{n+1}(z) = \int_{\partial D} \frac{f(\zeta)\mathrm{d} \zeta}{(\zeta-z_0)^{n+1}(\zeta-z)}.
+\end{equation*}
+Denote  $M = \max \left\{ \left|f(z)\right|: z\in \partial D \right\}$, then obtain
+\begin{equation}
+	\left|f_{n+1}(z)(z-z_0)^{n+1}\right| \leq \frac{M \left|z-z_0\right|^{n+1}}{\rho^n(\rho-\left|z-z_0\right|)}.
+\end{equation}
+which means that the remainder term inner compact uniform converges to zero in $D$ as $n\to \infty$.
+
+\begin{theorem}{Taylor's Series}{Taylors Series}
+	Let $f$ be analytic in the region $\Omega$. For any $z_0\in \Omega$ and any open disk $D \subseteq \Omega$ centered at $z_0$, the Taylor series
+	\begin{equation*}
+		S(z) = \sum_{k=0}^{\infty} \frac{f^{(k)}(z_0)}{k!} (z-z_0)^k, \qquad z\in D
+	\end{equation*}
+	converges uniformly to $f(z)$ on every compact subset of $D$.
+\end{theorem}
+Therefore, the radius of convergence is at least the distance from $z_0$ to the boundary of $\Omega$. (Well, it can be larger)
+
+\begin{remark}
+	The uniqueness of Taylor series is guaranteed by taking the derivative of the series term by term and evaluating at $z_0$.
+\end{remark}
+
+\begin{proposition}{The Derivatives and Integral of Taylor Series}{The Derivatives and Integral of Taylor Series}
+	Let $f$ be analytic in the region $\Omega$ and $z_0\in \Omega$. The Taylor series of $f$ at $z_0$ is
+	\begin{equation*}
+		S(z) = \sum_{k=0}^{\infty} \frac{f^{(k)}(z_0)}{k!} (z-z_0)^k, \qquad z\in D
+	\end{equation*}
+	if $D$ is an open disk centered at $z_0$ contained in $\Omega$. Then $f(z)=S(z)$ for $z\in D$ and $S(z)$ converges uniformly to $f(z)$ on every compact subset of $D$.
+
+	Independently speaking, $S$ is a power series, which is inner compact uniform convergent and analytic in an open disk $D$ of radius $R$ centered at $z_0$, and diverges for $\left|z-z_0\right|>R$. Moreover,
+	\begin{itemize}
+		\item The derivative of the series is
+			\begin{equation*}
+				S'(z) = \sum_{k=1}^{\infty} \frac{f^{(k)}(z_0)}{(k-1)!} (z-z_0)^{k-1}, \qquad z\in D.
+			\end{equation*}
+		\item The integral of the series is
+			\begin{equation*}
+				\int_{z_0}^{z} S(\zeta) \mathrm{d} \zeta = \sum_{k=0}^{\infty} \frac{f^{(k)}(z_0)}{(k+1)!} (z-z_0)^{k+1}, \qquad z\in D.
+			\end{equation*}
+	\end{itemize}
+	which have the same radius of convergence $R$ as $S$.
+\end{proposition}
+\begin{proof}
+	This is the Abel Disk Theorem \ref{thm:Abel Disk Theorem}.
+\end{proof}
+
+\begin{example}{Taylor Series of Elementary Functions}{Taylor Series of Elementary Functions}
+	\begin{itemize}
+	\item Exponential Function
+		\begin{equation*}
+			e^z = 1 + \frac{z}{1!} + \frac{z^2}{2!} + \cdots + \frac{z^n}{n!} + \cdots, \qquad z\in \mathbb{C}
+		\end{equation*}
+		This is of course the definition of $e^z$, but it is also the Taylor series at $z_0=0$ because of the uniqueness of Taylor series.
+	\item Sine and Cosine Function
+	\begin{equation*}
+		\sin z = z - \frac{z^3}{3!} + \frac{z^5}{5!} - \cdots + (-1)^n \frac{z^{2n+1}}{(2n+1)!} + \cdots, \qquad z\in \mathbb{C}
+	\end{equation*}
+	\begin{equation*}
+		\cos z = 1 - \frac{z^2}{2!} + \frac{z^4}{4!} - \cdots + (-1)^n \frac{z^{2n}}{(2n)!} + \cdots, \qquad z\in \mathbb{C}
+	\end{equation*}
+	\item Power and logarithm: For a non-$\mathbb{Z}_+$ power or logarithm, we need first to choose an analytic branch near the origin. For $(1+z)^{\mu}$ or $\log (1+z)$, we can choose the principal branch with a cut along $(-\infty ,-1]$. Then the Taylor series at $z_0=0$ is
+	\begin{equation*}
+		(1+z)^{\mu} = 1 + \mu z + \binom{\mu}{2} z^2 + \cdots + \binom{\mu}{n} z^n + \cdots, \qquad z\in \mathbb{C}, \left|z\right|<1
+	\end{equation*}
+	\begin{equation*}
+		\log (1+z) = z - \frac{z^2}{2} + \frac{z^3}{3} - \cdots + (-1)^{n-1} \frac{z^n}{n} + \cdots, \qquad z\in \mathbb{C}, \left|z\right|<1
+	\end{equation*}
+	The radius of convergence is $1$ for both series if $\mu\notin \mathbb{Z}_+$, for if $R>1$, then all the derivative would be bounded for $\left|z\right|< 1$, which is not the case. For $\mu\in \mathbb{Z}_+$, then the series converges in $\mathbb{R}$.
+
+	\item Arctangent and Arcsine: We determine the branch by
+		\begin{equation*}
+			\arctan z = \int_0^z \frac{1}{1+\zeta^2} \mathrm{d} \zeta, \qquad \arcsin z = \int_0^z \frac{1}{\sqrt{1-\zeta^2}} \mathrm{d} \zeta, \qquad z\in \mathbb{C}, \left|z\right|<1.
+		\end{equation*}
+		The path is taken to be any path from $0$ to $z$ that lies in the unit open disk. Through term-by-term integration, we have
+		\begin{equation*}
+			\arctan z = z - \frac{z^3}{3} + \frac{z^5}{5} - \cdots + (-1)^{n-1} \frac{z^{2n-1}}{2n-1} + \cdots, \qquad z\in \mathbb{C}, \left|z\right|<1
+		\end{equation*}
+		\begin{equation*}
+			\arcsin z = z + \frac{z^3}{6} + \frac{3z^5}{40} + \cdots + \frac{(2n-1)!!}{(2n)!!} \frac{z^{2n+1}}{2n+1} + \cdots, \qquad z\in \mathbb{C}, \left|z\right|<1
+		\end{equation*}
+		The radius of convergence is $1$ for both series.
+	\end{itemize}
+\end{example}
+
+\begin{notation}{$[z^n]$}{zn}
+	Denote $[z^n]$ to be any function which is analytic and has a zero of order at least $n$ at $z=0$. For any analytic function at the origin, we can say
+	\begin{equation}
+		f(z) = a_0 + a_1 z + a_2 z^2 + \cdots + a_n z^n + [z^{n+1}],
+	\end{equation}
+	Where the coefficients are uniquely determined by the Taylor series.
+\end{notation}
+
+\end{document}

@@ -1,0 +1,842 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\chapter{Eigenvalues and Eigenvectors}
+
+
+\begin{plainblackenv}
+Standing Assumptions:
+\tcblower\par
+\begin{itemize}
+\item $\mathbb{F}$ denotes $\mathbb{R}$ or $\mathbb{C}$.
+\item $V$ denotes a vector space of $\mathbb{F}$.
+\end{itemize}
+\end{plainblackenv}
+
+We begin our investigation from operators, that is, linear maps from $V$ to itself.
+
+\section{Invariant Subspaces}
+\subsection{Eigenvalues}
+
+\begin{definition}{operator}{Operator}
+A linear map from a vector space to itself is called an operator.
+\end{definition}
+
+\begin{notation}{Restriction of maps}{Restriction Of Maps}
+If $f:V \rightarrow  W$ and $U \subseteq V$. Then $f|_{U}$ is the function $U \rightarrow W$ with 
+\begin{equation*}
+\forall x\in U, f|_{U}(x) = f(x).
+\end{equation*}
+\end{notation}
+
+Suppose $T\in \mathscr{L}(V)$, if
+\begin{equation*}
+V = V_1 \oplus  \ldots \oplus V_m
+\end{equation*}
+To analyze the properties of $T$, we only need to analyze $T|_{V_k}$ for each $k$.
+
+However, the restriction of $T$ to $V_k$ may not be an operator anymore. That is, $T(V_k)$ may map outside  $V_k$.
+
+\begin{definition}{Invariant Subspace}{Invariant Subspace}
+Suppose $T\in \mathscr{L}(V)$, then a subspace $U$ of $V$ is called invariant under  $T$ if $\forall u \in U, Tu\in U$.
+\end{definition}
+Thus, if $U$ is an invariant subspace then $T|_{U}$ is an operator on $U$.
+
+\begin{example}{Invariant Subspaces}{Invariant Subspaces}
+If $T\in \mathscr{L}(V)$, then the following are invariant subspace of $V$.
+\begin{itemize}
+\item $\left\{ 0 \right\}$ 
+\item $V$ 
+\item $\snull T$, because if $u\in \snull T$, $Tu=0\in \snull T$.
+\item $\range T$, because $Tu\in \range T$.
+\end{itemize}
+\end{example}
+
+\begin{proposition}{Intersection of Invariant Subspaces}{Intersection of Invariant Subspaces}
+If $U,W$ are invariant subspaces of $V$, then $U\cap W$ is an invariant subspace of $V$.
+\end{proposition}
+
+We begin with invariant subspaces of dimension one.
+Take any $v\in V$ and let
+\begin{equation*}
+U = \left\{ \lambda v: \lambda\in \mathbb{F} \right\} = \vspan (v)
+\end{equation*}
+Every one dimension subspace has this form. If $U$ is invariant under $T\in \mathscr{L}(V)$, then $Tv\in U$, that is, 
+ \begin{equation*}
+\exists \lambda\in \mathbb{F}, Tv = \lambda v.
+\end{equation*}
+
+Conversely, if $\exists \lambda\in \mathbb{F}, Tv = \lambda v$, then $\forall u\in U, Tu=\lambda u$. (Set $u=\mu v$ would do). 
+
+Therefore, we have
+\begin{equation*}
+\vspan (v) \text{ is a one dimension subspace } \leftrightarrow \exists \lambda\in \mathbb{F}, Tv = \lambda v
+\end{equation*}
+
+\begin{definition}{Eigenvalue}{Eigenvalue}
+Suppose $T\in \mathscr{L}(V)$, a number $\lambda \in \mathbb{F}$ is called an \emph{eigenvalue} of $T$ if there exists $v\in V$ such that $v\neq 0$ and $Tv= \lambda v$.
+\end{definition}
+
+\begin{theorem}{Conditions for an eigenvalue}{Conditions For An Eigenvalue}
+Suppose $V$ is finite dimensional. $T\in \mathscr{L}(V)$ and $\lambda\in \mathbb{F}$. Then the following are equivalent.
+\begin{enumerate}
+	\item  $\lambda$ is an eigenvalue of $T$.
+	\item $T-\lambda I$ is not invertible.
+	\item $T-\lambda I$ is not injective (surjective).
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+We've already seen that the last two conditions are equivalent for an operator (has the same dimension).
+
+If $\lambda$ is an eigenvalue of $T$, then $Tv=\lambda v$ for some $v\in V,v\neq 0$, that is, $(T-\lambda I)v=0$, which is equivalent to $T$ being not invertible.
+\end{proof}
+
+
+\begin{definition}{Eigenvectors}{Eigenvectors}
+	Suppose $T\in \mathscr{L}(V)$ and $\lambda$ is an eigenvalue of $T$, A vector is called an eigenvector of $T$ corresponding to $\lambda$ if $v\neq 0$ and $Tv=\lambda v$.
+\end{definition}
+
+We frequently use the correspondence
+\begin{equation*}
+Tv= \lambda v \leftrightarrow (T-\lambda I)v=0
+\end{equation*}
+
+\begin{theorem}{Linearly Independent Eigenvectors}{Linearly Independent Eigenvectors}
+Suppose $T\in \mathscr{L}(V)$, then every list of eigenvectors corresponding to distinct eigenvalues are linear independent.
+\end{theorem}
+\begin{proof}
+We can do this by induction, but we can also do by the least number property.
+
+Suppose the result is false, then $\exists $ the smallest positive integer $m$ such that a linearly dependent list $v_1, \ldots , v_m$ corresponds to different eigenvalues $\lambda_1, \ldots ,\lambda_m$. We have $a_1, \ldots ,a_m\in \mathbb{F}$, none of which are $0$ because of minimality of $m$.
+\begin{equation*}
+a_1v_1+\ldots +a_mv_m=0
+\end{equation*}
+Apply $T-\lambda_m I$ to both sides we get
+\begin{equation*}
+a_1(\lambda_1-\lambda_m)v_1+\ldots +a_{m-1}(\lambda_{m-1}-\lambda_m)v_{m-1}=0
+\end{equation*}
+making $a_1, \ldots ,a_{m-1}$ a linear dependent list with length less than $m$. That contradicts.
+\end{proof}
+
+\begin{corollary}{An upper bound of number of eigenvalues}{An Upper Bound Of Number Of Eigenvalues}
+Suppose $V$ is finite dimensional. Then each operator on $V$ has at most $\dim V$ distinct eigenvalues.
+\end{corollary}
+
+\subsection{Polynomials Applied to Operators}
+The main reason an operator is far more interesting than arbitrary linear maps is that it can be raised to powers. That is, if $T$ is an operator, then $T^2=TT$ makes sense.
+
+\begin{notation}{$T^m$}{Tm}
+Suppose $T\in \mathscr{L}(V)$, $m\in \mathbb{Z}_+$. Define
+\begin{itemize}
+	\item $T^m\in \mathscr{L}(V)$ is defined by $T^m = \underbrace{T \ldots T}_{m \text{ times}}$.
+	\item $T^0$ is defined to be the identity operator $I$ on $V$.
+	\item If $T$ is invertible, $T^{-m} = \left(T ^{-1}\right)^m$.
+\end{itemize}
+\end{notation}
+
+Then we can define polynomials of operators.
+\begin{notation}{$p(T)$}{pT}
+Suppose $T\in \mathscr{L}(V)$, $p\in \mathscr{P}(\mathbb{F})$ is a polynomial 
+\begin{equation*}
+p(x) = a_0+a_1x+\ldots +a_mz^m
+\end{equation*}
+Then define $p(T)\in \mathscr{L}(V)$ to be
+\begin{equation*}
+p(T) = a_0I+a_1T+a_2T^2+\ldots +a_mT^m.
+\end{equation*}
+\end{notation}
+
+We earlier observe if $T\in \mathscr{L}(V)$, then $\snull T$ and $\range T$ are invariant subspaces under $T$. Of course this still hold for polynomials.
+\begin{theorem}{Polynomials of operator are invariant}{Polynomials Of Operator Are Invariant}
+Suppose $T\in \mathscr{L}(V)$ and $p\in \mathscr{P}(\mathbb{F})$. Then $\snull p(T)$ and $\range p(T)$ are invariant subspaces under $T$.
+\end{theorem}
+
+We know from intuition that change of basis does not influence eigenvalues.
+\begin{theorem}{Change of basis and eigenvalues}{Change Of Basis And Eigenvalues}
+Suppose $T\in \mathscr{L}(V)$, and $S\in \mathscr{L}(V)$ invertible. Then 
+\begin{itemize}
+\item $T$ and $S ^{-1}TS$ has the same eigenvalues.
+\item $v$ is an eigenvector corresponding to $\lambda$ in $T$, then $S ^{-1}v$ is an eigenvector corresponding to $\lambda$ in $S ^{-1}TS$.
+\end{itemize}
+\end{theorem}
+\begin{proof}
+If $\lambda $is an eigenvalue, then $Tv = \lambda v$ for some $v\in V$. Then 
+\begin{equation*}
+S ^{-1}TS(S ^{-1}v) = \lambda (S ^{-1}v).
+\end{equation*}
+\end{proof}
+
+The same goes for duals.
+\begin{theorem}{Dual Maps and Eigenvalues}{Dual Maps And Eigenvalues}
+Suppose $V$ is finite dimensional.  $T\in \mathscr{L}(V)$. Then $\lambda$ is an eigenvalue of $T$ iff $\lambda$ is an eigenvalue of $T'\in \mathscr{L}(V')$.
+\end{theorem}
+
+For complexification.
+\begin{theorem}{Complexification and Eigenvalues}{Complexification And Eigenvalues}
+$\mathbb{F}=\mathbb{R}$, $T\in \mathscr{L}(V)$, and $\lambda\in \mathbb{C}$. Then $\lambda$ is an eigenvalue of $T_{\mathbb{C}}$ iff $\overline{\lambda}$ is an eigenvalue of $T_{\mathbb{C}}$.
+\end{theorem}
+\begin{proof}
+If $\lambda = a+ib$ is an eigenvalue of $T_{\mathbb{C}}$. Then  $T(v+iu) = (a+ib) (v+iu)$. Then $T(v) = av-bu$ and $T(u) = au+bv$. Then  $T(u-iv) = av-bu - i(au+bv) = (a-ib)(v-iu)$.
+\end{proof}
+
+\begin{example}{Infinite-dimensional vector spaces}{Infinite-Dimensional Vector Spaces}
+\begin{itemize}
+\item The forward shift operator $T\in \mathscr{L}(\mathbb{F}^{\infty })$ defined by
+	\begin{equation*}
+	T(z_1, z_2, \ldots ) = (0,z_1,z_2, \ldots )
+	\end{equation*}
+	has no eigenvalues.
+\end{itemize}
+\end{example}
+
+\section{The Minimal Polynomial}
+\subsection{Existence of Eigenvalues on Complex Vector Spaces}
+\begin{theorem}{Existence of Eigenvalues}{Existence Of Eigenvalues}
+Every operator on a finite dimensional nonzero complex vector space has an eigenvalue.
+\end{theorem}
+\begin{proof}
+Suppose $V$ is a finite dimensional complex vector space of dimension $n>0$ and $T\in \mathscr{L}(V)$. Let $v\in  V$ with $v\neq 0$, then
+\begin{equation*}
+v,Tv,T^2v, \ldots ,T^nv
+\end{equation*}
+is not linear independent. Thus, there exists a non-constant polynomial $p$ of the smallest degree such that $p(T)v=0$. But $\exists \lambda\in \mathbb{C}$ such that $p(\lambda)=0$. That is $\exists q\in \mathscr{P}(\mathbb{C})$ such that 
+\begin{equation*}
+p(z) = (z-\lambda)q(z), \forall z\in \mathbb{C}
+\end{equation*}
+Then
+\begin{equation*}
+0 = p(T)v = (T-\lambda I)q(T)v
+\end{equation*}
+Because $q$ has smaller degree then $p$, $q(T)v\neq 0$. Thus $\lambda$ is an eigenvalue of $T$.
+\end{proof}
+
+\begin{remark}
+Both finite dimensional and complex are essential. For example, the forward shift operator has no eigenvalues.
+
+This theorem can also be proved by determinants, with the eigenvalues being the roots of the characteristic polynomial $\det (T - \lambda I) = 0$.
+\end{remark}
+
+\subsection{Eigenvalues and Minimal Polynomials}
+\begin{definition}{Minimal Polynomials}{Minimal Polynomials}
+Suppose $V$ is finite dimensional and $T\in \mathscr{L}(V)$. Then there is a unique monic polynomial $p\in \mathscr{P}(\mathbb{F})$ of smallest degree such that $p(T)=0$. This polynomial is called the minimal polynomial of $T$. Furthermore, $\deg p\leq \dim V$.
+\end{definition}
+\begin{proof}
+If $\dim V = 0$, then $I$ is the zero operator and we take $p = 1$.
+
+Now use induction on $\dim V$. Let $\dim V = n$, assume that the result is true for all vector spaces of smaller dimension. Let $v\in V$, $v\neq 0$. Then $v,Tv, \ldots ,T^nv$ is linear dependent. Thus there exists a smallest positive integer $m$ such that $\exists c_0,c_1, \ldots ,c_{m-1}\in \mathbb{F}$ with 
+\begin{equation*}
+	c_0v+c_1Tv+\ldots +c_{m-1}T^{m-1}v + T^mv = 0
+\end{equation*}
+Define a polynomial $q\in \mathscr{P}_m(\mathbb{F})$ such that
+\begin{equation*}
+	q(z) = c_0+c_1z+\ldots +c_{m-1}z^{m-1}+z^m
+\end{equation*}
+Then $q(T)v=0$. Furthermore, for every $k\in \mathbb{N}$ we have
+\begin{equation*}
+q(T)T^kv = T^kq(T)v = 0
+\end{equation*}
+Because $v,Tv, \ldots ,T^{m-1}v$ is linear independent, so $\dim \snull q(T) \geq m$. Hence
+\begin{equation*}
+\dim \range q(T) \leq n-m
+\end{equation*}
+
+Because $\range q(T)$ is invariant under $T$, we consider the operator $T' = T|_{\range q(T)}$ on the vector space $\range q(T)$. Thus there is a monic polynomial $s\in \mathscr{P}(\mathbb{F})$ such that
+\begin{equation*}
+\deg s \leq n-m \text{ and } s(T') = 0
+\end{equation*}
+Then $\forall v\in V$ we have
+\begin{equation*}
+	(sq)(T)v = s(T)q(T)v = 0
+\end{equation*}
+Thus $sq$ is a monic polynomial such that $\deg sq\leq \dim V$ and $sq(T)=0$. This completes the existence part.
+
+For uniqueness, let $p\in \mathscr{P}(\mathbb{F})$ be a monic polynomial of the smallest degree such that $p(T)=0$. Let  $r$ be another monic polynomial of the same degree and $r(T)=0$. Then $(p-r)T = 0$. Because $p$ has the smallest degree, $p-r=0$.
+\end{proof}
+
+\begin{remark}
+To compute the minimal polynomial, we can just solve the linear equation
+\begin{equation*}
+	c_0I+c_1T+\ldots +c_{m-1}T^{m-1}+T^m = 0
+\end{equation*}
+trying for smallest $m$ possible. However, most of the time we can just check $m=n$ and see if the equation has a unique solution.
+
+More quickly, if we have a vector $v\neq 0$ such that $v,Tv, \ldots ,T^{n-1}v$ are linear independent, then writing
+\begin{equation*}
+ c_0v+c_1Tv+ \cdots +c_{n-1}T^{n-1}v + T^nv=0
+\end{equation*}
+have a unique solution for $c_0, \ldots ,c_{n-1}$, then we are done.
+
+Next we shall see the proof in a more geometric aspect.
+\begin{enumerate}
+	\item First of all, we have $U = \vspan \left\{ T^kv: k\in \mathbb{N} \right\}$ is an invariant space under $T$. (We see this like there is a ``cycle'' in the list $v, Tv, \ldots $.
+	\item We find a polynomial that compress $U$ to $0$. Therefore, we compress $V$ to the quotient space $V / U$ which is $\range q(T)$.
+	\item $V / U$ is has less dimension, so we use induction assumptions to further compress it to $0$.
+\end{enumerate}
+\begin{figure}[H]
+    \centering
+    \incfig{geometric-interpretation-of-minimal-polynomials}
+    \caption{Geometric Interpretation of Minimal Polynomials}
+    \label{fig:geometric-interpretation-of-minimal-polynomials}
+\end{figure}
+
+In this part we see that every operator on a finite dimensional vector space has a minimal polynomial. Conversely, if a polynomial $p(T)$ is given, we can consider its null space: $\snull p(T)$. Restricting $T$ to this space, we have $p(T|_{\snull p(T)}) = 0$. This is useful to analysis the properties of null spaces of polynomials, as we will see later.
+\end{remark}
+
+Using the minimal polynomial, we get a stronger version of theorem \ref{thm:Existence Of Eigenvalues}.
+\begin{theorem}{Eigenvalues and the Minimal Polynomial}{Eigenvalues And The Minimal Polynomial}
+Suppose $V$ is finite dimensional and $T\in \mathscr{L}(V)$.
+\begin{enumerate}
+	\item The zeros of the minimal polynomial of $T$ are exactly the eigenvalues of $T$.
+	\item If $V$ is a complex vector space, then the minimal polynomial has the form
+		\begin{equation*}
+			(z-\lambda_1) \cdots (z-\lambda_m)
+		\end{equation*}
+	where $\lambda_1, \ldots ,\lambda_m$ is a list of all eigenvalues of $T$, possibly with repetition.
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+Let $p$ be the minimal polynomial of $T$. If $\lambda$ is a root of $p$, then
+\begin{equation*}
+p(z) = (z-\lambda)q(z)
+\end{equation*}
+where $q\in \mathscr{P}(\mathbb{F})$. Because $p(T) = 0$, we have
+\begin{equation*}
+	\forall v\in V, (T-\lambda I)q(T)v = 0
+\end{equation*}
+Because $\deg q< \deg p$, so $q$ is not the minimal polynomial, so $\exists v\in V, q(T)v\neq 0$. 
+
+To see that every eigenvalue of $T$ is a zero of $p$, let $\lambda$ is an eigenvalue of $T$. We have $\exists v\in V,v\neq 0$ such that $Tv = \lambda v$, so $T^kv = \lambda^kv$ for all $k\in \mathbb{N}$. Thus,
+\begin{equation*}
+p(T)v = p(\lambda)v=0
+\end{equation*}
+Thus $p(\lambda) = 0$.
+\end{proof}
+
+\begin{remark}
+We shall make it clear that the multiple root of the minimal polynomial is permitted, implying the size of the largest Jordan block of $\lambda$.
+
+As the minimal polynomial has degree at most $\dim V$, there can be at most $\dim V$ different eigenvalues, as stated above in corollary \ref{cor:An Upper Bound Of Number Of Eigenvalues}.
+\end{remark}
+
+To see what ``minimal'' means in another perspective, we have the following
+\begin{theorem}{}{p divides all q}
+Suppose $V$ is finite dimensional and $T\in \mathscr{L}(V)$, $q\in \mathscr{P}(\mathbb{F})$. Then $q(T) = 0$ iff $p \mid q$.
+\end{theorem}
+\begin{proof}
+Let $q=ps+r$ where $\deg r<\deg p$. Then $0 = q(T) = p(T)s(T)+r(T) = r(T)$ so $r=0$.
+\end{proof}
+
+\begin{corollary}{Minimal Polynomial of a Restricted Operator}{Minimal Polynomial Of A Restricted Operator}
+Suppose $V$ is finite dimensional and $T\in \mathscr{L}(V)$, $U$ is a subspace of $V$ that is invariant under $T$. Let $p$ be the minimal polynomial of $T$ and $p'$ be the minimal polynomial of $T|_U$. Then $p'\mid p$.
+\end{corollary}
+\begin{theorem}{Equivalent Conditions for Invertibles}{Equivalent Conditions For Invertibles}
+Suppose $V$ is finite dimensional and $T\in \mathscr{L}(V)$, $p$ is the minimal polynomial of $T$. Then the following are equivalent:
+\begin{enumerate}
+	\item $T$ is not invertible.
+	\item  $0$ is an eigenvalue of $T$.
+	\item $0$ is a zero of  $p$.
+	\item the constant term of $p$ is $0$.
+\end{enumerate}
+\end{theorem}
+
+
+\subsection{Eigenvalues on Odd-Dimensional Real Vector Spaces}
+We shall show that every operator on an odd-dimensional real vector space has an eigenvalue.
+
+\begin{lemma}{Even-dimensional Null Space}{Even-Dimensional Null Space}
+Suppose $\mathbb{F}=\mathbb{R}$ and $V$ is finite dimensional, $T\in \mathscr{L}(V)$. Let $b,c\in \mathbb{R}$ with $b ^2<4c$. Then $\dim \snull (T^2+bT+cI)$ is even.
+\end{lemma}
+As we are only interested in the properties of null space of the polynomial, feel free to restrict our discussion only to that space. This will make sure that $T^2+bT+cI = 0$.
+\begin{proof}
+	From theorem \ref{thm:Polynomials Of Operator Are Invariant} we know that $\snull (T^2+bT+cI)$ is invariant under $T$. Let $U = \snull (T^2+bT+cI)$ and $T' = T|_U$ we have $T'^2+bT'+cI = 0$. We now restrict our discussion to $U$.
+
+	Suppose $\lambda\in \mathbb{R}$ and $v\in U$ such that $T'v = \lambda v$. Then
+	\begin{equation*}
+	0 = (T'^2+bT'+cI)v = (\lambda^2+b \lambda+c)v = \left(\left(\lambda + \frac{b}{2}\right)^2 + c - \frac{b^2}{4}\right)v
+	\end{equation*}
+as the parentheses $>0$, so $v=0$, implying that $T'$ has no eigenvector.
+
+Let $W$ be a subspace of $U$ with the largest dimension such that:
+\begin{itemize}
+\item $W$ is invariant under $T'$.
+\item $W$ has even dimension.
+\end{itemize}
+If $W=U$ we're done. If $\exists w\in U,w\notin W$, let $Y = \vspan(w,T'w)$ then 
+\begin{itemize}
+\item $Y$ is invariant under $T'$ for $T(Tw) = -b Tw-cw$.
+\item $\dim Y=2$ otherwise $w$ is an eigenvector.
+\end{itemize}
+We also have  $W\cap Y = \left\{ 0 \right\} $ because otherwise $W\cap Y$ would be one-dimensional subspace invariant under $T'$, which means $T'$ has an eigenvector.
+
+Therefore, we have
+\begin{equation*}
+\dim (W+Y) = \dim W+\dim Y - \dim (W\cap Y) = \dim W + 2.
+\end{equation*}
+This contradicts that $W$ has largest dimension.
+\end{proof}
+
+\begin{theorem}{Eigenvalues of Odd-dimensional Real Vector Spaces}{Eigenvalues of Odd-dimensional Real Vector Spaces}
+Every operator on an odd-dimensional real vector space has an eigenvalue.
+\end{theorem}
+\begin{proof}
+Let $\mathbb{F}=\mathbb{R}$ and $V$ is finite dimensional, $\dim V=n$ which is odd. Let $T\in \mathscr{L}(V)$. We shall again use induction on $n$. Note that the result holds for $n=1$.
+
+Now suppose $n\geq 3$ and the result hold for all cases of fewer odd dimensions. Let  $p$ denote the minimal polynomial of $T$. If $p$ has factor $x-\lambda$ then we are done. So we shall suppose $p(x) = q(x)(x^2+bx+c)$, where  $b ^2<4c$, thus,
+\begin{equation*}
+0=p(T) = q(T)(T^2+bT+cI)
+\end{equation*}
+This implies that $q(T)=0$ on $\range (T^2+bT+cI)$. For $\deg q<\deg p$ and $p$ is the minimal polynomial, we have $\range (T^2+bT+cI)\neq V$.
+
+As $\dim \snull (T^2+bT+cI)$ is even, then $\dim \range (T^2+bT+cI)$ is odd, so $T|_{\range (T^2+bT+cI)}$ has an eigenvalue according to our induction hypothesis. So $T$ has an eigenvalue.
+\end{proof}
+
+\subsection{Companion Matrix}
+\begin{definition}{Companion Matrix}{Companion Matrix}
+Suppose $a_0, \ldots ,a_{n-1}\in \mathbb{F}$. Let $T\in \mathscr{L}(\mathbb{F}^n)$ with respect to standard basis whose matrix is:
+\begin{equation*}
+\begin{pmatrix}
+	0& & & & &-a_0\\
+	1&0& & & &-a_1\\
+	 &1&\ddots & & &-a_2\\
+	 & & \ddots & & & \vdots \\
+	 & & & &0&-a_{n-2}\\
+	 & & & &1&-a_{n-1}
+\end{pmatrix}
+\end{equation*}
+The blanks are all $0$.
+
+Then the minimal polynomial of the matrix is
+\begin{equation*}
+a_0+a_1z+\ldots +a_{n-1}z^{n-1}+z^n
+\end{equation*}
+\end{definition}
+This shows that every polynomial is the minimal polynomial of some operator.
+
+
+\section{Upper Triangle Matrices}
+When we study operators, we shall assume that we use the same basis for domain and range. A central goal of linear algebra is to show that ``given an operator $T$, there is a reasonably good basis that we can express $T$ is a simple matrix''.
+
+\begin{definition}{Upper-triangle Matrix}{Upper-triangle Matrix}
+A square matrix in called upper-triangle if all entries below the diagonal are $0$.
+\end{definition}
+That is, it has the form
+\begin{equation*}
+\begin{pmatrix}
+	\lambda_1& &*\\
+	&\ddots & \\
+	0& &\lambda_n	 
+\end{pmatrix}
+\end{equation*}
+
+The upper triangle matrices fulfills our intuition of ``getting least dimension to do the next thing''.
+\begin{theorem}{Conditions for upper-triangle matrices}{Conditions for upper-triangle matrices}
+Suppose $T\in \mathscr{L}(V)$ and $v_1, \ldots ,v_n$ is a basis of $V$. Then the following are equivalent.
+\begin{enumerate}
+	\item The matrix of $T$ with respect of $v_1, \ldots ,v_n$ is upper triangle.
+	\item $\vspan (v_1, \ldots ,v_k)$ is invariant under  $T$ for each $k=1, \ldots ,n$.
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+This is quite straightforward.
+\end{proof}
+
+The next result gives a simple equation that the upper triangle matrix satisfies.
+\begin{theorem}{Equation satisfied by operator with upper-triangle matrix}{Equation satisfied by operator with upper-triangle matrix}
+Suppose $T\in \mathscr{L}(V)$ and $V$ has a basis which $T$ is upper-triangle with diagonal entries $\lambda_1, \ldots ,\lambda_n$, then
+\begin{equation}
+	(T-\lambda_1 I) \cdots (T-\lambda_n I) = 0
+\end{equation}
+\end{theorem}
+\begin{proof}
+Our intuition for this is that for any $v\in V$, we have $(T-\lambda_n I)v$ deletes the last dimension of $v$. Going on, we delete each dimension of $v$ until $v$ become $0$.
+
+To see this more closely, let $v_1, \ldots ,v_n$ denotes the basis. Then we have $(T-\lambda_iI)v_i \in \vspan (v_1, \ldots ,v_{i-1})$. So we have $(T-\lambda_1I)\cdots (T-\lambda_nI)v_i = 0$ for all $i=1, \ldots ,n$.
+\end{proof}
+
+It is easy to determine the eigenvalues of operators representing as upper-triangle matrices.
+\begin{theorem}{The Eigenvalues from Upper-triangle Matrices}{The Eigenvalues from Upper-triangle Matrices}
+Suppose $T\in \mathscr{L}(V)$ is represented as upper-triangle matrix in $V$. Then the eigenvalues are exactly the entries on the diagonal of the matrix.
+\end{theorem}
+\begin{proof}
+Let $v_1, \ldots ,v_n$ be the basis, with $\mathscr{M}(T)$ is
+\begin{equation*}
+\mathscr{M}(T) = 
+\begin{pmatrix}
+	\lambda_1& &*\\
+	 &\ddots & \\
+	0& &\lambda_n
+\end{pmatrix}
+\end{equation*}
+\begin{itemize}
+\item We have $Tv_1=\lambda_1v_1$ so $\lambda_1$ is an eigenvalue of $T$.
+\item For $k\in \left\{ 2, \ldots ,n \right\}$, we see that $(T-\lambda_kI)v_k\in \vspan (v_1, \ldots ,v_{k-1}$. Thus $T-\lambda_kI$ is not injective. (The range has less dimension)
+
+Therefore $\exists v\in V$ such that $(T-\lambda_kI)v=0$ so $\lambda_k$ is an eigenvalue of $T$.
+\end{itemize}
+
+To prove that $T$ has no other eigenvalues, let $q\in \mathscr{P}(\mathbb{F})$ be $q(z) = (z-\lambda_1)\cdots (z-\lambda_n)$, then $q(T)=0$, thus $q$ is the multiple of the minimal polynomial of $T$, thus the minimal polynomial has no other roots other then $\lambda_1, \ldots ,\lambda_n$.
+\end{proof}
+
+This result illustrate the connection of upper-triangle matrix, eigenvalues, and minimal polynomials. We have
+\begin{theorem}{Equivalent Conditions for having an Upper-triangle Matrix}{Equivalent Conditions for having an Upper-triangle Matrix}
+Suppose $V$ is finite dimensional and $T\in \mathscr{L}(V)$. Then $T$ has an upper-triangle matrix with respect to some basis of $V$ if and only if the minimal polynomial of $T$ equals $(z-\lambda_1)\cdots (z-\lambda_m)$ for some $\lambda_1, \ldots ,\lambda_m\in \mathbb{F}$.
+\end{theorem}
+\begin{proof}
+\begin{itemize}
+\item First, if $T$ has an upper-triangle matrix with diagonal entries $\alpha_1, \ldots ,\alpha_n$, then $q(z) = (z-\alpha_1)\cdots (z-\alpha_n)$ is the multiple of the minimal polynomial of $T$.
+\item To deal with the other side we shall use induction on $m$.
+
+If $m=1$, then $T=\lambda_1I$ is an upper-triangle matrix. If for any smaller then $m$ is correct, let $U = \range (T-\lambda_mI)$ is invariant under $T$, Then $T|_U$ is an operator on $U$.
+
+If $u\in U$, then $u=(T-\lambda_mI)v$ for some $v\in V$ and
+\begin{equation*}
+	(T-\lambda_1I)\cdots (T-\lambda_{m-1}I)u = (T-\lambda_1I)\cdots (T-\lambda_mI)v = 0
+\end{equation*}
+Hence $(z-\lambda_1)\cdots (z-\lambda_{m-1})$ is a multiple of minimal polynomial of $T|_U$ on $U$. Therefore, $T|_U$ has an upper triangle matrix for some basis of $U$, let it be $u_1, \ldots ,u_M$. We have
+\begin{equation*}
+Tu_k = (T|_U)u_k \in \vspan (u_1, \ldots ,u_k), \forall k\in \left\{ 1, \ldots ,M \right\}
+\end{equation*}
+
+Extend our basis to $V$: $u_1, \ldots ,u_M, v_1, \ldots ,v_N$. For each $k\in \left\{ 1, \ldots ,N \right\}$ we have
+\begin{equation*}
+Tv_k = (T-\lambda_mI)v_k + \lambda_mv_k
+\end{equation*}
+Thus we have
+\begin{equation*}
+Tv_k \in \vspan (u_1, \ldots ,u_m,v_1, \ldots ,v_k)
+\end{equation*}
+Then $T$ is an upper-triangle matrix with respect to $u_1, \ldots ,u_M,v_1, \ldots ,v_N$.
+\end{itemize}
+\end{proof}
+
+\begin{corollary}{Triangle Matrix of $\mathbb{C}$}{Triangle Matrix of mathbbC}
+Suppose $V$ is a finite dimensional vector space. And $\mathbb{F}=\mathbb{C}$. For every $T\in \mathscr{L}(V)$, there is a basis such that $T$ is an  upper-triangle matrix.
+\end{corollary}
+\begin{remark}
+Note that the upper-triangle matrix here has nothing to do with the one we get from row echelon forms.
+\end{remark}
+
+\begin{proposition}{Operations of Triangle Matrices}{Operations of Triangle Matrices}
+Suppose $A,B$ are upper-triangle matrices of the same size, with $\alpha_1, \ldots ,\alpha_n$ on the diagonal of $A$ and $\beta_1, \ldots ,\beta_n$ on the doagonal of $B$.
+\begin{enumerate}
+	\item $A+B$ is an upper-triangle matrix with $\alpha_1+\beta_1, \ldots ,\alpha_n+\beta_n$ on the diagonal.
+	\item $AB$ is also an upper-triangle matrix with $\alpha_1 \beta_1, \ldots ,\alpha_n \beta_n$ on the diagonal.
+\end{enumerate}
+
+If $T\in \mathscr{L}(V)$ is invertible and  $v_1, \ldots ,v_n$ is a basis of $V$ that makes $T$ an upper-triangle matrix, with $\lambda_1, \ldots ,\lambda_n$ on the diagonal. Then the matrix of  $T^{-1}$ is also upper-triangle with respect to the basis, with
+\begin{equation*}
+\frac{1}{\lambda_1}, \ldots ,\frac{1}{\lambda_n}
+\end{equation*}
+on the diagonal.
+\end{proposition}
+\begin{proof}
+The first two are rather simple matters, for the third one, we have  $T T^{-1}=I$. As $T$ is invertible, none of $\lambda_1, \ldots ,\lambda_n$ is $0$. Let $T^{-1}=M$. We have
+\begin{equation*}
+M_{1,j}T_{.,1} + \ldots + M_{n,j}T_{.,n} = e_j
+\end{equation*}
+having the form as
+\begin{equation*}
+M_{1,j}
+\begin{pmatrix}
+T_{1,1}\\0\\ \vdots \\0\\0
+\end{pmatrix}
++ M_{2,j}
+\begin{pmatrix}
+T_{1,2}\\T_{2,2}\\ \vdots \\0\\0
+\end{pmatrix}
++ \ldots +
+M_{n-1,j}
+\begin{pmatrix}
+T_{1,n-1}\\T_{2,n-1}\\ \vdots \\T_{n-1,n-1}\\0
+\end{pmatrix}
++ M_{n,j}
+\begin{pmatrix}
+T_{1,n}\\T_{2,n}\\ \vdots \\T_{n-1,n}\\T_{n,n}
+\end{pmatrix}
+=e_j
+\end{equation*}
+
+Solving the equation, we have $M_{j+1,j} = \ldots =M_{n,j} = 0$, so $M$ is upper-triangle, The entries on the diagonal are easy to check.
+\end{proof}
+
+\subsection{Diagonalizable Operators}
+\subsection{Diagonal Matrices}
+\begin{definition}{Diagonal Matrix}{Diagonal Matrix}
+A \emph{diagonal matrix} is a square matrix that is $0$ everywhere except possibly on the diagonal. (Well, the diagonal can have $0$ really)
+\end{definition}
+
+\begin{definition}{Diagonalizable}{Diagonalizable}
+An operator on finite dimensional $V$ is called \emph{diagonalizable} if the operator has a diagonal matrix with respect to some basis of $V$.
+\end{definition}
+\begin{remark}
+A diagonal operator means that we can find $\dim V$ directions that the operator is just scaling on these dimensions. And yes, the scaling parameter are just the eigenvalues.
+\end{remark}
+
+\begin{definition}{Eigenspace, $E(\lambda,T)$}{Eigenspace ElambdaT}
+Suppose $T\in \mathscr{L}(V)$ and $\lambda\in \mathbb{F}$ is an eigenvalue of $T$. The eigenspace of $T$ corresponding to $\lambda$ is the subspace $E(\lambda,T) \subseteq V$ defined by
+\begin{equation*}
+E(\lambda,T) = \snull (T-\lambda I) = \left\{ v\in V: Tv = \lambda v \right\}
+\end{equation*}
+Hence $E(\lambda,T)$ is the set of all eigenvectors of $T$ corresponding to $\lambda$.
+\end{definition}
+
+It is easy to notice that the operator $T$ restricted to $E(\lambda,T)$ is just the operator $\cdot \lambda$.
+
+\begin{theorem}{Direct Sum of Eigenspaces}{Direct Sum of Eigenspaces}
+Suppose $T\in \mathscr{L}(V)$ and $\lambda_1, \ldots ,\lambda_m$ are eigenvalues of $T$, then
+
+\begin{equation*}
+E(\lambda_1,T)+\ldots +E(\lambda_m,T)
+\end{equation*}
+is a direct sum. If $V$ is finite dimensional, we have
+\begin{equation*}
+\dim E(\lambda_1,T)+\ldots +\dim E(\lambda_m,T) \leq \dim V
+\end{equation*}
+\end{theorem}
+\begin{proof}
+Using the linear independence of eigenvectors corresponding to distinct eigenvalues would suffice.
+\end{proof}
+
+
+\subsection{Conditions for Diagonalizability}
+\begin{theorem}{Equivalent Conditions of Diagonalizability}{Equivalent Conditions of Diagonalizability}
+Suppose $V$ is finite dimensional and $T\in \mathscr{L}(V)$. Let $\lambda_1, \ldots ,\lambda_m$ denotes the distinct eigenvalues of $T$. Then the following are equivalent:
+\begin{enumerate}
+	\item $T$ is diagonalizable.
+	\item $V$ has a basis consisting of eigenvectors of $T$.
+	\item $V = E(\lambda_1, T) \oplus \cdots \oplus E(\lambda_m,T)$.
+	\item $\dim V= \dim E(\lambda_1, T) + \cdots +\dim E(\lambda_m,T)$.
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+\begin{itemize}
+\item An operator $T\in \mathscr{L}(V)$ has a diagonal matrix
+	\begin{equation*}
+	\begin{pmatrix}
+		\lambda_1& &0\\
+		&\ddots & \\
+		0& &\lambda_n
+	\end{pmatrix}
+	\end{equation*}
+with respect to a basis $v_1, \ldots ,v_n$ of $V$ iff $T_k v_k = \lambda_k v_k$. So 1 and 2 are equivalent.
+\item Suppose 2 holds, so  $V$ has a basis of eigenvectors. So
+	\begin{equation*}
+	V = E(\lambda_1, T) +\cdots + E(\lambda_m,T)
+	\end{equation*}
+	Using theorem \ref{thm:Direct Sum of Eigenspaces} would imply 3.
+\item 4 follows 3 is obvious.
+\item Suppose 4 holds, Choose a basis of each $E(\lambda_i,T)$ and put them together, forming a basis of $V$. That will imply 2.
+\end{itemize}
+\end{proof}
+
+\begin{remark}
+We already know that every operator on a finite dimensional complex vector space has an eigenvalue, but there exists operators on it that is not diagonalizable, such as
+\begin{equation*}
+\begin{pmatrix}
+	0&1&0\\0&0&1\\0&0&0
+\end{pmatrix}
+\end{equation*}
+\end{remark}
+
+\begin{corollary}{Enough Eigenvalues implies Diagonalizability}{Enough Eigenvalues implies Diagonalizability}
+Suppose $V$ is finite dimensional and $T\in \mathscr{L}(V)$ has  $\dim V$ eigenvalues, then $T$ is diagonalizable.
+\end{corollary}
+
+We can use diagonalizability to easily calculate powers. For instance, if $T\in \mathscr{L}(V)$ is diagonalizable, changing to the basis in which the matrix of $T$ is diagonal is $S$, we have
+\begin{equation}
+M = SDS^{-1}
+\end{equation}
+thus
+\begin{equation*}
+M^k = SD^kS^{-1}
+\end{equation*}
+where $D^k$ is just taking powers from the diagonal.
+\begin{equation*}
+D = 
+\begin{pmatrix}
+	\lambda_1& &0\\
+		 &\ddots &\\
+	0&&\lambda_n
+\end{pmatrix}
+, \quad D^k=
+\begin{pmatrix}
+	\lambda_1^k&&0\\
+		   &\ddots &\\
+	0&&\lambda_n^k
+\end{pmatrix}
+\end{equation*}
+
+The next result is also showing the power of minimal polynomial, and implying what ``minimal'' means also.
+
+\begin{theorem}{Diagonalizability and Minimal Polynomial}{Diagonalizability and Minimal Polynomial}
+Suppose $V$ is finite dimensional and $T\in \mathscr{L}(V)$. Then $T$ is diagonalizable if and only if the minimal polynomial of $T$ equals $(z-\lambda_1)\cdots (z-\lambda_m)$ for distinct $\lambda_1, \ldots ,\lambda_m$.
+\end{theorem}
+\begin{proof}
+First suppose $T$ is diagonalizable. Thus there is a basis $v_1, \ldots ,v_n$ of $V$ consisting of eigenvectors of $T$. Let $\lambda_1, \ldots ,\lambda_m$ be distinct eigenvalues corresponding to $v_i$, that is, $\forall j\exists \lambda_k, (T-\lambda_kI)v_j=0$. So
+\begin{equation*}
+\forall j\in \left\{ 1, \ldots ,n \right\}, (T-\lambda_1I)\cdots (T-\lambda_mI)v_j=0
+\end{equation*}
+so $p(z) = (z-\lambda_1)\cdots (z-\lambda_m)$ is a multiple of the minimal polynomial of $T$.
+
+For the other direction, we do it by induction on $m$. For $m=1$ we have $T=\lambda_1I$ which is diagonalizable.
+
+Suppose $m>1$ and the result hold for smaller $m$, we have $\range (T-\lambda_mI)$ is invariant under $T$. Restrict our discussion to $\range (T-\lambda_mI)$.
+
+If $u\in \range (T-\lambda_mI)$, then $u = (T-\lambda_mI)v$ for some $v\in V$, so
+\begin{equation*}
+	(T-\lambda_1I)\cdots (T-\lambda_{m-1}I)u = (T-\lambda_1I)\cdots (T-\lambda_mI)v=0
+\end{equation*}
+Hence $(z-\lambda_1)\cdots (z-\lambda_{m-1})$ is a multiple of minimal polynomial of $T$ restricted to $\range (T-\lambda_mI)$. So there is a basis of $\range (T-\lambda_mI)$ consisting of eigenvectors of $T$.
+
+Suppose that $u\in \range (T-\lambda_mI)\cap \snull (T-\lambda_mI)$. Then $Tu=\lambda_m u$. Now we have
+\begin{equation*}
+\begin{aligned}
+	0&=(T-\lambda_1I)\cdots (T-\lambda_mI)u\\
+	 &=(\lambda_m-\lambda_1)\cdots (\lambda_m-\lambda_{m-1})u.
+\end{aligned}
+\end{equation*}
+Because $\lambda_1, \ldots ,\lambda_m$ are distinct, this implies $u=0$, therefore $\range (T-\lambda_mI) \cap \snull (T-\lambda_mI) = \left\{ 0 \right\}$, making
+ \begin{equation*}
+V = \range (T-\lambda_mI) \oplus \snull (T-\lambda_mI)
+\end{equation*}
+Joining the basis we get earlier with a basis of $\snull (T-\lambda_mI)$ we get a basis of $V$ consisting of eigenvectors of $T$, completing the proof.
+\end{proof}
+
+The next result is quite straightforward.
+\begin{proposition}{Restriction of Diagonalizable Operators to Invariant Subspaces}{Restriction of Diagonalizable Operators to Invariant Subspaces}
+Suppose $T\in \mathscr{L}(V)$ is diagonalizable and $U$ is a subspace of $V$ that is invariant under $T$. Then $T|_U$ is a diagonalizable operator on $U$.
+\end{proposition}
+\begin{proof}
+Because $T$ is diagonalizable over $V$, then the minimal polynomial has the form $(z-\lambda_1)\cdots (z-\lambda_m)$ with distinct $\lambda_1, \ldots ,\lambda_m$. Also the minimal polynomial is a multiple of the minimal polynomial of $T|_U$ so we get our result.
+\end{proof}
+
+\subsection{Gershgorin Disk Theorem}
+\begin{definition}{Gershgorin Disks}{Gershgorin Disks}
+Suppose $T\in \mathscr{L}(V)$ and  $v_1, \ldots ,v_n$ is a basis of $V$. Let $A$ denote the matrix of $T$ with respect to the basis. A \emph{Gershgorin disk} of $T$ with respect to the basis is a set:
+\begin{equation}
+\left\{ z\in \mathbb{F}: \left|z-A_{j,j}\right|\leq \sum_{1\leq k\leq n,k\neq j} \left|A_{j,k}\right| \right\},
+\end{equation}
+where $j\in \left\{ 1, \ldots ,n \right\}$. (Well $T$ has $n$ Gershgorin disks)
+\end{definition}
+
+The Gershgorin disks are a small range near the diagonal entry, indicating the tiny shift from diagonal. As we can see, a diagonal matrix has zero radius Geometric disks.
+
+\begin{theorem}{Gershgorin Disk Theorem}{Gershgorin Disk Theorem}
+Suppose $T\in \mathscr{L}(V)$ and $v_1, \ldots ,v_n$ is a basis of $V$. Then each eigenvalue of $T$ is contained in some Gershgorin disk of $T$ with respect to the basis $v_1, \ldots ,v_n$.
+\end{theorem}
+\begin{proof}
+Suppose $\lambda \in \mathbb{F}$ is an eigenvalue of $T$. Let $w\in V$ ba a corresponding eigenvector. There exists $c_1, \ldots ,c_n\in \mathbb{F}$ such that
+\begin{equation*}
+w=c_1v_1+\ldots +c_nv_n
+\end{equation*}
+
+Let $A$ denote the matrix of $T$ for $v_i$, applying $T$ to both sides we get
+\begin{equation*}
+	\lambda w = \sum_{k=1}^{n} c_k Tv_k = \sum_{k=1}^{n} c_k \sum_{j=1}^{n} A_{j,k}v_j =\sum_{j=1}^{n} \left(\sum_{k=1}^{n} A_{j,k}c_k\right)v_j.
+\end{equation*}
+
+Let $j\in \left\{ 1, \ldots ,n \right\}$ be such that
+\begin{equation*}
+\left|c_j\right| = \max \left\{ \left|c_1\right|, \ldots ,\left|c_n\right| \right\}
+\end{equation*}
+Therefore we have
+\begin{equation*}
+\lambda c_j = \sum_{k=1}^{n} A_{j,k}c_k
+\end{equation*}
+To subtract $A_{j,j}$ we have
+\begin{equation*}
+\left|\lambda-A_{j,j}\right| = \left|\sum_{k=1,k\neq j}^{n} A_{j,k}\frac{c_k}{c_j}\right| \leq \sum_{k=1,k\neq j}^{n} \left|A_{j,k}\right|.
+\end{equation*}
+\end{proof}
+In the proof $c_j$ is the major contribution to $\lambda w$. It is quite intuitive that the major contribution would not differ much from the actual eigenvalue.
+
+
+\section{Commuting Operators}
+
+Commuting operators, like $AB=BA$, is very rare in common. They often indicates some similarity of operators.
+
+\begin{theorem}{Eigenspace is Invariant Under Commuting Operators}{Eigenspace is Invariant Under Commuting Operators}
+Suppose $S,T\in \mathscr{L}(V)$ commute, then $E(\lambda,S)$ is invariant under $T$.
+\end{theorem}
+\begin{proof}
+Suppose $v\in E(\lambda,S)$, then
+\begin{equation*}
+S(Tv) = (ST)v = (TS)v = T(Sv) = \lambda Tv
+\end{equation*}
+So $Tv\in E(\lambda,S)$.
+\end{proof}
+\begin{remark}
+In our common sense, commutativeness comes from ``stretching at the same direction''. A simple image is diagonal operators commute. Changing directions would cause some non-commuting behavior, like rotating in different axis.
+\end{remark}
+
+\begin{theorem}{Commutativity and Simultaneous Diagonalizability}{Commutativity and Simultaneous Diagonalizability}
+Two diagonalizable operators on the same vector space have diagonal matrices with respect to the same basis if and only if the two operators commute.
+\end{theorem}
+\begin{proof}
+First suppose that $S,T$ have diagonal matrices for the same basis $V$, then for this basis we have $S$ and $T$ commute.
+
+The other side we now suppose $S,T\in \mathscr{L}(V)$ are diagonalizable operators that commute. Let $\lambda_1, \ldots ,\lambda_m$ denote distinct eigenvalues of $S$. Then we have
+\begin{equation*}
+V = E(\lambda_1, S) \oplus \cdots \oplus E(\lambda_m,S)
+\end{equation*}
+Then for each $k=1, \ldots ,m$ the subspace $E(\lambda_k,S)$ is invariant under $T$. Therefore by proposition \ref{prop:Restriction of Diagonalizable Operators to Invariant Subspaces} we have $T|_{E(\lambda_k,S)}$ is diagonalizable. So there is a basis of $E(\lambda_k,S)$ consisting the eigenvalues of $T$. Forming together we get a basis consisting of eigenvectors for both $S$ and $T$.
+\end{proof}
+
+If we cancel out the diagonalizable assumption, we have a result for the complex space:
+\begin{proposition}{Common Eigenvector for Commuting Operators}{Common Eigenvector for Commuting Operators}
+Every pair of commuting operators on a finite dimensional nonzero complex vector space has a common eigenvector.
+\end{proposition}
+\begin{proof}
+Let $\lambda$ be an eigenvalue of $S$, (which indeed exists for complex vector spaces) Thus $E(\lambda,S)\neq \left\{ 0 \right\}$ and is invariant under $T$. Thus $T|_{E(\lambda,S)}$ has an eigenvector, completing the proof.
+\end{proof}
+
+Not surprisingly, we reduced to upper triangle matrices for generalization of non-diagonal sizable matrices.
+
+\begin{theorem}{Commuting Operators are Simultaneously upper triangle}{Commuting Operators are Simultaneously upper triangle}
+Suppose $V$ is finite dimensional complex vector space and $S,T$ are commuting operators on  $V$. Then $\exists $ a basis of $V$ for which $S$ and $T$ are both upper triangle.
+\end{theorem}
+\begin{proof}
+Let $n=\dim V$, We shall use induction on $n$.  For $n=1$ the result holds. Now suppose $n>1$ and the result holds for complex vector spaces that has dimension $n-1$.
+
+Let $v_1$ be any common eigenvector of $S$ and $T$. Then $Sv_1\in \vspan (v_1)$ and $Tv_1\in \vspan (v_1)$. Let $W$ be a subspace of  $V$ such that
+\begin{equation*}
+V = \vspan (v_1) \oplus W.
+\end{equation*}
+We collapse $V$ to $W$ by $P:V \rightarrow W, P(av_1+w) = w$. For each $\alpha\in \mathbb{C}$ and $w\in W$, define $\hat{S},\hat{T}\in \mathscr{L}(W)$ by
+\begin{equation*}
+\forall w\in W,\quad \hat{S}w = P(Sw) \text{ and } \hat{T}w = P(Tw)
+\end{equation*}
+We shall see $\hat{S},\hat{T}$ commute:
+\begin{equation*}
+	(\hat{S}\hat{T})w = \hat{S}(P(Tw)) = \hat{S}(Tw-av_1) = P(S(Tw-av_1)) = P((ST)w). \quad \text{ for } P(S(v_1)) =0
+\end{equation*}
+Therefore, we state that there exists a basis $v_2, \ldots ,v_n\in W$ such that $\hat{S}$ and $\hat{T}$ has upper-triangle matrices. The list $v_1, \ldots ,v_n$ is a basis of $V$.
+
+For $k\in \left\{ 2, \ldots ,n \right\}$ there exists $a_k,b_k\in \mathbb{C}$ such that
+\begin{equation*}
+S v_k = a_k v_1+\hat{S} v_k \quad \text{ and }\quad T v_k = b_kv_1+\hat{T} v_k
+\end{equation*}
+So $\hat{S} v_k\in \vspan (v_1, \ldots ,v_k)$ and $\hat{T} v_k \in \vspan (v_1, \ldots ,v_k)$ as usual. So we get our result.
+\end{proof}
+
+\begin{remark}
+We've seen many proof using the technique of collapsing a dimension and then using induction.
+
+In general, it is not possible to determine the eigenvalues of sum and product of two operators. However, there are something happening with comuuting operators.
+\end{remark}
+\begin{theorem}{Eigenvalues of sum and product of Commuting Operators}{Eigenvalues of sum and product of Commuting Operators}
+Suppose $V$ is finite dimensional complex vector space and $S,T$ are commuting operators on $V$. Then
+\begin{itemize}
+\item every eigenvalue of $S+T$ is an eigenvalue of  $S$ $+$ an eigenvalue of $T$.
+\item every eigenvalue of $ST$ is an eigenvalue of  $S$ $\times $ an eigenvalue of $T$.
+\end{itemize}
+\end{theorem}
+\begin{proof}
+Using the basis that makes moth $S$ and $T$ upper-triangular, we have
+\begin{equation*}
+\mathscr{M}(S+T) = \mathscr{M}(S)+\mathscr{M}(T) \text{ and }\mathscr{M}(S T) = \mathscr{M}(S) \mathscr{M}(T)
+\end{equation*}
+\end{proof}
+
+\end{document}

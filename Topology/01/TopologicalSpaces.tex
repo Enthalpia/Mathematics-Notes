@@ -1,0 +1,299 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+
+\chapter{Topological Spaces}
+
+The concept of topological space grew out of the study of the real line and Euclidean space and the study of continuous functions on these spaces.
+
+\section{Topological Spaces}
+
+\begin{definition}{Topology}{Topology}
+	A \emph{topology} on a set $X$ is a collection $\mathcal{T}$ of subsets of $X$ (that is, $T \subseteq P(X)$) such that the following conditions hold:
+\begin{itemize}
+\item $\emptyset, X \in \mathcal{T}$.
+\item The union of any collection of sets in $\mathcal{T}$ is in $\mathcal{T}$.
+\item The intersection of any finite collection of sets in $\mathcal{T}$ is in $\mathcal{T}$.
+\end{itemize}
+
+A topological space is a pair $(X, \mathcal{T})$ where $X$ is a set and $\mathcal{T}$ is a topology on $X$.
+\end{definition}
+
+\begin{example}{Topologies}{Topologies}
+\begin{itemize}
+\item The \emph{discrete topology} on a set $X$ is the topology $\mathcal{T} = P(X)$, where $P(X)$ is the power set of $X$. In this topology, every subset of $X$ is open.
+\item The \emph{indiscrete topology}, or trivial topology, on a set $X$ is the topology $\mathcal{T} = \left\{ \emptyset , X \right\}$. In this topology, only the empty set and the entire set are open.
+\item Topologies on $\mathbb{R}$.
+	\begin{enumerate}
+		\item $\mathcal{T}_1$ consisting of $\mathbb{R}$, $\emptyset $, and all open intervals $(a,b)$.
+		\item $\mathcal{T}_2$ consisting of $\mathbb{R}$, $\emptyset $, and all $\left[-n,n\right]$ for $n\in \mathbb{Z}_+$.
+	\end{enumerate}
+\item Topologies on $\mathbb{N}$.
+	\begin{enumerate}
+		\item The initial segment topology: $\mathcal{T}_1$ consisting of $\mathbb{N}$, $\emptyset $ and the set $\left\{ 1, \ldots ,n \right\}$ for $n\in \mathbb{N}$.
+		\item The final segment topology: $\mathcal{T}_2$ consisting of $\mathbb{N}$, $\emptyset $ and the set $\left\{ n, n+1 \ldots  \right\}$ for $n\in \mathbb{N}$.
+	\end{enumerate}
+\end{itemize}
+\end{example}
+
+\begin{definition}{Finer Topologies}{Finer Topologies}
+	If $\mathcal{T}_1$ and $\mathcal{T}_2$ are topologies on a set $X$ and $\mathcal{T}_1 \subseteq \mathcal{T}_2$, then $\mathcal{T}_2$ is said to be \emph{finer} than $\mathcal{T}_1$. Similarly, $\mathcal{T}_1$ is said to be \emph{coarser} than $\mathcal{T}_2$. If $\mathcal{T}_1$ is neither finer nor coarser than $\mathcal{T}_2$, then $\mathcal{T}_1$ and $\mathcal{T}_2$ are said to be \emph{incomparable}.
+\end{definition}
+
+\section{Open Sets, Closed Sets and Clopen Sets}
+
+The axioms of a topology is the extension of the concept of open sets in Euclidean space. As we can see, every open sets in Euclidean space satisfies the axioms of a topology. Therefore, we can define open sets in a topological space as follows.
+
+\begin{definition}{Open Sets}{Open Sets}
+If $X$ is a set with a topology $\mathcal{T}$, a subset $U \subseteq X$ is \emph{open} if $U \in \mathcal{T}$.
+\end{definition}
+
+We define closed sets as the complements of open sets, which is a natural extension of the concept of closed sets in Euclidean space.
+\begin{definition}{Closed Sets}{Closed Sets}
+	Let $\left(X,\mathcal{T}\right)$ be a topological space. A subset $S \subseteq X$ is a \emph{closed set} if $X - S$ is open.
+\end{definition}
+
+\begin{theorem}{Properties of Closed Sets}{Properties Of Closed Sets}
+	If $\left(X,\mathcal{T}\right)$ is a topological space, then
+\begin{enumerate}
+	\item $\emptyset$ and $X$ are closed.
+	\item The intersection of any collection of closed sets is closed.
+	\item The union of any finite collection of closed sets is closed.
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+This is a rather straightforward consequence of the definition of closed sets. Using
+\begin{equation*}
+	X - \bigcap_{\alpha \in I} S_{\alpha} = \bigcup_{\alpha \in I} (X - S_{\alpha}) \quad \text{and} \quad X - \bigcup_{i=1}^n S_i = \bigcap_{i=1}^n (X - S_i),
+\end{equation*}
+would do.
+\end{proof}
+\begin{remark}
+	Note that openness and closedness are not mutually exclusive. A set can be both open and closed, such as $\emptyset $ and $X$ in any topological space. Also, there are sets that are neither open nor closed, just like $(0,1]$ in the standard topology on $\mathbb{R}$.
+\end{remark}
+
+\begin{definition}{Clopen Sets}{Clopen Sets}
+A subset $S$ in a topological space $(X, \mathcal{T})$ is a \emph{clopen set} if it is both open and closed.
+\end{definition}
+\begin{example}{Clopen Sets}{Clopen Sets}
+\begin{itemize}
+\item In every topological space, $\emptyset$ and $X$ are clopen.
+\item In the discrete topology, every subset of $X$ is clopen.
+\item In the indiscrete topology, only $\emptyset$ and $X$ are clopen.
+\end{itemize}
+\end{example}
+
+\subsection{Distinct Topologies on Finite and Infinite Sets}
+\begin{proposition}{Finite Set Topologies}{Finite Set Topologies}
+\begin{enumerate}
+	\item The number of topologies on a finite set increases as $\card{X}$ increases.
+	\item if finite set $X$ has $n\in \mathbb{N}$ points, then it has at least $(n-1)!$ distinct topologies.
+\end{enumerate}
+\end{proposition}
+\begin{proof}
+Use mathematical induction. If $\card X=n$, and there are $M$ different topologies. Let  $\card Y=n+1$, the additional point is $x$. For any $\mathcal{T}$, let $\mathcal{T}' = \left\{ U\cup \left\{ x \right\}: U\in \mathcal{T} \right\}$ is a topology on $Y$ ($\mathcal{T}'$ is constructed by adding $x$ to every element of $\mathcal{T}$ ), and $\mathcal{T}'$ is a topology on $Y$. Then $\left\{ \emptyset ,Y \right\}$ is a new topology, thus $Y$ has at least $M+1$ topologies.
+
+Furthermore, Let $X = \left\{ x_1, \ldots ,x_n \right\}$ and $Y = \left\{ x_1, \ldots ,x_{n+1} \right\}$. If $\mathcal{T}$ is any topology on $X$, fix $i\in \left\{ 1, \ldots ,n \right\}$, define $U_i$ by replacing any occurrences of $x_i$ in $Y$ with $x_{n+1}$, then $\mathcal{T}_i = \left\{ U_i : U\in \mathcal{T} \right\}$ is a topology on $Y$. Then for any topology on $X$, we can construct at least $n$ distinct topologies on $Y$. 
+\end{proof}
+
+
+\begin{proposition}{Infinite Set Topologies}{Infinite Set Topologies}
+	If $X$ is any infinite set with cardinality $\aleph$, there are at least $2^{\aleph}$ distinct topologies on $X$.
+\end{proposition}
+\begin{proof}
+	As $P(X)$ has cardinality $2^{\aleph}$, there are at least $2^{\aleph}$ distinct topologies on $X$: $\forall U\in P(X), \left\{ \emptyset ,U,X \right\}$ is a topology on $X$.
+\end{proof}
+
+
+\section{The Finite-Closed Topology}
+
+Sometimes, describing a topology in terms of closed sets is more convenient than describing it in terms of open sets.
+\begin{definition}{Finite-Closed Topology}{Finite-Closed Topology}
+	Let $X$ be any nonempty set. A topology $\mathcal{T}_f$ on $X$ is called the \emph{finite-closed topology} if the closed sets in $\mathcal{T}_f$ are precisely the finite sets and $X$ itself.
+\end{definition}
+
+We shall prove that the finite-closed topology is indeed a topology.
+\begin{proof}
+We shall prove that the finite complement topology satisfies the axioms of a topology.
+\begin{itemize}
+	\item $\emptyset, X \in \mathcal{T}_f$.
+	\item Let $\left\{ U_{\alpha}: \alpha\in I \right\}$ be a subset of $\mathcal{T}_f$, where $I$ is an index set. Then
+	\begin{equation*}
+		X - \bigcup_{\alpha \in I} U_{\alpha} = \bigcap_{\alpha \in I} (X - U_{\alpha})
+	\end{equation*}
+	is an intersection of finite sets, so it is finite. If all of $U_{\alpha}$ is $\emptyset $, then $X - \bigcup_{\alpha \in I} U_{\alpha} = X$. Therefore, $\bigcup_{\alpha \in I} U_{\alpha} \in \mathcal{T}_f$.
+	\item Let $\left\{ U_i \right\}_{i=1}^n$ be a subset of $\mathcal{T}_f$. Then 
+	\begin{equation*}
+		X - \bigcup_{i=1}^n U_i = \bigcap_{i=1}^n (X - U_i)
+	\end{equation*}
+	is a finite intersection of finite sets, so it is finite. If there is an $i$ such that $U_i = \emptyset$, then $\bigcup_{i=1}^n U_i = \emptyset$. Therefore, $\bigcup_{i=1}^n U_i \in \mathcal{T}_f$.
+\end{itemize}
+\end{proof}
+
+There are many other ways of constructing topologies.
+\begin{theorem}{Topology of Preimages}{Topology Of Preimages}
+Let $(Y,\mathcal{T})$ be a topological space and $X$ be a nonempty set. Let $f:X \rightarrow Y$ be a function. Then $\mathcal{T}_1 = \left\{ f^{-1}(S): S\in \mathcal{T} \right\}$ is a topology on $X$.
+\end{theorem}
+
+We shall prove a lemma first.
+\begin{lemma}{Preimage of Union and Intersection}{Preimage Of Union And Intersection}
+Let $f:X \rightarrow Y$. Then we have
+\begin{equation}
+	f^{-1}\left(\bigcup_{\alpha\in I} U_{\alpha}\right) = \bigcup_{\alpha\in I} f^{-1}(U_{\alpha})
+\end{equation}
+and
+\begin{equation}
+	f^{-1}\left(\bigcap_{\alpha\in I} U_i \right) = \bigcap_{\alpha\in I} f^{-1}(U_i) 
+\end{equation}
+for any $U_{\alpha} \subseteq Y$.
+\end{lemma}
+\begin{proof}
+\begin{itemize}
+	\item $\displaystyle \forall x\in f^{-1}\left(\bigcup_{\alpha\in I} U_{\alpha}\right)$,  we have $\displaystyle f(x) \in \bigcup_{\alpha\in I} U_{\alpha}$, then $f(x)\in U_{\alpha}$ for some $\alpha\in I$. Then $x\in f^{-1}(U_{\alpha})$, thus $\displaystyle x\in \bigcup_{\alpha\in I} f^{-1}(U_{\alpha})$. Other way is the same.
+	\item $\displaystyle \forall x\in f^{-1}\left(\bigcap_{\alpha\in I} U_{\alpha}\right)$,  we have $\displaystyle f(x) \in \bigcap_{\alpha\in I} U_{\alpha}$, then $f(x)\in U_{\alpha}$ for all $\alpha\in I$. Then $\forall \alpha\in I, x\in f^{-1}(U_{\alpha})$, thus $\displaystyle x\in \bigcap_{\alpha\in I} f^{-1}(U_{\alpha})$. Other way is the same.
+\end{itemize}
+\end{proof}
+
+\begin{remark}
+Note that the image does not preserve set operation as preimages. Like for $f: \mathbb{R}\rightarrow \mathbb{R}, x \mapsto 0$, we have $f \left(\left\{ 0 \right\}\cap \left\{ 1 \right\}\right) \neq f \left(\left\{ 0 \right\}\right)\cap f \left(\left\{ 1 \right\}\right)$.
+\end{remark}
+
+We now prove theorem \ref{thm:Topology Of Preimages}
+
+\begin{proof}
+\begin{itemize}
+\item First we have $f^{-1}(\emptyset) = \emptyset$ and $f^{-1}(Y) = X$, so $\emptyset, X \in \mathcal{T}_1$.
+\item Let $\left\{ U_{\alpha} \right\}_{\alpha \in I}$ be a subset of $\mathcal{T}_1$. Then let $U_{\alpha} = f^{-1}\left(V_{\alpha}\right)$ where $V_{\alpha} \in \mathcal{T}$. Then
+	\begin{equation*}
+	\bigcup_{\alpha\in I} U_{\alpha} = f^{-1}\left(\bigcup_{\alpha\in I} V_{\alpha}\right) \in \mathcal{T}_1
+	\end{equation*}
+\item Similarly, we have
+	\begin{equation*}
+	\bigcap_{i=1}^{n} U_i = f^{-1}\left(\bigcap_{i=1}^{n} V_i\right)\in \mathcal{T}_1
+	\end{equation*}
+\end{itemize}
+\end{proof}
+
+\subsection{$T_1$-Spaces}
+\begin{definition}{$T_1$-Spaces}{T1 Spaces}
+A topological space $(X,\mathcal{T})$ is a $T_1$-space $\forall x\in X$, the set $\left\{ x \right\}$ is closed in $\mathcal{T}$.
+\end{definition}
+
+Of course, this means that any finite subset of $X$ is closed, so the finite-closed topology is indeed a $T_1$-space.
+
+We can also rephrase the definition of $T_1$-space by separation.
+\begin{theorem}{Equivalent Definition of $T_1$-space}{Equivalent Definition of T1-space}
+A topological space is a $T_1$-space iff
+\begin{equation}
+\forall x,y\in X, x\neq y, \exists U,V\in \mathcal{T} (x\in U \land y\notin U \quad \land \quad x\notin V\land y\in V)
+\end{equation}
+\end{theorem}
+\begin{proof}
+\begin{itemize}
+\item The if part: Let $U = \left\{ x \right\}^{c}$ and $V = \left\{ y \right\}^{c}$ would do.
+\item The only if part: $\forall y\neq x$, let $V_y\in \mathcal{T}$ be such that $x\notin V_y \land y\in V_y$. Then $\bigcup_{y\neq x} V_y = \left\{ x \right\}^{c}$ is open so $\left\{ x \right\}$ is closed.
+\end{itemize}
+\end{proof}
+
+\subsection{$T_0$-Spaces and the Sierpinski Space}
+\begin{definition}{$T_0$-Space}{T0-Space}
+A topological space $(X,\mathcal{T})$ is a $T_0$-space if $\forall a,b\in X, a\neq b$, there is an open set containing $a$ but not $b$, or there exists an open set containing $b$ but not $a$. That is
+\begin{equation*}
+\exists U\in \mathcal{T}(a\in U \land b\notin U)\quad \lor\quad \exists V\in \mathcal{T}(b\in V \land a\notin V)
+\end{equation*}
+\end{definition}
+
+\begin{theorem}{}{T1 is T0}
+Every $T_1$-space is a $T_0$-space.
+\end{theorem}
+\begin{proof}
+We assume that $X$ has at least 2 points. If $(X,\mathcal{T})$ is a $T_1$-space, then $\forall a\neq b$, we have $\left\{ b \right\}$ is closed, then $X-\left\{ b \right\}\in \mathcal{T}$ contains $a$ but not $b$.
+\end{proof}
+
+The other way is not correct.
+\begin{definition}{Sierpinski Space}{Sierpinski Space}
+Let $X = \left\{ 0,1 \right\}$, $\mathcal{T}=\left\{ \emptyset , \left\{ 0 \right\}, X \right\}$ be a topology on $X$. This is called Sierpinski Space.
+\end{definition}
+
+It is easy to say that the Sierpinski space is a $T_0$-space but not $T_1$-space.
+
+Similar to arbitrary topologies we have
+\begin{proposition}{}{T0 Spaces on finite sets}
+If $\card X = n$, then the number of $T_0$-space increases as $n$ increases.
+\end{proposition}
+\begin{proof}
+Again by induction. If $\card X=n$, and there are $M$ different $T_0$-spaces. Let  $\card Y=n+1$, the additional point is $x$. For any $\mathcal{T}$ such that $(X, \mathcal{T})$ is a $T_0$-space. $\mathcal{T}' = \mathcal{T}\cup \left\{ U\cup \left\{ x \right\}: U\in \mathcal{T} \right\}$ is a topology on $Y$ ($\mathcal{T}'$ is constructed by $\mathcal{T}$ and adding $x$ to every element of $\mathcal{T}$ ), and $(Y,\mathcal{T}')$ is a $T_0$-space. 
+
+We now construct a $T_0$-space that does not have this structure. Let $Y = \left\{ y_1, \ldots ,y_{n+1} \right\}$, then Let $Y_i = \left\{ y_1, \ldots ,y_i \right\}$, then let $\mathcal{T} = \left\{ Y_0, \ldots ,Y_{n+1} \right\}$, then $(Y,\mathcal{T})$ is a $T_0$-space.
+\end{proof}
+
+\begin{remark}
+Our intuition of $T_0$ and $T_1$ spaces comes from ``how nicely can we distinguish points in the space''. 
+
+In $T_0$-spaces, we can ``tell any two points apart'', that is, there does not exist two points that are either in or not in  the same open set. As the only properties of a topological space is the open sets, we can only distinguish two points if there exists an open set containing one but not the other. 
+
+In $T_1$-spaces, we can ``tell any point apart from a closed set''. This ensures that we can tell two points from both directions. Moreover, every point is a closed set gives us convenience for the definition of limits and continuity.
+\end{remark}
+
+\subsection{Countable-Closed Topology}
+\begin{definition}{Countable-Closed Topology}{Countable-Closed Topology}
+Let $X$ be any infinite set. Then $\mathcal{T}_c = \left\{ U \subseteq X : X-U \text{ is countable }\lor U = \emptyset  \right\}$ is the countable-closed topology on $X$.
+\end{definition}
+This is very similar to the Finite-Closed Topology \ref{def:Finite-Closed Topology}.
+
+\subsection{Intersection of Two Topologies}
+\begin{proposition}{Intersection of topologies}{Intersection Of Topologies}
+Let $\mathcal{T}_{\alpha}, \alpha\in I$ be topologies on $X$. Then
+\begin{enumerate}
+\item $\displaystyle \mathcal{T} = \bigcap_{\alpha\in I} T_{\alpha}$ is a topology on $X$.
+\item If $(X,\mathcal{T}_{\alpha})$ are $T_1$-spaces, then $(X, \mathcal{T})$ is a $T_1$-space.
+\end{enumerate}
+\end{proposition}
+\begin{proof}
+\begin{enumerate}
+\item First $\emptyset ,X\in \mathcal{T}$. And we have if $U_{\beta}\in \mathcal{T}$, then $\bigcup U_{\beta}\in \mathcal{T}$. Intersection the same.
+\item If $\forall x\in X, \left\{ x \right\}$ is closed in $\mathcal{T}_{\alpha}$ for all $\alpha\in I$, then $X-\left\{ x \right\}\in \mathcal{T}_{\alpha}$. Then $X-\left\{ x \right\}\in \bigcap \mathcal{T}_{\alpha}$, meaning $\left\{ x \right\}$ is closed in $\mathcal{T}$.
+\end{enumerate}
+\end{proof}
+
+\subsection{Door Space}
+\begin{definition}{Door Space}{Door Space}
+A topological space $(X,\mathcal{T})$ is a door space iff $\forall U\in \mathcal{T}$ is open or closed.
+\end{definition}
+\begin{example}{Door Spaces}{Door Spaces}
+\begin{itemize}
+\item The indiscrete space is a door space.
+\end{itemize}
+\end{example}
+
+\subsection{Saturated Set}
+\begin{definition}{Saturated Sets}{Saturated Sets}
+If $(X,\mathcal{T})$ is a topological space and $S \subseteq X$, then $S$ is a saturated set if it is the intersection of open sets
+\end{definition}
+\begin{remark}
+Well, it can be the intersection of infinite number of open sets, so it is not necessarily open.
+\end{remark}
+
+\begin{example}{Saturated Sets}{Saturated Sets}
+\begin{itemize}
+\item Every open set is a saturated set. In a finite set, every saturated set is open.
+\item In a $T_1$-space every set is a saturated set.
+\begin{proof}
+For any set $S \subseteq X$, we have $\forall x\in X - S, \left\{ x \right\}$ is closed, so $X- \left\{ x \right\}$ is open. And
+\begin{equation*}
+S = \bigcap_{x\in X-S} \left(X - \left\{ x \right\}\right)
+\end{equation*}
+is a saturated set.
+\end{proof}
+\item The other way is also true: If every subset is saturated, then it is a $T_1$-space.
+\begin{proof}
+It is quite straightforward. $\forall A \subseteq X$, we have $X-A$ is a union of closed sets. Let $A = X - \left\{ x \right\}$ would do.
+\end{proof}
+\end{itemize}
+\end{example}
+
+There are obvious sets that are not saturated. Like the discrete topology of any nonempty set. 
+
+
+
+\end{document}

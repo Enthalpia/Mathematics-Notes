@@ -1,0 +1,341 @@
+\documentclass[../main.tex]{subfiles}
+
+
+\begin{document}
+\chapter{Euclidean Topology}
+
+The Euclidean topology is a central character of the topology story, acting as an inspiration for future thoughts as well.
+
+\section{The Euclidean Topology on $\mathbb{R}$}
+\begin{definition}{The Euclidean Topology}{The Euclidean Topology}
+A subset $S \subseteq \mathbb{R}$ is said to be open in Euclidean topology if $\forall x \in S$, $\exists a,b\in \mathbb{R}$ with $a<b$, such that $x\in (a,b) \subseteq S$.
+\end{definition}
+We shall prove that the Euclidean topology is indeed a topology on $\mathbb{R}$.
+\begin{proof}
+\begin{itemize}
+\item Firstly, $\emptyset $ and $\mathbb{R}$ are open.
+\item Now let $\left\{ A_i : i\in I \right\}$ be a collection of open sets. Let $A = \bigcup_{i\in I} A_i$. For $\forall x\in A$, we have $x\in A_i$ for some $i\in I$. Since $A_i$ is open, $\exists a_i, b_i \in \mathbb{R}$ with $a_i < b_i$ such that $x\in (a_i, b_i) \subseteq A_i$. Then $x\in (a_i, b_i) \subseteq A$. Hence $A$ is open.
+\item Let $A_1, A_2, \ldots, A_n$ be a finite collection of open sets. Let $A = \bigcap_{i=1}^n A_i$. For $\forall x\in A$, we have $x\in A_i$ for all $i=1,2,\ldots,n$. Since $A_i$ is open, $\exists a_i, b_i \in \mathbb{R}$ with $a_i < b_i$ such that $x\in (a_i, b_i) \subseteq A_i$. Let $a = \max\left\{ a_1, a_2, \ldots, a_n \right\}$ and $b = \min\left\{ b_1, b_2, \ldots, b_n \right\}$. Then $x\in (a, b) \subseteq A$. Hence $A$ is open.
+\end{itemize}
+\end{proof}
+
+\begin{remark}
+This definition is a little bit complicated to understand. We shall clarify it by seeing that the openness and closedness are indeed what we mean in our usual sense.
+\begin{enumerate}
+	\item Let $r,s\in \mathbb{R}$ with $r<s$. Then the open interval $(r,s)$ and $(r,+\infty )$ and $(-\infty ,s)$ are open and not closed in Euclidean topology.
+	\item Let $r,s\in \mathbb{R}$ with $r<s$. Then the closed interval $[r,s]$ and $[r,+\infty )$ and $(-\infty ,s]$ are closed and not open in Euclidean topology.
+	\item Each singleton set $\left\{ a \right\}$ is closed and not open in $\mathbb{R}$.
+	\item The only clopen sets in $\mathbb{R}$ are $\emptyset $ and $\mathbb{R}$. (We shall prove this later)
+\end{enumerate}
+
+The Euclidean topology also helps us to understand why do we define open sets to be closed under arbitrary union and finite intersection. An infinite intersection of open sets may be not open.
+\begin{equation*}
+\bigcap_{n\in \mathbb{N}} \left(-\frac{1}{n},\frac{1}{n}\right) = \left\{ 0 \right\}
+\end{equation*}
+
+We shall also clarify that not all open sets in $\mathbb{R}$ are open intervals. For example, $(0,1)\cup (2,3)$.
+\end{remark}
+\begin{example}{Integers and Rationals in $\mathbb{R}$}{Integers And Rationals In R}
+\begin{itemize}
+	\item The set of integers $\mathbb{Z}$ is closed and not open in $\mathbb{R}$.
+		\begin{proof}
+		Just make $\mathbb{Z} = \bigcup_{x\in \mathbb{Z}} \left\{ x \right\} $ would do.
+		\end{proof}
+	\item The set of rationals $\mathbb{Q}$ is neither open nor closed in $\mathbb{R}$.
+		\begin{proof}
+		There is no open interval in $\mathbb{Q}$ and $\mathbb{Q}^c$
+		\end{proof}
+\end{itemize}
+\end{example}
+
+\subsection{$F_{\sigma}$-Sets and $G_{\delta}$-Sets}
+\begin{definition}{$F_{\sigma}$-Sets}{Fs-Sets}
+Let $(X,\mathcal{T})$ be a topological space. A subset $S \subseteq X$ is said to be an $F_{\sigma}$-set if it is the union of a \emph{countable} number of closed sets.
+\end{definition}
+\begin{definition}{$G_{\delta}$-Sets}{Gd-Sets}
+Let $(X,\mathcal{T})$ be a topological space. A subset $S \subseteq X$ is said to be an $G_{\delta}$-set if it is the intersection of a \emph{countable} number of open sets.
+\end{definition}
+\begin{example}{}{FsigmaGdelta}
+\begin{itemize}
+	\item All intervals in $\mathbb{R}$ are $F_{\sigma}$-sets.
+		\begin{proof}
+		Let $I = (a,b)$. Then $I = \bigcup_{n\in \mathbb{N}} \left[ a + \frac{1}{n}, b - \frac{1}{n} \right] $.
+		The other intervals can be proved similarly.
+		\end{proof}
+	\item All intervals in $\mathbb{R}$ are $G_{\delta}$-sets.
+		\begin{proof}
+		Let $I = [a,b]$. Then $I = \bigcap_{n\in \mathbb{N}} \left( a - \frac{1}{n}, b + \frac{1}{n} \right) $.
+		\end{proof}
+	\item $\mathbb{Q}$ is a $F_{\sigma}$-set but not a $G_{\delta}$-set.
+		\begin{proof}
+			$\mathbb{Q} = \bigcup_{x\in \mathbb{Q}} \left\{ x \right\} $. (We shall prove that $\mathbb{Q}$ is not a $G_{\delta}$-set later)
+		\end{proof}
+\end{itemize}
+\end{example}
+
+\begin{theorem}{Complements of $F_{\sigma}$-sets and $G_{\delta}$-sets}{Complements of Fs Gd}
+	The complement of an $F_{\sigma}$-set is a $G_{\delta}$-set.
+
+	The complement of an $G_{\delta}$-set is a $F_{\sigma}$-set.
+\end{theorem}
+
+\section{The Basis of a Topology}
+Our intuitive idea of open sets makes it easier for us to picture the Euclidean topology.
+\begin{proposition}{}{Prp1}
+A subset  $S \subseteq \mathbb{R}$ is open iff it is a union of open intervals.
+\end{proposition}
+\begin{proof}
+If $S$ is an open set, then $\forall x\in \mathbb{R}, \exists I_x = (a,b) \subseteq S$ such that $x\in I_x$. We now claim that $S = \bigcup_{x\in S} I_x$.
+
+First we have $S \subseteq \bigcup_{x\in S} I_x$, and we have $\forall x, I_x \subseteq S$, so $\bigcup_{x\in S} I_x \subseteq S$.
+\end{proof}
+
+Therefore, to depict the open sets in Euclidean topology, it suffices to show that all open intervals are open sets.
+
+\begin{definition}{Basis of a Topology}{Basis Of A Topology}
+	Let $(X,\mathcal{T})$ be a topological space. A basis for the topology $\mathcal{T}$ is a collection $\mathcal{B}$ of open sets such that every open set in $\mathcal{T}$ can be written as a union of elements of $\mathcal{B}$.
+\end{definition}
+We can understand this by "$\mathcal{B}$ generates $\mathcal{T}$".
+
+\begin{example}{Basis of Topology}{Basis Of Topology}
+\begin{itemize}
+\item Let $\mathcal{B} = \left\{ (a,b): a,b\in \mathbb{R}, a<b \right\}$, then $\mathcal{B}$ is a basis for the euclidean topology on $\mathbb{R}$. 
+
+In fact, $\mathcal{B}' = \left\{ (a,b): a,b\in \mathbb{Q}, a<b \right\}$ is also a basis for the euclidean topology on $\mathbb{R}$.
+\begin{proof}
+	We shall verify that every element in $\mathcal{B}$ is a union of open intervals in $\mathcal{B}'$. Let $I = (a,b) \in \mathcal{B}$, then 
+	\begin{equation*}
+	I = \bigcup_{a<x<y<b, x,y\in \mathbb{Q}} (x,y)
+	\end{equation*}
+\end{proof}
+\item Let $(X,\mathcal{T})$ be a discrete space and $\mathcal{B}$ be the collection of all singletons in $X$. Then $\mathcal{B} = \left\{ \left\{ x \right\}, x\in X \right\}$ is a basis for $\mathcal{T}$.
+\item For all topological spaces $(X,\mathcal{T})$, $\mathcal{B} = \mathcal{T}$ is a basis for $\mathcal{T}$.
+\end{itemize}
+\end{example}
+
+We see that there can be many basis for the same topology. However not all collections of open sets can be a basis for a topology. For example, if there is an element that does not belong to any element in $\mathcal{B}$, then $\mathcal{B}$ cannot be a basis for any topology. Even if every element in $X$ belongs to some element in $\mathcal{B}$, $\mathcal{B}$ may not be a basis for any topology.
+\begin{example}{}{not a basis}
+	Let $X = \left\{ a,b,c \right\}$ and $\mathcal{B} = \left\{ \left\{ a \right\}, \left\{ b \right\}, \left\{ a,c \right\}, \left\{ b,c \right\} \right\}$. Then $\mathcal{B}$ is not a basis for any topology on $X$. Writing all possible unions, we have
+	\begin{equation*}
+	\mathcal{T} = \left\{ X, \emptyset , \left\{ a \right\}, \left\{ b \right\}, \left\{ a,b \right\}, \left\{ a,c \right\}, \left\{ b,c \right\} \right\}
+	\end{equation*}
+	But $\mathcal{T} $ is not a topology for $\left\{ c \right\} = \left\{ a,c \right\}\cap \left\{ b,c \right\}$ is not in $\mathcal{T}$.
+\end{example}
+
+\begin{remark}
+The topology generated by a basis $\mathcal{B}$ is actually
+\begin{equation*}
+	\mathcal{T} = \left\{ \bigcup S: S \subseteq \mathcal{B} \right\}
+\end{equation*}
+To verify that two basis generate the same topology, we only need to verify that every element in one basis can be written as a union of elements in the other basis. That is, the elements in one basis is open in the topology generated by the other basis, and vice versa.
+\end{remark}
+
+\begin{theorem}{Conditions for a Collection to be a Basis}{Conditions For A Collection To Be A Basis}
+Let $X$ be a nonempty set and let $\mathcal{B}$ be a collection of subsets of $X$. Then $\mathcal{B}$ is a basis for a topology on $X$ iff
+\begin{enumerate}
+	\item $\displaystyle X = \bigcup_{B\in \mathcal{B}} B$ 
+	\item $\forall B_1,B_2\in \mathcal{B}$, then $B_1\cap B_2$ is a union of elements of $\mathcal{B}$.
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+	This is really quite straightforward. The ``if'' part is just the definition of a basis. The ``only if'' part is also easy to prove. Let $\mathcal{T} = \left\{ \bigcup S: S \subseteq \mathcal{B} \right\}$
+
+	First we have $\emptyset , X\in \mathcal{T}$.
+
+	Then let $U,V\in \mathcal{T}$. Then $U = \bigcup S$ and $V = \bigcup T$ for some $S,T\subseteq \mathcal{B}$. Then $U\cap V = \bigcup S\cap T$. Since $S\cap T\subseteq \mathcal{B}$, $U\cap V\in \mathcal{T}$.
+
+	Finally let $\left\{ U_i \right\}_{i\in I}$ be a collection of elements in $\mathcal{T}$. Then $U_i = \bigcup S_i$ for some $S_i\subseteq \mathcal{B}$. Then $\bigcup_{i\in I} U_i = \bigcup_{i\in I} \bigcup S_i = \bigcup S$ for some $S\subseteq \mathcal{B}$. Hence $\bigcup_{i\in I} U_i\in \mathcal{T}$.
+\end{proof}
+
+And now it is far more easier to define topologies: we only need to write a basis.
+
+\begin{definition}{Euclidean Topology on $\mathbb{R}^n$}{Euclidean Topology On Rn}
+	An open rectangle in $\mathbb{R}^n$ has the form $\left\{ \left< x_1, \ldots ,x_n \right>: a_i<x_i<b_i \right\} $ for some $a_i,b_i\in \mathbb{R}$. We define $\mathcal{B}$ to be the collection of all open rectangles in $\mathbb{R}^n$. Then the topology generated by $\mathcal{B}$ is called the Euclidean topology on $\mathbb{R}^n$.
+\end{definition}
+
+\begin{proposition}{Disks of the Euclidean Topology}{Disks Of The Euclidean Topology}
+The disc $D = \left\{ \left< x_1, \ldots ,x_n \right> : x_1^2+\ldots +x_n^2 < r^2 \right\}$ is an open set in $\mathbb{R}^n$.
+
+We also have a more general result: every disk $D = \left\{ \left< x_1, \ldots ,x_n \right> : \sum_{i=1}^{n} (x_i-a_i)^2 < r^2 \right\}$ is an open set in $\mathbb{R}^n$.
+\end{proposition}
+\begin{proof}
+	We do this by finding a small open rectangle in the disc that contains the point. 
+
+	Let $x = \left< x_1, \ldots ,x_n \right> \in D$. Let $r' = r - \sqrt{x_1^2+\ldots +x_n^2}$. Then the open rectangle $R_x = \left\{ \left< y_1, \ldots ,y_n \right> : |y_i-x_i|< \frac{r'}{4n} \right\}$ is contained in the disc and contains $x$.
+
+	Thus we have the disc
+	\begin{equation*}
+		D = \bigcup_{x\in D} R_x
+	\end{equation*}
+\begin{figure}[H]
+    \centering
+    \incfig{finding-rectangle}
+    \caption{Finding Rectangle}
+    \label{fig:finding-rectangle}
+\end{figure}
+\end{proof}
+
+\begin{theorem}{Disks as Basis}{Disks As Basis}
+The collection of all discs in $\mathbb{R}^n$ is a basis for the Euclidean topology on $\mathbb{R}^n$.
+\end{theorem}
+\begin{proof}
+First we verify that all discs in $\mathbb{R}^n$ are indeed a basis. For convenience, we denote a disk with center $a$ and radius $r$ as $D(a,r)$.
+\begin{itemize}
+\item First $\mathbb{R}^n = \bigcup_{r>0} D(0,r)$.
+\item Then let $D_1(a_1,r_1),D_2(a_2,r_2)$ be any open disks with $D_1\cap D_2\neq \emptyset $, for any $a\in D_1\cap D_2$, let $r = \min\left\{ r_1 - |a-a_1|, r_2 - |a-a_2| \right\}$. Then $D(a,r) \subseteq D_1\cap D_2$. So $D_1\cap D_2 = \bigcup_{a\in D_1\cap D_2} D(a,r)$.
+\end{itemize}
+\begin{figure}[H]
+    \centering
+    \incfig{disks-as-basis}
+    \caption{Disks as Basis}
+    \label{fig:disks-as-basis}
+\end{figure}
+
+To prove that the topology generated by disks is indeed the Euclidean topology, we only need to show that every open rectangle is a union of disks. Let $R$ be an open rectangle, $\forall a\in R$, let $r$ be the least distance from $a$ to the boundary of $R$. Then $D(a,r)\subseteq R$. Then $R = \bigcup_{a\in R} D(a,r)$.
+\end{proof}
+
+\subsection{Second Axiom of Countability}
+\begin{definition}{Second Axiom of Countability}{Second Axiom Of Countability}
+A topological space $(X,\mathcal{T})$ is said to satisfy the second axiom of countability if there exists a countable basis for $\mathcal{T}$.
+\end{definition}
+
+\begin{example}{Second Axiom of Countability}{Second Axiom Of Countability}
+\begin{itemize}
+\item The Euclidean topology on $\mathbb{R}$ satisfies the second axiom of countability. (For $\mathcal{B} = \left\{ (a,b): a,b\in \mathbb{Q}, a<b \right\}$)
+\item Similarly, the Euclidean topology on $\mathbb{R}^n$ satisfies the second axiom of countability. (For $\mathcal{B} = \left\{ D(a,r): a\in \mathbb{Q}^n, r\in \mathbb{Q} \right\}$)
+\item The discrete topology on an uncountable set does not satisfy the second axiom of countability.
+	\begin{proof}
+	Well every basis must have every singleton set, so the basis must be uncountable.
+	\end{proof}
+\end{itemize}
+\end{example}
+
+
+\begin{proposition}{Open Subsets of $\mathbb{R}$}{Open subsets of R}
+Every open subset of $\mathbb{R}$ are $F_{\sigma}$-sets and $G_{\delta}$-sets.
+\end{proposition}
+\begin{proof}
+\begin{itemize}
+	\item Let $S\subseteq \mathbb{R}$ be open. Then because $S$ can be written as a union of countability many of $\mathcal{B} = \left\{ (a,b), a,b\in \mathbb{Q},a<b \right\}$. And each $(a,b)$ is a $F_{\sigma}$-set, so $S$ is a $F_{\sigma}$-set.
+	\item $S$ is open, so it is a $G_{\delta}$-set.
+\end{itemize}
+\end{proof}
+
+
+\subsection{Product Topology}
+\begin{definition}{Product Topology}{Product Topology}
+	Let $\mathcal{B}_1$ be a basis for $(X,\mathcal{T}_1)$, and $\mathcal{B}_2$ be a basis for $(Y,\mathcal{T}_2)$. Then $\mathcal{B} = \left\{ B_1 \times B_2 : B_1\in \mathcal{B}_1, B_2\in \mathcal{B}_2 \right\}$ is a basis for the product topology on $X\times Y$.
+
+	In fact, the product topology is just $\mathcal{T} = \left\{ T_1 \times T_2 : T_1\in \mathcal{T}_1, T_2 \in \mathcal{T}_2\right\}$.
+\end{definition}
+We first prove that $\mathcal{B}$ is a basis.
+\begin{proof}
+\begin{itemize}
+	\item First $\forall \left<x,y\right>\in X \times Y$, we have $x\in B_x$ for some $B_x\in \mathcal{B}_1$ and $y\in B_y$ for some $B_y\in \mathcal{B}_2$. Then $\left<x,y\right>\in B_x\times B_y\in \mathcal{B}$. So $X \times Y = \bigcup_{B\in \mathcal{B}} B$.
+	\item For $B_1\times B_2, B_1'\times B_2'\in \mathcal{B}$, we have $(B_1\times B_2)\cap (B_1'\times B_2') = (B_1\cap B_1')\times (B_2\cap B_2')$. Since $B_1\cap B_1'$ and $B_2\cap B_2'$ are unions of elements in $\mathcal{B}_1$ and $\mathcal{B}_2$, $(B_1\cap B_1')\times (B_2\cap B_2')$ is a union of elements in $\mathcal{B}$.
+\end{itemize}
+\end{proof}
+
+
+\section{Basis of a Given Topology}
+
+\begin{theorem}{Conditions for being a basis of given topology}{Conditions For Being A Basis Of Given Topology}
+	Let $(X,\mathcal{T})$ be a topological space. A collection $\mathcal{B}$ of subsets of $X$ is a basis for $\mathcal{T}$ iff
+	\begin{itemize}
+	\item $\forall B\in \mathcal{B}$ is open. That is, $\mathcal{B} \subseteq \mathcal{T}$.
+	\item $\forall U \in \mathcal{T} \forall x\in U \exists B_x\in \mathcal{B},x\in B_x \subseteq U$.
+	\end{itemize}
+\end{theorem}
+\begin{proof}
+	This is quite straightforward. The ``if'' part is just definition. 
+
+	For the ``only if'' part, we have $\forall U\in \mathcal{T}$, $U = \bigcup_{x\in U} B_x$ for some $B_x\in \mathcal{B}$.
+\end{proof}
+
+\begin{proposition}{}{Conditions for open sets}
+	Let $\mathcal{B}$ be a basis for a topology $\mathcal{T}$ on $X$. Then $U\subseteq X$ is open in $\mathcal{T}$ iff $\forall x\in U$, $\exists B_x\in \mathcal{B}$ such that $x\in B_x\subseteq U$.
+\end{proposition}
+Note that this proposition is exactly how we came to define the Euclidean topology on $\mathbb{R}$.
+
+\begin{theorem}{Verifying Same Topology for Different Basis}{Verifying Same Topology For Different Basis}
+Let $\mathcal{B}_1$ and $\mathcal{B}_2$ are basis for $\mathcal{T}_1$ and $\mathcal{T}_2$ on $X$, then $\mathcal{T}_1 = \mathcal{T}_2$ iff
+\begin{itemize}
+	\item $\forall B \in \mathcal{B}_1$ and $\forall x\in B$, $\exists B_x\in \mathcal{B}_2$ such that $x\in B_x\subseteq B$.
+	\item $\forall B \in \mathcal{B}_2$ and $\forall x\in B$, $\exists B_x\in \mathcal{B}_1$ such that $x\in B_x\subseteq B$.
+\end{itemize}
+\end{theorem}
+\begin{proof}
+This is exactly what we mean by saying one basis is open is the sense of the other.
+\end{proof}
+
+\begin{proposition}{Larger Basis}{Larger Basis}
+Let $\mathcal{B}$ be a basis for $(X,\mathcal{T})$, If $\mathcal{B}_1 \subseteq X$ with $\mathcal{B} \subseteq \mathcal{B}_1 \subseteq \mathcal{T}$, then $\mathcal{B}_1$ is also a basis for $\mathcal{T}$.
+\end{proposition}
+\begin{proof}
+	This is fairly easy. For $\bigcup \mathcal{B}_1 = \bigcup \mathcal{B} = X$ and intersection closed under $\mathcal{B}$ obviously implies intersection closed under $\mathcal{B}_1$.
+\end{proof}
+This would imply that there are uncountably many basis for the Euclidean topology on $\mathbb{R}$.
+
+\begin{example}{The Topology on $C[0,1]$}{The Topology On C01}
+	$C[0,1]$ is the set of all continuous functions on $[0,1]$. We shall define a topology on $C[0,1]$ by using the following basis.
+\begin{enumerate}
+\item Let $M(f,\epsilon) = \left\{ g:g\in C[0,1], \int_0^1 \left|f(x)-g(x)\right| \mathrm{d}x < \epsilon \right\}$. (This is the set of functions that are ``close'' to $f$)
+
+	The collection $\mathcal{M} = \left\{ M(f,\epsilon): f\in C[0,1], \epsilon >0  \right\}$ is a basis for a topology $\mathcal{T}_1$ on $C[0,1]$.
+	\begin{proof}
+	\begin{itemize}
+		\item First we have $f\in M(f,\epsilon)$ obviously. So $C[0,1] = \bigcup_{f\in C[0,1]} f$.
+		\item Let $M(f_1,\epsilon_1),M(f_2,\epsilon_2)\in \mathcal{M}$, then for $\forall g\in M(f_1,\epsilon_1)\cap M(f_2,\epsilon_2)$, we need to find an $\epsilon$ such that $M(g,\epsilon) \subseteq M(f_1,\epsilon_1)\cap M(f_2,\epsilon_2)$.
+
+			Let $I_1 = \int_0^1 \left|f_1(x)-g(x)\right| \mathrm{d}x$, $I_2 = \int_0^1 \left|f_2(x)-g(x)\right| \mathrm{d}x$. We have $I_1<\epsilon_1$ and $I_2<\epsilon_2$.
+
+			Let $\epsilon = \min\left\{ \epsilon_1-I_1, \epsilon_2-I_2 \right\}$. Then $\forall f\in M(g,\epsilon)$ we have $\int_{0}^{1} \left|f(x)-g(x)\right| \mathrm{d}x < \epsilon$. So
+		\begin{equation*}
+		\begin{aligned}
+			I_1 &= \int_{0}^{1} \left|g(x)-f_1(x)\right| \mathrm{d}x > \int_{0}^{1} \left|\left|f(x)-g(x)\right| - \left|f(x)-f_1(x)\right|\right| \mathrm{d}x\\
+				   &\geq \left|\int_{0}^{1} \left|f(x)-g(x)\right| \mathrm{d}x - \int_{0}^{1} \left|f(x)-f_1(x)\right| \mathrm{d}x\right|
+		\end{aligned}
+		\end{equation*}
+		Thus
+		\begin{equation*}
+		\int_{0}^{1} \left|f(x)-g(x)\right| \mathrm{d}x < I_1 + \epsilon \leq \epsilon_1
+		\end{equation*}
+		Similarly we have $\int_{0}^{1} \left|f(x)-g(x)\right| \mathrm{d}x < \epsilon_2$. So $M(g,\epsilon) \subseteq  M(f_1,\epsilon_1)\cap M(f_2,\epsilon_2)$.
+	\end{itemize}
+	\end{proof}
+
+\item Let $U(f,\epsilon) = \left\{ g: g\in C[0,1], \sup_{x\in [0,1]}\left|f(x)-g(x)\right|<\epsilon \right\}$. (This is also a way to show the collection of functions that are close to $f$, but not the same as the one previously)
+
+	The collection $\mathcal{U} = \left\{ U(f,\epsilon): f\in C[0,1], \epsilon >0  \right\}$ is a basis for a topology $\mathcal{T}_2$ on $C[0,1]$.
+	\begin{proof}
+	Changing the integral to supremum, the proof is similar.
+	\end{proof}
+\item We have $\mathcal{T}_1\neq \mathcal{T}_2$.
+	\begin{proof}
+		Intuitively, the first basis allows "sharp points" that is far from original function, while the second basis does not. Let $f\in U(f,\epsilon)\in \mathcal{U}$. For all $M(g,\epsilon')\in \mathcal{M}$ we have some function $h\in M(g,\epsilon')$ that $\sup h - \inf h > 2 \epsilon$. So $h\notin U(f,\epsilon)$. Making $U(f,\epsilon)$ not open in the sense of $\mathcal{T}_1$.
+\begin{figure}[H]
+    \centering
+    \incfig{sharp-points-of-functions}
+    \caption{Sharp Points of Functions}
+    \label{fig:sharp-points-of-functions}
+\end{figure}
+	\end{proof}
+\end{enumerate}
+\end{example}
+
+
+\subsection{Subbasis of a Topology}
+\begin{definition}{Subbasis of a Topology}{Subbasis Of A Topology}
+	Let $(X,\mathcal{T})$ be a topological space. A non-empty collection $\mathcal{S}$ of subsets of $X$ is said to be a subbasis for $\mathcal{T}$ if the collection of all finite intersections of elements of $\mathcal{S}$ is a basis for $\mathcal{T}$.
+\end{definition}
+\begin{remark}
+Unlike a basis, a subbasis does not require closure under finite intersections. This allows you to define a topology by specifying only the ``essential'' open sets you care about (e.g., preimages of projections in product topology). The topology then automatically incorporates the necessary intersections and unions. This avoids the need to specify all finite intersections upfront, making it a more economical starting point than a basis.
+\end{remark}
+
+\begin{example}{Subbasis}{Subbasis}
+\begin{itemize}
+	\item The collection of all open intervals of the form $(-\infty ,a)$ or $(b,\infty )$ is a subbasis for the Euclidean topology on $\mathbb{R}$. (The basis is the collection of all open intervals)
+\end{itemize}
+\end{example}
+
+\end{document}

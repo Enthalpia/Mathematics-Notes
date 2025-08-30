@@ -1,0 +1,526 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\chapter{Finite-Dimensional Vector Spaces}
+
+\begin{plainblackenv}
+Standing Assumptions:
+\tcblower\par
+\begin{itemize}
+\item $\mathbb{F}$ denotes $\mathbb{R}$ or $\mathbb{C}$ 
+\item $V$ denotes a vector space over $\mathbb{F}$.
+\end{itemize}
+\end{plainblackenv}
+
+\section{Span and Linear Independence}
+\subsection{Linear Combination and Span}
+
+\begin{definition}{Linear Combination}{Linear Combination}
+A \emph{linear combination} of a list $v_1, \ldots ,v_m$ of vectors in $V$ is a vector:
+\begin{equation}
+a_1v_1+\ldots +a_mv_m
+\end{equation}
+where $a_1, \ldots ,a_m \in \mathbb{F}$
+\end{definition}
+
+\begin{definition}{Span}{Span}
+The set of all linear combinations of a list of vectors is called the \emph{span} denoted
+\begin{equation}
+	\vspan(v_1, \ldots ,v_m) = \left\{ a_1v_1+\ldots +a_mv_m : a_1, \ldots ,a_m \in \mathbb{F} \right\}
+\end{equation}
+
+The span of the empty list is defined
+\begin{equation}
+\vspan() = \left\{ \boldsymbol{0} \right\}
+\end{equation}
+
+Span is sometimes also called \emph{linear span}
+\end{definition}
+
+\begin{theorem}{Span is a subspace}{Span Is A Subspace}
+For every list $v_1, \ldots ,v_m$ in $V$, $\vspan (v_1, \ldots ,v_m)$ is a subspace in $V$.
+\end{theorem}
+\begin{proof}
+Let $U = \vspan(v_1, \ldots ,v_m)$, we have $\boldsymbol{0} = 0v_1+\ldots +0v_m \in U$.
+
+Also $U$ is closed under addition and scalar multiplication.
+\end{proof}
+\begin{theorem}{Span is the Smallest Containing Subspace}{Span Is The Smallest Containing Subspace}
+$\forall \text{ subspace } U \subseteq V$ such that $v_1, \ldots ,v_m \in U$, we have
+\begin{equation*}
+\vspan (v_1, \ldots ,v_m) \subseteq U
+\end{equation*}
+\end{theorem}
+\begin{proof}
+Obvious
+\end{proof}
+
+\begin{definition}{Spans}{Spans}
+If $\vspan(v_1, \ldots ,v_m) = V$, then we say the list $v_1, \ldots ,v_m$ spans $V$.
+\end{definition}
+\begin{example}{Spans}{Spans}
+For $\mathbb{F}^n$, we have
+\begin{equation}
+	(1,0, \ldots ,0), (0,1, \ldots ,0), \ldots ,(0,0, \ldots ,1)
+\end{equation}
+spans  $\mathbb{F}^n$.
+\end{example}
+
+\begin{definition}{Finite Dimensional Vector Spaces}{Finite Dimensional Vector Spaces}
+A vector space is called finite dimensional if some list (finite) of vectors spans the space.
+\end{definition}
+The example above shows that $\mathbb{F}^n$ is finite dimensional. Note that every list has finite length.
+
+\begin{notation}{Polynomials}{Polynomials}
+	We denote $\mathscr{P}(\mathbb{F})$ to polynomials on field $\mathbb{F}$, and $\mathscr{P}_m(\mathbb{F})$ denotes all polynomials with degree at most $m$ on $\mathbb{F}$.
+\end{notation}
+
+\begin{example}{Polynomials}{Polynomials}
+	Obviously the polynomials $\mathscr{P}(\mathbb{F})$ and $\mathscr{P}_m(\mathbb{F})$ are vector spaces.
+
+\begin{itemize}
+	\item If $m\geq 0$ is an integer, then $\mathscr{P}_m(\mathbb{F}) = \vspan(1,x, \ldots ,x^m)$.
+	\item $\mathscr{P}(\mathbb{F})$ is infinite-dimensional. 
+
+		\begin{proof}
+			For any list of elements in $\mathscr{P}(\mathbb{F})$, Let $m$ be the maximum degree. Then any linear combination has degree  $\leq m$, which means $x^{m+1}$ is not a linear combination. Therefore $\mathscr{P}(\mathbb{F})$ has infinite dimension.
+		\end{proof}
+\end{itemize}
+\end{example}
+\begin{remark}
+We've noticed some similarities between spans and the sums of vector spaces. In fact, $\forall v \in V$, the set $\left\{ \lambda v: \lambda \in \mathbb{F} \right\}$ is a subspace of $V$, and the span of $v_1, \ldots ,v_m$ is actually $V_1\oplus V_2 \oplus , \ldots ,\oplus V_m$ where $V_i = \left\{ \lambda v_i : \lambda \in \mathbb{F} \right\}$. 
+\end{remark}
+
+\subsection{Linear Independence}
+Suppose $v_1, \ldots ,v_m \in V$ and $v \in \vspan(v_1, \ldots ,v_m)$. Then there exists $a_1, \ldots ,a_m \in \mathbb{F}$ such that
+\begin{equation*}
+v = a_1v_1+\ldots +a_mv_m
+\end{equation*}
+
+We want to find the condition in which the choice of the scalars is unique. This is also similar to the direct sum condition.
+
+\begin{definition}{Linear Independent}{Linear Independent}
+A list $v_1, \ldots ,v_m$ in $V$ is linear independent if
+\begin{equation*}
+\forall a_1, \ldots ,a_m \in \mathbb{F},\ (a_1v_1+\ldots +a_mv_m = \boldsymbol{0} \rightarrow a_1=...=a_m=0)
+\end{equation*}
+
+In other words, $v_1, \ldots ,v_m$ is linear dependent if $a_1, \ldots ,a_m$ not all $0$ such that $a_1v_1+\ldots +a_mv_m=\boldsymbol{0}$.
+\end{definition}
+
+\begin{remark}
+We can see that $v_1, \ldots ,v_m$ is linear independent is equivalent to $\left\{ \lambda v_i : \lambda \in \mathbb{F} \right\}$ forms a direct sum.
+
+Intuitively, linear independence means that the vectors do not "fall in the same plane". For example, three vectors that are coplanar are dependent in $\mathbb{R}^3$. This picture also gives us an intuition to understand the following lemma
+\end{remark}
+
+\begin{lemma}{Linear Independence Lemma}{Linear Independence Lemma}
+Suppose $v_1, \ldots ,v_m$ is a linear dependent list in $V$. Then there exists $k \in \left\{ 1,2, \ldots ,m \right\}$ such that
+\begin{equation}
+v_k \in \vspan(v_1, \ldots ,v_{k-1})
+\end{equation}
+
+Furthermore, removing $v_k$ from the list, the remaining span dose not change.
+\begin{equation}
+\vspan(v_1, \ldots ,v_{k-1},v_{k+1}, \ldots ,v_m) = \vspan (v_1, \ldots ,v_m)
+\end{equation}
+\end{lemma}
+\begin{proof}
+Because $v_1, \ldots ,v_m$ is linear dependent, $\exists a_1, \ldots ,a_m \in \mathbb{F}$ not all $0$ such that 
+\begin{equation*}
+a_1v_1+\ldots +a_mv_m=\boldsymbol{0}
+\end{equation*}
+Let $k$ be the largest element in $\left\{ 1, \ldots ,m \right\}$ such that $a_k \neq 0$.
+
+If $k=1$ then $a_1v_1=\boldsymbol{0}$ and $a_1 \neq 0$, then $v_1 = \boldsymbol{0} \in \vspan()$
+
+If $k\geq 2$, then
+\begin{equation*}
+a_1v_1+\ldots +a_kv_k=\boldsymbol{0}
+\end{equation*}
+\begin{equation}
+v_k = -\frac{a_1}{a_k}v_1-\ldots -\frac{a_{k-1}}{a_k}v_{k-1}
+\end{equation}
+Thus $v_k \in \vspan(v_1, \ldots ,v_{k-1})$
+
+For any $v = b_1v_1+ \ldots +b_mv_m$, we can write $v_k$ as above.
+\end{proof}
+\begin{remark}
+Now we may guess that linear independence depicts the least number of vectors that can span the entire space. The vectors that can be written as linear combination of other vectors is indeed unnecessary.
+
+This lemma also gives us a way to expand the independent vector list.
+\end{remark}
+
+\begin{corollary}{Expanding the independent list}{Expanding The Independent List}
+If $u_1, \ldots ,u_{n-1}$ are independent vectors, then 
+
+\begin{equation}
+u_n \notin \vspan(u_1, \ldots ,u_{n-1})\quad \leftrightarrow \quad u_1, \ldots ,u_n \text{ is independent }
+\end{equation}
+
+\end{corollary}
+\begin{proof}
+If not, $\exists k\leq n-1$, such that $u_k \in \vspan(u_1, \ldots ,u_{k-1})$, contradicts.
+\end{proof}
+
+\begin{theorem}{Length of linearly independent list}{Length Of Linearly Independent List}
+In a finite-dimensional vector space, the length of every linearly independent list of vectors $\leq $ the length of every spanning list of vectors.
+
+That is, $\forall u_1, \ldots ,u_m$ is linearly independent in $V$. And  $\vspan(w_1, \ldots ,w_n) = V$, then $m\leq n$.
+\end{theorem}
+\begin{proof}
+We do so in a process as follows.
+\begin{itemize}
+\item \textbf{Step 1}
+
+	Because $u_1$ can be written as linear combination of $w_1, \ldots ,w_n$. The list
+	\begin{equation*}
+	u_1, w_1, \ldots ,w_n
+	\end{equation*}
+	is linear dependent.
+
+	Thus by lemma \ref{lem:Linear Independence Lemma}, one of the vectors is the span of previous vectors. For $u_1\neq \boldsymbol{0}$, this vector is some $w_k$, delete $w_k$ and let the remaining list be $B$. Then $B$ still spans $V$.
+\item \textbf{Step $k$, for $k=2,3, \ldots ,m$}
+
+	Similarly, adding $u_k$ in front of $B$ and delete some $w_i$ to generate a new $B$ (as $u_1, \ldots ,u_k$ are linear independent).
+
+	During this process, there must be some $w_i$ left before $k=m$ because if there are only $u_i$'s is the list, they cannot span  $V$ because $u_n$ is not a linear combination of previous $u_i$.
+\end{itemize}
+
+After $m$ steps, we get $B = u_m, \ldots ,u_1, \text{ some }w_i$, and the list length of $B$ does not change during the process. Thus $m\leq n$
+\end{proof}
+
+\begin{example}{}{exp1}
+No list of length $n-1$ spans $\mathbb{R}^n$.
+\end{example}
+\begin{proof}
+with the basis $\boldsymbol{e_i}$ spans $\mathbb{R}^n$ and are linearly independent.
+\end{proof}
+
+\begin{theorem}{Finite-dimensional subspaces}{Finite-Dimensional Subspaces}
+Every subspace of a finite-dimensional vector space is finite-dimensional.
+\end{theorem}
+\begin{proof}
+Suppose $V$ is finite dimensional and $U$ is a subspace. We construct a list of linearly independent vectors that spans $U$ using the following process.
+
+\begin{itemize}
+\item \textbf{Step 1}
+
+	If $U=\left\{ \boldsymbol{0} \right\}$ then we are done. If not, let $u_1\neq 0,u_1 \in U$.
+\item \textbf{Step $k$}
+
+	If $U = \vspan(u_1, \ldots ,u_{k-1})$, then we are done. If not, let $u_k \in U, u_k \notin \vspan(u_1, \ldots ,u_{k-1})$, then by corollary \ref{cor:Expanding The Independent List}, $u_1, \ldots ,u_k$ is independent.
+\end{itemize}
+
+As the length of this list increases, it cannot surpass the length of any spanning list in $V$, Thus the process eventually ends with a finite step, which means that $U$ is finite-dimensional.
+\end{proof}
+
+\begin{example}{Span and Linear Independence}{Span And Linear Independence}
+\begin{enumerate}
+	\item If $v_1, \ldots ,v_m$ is linear independent in $V$, then $\forall \lambda \in \mathbb{F}$, we have $\lambda v_1, \ldots ,\lambda v_m$ in linear independent.
+	\item Suppose $v_1, \ldots ,v_m$ is a list of vectors in $V$. For $k \in \left\{ 1,2, \ldots ,m \right\}$, let
+		\begin{equation*}
+		w_k = v_1+\ldots +v_k
+		\end{equation*}
+		then we have 
+		\begin{equation*}
+		v_1, \ldots ,v_m \text{ is linear independent } \leftrightarrow w_1, \ldots ,w_m \text{ is linear independent }
+		\end{equation*}
+	\item A vector space $V$ is infinite-dimensional iff $\exists $ a sequence $v_1, \ldots $ of vectors in $V$ such that $\forall m \in \mathbb{N}, v_1, \ldots ,v_m$ is linear independent.
+
+		\begin{proof}\par
+		\begin{itemize}
+			\item if $V$ is infinite-dimensional, we construct the list using the steps of theorem \ref{thm:Finite-Dimensional Subspaces}. As $V$ cannot be the span of $v_1, \ldots ,v_m$, the process would not stop.
+			\item if $V$ is finite-dimensional, then let independent $u_1, \ldots ,u_m$ spans $V$. Then $u_1, \ldots ,u_m,u_1$ spans $V$ and are linear dependent, then any independent list must have length $\leq m+1$, contradicts.
+		\end{itemize}
+		\end{proof}
+
+	\item $\mathbb{F}^{\infty}$ is infinite-dimensional.
+\end{enumerate}
+\end{example}
+
+
+\section{Basis}
+
+In the previous section, we give an intuition that independent depicts the "smallest" number of vectors that is needed to span the space. We now give the definition of basis.
+\begin{definition}{Basis}{Basis}
+	A \emph{basis} of $V$ is a list of vectors in $V$ that are linear independent and span $V$.
+\end{definition}
+
+\begin{example}{Basis}{Basis}
+\begin{itemize}
+\item The list $(1,0, \ldots 0), \ldots ,(0,0, \ldots ,1)$ is a basis of $\mathbb{F}^{n}$, called the standard basis of $\mathbb{F}^{n}$.
+\end{itemize}
+\end{example}
+
+\begin{theorem}{Criterion for Basis}{Criterion For Basis}
+A list $v_1, \ldots ,v_n$ in $V$ is a basis of $V$ iff $\forall v \in V$ can be uniquely written as 
+\begin{equation}
+v = a_1v_1+\ldots +a_nv_n
+\end{equation}
+where $a_1, \ldots ,a_n \in \mathbb{F}$.
+\end{theorem}
+\begin{proof}
+	This is indeed the intuition that drives us to define linear independence in definition \ref{def:Linear Independent}. 
+
+	\begin{itemize}
+	\item First suppose $v_1, \ldots ,v_n$ is a basis of $V$. Let $v \in V$. Because $V=\vspan(v_1, \ldots ,v_n)$, we have
+		\begin{equation*}
+		v=a_1v_1+\ldots +a_nv_n
+		\end{equation*}
+		If $v=c_1v_1+\ldots +c_nv_n$ 
+		then
+		\begin{equation*}
+			(a_1-c_1)v_1+\ldots +(a_n-c_n)v_n=\boldsymbol{0}
+		\end{equation*}
+		which means $a_i=c_i$ for $i=1,2, \ldots ,n$. Meaning unique.
+	\item the other side is exactly the same.
+	\end{itemize}
+\end{proof}
+
+We now give a method to find a basis in a linear independent list.
+\begin{theorem}{Every Spanning List Contains a Basis}{Every Spanning List Contains A Basis}
+Every spanning list of a vector space $V$ can be reduced to a basis of the vector space. (It contains a sub-list that is a basis).
+\end{theorem}
+\begin{proof}
+Suppose $V=\vspan(v_1, \ldots ,v_n)$. We want to remove some of the vectors from the list so that the remaining still span $V$.
+\begin{itemize}
+	\item If $v_1=\boldsymbol{0}$, then delete $v_1$
+	\item If $v_k \in \vspan(v_1, \ldots ,v_{k-1})$, then delete $v_k$. (For  $k=2, \ldots ,n$ )
+\end{itemize}
+Then the remaining list in linearly independent and still spans $V$.
+\end{proof}
+
+We now come to an important corollary.
+\begin{corollary}{Basis of finite-dimensional vector space}{Basis Of Finite-Dimensional Vector Space}
+Every finite-dimensional vector space have a basis.
+\end{corollary}
+\begin{proof}
+A finite dimensional vector space have a spanning list that can be reduced to a basis.
+\end{proof}
+
+\begin{theorem}{Every linearly independent list extends to a basis}{Every Linearly Independent List Extends To A Basis}
+Every linearly independent list of vectors in a finite-dimensional vector space can be extended to a  basis.
+\end{theorem}
+\begin{proof}
+let $u_1, \ldots ,u_m$ be linearly independent, and $w_1, \ldots ,w_n$ spans $V$. Then the list
+\begin{equation*}
+u_1, \ldots ,u_m, w_1, \ldots ,w_n
+\end{equation*}
+spans $V$. Reduce it using the method in \ref{thm:Every Spanning List Contains A Basis}, we get a basis. Note that $u_1, \ldots ,u_m$ would not be deleted in the process.
+\end{proof}
+
+\begin{remark}
+	Theorem \ref{thm:Every Spanning List Contains A Basis} and theorem \ref{thm:Every Linearly Independent List Extends To A Basis} is somewhat dual to each other. They depict how a basis is formed in a vector space. Intuitively, a basis is like the axis of a "coordinate system" of the vector space.
+\end{remark}
+
+\begin{corollary}{Every Subspace of $V$ is a part of a direct sum equal to $V$}{A Part Of A Direct Sum}
+Suppose $V$ is finite-dimensional and $U$ is a subspace. Then $\exists \text{ a subspace }W$ of $V$ such that $V = U \oplus W$.
+\end{corollary}
+\begin{proof}
+	By \ref{thm:Finite-Dimensional Subspaces}, $U$ is finite-dimensional. Let $u_1, \ldots ,u_m$ be a basis of $U$, then extends it to a basis of $V$. 
+	\begin{equation*}
+	u_1, \ldots ,u_m, w_1, \ldots ,w_n
+	\end{equation*}
+	Let $W = \vspan(w_1, \ldots ,w_n)$ would do.
+\end{proof}
+
+\begin{theorem}{Basis of Complex vector space}{Basis Of Complex Vector Space}
+If $v_1, \ldots ,v_n$ is a basis if a real vector space $V$, then it is also a basis of the complex vector space $V_{\mathbb{C}}$.
+\end{theorem}
+\begin{proof}
+	$\forall v \in V, v = a_1v_1+ \ldots +a_nv_n$, where $a_k \in \mathbb{R}$ is unique.
+	Then $\forall v = u+iw \in V_{\mathbb{C}}, u,w\in V$ we have
+	\begin{equation*}
+	v = z_1v_1+\ldots +z_nv_n
+	\end{equation*}
+
+	Let $z_k=a_k+ib_k$ where $a_k,b_k\in \mathbb{R}$. Then we have
+	\begin{equation*}
+	u = a_1v_1+\ldots +a_nv_n,\quad w=b_1v_1+\ldots +b_nv_n
+	\end{equation*}
+	Then $a_k,b_k$ exists and is unique.
+\end{proof}
+
+
+\section{Dimensions}
+Our intuition suggests that the dimension for $\mathbb{F}^{n}$ should me $n$, that is, the number of standard basis. To expand this intuition to an arbitrary vector space, we can show that basis length does not depend on basis.
+
+\begin{theorem}{Basis Length does not depend on Basis}{Basis Length Does Not Depend On Basis}
+For a finite-dimensional vector space, any basis have same length.
+\end{theorem}
+\begin{proof}
+Suppose $V$ is finite-dimensional, let $B_1,B_2$ be two basis. Because $B_1$ is linear independent and $B_2$ spans $V$, then the length of  $B_2$ $\geq $ the length of $B_1$. The other way is exactly the same.
+\end{proof}
+
+Now we define the dimension of a vector space.
+\begin{definition}{Dimensions}{Dimensions}
+The dimension of a finite-dimensional vector space $V$ is the length of its basis, denote $\dim V$
+\end{definition}
+\begin{example}{Dimensions of vector spaces}{Dimensions Of Vector Spaces}
+\begin{itemize}
+\item $\dim \mathbb{F}^{n} = n$ for its standard basis has length $n$.
+\item $\dim \mathscr{P}_m(\mathbb{F}) = m+1$ for the standard basis $1,x, \ldots ,x^m$.
+\item The vector space $\mathbb{C}$ on $\mathbb{C}$ has dimension 1, but $\mathbb{C}$ on $\mathbb{R}$ has dimension 2.
+\end{itemize}
+\end{example}
+
+\begin{theorem}{Dimension of Subspace}{Dimension Of Subspace}
+if $V$ is finite-dimensional, $U \subseteq V$ is a subspace, then $\dim U \leq \dim V$.
+\end{theorem}
+\begin{proof}
+	The basis in $U$ can be expanded to form a basis in $V$, as in \ref{cor:Expanding The Independent List}.
+\end{proof}
+
+Using theorem \ref{thm:Basis Length Does Not Depend On Basis}, we can simplify our criterion for a basis.
+\begin{theorem}{Linear independent list of length $\dim$ is a basis}{Linear Independent List Of Length Dim Is A Basis}
+Suppose $V$ is finite-dimensional,  then every independent list of length $\dim V$ is a basis of $V$.
+\end{theorem}
+\begin{proof}
+Suppose $\dim V=n$, and $v_1, \ldots ,v_n$ is linear independent. If $v_1, \ldots ,v_n$ does not span $V$, it can be expanded to form a basis, which has length $\geq n$, contradicts.
+\end{proof}
+\begin{corollary}{Subspace of full dimension}{Subspace Of Full Dimension}
+If $U$ is a subspace of $V$, and $\dim U=\dim V$, then $U=V$
+\end{corollary}
+\begin{proof}
+Obvious.
+\end{proof}
+
+On the other hand, have the right length and spanning the space all does the trick.
+\begin{theorem}{Spanning list of length $\dim$ is basis}{Spanning List Of Length Dim}
+Suppose $V$ is finite-dimensional, then $\forall $ spanning list $B$ that has length $\dim V$ is a basis.
+\end{theorem}
+\begin{proof}
+Similarly, if not, reduce it.
+\end{proof}
+\begin{remark}
+	Theorems \ref{thm:Criterion For Basis}, \ref{thm:Linear Independent List Of Length Dim Is A Basis}, \ref{thm:Spanning List Of Length Dim} tells us that to identify a basis, any 2 of the following:
+	\begin{itemize}
+	\item A spanning list.
+	\item Linear Independent.
+	\item Has length $\dim V$.
+	\end{itemize}
+	would suffice.
+\end{remark}
+
+\begin{theorem}{Dimension of sum}{Dimension Of Sum}
+If $V_1,V_2$ are 2 subspaces of a finite-dimensional vector space $V$, then 
+\begin{equation}
+\dim (V_1+V_2) = \dim V_1 + \dim V_2 - \dim V_1\cap V_2.
+\end{equation}
+\end{theorem}
+\begin{proof}
+For $V_1\cap V_2$ is also a subspace of $V_1$ and $V_2$, let $v_1, \ldots ,v_n$ be a basis of $V_1\cap V_2$, expand it to a basis $v_1, \ldots ,v_n, u_1, \ldots ,u_m$ of $V_1$, and $v_1, \ldots ,v_n, w_1, \ldots ,w_k$ of $V_2$. Then we will  show that 
+\begin{equation*}
+v_1, \ldots ,v_n, u_1, \ldots ,u_m, w_1, \ldots ,u_k
+\end{equation*}
+is a basis of $V_1+V_2$. Denote it with $B$.
+
+First, as all of the vectors are in $V_1\cup V_2$, then they are in $V_1+V_2$. And the spanning contains $V_1$ and $V_2$ so $\vspan B = V_1+V_2$, as the sum is the smallest.
+
+Then we can show they are linear independent.
+\begin{equation}
+a_1v_1+ \ldots + a_nv_n + b_1u_1+ \ldots +b_mu_m + c_1w_1+\ldots +c_kw_k = \boldsymbol{0}
+\end{equation}
+then
+\begin{equation*}
+c_1w_1+\ldots +c_kw_k = -a_1v_1- \ldots -a_nv_n - b_1u_1 - \ldots -b_mu_m \in V_1
+\end{equation*}
+but $c_1w_1+\ldots +c_kw_k \in V_2$, therefore $c_1w_1+\ldots +c_kw_k \in V_1\cap V_2$.
+\begin{equation*}
+c_1w_1+\ldots +c_kw_k = d_1v_1+\ldots +d_nv_n
+\end{equation*}
+then $c_1=\ldots =c_k=0$.
+Then all of the coefficient is  $0$.
+\end{proof}
+
+\begin{corollary}{Direst Sum Dimension}{Direst Sum Dimension}
+\begin{equation}
+\dim V_1 \oplus V_2  = \dim V_1 + \dim V_2
+\end{equation}
+\end{corollary}
+
+\begin{remark}
+We have noticed astounding similarities between sets and vector spaces
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline
+\textbf{set} & \textbf{vector space} \\
+\hline
+$S$ is a finite set & $V$ is a finite-dimensional vector space \\
+$\# S$ & $\dim V$ \\
+$S_1\cup S_2$ is the smallest containing both & $V_1+V_2$ is the smallest contain both \\
+$\# S_1\cup S_2 = \# S_1+\# S_2 - \# S_1\cap S_2$ & $\dim (V_1+V_2) = \dim V_1 + \dim V_2 - \dim V_1\cap V_2$ \\
+\hline
+\end{tabular}
+\end{center}
+\end{remark}
+
+\begin{example}{Dimensions}{Dimensions}
+\begin{enumerate}
+	\item \textbf{Bernstein polynomials }
+
+		Suppose $m\in \mathbb{Z}_{+}$, for $0\leq k\leq m$, let 
+		\begin{equation}
+		p_k(x) = x^k(1-x)^{m-k}
+		\end{equation}
+		then $p_0, \ldots ,p_m$ is a basis of $\mathscr{P}_m(\mathbb{F})$.
+		\begin{proof}
+		let
+		\begin{equation*}
+		c_0p_0+\ldots +c_mp_m = \boldsymbol{0}
+		\end{equation*}
+		that is, $\forall x \in \mathbb{R}$
+		\begin{equation*}
+		c_0p_0(x)+\ldots +c_mp_m(x)=0
+		\end{equation*}
+		\begin{itemize}
+		\item let $x=0$ we get $c_0=0$.
+		\item if $c_0=\ldots =c_{k-1}=0$, we take $k^\text{th}$ derivative and let $x = 0$, then  $c_k=0$
+		\end{itemize}
+		then $c_0=\ldots =c_m=0$, that is,  $p_0, \ldots ,p_m$ is linear independent.
+		\end{proof}
+
+	\item Suppose $V_1, \ldots ,V_m$ are finite dimensional subspaces of $V$. Then $V_1+\ldots +V_m$ is finite dimensional and
+		\begin{equation}
+		\dim(V_1+\ldots +V_m) \leq \dim V_1+\ldots +\dim V_m
+		\end{equation}
+		\begin{proof}
+		using $\dim (V_1+V_2) = \dim V_1+\dim V_2-\dim V_1\cap V_2$ and induction.
+		\end{proof}
+
+		In fact, equality hold iff all were direct sums.
+\end{enumerate}
+\end{example}
+
+
+\section{The Structure of Finite-dimensional vector space}
+
+We've already have the intuition that the basis of vector space are somewhat like a coordinate system. We shall push this intuition further and prove that any vector space can be understand as $\mathbb{F}^n$.
+
+\begin{theorem}{The Structure of Finite-dimensional vector space }{The Structure Of Finite-Dimensional Vector Space }
+If $V$ is a vector space over $\mathbb{F}$ and $\dim V=n$, then $V \cong \mathbb{F}^n$.
+\end{theorem}
+
+\begin{proof}
+Take $v_1, \ldots ,v_n$ be a basis for $V$. Define a mapping $T:V \rightarrow  \mathbb{F}^n$ as follows:
+
+\begin{equation*}
+T(v_i)=\boldsymbol{e_i}, i=1,2, \ldots ,n
+\end{equation*}
+then $\forall v \in V$, let $v=c_1v_1+\ldots +c_nv_n$, we have
+\begin{equation*}
+T(v) = \sum_{i=1}^{n} c_i \boldsymbol{e_i}
+\end{equation*}
+
+It is easy to check that $T$ is a bijection. And satisfies
+\begin{itemize}
+\item $T(v_1+v_2)= T(v_1)+T(v_2)$ 
+\item $T(\lambda v) = \lambda T(v)$
+\end{itemize}
+\end{proof}
+
+
+
+
+\end{document}

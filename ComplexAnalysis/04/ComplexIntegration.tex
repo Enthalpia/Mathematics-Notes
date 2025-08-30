@@ -1,0 +1,1647 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\chapter{Complex Integration}
+
+\section{Fundamental Theorems}
+Similar to the real case, we have definite and indefinite integrals for complex field.
+
+\subsection{Line Integral}
+A direct generalization of the real integral is the integral of a function $f: [a,b] \subseteq \mathbb{R} \rightarrow \mathbb{C}$. If $f(t) = u(t)+iv(t)$, then
+\begin{equation}
+	\int_a^b f(t) \mathrm{d} t = \int_a^b u(t) \mathrm{d} t + i \int_a^b v(t) \mathrm{d} t
+\end{equation}
+It has similar properties as the real integral, such as linearity, additivity, and monotonicity. If $c\in \mathbb{C}$ we have
+\begin{equation*}
+	\int_a^b c f(t) \mathrm{d} t = c \int_a^b f(t) \mathrm{d} t
+\end{equation*}
+and if $a \leq b$ the fundamental inequality holds:
+\begin{equation*}
+	\left| \int_a^b f(t) \mathrm{d} t \right| \leq \int_a^b |f(t)| \mathrm{d} t
+\end{equation*}
+
+This would naturally turn to our definition of a complex line integral.
+
+\begin{definition}{Complex Line Integral}{Complex Line Integral}
+	Let $\gamma$ be a piecewise differentiable arc with equation $z=z(t)$, $a\leq t\leq b$. If $f: \gamma \rightarrow \mathbb{C}$ is continuous on $\gamma$, then the complex line integral of $f$ along $\gamma$ is defined as
+	\begin{equation}
+		\int_{\gamma} f(z) \mathrm{d} z = \int_a^b f(z(t)) z'(t) \mathrm{d} t
+	\end{equation}
+\end{definition}
+It is easy to show that the definition is invariant under reparametrization.
+
+\begin{remark}
+The integral can be defined by the Riemann sum just like the real case. If $\gamma$ is a polygonal arc, then the integral can be computed as
+\begin{equation}
+	\int_{\gamma} f(z) \mathrm{d} z =\lim \sum_{k=1}^n f(z_k) (z_k - z_{k-1})
+\end{equation}
+where $z_k$ are the points on $\gamma$ with max distance tend to zero.
+\end{remark}
+
+\begin{proposition}{Some Properties of Line Integrals}{Some Properties of Line Integrals}
+Similar of that of $\mathbb{R}^2$, we have
+\begin{itemize}
+	\item The reverse direction of $\gamma$ is $-\gamma$, then
+		\begin{equation}
+			\int_{-\gamma} f(z) \mathrm{d} z = -\int_{\gamma} f(z) \mathrm{d} z
+		\end{equation}
+	\item Additive to the arcs:
+		\begin{equation}
+			\int_{\gamma_1 + \gamma_2} f(z) \mathrm{d} z = \int_{\gamma_1} f(z) \mathrm{d} z + \int_{\gamma_2} f(z) \mathrm{d} z
+		\end{equation}
+	\item Expanding the integral, if $f=u+iv$ we have
+		\begin{equation*}
+			\int_{\gamma} f(z) \mathrm{d} z = \int_{\gamma} u \mathrm{d} x - v \mathrm{d} y + i \int_{\gamma} v \mathrm{d} x + u \mathrm{d} y
+		\end{equation*}
+	\item For respect to the arc length, we have
+		\begin{equation*}
+			\int_{\gamma} f(z) \mathrm{d} s = \int_{\gamma} f(z) \left|\mathrm{d} z\right| = \int_a^b f(z(t)) \left|z'(t)\right| \mathrm{d} t
+		\end{equation*}
+		And the fundamental inequality holds:
+		\begin{equation*}
+			\left| \int_{\gamma} f(z) \mathrm{d} s \right| \leq \int_{\gamma} |f(z)| \mathrm{d} s
+		\end{equation*}
+\end{itemize}
+\end{proposition}
+
+For integrals of the conjugate, we have
+\begin{equation}
+	\int_{\gamma} f(z) \overline{\mathrm{d} z} = \overline{\int_{\gamma} \overline{f(z)} \mathrm{d} z}
+\end{equation}
+So we can write:
+\begin{equation*}
+\begin{aligned}
+	\int_{\gamma}f(z) \mathrm{d} x &= \frac{1}{2} \left( \int_{\gamma} f(z) \mathrm{d} z + \int_{\gamma} f(z) \overline{\mathrm{d} z} \right) \\
+	\int_{\gamma}f(z) \mathrm{d} y &= \frac{1}{2i} \left( \int_{\gamma} f(z) \mathrm{d} z - \int_{\gamma} f(z) \overline{\mathrm{d} z} \right)
+\end{aligned}
+\end{equation*}
+
+\subsection{Rectifiable Arcs}
+\begin{definition}{Rectifiable Arcs}{Rectifiable Arcs}
+The length of an arc can be defined as the least upper bound of the sums of the lengths of the polygonal arcs that approximate it. That is,
+\begin{equation*}
+	\left|z(t_1)-z(t_0)\right| + \cdots + \left|z(t_n)-z(t_{n-1})\right| = \sum_{k=1}^n \left|z(t_k)-z(t_{k-1})\right|
+\end{equation*}
+where $a = t_0 < t_1 < \cdots < t_n = b$ is a partition of the interval $[a,b]$. The arc is said to be rectifiable if the length is finite.
+\end{definition}
+
+It is easy to show that piecewise differentiable arcs are rectifiable.
+
+When $\gamma$ is rectifiable, we can define the integral with respect to the arc length:
+\begin{definition}{Integral with Respect to Arc Length}{Integral with Respect to Arc Length}
+	Let $\gamma$ be a rectifiable arc, then the integral of $f$ with respect to the arc length is defined as
+	\begin{equation}
+		\int_{\gamma} f(z) \mathrm{d} s = \lim \sum_{k=1}^n f(z_k) \left|z_k - z_{k-1}\right|
+	\end{equation}
+\end{definition}
+
+\subsection{Line Integral As Functions of Arcs}
+If $p,q: \mathbb{R}^2 \rightarrow \mathbb{R}^2$ are continuous in $\Omega$, and $\gamma$ is any piecewise differentiable arc in $\Omega$, then we have a function
+\begin{equation}
+	\gamma \mapsto \int_{\gamma} p \mathrm{d} x + q \mathrm{d} y
+\end{equation}
+This is a functional on the space of arcs in $\Omega$. In analysis, we've known that the integral is zero for every closed curve is called a \textbf{conservative field}.
+
+\begin{quote}
+	Let $p,q$ be continuously differentiable on a region $\Omega \subseteq \mathbb{R}^2$. The line integral $ \displaystyle \int_{\gamma} p \mathrm{d} x + q \mathrm{d} y$ is independent of the path $\gamma$ if and only if there exists a function $U: \Omega \rightarrow \mathbb{R}^2$ such that $\displaystyle p = \frac{\partial U}{\partial x}$ and $\displaystyle q = \frac{\partial U}{\partial y}$.
+
+	The function $U$ is called a \textbf{potential function} of the field $(p,q)$, and it is unique up to an additive constant.
+\end{quote}
+
+Now, when do a continuous function $f: \mathbb{C}\rightarrow \mathbb{C}$ has a primitive function $F$ such that $F'=f$ ?
+
+Let $f=u+iv$, then we have
+\begin{equation*}
+	u = \frac{\partial F}{\partial x}, \quad v = \frac{\partial F}{\partial y}
+\end{equation*}
+Comparing to the last theorem, we have
+\begin{theorem}{Indefinite Integralizable Functions}{Indefinite Integralizable Functions}
+	If $f$ is continuous, and has continuous partial derivatives in a simply connected domain $\Omega \subseteq \mathbb{C}$, then there exists a function $F: \Omega \rightarrow \mathbb{C}$ such that $F'=f$ iff the integral $\displaystyle \int_{\gamma} f(z) \mathrm{d} z$ is only dependent on the endpoints of $\gamma$ and not on the path taken.
+\end{theorem}
+NOTE that the region can have holes, but it must be simply connected.
+
+An immediate example shows that
+\begin{equation}
+\int_{\gamma} (z-a)^n \mathrm{d} z = 0, n\in \mathbb{N}
+\end{equation}
+As $(z-a)^n$ has a primitive function $\displaystyle F(z) = \frac{(z-a)^{n+1}}{n+1}$, which is analytic on $\mathbb{C}$. If $n<0,n\neq -1$, then the result also holds for any closed curves that do not pass through $a$.
+
+For $n=-1$, the result does not hold, for a circle $C: z=a+ \rho e^{it},0\leq t\leq 2 \pi$, we have
+\begin{equation}
+	\int_C \frac{\mathrm{d} z}{z-a} = \int_0^{2\pi} i \rho e^{it} \cdot \frac{1}{\rho e^{it}} \mathrm{d} t = 2 \pi i
+\end{equation}
+\begin{remark}
+This implies that it is impossible to define a single-valued branch of $\log (z-a)$ in an annulus $\rho_1 < |z-a| < \rho_2$.
+\end{remark}
+
+\subsection{Cauchy's Integral Theorem for Rectangles}
+
+Let $R$ be a rectangle defined $a\leq x\leq b,c\leq y\leq d$. Let the boundary (counterclockwise) be $\partial R$. (Note that $R$ is closed, so not a region)
+
+\begin{theorem}{Cauchy's Integral Theorem on Rectangles}{Cauchys Integral Theorem on Rectangles}
+If $f$ is analytic on $R$, (on an open region containing $R$), then
+\begin{equation}
+	\int_{\partial R} f(z) \mathrm{d} z = 0
+\end{equation}
+\end{theorem}
+\begin{proof}
+Let
+\begin{equation*}
+	\eta(R) = \int_{\partial R} f(z) \mathrm{d} z
+\end{equation*}
+Divide $R$ into four congruent rectangles $R^{(1)}, R^{(2)}, R^{(3)}, R^{(4)}$ with the same orientation as $R$, then we have
+\begin{equation*}
+	\eta(R) = \eta(R^{(1)}) + \eta(R^{(2)}) + \eta(R^{(3)}) + \eta(R^{(4)})
+\end{equation*}
+We have one of the four rectangles $R^{(k)}$, denoted by $R_1$, having
+\begin{equation*}
+\left|\eta(R_1)\right| \geq \frac{1}{4} \left|\eta(R)\right|
+\end{equation*}
+
+Repeat the process and get $R \supset R_1 \supset R_2 \supset \cdots$, we have
+\begin{equation*}
+	\left|\eta(R_n)\right| \geq \frac{1}{4^n} \left|\eta(R)\right|
+\end{equation*}
+
+From the nested chain of closed sets, we have a $z^*\in R_n$ for all $n$, so for given $\epsilon>0$, there exists $\delta>0$ such that $\forall z, \left|z-z^*\right|<\delta$, we have
+\begin{equation*}
+\left|\frac{f(z)-f(z^*)}{z-z^*} - f'(z^*)\right| < \epsilon
+\end{equation*}
+Choose large enough $n$ that $R_n \subseteq \left\{ z: \left|z-z^*\right|<\delta \right\}$. From theorem \ref{thm:Indefinite Integralizable Functions}, we have
+\begin{equation*}
+	\int_{\partial R_n} \mathrm{d} z = 0, \qquad \int_{\partial R_n} z \mathrm{d} z = 0
+\end{equation*}
+So we write
+\begin{equation*}
+	\eta(R_n) = \int_{\partial R_n} \left( f(z) - f(z^*) - (z-z^*) f'(z^*) \right) \mathrm{d} z
+\end{equation*}
+Let $d_n,L_n$ denote the diagonal length and perimeter of $R_n$, so we have $d_n = 2^{-n}d, L_n = 2^{-n}L$, so
+\begin{equation*}
+	\left|\eta(R_n)\right| \leq \epsilon \int_{\partial R_n} \left|z-z^*\right| \left|\mathrm{d} z\right| \leq \epsilon d_n L_n = \epsilon 4^{-n} d L
+\end{equation*}
+So we get
+\begin{equation*}
+\left|\eta(R)\right| \leq \epsilon dL
+\end{equation*}
+As $\epsilon$ can be arbitrarily small, we have $\eta(R) = 0$.
+\end{proof}
+
+Now we weaken the conditions step by step.
+
+\begin{theorem}{Cauchy's Theorem on Stained Rectangles}{Cauchys Theorem on Stained Rectangles}
+Let $R'$ be a rectangle $R$ omitting a finite number of interior points $\zeta_i$, if  $f$ is analytic on $R'$ and 
+\begin{equation*}
+\lim_{z \to \zeta_i} (z-\zeta_i) f(z) = 0, i=1,2,\ldots,n
+\end{equation*}
+holds, then
+\begin{equation}
+	\int_{\partial R} f(z) \mathrm{d} z = 0
+\end{equation}
+\end{theorem}
+\begin{proof}
+We shall only consider one point, as $R$ can be splited into several rectangles $R_i$ with at most one hole.
+
+Let $R_0$ be a small rectangle surrounding $\zeta$, splitting shows that
+\begin{equation*}
+	\int_{\partial R} f(z) \mathrm{d} z = \int_{\partial R_0} f(z) \mathrm{d} z
+\end{equation*}
+For any $\epsilon>0$, choose small enough $R_0$ that
+\begin{equation*}
+\left|f(z)\right|\leq \frac{\epsilon}{\left|z-\zeta\right|}
+\end{equation*}
+Thus,
+\begin{equation*}
+	\left|\int_{\partial R}f(z) \mathrm{d} z\right| \leq \epsilon \int_{\partial R_0} \frac{\left|\mathrm{d} z\right|}{\left|z-\zeta\right|} \leq 8 \epsilon
+\end{equation*}
+\end{proof}
+
+Note the condition holds automatically if $f$ is bounded on $R'$.
+
+\subsection{Cauchy's Theorem in Disk}
+Let $\Delta$ denote an open disk $\left|z-z_0\right|<\rho$.
+\begin{theorem}{Cauchy's Theorem on Disk}{Cauchys Theorem on Disk}
+If $f(z)$ is analytic in an open disk $\Delta$. Then
+\begin{equation}
+\int_{\gamma} f(z) \mathrm{d} z = 0
+\end{equation}
+for every closed curve $\gamma$ in $\Delta$.
+\end{theorem}
+
+\begin{figure}[ht]
+    \centering
+    \incfig{diagram-of-f(z)}
+    \caption{Diagram of F(z)}
+    \label{fig:diagram-of-f(z)}
+\end{figure}
+
+\begin{proof}
+	Let $\displaystyle F(z) = \int_{\sigma} f(z)\mathrm{d} z$, where $\sigma$ is the rectangular route (either up or down is the same) from $z_0$ to $z$ as shown in Figure \ref{fig:diagram-of-f(z)}. Then by the two routes respectively, we have
+	\begin{equation*}
+		\frac{\partial F}{\partial x} = f(z), \quad \frac{\partial F}{\partial y} = i f(z)
+	\end{equation*}
+	Therefore, $F$ follows the Cauchy-Riemann equations, and $F'(z) = f(z)$.
+\end{proof}
+Similarly, we also have
+\begin{theorem}{Cauchy's Theorem on Disk with Holes}{Cauchy's Theorem on Disk with Holes}
+	Let $\Delta'$ be an open disk $\left|z-z_0\right|<\rho$ omitting a finite number of interior points $\zeta_i$, if $f$ is analytic on $\Delta'$ and
+	\begin{equation*}
+		\lim_{z \to \zeta_i} (z-\zeta_i) f(z) = 0, i=1,2,\ldots,n
+	\end{equation*}
+	then
+	\begin{equation*}
+		\int_{\gamma} f(z) \mathrm{d} z = 0
+	\end{equation*}
+	for every closed curve $\gamma$ in $\Delta'$.
+\end{theorem}
+
+\section{Cauchy's Integral Formula}
+
+\subsection{The Index of a Point}
+This formulate our notion of how many times a closed curve winds around a point not on the curve.
+
+\begin{lemma}{The Index Lemma}{The Index Lemma}
+	If $\gamma$ is a piecewise differentiable closed curve in $\mathbb{C}$, and $a$ is a point not on $\gamma$, then there exists $n\in \mathbb{Z}$ that
+	\begin{equation}
+		\int_{\gamma} \frac{\mathrm{d} z}{z-a} = 2 \pi i n
+	\end{equation}
+\end{lemma}
+\begin{proof}
+The simplest proof is computation. Let $\gamma:z=z(t)$, where $\alpha\leq t\leq \beta$, so we have
+\begin{equation*}
+h(t) = \int_{\alpha}^t \frac{z'(t)}{z(t)-a} \mathrm{d} t
+\end{equation*}
+it is continuous and differentiable on $[\alpha,\beta]$.
+\begin{equation*}
+	h'(t) = \frac{z'(t)}{z(t)-a}
+\end{equation*}
+Multiplying to the left, we have the derivative of the function $e^{-h(t)}(z(t)-a)$ is zero. So we have
+\begin{equation*}
+	e^{h(t)} = \frac{z(t)-a}{z(\alpha)-a}
+\end{equation*}
+Since $z(\alpha)=z(\beta)$, we have $e^{h(\beta)} = 1$, so $h(\beta) = 2 \pi i n$ for some integer $n$.
+\end{proof}
+
+\begin{definition}{Index of a Point to a Curve}{Index of a Point to a Curve}
+	If $\gamma$ is a piecewise differentiable closed curve in $\mathbb{C}$, and $a$ is a point not on $\gamma$, then the index of $a$ to $\gamma$ is defined as
+	\begin{equation}
+		n(\gamma,a) = \frac{1}{2\pi i} \int_{\gamma} \frac{\mathrm{d} z}{z-a}
+	\end{equation}
+	$n$ is also called the winding number of $\gamma$ around $a$.
+\end{definition}
+
+The following are some properties of the index:
+\begin{itemize}
+\item It is clear that $n(-\gamma,a) = -n(\gamma,a)$.
+\item If $\gamma$ lies in an open disk, and $a$ is outside of the open disk, then $n(\gamma,a) = 0$.
+\end{itemize}
+
+A closed curve $\gamma$ is a closed point set, and its complement is open so can be divided into components as open regions. We say $\gamma$ determines these regions.
+
+\begin{theorem}{Regions by a Closed Curve}{Regions by a Closed Curve}
+The function $a \mapsto n(\gamma,a)$ is constant for each region determined by $\gamma$.
+\end{theorem}
+\begin{proof}
+As two points in a region can be joined by a polygonal path. We only need to prove when the segment $ab$ does not meet $\gamma$ and lies in the same region.
+
+Outside the segment the function $\displaystyle \frac{z-a}{z-b}$ is never real and $\leq 0$. Then $\displaystyle \log \frac{z-a}{z-b}$ can be analytically defined on $\mathbb{C}-(-\infty ,0]$. Its derivative is what we want:
+\begin{equation*}
+	\frac{\mathrm{d}}{\mathrm{d} z} \log \frac{z-a}{z-b} = \frac{1}{z-a} - \frac{1}{z-b}
+\end{equation*}
+Therefore, we have
+\begin{equation*}
+	\int_{\gamma} \frac{\mathrm{d} z}{z-a} - \int_{\gamma} \frac{\mathrm{d} z}{z-b} = 0
+\end{equation*}
+\end{proof}
+
+Specifically, if $\left|a\right|$ is sufficiently large, then $n(\gamma,a) = 0$. So the index is zero for the unbounded region determined by $\gamma$.
+
+The case where $n(\gamma,a)=1$ is worth noting. For convenience, we want $a=0$.
+
+\begin{lemma}{When Index is 1}{When Index is 1}
+Let $z_1,z_2$ be points on a closed curve $\gamma$ which does not pass through $0$. Following the direction of the curve, we denote $\gamma_1$ be the subarc from $z_1$ to $z_2$, and $\gamma_2$ be the subarc from $z_2$ to $z_1$. Also assume $\im z_1 <0,\im z_2>0$. If $\gamma_1$ does not intersect the negative real axis, and $\gamma_2$ does not intersect the positive real axis, then $n(\gamma,0)=1$.
+\end{lemma}
+
+\begin{figure}[ht]
+    \centering
+    \incfig{when-index-is-1}
+    \caption{When Index is 1}
+    \label{fig:when-index-is-1}
+\end{figure}
+\begin{proof}
+Well this is a how we formulate our intuition of winding the origin once.
+
+Take a small circle around the origin, and the origin belongs to the unbounded region of the two sides, so we have $n(\gamma,0) = n(C,0)=1$.
+\end{proof}
+
+\subsection{The Integral Formula}
+
+Let $f(z)$ be analytic on an open disk $\Delta$. Let $\gamma$ be a closed piecewise differentiable curve in $\Delta$ and $a$ be a point not on $\gamma$.
+
+We apply Cauchy's theorem on disks with holes \ref{thm:Cauchy's Theorem on Disk with Holes} for the function
+\begin{equation}
+F(z) = \frac{f(z)-f(a)}{z-a}
+\end{equation}
+We have
+\begin{equation}
+	\int_{\gamma} F(z) \mathrm{d} z = 0
+\end{equation}
+\begin{equation}
+	\int_{\gamma} \frac{f(z)}{z-a} \mathrm{d} z = f(a) \int_{\gamma} \frac{\mathrm{d} z}{z-a}
+\end{equation}
+
+\begin{theorem}{Cauchy's Integral Theorem}{Cauchys Integral Theorem}
+Suppose $f$ is analytic on an open disk $\Delta$ (there can be exceptional points $\zeta_j$, such that $\lim_{z \to \zeta_j} (z-\zeta_j)f(z) =0$), and $\gamma$ be a closed piecewise differentiable curve in $\Delta$ and $a$ is a point not on $\gamma$. Then
+\begin{equation}
+	n(\gamma,a) f(a) = \frac{1}{2\pi i} \int_{\gamma} \frac{f(z)}{z-a} \mathrm{d} z
+\end{equation}
+NOTE here $a$ may not be in $\Delta$.
+\end{theorem}
+
+\begin{remark}
+	The region which $f$ is analytic on may also be not a disk, as long as theorem \ref{thm:Cauchy's Theorem on Disk with Holes} holds, we can still apply the theorem.
+\end{remark}
+
+An immediate usage is when $n(\gamma,a)=1$, we have
+\begin{equation}
+	f(a) = \frac{1}{2\pi i} \int_{\gamma} \frac{f(z)}{z-a} \mathrm{d} z, \quad a\notin \gamma, n(\gamma,a)=1
+\end{equation}
+This is called the Cauchy's integral formula.
+
+\subsection{Higher Order Derivatives}
+The Cauchy's integral formula provided us with a powerful tool to study the local properties of analytic functions.
+
+\begin{lemma}{Derivatives Under Integral}{Derivatives Under Integral}
+	The function $\varphi(z,t)$ is defined for $z\in \Omega$ and $t\in [\alpha,\beta]$ and is continuous. If $\forall t, z \mapsto \varphi(z,t)$ is analytic, then
+	\begin{equation}
+	F(z) = \int_{\alpha}^{\beta} \varphi(z,t) \mathrm{d} t
+	\end{equation}
+	is analytic in $\Omega$ and
+	\begin{equation}
+	F'(z) = \int_{\alpha}^{\beta} \frac{\partial \varphi(z,t)}{\partial z}\mathrm{d} t
+	\end{equation}
+\end{lemma}
+\begin{proof}
+	Using the definition, we have
+	\begin{equation*}
+	\frac{F(z)-F(z_0)}{z-z_0} = \int_{\alpha}^{\beta} \frac{\varphi(z,t)-\varphi(z_0,t)}{z-z_0} \mathrm{d} t
+	\end{equation*}
+	Just like the real case, get a small closed space around $z_0$, and continuity of $\varphi$ in a closed set implies uniform continuity. Using the $\epsilon-\delta$ language it is easy.
+\end{proof}
+
+Let $f$ be analytic on the region $\Omega$. For a point $a\in \Omega$ consider its $\delta$-neighborhood $\Delta = N_\delta(a) = \{ z: |z-a|<\delta \}$ contained in $\Omega$.  In $\Delta$ we have a circle $C$ around $a$, so we have
+\begin{equation*}
+	f(z) = \frac{1}{2 \pi i} \int_C \frac{f(\zeta)}{\zeta - z} \mathrm{d} \zeta, \qquad \forall z \text{ inside }C
+\end{equation*}
+Provided that the derivative can be done inside the integral, we have
+\begin{equation}
+	f'(z) = \frac{1}{2 \pi i} \int_C \frac{f(\zeta)}{(\zeta - z)^2} \mathrm{d} \zeta, \qquad \forall z \text{ inside }C
+\end{equation}
+And higher order derivatives can be computed similarly:
+\begin{equation}\label{eq:Cauchy's Integral Formula for Derivatives}
+	f^{(n)}(z) = \frac{n!}{2 \pi i} \int_C \frac{f(\zeta)}{(\zeta - z)^{n+1}} \mathrm{d} \zeta, \qquad \forall z \text{ inside }C
+\end{equation}
+As the choice of $a$ is arbitrary in $\Omega$, we've proven that $f$ has arbitrary order derivatives in $\Omega$.
+
+The following are some classical results of Cauchy's integral formula.
+\begin{theorem}{Morera's Theorem}{Moreras Theorem}
+	Let $f$ be continuous on a region $\Omega \subseteq \mathbb{C}$. If for every closed curve $\gamma$ in $\Omega$, we have
+	\begin{equation}
+		\int_{\gamma} f(z) \mathrm{d} z = 0
+	\end{equation}
+	then $f$ is analytic on $\Omega$.
+\end{theorem}
+\begin{proof}
+We know that $f$ is the derivative of some analytic function $F$ on $\Omega$. So $f$ is analytic.
+\end{proof}
+
+\begin{theorem}{Cauchy's Estimation}{Cauchys Estimation}
+	Let $f$ be analytic on a disk $\Delta$ with radius $r$ centered at $a$. Then for any $z\in \Delta$, we have
+	\begin{equation}
+		\left|f^{(n)}(z)\right| \leq \frac{M}{r^n} n!, \quad M = \max_{\left|\zeta-a\right|=r} \left|f(\zeta)\right|
+	\end{equation}
+\end{theorem}
+\begin{proof}
+We use Cauchy's integral formula \ref{eq:Cauchy's Integral Formula for Derivatives}. If we have $\left|f(z)\right|\leq M$ for all $z\in C$, then let the radius of the circle $C$ be $r$, we have
+	\begin{equation}
+		\left|f^{(n)}(z)\right| = \left|\frac{n!}{2 \pi i} \int_C \frac{f(\zeta)}{(\zeta - z)^{n+1}} \mathrm{d} \zeta\right| \leq \frac{M n!}{r^n}
+	\end{equation}
+\end{proof}
+
+\begin{theorem}{Liouville's Theorem}{Liouvilles Theorem}
+	Let $f$ be a bounded analytic function on $\mathbb{C}$. Then $f$ is constant.
+\end{theorem}
+\begin{proof}
+	For $n=1$ we have 
+	\begin{equation*}
+		\left|f'(z)\right| \leq \frac{M}{r}, \forall r>0
+	\end{equation*}
+	So we have $f'(z)=0$.
+\end{proof}
+This leads to a trivial proof of the fundamental theorem of algebra: Every non-constant complex polynomial $p(z)$ has at least one root in $\mathbb{C}$.
+\begin{proof}
+	Suppose $P(z)$ is a polynomial with degree $n\geq 1$. Then $f(z) = 1 / P(z)$ is bounded and analytic if there are no roots. By Liouville's theorem, $f(z)$ is constant, which contradicts.
+\end{proof}
+
+\section{Local Properties of Analytic Functions}
+
+\subsection{Removable Singularities and Taylor's Formula}
+
+We've shown that the Cauchy's Theorem holds for regions that have finite exceptional points $\zeta_j$. However, we will see that these are not actual singularities. They can be filled and thus producing a whole analytic function on the entire region.
+
+\begin{theorem}{Removable Singularities}{Removable Singularities}
+	If $\Omega$ is an open region, and $\Omega'$ is contracted by $\Omega$ omitting a point $a$. Suppose $f$ is analytic on $\Omega'$. Then there is an analytic function $g$ on $\Omega$ which $\forall z\in \Omega', g(z) = f(z)$ iff we have
+	\begin{equation*}
+	\lim_{z \to a} (z-a)f(z) = 0
+	\end{equation*}
+	The extended function $g$ is unique.
+\end{theorem}
+\begin{proof}
+The necessity and uniqueness is trivial to notice. To prove sufficiency we let $D$ be an open disk that $\overline{D} \subseteq \Omega$ with center $a$. Define $g(z) = f(z)$ for $z\notin D$ and
+\begin{equation*}
+g(z) = \frac{1}{2 \pi i}\int_{\partial D} \frac{f(\zeta) \mathrm{d} \zeta}{\zeta-z}, \qquad z\in D
+\end{equation*}
+Then $g$ is the desired function.
+\end{proof}
+
+If $f$ is analytic on $\Omega$ and $a\in \Omega$, we apply the theorem to the function
+\begin{equation*}
+	F(z) = \frac{f(z) - f(a)}{z-a}
+\end{equation*}
+Then $F(z)$ has an analytic extension on $\Omega$, denoted $f_1(z)$ with $f_1(z) = f'(a)$. Resume the construction, we have
+\begin{equation}
+\begin{aligned}
+	f(z) &= f(a) + (z-a) f_1(z)\\
+	f_1(z) &= f(a) + (z-a) f_2(z)\\
+	       &\cdots \cdots \\
+	f_{n-1}(z) &= f(a) + (z-a) f_n(z)\\
+\end{aligned}
+\end{equation}
+Getting together, we have
+\begin{equation*}
+f(z) = f(a) + (z-a)f_1(a) + (z-a)^2f_2(a) + \cdots + (z-a)^{n-1}f_{n-1}(a) + (z-a)^n f_n(z)
+\end{equation*}
+Taking $n^{\text{th}}$ derivative, we have
+\begin{equation*}
+f^{(n)}(a) = n!f_n(a)
+\end{equation*}
+
+\begin{theorem}{Taylor's Theorem}{Taylors Theorem}
+	If $f$ is analytic on $\Omega$ and $a\in \Omega$, then
+	\begin{equation*}
+	f(z) = \sum_{k=0}^{n-1} \frac{1}{k!}f^{(k)}(a) (z-a)^k + f_n(z)(z-a)^n
+	\end{equation*}
+	Where $f_n$ is analytic in $\Omega$.
+\end{theorem}
+For $z\in D$, writing
+\begin{equation*}
+f_n(z) = \frac{1}{2 \pi i}\int_{\partial D} \frac{f_n(\zeta)}{\zeta-z}\mathrm{d} \zeta = \frac{1}{2 \pi i}\int_{\partial D} \frac{f(\zeta)}{(\zeta-a)^n(\zeta-z)} \mathrm{d} \zeta - R(z)
+\end{equation*}
+The integrals in $R(z)$ has the form
+\begin{equation*}
+F_{\nu} = \int_{\partial D} \frac{\mathrm{d} \zeta}{(\zeta-a)^{\nu}(\zeta-z)}, \qquad \nu \geq 1
+\end{equation*}
+Taking it as a function of $a$. We have
+\begin{equation*}
+F_1 = \frac{1}{z-a}\int_{\partial D} \left(\frac{1}{\zeta-z}-\frac{1}{\zeta-a}\right)\mathrm{d} \zeta = 0
+\end{equation*}
+Then we have
+\begin{equation*}
+F_{\nu+1} = \frac{1}{\nu!} \frac{\mathrm{d}^{\nu}F_1}{\mathrm{d} a^{\nu}} = 0
+\end{equation*}
+Therefore, $R=0$ and we have
+\begin{equation}\label{eq:Evaluation of fn}
+f_n(z) = \frac{1}{2 \pi i}\int_{\partial D} \frac{f(\zeta) \mathrm{d} \zeta}{(\zeta-a)^{n}(\zeta-z)}, \qquad z\in D
+\end{equation}
+
+\subsection{Zeros and Poles}
+We'll see that local properties of an analytic function has surprising influence on the global properties of the function.
+
+\begin{theorem}{All Derivatives Zero}{All Derivatives Zero}
+	Let $f$ be analytic on $\Omega$ and $a\in \Omega$. If $f^{(n)}(a) = 0$ for all $n\geq 0$, then $f(z) = 0$ for all $z\in \Omega$.
+\end{theorem}
+\begin{proof}
+We write
+\begin{equation*}
+f(z) = f_n(z) (z-a)^n
+\end{equation*}
+according to Taylor's theorem. An estimation of $f_n$ can be obtained by equation \ref{eq:Evaluation of fn}: If $M = \max \left\{ f(z): z\in \partial D \right\}$ and the radius of $\partial D$ is $R$, then we have
+\begin{equation*}
+	\left|f_n(z)\right| \leq \frac{1}{2 \pi }\int_{\partial D} \frac{M \left|\mathrm{d} \zeta\right|}{R^n(R-\left|z-a\right|)} = \frac{M}{R^n} \cdot \frac{R}{R-\left|z-a\right|}
+\end{equation*}
+Thus we have
+\begin{equation*}
+\left|f(z)\right| \leq \left(\frac{\left|z-a\right|}{R}\right)^n \frac{MR}{R-\left|z-a\right|}, \qquad \forall z\in D, \forall n\in \mathbb{N}
+\end{equation*}
+As $\left|z-a\right| / R < 1$, we have $f(z) = 0$ for all $z\in D$.
+
+To show that $f(z)=0$ for all $z\in \Omega$, we denote
+\begin{equation*}
+E_1 = \left\{ z\in \Omega: \forall n\in \mathbb{N}, f^{(n)}(z) = 0 \right\}, \qquad E_2=\Omega-E_1
+\end{equation*}
+We have $E_1$ being open, as for any $z\in E_1$, we can find a disk $D$ such that $f(z) = 0$ for all $n\geq 0$. $E_2$ is also open for the derivatives of $f$ is continuous. Therefore, the connectedness of $\Omega$ implies that $E_1 = \Omega$ as $a\in E_1$.
+\end{proof}
+
+\paragraph{Local Properties of Zeros}
+
+Now, if $f$ is not identically zero on $\Omega$, then if $f(a) = 0$, there exists a smallest $n\in \mathbb{N}$ that $f^{(n)}(a) \neq 0$. We call $a$ a \textbf{zero of $f$ of order $n$}. Now it is possible to write
+\begin{equation}
+	f(z) = (z-a)^n f_n(z), \qquad \text{ where } f_n \text{ is analytic on } \Omega \text{ and } f_n(a) \neq 0
+\end{equation}
+\begin{remark}
+We can see that the zeros of a nontrivial analytic function has the same local properties as the polynomials, which can also be written in this form.
+\end{remark}
+
+As $f_n$ is continuous, there is a neighborhood $D$ of $a$ such that $f_n(z) \neq 0$ for all $z\in D$. In that neighborhood, $a$ is the only zero of $f$. Thus \textbf{All zeros of a nontrivial analytic function are isolated}.
+
+An equivalent formulation is as follows:
+\begin{quote}
+	$f,g$ are analytic on $\Omega$. If there is a set $S \subseteq \Omega$ containing a limit point in $S$, such that $f(z) = g(z)$ for all $z\in S$, then $f(z) = g(z)$ for all $z\in \Omega$.
+\end{quote}
+Particularly, if $f$ is analytic on a subreigion $\Omega' \subseteq \Omega$, and $f(z) = 0$ holds in $\Omega'$, then $f(z) = 0$ for all $z\in \Omega$. This is true for all subspaces $\Omega'$ that do not reduce to points, like lines, curves, etc.
+
+\paragraph{Poles}
+
+If a function $f$ is analytic on $\Omega-\left\{ a \right\}$, then we say $a$ is an \textbf{isolated singularity} of $f$ on $\Omega$. We've already considered removable singularities. Since we can extend the function to a whole analytic function on $\Omega$, there is no need for further discussion.
+
+Let $a$ be an isolated singularity of $f$. If $\displaystyle \lim_{z \to a} f(z) = \infty $, then we say $a$ is a \textbf{pole} of $f$. In a near neighborhood $\Omega'$ of $a$, we have $f(z)\neq 0$, and the function $g(z) = 1 / f(z)$ is defined and analytic on $\Omega'-\left\{ a \right\}$. As $\lim_{z \to a} g(z) = 0$, then $a$ is a removable singularity of $g$, with $g(a) = 0$. The zero $a$ has finite order $h$, with $g(z) = (z-a)^hg_h(z),g_h(a)\neq 0$. So we write
+\begin{equation}
+	f(z) = (z-a)^{-h} f_h(z), \qquad \text{ where } f_h \text{ is analytic on } \Omega' \text{ and } f_h(a) \neq 0
+\end{equation}
+The number $h$ is called the \textbf{order of the pole} of $f$ at $a$. Similar to the zeros, we can see that the poles of a nontrivial analytic function is also isolated. (This is partly because our definition of poles require a limit process, which is not possible for a non-isolated singularity.)
+
+\begin{remark}
+	There are singularities that are not removable and not poles. The limit process near such singularities does not exist.
+\end{remark}
+
+\begin{definition}{Meromorphic}{Meromorphic}
+	A function $f$ is called \textbf{meromorphic} on $\Omega$ if it is analytic on $\Omega$ except for some isolated singularities, which are all poles.
+\end{definition}
+
+\begin{proposition}{The Operations of Meromorphics}{The Operations of Meromorphics}
+	The sum, difference, product, and quotient of two non-trivial(not zero) meromorphic functions is also meromorphic. The composition of a meromorphic function with an analytic function is also meromorphic.
+\end{proposition}
+
+\begin{proof}
+	For any point $z$, we can write $f(z) = (z-z_0)^n f_n(z)$, where $f_n(z_0)\neq 0$, for a non-zero, non-pole point, $n=0$ would do. Substituting this for $f,g$ it is easy to verify the result.
+\end{proof}
+
+To make a clear classification of isolated singularities, we consider the expressions (where $\alpha\in \mathbb{R}$)
+\begin{enumerate}
+\item $\displaystyle \lim_{z \to a} \left|z-a\right|^{\alpha}\left|f(z)\right| = 0$.
+\item $\displaystyle \lim_{z \to a} \left|z-a\right|^{\alpha}\left|f(z)\right| = \infty$.
+\end{enumerate}
+
+If $f=0$, then 1 always holds, and 2 never holds.
+
+If $f$ is not trivial, and 1 holds for certain $\alpha_0$, then it holds for $\forall \alpha\geq \alpha_0$. Let $m\geq \alpha_0$ be an integer, then $(z-a)^mf(z)$ has a removable singularity that is a zero of finite order $k\in \mathbb{Z}_+$, so we have $(z-a)^mf(z) = (z-a)^kf_h(z)$, letting $h = m-k$, we have $f(z) = (z-a)^{-h} f_h(z)$, where $f_h$ is analytic on $\Omega'$ and $f_h(a)\neq 0$. Therefore, 1 holds for all $\alpha>h$, and 2 holds for all $\alpha\leq h$.
+
+If 2 holds for certain $\alpha_0$, then it holds for $\forall \alpha\leq \alpha_0$. We have a similar discussion with the same result as above.
+
+We conclude that there are three possibilities for an isolated singularity $a$ of a nontrivial function $f$:
+\begin{enumerate}[label=(\roman*)]
+	\item 1 holds for all $\alpha\in \mathbb{R}$, then $f=0$.
+	\item There is an integer $h$ such that 1 holds for all $\alpha>h$ and 2 holds for all $\alpha\leq h$. The integer $h$ is called the \textbf{algebraic order} of the singularity. It is positive for a pole, negative for a zero, and zero for a non-zero, non-pole analytic point.
+	\item Neither 1 nor 2 holds for any $\alpha\in \mathbb{R}$. Such singularities are called \textbf{essential isolated singularities}.
+\end{enumerate}
+
+If $a$ is a pole of order $h$, apply Taylor's theorem to the analytic function $(z-a)^hf(z)$, we have
+\begin{equation*}
+	(z-a)^hf(z) = B_h + B_{h-1}(z-a) + \cdots + B_1(z-a)^{h-1} + \varphi(z) (z-a)^h
+\end{equation*}
+where $\varphi(z)$ is analytic at $z=a$. Thus, we have
+\begin{equation}
+	f(z) = \frac{B_h}{(z-a)^h} + \frac{B_{h-1}}{(z-a)^{h-1}} + \cdots + \frac{B_1}{z-a} + \varphi(z)
+\end{equation}
+The part $\displaystyle \frac{B_h}{(z-a)^h} + \frac{B_{h-1}}{(z-a)^{h-1}} + \cdots + \frac{B_1}{z-a}$ is called the \textbf{singular part} of $f$ at $a$.
+
+
+The essential isolated singularity is more complicated. We can not write it in a similar form as above. The neighborhood of an essential singularity can come close to any value in $\mathbb{C}$ and $\infty $, as we shall see.
+
+\begin{theorem}{Weierstrass Theorem for Essential Isolated Singularities}{Weierstrass Theorem for Essential Isolated Singularities}
+	Let $f$ be analytic on $\Omega-\left\{ a \right\}$, where $a$ is an essential isolated singularity of $f$. Let $c\in \mathbb{C}$ be any number. Then for any neighborhood $\Omega'$ and any $r>0$, there exists a point $z_0\in \Omega',z_0\neq a$ such that
+	\begin{equation*}
+		\left|f(z_0)-c\right| < r
+	\end{equation*}
+	and there exists a point $z_1\in \Omega',z_1\neq a$ such that
+	\begin{equation*}
+		\left|f(z_1)\right| > \frac{1}{r}
+	\end{equation*}
+\end{theorem}
+\begin{proof}
+	If it is not true, there exists $A\in \mathbb{C},r>0$ and a neighborhood $\Omega'$ of $a$ such that $\forall z\in \Omega',z\neq a$, we have $\left|f(z)-A\right| \geq r$. Then $\forall \alpha<0$, we have
+	\begin{equation*}
+		\lim_{z \to a} \left|z-a\right|^{\alpha} \left|f(z)-A\right| = \infty 
+	\end{equation*}
+	Well, $a$ is not a essential isolated singularity of $f-A$, so there exists $\beta\in \mathbb{R}_+$ that
+	\begin{equation*}
+		\lim_{z \to a} \left|z-a\right|^{\beta} \left|f(z)-A\right| = 0
+	\end{equation*}
+	As $\lim_{z \to a} \left|z-a\right|^{\beta}\left|A\right| = 0$, we have
+	\begin{equation*}
+		\lim_{z \to a} \left|z-a\right|^{\beta} \left|f(z)\right| = 0
+	\end{equation*}
+	Contradicting that $a$ is an essential isolated singularity of $f$.
+
+	The infinity part is similar, if $\left|f(z)\right| \leq 1 / r$, then $\forall \alpha>0$, we have $\lim_{z \to a} \left|z-a\right|^{\alpha} \left|f(z)\right| = 0$, contradicting again.
+\end{proof}
+
+\paragraph{Treating Infinity as a Point}
+The notion of isolated singularity can also apply to $\infty $. The neighborhood of $\infty $ is seen as an open region containing some $\left\{ z: \left|z\right|>R \right\}$. We can transfer the neighborhood of $\infty $ to the neighborhood of $0$ by letting $\displaystyle g(z) = f(\frac{1}{z})$.
+
+If we have $g(z) = z^hg_h(z)$, then $f(z) = g(\frac{1}{z}) = z^{-h}f_h(z)$, where $f_h(z) = g_h(\frac{1}{z})$. The classification of removable singularities, poles, and essential isolated singularities can be done similarly by consulting equations
+\begin{equation*}
+\lim_{z \to \infty} \frac{\left|f(z)\right|}{\left|z\right|^{\alpha}} = 0, \quad \lim_{z \to \infty} \frac{\left|f(z)\right|}{\left|z\right|^{\alpha}} = \infty
+\end{equation*}
+If the singularity is non-trivial and non-essential, then there is a interger $h$ such that the first limit holds for all $\alpha>h$ and the second limit holds for all $\alpha\leq h$. The integer $h$ is called the \textbf{algebraic order} of $f$ at $\infty $. It is positive for a pole, negative for a zero, and zero for a non-zero, non-pole analytic point.
+
+The singular part expansion and Weierstrass theorem can also be done similarly.
+
+
+\subsection{The Local Mapping}
+We want to determine the number of zeros of an analytic function. Consider $f$ is an analytic function (not identically zero) on an open disk  $\Delta$. Let $\gamma$ be a closed curve in $\Delta$ that $\forall z\in \gamma, f(z)\neq 0$. For simplicity we only consider $f$ has finite zeros, denoted $z_1,z_2, \ldots ,z_n$ with multiplicity equals order. So we can write
+\begin{equation}
+	f(z) = (z-z_1)(z-z_2)\cdots (z-z_n)g(z)
+\end{equation}
+where $g$ is analytic on $\Omega$, and $\forall z\in \Omega, g(z)\neq 0$. Taking the logarithm (analytic for a small neighborhood of each point), we have
+\begin{equation}
+	\frac{f'(z)}{f(z)} = \frac{1}{z-z_1} + \frac{1}{z-z_2} + \cdots + \frac{1}{z-z_n} + \frac{g'(z)}{g(z)}
+\end{equation}
+for any $z\neq z_j$ in $\Delta$, particularly for $z\in \gamma$. We can integrate this on $\gamma$. Since $g(z)\neq 0$ on $\Omega$, from Cauchy's Theorem we have
+\begin{equation*}
+\int_{\gamma} \frac{g'(z)}{g(z)} \mathrm{d} z = 0
+\end{equation*}
+
+The definition of index yields
+\begin{equation}
+	n(\gamma,z_1) + \cdots + n(\gamma,z_n) = \frac{1}{2\pi i} \int_{\gamma} \frac{f'(z)}{f(z)} \mathrm{d} z
+\end{equation}
+
+If $f$ has infinite zeros, then we choose a concentric smaller open disk $\Delta'$ that $\gamma \subseteq \Delta', \overline{\Delta'} \subseteq \Delta$ (This is possible due to normality). Then the compactness of $\overline{\Delta'}$ and the isolation of zeros implies that $f$ has only finitely many zeros in $\overline{\Delta'}$, and the above equation still holds, as the zeros outside do not contribute to the sum.
+
+\begin{theorem}{Number of Zeros}{Number of Zeros}
+	Let $f$ be analytic on an open disk $\Delta$ (not identically zero), and $z_j$ are distinct zeros of $f$ that has order $m_j$. Then for every closed curve $\gamma$ in $\Delta$ that does not pass through any $z_j$, we have
+	\begin{equation}
+		\sum_{j} m_j n(\gamma,z_j) = \frac{1}{2\pi i} \int_{\gamma} \frac{f'(z)}{f(z)} \mathrm{d} z 
+	\end{equation}
+	The sum has only finite terms that are not zero.
+\end{theorem}
+The function $w = f(z)$ maps $\gamma$ into a closed curve $\Gamma$ in the $w$-plane. And we have
+\begin{equation*}
+	\int_{\Gamma} \frac{\mathrm{d} w}{w} = \int_{\gamma} \frac{f'(z)}{f(z)} \mathrm{d} z
+\end{equation*}
+Therefore, we have
+\begin{equation}
+	n(\Gamma,0) = \sum_{j} m_j n(\gamma,z_j)
+\end{equation}
+\begin{remark}
+	When $\gamma$ is a circle, then all $n(\gamma,z_j)$ are either $0$ or $1$, and the number of zeros are calculated by theorem \ref{thm:Number of Zeros}.
+\end{remark}
+
+To find the roots of $f(z) = a$, apply theorem \ref{thm:Number of Zeros} to the function $g(z) = f(z) - a$. The zeros of $g$ are the roots of $f(z) = a$, denoted as $z_j(a)$, so we have
+\begin{equation}
+	\sum_{j} m_j(a) n(\gamma,z_j(a)) = \frac{1}{2\pi i} \int_{\gamma} \frac{g'(z)}{g(z)} \mathrm{d} z = \frac{1}{2\pi i} \int_{\gamma} \frac{f'(z)}{f(z)-a} \mathrm{d} z
+\end{equation}
+\begin{equation}
+	n(\Gamma,a) = \sum_{j} m_j(a) n(\gamma,z_j(a))
+\end{equation}
+If $a,b$ are in the same region determined by $\Gamma$, then $n(\Gamma,a) = n(\Gamma,b)$, so we have
+\begin{equation}
+	\sum_{j} m_j(a) n(\gamma,z_j(a)) = \sum_{j} m_j(b) n(\gamma,z_j(b))
+\end{equation}
+
+\begin{theorem}{Local Variation of Roots}{Local Variation of Roots}
+	If $f$ is analytic at a neighborhood of $z_0$ and $f(z_0)=w_0$, and $f(z)-w_0$ has a zero of order $m$ at $z_0$. Then $\forall \epsilon>0$ that $z_0$ is the only zero of $f(z)-w_0$ in $\overline{N_\epsilon(z_0)}$, there exists $\delta>0$ such that $\forall w$ that $\left|w-w_0\right|<\delta$, $f(z)-w$ has exactly $m$ zeros counting multiplicity in $N_\epsilon(z_0)$.
+\end{theorem}
+\begin{proof}
+Letting $\gamma$ be the circle $\partial N_{\epsilon}(z_0)$. Taking $\delta$ such that $N_{\delta}(w_0)\cap f(\gamma) = \emptyset $ would do.
+\end{proof}
+\begin{remark}
+	If we take small enough $\epsilon$, then $f'(z)\neq 0$ for all $z\in N_\epsilon(z_0)-\left\{ z_0 \right\}$. In this case, $\forall a\in w_0$, the $m$ roots of $f(z) = a$ are all simple (of order $1$).
+\end{remark}
+
+\begin{corollary}{Image of Analytic Function on Open Sets}{Image of Analytic Function on Open Sets}
+A nonconstant analytic function maps open sets onto open sets.
+\end{corollary}
+\begin{proof}
+	Let $f$ be analytic on $\Omega$ and nonconstant, and $a\in \Omega$. Let $w_0 = f(a)$, then $f(z)-w_0$ has a zero of order $n\geq 1$ at $a$. Choose $\epsilon>0$ such that $N_\epsilon(a) \subseteq \Omega$ and $f(z)-w_0$ has no other zeros in $\overline{N_\epsilon(a)}$. By theorem \ref{thm:Local Variation of Roots}, there exists $\delta>0$ such that $\forall w\in N_\delta(w_0)$, $f(z)-w$ has exactly $n$ zeros in $N_\epsilon(a)$. Therefore, $N_\delta(w_0) \subseteq f(N_\epsilon(a))$, so $f(\Omega)$ is open.
+\end{proof}
+
+\begin{figure}[ht]
+    \centering
+    \incfig{local-mapping-of-an-analytic-function}
+    \caption{Local Mapping of an Analytic Function}
+    \label{fig:local-mapping-of-an-analytic-function}
+\end{figure}
+
+
+If the order of the zero is $m=1$, then $f$ is 1-1 on $f^{-1}(N_{\delta}(w_0)) \subseteq N_{\epsilon}(z_0)$. This is an open set due to continuity of $f$. We can take a smaller $\epsilon'$ such that $N_{\epsilon'}(z_0) \subseteq f^{-1}(N_{\delta}(w_0))$. Then $f$ is injective on $N_{\epsilon'}(z_0)$, and thus a homeomorphism onto its image.
+
+\begin{corollary}{Local Homeomorphism}{Local Homeomorphism}
+	If $f(z)$ is analytic at $z_0$ with $f'(z_0)\neq 0$, then there exists a neighborhood $N_\epsilon(z_0)$ such that $f$ is conformal and is a homeomorphism from $N_\epsilon(z_0)$ onto its image.
+\end{corollary}
+\begin{remark}
+Note that $f$ is analytic at $z_0$ means that it is analytic on a neighborhood of $z_0$. The condition $f'(z_0)\neq 0$ is equivalent to the condition that $f(z)-f(z_0)$ has a zero of order $1$ at $z_0$.
+
+This corollary can also be easily seen by the inverse function theorem, which states that if $f$ is analytic at $z_0$ and $f'(z_0)\neq 0$, then there exists a neighborhood $N_\epsilon(z_0)$ such that $f$ is a homeomorphism from $N_\epsilon(z_0)$ onto its image. We also note that the inverse function theorem cannot apply to the case that $f'(z_0) = 0$, as in corollary \ref{cor:Image of Analytic Function on Open Sets}.
+\end{remark}
+
+
+The inverse mapping is also conformal due to the inverse function theorem.
+
+For order $n>1$, we write
+\begin{equation*}
+	f(z) - w_0 = (z-z_0)^n g(z)
+\end{equation*}
+where $g$ is analytic at $z_0$ and $g(z_0)\neq 0$. Choose $\epsilon>0$ such that $g(z)\in N_{\delta}(g(z_0))$ for all $z\in \Omega=N_{\epsilon}(z_0)$, where $\delta<\left|g(z_0)\right|$. In this neighborhood we define an analytic branch of $h(z) = \sqrt[n]{g(z)}$. As $g(\Omega)$ lies in a disk that do not contain zero, we do not need a branch cut.
+\begin{equation*}
+	f(z) - w_0 = \zeta^n(z), \qquad \zeta(z) = (z-z_0)h(z)
+\end{equation*}
+As $\zeta'(z_0) = h(z_0)\neq 0$, then $\zeta$ is a homeomorphism on a neighborhood of $z_0$. The function $w = w_0+\zeta^n$ is familiar.
+
+\begin{figure}[ht]
+    \centering
+    \incfig{the-local-properties-of-analytic-functions}
+    \caption{The Local Properties of Analytic Functions $(n=3)$}
+    \label{fig:the-local-properties-of-analytic-functions}
+\end{figure}
+
+\subsection{The Maximum Principle}
+
+\begin{theorem}{The Maximum Principle}{The Maximum Principle}
+If $f$ is analytic and not constant in a region $\Omega$, then $\left|f\right|$ has no maximum value in $\Omega$.
+\end{theorem}
+\begin{proof}
+	Assume $z_0\in \Omega$ and $\left|f(z_0)\right| = M = \max_{z\in \Omega} \left|f(z)\right|$. Then let $D$ be a neighborhood of $z_0$ such that $D \subseteq \Omega$. Then $f(D)$ is a neighborhood of $f(z_0)$, and it contains some $w_0$ such that $\left|w_0\right| > M$.
+\end{proof}
+
+A restatement of the maximum principle is as follows:
+\begin{quote}
+	If $f$ is analytic on a region $\Omega$ and $E$ is a closed bounded subset of $\Omega$, then $\left|f\right|$ has a maximum value on $E$, which is taken on the boundary of $E$.
+\end{quote}
+The existence is due to the compactness of $E$, and the continuity of $f$. The maximum principle is then used to show that the maximum value is not taken in the interior of $E$.
+
+Another computational proof is as follows:
+\begin{proof}
+Let $D$ be a small disk centered at $z_0$ such that $\overline{D} \subseteq \Omega$. Then we have
+\begin{equation*}
+	f(z_0) = \frac{1}{2\pi i} \int_{\partial D} \frac{f(\zeta)}{\zeta-z_0} \mathrm{d} \zeta = \frac{1}{2\pi} \int_0^{2\pi} f(z_0 + Re^{i\theta}) \mathrm{d} \theta
+\end{equation*}
+\begin{equation*}
+	\left|f(z_0)\right| \leq \frac{1}{2\pi} \int_0^{2\pi} \left|f(z_0 + Re^{i\theta})\right| \mathrm{d} \theta
+\end{equation*}
+Suppose $\left|f(z_0)\right|$ is a maximum, then $f$ is constant on $D$. Which is a contradiction to the assumption that $f$ is not constant in $\Omega$.
+\end{proof}
+
+Now consider that $f$ is analytic on an open set $D = \left\{ z: \left|z\right|<R \right\}$ and continuous on $\overline{D}$. If $\left|f\right|\leq M$ for $z\in \partial D$, then we have $\left|f\right|\leq M$ for $z\in D$. There is a point $z_0\in D$ that $\left|f(z_0)\right| = M$ iff $f$ is a constant with norm $M$. So if we know that there is $f(z_1)<M$, we may want a better approximation.
+
+\begin{theorem}{Schwarz Lemma}{Schwarz Lemma}
+	Let $f$ be analytic on $D=\left\{ z: \left|z\right|<1 \right\}$ and satisfies
+	\begin{itemize}
+	\item $f(0)=0$.
+	\item $\forall z\in D, \left|f(z)\right| \leq 1$.
+	\end{itemize}
+	Then $\left|f(z)\right|\leq \left|z\right|$ and $\left|f'(0)\right|\leq 1$.
+
+	If $(\exists z_0\in D,z_0\neq 0,\left|f(z_0)\right|=\left|z_0\right|) \lor \left|f'(0)\right|=1$, then $\exists c\in \mathbb{C},\left|c\right|=1$ that $f(z) = cz$.
+\end{theorem}
+\begin{proof}
+Letting
+\begin{equation*}
+	f_1(z) = 
+	\begin{cases}
+		f(z) / z & \text{if } z\neq 0\\
+		f'(0) & \text{if } z=0
+	\end{cases}
+\end{equation*}
+This can be thought of an extended function of $f(z) / z$ thus is analytic on $D$. On $\partial D$, we have $\left|f_1(z)\right| = \left|f(z)\right| \leq 1$. By the maximum principle, we have $\left|f_1(z)\right|\leq 1$ for all $z\in D$. Therefore, $\left|f(z)\right| \leq \left|z\right|$ and $\left|f'(0)\right| = \left|f_1(0)\right|\leq 1$.
+
+If either of the conditions hold, then $f_1(z)=c$.
+\end{proof}
+
+Generally speaking, if $f$ is analytic on $D= \left\{ z: \left|z\right|<R \right\}$ and $f(z) \leq M$, and for some $\left|z_0\right|<R$ we have $f(z_0)=w_0, \left|w_0\right|<M$. We can find a linear fractional transformation $\zeta=Tz$ such that $Tz_0=0$ and $T(\partial D) = \left\{ z: \left|z\right|=1 \right\}$ the unit circle. (This can be done by transforming $z_0,z_0^*$ and some point on $\partial D$ to $0,\infty,1$ respectively, where $z_0^*$ is the symmetric point of $z_0$ about the circle $\left|z\right|=R$.) Such a transformation can be written 
+\begin{equation*}
+	Tz = \frac{R(z-z_0)}{R^2-\overline{z_0}z}
+\end{equation*}
+
+Similarly, we take a linear fractional transformation $\omega = Sw$ such that $Sw_0=0$ and $S(\left\{ w: \left|w\right|=M \right\}) = \left\{ w: \left|w\right|=1 \right\}$. Then the function $g(z) = Sf(T^{-1}z)$ satisfies the conditions of Schwarz lemma, so we have $\left|g(z)\right|\leq \left|z\right|$. Therefore, we have $\left|Sf(T^{-1}z)\right| \leq \left|z\right|$ or $\left|Sf(z)\right| \leq \left|Tz\right|$, explicitly,
+\begin{equation}
+	\left|\frac{M(f(z)-w_0)}{M^2-\overline{w_0}f(z)}\right| \leq \left|\frac{R(z-z_0)}{R^2-\overline{z_0}z}\right|
+\end{equation}
+
+\section{The General Cauchy Theorem}
+In previous discussions of Cauchy's theorem we've dealt with regions that are open disks. We now want to extend the theorem to more general regions, and open sets also (which may not be connected)
+
+\subsection{Chains and Cycles}
+\begin{definition}{Chains}{Chains}
+	Chains are the smallest Abelian group containing all directed curves in an open set $\Omega \subseteq \mathbb{C}$.
+\end{definition}
+In the formulation, a chain can be written as
+\begin{equation}
+\gamma = a_1\gamma_1 + a_2\gamma_2 + \cdots + a_n\gamma_n
+\end{equation}
+where $a_j\in \mathbb{Z},\gamma_j$ are directed curves. The zero and negative of the group is easy to find. An integral of a function $f$ on a chain $\gamma$ is defined as
+\begin{equation}
+	\int_{\gamma} f(z) \mathrm{d} z = a_1 \int_{\gamma_1} f(z) \mathrm{d} z + a_2 \int_{\gamma_2} f(z) \mathrm{d} z + \cdots + a_n \int_{\gamma_n} f(z) \mathrm{d} z
+\end{equation}
+it is clear that this definition is well-defined: different representations of the same chain would yield the same integral.
+
+\begin{definition}{Cycles}{Cycles}
+	A \textbf{cycle} is a chain that can be represented as a sum of closed curves.
+\end{definition}
+A chain is a cycle if in its representation, the initial and terminal points of each directed curve appear the same number of times. A simple corollary is that \emph{the integral of an exact differential on a cycle is zero}.
+
+The index of a point with respect to a cycle is defined similarly to closed curves. We have the obvious additivity property:
+\begin{equation}
+	n(\gamma,z) = a_1 n(\gamma_1,z) + a_2 n(\gamma_2,z) + \cdots + a_n n(\gamma_n,z)
+\end{equation}
+
+\subsection{Simple Connectedness}
+This notion formulates our intuition that there are no holes.
+
+\begin{definition}{Simple Connectedness}{Simple Connectedness}
+	A region $\Omega \subseteq \mathbb{C}$ is called \textbf{simply connected} if $\mathbb{C}_{\infty }-\Omega$ is connected in $\mathbb{C}_{\infty }$.
+\end{definition}
+In this case, a parallel strip is simply connected, but the outside of a circle is not.
+\begin{remark}
+	This is not a common definition of simple connectedness. The common definition is that any closed curve in $\Omega$ can be contracted to a point in $\Omega$. The two definitions are equivalent in $\mathbb{C}$, but not in general topological spaces.
+\end{remark}
+
+\begin{theorem}{Criterion for Simply Connectedness}{Criterion for Simply Connectedness}
+	A region $\Omega$ is simply connected iff $\forall a\notin \Omega$ and $\forall $ cycles $\gamma \subseteq \Omega$ we have $n(\gamma,a) = 0$.
+\end{theorem}
+\begin{proof}
+	The $\Rightarrow$ direction is obvious, as $\mathbb{C}_{\pm \infty } - \Omega$ is connected, and $\infty$ belongs to it, then $\mathbb{C}_{\pm \infty }-\Omega$ is in the unbounded region determined by $\gamma$, thus $n(\gamma,a) = 0$.
+
+	To prove the $\Leftarrow$ direction, we need an explicit construction. We assume $\mathbb{C}_{\pm \infty }-\Omega = A \sqcup B$ for two disjoint closed sets, and $\infty \in B$ while $A$ is bounded. Let $\delta>0$ be the distance of $A$ and $B$. Let $a\in A$, and $Q$ be a net of squares covering the whole $\mathbb{C}$ with edge length $< \delta / \sqrt{2}$, and $a$ is a center of a square $Q_0\in Q$.
+
+	Consider the cycle
+	\begin{equation}
+	\gamma = \sum_{j\in J} \partial Q_j, \qquad J = \left\{ j:Q_j\in Q,Q_j\cap A \neq \emptyset \right\} 
+	\end{equation}
+	consisting of all squares that intersects $A$ (the sum is finite due to boundedness of $A$.) As $a$ is contained in just one square in $\gamma$, we have $n(\gamma,a)=1$. Also, we have  $\gamma$ does not intersects $B$, as the distance between $A$ and $B$ is greater than the diagonal of each square. $\gamma$ does not meet $A$ either, as every edge of square that intersects $A$ are counted twice with opposite directions. Therefore, $\gamma \subseteq \Omega$, contradicting the assumption.
+\end{proof}
+
+\begin{figure}[ht]
+    \centering
+    \incfig{the-nets-of-squares}
+    \caption{The Nets of Squares}
+    \label{fig:the-nets-of-squares}
+\end{figure}
+
+Cauchy's theorem is not generally true for non-simply connected regions. For example, consider the function $f(z) = 1 / z$ on the region $\Omega = \mathbb{C}-\left\{ 0 \right\}$. The function is analytic on $\Omega$, but for the unit circle $\gamma$, we have
+\begin{equation*}
+	\int_{\gamma} f(z) \mathrm{d} z = \int_{\gamma} \frac{1}{z} \mathrm{d} z = 2\pi i
+\end{equation*}
+
+\subsection{Homology}
+
+\begin{definition}{Homology}{Homology}
+	A cycle $\gamma$ in an open set $\Omega$ is said to be \textbf{homologous to zero} in $\Omega$ if $\forall a\notin \Omega$, we have $n(\gamma,a) = 0$. Denoted as $\gamma \sim 0 (\text{mod } \Omega)$.
+
+	Two cycles $\gamma_1,\gamma_2$ in $\Omega$ are said to be \textbf{homologous} in $\Omega$ if $\gamma_1 - \gamma_2 \sim 0 (\text{mod } \Omega)$. Denoted as $\gamma_1 \sim \gamma_2 (\text{mod } \Omega)$.
+\end{definition}
+For $\Omega' \subseteq \Omega$, it is obvious that $\gamma\sim 0 (\text{mod } \Omega')$ implies $\gamma\sim 0 (\text{mod } \Omega)$. If $\Omega$ is simply connected, then every cycle in $\Omega$ is homologous to zero in $\Omega$.
+
+\subsection{The General Cauchy's Theorem}
+\begin{theorem}{The General Cauchy's Theorem}{The General Cauchy's Theorem}
+	If $f$ is analytic in an open set $\Omega$ and $\gamma$ is a cycle in $\Omega$ that is homologous to zero in $\Omega$, then
+	\begin{equation}
+		\int_{\gamma} f(z) \mathrm{d} z = 0
+	\end{equation}
+\end{theorem}
+
+Here are some frequently used corollaries:
+\begin{itemize}
+	\item If $f$ is analytic in a simply connected open set $\Omega$, then for all cycles $\gamma$ in $\Omega$, we have $\int_{\gamma} f(z) \mathrm{d} z = 0$.
+	\item Every analytic function in a simple connected region is an exact differential. That is, $\exists $ an analytic function $F$ in $\Omega$ such that $F' = f$.
+	\item If $f$ is analytic and $\neq 0$ in a simply connected region $\Omega$, then it is possible to define a single-value branch of $\log f(z)$ and $\sqrt[n]{f(z)}$ in $\Omega$.
+\end{itemize}
+\begin{proof}
+The first two are obvious, for the third statement, we have $f'(z) / f(z)$ is analytic, so there is an analytic $F$ in $\Omega$ that $F'(z) = f'(z) / f(z)$. Thus we have
+\begin{equation*}
+f(z) e^{-F(z)} \text{ has zero derivative so is constant.}
+\end{equation*}
+Let $z_0\in \Omega$ and choose one of the values of $\log f(z_0)$. We have
+\begin{equation*}
+f(z_0)e^{-F(z_0)} = e^{\log f(z_0)-F(z_0)} = f(z) e^{-F(z)}
+\end{equation*}
+So we let
+\begin{equation*}
+\log f(z) = F(z)-F(z_0) + \log f(z_0), \qquad \sqrt[n]{f(z)} = \exp {\frac{1}{n}\log f(z)}
+\end{equation*}
+\end{proof}
+
+\subsection{Proof of Cauchy's Theorem}
+We present a proof that is similar to the one of theorem \ref{thm:Criterion for Simply Connectedness}.
+
+First assume $\Omega$ is a bounded open set. Given $\delta>0$, we cover the whole $\mathbb{C}$ with nets of squares. Denote $Q_j,j\in J$ by those closed square regions $Q_j \subseteq \Omega$. Then the set $J$ is finite. We denote
+\begin{equation}
+	\Gamma_{\delta} = \sum_{j\in J} \partial Q_j ,\qquad  \Omega_{\delta} = \operatorname{Int} \bigcup_{j\in J} Q_j
+\end{equation}
+
+Let $\gamma$ be a circle homologous to zero in $\Omega$. Choose sufficiently small $\delta$ that $\gamma \subseteq \Omega_{\delta}$. (This is possible for $\gamma$ and $\Omega^c$ are closed sets and have distance $>0$.) Let $\zeta\in \Omega-\Omega_{\delta}$. (This is possible for $\overline{\Omega_{\delta}}\subseteq \Omega$.) Then $\zeta\in Q$ for some $Q\neq Q_j$. The let $\zeta_0\in Q, \zeta_0\notin \Omega$. Draw a straight line $\overline{\zeta \zeta_0}$ and it does not intersect $\Omega_{\delta}$. So we have $n(\gamma,\zeta) = n(\gamma,\zeta_0) = 0$. In particular, we have
+\begin{equation*}
+\forall \zeta\in \Gamma_{\delta}, n(\gamma,\zeta)=0
+\end{equation*}
+
+Suppose $f$ is analytic in $\Omega$. Let $z\in \operatorname{Int} Q_{j_0}$ for some $j_0\in J$. Then we have
+\begin{equation*}
+	\frac{1}{2 \pi i} \int_{\partial Q_j} \frac{f(\zeta) \mathrm{d} \zeta}{\zeta-z} = 
+	\begin{cases}
+		f(z), &\text{ if } j_0=j\\
+		0, & \text{ otherwise }
+	\end{cases}
+\end{equation*}
+Thus we have
+\begin{equation*}
+	f(z) = \frac{1}{2 \pi i} \int_{\Gamma_{\delta}} \frac{f(\zeta)\mathrm{d} \zeta}{\zeta-z}
+\end{equation*}
+for every $z$ in the interior of some square $Q_j$. As both side are continuous, we have this equation holds for all $z\in \Omega_{\delta}$. As a consequence, we have
+\begin{equation*}
+\int_{\gamma}f(z) \mathrm{d} z = \int_{\gamma} \left(\frac{1}{2 \pi i} \int_{\Gamma_{\delta}} \frac{f(\zeta)\mathrm{d} \zeta}{\zeta-z}\right) \mathrm{d} z = \int_{\Gamma_{\delta}}\left(\frac{1}{2 \pi i}\int_{\gamma} \frac{\mathrm{d} z}{\zeta - z}\right) f(\zeta) \mathrm{d} \zeta = 0
+\end{equation*}
+This interchange of integral is due to the continuity of both $z$ and $\zeta$ (Taking parametric form we can prove this using the real analysis theorem).
+
+If $\Omega$ is unbounded, replace it with a bounded subregion that contains $\gamma$, and we still have our result.
+
+\subsection{Local Exact Differential}
+
+\begin{definition}{Local Exact Differential}{Local Exact Differential}
+	A differential form $p \mathrm{d} x+q \mathrm{d} y$ is local exact in $\Omega$ if $\forall z\in \Omega$, there is a neighborhood $\Omega_z$ of $z$ that $p \mathrm{d} x + q \mathrm{d} y$ is an exact differential in $\Omega_z$.
+\end{definition}
+
+A sufficient and necessary condition for local exactness is that $\displaystyle \int_{\gamma} p \mathrm{d} x + q \mathrm{d} y=0$ holds for all $\gamma = \partial R$, where $R \subseteq \Omega$ is an open rectangle with edge parallel to the axes.
+\begin{proof}
+	The sufficiency is obvious, taking a disk as the neighborhood. And define $F$ similarly to the proof of theorem \ref{thm:Cauchys Theorem on Disk}.
+	
+	The necessity is also obvious, cover $\overline{R}$ with each neighborhood $U_x$ of $x\in R$ that $p \mathrm{d} x + q \mathrm{d} y$ is exact. As $\overline{R}$ is compact, we can take a finite subcover $U_1, \ldots ,U_n$. Therefore, divide the rectangle $R$ into enough small rectangles that each is fully in one of the $U_j$. Then we have our result.
+\end{proof}
+
+\begin{theorem}{Locally Exact Implies Zero Cycle}{Locally Exact Implies Zero Cycle}
+	If $p \mathrm{d} x + q \mathrm{d} y$ is locally exact in $\Omega$, then for any cycle $\gamma\sim 0$ in $\Omega$, we have
+	\begin{equation}
+		\int_{\gamma} p \mathrm{d} x + q \mathrm{d} y = 0
+	\end{equation}
+\end{theorem}
+
+As we can see, the general Cauchy's theorem is a special case of this theorem. However, there is no obvious way to modify the proof of the general Cauchy's theorem to prove this theorem. So we would follow another way.
+
+\begin{proof}
+Without the loss of generality, we shall assume $\Omega$ is bounded.
+
+We first show that $\gamma$ can be replaced by a polygon $\sigma$. Let the distance of $\gamma$ to $\Omega^c$ be $\rho$. Let $\gamma: z=z(t), t\in [a,b]$. Then $z(t)$ is uniformly continuous on $[a,b]$. Take $\delta>0$ that
+\begin{equation*}
+	\forall t,t'\in [a,b], \left|t-t'\right|<\delta \rightarrow \left|z(t)-z(t')\right|<\rho.
+\end{equation*}
+
+Divide $[a,b]$ into subintervals of length $< \delta$. Then each subarc $\gamma_i$ of $\gamma$ lies in a small disk $\Delta_i$ of radius $\rho$ that lies entirely in $\Omega$. Join the endpoints of each subarc $\gamma_i$ to form a polygon $\sigma_i$ with a vertical and a horizontal edge. Then $\sigma_i \subseteq \Delta_i$ as well.
+
+It is easy to see that $p \mathrm{d} x + q \mathrm{d} y$ is exact in $\Delta_i$ for each $i$. (This is a result by multivariable calculus). Thus
+\begin{equation*}
+	\int_{\sigma_i} p \mathrm{d}x + q \mathrm{d} y = \int_{\gamma_i} p \mathrm{d} x + q \mathrm{d} y
+\end{equation*}
+Taking the sum of all $\sigma_i$, we have
+\begin{equation*}
+	\int_{\sigma} p \mathrm{d} x + q \mathrm{d} y = \int_{\gamma} p \mathrm{d} x + q \mathrm{d} y
+\end{equation*}
+Now we extend each segment that form $\sigma$ to a rectangular grid. There are finite rectangles $R_i$ and unbounded rectangles(strips) $R_j'$. Choose ANY $a_i\in R_i$ for all $i$, and we shall prove
+\begin{equation}
+	\sigma = \sum_{i} n(\sigma,a_i) \partial R_i.
+\end{equation}
+(Well this is quite obvious in an intuitive way, each rectangle inside contributes $n(\sigma,a_i)$ times to the total cycle).
+
+To prove this, we let $\sigma_0=\sum_{i} n(\sigma,a_i) \partial R_i $. And let $a_j'\in R_j'$. It is clear that
+\begin{equation*}
+	n( \partial R_i, a_k) = \delta_{ik}, \qquad n(\partial R_i, a_j') = 0
+\end{equation*}
+Therefore, we have $n(\sigma_0,a_j')=0$. We also have $n(\sigma,a_j)=0$ for $a_j$ belongs to the unbounded region determined by $\sigma$. So we have
+\begin{equation*}
+	n(\sigma - \sigma_0, a) = 0, \qquad \forall a \text{ is in any } R_i \text{ or } R_j'
+\end{equation*}
+We shall conclude that $\sigma=\sigma_0$ from here: Let $\sigma_{ik}$ be the common side of $R_i$ and $R_k$. Choose orientation so that $R_i$ lies on the left of $\sigma_{ik}$. Suppose $\sigma-\sigma_0$ contains $c \sigma_{ik}$. Then $\sigma'=\sigma-\sigma_0-c \partial R_i$ does not contain $\sigma_{ik}$, so we have $n(\sigma',a_i) = n(\sigma',a_k)$. Thus we have $-c=0$. The same holds true for all $R_i, R_j'$.
+
+Now we prove that all $\overline{R_i}$ such that $n(\sigma,a_i)\neq 0$ are contained in $\Omega$. If not so, take some $a_i\in \overline{R_i}\cap \Omega^c$, (then $a_i$ do not lie on $\sigma$) then rake a very small neighborhood that $b_i\in R_i$ and $b_i,a_i$ are in the same region determined by $\sigma$. So we have $n(\sigma,b_i)=n(\sigma,a_i)=0$ for $\sigma\sim 0$ in $\Omega$.
+
+It is easy to show that $p \mathrm{d} x + q \mathrm{d} y$ is exact in $\overline{R_i}$, so we have
+\begin{equation*}
+	\int_{\sigma} p \mathrm{d} x + q \mathrm{d} y = \sum_{i} n(\sigma,a_i) \int_{\partial R_i} p \mathrm{d} x + q \mathrm{d} y = 0
+\end{equation*}
+\end{proof}
+
+\subsection{Multiply Connected Regions}
+\begin{definition}{Multiply Connectedness}{Multiply Connectedness}
+	A region which is not simply connected is called \textbf{multiply connected}.
+
+	Let $\Omega$ be an open set. If $\mathbb{C}_{\infty }-\Omega$ has $n$ components, then $\Omega$ is said to be \textbf{$n$-connected}. If $n=1$, then $\Omega$ is simply connected. If $\mathbb{C}_{\infty }-\Omega$ has infinitely many components, then $\Omega$ is said to be \textbf{infinitely connected}.
+\end{definition}
+
+In the case if finite connectedness, let $A_1, \ldots ,A_n$ be the components of $\mathbb{C}_{\infty }-\Omega$ and assume $\infty \in A_n$. If $\gamma$ is any cycle in $\Omega$, then in each $A_i$ we have $n(\gamma,a_i)$ is constant for all $a_i\in A_i$, and $n(\gamma,a)=0$ for all $a\in A_n$. 
+
+Furthermore, duplication the construction method used in the proof of theorem \ref{thm:Criterion for Simply Connectedness}, we can find $n-1$ cycles $\gamma_1, \ldots ,\gamma_{n-1}$ in $\Omega$ such that $n(\gamma_i,a_j) = \delta_{ij}$ for all $a_j\in A_j$. For a given cycle $\gamma\in \Omega$, let $c_i = n(\gamma,a_i)$. Now every point outside $\Omega$ has zero index with respect to the cycle $\gamma - \sum_{i=1}^{n-1} c_i \gamma_i$. So we have
+\begin{equation}
+	\gamma \sim \sum_{i=1}^{n-1} c_i \gamma_i\qquad (\text{mod } \Omega)
+\end{equation}
+
+As $c_1 \gamma_1 + \cdots + c_{n-1} \gamma_{n-1}\sim 0$ would imply $c_1 = c_2 = \cdots = c_{n-1} = 0$, we have the uniqueness of this representation:
+\begin{theorem}{The Representation of Cycle}{The Representation of Cycle}
+	Let $\Omega$ be an $n$-connected region, and let $\gamma_1, \ldots ,\gamma_{n-1}$ be cycles in $\Omega$ such that $n(\gamma_i,a_j) = \delta_{ij}$ for all $a_j\in A_j$. Then every cycle $\gamma$ in $\Omega$ can be uniquely represented as
+	\begin{equation*}
+		\gamma \sim \sum_{i=1}^{n-1} c_i \gamma_i \qquad (\text{mod } \Omega)
+	\end{equation*}
+	where $c_i = n(\gamma,a_i)$ for some (and hence all) $a_i\in A_i$.
+
+	The $\gamma_i$ are called the homology basis for the region $\Omega$.
+\end{theorem}
+
+Therefore, the general Cauchy's theorem would implie: for an analytic function $f$ in an $n$-connected region $\Omega$, we have
+\begin{equation}
+	\int_{\gamma} f(z) \mathrm{d} z = \sum_{i=1}^{n-1} c_i \int_{\gamma_i} f(z) \mathrm{d} z
+\end{equation}
+We define
+\begin{equation}
+	P_i = \int_{\gamma_i} f(z) \mathrm{d} z
+\end{equation}
+as long as $\gamma_i$ satisfies theorem \ref{thm:The Representation of Cycle}, then $P_i$ does not depends on the choice of $\gamma_i$. We call $P_i$ the \textbf{modulus of periodicity} of the differential $f(z) \mathrm{d} z$ with respect to the cycle $\gamma_i$, or the \textbf{periods} of the indefinite integral $\int f(z) \mathrm{d} z$.
+
+\section{The Calculus of Residues}
+As it turns out, periods are likely easier to calculate.
+
+\subsection{The Residue Theorem}
+All theorems we derived from the Cauchy's Theorem on a disk is now valid in arbitrary regions for $\gamma\sim 0$.
+
+\begin{theorem}{General Cauchy's Integral Formula}{General Cauchys Integral Formula}
+	If $f$ is analytic in an open set $\Omega$ and $\gamma$ is a cycle in $\Omega$ that is homologous to zero in $\Omega$, then for all $a\in \mathbb{C},a\notin \gamma$, we have
+	\begin{equation}
+		n(\gamma,a)f(a) = \frac{1}{2 \pi i} \int_{\gamma} \frac{f(z)}{z-a} \mathrm{d} z
+	\end{equation}
+\end{theorem}
+\begin{remark}
+	There is no need for a separate talk on exceptional points, for they are removable singularities which could be ignored.
+\end{remark}
+
+Now we come a function $f$ which is analytic in a region $\Omega$ with finite isolated singularities $a_1, \ldots ,a_n$. Denote $\Omega'=\Omega-\left\{ a_1, \ldots ,a_n \right\}$. For each $a_i$, there is a $\delta_j>0$ such that the doubly connected region $0<\left|z-a_j\right|<\delta_j$ is contained in $\Omega'$. Draw a circle $C_j$ around each $a_j$ with radius $<\delta_j$. Let
+\begin{equation*}
+	P_j = \int_{C_j} f(z) \mathrm{d} z, \qquad R_j = \frac{P_j}{2 \pi i}
+\end{equation*}
+Thus the function
+\begin{equation*}
+	f(z) - \frac{R_j}{z-a_j}
+\end{equation*}
+has a vanishing period around $C_j$.
+
+\begin{definition}{Residue}{Residue}
+	Let $f$ be analytic in a region $\Omega$ with isolated singularity $a$. The \textbf{residue} of $f$ at $a$ is the unique complex number $R$ such that the function differential
+	\begin{equation*}
+		\left(f(z) - \frac{R}{z-a} \right) \mathrm{d} z
+	\end{equation*}
+	is exact in an annulus $0<\left|z-a\right|<\delta$ for some $\delta>0$. Denoted $R = \Res_{z=a}f(z)$.
+\end{definition}
+
+If there are infinite many isolated singularities, there are only infinite pf them in a closed disk covering $\gamma$, so it doesn't matter.
+
+\begin{theorem}{The Residue Theorem}{The Residue Theorem}
+	Let $f$ be analytic in a region $\Omega$ with isolated singularities $a_j,j\in J$, and $\gamma$ be a cycle in $\Omega$ that does not pass $a_j$. Then
+	\begin{equation}
+		\frac{1}{2 \pi i} \int_{\gamma} f(z) \mathrm{d} z = \sum_{j\in J} n(\gamma,a_j) \Res_{z=a_j}f(z)
+	\end{equation}
+	And only a finite number of $a_j$ contributes to the sum.
+\end{theorem}
+
+\begin{remark}
+	Indeed, this result holds for every point set $a_j$ as long as it contains the singularities, the non-singularity points would contribute zero of the sum.
+\end{remark}
+
+There is no direct and universal way to find residues for essential singularities. However, for poles we can tell another story. If $a$ is a pole, then
+\begin{equation*}
+	f(z) = B_h (z-a)^{-h} + \cdots + B_1 (z-a)^{-1} + B_0 + \varphi(z).
+\end{equation*}
+where $\varphi(z)$ is analytic in a neighborhood of $a$ and $B_h \neq 0$. Well we can see that
+\begin{equation}
+	\Res_{z=a}f(z) = B_1
+\end{equation}
+for the remainder is certianly exact in a no-center neighborhood of $a$. For simple poles, we have
+\begin{equation}
+	\Res_{z=a}f(z) = \lim_{z\to a} (z-a)f(z)
+\end{equation}
+
+\begin{remark}
+	In presentations of Cauchy's theorem, the integral formula
+and the residue theorem which follow more classical lines, there is no
+mention of homology, nor is the notion of index used explicitly. Instead, the curve $\gamma$ to which the theorems are applied is supposed to form the complete boundary of a subregion of $\Omega$, and the orientation is chosen so that the subregion lies to the left of $\Omega$. With the general point of view it is still possible to isolate the classical case. All that is needed is to accept the following definition:
+\end{remark}
+\begin{definition}{A Curve that Bounds a Region}{A Curve that Bounds a Region}
+	A cycle $\gamma$ is said to bounded the region $\Omega$ iff $n(\gamma,a)=1$ for all $a\in \Omega$ and $n(\gamma,a)=0$ for all $a\notin \Omega\land a\notin \gamma$.
+\end{definition}
+
+\subsection{The Argument Principle}
+
+Cauchy's Integral Formula is a special case of the residue theorem, taking that the function $f(z) / (z-a)$ has a simple pole at $z=a$ with residue $f(a)$.
+
+Another application is to determine the number of zeros of an analytic function in a region, as theorem \ref{thm:Number of Zeros} states, which we now generalize to meromorphic functions.
+
+\begin{theorem}{The Argument Principle}{The Argument Principle}
+	Let $f$ be a meromorphic function in a region $\Omega$ with zeros $a_j$ and poles $b_k$, with multiplicities $m_j,n_k$, then
+	\begin{equation}\label{eq:Argument Principle}
+		\frac{1}{2 \pi i} \int_{\gamma} \frac{f'(z)}{f(z)} \mathrm{d} z = \sum_{j} m_j n(\gamma,a_j) - \sum_{k} n_k n(\gamma,b_k)
+	\end{equation}
+	for any cycle $\gamma\in \Omega, \gamma\sim 0$ which does not pass any zeros or poles.
+\end{theorem}
+\begin{proof}
+	The singularities of $f'(z) / f(z)$ would lie in the singularities and zeros of $f$. For a zero $a$ of order $h$ we can write $f(z) = (z-a)^hf_h(z)$, and thus $f'(z) = h(z-a)^{h-1}f_h(z) + (z-a)^h f_h'(z)$. And we have
+	\begin{equation*}
+		\frac{f'(z)}{f(z)} = \frac{h}{z-a} + \frac{f_h'(z)}{f_h(z)}
+	\end{equation*}
+	As $f_h'(z) / f_h(z)$ is analytic around $a$, we have $\Res_{z=a} f' / f = h$.
+	
+	Taking $h \rightarrow -h$ the result holds for poles.
+\end{proof}
+
+The left of equation \eqref{eq:Argument Principle} is $n(\Gamma,0)$ where $\Gamma$ is the image $f(\gamma)$. We would have $n(\Gamma,0)=0$ if $\Gamma$ lies in a disk not containing the origin.
+
+\begin{theorem}{Rouch\'e's Theorem}{Rouches Theorem}
+	Let $\gamma\sim 0$ in $\Omega$ and $n(\gamma,z)=0$ or $1$ for $\forall z\notin \gamma$. Suppose $f,g$ are analytic in $\Omega$ and satisfy $\left|f(z)-g(z)\right|<\left|f(z)\right|$ on $\gamma$. Then $f,g$ has the same number of zeros enclosed by $\gamma$. (This means the zeros of $f$ and $g$ that has index 1 with respect to $\gamma$, counting multiplicities)
+\end{theorem}
+\begin{proof}
+Well the assumption shows that $f(z),g(z)\neq 0$ on $\gamma$. And we have
+\begin{equation*}
+	\left|\frac{f(z)}{g(z)}-1\right|<1, \qquad \forall z\in \gamma
+\end{equation*}
+Let $F(z) = f(z) / g(z)$ then we have $n(F(\gamma),0)=0$, as the image curve lies on the disk radius 1 centered at 1. By the argument principle, we have our result.
+\end{proof}
+
+An application involves finding the number of zeros of $f$ in a closed disk neighborhood of a point $a$. We approximate $f$ by Taylor's Theorem:
+\begin{equation*}
+	f(z) = P_{n-1}(z-a) + (z-a)^nf_n(z)
+\end{equation*}
+where $P_{n-1}$ is a polynomial of degree $n-1$ and $f_n(z)$ is analytic in the disk radius $R$. If we have $R^n \left|f_n(z)\right| < \left|P_{n-1}(z)\right|$ on $\left|z-a\right| = R$, then $f$ and $P_{n-1}$ has the same number of zeros inside the disk.
+
+We can also generalize the argument principle. Take $g$ be an analytic function in $\Omega$ and we have
+\begin{equation*}
+	g(z) \frac{f'(z)}{f(z)} = \frac{hg(a)}{z-a} + g_1(z) + \frac{f_n'(z)}{f_n(z)}g(z)
+\end{equation*}
+Thus we have $\Res_{z=a} g(z) f'(z) / f(z) = hg(a)$ for a zero $a$ of order $h$. For a pole $b$ of order $k$, we have similar results.
+
+\begin{theorem}{Generalized Argument Principle}{Generalized Argument Principle}
+	Let $f$ be a meromorphic function in a region $\Omega$ with zeros $a_j$ and poles $b_k$, with multiplicities $m_j,n_k$. Let $g$ be an analytic function in $\Omega$, then
+	\begin{equation}
+		\frac{1}{2 \pi i} \int_{\gamma} g(z) \frac{f'(z)}{f(z)} \mathrm{d} z = \sum_{j} m_j g(a_j) n(\gamma,a_j) - \sum_{k} n_k g(b_k) n(\gamma,b_k)
+	\end{equation}
+\end{theorem}
+
+\paragraph{The Representation of Inverse Functions}
+For an analytic function $f$ in $\Omega$ and $f(z_0)=w_0$, we have $f(z)-w_0$ has a zero of order $n$ at $z_0$. We know that for a small $\epsilon,\delta>0$, the equation $f(z)=w$ has $n$ roots $z_j(w)$ in the disk $\left|z-z_0\right|<\epsilon$ for $\left|w-w_0\right|<\delta$. We apply $g(z)=z^m$, we have
+\begin{equation}
+	\sum_{j=1}^{n} z_j(w)^m = \frac{1}{2 \pi i} \int_{\gamma} \frac{f'(z)}{f(z)-w} z^m \mathrm{d} z, \qquad \forall \left|w-w_0\right|<\delta
+\end{equation}
+where $\gamma: \left|z-z_0\right| = \epsilon$.
+
+For $j=1,m=1$ we have
+\begin{equation}
+	f^{-1}(w)  = \frac{1}{2 \pi i} \int_{\gamma} \frac{f'(z)}{f(z)-w} z \mathrm{d} z, \qquad \forall \left|w-w_0\right|<\delta
+\end{equation}
+
+Thus the power sums (elementary symmetric functions) of $z_j(w)$ are analytic functions of $w$ in a small neighborhood of $w_0$, thus we have $z_j(w)$ is the roots of a polynomial
+\begin{equation}
+	z^n + a_1(w) z^{n-1} + \cdots + a_{n-1}(w) z + a_n(w) = 0
+\end{equation}
+whose coefficients are analytic functions of $w$ in a small neighborhood of $w_0$. The coefficients are given by elementary symmetric functions of $z_j(w)$.
+
+\subsection{The Definite Integrals}
+
+\paragraph{The rational functions of $\sin $ and $\cos $}
+\begin{equation}
+	I = \int_0^{2 \pi} R(\cos \theta,\sin \theta) \mathrm{d} \theta
+\end{equation}
+where $R(x,y)$ is a rational function of $x,y$. We can write $z = e^{i \theta}$ and thus
+\begin{equation*}
+	I = -i \int_{\gamma} R\left(\frac{z+z^{-1}}{2},\frac{z-z^{-1}}{2i}\right) \frac{\mathrm{d} z}{z}, \qquad \gamma: \left|z\right|=1
+\end{equation*}
+
+\paragraph{The rational infinite integrals}
+\begin{equation}
+	I = \int_{-\infty}^{\infty} R(x) \mathrm{d} x
+\end{equation}
+where the degree of denominator of $R(x)$ is at least 2 units greater than the degree of numerator, and we assume there is no poles on the real axis. We can take a segment $(-\rho,\rho)$ and the semicircle on the upper half plane. As $\rho \rightarrow \infty $ the integral on the semicircle vanishes, and we have
+\begin{equation}
+	\int_{-\infty}^{\infty} R(x) \mathrm{d} x = 2 \pi i \sum_{y>0} \Res R(z). 
+\end{equation}
+The same method also applies to
+\begin{equation}
+	I = \int_{-\infty}^{\infty} R(x) e^{i x} \mathrm{d} x = 2 \pi i \sum_{y>0} \Res R(z) e^{i z}
+\end{equation}
+
+It is surprising to see that the same result holds for a simple zero at $\infty $.
+\begin{theorem}{Rational Infinite Integral with Exponential}{Rational Infinite Integral with Exponential}
+	Let $R(x)$ be a rational function of $x$ with $R(\infty )=0$, and there are no poles on the real axis. Then
+	\begin{equation}
+		\int_{-\infty}^{\infty} R(x) e^{i x} \mathrm{d} x = 2 \pi i \sum_{y>0} \Res R(z) e^{i z}
+	\end{equation}
+\end{theorem}
+\begin{proof}
+	We first prove the convergence of the integral. Consider
+	\begin{equation*}
+		I(X_1,X_2) = \int_{-X_1}^{X_2} R(x) e^{i x} \mathrm{d} x, \qquad X_1,X_2\in \mathbb{R}, -X_1<X_2
+	\end{equation*}
+	for $Y>0$, consider the rectangle 
+	\begin{equation*}
+		R = \left\{ z=x+iy: -X_1< x < X_2, 0 <y < Y \right\}
+	\end{equation*}
+	when $X_1,X_2,Y$ are sufficiently large, this rectangle will cover all poles in the upper half plane. Also, we have $\left|zR(z)\right|$ is bounded, so the integral over the right side would be
+	\begin{equation*}
+		\left|\int_{X_2}^{X_2+iY} R(z) e^{iz} \mathrm{d} z\right| \leq C \int_0^Y \frac{e^{-y}}{\left|X_2+iy\right|} \mathrm{d} y < \frac{C}{X_2} \int_0^Y e^{-y} \mathrm{d} y < \frac{C}{X_2}
+	\end{equation*}
+	The same holds for the left side, and for the upper side, we have
+	\begin{equation*}
+	\left|\int_{-X_1+iY}^{X_2+iY} R(z) e^{iz} \mathrm{d} z\right| \leq C \int_{-X_1}^{X_2} \frac{e^{-Y}}{\left|x+iY\right|} \mathrm{d} x < C \frac{X_1+X_2}{Y} e^{-Y}
+	\end{equation*}
+	We also have the residue theorem
+	\begin{equation*}
+		\int_{\partial R} R(z) e^{iz} \mathrm{d} z = 2 \pi i \sum_{y>0} \Res R(z) e^{iz}
+	\end{equation*}
+	As $Y \rightarrow \infty $, the integral over the upper side would vanish, and we have
+	\begin{equation*}
+		\left|\int_{-X_1}^{X_2} R(x) e^{ix} \mathrm{d} x - 2 \pi i \sum_{y>0} \Res R(z) e^{iz}\right| < C \left(\frac{1}{X_1} + \frac{1}{X_2}\right)
+	\end{equation*}
+	This would imply that
+	\begin{equation*}
+		\int_{-\infty}^{\infty} R(x) e^{ix} \mathrm{d} x = 2 \pi i \sum_{y>0} \Res R(z) e^{iz}
+	\end{equation*}
+\end{proof}
+
+Now, if $R(z)$ has a simple pole at $0$, we can adjust the rectangle a little to form a small semicircle of radius $\delta$ at $0$.
+
+\begin{figure}[ht]
+    \centering
+    \incfig{rational-infinite-integral}
+    \caption{Rational Infinite Integral}
+    \label{fig:rational-infinite-integral}
+\end{figure}
+
+If we write $R(z) e^{iz} = \frac{B}{z} + R_0(z)$, where $R_0(z)$ is analytic in the neighborhood of $0$, then the integration of the first term would be $\pi i B$, and the integration of the second term would tend to $0$ as $\delta \rightarrow 0$. Thus we have
+\begin{equation}
+	\lim_{\delta \to 0} \int_{-\infty }^{-\delta} + \int_{\delta}^{\infty} R(x) e^{ix} \mathrm{d} x = 2 \pi i \left(\sum_{y>0} \Res_{y>0} R(z) e^{iz} + \frac{1}{2} B\right)
+\end{equation}
+The limit on the left side is called the \textbf{Cauchy Principal Value} of the integral, denoted by $\PV \int_{-\infty}^{\infty} R(x) e^{ix} \mathrm{d} x$. So we have
+\begin{equation}
+	\PV \int_{-\infty}^{\infty} R(x) e^{ix} \mathrm{d} x = 2 \pi i \sum_{y>0} \Res_{y>0} R(z) e^{iz} + \pi i \sum_{y=0} \Res_{y=0} R(z) e^{iz}
+\end{equation}
+\begin{example}{Cauchy Principal Value}{Cauchy Principal Value}
+	A direct application is
+	\begin{equation*}
+		\PV \int_{-\infty}^{\infty} \frac{e^{ix}}{x} \mathrm{d} x = \pi i
+	\end{equation*}
+	Taking the imaginary part, we have
+	\begin{equation*}
+		\int_{0}^{\infty} \frac{\sin x}{x} \mathrm{d} x = \frac{\pi}{2}
+	\end{equation*}
+\end{example}
+
+Another type of interest is
+\begin{equation}
+	I = \int_{0}^{\infty } x^{\alpha} R(x) \mathrm{d} x, \qquad 0<\alpha<1.
+\end{equation}
+where $R(z)$ has a zero of order $\geq 2$ at $\infty $, and at most a simple pole at $0$. (There are no poles on $(0,\infty )$).
+
+Take $z \rightarrow t^2$, we have
+\begin{equation*}
+	I = 2 \int_{0}^{\infty } t^{2\alpha +1} R(t^2) \mathrm{d} t
+\end{equation*}
+As $z^{2 \alpha} = e^{2 \alpha \Log z}$. We take the analytic branch, cutting the negative imaginary axis, and the imaginary part of $\Log z$ are taken to be in $(-\pi / 2, 3\pi / 2)$. Then we take the following cycle, with the small semicircle tends to 0 and the big semicircle tends to $\infty$. For a semicircle $\gamma$ of radius $r$, we have $\left|z^4 R(z^2)\right|$ is bounded as $r \rightarrow \infty$, and $\left|z^2 R(z^2)\right|$ is bounded as $r \rightarrow 0$. Thus we have
+\begin{equation*}
+	\left|\int_{\gamma} z^{2 \alpha+1} R(z^2) \mathrm{d} z \right| \leq r^{2 \alpha+1} \int_0^{\pi} \frac{C_1}{r^2} r \mathrm{d} \theta =r^{2 \alpha} \pi C_1 \rightarrow 0, \qquad r \rightarrow 0
+\end{equation*}
+\begin{equation*}
+	\left|\int_{\gamma} z^{2 \alpha+1} R(z^2) \mathrm{d} z \right| \leq r^{2 \alpha+1} \int_0^{\pi} \frac{C_2}{r^4} r \mathrm{d} \theta =r^{2 \alpha -2} \pi C_2 \rightarrow 0, \qquad r \rightarrow \infty
+\end{equation*}
+So we have
+\begin{equation}
+	\int_{-\infty }^{\infty} z^{2 \alpha+1} R(z^2) \mathrm{d} z = 2 \pi i \sum_{y>0} \Res_{y>0} z^{2 \alpha+1} R(z^2)
+\end{equation}
+Also we have
+\begin{equation}
+	\int_{-\infty }^{\infty } z^{2 \alpha+1} R(z^2) \mathrm{d} z = \int_0^{\infty } (z^{2 \alpha+1} + (-z)^{2 \alpha+1}) R(z^2) \mathrm{d} z = \frac{1}{2} (1-e^{2 \pi i \alpha}) I
+\end{equation}
+
+\begin{figure}[ht]
+    \centering
+    \incfig{infinite-rational-integral-with-power}
+    \caption{Infinite Rational Integral with Power}
+    \label{fig:infinite-rational-integral-with-power}
+\end{figure}
+
+\begin{remark}
+	We can also use the second cycle in figure \ref{fig:infinite-rational-integral-with-power} to the original integral with slight change in adjustment and justification, and the result would be the same.
+\end{remark}
+
+\paragraph{The logarithmic integrals}
+\begin{equation}
+	I = \int_0^{\pi} \log (\sin \theta) \mathrm{d} \theta
+\end{equation}
+
+Consider the expression
+\begin{equation*}
+	1-e^{2iz} = -2i e^{iz} \sin z = 1-e^{-2y}(\cos 2x + i \sin 2x)
+\end{equation*}
+it falls on $(-\infty ,0]$ when $x=n \pi,y\leq 0$. Omitting this lines, we have an analytic branch (the principal branch) for the function $\log (1-e^{2iz})$. Let
+\begin{equation*}
+	R = \left\{ z=x+iy: 0<x< \pi, 0<y<Y \right\}
+\end{equation*}
+And let $\gamma = \partial R$, with the vertices at $0, \pi$ changed to small quarter circles of radius $\delta$ at $0$ and $\pi$. As $Y \rightarrow \infty $, the integral on the upper side tends to $0$, and that
+\begin{equation*}
+	\lim_{z \to 0} \left|\frac{1-e^{2iz}}{z}\right| = 2
+\end{equation*}
+which means that the integral $\log (1-e^{2iz})$ of quarter circles near $0,\pi$ would behave like $\delta \log \delta$ which tends to $0$. Also, the side edge integral vanishes due to periodicity. Thus we have
+\begin{equation}
+	\int_0^{\pi} \log (-2i e^{iz} \sin z) \mathrm{d} z = 2 \pi i \sum_{y>0,0<x< \pi} \Res \log (1-e^{2iz})=0
+\end{equation}
+We have $\log (-2ie^{ix}) = \log 2 + ix- \pi i / 2$ (lying in the principal branch) so we have
+\begin{equation}
+	\int_0^{\pi} \log (\sin x) \mathrm{d} x = -\int_0^{\pi} \log (-2i e^{ix}) \mathrm{d} x = - \pi \log 2
+\end{equation}
+
+\paragraph{The Bergman Kernel}
+Sometimes complex integration can be used to evaluate area integrals.
+\begin{theorem}{Bergman's Kernel Formula}{Bergmans Kernel Formula}
+	If $f$ is analytic and bounded for the unit disk $\left|z\right|<1$, and let $\left|\zeta\right|<1$, then we have
+	\begin{equation}
+		f(\zeta) = \frac{1}{\pi} \int_{\left|z\right|<1} \frac{f(z)}{(1-\overline{z} \zeta)^2} \mathrm{d} x \mathrm{d} y
+	\end{equation}
+\end{theorem}
+\begin{proof}
+Write it in polar coordinates, we have
+\begin{equation*}
+	\RHS = \frac{1}{\pi} \int_0^{2 \pi} \int_0^1 \frac{f(re^{i \theta})}{(1-re^{-i \theta} \zeta)^2} r \mathrm{d} r \mathrm{d} \theta = 2\int_0^1 \left(\frac{1}{2 \pi i} \int_{\left|z\right|=r} \frac{z f(z)}{(z-r^2\zeta)^2} \mathrm{d} z\right) r \mathrm{d} r
+\end{equation*}
+As $\left|r^2 \zeta\right| < \left|r\right|$, we have
+\begin{equation*}
+	\RHS = 2\int_0^1 (f(r^2 \zeta) + r^2 \zeta f'(r^2 \zeta) ) r \mathrm{d} r = r^2 f(r^2 \zeta) \bigg|_0^1 = \LHS
+\end{equation*}
+\end{proof}
+
+\section{Harmonic Functions}
+\subsection{Definition and Basic Properties}
+\begin{definition}{Harmonic Function}{Harmonic Function}
+	A function $u: \Omega \subseteq \mathbb{R}^2 \rightarrow \mathbb{R}$ define on a region $\Omega$ is called \textbf{harmonic} if it is twice continuously differentiable and satisfies the Laplace equation
+	\begin{equation}
+		\Delta u = \frac{\partial^2 u}{\partial x^2} + \frac{\partial^2 u}{\partial y^2} = 0
+	\end{equation}
+\end{definition}
+In polar coordinates, the Laplace equation becomes
+\begin{equation}
+	r^2 \Delta u = r \frac{\partial}{\partial r} \left( r \frac{\partial u}{\partial r} \right) + \frac{\partial^2 u}{\partial \theta^2} = 0
+\end{equation}
+This would imply that any analytic function depending only on $r$ has the form $u(r) = A + B \log r$.
+
+If $u$ is harmonic in $\Omega$, then
+\begin{equation}
+	f(z) = \frac{\partial u}{\partial x} - i \frac{\partial u}{\partial y}
+\end{equation}
+is analytic in $\Omega$, according to theorem \ref{thm:Analytic And Conjugate Harmonic}.
+
+We now pass to the differential form
+\begin{equation*}
+	f(z)\mathrm{d} z = \left(\frac{\partial u}{\partial x} \mathrm{d} x + \frac{\partial u}{\partial y} \mathrm{d} y\right) + i \left(-\frac{\partial u}{\partial y} \mathrm{d} x + \frac{\partial u}{\partial x} \mathrm{d} y\right)
+\end{equation*}
+The first part is just $\mathrm{d} u$, and the second part is local exact, which potential is the conjugate harmonic function $v$ of $u$. 
+\begin{remark}
+	In a simple connected region $\Omega$, we can always find a harmonic conjugate $v$ of $u$ such that $f(z) \mathrm{d} z = \mathrm{d} u + i \mathrm{d} v$. In this case, we have $F=u+iv$ is analytic in $\Omega$, and $f(z) \mathrm{d} z = \mathrm{d} F$.
+\end{remark}
+
+However in general, the second part is not exact (if $\Omega$ is not single valued especially), we denote
+\begin{equation*}
+	^* \mathrm{d} u = -\frac{\partial u}{\partial y} \mathrm{d} x + \frac{\partial u}{\partial x} \mathrm{d} y
+\end{equation*}
+called the conjugate differential of $u$. Then we have
+\begin{equation}
+	f \mathrm{d} z = \mathrm{d} u + i \, ^* \mathrm{d} u
+\end{equation}
+
+According to theorem \ref{thm:Locally Exact Implies Zero Cycle}, for any cycle $\gamma\sim 0$ in $\Omega$, we have
+\begin{equation*}
+	\int_{\gamma} f \mathrm{d} z = \int_{\gamma} \mathrm{d} u + i \int_{\gamma} \, ^* \mathrm{d} u = 0
+\end{equation*}
+which is consistent with Cauchy's theorem. Also, this would imply
+\begin{equation}
+	\int_{\gamma} \frac{\partial u}{\partial n} \left|\mathrm{d} z\right| = 0
+\end{equation}
+which is easily proved by the divergence theorem, where $\partial u / \partial n$ is the normal derivative of $u$ on $\gamma$.
+
+In a simply connected region $\Omega$, we can define the harmonic conjugate $v$ of $u$ without difficulty. In multiple connected regions, the conjugate functions has periods:
+\begin{equation*}
+	\int_{\gamma_i} \, ^* \mathrm{d} u = \int_{\gamma_i} \frac{\partial u}{\partial n} \left|\mathrm{d} z\right|
+\end{equation*}
+where $\gamma_i$ are cycles in a homology basis.
+
+\begin{theorem}{Pair Harmonic Functions}{Pair Harmonic Functions}
+	If $u_1,u_2$ are harmonic in $\Omega$, and $\gamma\sim 0$ in $\Omega$, then
+	\begin{equation}
+		\int_{\gamma} u_1 \, ^* \mathrm{d} u_2 - u_2 \, ^* \mathrm{d} u_1 = 0
+	\end{equation}
+\end{theorem}
+\begin{proof}
+	The simplest proof is by calculation, we have
+	\begin{equation*}
+		\begin{aligned}
+			u_1 \, ^* \mathrm{d} u_2 - u_2 \, ^* \mathrm{d} u_1 &= u_1 \left(-\frac{\partial u_2}{\partial y} \mathrm{d} x + \frac{\partial u_2}{\partial x} \mathrm{d} y\right) - u_2 \left(-\frac{\partial u_1}{\partial y} \mathrm{d} x + \frac{\partial u_1}{\partial x} \mathrm{d} y\right)\\
+									    &= \left(-u_1 \frac{\partial u_2}{\partial y} + u_2 \frac{\partial u_1}{\partial y}\right) \mathrm{d} x + \left(u_1 \frac{\partial u_2}{\partial x} - u_2 \frac{\partial u_1}{\partial x}\right) \mathrm{d} y\\
+		\end{aligned}
+	\end{equation*}
+	This is certainly a local exact differential, as we have
+	\begin{equation*}
+		\frac{\partial }{\partial y} \left( -u_1 \frac{\partial u_2}{\partial y} + u_2 \frac{\partial u_1}{\partial y}\right) - \frac{\partial }{\partial x} \left(u_1 \frac{\partial u_2}{\partial x} - u_2 \frac{\partial u_1}{\partial x}\right) = -u_1 \frac{\partial ^2 u_2}{\partial y^2} + u_2 \frac{\partial ^2 u_1}{\partial y^2} - u_1 \frac{\partial ^2 u_2}{\partial x^2} + u_2 \frac{\partial ^2 u_1}{\partial x^2} = 0
+	\end{equation*}
+\end{proof}
+
+\subsection{The Mean Value Theorem}
+Apply theorem \ref{thm:Pair Harmonic Functions} to the pair $u_1(z)=\log r$ and $u_2(z) = u(z)$, where $u$ is harmonic in $\left|z\right|<\rho$. We choose $\Omega=\left\{ z: 0<\left|z\right|<\rho \right\}$ and $\gamma=C_1-C_2$ where $C_i: \left|z\right| = r_i<\rho$. Thus
+\begin{equation*}
+	\log r_1 \int_{C_1} r_1 \frac{\partial u}{\partial r} \mathrm{d} \theta - \int_{C_1} u \mathrm{d} \theta = \log r_2 \int_{C_2} r_2 \frac{\partial u}{\partial r} \mathrm{d} \theta - \int_{C_2} u \mathrm{d} \theta
+\end{equation*}
+Therefore, we have
+\begin{equation}
+	\log r \int_{\left|z\right|=r} r \frac{\partial u}{\partial r} \mathrm{d} \theta - \int_{\left|z\right|=r} u \mathrm{d} \theta = \operatorname{const} \qquad \forall r<\rho
+\end{equation}
+If we take $u_1=1,u_2=u$, we have
+\begin{equation}
+	\int_{\left|z\right|=r} r \frac{\partial u}{\partial r} \mathrm{d} \theta = \operatorname{const}, \qquad \forall r<\rho
+\end{equation}
+
+\begin{theorem}{Mean Value of a Harmonic Function}{Mean Value of a Harmonic Function}
+	Let $u$ be a harmonic function in an annulus $r_1<\left|z\right|<r_2$, then the arithmetic mean of $u$ is
+	\begin{equation}
+		\frac{1}{2 \pi} \int_{\left|z\right|=r} u \mathrm{d} \theta = \alpha \log r + \beta.
+	\end{equation}
+	where $\alpha,\beta\in \mathbb{R}$ are constants. If $u$ is harmonic in the whole disk $r<\rho$, then $\alpha=0, \beta=u(0)$.
+
+	If $u$ is harmonic in the disk $B(z_0,r_0)$, then
+	\begin{equation}
+		u(z_0) = \frac{1}{2 \pi } \int_0^{2 \pi} u(z_0 + re^{i \theta}) \mathrm{d} \theta
+	\end{equation}
+\end{theorem}
+\begin{proof}
+	This can also be directly proved by the proof of theorem \ref{thm:The Maximum Principle}.
+\end{proof}
+
+\begin{remark}
+	For a slightly different case, if $u$ is harmonic in $r< \rho$, and continuous in $r \leq \rho$, then the theorem also holds:
+	\begin{equation*}
+		u(0) = \frac{1}{2 \pi} \int_0^{2 \pi} u(\rho e^{i \theta}) \mathrm{d} \theta
+	\end{equation*}
+	The proof uses the uniform continuity due to the close disk.
+\end{remark}
+
+\begin{theorem}{The Maximum Principle for Harmonic Functions}{The Maximum Principle for Harmonic Functions}
+	A nonconstant harmonic function $u$ is defined on a region $\Omega$, then $u$ does not have a maximum or minimum value on $\Omega$.
+\end{theorem}
+\begin{proof}
+	Using the similar method proving maximum value theorem of analytic functions \ref{thm:The Maximum Principle} would do. Let $A = \left\{ z: u(z) = \max u \right\}$, and $B = \Omega-A$. Then $\forall z\in A$, take a small disk and the mean value theorem says that $u$ is constant in the disk, so $A$ is open. As $u$ is continuous, $B = u^{-1}((-\infty ,\max u))$ is also open, which contradicts to the connectedness of $\Omega$.
+\end{proof}
+
+\subsection{Poisson's Formula}
+
+\begin{theorem}{The Uniqueness Theorem of Dirichlet Boundary}{The Uniqueness Theorem of Dirichlet Boundary}
+	Let $u,v$ be harmonic functions in a region $\Omega$, and continuous on $\overline{\Omega}$. Then if $u=v$ on the boundary $\partial \Omega$, then $u=v$ in $\Omega$.
+\end{theorem}
+\begin{proof}
+	We have $u-v$ is harmonic in $\Omega$ and continuous on $\overline{\Omega}$. The maximum and minimum of $u-v$ takes place on $\partial \Omega$, which is constant in $\Omega$. Thus $u=v$ in $\Omega$.
+\end{proof}
+
+We now want to solve $u$ if its boundary value are given. For simplicity we consider disks first.
+\begin{itemize}
+	\item First, we can use the mean value theorem to evaluate the center.
+	\item Use a linear transform to carry any point to the center. Let
+		\begin{equation}
+			z = S(\zeta) = \frac{R(R \zeta+a)}{R+\overline{a}\zeta}.
+		\end{equation}
+		mapping $\left|\zeta\right|\leq 1 \mapsto \left|z\right|\leq R, 0 \mapsto a$. Now $u(S(\zeta))$ is harmonic in $\left|\zeta\right|<1$, and continuous on $\left|\zeta\right|\leq 1$. Thus
+		\begin{equation*}
+			u(a) = \frac{1}{2 \pi}\int_{\left|\zeta\right|=1} u(S(\zeta)) \mathrm{d} \theta_{\zeta}
+		\end{equation*}
+\end{itemize}
+From
+\begin{equation*}
+	\zeta = \frac{R(z-a)}{R^2-\overline{a}z}
+\end{equation*}
+we have
+\begin{equation*}
+	\mathrm{d} \theta_{\zeta} = -i \frac{\mathrm{d} \zeta}{\zeta} = -i \left(\frac{1}{z-a} + \frac{\overline{a}}{R^2-\overline{a}z}\right) \mathrm{d} z = \left(\frac{z}{z-a} + \frac{\overline{a}z}{R^2-\overline{a}z}\right) \mathrm{d} \theta_z
+\end{equation*}
+From $R^2 = z \overline{z}$ we have
+\begin{equation*}
+	\mathrm{d} \theta_{\zeta} = \frac{R^2-\left|a\right|^2}{\left|z-a\right|^2} \mathrm{d} \theta_z
+\end{equation*}
+
+\begin{theorem}{Poisson's Formula}{Poissons Formula}
+	Suppose $u$ is harmonic for $\left|z\right|<R$ and continuous on $\left|z\right|\leq R$, then for any $a\in \mathbb{C}$ with $\left|a\right|<R$, we have
+	\begin{equation}
+		u(a) = \frac{1}{2 \pi} \int_{\left|z\right|=R} u(z) \frac{R^2-\left|a\right|^2}{\left|z-a\right|^2} \mathrm{d} \theta_z = \frac{1}{2 \pi } \int_{\left|z\right|=R} \re \frac{z+a}{z-a} u(z) \mathrm{d} \theta_z
+	\end{equation}
+\end{theorem}
+Poisson's Formula also gives us a explicit representation of the conjugate harmonic function $v$ of $u$ in the disk $\left|z\right|<R$: as
+\begin{equation*}
+	u(z) = \re \left(\frac{1}{2 \pi i} \int_{\left|\zeta\right|=R} \frac{\zeta+z}{\zeta-z} u(\zeta) \frac{\mathrm{d} \zeta}{\zeta}\right)
+\end{equation*}
+We have
+\begin{equation}
+	f(z) = \frac{1}{2 \pi i} \int_{\left|\zeta\right|=R} \frac{\zeta+z}{\zeta-z} u(\zeta) \frac{\mathrm{d} \zeta}{\zeta} + i C, \qquad  C\in \mathbb{R}
+\end{equation}
+is an analytic function, and $f=u+iv$. This is known as the Schwarz integral formula.
+
+As a special case, take $u=1$, we have
+\begin{equation}
+	\int_{\left|z\right|=R} \frac{R^2-\left|a\right|^2}{\left|z-a\right|^2} \mathrm{d} \theta_z = 2 \pi
+\end{equation}
+
+\subsection{Schwarz's Theorem}
+
+We can relax the continuity condition on the boundary a little. As long as $u$ has sufficient regularity (say piecewise continuity) on the boundary, the integral in Poisson's formula still makes sense. We then define $u = \re f$ as in the Schwarz integral formula. Then $u$ is harmonic in $\left|z\right|<R$. The question whether $u$ matches the boundary condition or not is answered by the following theorem.
+
+For simplicity, choose $R=1$, define $U(\theta), \theta\in [0, 2 \pi)$ to be a piecewise continuous real function, and let
+\begin{equation}
+	P_U(z) = \frac{1}{2 \pi} \int_0^{2 \pi} \re \frac{e^{i \theta}+z}{e^{i \theta}-z} U(\theta) \mathrm{d} \theta, \qquad \left|z\right|<1
+\end{equation}
+Then $U \mapsto P_U(z)$ is a linear positive functional given that $U>0 \rightarrow P_U(z)>0$.
+
+As $P_c=c$, we have
+\begin{equation}\label{eq:Bound of Schwarz's Theorem}
+	U(\theta)\in [m,M] \rightarrow P_U(z)\in [m,M]
+\end{equation}
+
+\begin{theorem}{Schwarz's Theorem}{Schwarz's Theorem}
+	Let $U(\theta)$ be a piecewise continuous real function on $[0,2 \pi]$, and let $P_U(z)$ be defined as above. Then for any $\theta_0 \in [0,2 \pi]$ where $U$ is continuous, we have $P_U(z)$ is harmonic in $\left|z\right|<1$, and
+	\begin{equation}
+		\lim_{z \to e^{i \theta_0}} P_U(z) = U(\theta_0)
+	\end{equation}
+\end{theorem}
+\begin{proof}
+We've already proved that $P_U(z)$ is harmonic in $\left|z\right|<1$. Now we need to show the limit.
+
+\begin{itemize}
+	\item Decompose the unit circle to open arcs $\overline{C_1\sqcup C_2}$, and let $U_i = U|_{C_i}$. Then $P_U = P_{U_1} + P_{U_2}$.
+	\item $P_{U_1}$ is harmonic on $\mathbb{C}-C_1$, being the real part of an analytic function. And we also have
+		\begin{equation*}
+			\re \frac{e^{i \theta}+z}{e^{i \theta}-z} = \frac{1-\left|z\right|^2}{\left|e^{i \theta}-z\right|^2}.
+		\end{equation*}
+		So $P_{U_1}(z)=0$ for $z\in C_2$. Through continuity we conclude that $P_{U_1}(z) \to 0$ as $z \to e^{i \theta_0}$, where $e^{i \theta_0} \in C_2$.
+	\item Suppose $U(\theta_0)=0$, otherwise we can replace $U$ by $U-U(\theta_0)$. Given $\epsilon>0$, find $C_1,C_2$ that $e^{i \theta_0}\in C_2$ and $\forall e^{i \theta}\in C_2, \left|U(\theta)\right| < \epsilon / 2$. Due to equation \ref{eq:Bound of Schwarz's Theorem}, we have $\left|P_{U_2}(z)\right|< \epsilon / 2$ for $\left|z\right|<1$. The continuity of $P_{U_1}$ near $e^{i \theta_0}$ implies that $\exists \delta>0$ such that $\left|P_{U_1}(z)\right|<\epsilon / 2$ for $\left|z-e^{i \theta_0}\right|<\delta$. Thus we have
+		\begin{equation*}
+			\left|P_U(z) - U(\theta_0)\right| = \left|P_{U_1}(z) + P_{U_2}(z) - U(\theta_0)\right| < \epsilon, \qquad \left|z-e^{i \theta_0}\right|<\delta
+		\end{equation*}
+		which implies the limit.
+\end{itemize}
+\end{proof}
+
+\paragraph{A Geometric Interpretation of Poisson's Formula}
+Let $\theta^*$ be such that on the unit circle $e^{i \theta},z,e^{i \theta^*}$ are collinear. Then
+\begin{equation}
+	P_U(z) = \frac{1}{2 \pi} \int_0^{2 \pi} U(\theta) \mathrm{d} \theta^* = \frac{1}{2 \pi} \int_0^{2 \pi} U(\theta^*) \mathrm{d} \theta
+\end{equation}
+
+\begin{figure}[ht]
+    \centering
+    \incfig{geometry-of-poisson's-formula}
+    \caption{Geometry of Poisson's Formula}
+    \label{fig:geometry-of-poisson's-formula}
+\end{figure}
+
+\subsection{The Reflection Principle}
+
+We notice that if $u(z)$ harmonic, then $u(\overline{z})$ is also harmonic, and if $f(z)$ is analytic, then $\overline{f(\overline{z})}$ is also analytic.
+\begin{proof}
+	This is quite straightforward. Let $g(z) = \overline{f(\overline{z})}$, then
+	\begin{equation*}
+		g(z+\Delta z) - g(z) = \overline{f(\overline{z}+\overline{\Delta z}) - f(\overline{z})} = \overline{f'(\overline{z}) \overline{\Delta z} + o(\left|\Delta z\right|)} = \overline{f'(\overline{z})} \Delta z + o(\left|\Delta z\right|)
+	\end{equation*}
+	which implies that $g'(z) = \overline{f'(\overline{z})}$. If $u=\re f$ then $u(\overline{z}) = \re g(z)$ so $u(\overline{z})$ is harmonic.
+\end{proof}
+This can be simply interpreted as flipping both $\Omega$ and the range about the real axis. Let $\Omega^* = \left\{ \overline{z} : z\in \Omega \right\}$.
+
+Consider when $\Omega = \Omega^*$, as $\Omega$ is connected, it must contain some open interval $I \subseteq \mathbb{R}$. Assume $f$ is real on $I$. As $f(z) - \overline{f(\overline{z})}$ is analytic on $I$, which implies that $f(z) = \overline{f(\overline{z})}$ on $\Omega$. Setting $f=u+iv$, we have $u(z) = u(\overline{z})$ and $v(z) = -v(\overline{z})$.
+
+\begin{theorem}{The Reflection Principle}{The Reflection Principle}
+	Let $\Omega$ be a symmetric region $\Omega=\Omega^*$, and $\Omega^+ = \Omega \cap \left\{ z: \im z>0 \right\}$ and $\sigma= \Omega\cap \mathbb{R}$. Suppose $v$ is continuous in $\Omega^+\cup \sigma$, harmonic in $\Omega^+$, and $v=0$ on $\sigma$. Then $v$ can be extended to a harmonic function in $\Omega$ by setting $v(\overline{z}) = -v(z)$.
+
+	If $v$ is the imaginary part of an analytic function $f$ in $\Omega^+$, then $f$ has an analytic extension to $\Omega$ by setting $f(\overline{z}) = \overline{f(z)}$.
+\end{theorem}
+\begin{proof}
+We construct $V(z)$ as the theorem states.
+\begin{equation*}
+	V(z) = 
+	\begin{cases}
+		v(z), & z\in \Omega^+\\
+		0, & z\in \sigma\\
+		-v(\overline{z}), & z\in \Omega^-
+	\end{cases}
+\end{equation*}
+and prove that $V$ is harmonic in $\Omega$. For $x_0\in \sigma$ consider a disk $\Delta \subseteq \Omega$ centered at $x_0$. Then let $P_V$ be the Poisson Integral with boundary values of $V$ on $\partial \Delta$. We have $V- P_V$ being harmonic on on $\Delta\cap \Omega^+$, and $V(z)-P_V(z)=0$ on $\sigma$ due to obvious symmetry. Considering the uppse half disk, we have a boundary $0$ Dirichlet problem, which shows that $V=P_V$ on the upper half disk, so $V=P_V$ on $\Delta$, therefore, $V$ is harmonic at $x_0$.
+
+The next part of the theorem follows smoothly, as choosing a conjugate function on the disk that coincides with $v$ on $\Omega^+$ would do.
+\end{proof}
+
+Taking linear fractional transformations (to the domain and image), we can generalize the theorem to symmetry with respect to circles and other lines.
+
+\begin{theorem}{Generalized Reflection Principle}{Generalized Reflection Principle}
+	Let $C,C'$ be circles or lines in $\mathbb{C}$. Let $\Omega$ be a region symmetric with respect to $C$, $\Omega=\Omega^*$, and $\Omega^+, \Omega^-$ be two sides of $\Omega$ to $C$. If $f$ is analytic in $\Omega^+$, continuous on $\overline{\Omega^+}$, and $f(C) \subseteq C'$, then $f$ can be extended to a function $F$ in $\Omega$ by setting $f(z^*[C]) = f(z)^*[C']$. (where $z^*[C]$ is the reflection of $z$ with respect to $C$).
+\end{theorem}
+
+\end{document}

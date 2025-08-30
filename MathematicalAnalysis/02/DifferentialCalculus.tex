@@ -1,0 +1,199 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\chapter{General Differential Calculus}
+
+\section{Normed Vector Spaces}
+Differentiation is the process of finding the best local linear approximation of a function.
+
+\begin{definition}{Norm of a Vector Space}{Norm of a Vector Space}
+Let $X$ be a vector space on $\mathbb{R}$ or $\mathbb{C}$. Then a norm is a function $\|\cdot \| : X \rightarrow \mathbb{R}$ that satisfies:
+\begin{itemize}
+\item $\|x\|=0 \Leftrightarrow x=0$.
+\item $\| \lambda x\| = \left|\lambda\right| \|x\|$.
+\item $\|x_1+x_2\| \leq \|x_1\|+\|x_2\|$.
+\end{itemize}
+A vector with a norm defined on it is called a normed vector space.
+\end{definition}
+
+Every normed vector space has a natural metric $d(x_1,x_2) = \|x_1-x_2\|$.
+
+\begin{definition}{Banach Space}{Banach Space}
+If a normed vector space is complete as a metric space with the natural metric, it is called a complete normed vector space, or a Banach space.
+\end{definition}
+
+\begin{example}{Normed Vector Spaces}{Normed Vector Spaces}
+\begin{itemize}
+\item For  $\mathbb{R}^{n}$, let $p>1$, define:
+	\begin{equation*}
+	\|x\|_{p} = \left(\sum_{i=1}^{n} \left|x^i\right|^p\right)^{\frac{1}{p}}
+	\end{equation*}
+	Which will become $\|x\|_{\infty } = \max x^i$ as $p \rightarrow \infty $.
+\item On $C[a,b]$ define
+	\begin{equation*}
+		\|f\| = \max _{x\in [a,b]} \left|f(x)\right|
+	\end{equation*}
+\item On $C[a,b]$ define
+	\begin{equation*}
+	\|f\|_{p} = \left( \int _a^b \left|f(x)\right|^p\mathrm{d}x\right)^{\frac{1}{p}}
+	\end{equation*}
+	Which becomes the previous one as $p \rightarrow \infty $.
+\end{itemize}
+\end{example}
+
+\subsection{Inner Products in Vector Spaces}
+
+\begin{definition}{Hermitian Form}{Hermitian Form}
+A Hermitian form is defined on a vector space $X$ over $\mathbb{C}$. It is a mapping $\left<\cdot ,\cdot \right>: X \times X \rightarrow  \mathbb{C}$ having the following properties:
+\begin{itemize}
+\item $\left<x_1,x_2\right> = \overline{\left<x_2,x_1\right>}$.
+\item $\left<\lambda x_1,x_2\right> = \lambda \left<x_1,x_2\right>$.
+\item $\left<x_1+x_2,x_3\right> = \left<x_1,x_3\right> = \left<x_2,x_3\right>$.
+\end{itemize}
+
+A Hermitian form is called nonnegetive if
+\begin{itemize}
+\item $\left<x,x\right> >0$.
+\end{itemize}
+and non-degenerate if
+\begin{itemize}
+\item $\left<x,x\right> = 0 \Leftrightarrow x=0$.
+\end{itemize}
+\end{definition}
+
+\begin{definition}{Inner Product}{Inner Product}
+A non-degenerate nonnegative Hermitian form in a vector space is called a inner product in the space.
+\end{definition}
+
+\begin{example}{Inner Products}{Inner Products}
+\begin{itemize}
+\item On $\mathbb{C}^{n}$ we set:
+	\begin{equation*}
+		\left<x,y\right> = \sum_{x=1}^{n} x^i \overline{y^i}
+	\end{equation*}
+\item On $C[a,b]$ we set
+	\begin{equation*}
+	\left<f,g\right> = \int _a^b f(x) \overline{g(x)} \mathrm{d}x
+	\end{equation*}
+\end{itemize}
+\end{example}
+
+The Cauchy-Schwartz inequality holds for inner products:
+\begin{equation}
+\left|\left<x,y\right>\right|^2 \leq \left<x,x\right>\cdot \left<y,y\right>
+\end{equation}
+
+A vector space with an inner product has a natural norm:
+\begin{equation}
+\|x\| = \sqrt{\left<x,x\right>}
+\end{equation}
+and metric
+\begin{equation*}
+d(x,y) = \|x-y\|
+\end{equation*}
+
+
+\section{Linear and Multilinear Transformations}
+
+
+\section{The Differential of a Mapping}
+
+\begin{definition}{Differentiable}{Differentiable}
+Let $X$ and $Y$ be normed vector spaces. A mapping $f:E \rightarrow Y$ of a set $E \subseteq X$ is differentiable at an interior point $x\in E$ if there extsts a continuous linear transform $L(x): X \rightarrow Y$ such that
+\begin{equation*}
+f(x+h) - f(x) = L(x)h+\alpha(x;h)
+\end{equation*}
+where
+\begin{equation*}
+\lim_{h \to 0,x+h\in E} \left|\alpha(x;h)\right|_Y \cdot \left|h\right|_X^{-1} = 0.
+\end{equation*}
+
+The function $L(x)\in \mathscr{L}(X,Y)$ is called the differential, the tangent mapping or the derivative of $f$ at $x$. We denote $L(x)$ by $\mathrm{d} f(x),Df(x)$ or $f'(x)$.
+\end{definition}
+
+\begin{theorem}{Uniqueness of Differential}{Uniqueness of Differential}
+If $f:X \rightarrow Y$ is differentiable at $x\in X$, its differential $L(x)$ is unique.
+\end{theorem}
+\begin{proof}
+Let $L_1(x)$ and $L_2(x)$ satisfy the condition. Then
+\begin{equation*}
+\begin{aligned}
+f(x+h)-f(x)-L_1(x)h = \alpha_1(x;h)\\
+f(x+h)-f(x)-L_2(x)h = \alpha_2(x;h)
+\end{aligned}
+\end{equation*}
+Setting $L(x)=L_1(x)-L_2(x)$ and $\alpha(x;h) = \alpha_1(x;h)-\alpha_2(x;h)$, so $\alpha(x;h) = o(h)$ as $h \rightarrow 0$. And we have
+\begin{equation*}
+L(x)h = \alpha(x;h)
+\end{equation*}
+We have
+\begin{equation*}
+\left|L(x)h\right| = \frac{\left|L(x)(\lambda h)\right|}{\left|\lambda\right|} = \frac{\left|\alpha(x;\lambda h)\right|}{\left|\lambda h\right|}\left|h\right| \rightarrow 0, \text{ as $\lambda \rightarrow 0$ }.
+\end{equation*}
+Thus $\forall h\neq 0,L(x)h=0$, thus $L(x)=0$.
+\end{proof}
+
+If $E$ is an open subset of $X$ and $f:E \rightarrow Y$ is a mapping that is differential at $\forall x\in E$, then the function $f':E \rightarrow \mathscr{L}(X;Y)$ is called the derivative of $f$. Keep in mind that $f'(x)\in \mathscr{L}(X;Y)$ is a linear transform.
+
+\subsection{The General Rules for Differentiation}
+
+\begin{proposition}{Rules for Differential}{Rules for Differential}
+Let $X,Y,Z$ be normed spaces and $U,V$ open sets in $X,Y$ respectively.
+\begin{itemize}
+\item \textbf{Linearity: }If $f_1,f_2$ are differentiable at $x$, then $f_1+f_2$ is differentiable at $x$, and
+	\begin{equation*}
+	(\lambda_1f_1 + \lambda_2f_2)'(x) = \lambda_1f_1'(x) + \lambda_2f_2'(x).
+	\end{equation*}
+\item \textbf{Composition Chain Rule: } $f:U \rightarrow V$ is differentiable at $x\in U \subseteq X$, and $g:V \rightarrow Z$ if differentiable at $f(x)=y\in V \subseteq Y$, then $g\circ f$ is differentiable at $x$ and
+	\begin{equation*}
+		(g\circ f)'(x) = g'(f(x))\circ f'(x)
+	\end{equation*}
+\item \textbf{Inverse Mapping: } If $f:U \rightarrow Y$ is continuous at $x \in U \subseteq X$ and has a continuous inverse $f^{-1}:V \rightarrow  X$ in the neighborhood at $f(x)$. Then if $f$ is differential at $x$ and $f'(x)$ has a continuous inverse, then the mapping $f^{-1}$ is differentiable at $f(x)$ with
+	\begin{equation*}
+		(f^{-1})'(f(x)) = (f'(x))^{-1}
+	\end{equation*}
+\end{itemize}
+\end{proposition}
+
+\subsection{The Partial Derivatives of a Mapping}
+Let $U = U(a)$ be a neighborhood of $a\in X = X_1 \times \cdots \times X_m$, and $f: U \rightarrow Y$ be a mapping. In this case
+\begin{equation*}
+y=f(x) = f(x_1, \ldots ,x_m)
+\end{equation*}
+Fixing all variables other then $x_i$, we have a mapping
+\begin{equation*}
+f(a_1, \ldots ,a _{i-1}, x_i , a _{i+1}, \ldots ,a_m) = \varphi_i(x_i)
+\end{equation*}
+defined in some neighborhood $U_i$ of $a_i\in X$.
+
+The mapping $\varphi_i$ is called the partial mapping with respect to $x_i$ at $a\in X$.
+
+\begin{definition}{Partial Derivative}{Partial Derivative}
+If $\varphi_i$ is differentiable at $x_i=a_i$, then its derivative is called the partial derivative of $f$ at $a$ with  respect to $x_i$. Denoted
+\begin{equation*}
+\partial _i f(a)\qquad D_if(a)\qquad \frac{\partial f}{\partial x_i}(a)\qquad f_{x_i}'(a)
+\end{equation*}
+\end{definition}
+Note that $\partial _if(a)\in \mathscr{L}(X_i;Y)$.
+
+\begin{proposition}{Total Derivative and Partial Derivative}{Total Derivative and Partial Derivative}
+If the mapping $f: X \rightarrow Y$ is differentiable at $a = (a_1, \ldots ,a_m) \in X$, then it has partial derivative of each variable and the derivative of $f$ is:
+\begin{equation*}
+df(a) h = \partial _1f(a)h_1+\cdots +\partial _mf(a) h_m.
+\end{equation*}
+where $h = (h_1, \ldots ,h_m)\in TX(a)$.
+\end{proposition}
+
+\section{The Finite-Increasement Theorem}
+
+\begin{theorem}{The Finite-Increasement Theorem}{The Finite-Increasement Theorem}
+Let $X$ and $Y$ be normed spaces. Let $f: U \rightarrow Y$ be a continuous mapping from an open $U \subseteq X$ to $Y$.
+
+If the closed interval $[x,x+h] = \left\{ \xi\in X \mid \xi=x+\theta h,0\leq \theta \leq 1 \right\} \subseteq U$ and $f$ is differentiable at $(x,x+h)$, then the following holds:
+\begin{equation}
+\left|f(x+h) - f(x)\right| \leq \sup \|f'(\xi)\|_{\mathscr{L}(X;Y)} \left|h\right|
+\end{equation}
+\end{theorem}
+
+
+\end{document}

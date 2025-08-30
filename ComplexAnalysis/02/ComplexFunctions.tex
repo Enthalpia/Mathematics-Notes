@@ -1,0 +1,706 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\chapter{Complex Functions}
+
+\section{Analytic Functions}
+
+We aim to extend the differentiation and integration of real analysis to the complex field. During this process, the range of capability is greatly restricted. Only analytic (or holomorphic) functions can be differentiated and integrated.
+
+\begin{plainblackenv}
+Practical notation:
+\tcblower
+We shall denote the symbols 
+\begin{itemize}
+\item $z$ and $w$ always means variables in $\mathbb{C}$ 
+\item $x$ and $y$ can be in either $\mathbb{R}$ or $\mathbb{C}$
+\item $t$ is always in $\mathbb{R}$
+\item $z=x+iy$ automatically means $x$ and $y$ are real.
+\end{itemize}
+
+We also denote $\mathbb{F}$ for $\mathbb{R}$ or $\mathbb{C}$.
+\end{plainblackenv}
+
+We shall restricted our discussion to only functions defined on open sets.
+
+\subsection{Limits and Continuity}
+
+\begin{definition}{Limits}{Limits}
+The function $f: \mathbb{F}\rightarrow \mathbb{F}$ is said to have a limit $A$ at $a$, denoted
+\begin{equation}
+\lim_{x \to a} f(x) = A 
+\end{equation}
+iff the following is true.
+
+For every $\epsilon>0$ there exists $\delta>0$ such that $\forall 0<\left|x-a\right|<\delta$, we have $\left|f(x)-A\right|<\epsilon$. That is
+\begin{equation}
+\forall \epsilon>0,\exists \delta>0,( \forall 0<\left|x-a\right|<\delta, \left|f(x)-A\right|<\epsilon)
+\end{equation}
+\end{definition}
+
+There are also similar definitions for $a$ or $A$ to be $\infty $.
+
+\begin{theorem}{Rational Operations on Limits}{Rational Operations On Limits}
+If $f,g: \mathbb{F}\rightarrow \mathbb{F}$ has 
+\begin{equation*}
+\lim_{x \to a} f(x) = A, \lim_{x \to a} g(x) = B
+\end{equation*}
+Then for any rational operation $R$, we have
+\begin{equation*}
+\lim_{x \to a} R(f(x),g(x)) = R(A,B)
+\end{equation*}
+\end{theorem}
+\begin{proof}
+The proof is completely the same as those of real analysis. For we only need 
+\begin{equation*}
+\left|ab\right|= \left|a\right|\left|b\right| \text{ and } \left|a+b\right|\leq \left|a\right|+\left|b\right|
+\end{equation*}
+\end{proof}
+
+\begin{theorem}{Equivalences of Limits}{Equivalences Of Limits}
+The following are equivalent.
+\begin{itemize}
+\item $\displaystyle \lim_{x \to a} f(x) = A$.
+\item $\displaystyle \lim_{x \to a} \overline{f(x)} = \overline{A}$.
+\item $\displaystyle 
+	\begin{cases}
+	\displaystyle \lim_{x \to a} \re f(x) = \re A\\
+	\displaystyle \lim_{x \to a} \im f(x) = \im A
+	\end{cases}$
+\end{itemize}
+\end{theorem}
+\begin{proof}
+We use $\left|\re f(x)-\re A\right| \leq \left|f(x)-A\right|\leq \left|\re f(x)-\re A\right| + \left|\im f(x)-\im A\right|$ would do.
+\end{proof}
+
+We defines continuous functions similarly
+\begin{definition}{Continuity}{Continuity}
+$f: \mathbb{F}\rightarrow \mathbb{F}'$ is continuous at $a$ iff 
+\begin{equation*}
+\lim_{x \to a} f(x) = f(a)
+\end{equation*}
+A continuous function is a function that is continuous at $\forall x\in $ domain.
+\end{definition}
+
+\begin{definition}{Derivative}{Derivative}
+The derivative of a function $f: \mathbb{F}\rightarrow \mathbb{F}'$ is defined
+\begin{equation*}
+f'(a) = \lim_{x \to a} \frac{f(x)-f(a)}{x-a}
+\end{equation*}
+we notice that we use a multiplication of the domain and range, which is not valid for two arbitrary fields $\mathbb{F}$ and $\mathbb{F}'$.
+\end{definition}
+
+For a function $f: \mathbb{C}\rightarrow \mathbb{R}$, if it has a derivative at $x=a$, then it must be zero. For $h\in \mathbb{R}$, we have
+\begin{equation*}
+f'(a) = \lim_{h \to 0} \frac{f(a+h)-f(a)}{h} = \lim_{h \to 0} \frac{f(a+ih)-f(a)}{ih}
+\end{equation*}
+The two equations are real and pure imaginary respectively, thus must be $0$.
+
+For a function $z: \mathbb{R}\rightarrow \mathbb{C}$, we have $z(t) = x(t)+iy(t)$, thus
+\begin{equation*}
+z'(t)=x'(t)+iy'(t)
+\end{equation*}
+
+In short, the rational operations of derivatives and the chain rule also applied for the derivatives.
+
+
+\subsection{Analytic Functions}
+
+\begin{definition}{Analytic Functions}{Analytic Functions}
+An analytic function is a function $f: \mathbb{C}\rightarrow \mathbb{C}$ that has a derivative for $\forall x\in $ domain.
+\end{definition}
+
+The rational operations on analytic functions is also analytic (except of those points that have zero denominator, obviously). We begin by finding the necessary results of an analytic function.
+
+\begin{itemize}
+\item Analytic Functions are Continuous
+
+The definition of derivative can be rewritten as 
+\begin{equation*}
+f'(z) = \lim_{h \to 0} \frac{f(z+h)-f(z)}{h}
+\end{equation*}
+Then 
+\begin{equation*}
+\lim_{h \to 0} (f(z+h)-f(z)) = f'(z) \lim_{h \to 0} h = 0
+\end{equation*}
+giving $\displaystyle \lim_{h \to 0} f(z+h) = f(z)$ as expected.
+
+If we write $f(z) = u(z)+iv(z)$, then $u,v$ are both continuous.
+
+\item The limit must be the same regardless of how $h$ approaches $0$.
+
+We write $z=x+iy$ then $u(z) = u(x,y)$ and $v(z) = v(x,y)$. 
+
+If we let  $h$ approaches $0$ in the real line, we have
+\begin{equation*}
+f'(z) = \frac{\partial f}{\partial x} = \frac{\partial u}{\partial x} + i \frac{\partial v}{\partial x}
+\end{equation*}
+
+Letting $h$ approach $0$ on the imaginary side, we have
+\begin{equation*}
+f'(z) = \lim_{k \to 0} \frac{f(z+ik)-f(z)}{ik} = -i \frac{\partial f}{\partial y} = -i \frac{\partial u}{\partial y} + \frac{\partial v}{\partial y}
+\end{equation*}
+\end{itemize}
+
+Getting those together, we have
+\begin{theorem}{The Cauchy-Riemann Equations}{The Cauchy-Riemann Equations}
+If $f: \mathbb{C}\rightarrow \mathbb{C}$ is an analytic function, then let $f(z) = u(x,y) + iv(x,y)$ where $z = x+iy$, then we have
+\begin{equation}
+\displaystyle \frac{\partial u}{\partial x} = \frac{\partial v}{\partial y} \qquad
+\frac{\partial u}{\partial y} = - \frac{\partial v}{\partial x}
+\end{equation}
+or more shortly, we have
+\begin{equation}
+\frac{\partial f}{\partial x}+i \frac{\partial f}{\partial y}=0
+\end{equation}
+\end{theorem}
+
+For the quantity $\left|f'(z)\right|^2$ we have
+\begin{equation*}
+\left|f'(z)\right|^2 = \left(\frac{\partial u}{\partial x}\right)^2 + \left(\frac{\partial v}{\partial x}\right)^2 = \frac{\partial u}{\partial x}\frac{\partial v}{\partial y} - \frac{\partial u}{\partial y}\frac{\partial v}{\partial x} = \frac{\partial (u,v)}{\partial (x,y)}
+\end{equation*}
+
+We shall later prove that the derivative of an analytic function is analytic, that is, it has derivative of all orders. Using theorem \ref{thm:The Cauchy-Riemann Equations}, we have
+\begin{equation}
+\begin{aligned}
+	\Delta u &= \frac{\partial ^2 u}{\partial x^2} + \frac{\partial ^2u}{\partial y^2} = 0\\
+	\Delta v &= \frac{\partial ^2v}{\partial x^2} + \frac{\partial ^2v}{\partial y^2} = 0
+\end{aligned}
+\end{equation}
+
+\begin{definition}{Harmonic Functions}{Harmonic Functions}
+A function $u$ satisfying the Laplace equation $\Delta u =0 $ is said to be harmonic. 
+
+If two harmonic functions $u$ and $v$ satisfies the Cauchy-Riemann Equation, then $v$ is the conjugate harmonic function of $u$. ($u$ is the conjugate harmonic function of $-v$ ).
+\end{definition}
+Thus the real and imaginary part of an analytic function are conjugate harmonic functions.
+
+We wish to prove, if $v$ is the conjugate harmonic function of $u$, then $u+iv$ is analytic. This is a sufficient and necessary condition.
+\begin{theorem}{Analytic and Conjugate Harmonic}{Analytic And Conjugate Harmonic}
+If $u(x,y)$ and $v(x,y)$ have continuous first-order partial derivatives which satisfies the Cauchy-Riemann Equations, then $f(z) = u(z)+iv(z)$ is an analytic function, and conversely.
+\end{theorem}
+
+\begin{proof}
+The continuity of the first-order partial derivatives makes it possible to write
+\begin{equation*}
+\begin{aligned}
+u(x+h,y+k)-u(x,y) = \frac{\partial u}{\partial x}h + \frac{\partial u}{\partial y}k + \epsilon_1\\
+v(x+h,y+k)-v(x,y) = \frac{\partial v}{\partial x}h + \frac{\partial v}{\partial y}k + \epsilon_2
+\end{aligned}
+\end{equation*}
+Thus we have
+\begin{equation*}
+\begin{aligned}
+	f(z+h+ik)-f(z) &= u(x+h,y+k) + iv(x+h,y+k) - u(x,y) - iv(x,y)\\
+		       &= \frac{\partial u}{\partial x}h + \frac{\partial u}{\partial y}k + \epsilon_1 + i \left(\frac{\partial v}{\partial x}h + \frac{\partial v}{\partial y}k + \epsilon_2\right)\\
+		       &= \frac{\partial u}{\partial x}h - \frac{\partial v}{\partial x}k + i \frac{\partial v}{\partial x}h + i \frac{\partial u}{\partial y}k + \epsilon_1+i \epsilon_2\\
+		       &= \left(\frac{\partial u}{\partial x}+ i \frac{\partial v}{\partial x}\right)\left(h+ik\right) + \epsilon_1 + i \epsilon_2
+\end{aligned}
+\end{equation*}
+
+Therefore we get 
+\begin{equation*}
+\lim_{h+ik \to 0} \frac{f(z+h+ik)-f(z)}{h+ik} = \frac{\partial u}{\partial x} + i \frac{\partial v}{\partial x}
+\end{equation*}
+We conclude that  $f$ is analytic.
+\end{proof}
+
+The next result is pretty interesting. Consider a complex function with two real variables $f(x,y)$. We write $x = \frac{1}{2}(z+\overline{z})$ and $y = -\frac{1}{2}i(z-\overline{z})$, then we see $f(x(z,\overline{z}),y(z,\overline{z}))$ as a function of ``independent'' $z$ and $\overline{z}$. We give a derivative \emph{formally}, which is not means by limits.
+\begin{equation}
+	\frac{\partial f}{\partial z} = \frac{1}{2} \left(\frac{\partial f}{\partial x}-i \frac{\partial f}{\partial y}\right), \qquad \frac{\partial f}{\partial \overline{z}} = \frac{1}{2}\left(\frac{\partial f}{\partial x} + i \frac{\partial f}{\partial y}\right).
+\end{equation}
+
+The derivative here is only formal, we can understand it as a definition. Then the Cauchy-Riemann Equations are equivalent to $\displaystyle \frac{\partial f}{\partial \overline{z}} = 0$, thus we are tempted to say that analytic functions are "truly functions of $z$ alone".
+
+This gives us a fairly easy way to compute the conjugate harmonic function of $u(x,y)$. Just making $u+iv$ be function that has only $x+iy$ as variable.
+
+If $u$ is rational, then we have $f=u+iv$,
+\begin{equation*}
+	u(x,y) = \frac{1}{2}(f(z) + \overline{f(z)}) = \frac{1}{2}(f(z)+f(\overline{z}))
+\end{equation*}
+thus we have
+\begin{equation*}
+u(\frac{z}{2},\frac{z}{2i}) = \frac{1}{2} \left(f(z)+\overline{f(0)}\right)
+\end{equation*}
+As adding a pure imaginary constant does not influence $f$, we can assume $f(0)$ to be real. Then we have $\overline{f(0)} = u(0,0)$. Take
+\begin{equation}
+	f(z) = 2u(\frac{z}{2},\frac{z}{2i}) - u(0,0)
+\end{equation}
+would do.
+
+\subsection{Polynomials}
+
+The simplest analytic function is the constant function and the identity function $z \mapsto z$. Since the sum and product of any two analytic functions are again analytic, we have
+\begin{theorem}{Polynomials}{Polynomials}
+Every Polynomial
+\begin{equation}
+P(z) = a_0+a_1z+\ldots +z_nz^n
+\end{equation}
+is analytic.
+\end{theorem}
+
+For $\deg P>0$, $P(z)=0$ has at least one root in $\mathbb{C}$. Thus we have the complete factorization
+\begin{equation*}
+P(z) = a_n(z-\alpha_1) \cdots (z-\alpha_n)
+\end{equation*}
+
+We are familiar with the order of zeros. A simple zero has order $1$. If a zero $\alpha$ has order $h$, then we have
+\begin{equation*}
+P(\alpha)=\ldots =P^{(h-1)}(\alpha) = 0 \text{ and } P^{(h)}(\alpha)\neq 0
+\end{equation*}
+
+As a result
+\begin{theorem}{Lucas's Theorem}{Lucas's Theorem}
+If all zeros of a polynomial $P(z)$ lies in a half plane, then all the zeros of $P'(z)$ lies in the same half plane.
+\end{theorem}
+\begin{proof}
+We have
+\begin{equation}
+\frac{P'(z)}{P(z)} = \frac{1}{z-\alpha_1}+\ldots +\frac{1}{z-\alpha_n}
+\end{equation}
+Suppose the half plane $H$ is defined $\displaystyle \left\{ z\in \mathbb{C}: \im \frac{z-a}{b}<0 \right\}$. If $z\notin H$, we have
+\begin{equation*}
+\im \frac{z-\alpha_k}{b} = \im \frac{z-a}{b}-\im \frac{\alpha_k-a}{b} > 0
+\end{equation*}
+then $\displaystyle \im \frac{b}{z-\alpha_k}<0$. Then we have
+\begin{equation*}
+\im \frac{bP'(z)}{P(z)} = \sum_{k=1}^{n} \im \frac{b}{z-\alpha_k}<0
+\end{equation*}
+Thus $P'(z)\neq 0$
+\end{proof}
+
+A sharper formulation is that the smallest convex polygon that contains all zeros of $P(z)$ also contains all zeros of $P'(z)$. (as a convex polygon can be made up of half plains).
+
+\subsection{Rational Functions}
+We turn to rational functions
+\begin{equation}
+R(z) = \frac{P(z)}{Q(z)}
+\end{equation}
+Assuming that $P$ and $Q$ has no common roots. The roots of $Q(z)$ are called poles in $R(z)$. The order of each pole in defined respectively.
+
+The derivative 
+\begin{equation*}
+R'(z) = \frac{P'(z)Q(z)-Q'(z)P(z)}{Q^2(z)}
+\end{equation*}
+has the same poles as $R(z)$, with order increased by $1$.
+
+We extend the domain and range to the extended plain. \textbf{Then $R$ is continuous}.
+\begin{itemize}
+\item If $z_0$ is a pole of $R(z)$, then define $R(z_0)= \infty $.
+\item For $R(\infty )$ we can use limit to define it but in that way it is hard to define the order of a zero or pole at $\infty $. Therefore we consider $R_1(z) = R(\frac{1}{z})$. 
+
+Define $R(\infty )=R_1(0)$.
+\end{itemize}
+
+With the notation 
+\begin{equation*}
+R(z) =\frac{a_0+a_1z+\ldots +a_nz^n}{b_0+b_1z+\ldots +b_mz^m}
+\end{equation*}
+we have
+\begin{equation*}
+R_1(z) = z^{m-n} \frac{a_0z^n+\ldots +z_n}{b_0z^m+\ldots +b_m}
+\end{equation*}
+\begin{itemize}
+\item $m>n$ then $\infty $ is a zero or order $m-n$.
+\item $m<n$ the $\infty $ is a pole of order $n-m$.
+\item $m=n$ then $R(\infty ) = \frac{a_n}{b_m}$
+\end{itemize}
+
+The total number of zeros or poles of $R(z)$ in the extended plane is both $\max \left\{ m,n \right\}$.
+
+\begin{definition}{Order of Rational Functions}{Order Of Rational Functions}
+The  order of a rational function $\displaystyle R(z) = \frac{P(z)}{Q(z)}$ with $\deg P(z) = n$ and $\deg Q(z)=m$ is define as $\max \left\{ n,m \right\}$.
+\end{definition}
+
+\begin{theorem}{Zeros and Poles of the Extended Plane}{Zeros And Poles Of The Extended Plane}
+A rational function that has degree $p$ has $p$ roots and $p$ poles. Every equation $R(z)$ has exactly $p$ roots.
+\end{theorem}
+
+A rational function of order  $1$ is linear
+\begin{equation}
+S(z) = \frac{\alpha z+\beta}{\gamma z+\delta}, \text{ with }\alpha \delta-\beta \gamma\neq 0
+\end{equation}
+
+The equation $\omega = S(z)$ has only one root, and 
+\begin{equation*}
+z = S^{-1}(\omega) = \frac{\delta \omega - \beta}{-\gamma \omega + \alpha}
+\end{equation*}
+
+Specifically, the linear transformation $z+a$ is called parallel translation, and $1 / z$ is called inversion.
+
+If $R(z)$ has a pole at $\infty $, divide $P(z)$ with $Q(z)$ till the degree of nominator and denominator are the same and we get
+\begin{equation*}
+R(z) = G(z) + H(z)
+\end{equation*}
+where $G$ is a polynomial without constant terms and $H(z)$ is finite at $\infty $. Then $G$ is called the singular part of $R$ at $\infty $.
+
+This process can be done similarly to finite poles. Let $\beta_1, \ldots ,\beta_q$ be distinct finite poles. Then the function $\displaystyle R(\beta_j + \frac{1}{\zeta})$ is a rational function that has a pole at $\infty $. We decompose it into
+\begin{equation*}
+	R(\beta_j + \frac{1}{\zeta}) = G_j(\zeta) + H_j(\zeta)
+\end{equation*}
+then
+\begin{equation*}
+	R(z) =G_j (\frac{1}{z-\beta_j}) + H_j(\frac{1}{z-\beta_j})
+\end{equation*}
+Then $H_j$ is finite at $\beta_j$, and $G_j$ is called the singular part of $R$ at $\beta_j$.
+
+Consider the expression
+\begin{equation*}
+	R(z) - G(z) - \sum_{j=1}^{q} G_j(\frac{1}{z-\beta_j})
+\end{equation*}
+It has no poles other than $\beta_1, \ldots ,\beta_q,\infty $. But at each one of these points, the expression is finite. Thus it is a constant function according to theorem \ref{thm:Zeros And Poles Of The Extended Plane}. We absorb it in $G(z)$ and get
+\begin{equation}
+	R(z) = G(z) + \sum_{j=1}^{q} G_j(\frac{1}{z-\beta_j})
+\end{equation}
+where $G,G_j$ are polynomials.
+
+In analysis, this is how we do indefinite integration of rational functions.
+
+\section{Elementary Theory of Power Series}
+
+Polynomials and Rational functions are rare in general, and the easiest way to achieve greater variety is to form limits. Infinite sums of analytic functions have good chance to be analytic.
+
+\begin{definition}{Limit of Sequence}{Limit of Sequence}
+Then sequence $\left\{ a_n \right\}_{n\in \mathbb{Z}_+}$ has the limit $A$ iff
+\begin{equation*}
+	\forall \epsilon>0, \exists N\in \mathbb{Z}_+ \text{ such that } \forall n>N, \left|a_n-A\right|<\epsilon
+\end{equation*}
+If a sequence has finite limit, then it is convergent, otherwise it is divergent.
+\end{definition}
+
+In analysis, we are familiar with the convergence criterion.
+
+\begin{theorem}{Cauchy Criterion for Convergence}{Cauchy Criterion for Convergence}
+	A sequence $\left\{ a_n \right\}_{n\in \mathbb{Z}_+}$ is convergent iff
+\begin{equation*}
+	\forall \epsilon>0, \exists N\in \mathbb{Z}_+ \text{ such that } \forall m,n>N, \left|a_n-a_m\right|<\epsilon
+\end{equation*}
+such sequence is called Cauchy sequence.
+\end{theorem}
+The real and complex part of a Cauchy sequence is also Cauchy sequence, thus convergent.
+
+\subsection{Series}
+A simple application of Cauchy's criterion allows us to identify convergence from existing sequences. If $|b_n-b_m| \leq |a_n-a_m|$ for all $n,m$, then $\left\{ b_n \right\}$ is a contraction of $\left\{ a_n \right\}$. Then the convergence of $\left\{ a_n \right\}$ implies the convergence of $\left\{ b_n \right\}$.
+
+For an infinite series
+\begin{equation}
+a_1 + \cdots + a_n + \cdots
+\end{equation}
+The partial sum is given
+\begin{equation*}
+s_n = a_1 + \cdots + a_n
+\end{equation*}
+We say the series converges to $A$ iff $\left\{ s_n \right\}$ converges to $A$. We denote the series as $\sum_{n=1}^{\infty } a_n = A$.
+
+If the series of absolute values
+\begin{equation}
+\left|a_1\right| + \cdots + \left|a_n\right| + \cdots
+\end{equation}
+converges, then we say the series $\sum_{n=1}^{\infty } a_n$ to be absolutely convergent. From Cauchy's criterion, we know that absolutely convergent series is convergent.
+
+\subsection{Uniform Convergence}
+\begin{definition}{Uniform Convergence}{Uniform Convergence}
+	A sequence of functions $\left\{ f_n \right\}$ converges uniformly to $f$ on a set $D$ iff
+	\begin{equation*}
+		\forall \epsilon>0, \exists N\in \mathbb{Z}_+ \text{ such that } \forall n>N, \forall x\in D, \left|f_n(x)-f(x)\right|<\epsilon
+	\end{equation*}
+
+	A convergent series that do not converge uniformly is called pointwise convergent.
+\end{definition}
+
+The Cauchy criterion for uniform convergence is similar to the one for convergence of sequences.
+
+\begin{quote}
+	A sequence of functions $\left\{ f_n \right\}$ converges uniformly to $f$ on a set $D$ iff
+	\begin{equation*}
+		\forall \epsilon>0, \exists N\in \mathbb{Z}_+ \text{ such that } \forall m,n>N, \forall x\in D, \left|f_n(x)-f_m(x)\right|<\epsilon
+	\end{equation*}
+\end{quote}
+
+In practice, if $\left\{ f_n(x) \right\}$ is a contraction of $\left\{ a_n \right\}$, then if $\left\{ a_n \right\}$ is convergent, $\left\{ f_n(x) \right\}$ is uniformly convergent. This is called the \textbf{Weierstrass test}.
+
+\begin{theorem}{Continuity of Uniform Convergence}{Continuity of Uniform Convergence}
+The limit function of a uniformly convergent sequence of continuous functions is continuous.
+\end{theorem}
+
+\subsection{Power Series}
+A power series is a series of the form
+\begin{equation*}
+	a_0 + a_1 z + a_2 z^2 + \cdots + a_n z^n + \cdots = \sum_{n=0}^{\infty } a_n z^n
+\end{equation*}
+where $a_n\in \mathbb{C}$. More generally we can translate the series to a power series centered at $z_0$ as
+\begin{equation*}
+	\sum_{n=0}^{\infty } a_n (z-z_0)^n
+\end{equation*}
+
+\begin{theorem}{Abel Disk Theorem}{Abel Disk Theorem}
+For every power series $\sum_{i=1}^{\infty } a_n z^n$, there exists $0\leq R\leq +\infty $, called the radius of convergence, that:
+\begin{itemize}
+	\item The series converge absolutely for $\left|z\right|<R$. $\forall 0\leq \rho<R$, the series converges uniformly on the disk $\left\{ z\in \mathbb{C}: \left|z\right|\leq \rho \right\}$.
+	\item For $\left|z\right|>R$, then the terms are not bounded, so the series is divergent.
+	\item In $\left|z\right|<R$ the sum of the series is an analytic  function. The derivative can be obtained by term-by-term differentiation, and the derivative series has the same radius of convergence.
+\end{itemize}
+\end{theorem}
+This is rather similar to that of $\mathbb{R}$ in analysis. The radius $R$ can be given by
+\begin{equation}
+	\frac{1}{R} = \lim_{n \to \infty } \sqrt[n]{\left|a_n\right|}
+\end{equation}
+called the Hadamard formula.
+\begin{proof}
+\begin{itemize}
+\item The first two statements we get by comparing the series with $\sum \rho^n$, using Weierstrass test.
+\item the derived series $\sum_{n=1}^{\infty } na_nz^{n-1}$ has the same radius of convergence, for $\lim_{n \to \infty } \sqrt[n]{n}=1$. To show that we can derive term-by-term, we write
+	\begin{equation*}
+	f(z) = \sum_{n=0}^{\infty } a_nz^n = s_n(z) + R_n(z)
+	\end{equation*}
+	for $\left|z\right|<R$, also
+	\begin{equation*}
+		f_1(z) = \sum_{n=0}^{\infty } na_nz^{n-1} = \lim_{n \to \infty } s_n'(z)
+	\end{equation*}
+	Now we show $f'(z) = f_1(z)$. Consider the identity
+	\begin{equation*}
+	\frac{f(z)-f(z_0)}{z-z_0} - f_1(z_0) = \left(\frac{s_n(z)-s_n(z_0)}{z-z_0} - s_n'(z_0)\right)+(s_n'(z_0)-f_1(z_0)) + \left(\frac{R_n(z)-R_n(z_0)}{z-z_0}\right)
+	\end{equation*}
+	Assume $z\neq z_0,\left|z\right|,\left|z_0\right|<\rho<R$, then as have
+	\begin{equation*}
+		\frac{z^n-z_0^n}{z-z_0} = z^{n-1} + z^{n-2}z_0 + \cdots + z_0^{n-1}
+	\end{equation*}
+	\begin{equation*}
+	\left|\frac{R_n(z)-R_n(z_0)}{z-z_0}\right| \leq \sum_{k=n}^{\infty } k \left|a_k\right|\rho^{k-1}
+	\end{equation*}
+	For every $\epsilon>0$, there exists sufficiently large $n$ such that the last two terms are less than $\epsilon / 2$. Then when $z$ is close to $z_0$ we can make the first term as small as we want, thus
+	\begin{equation*}
+		\left|\frac{f(z)-f(z_0)}{z-z_0} - f_1(z_0)\right|<\epsilon
+	\end{equation*}
+\end{itemize}
+\end{proof}
+
+We now have proved that a power series with positive radius of convergence is an analytic function, and has derivative of all orders. The derivative is also a power series with the same radius of convergence.
+
+By continuously taking derivatives, we can get the $n$-th derivative of a power series $f(z)$ :
+\begin{equation*}
+	f^{(n)}(z) = \sum_{k=n}^{\infty } a_k \frac{k!}{(k-n)!} z^{k-n} = \sum_{k=0}^{\infty } a_{n+k} \frac{(n+k)!}{k!} z^k
+\end{equation*}
+We see that $a_k = f^{(k)}(0) / k!$, so
+\begin{equation*}
+	f(z) = \sum_{k=0}^{\infty } \frac{f^{(k)}(0)}{k!} z^k
+\end{equation*}	
+This is the familiar Taylor series.
+\begin{remark}
+We have shown that an analytic function that is formed by power series has arbitrary many derivatives, and the Taylor series converges to the function inside the convergence disk.
+
+But it remains to be seen that every analytic function can be expressed as a power series. This is the content of the \textbf{Cauchy Integral Theorem}, which we shall prove later.
+\end{remark}
+
+\subsection{Abel limit Theorem}
+
+We cannot say much about convergence on the circle of radius $R$. However, if it converges at one point on the circle, then we can say some things about the ``one side continuity'' of the series. We loss no generality by assuming that $R=1$.
+
+\begin{theorem}{Abel Limit Theorem}{Abel Limit Theorem}
+If $\displaystyle \sum_{n=0}^{\infty } a_n$ converges, then $\displaystyle f(z) = \sum_{n=0}^{\infty } a_nz^n$ tends to $f(1)$ as $z$ tends to $1$ in a way that $\displaystyle \frac{\left|1-z\right|}{1-\left|z\right|} \leq K$ for some constant $K>0$.
+\end{theorem}
+Geometrically it means that $z$ stays in an angle $<\pi$ with vertex $1$ and symmetric to the real axis. We say that the approach takes place in a Stolz angle.
+
+\begin{proof}
+Assume $\sum_{n=0}^{\infty } a_n = 0$ by adding a constant ti $a_0$. Then write $s_n = a_0+a_1+\cdots +a_n$ and use Abel tranform
+\begin{equation*}
+	s_n(z) = (1-z)(s_0+s_1z+\cdots + s_{n-1}z^{n-1}) + s_nz^n
+\end{equation*}
+As $s_nz^n \rightarrow 0$ we have
+\begin{equation*}
+f(z) = (1-z) \sum_{i=1}^{\infty } s_nz^n
+\end{equation*}
+
+When $\left|1-z\right| \leq K(1-\left|z\right|)$, choose large enough $m$ such that $\forall n>m,\left|s_n\right|<\epsilon$, then we have
+\begin{equation*}
+\begin{aligned}
+	\left|f(z)\right| &\leq \left|1-z\right| \left|\sum_{k=0}^{m-1} s_kz^k\right| + \left|1-z\right| \epsilon \sum_{k=m}^{\infty } \left|z\right|^k\\
+			  &\leq \left|1-z\right| \left|\sum_{k=0}^{m-1} s_kz^k\right| + \frac{\left|1-z\right|}{1-\left|z\right|} \epsilon
+\end{aligned}
+\end{equation*}
+The first term is arbitrarily small when $z \rightarrow 1$ and the second term is bounded by $K\epsilon$. Thus we have $\left|f(z)-f(1)\right| \rightarrow 0$.
+\end{proof}
+
+
+\section{The Exponential and Trigonometric Functions}
+
+Back is analysis, we have noticed the similarity of Taylor series of exponential and trigonometric functions. We can define them in the complex plane as well, this time directly via power series, or a solution of a differential equation.
+
+In this way, we can analytically define the logarithm and the argument of a complex number, and leading to a nongeometric definition of the angle.
+
+\subsection{the Exponential}
+\begin{definition}{Exponential Function}{Exponential Function}
+The exponential function is defined as the solution of the differential function
+\begin{equation}
+f'(z) = f(z) \qquad f(0) = 1
+\end{equation}
+Taking the series expansion it shows that if $f(z)$ can be expressed as a power series, then it must be of the form
+\begin{equation}
+	f(z) = \sum_{n=0}^{\infty } \frac{z^n}{n!} = 1 + z + \frac{z^2}{2!} + \frac{z^3}{3!} + \cdots
+\end{equation}
+And $f(z)$ is denoted $e^z$.
+\end{definition}
+
+\begin{proposition}{Properties of the Exponential}{Properties of the Exponential}
+\begin{itemize}
+	\item The series converges for all $z\in \mathbb{C}$, for $\sqrt[n]{n!} \rightarrow \infty $.
+	\item The addition property:
+		\begin{equation}
+			e^a e^b = e^{a+b}
+		\end{equation}
+	\begin{proof}
+	We find that $D(e^ze^{c-a}) = e^ze^{c-z} - e^ze^{c-z} = 0$. Hence $e^ze^{c-z}$ is a constant. (Using Cauchy Riemann Equations and the real immediate value theorem). Setting $z=0$ gives $e^ze^{c-z} = e^c$, letting $z=a,c=a+b$ would do.
+	\end{proof}
+
+	Specifically, $e^ze^{-z} = 1$, so $\forall z\in \mathbb{C},e^z\neq 0$.
+\item For $x\in \mathbb{R}$ the series shows that $e^x>0,x>0$ and $0<e^x<1,x<0$.
+\item The conjugate property:
+	\begin{equation}
+		e^{\overline{z}} = \overline{e^z}
+	\end{equation}
+	\begin{proof}
+	We have $\displaystyle e^{\overline{z}} = \sum_{n=0}^{\infty } \frac{\overline{z}^n}{n!} = \sum_{n=0}^{\infty } \frac{\overline{z^n}}{n!} = \overline{\sum_{n=0}^{\infty } \frac{z^n}{n!}} = \overline{e^z}$.
+	\end{proof}
+\end{itemize}
+\end{proposition}
+
+\subsection{The Trigonometric Functions}
+\begin{definition}{Trigonometric Functions}{Trigonometric Functions}
+The trigonometric functions are defined by:
+\begin{equation}
+	\cos z = \frac{e^{iz}+e^{-iz}}{2}, \qquad \sin z = \frac{e^{iz}-e^{-iz}}{2i}
+\end{equation}
+A series expansion shows that:
+\begin{equation}
+	\cos z = 1 - \frac{z^2}{2!} + \frac{z^4}{4!} - \frac{z^6}{6!} + \cdots, \qquad \sin z = z - \frac{z^3}{3!} + \frac{z^5}{5!} - \cdots
+\end{equation}
+The other trigonometric functions are defined by $\cos $ and $\sin $. All are rational functions of $e^{iz}$.
+\end{definition}
+
+So we have the famous Euler's formula, directly from the definition.
+\begin{equation}
+	e^{iz} = \cos z + i \sin z
+\end{equation}
+Some familiar results:
+\begin{equation*}
+	\cos ^2z + \sin ^2z = 1
+\end{equation*}
+\begin{equation*}
+D \cos z = -\sin z, \qquad D \sin z = \cos z
+\end{equation*}
+The addition formulas
+\begin{equation*}
+\begin{aligned}
+	\cos (z_1+z_2) &= \cos z_1 \cos z_2 - \sin z_1 \sin z_2\\
+	\sin (z_1+z_2) &= \sin z_1 \cos z_2 + \cos z_1 \sin z_2
+\end{aligned}
+\end{equation*}
+
+\subsection{The Periodicity}
+We say that  $f$ is periodic with period $T\in \mathbb{C}$ if $f(z+T) = f(z)$ for all $z\in \mathbb{C}$.
+
+\begin{theorem}{Periodicity of the Exponential}{Periodicity of the Exponential}
+	The exponential function $e^{z}$ is periodic. The periods are of the form $c =i k \omega_0$, where $k\in \mathbb{Z}_+, \omega_0\in \mathbb{R}_+$.
+\end{theorem}
+\begin{proof}
+	A period of $e^{z}$ satisfies $e^{z+c} = e^{z}$, thus $e^{c}=1$, writing $c = a+ib$, we have $e^{a+ib} = e^ae^{ib} = 1$, so taking norm we have $a=0$ and $c=ib$.
+
+	For $y\in \mathbb{R}$, we use $D \sin y = \cos y \leq 1$ (by series form) and $\sin 0=0$, thus $\forall y>0,\sin y<y$. In similar ways, we get
+	\begin{equation*}
+		\cos y < 1 - \frac{y^2}{2} + \frac{y^4}{24}, y>0
+	\end{equation*}
+	Thus we have $\cos \sqrt{3} <0$, thus $\exists 0<y_0<\sqrt{3},\cos y_0=0$. For
+	\begin{equation*}
+	\cos ^2y_0+\sin ^2y_0=1
+	\end{equation*}
+	we have $\sin y_0+ \pm 1$, thus $e^{iy_0} = \pm i$, thus $e^{4y_0}=1$. We've shown that $4y_0$ is a period.
+
+	A more careful analysis shows that $4y_0$ is the smallest period. As $\forall 0<y<y_0,\sin y>y(1-y^2 /6)>0$ showing $\cos y$ is strictly decreasing. Also $\sin y$ is positive so $\sin y$ is strictly increasing. Therefore, $e^{iy}$ cannot be $\pm 1,\pm i$ for $0<y<4y_0$. Thus the smallest period is $4y_0$.
+\end{proof}
+
+\begin{definition}{\pi}{pi}
+	The period of the exponential function is denoted $c = 2k \pi i$.
+\end{definition}
+We have
+\begin{equation*}
+	e^{\pi i / 2} = i, \qquad e^{\pi i} = -1, \qquad e^{3\pi i / 2} = -i, \qquad e^{2\pi i} = 1
+\end{equation*}
+
+Geometrically, the mapping $y \rightarrow e^{iy}, 0\leq y<2 \pi$ is a 1-1 mapping from the interval $[0,2\pi)$ to the unit circle $S^1$ in the complex plane. The image of $y$ is the point on the unit circle with angle $y$ with respect to the positive real axis.
+
+Algebraically, the function $y \rightarrow e^{iy}$ defines a homomorphism from the additive group of $\mathbb{R}$ to the multiplicative group of $S^1$, the kernel is $2\pi \mathbb{Z}$.
+
+\section{The Logarithm}
+
+The logarithm is the inverse function of the exponential function.
+
+If $e^z = e^{x+iy} = w$, we have
+\begin{equation}
+e^x = \left|w\right|, \qquad e^{iy} = \frac{w}{\left|w\right|}
+\end{equation}
+First, $w\neq 0$, for $e^z\neq 0$. The first function has a unique solution $x = \log_{\mathbb{R}} \left|w\right|$, the real logarithm. The solution is a set $y+2 \pi \mathbb{Z}$ where $0\leq y<2 \pi$. Therefore, the logarithm of a complex number has the form $z + 2 \pi i \mathbb{Z}$.
+
+\begin{definition}{Arguments and Logarithm}{Arguments and Logarithm}
+If $w\neq 0$, then let $e^z = w, 0\leq \im z <2 \pi$, we define the (principle) argument of $w$ by $\arg w = \im z$. And
+\begin{equation}
+\log w = \log_{\mathbb{R}} \left|w\right| + i \arg w
+\end{equation}
+
+We can write an arbitrary complex number $w$ as
+\begin{equation}
+w = r e^{i \theta}
+\end{equation}
+where $r = \left|w\right|\geq 0$ and $\theta = \arg w$ is the principal argument, i.e. $\theta \in [0,2\pi)$.
+\end{definition}
+The solution of $e^z=w$ can be written as $\log w + 2 \pi i \mathbb{Z}$, we denote it by $\Log w$. The set $\Arg w = \arg w + 2 \pi \mathbb{Z}$.
+\begin{itemize}
+\item $\Log w = \log w + 2 \pi i\mathbb{Z}$.
+\item $\Arg w = \arg w + 2 \pi \mathbb{Z}$.
+\end{itemize}
+
+\begin{definition}{Power}{Power}
+The power is defined as
+\begin{equation}
+	a^b = e^{b \log a} e^{2 \pi i k b}, k\in \mathbb{Z}
+\end{equation}
+\end{definition}
+This is somewhat chaotic.
+\begin{itemize}
+\item If $a\in \mathbb{R}_+$, then usually we take $a^b = e^{b \log _{\mathbb{R}}a}$.
+\item If $b\in \mathbb{Z}$, then the above expression has only one value $e^{b \log a}$, which is just the repeated products of $a$ for $b$ times.
+	\begin{proof}
+	We have $e^{b \log a} = e^{\log a} \cdots e^{\log a} = a^b$.
+	\end{proof}
+\item If $b = p /q$, then there are exactly $q$ different values of $a^b$.
+\end{itemize}
+
+The addition theorem of exponential implies
+\begin{equation}
+\begin{aligned}
+	\Log (a b) &= \Log a + \Log b\\
+	\Arg (a b) &= \Arg a + \Arg b
+\end{aligned}
+\end{equation}
+
+Finally we consider the inverse trigonometric functions.
+The function
+\begin{equation*}
+	\cos z = \frac{e^{iz}+e^{-iz}}{2} = w
+\end{equation*}
+implies that $e^{iz}$ satisfies $z + \frac{1}{z} = 2w$.
+\begin{equation*}
+	z = -i \Log \left(w + \sqrt{w^2-1}\right)
+\end{equation*}
+Note that $\sqrt{w^2-1}$ has usually two values, and $\Log$ has infinity.
+
+The two values of $w + \sqrt{w^2-1}$ are reciprocal to each other, so we can write
+\begin{equation}
+	\arccos w = \pm i \Log \left(w + \sqrt{w^2-1}\right), \text{ taking one of the two values of $\sqrt$} 
+\end{equation}
+
+We also have
+\begin{equation}
+	\arcsin x = \frac{\pi}{2} - \arccos x
+\end{equation}
+
+\end{document}

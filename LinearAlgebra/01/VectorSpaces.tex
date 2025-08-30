@@ -1,0 +1,342 @@
+\documentclass[../main.tex]{subfiles}
+
+
+\begin{document}
+\chapter{Vector Spaces}
+
+Linear algebra is the study of linear maps on finite-dimensional vector spaces.
+
+\section{Definition of Vector Spaces}
+Let $\mathbb{F}$ be a field, usually $\mathbb{R}$ or $\mathbb{C}$. The motivation of a vector space comes from the scalar multiplication in $\mathbb{F}^{n}$: 
+\begin{definition}{Vector Spaces}{Vector Spaces}
+A Vector Field $(V,+,*)$ contains a set $V$ and operations $+:V \times V \rightarrow  V$ and $*: \mathbb{F} \times V \rightarrow  V$ such as the following proposes hold:
+
+\textbf{Addition:}
+\begin{itemize}
+\item \textbf{Commutativity: } $\forall u,v \in V,u+v=v+u$
+\item \textbf{Associativity: } $\forall u,v,w \in V, \left(u+v\right)+w = u+\left(v+w\right)$ 
+\item \textbf{Identity: } $\exists \boldsymbol{0} \in V, \forall w \in V, v+ \boldsymbol{0}=v$ 
+\item \textbf{Inverse: } $\forall v \in V, \exists w \in V, v+w= \boldsymbol{0}$
+\end{itemize}
+
+\textbf{Multiplication: }
+\begin{itemize}
+\item \textbf{Associativity: } $\forall v \in V, a,b \in \mathbb{F}, (ab)v=a(bv)$
+\item \textbf{Identity: } $\forall v \in V,1v=v$, where $1$ is the multiplicative identity of field $\mathbb{F}$.
+\end{itemize}
+
+\textbf{Distribution: }$\forall a,b \in \mathbb{F},u,v \in V$:
+\begin{itemize}
+\item $a(u+v)=au+av$
+\item  $(a+b)v=av+bv$
+\end{itemize}
+\end{definition}
+
+The scalar multiplication in a vector space depends on $\mathbb{F}$. We must say that $V$ is a vector space \emph{over} $\mathbb{F}$ to be precise.
+\begin{definition}{Real and Complex Vector Spaces}{Real And Complex Vector Spaces}
+\begin{itemize}
+\item A vector space over $\mathbb{R}$ is called a real vector space.
+\item A vector space over $\mathbb{C}$ is called a complex vector space.
+\end{itemize}
+\end{definition}
+
+Vector Spaces has a very clear geometric meaning.
+\begin{definition}{Vector and Points}{Vector And Points}
+Elements of a Vector Space are called vectors or points.
+\end{definition}
+
+\begin{notation}{$\mathbb{F}^{S}$}{F^S}
+If $S$ is a set, then $\mathbb{F}^{S}$ denotes $\left\{ f | f: S \rightarrow \mathbb{F} \right\}$
+
+For $f,g \in \mathbb{F}^{S}$, the \emph{sum} $f+g \in \mathbb{F}^{S}$ is the function defined by
+\begin{equation}
+	(f+g)(x) = f(x)+g(x), \forall x \in S
+\end{equation}
+
+For $\lambda \in \mathbb{F}$ and $f \in \mathbb{F}^{S}$, the product $\lambda f \in \mathbb{F}^{S}$ is the function defined by
+\begin{equation}
+	(\lambda f)(x) = \lambda f(x), \forall x \in S
+\end{equation}
+
+The usual notation $\mathbb{F}^{n}$ is actually $\mathbb{F}^{\left\{ 1,2, \cdots,n \right\}}$ and $\mathbb{F}^{\infty }$ is $\mathbb{F}^{\mathbb{N}}$
+\end{notation}
+
+Then we have:
+\begin{example}{exp1}{exp1}
+$\mathbb{F}^{S}$ is a vector space.
+\end{example}
+\begin{proof}
+Obvious.
+\end{proof}
+
+\subsection{Some Properties of Vector Spaces}
+\begin{theorem}{Uniqueness of Identity}{Uniqueness Of Identity}
+A vector space has a unique additive identity.
+\end{theorem}
+\begin{proof}
+Let $\boldsymbol{0}$ and $\boldsymbol{0'}$ are identities, then we have
+\begin{equation*}
+\boldsymbol{0}=\boldsymbol{0} + \boldsymbol{0'} = \boldsymbol{0'} + \boldsymbol{0} = \boldsymbol{0'}
+\end{equation*}
+\end{proof}
+
+\begin{theorem}{Uniqueness of Inverse}{Uniqueness Of Inverse}
+Every element $v \in V$ has a unique additive inverse, denotes $-v$
+\end{theorem}
+\begin{proof}
+$\forall v \in V$, let $u,w$ be inverses. Then we have:
+\begin{equation*}
+v+u=\boldsymbol{0},v+w=\boldsymbol{0}
+\end{equation*}
+\begin{equation*}
+w=w+\boldsymbol{0}=w+(v+u)=(w+v)+u=\boldsymbol{0}+u=u 
+\end{equation*}
+\end{proof}
+
+Thus, we denote $u-v=u+(-v)$ 
+\begin{theorem}{}{0times}
+$\forall v \in V, 0v=\boldsymbol{0}$
+\end{theorem}
+\begin{proof}
+For $v \in V$, we have
+\begin{equation*}
+0v=(0+0)v=0v+0v
+\end{equation*}
+adding the additive inverse of $0v$, we have
+\begin{equation*}
+0v=\boldsymbol{0}
+\end{equation*}
+\end{proof}
+\begin{remark}
+The distribution law is the only axiom connecting addition and scalar multiplication, thus must be used in the proof.
+
+Note that the $\boldsymbol{0}$ is the additive identity in the vector space $V$, and $0$ is the additive identity in the field $\mathbb{F}$
+\end{remark}
+
+\begin{example}{}{thm2}
+$\forall a \in \mathbb{F}, a \boldsymbol{0} = \boldsymbol{0}$
+\end{example}
+\begin{proof}
+For $a \in \mathbb{F}$, we have 
+\begin{equation*}
+a \boldsymbol{0} = a(\boldsymbol{0}+ \boldsymbol{0}) = a \boldsymbol{0} + a \boldsymbol{0}
+\end{equation*}
+Thus we get
+\begin{equation*}
+a \boldsymbol{0} = \boldsymbol{0}
+\end{equation*}
+\end{proof}
+
+\begin{example}{}{thm3}
+\begin{enumerate}
+	\item $\forall v \in V, (-1)v=-v$
+	\item Suppose $a \in  \mathbb{F},v \in V, av=\boldsymbol{0}$, then $a=0$ or $v=\boldsymbol{0}$.
+	\item $\emptyset $ is not a vector space
+\end{enumerate}
+\end{example}
+\begin{proof}
+\begin{enumerate}
+	\item Obvious
+	\item If $a \neq 0$, then $a$ has inverse $a^{-1}$
+		\begin{equation*}
+		a^{-1}av = a^{-1} \boldsymbol{0} = 0
+		\end{equation*}
+		\begin{equation*}
+		v=\boldsymbol{0}
+		\end{equation*}
+	\item $\emptyset $ does not have additive identity.
+\end{enumerate}
+\end{proof}
+
+\begin{remark}
+In fact, in the definition of vector space, $\forall v \in V,0v=\boldsymbol{0}$ can replace the additive inverse condition.
+
+\begin{proof}
+Using $\forall v = 0,0v=\boldsymbol{0}$, then $(-1)v$ is the additive inverse, because 
+\begin{equation*}
+	v + (-1)v=  1v+(-1)v = (1+(-1))v = 0v = \boldsymbol{0}
+\end{equation*}
+\end{proof}
+\end{remark}
+
+\subsection{Complex Vector Spaces from Real Vector Spaces}
+Now we take a look at how to generate a complex vector space from a real vector space.
+
+Suppose $V$ is a real vector space. Denote $V_{\mathbb{C}} = V \times V$, we write $(u,v) \in V_{\mathbb{C}}$ as $u+iv$, and define
+\begin{itemize}
+\item Addition:
+	\begin{equation*}
+		(u_1+iv_1)+(u_2+iv_2) = (u_1+u_2)+i(v_1+v_2)
+	\end{equation*}
+\item Complex scalar multiplication:
+	\begin{equation*}
+		(a+bi)(u+iv) = (au-bv)+i(av+bu)
+	\end{equation*}
+	for all $a,b \in \mathbb{R}$ and all $u,v \in V$
+\end{itemize}
+
+Then $V_{\mathbb{C}}$ is a vector space on $\mathbb{C}$
+
+
+
+
+\section{Subspaces}
+\subsection{Definition}
+\begin{definition}{Subspaces}{Subspaces}
+A subset $U$ is the subspace of a vector space $V$ if $U$ is also a vector space with the same additive and scalar multiplicative property.
+\end{definition}
+We can easily identify a subspace by checking:
+\begin{theorem}{Conditions for Subspaces}{Conditions For Subspaces}
+A subset $U$ of $V$ is a subspace iff $U$ satisfies:
+\begin{itemize}
+\item \textbf{Additive Identity: } $\boldsymbol{0}\in U$ (Can be replaced by $U\neq \emptyset $)
+\item \textbf{Closed under Addition: } $\forall u,w \in U, u+w \in U$ 
+\item \textbf{Closed under scalar multiplication: }$\forall a \in \mathbb{F},u \in U,au \in U$
+\end{itemize}
+\end{theorem}
+
+This is easily proved because other properties such as associativity and distribution dose not depends on the range. 
+\begin{remark}
+The Additive Identity is necessary to avoid $\emptyset $, it can be replaced by $U\neq \emptyset $ because take any $u \in U$ we shall have $0u=\boldsymbol{0}\in U$ by the closure under scalar multiplication.
+\end{remark}
+
+\begin{example}{Subspaces}{Subspaces}
+\begin{itemize}
+\item $\left\{ (x,0):x \in \mathbb{R} \right\}$ is a subspace of $\mathbb{R}^2$,which means the x-axis in the 2-dimensional plane. 
+\end{itemize}
+\end{example}
+
+\subsection{Sums of subspace}
+We now generate bigger subspaces from smaller ones.
+\begin{definition}{Sums of subspaces}{Sums Of Subspaces}
+Suppose $V_1, \ldots ,V_m$ are subspaces of $V$. The \emph{sum} of $V_1, \ldots ,V_m$ is defined:
+\begin{equation}
+V_1+\ldots +V_m = \left\{ v_1+\ldots +v_m : v_i \in V_i,i=1,2, \ldots ,m \right\}
+\end{equation}
+\end{definition}
+
+\begin{theorem}{Sums of Subspaces are Smallest}{Sums Of Subspaces Are Smallest}
+	Suppose $V_1, \ldots ,V_m$ are subspaces of $V$. Then $V_1+\ldots +V_m$ is a subspace of $V$ and $\forall \text{ subspace } U \in V$, we have $V_1+\ldots +V_m \subseteq U$
+\end{theorem}
+\begin{proof}
+$V_1+\ldots +V_m$ contains $\boldsymbol{0} = \boldsymbol{0}+\ldots +\boldsymbol{0}$ and is closed under addition and scalar multiplication. Therefore it is a subspace.
+
+$\forall u \in V_1+\ldots +V_m$, let $u=v_1+\ldots +v_m$, because $v_i \in V_i \subseteq U$, then $v_1+\ldots +v_m \in U$ using the closure under addition.
+\end{proof}
+\begin{remark}
+Sums of subspaces are analogous to unions of sets in set theory. $\forall S_1, \ldots ,S_n$, the smallest set containing all of them is $S_1\cap S_2\cap \ldots \cap S_n$
+\end{remark}
+
+The following are some examples:
+\begin{example}{Sums of Subspaces}{Sums Of Subspaces}
+\begin{itemize}
+\item For the vector space $\mathbb{R}^3$, the sum of x-axis and y-axis are the x-y plane.
+\item For  $\mathbb{R}^3$, x-axis + x-axis = x-axis
+\end{itemize}
+\end{example}
+\begin{remark}
+Intuitively, the sum of subspaces are the "linear span" of subspaces. Like two axis form a plane in $\mathbb{R}^3$
+\end{remark}
+
+\subsection{Direct Sums}
+The intuition of direct sums comes from whether the two subspaces are "independent". Every element of $V_1+\ldots +V_m$ can be written as $v_1+\ldots +v_m$. For "independent" subspaces, the factorization is unique.
+\begin{definition}{Direct Sum}{Direct Sum}
+Suppose $V_1, \ldots ,V_m$ are subspaces of $V$. The sum $V_1+\ldots +V_m$ is a direct sum iff $\forall u \in V_1+\ldots +V_m$ can be written in \emph{only one way} as a sum $v_1+\ldots +v_m$, where $v_i \in V_i$. 
+
+In this case, we denote $V_1 \oplus V_2 \oplus \ldots \oplus V_m$
+\end{definition}
+
+\begin{example}{Direct Sum}{Direct Sum}
+In $\mathbb{F}^3$, let $U = \left\{ (x,y,0) \in \mathbb{F}^3 : x,y \in \mathbb{F} \right\}$ and  $W=\left\{ (0,0,z)\in \mathbb{F}^3:z \in \mathbb{F} \right\}$. Then $\mathbb{F}^3 = U \oplus W$
+
+While $\mathbb{F}=\mathbb{F} + \mathbb{F}$ is not a direct sum.
+\end{example}
+
+To identify direct sums, we only need to check whether $\boldsymbol{0}$ can be uniquely written as an appropriate sum.
+\begin{theorem}{Conditions for a direct sum}{Conditions For A Direct Sum}
+Suppose $V_1, \ldots ,V_m$ are subspaces of $V$. Then $V_1+\ldots +V_m$ is a direct sum iff:
+\begin{equation}
+\forall v_i \in V_i\ (v_1+\ldots +v_m=\boldsymbol{0} \rightarrow v_1=\ldots =v_m=\boldsymbol{0})
+\end{equation}
+\end{theorem}
+\begin{proof}
+If $V_1+\ldots +V_m$ is a direct sum, then $\boldsymbol{0}=\boldsymbol{0}+\ldots +\boldsymbol{0}$ is unique.
+
+The other side, if $\boldsymbol{0}$ can be uniquely written, $\forall v \in V$, let
+\begin{equation*}
+u=v_1+\ldots +v_m=u_1+\ldots +u_m
+\end{equation*}
+Then we have
+\begin{equation*}
+(v_1-u_1)+\ldots +(v_m-u_m)=\boldsymbol{0}
+\end{equation*}
+which means $u_i=v_i$ for all $i \in \left\{ 1,2, \ldots ,m \right\}$
+\end{proof}
+
+\begin{remark}
+Intuitively, two planes in $\mathbb{R}^3$ are not direct sums because they intersects a line, making $\boldsymbol{0}$-the origin, not uniquely written.
+
+This intuition gives us another condition concerning 2 subspaces.
+\end{remark}
+\begin{theorem}{Direct sum of 2 subspaces}{Direct Sum Of 2 Subspaces}
+Suppose $U,W \subseteq V$ are subspaces, then
+\begin{equation}
+U+W \text{ is a direct sum } \leftrightarrow U\cap W = \left\{ \boldsymbol{0} \right\}
+\end{equation}
+\end{theorem}
+\begin{proof}
+If $U+W$ is a direct sum, them let $v \in U\cap W$, then $-v \in U\cap W$ then $\boldsymbol{0} = v+(-v)$, where $v \in V$ and $-v \in W$, then by uniqueness, $v=\boldsymbol{0}$.
+
+If $U\cap W=\left\{ \boldsymbol{0} \right\}$, let $v = u_1+w_1=u_2+w_2 \in U+W$, where $u_1,u_2 \in U,w_1,w_2 \in W$, then $(u_1-u_2)+(w_1-w_2)= \boldsymbol{0}$, where $u_1-u_2 \in U,w_1-w_2 \in W$, then $u_1=u_2,w_1=w_2$.
+\end{proof}
+
+\begin{remark}
+The above criterion only deals with 2 subspaces, for more subspaces, merely $V_i\cap V_j = \left\{ \boldsymbol{0} \right\}$ is not suffice. For example, three lines in a plane that contains origin is not a direct product.
+\end{remark}
+
+\begin{example}{Subspaces}{subspaces}
+\begin{enumerate}
+	\item  $\mathbb{Q}$ is not a subspace of $\mathbb{R}$ under $\mathbb{R}$.
+	\item x-axis  $\cup$ y-axis is closed under scalar multiplication but is not a subspace of $\mathbb{R}^2$.
+\end{enumerate}
+\end{example}
+
+\subsection{Some Theorems and Properties}
+\begin{theorem}{}{Intersection}
+Suppose $V_1,V_2$ are subspaces of $V$, then $V_1\cap V_2$ is a subspace of $V$. 
+
+Furthermore, for any collection of subspaces $v_{\alpha}, \alpha \in I$, the intersection $\displaystyle \bigcap_{\alpha \in I} V_{\alpha}$ is a subspace of $V$. 
+\end{theorem}
+\begin{proof}
+First, as $\forall \alpha \in I, \boldsymbol{0}\in V_{\alpha}$, then $\boldsymbol{0}\in \bigcap V_{\alpha}$.
+
+If $u,v \in \bigcap V_{\alpha}$, then $\forall \alpha, u,v \in V_{\alpha}$, then $u+v \in V_{\alpha}$, then $u+v \in \bigcap V_{\alpha}$.
+
+scalar multiplication is similar.
+\end{proof}
+
+\begin{theorem}{}{Union}
+Suppose $U,W$ are subspaces of $V$, then
+
+\begin{equation*}
+U\cup W \text{ is subspace of $V$ } \leftrightarrow U \subseteq W \text{ or } W \subseteq U
+\end{equation*}
+\end{theorem}
+\begin{proof}
+If $\exists u \in U, u \notin W, w \in W, w\notin U$, let $v = u+w$.
+
+If  $v \in U$, then $w=v-u \in U$, contradicts. Similarly, $v \notin W$, therefore  $v \notin U\cup W$, which means $U\cup W$ is not a subspace.
+\end{proof}
+
+\begin{remark}
+One may find that the sum of subspaces satisfies a commutative semi-group that has an identity. That is, for subspaces of $V$, 
+\begin{enumerate}
+	\item \textbf{Commutativity: } $U+W=W+U$ 
+	\item \textbf{Associativity: } $(V_1+V_2)+V_3 = V_1+(V_2+V_3)$
+	\item \textbf{Identity: } $\left\{ \boldsymbol{0} \right\}$
+\end{enumerate}
+
+However, subspaces does not have additive inverse apart from $\left\{ \boldsymbol{0} \right\}$. That is, the cancellation law does not hold.
+\end{remark}
+
+\end{document}

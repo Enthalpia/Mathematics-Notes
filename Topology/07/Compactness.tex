@@ -1,0 +1,254 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\chapter{Compactness}
+
+The most important topological property is compactness.
+
+\section{Compact Space}
+\begin{definition}{Compact Sets}{Compact Sets}
+Let $A$ be a subset of a topological space $(X,\mathcal{T})$. Then $A$ is compact iff every open cover of $A$ has a finite subcover. That is,
+\begin{equation*}
+\forall A \subseteq \bigcup_{i\in I} O_i, \exists \text{ a finite family } O_{i_1}, \ldots ,O_{i_n}, A = \bigcup_{k=1}^{n} O_{i_k} 
+\end{equation*}
+
+If $X$ is compact, we say that $(X,\mathcal{T})$ is a compact space.
+\end{definition}
+
+\begin{example}{Compact Sets}{Compact Sets}
+\begin{itemize}
+\item If $(X,\mathcal{T}) = \mathbb{R}$ and $A = (0,\infty )$, then $A$ is not compact.
+\item Any finite set is compact.
+\end{itemize}
+\end{example}
+
+\begin{remark}
+As we can see, compactness is some sense of generalization of finiteness. But of course, there are infinite sets that are compact.
+\end{remark}
+
+\begin{theorem}{The Internal Property of Compactness}{The Internal Property of Compactness}
+Let $A$ be a subset of $(X,\mathcal{T})$ and $\mathcal{T}_1$ the topology induced on $A$. Then $A$ is a compact set iff $(A,\mathcal{T}_1)$ is a compact space.
+\end{theorem}
+\begin{proof}
+
+\end{proof}
+\begin{itemize}
+\item If $(A,\mathcal{T}_1)$ is a compact space, the let $O_i$ be an open cover of $A$, then $O_i \cap S$ is an open cover of $A$ in $(A,\mathcal{T}_1)$, which has a finite subcover $O_{i_n}\cap S$, then $O_{i_n}$ is a finite subcover of $A$ is $(X,\mathcal{T})$.
+\item If $A$ is a compact set, then for all open cover of $(A, \mathcal{T}_1)$, similarly we have $O_i' = O_i\cap S$ for some open set  $O_i \in \mathcal{T}$. The next step proceeds the same as above.
+\end{itemize}
+\begin{proposition}{Closed Interval is Compact}{Closed Interval is Compact}
+	The closed interval $[0,1]$ is compact.
+\end{proposition}
+\begin{proof}
+	We see $[0,1]$ as a space. Let $O_i,i\in I$ be any covering of $[0,1]$. Then $\forall x\in [0,1], \exists i,x\in O_i$. As $O_i$ is open, there exists an open interval $x\in U_x \subseteq O_i$.
+
+	Define $S \subseteq [0,1]$ by
+	\begin{equation*}
+		S = \left\{ z:[0,z] \text{ can be covered by a finite number of sets }U_x \right\}
+	\end{equation*}
+	If $x\in S,y\in U_x$, then $[x,y] \subseteq U_x$ (assuming $x \leq y$ ). So
+	\begin{equation*}
+		[0,y] \subseteq U_{x_1} \cup \cdots \cup U_{x_n}\cup U_x
+	\end{equation*}
+	So $y\in S$. This implies that $\forall x\in [0,1], U_x\cap S = \emptyset $ or $U_x$, which means
+	\begin{equation*}
+		S = \bigcup_{x\in S} U_x, \quad [0,1] \backslash S = \bigcup_{x\notin S} U_x 
+	\end{equation*}
+	Thus $S$ is clopen in $[0,1]$, but $[0,1]$ is connected and $0\in S$, we have only $S = [0,1]$.
+\end{proof}
+
+\subsection{Alexander Subbasis Theorem}
+\begin{theorem}{Alexander Subbasis Theorem}{Alexander Subbasis Theorem}
+A topological space $(X,\mathcal{T})$ is compact, then every subbasis cover has a finite subcover.
+
+That is, if $\mathcal{S}$ is a subbasis of $\mathcal{T}$, and $\left\{ O_i \right\} \subseteq \mathcal{S}$ is a cover of $X$, then $O_i$ has a finite subcover.
+\end{theorem}
+
+\section{The Heine-Borel Theorem}
+The next result states that ``a continuous image of a compact space is compact''.
+
+\begin{theorem}{}{a continuous image of a compact space is compact}
+Let $f:(X,\mathcal{T}) \rightarrow (Y,\mathcal{T}_1)$ be a continuous surjective map. If $(X,\mathcal{T})$ is compact then $(Y,\mathcal{T}_1)$ is compact.
+\end{theorem}
+\begin{proof}
+If $O_i$ is an open covering of $T$, then $f^{-1}(O_i)$ is an open coving of $X$, and that will do.
+\end{proof}
+
+\begin{corollary}{Homeomorphism and Compactness}{Homeomorphism and Compactness}
+Let $(X,\mathcal{T})$ and $(Y,\mathcal{T}_1)$ be homeomorphic topological space. If $(X,\mathcal{T})$ is compact iff $(Y,\mathcal{T}_1)$ is compact.
+\end{corollary}
+
+\begin{corollary}{Open Intervals are not Compact}{Open Intervals are not Compact}
+	For $a,b\in \mathbb{R}$ with $a < b$, $[a,b]$ is compact while $(a,b)$ is not compact.
+\end{corollary}
+\begin{proof}
+	$[a,b]$ is homeomorphic to $[0,1]$ and $(a,b)$ is homeomorphic to $(0,\infty )$.
+\end{proof}
+
+\begin{theorem}{Closed Subsets of Compact Spaces}{Closed Subsets of Compact Spaces}
+Every closed subset of a compact space is compact.
+\end{theorem}
+\begin{proof}
+Let $A$ be a closed subset of a compact space $(X,\mathcal{T})$. Let $U_i\in \mathcal{T}$ be an open covering of $A$. Then
+\begin{equation*}
+X = \left(\bigcup_{i\in I} U_i\right) \cup (X-A)
+\end{equation*}
+
+This is an open cover of $X$, and thus has a subcover.
+\end{proof}
+
+\begin{theorem}{Compact sets in Hausdorff Space is Closed}{Compact sets in Hausdorff Space is Closed}
+A compact subset of a Hausdorff space is closed.
+\end{theorem}
+\begin{proof}
+Let $A$ be a compact set of a Hausdorff space $(X,\mathcal{T})$. We shall show that $A$ contains all its limit points. Let $p\in X-A$, then $\forall a\in A, \exists U_a,V_a\in \mathcal{T},a\in U_a,p\in V_a,U_a\cap V_a = \emptyset $.
+
+Then we have
+\begin{equation*}
+A \subseteq \bigcup_{a\in A} U_a
+\end{equation*}
+is a open covering of $A$. Therefore, we have
+\begin{equation*}
+A \subseteq U_{a_1}\cup \cdots \cup U_{a_n}
+\end{equation*}
+Put $U = \bigcup_{i=1}^{n} U_{a_i}$ and $V = \bigcap_{i=1}^{n} V_{a_i}$. Then $p\in V$ and $V\cap U=\emptyset $. So $V \cap A=\emptyset $. Therefore, $p$ is not a limit point of $A$.
+\end{proof}
+
+\begin{remark}
+In a compact Hausdorff space, compact sets $\Leftrightarrow $ closed sets.
+\end{remark}
+
+\begin{proposition}{Compact and Bounded}{Compact and Bounded}
+A compact subset of $\mathbb{R}$ is bounded.
+\end{proposition}
+
+\begin{theorem}{Heine-Borel Theorem}{Heine-Borel Theorem}
+$A$ is a closed bounded subset of $\mathbb{R}$ $\Leftrightarrow A$ is compact. ($n \geq 1$)
+\end{theorem}
+\begin{proof}
+	Every closed bounded subset $A \subseteq \mathbb{R}$ has $A \subseteq [a,b]^n$ for some $a,b$. And $A$ is a closed set of the compact set $[a,b]^n$.
+\end{proof}
+
+Similar to $\mathbb{R}^n$ we defined boundedness on a metric space as
+\begin{definition}{Boundedness on a metric space}{Boundedness on a metric space}
+A subset $A \subseteq (X,d)$ is bounded if $\exists r\in \mathbb{R}, \forall a,b\in A,d(a,b)<r$.
+\end{definition}
+
+\begin{theorem}{Compact subset of a metric space}{Compact subset of a metric space}
+Let $A$ be a compact subset of a metric space $(X,d)$, then $A$ is closed and bounded
+\end{theorem}
+\begin{proof}
+As a metric space is Hausdorff, we have $A$ is closed. Now fix $x_0\in X$ and define $f: (A,\mathcal{T}) \rightarrow \mathbb{R}$ by
+\begin{equation*}
+f(a) = d(a,r_0), \forall a\in A.
+\end{equation*}
+Then $f$ is continuous so $f(A)$ is compact. Thus, $f(A)$ is bounded so $f(a)=d(a,r_0) \leq M,\forall a\in A$, thus $A$ is bounded.
+\end{proof}
+
+We can generalize the Heine-Borel Theorem to $\mathbb{R}^n$ :
+
+\begin{theorem}{Generalized Heine-Borel Theorem}{Generalized Heine-Borel Theorem}
+$A$ is a closed bounded subset of $\mathbb{R}^n$ $\Leftrightarrow A$ is compact. ($n \geq 1$)
+\end{theorem}
+\begin{proof}
+Postponed.
+\end{proof}
+
+\begin{remark}
+The Heine-Borel Theorem cannot be generalized to arbitrary metric spaces. As closed bounded subsets may not be compact.
+\end{remark}
+
+\begin{proposition}{Continuous Functions on Intervals}{Continuous Functions on Intervals}
+	Let $a, b\in \mathbb{R}$ and $f$ is a continuous function from $[a,b]$ to $\mathbb{R}$. Then $f([a,b]) = [c,d]$ for some $c,d\in \mathbb{R}$.
+\end{proposition}
+\begin{proof}
+	As $[a,b]$ is connected, then $f([a,b])$ is connected hence is an interval. Also $[a,b]$ is compact so $f([a,b])$ is compact thus is a closed interval.
+\end{proof}
+
+\subsection{Closed and Open Mapping}
+\begin{definition}{Closed and Open Mapping}{Closed and Open Mapping}
+Let $(X,\mathcal{T})$ and $(Y,\mathcal{T}_1)$ be topological spaces. A mapping $f:X \rightarrow Y$ is a \emph{closed mapping} if for every closed subset $A \subseteq X$, $f(A)$ is closed in $Y$. Open mappings are similar.
+\end{definition}
+
+\begin{proposition}{}{Closed Mapping 1}
+Continuous mappings on compact Hausdorff spaces are closed.
+\end{proposition}
+\begin{proof}
+If $A \subseteq X$ is closed, then $A$ is compact, so $f(A)$ is compact, so $f(A)$ is closed.
+\end{proof}
+
+\begin{theorem}{Compact Hausdorff Spaces are Normal}{Compact Hausdorff Spaces are Normal}
+Every compact Hausdorff space is a normal space.
+\end{theorem}
+\begin{proof}
+SORRY
+\end{proof}
+
+\subsection{Other Compactness}
+\begin{definition}{Relative Compact}{Relative Compact}
+A subset $A \subseteq (X,\mathcal{T})$ is said to be relatively compact if $\overline{A}$ is compact.
+\end{definition}
+
+\begin{definition}{Supercompact}{Supercompact}
+A topological space $(X,\mathcal{T})$ is supercompact if there is a subbasis $\mathcal{S}$ of $\mathcal{T}$ such that if $\left\{ O_i:i\in I \right\}$ with $O_i \in \overline{S}$ is any open cover, then there exists $j,k\in I$ such that $X = O_j\cup O_k$.
+\end{definition}
+
+\begin{example}{Supercompact}{Supercompact}
+	$[0,1]$ with the Euclidean topology is supercompact.
+\end{example}
+
+\begin{definition}{Countably Compact}{Countably Compact}
+A topological space $(X,\mathcal{T})$ is countably compact if every countable open covering of $X$ has a finite subcover. (Note that this is weaker than compactness).
+\end{definition}
+
+\begin{proposition}{Properties of Countably Compactness}{Properties of Countably Compactness}
+\begin{itemize}
+\item A metrizable space is countably compact $\Leftrightarrow $ it is compact.
+\item The continuous image of a countably compact space is countably compact.
+	\begin{proof}
+	Similar to the proof of \ref{thm:a continuous image of a compact space is compact}.
+	\end{proof}
+\end{itemize}
+\end{proposition}
+
+\begin{definition}{Locally Compact}{Locally Compact}
+A topological space $(X,\mathcal{T})$ is said to be locally compact if each point $x\in X$ has a compact neighborhood.
+\end{definition}
+
+\subsection{Generalized Convergent Sequences}
+
+We generalize the concept of convergent sequences to arbitrary topological space.
+
+\begin{definition}{Convergence Generalized}{Convergence Generalized}
+	A topological space $(X,\mathcal{T})$. Let $x_1, \ldots ,x_n, \ldots $ be points in $X$. Then the sequence converge to $x\in X$ iff $\forall U\in \mathcal{T}, \exists N\in \mathbb{N}, \forall n \geq N, x_n\in U$.
+\end{definition}
+
+\begin{proposition}{Properties of Convergences}{Properties of Convergences}
+\begin{itemize}
+\item In a Hausdorff space $(X,\mathcal{T})$, every convergent sequence converge to uniquely one point.
+\item A sequence can converge to infinitely many points. The indiscrete topology would do.
+\end{itemize}
+\end{proposition}
+
+\begin{definition}{Sequentially Compact}{Sequentially Compact}
+A topological space $(X,\mathcal{T})$ is sequentially compact iff every sequence has a convergent subsequence.
+\end{definition}
+
+\begin{definition}{Pseudocompact}{Pseudocompact}
+A topological space $(X,\mathcal{T})$ is pseudocompact if every continuous function $X \rightarrow \mathbb{R}$ is bounded.
+\end{definition}
+\begin{proposition}{Properties of Pseudocompactness}{Properties of Pseudocompactness}
+\begin{itemize}
+\item Every compact space is pseudocompact.
+	\begin{proof}
+	A compact space in $\mathbb{R}$ is bounded.
+	\end{proof}
+\item Any countably compact space is pseudocompact.
+\item The continuous image of a pseudocompact space is pseudocompact.
+	\begin{proof}
+	SORRY
+	\end{proof}
+\end{itemize}
+\end{proposition}
+
+\end{document}

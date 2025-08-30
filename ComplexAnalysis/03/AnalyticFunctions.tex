@@ -1,0 +1,782 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+
+\chapter{Analytic Functions As Mappings}
+
+\section{Conformality}
+Our goal here is to derive a geometrical intuition about what it means to be an analytic function.
+
+\subsection{Arcs and Closed Curves}
+\begin{definition}{Arcs}{Arcs}
+	An arc $\gamma$ on the complex plane is image of a continuous function $z: [\alpha,\beta] \rightarrow \mathbb{C}$, where $\alpha,\beta\in \mathbb{R}$. We denote the arc $z = z(t) = x(t) + iy(t)$.
+\end{definition}
+As a continuous mapping of a closed interval, an arc is closed and thus compact and connected. 
+
+The choice of parameter $t$ is arbitrary, and we can freely change it. If $\varphi:[\alpha', \beta'] \rightarrow [\alpha,\beta]$ is a strictly increasing function, then $z = z(\varphi(\tau))$ describes the same arc, but with a different parameter $\tau$.
+
+The following are some properties that describe an arc:
+\begin{itemize}
+	\item \textbf{Differentiability}: The arc is differentiable (continuously differentiable) if the derivative $z'(t)$ exists and is continuous for all $t\in[\alpha,\beta]$.
+	\item \textbf{Regularity}: The arc is regular if it is differentiable and the derivative $z'(t) \neq 0$ for all $t\in[\alpha,\beta]$.
+	\item \textbf{Piecewise Differentiability}: The arc is piecewise differentiable iff:
+		\begin{itemize}
+		\item It is continuous on $[\alpha,\beta]$.
+		\item It has continuous derivatives except for a finite number of points in $[\alpha,\beta]$.
+		\item At each breaking point, the left and right derivatives exist and are equal to the limit of $z'(t)$. (left and right continuous derivatives)
+		\end{itemize}
+	\item \textbf{Piecewise Regularity}: The arc is piecewise regular if it is piecewise differentiable and $z'(t) \neq 0$ and the left and right derivatives at the breaking points are $\neq 0$.
+		\begin{remark}
+		Differentiability and Regularity is invariant under change of parameters.
+		\end{remark}
+	\item \textbf{Jordan arc (Simple arc)}: An arc is simple if $z(t_1)=z(t_2) \rightarrow t_1=t_2$. (it doesn't cross itself)
+	\item \textbf{Closed Curve}: An arc is a closed curve if $z(\alpha)=z(\beta)$. For that, a shift of parameter can be done: taking $t_0\in (\alpha,\beta)$ and defining a new one by taking $t_0$ as initial point.
+	\item The \textbf{Opposite} of an arc $\gamma$ is the arc defined by $\gamma^*(t) = \gamma(\beta + \alpha - t)$, where $t\in[\alpha,\beta]$.
+\end{itemize}
+
+\subsection{Analytic Functions in Regions}
+The definition of an analytic function requires the approach to a point in arbitrary directions. So we have good reasons to restrict our discussion to open sets.
+
+\begin{definition}{Analytic Functions in Open Sets}{Analytic Functions in Open Sets}
+Let $\Omega \subseteq \mathbb{C}$ be open. A complex function $f: \Omega\rightarrow \mathbb{C}$ is analytic (holomorphic) if it has a derivative at every point in $\Omega$.
+\end{definition}
+
+It is obvious that the restriction of an analytic function to an open subset is also analytic. Also, for the components of open sets are open, we can assume that $\Omega$ is connected, that is, $\Omega$ is a region.
+
+\begin{definition}{Regions}{Regions}
+	A region is an open connected subset of $\mathbb{C}$.
+\end{definition}
+
+\begin{definition}{Analytic Functions on Arbitrary Sets}{Analytic Functions on Arbitrary Sets}
+A function $f$ is analytic on $A \subseteq \mathbb{C}$ if $\exists C \subseteq \mathbb{C},A \subseteq C$ and $C$ is open and $f$ is analytic on $C$.
+\end{definition}
+
+\begin{remark}
+For multivalued functions like the logarithm and inverse trigonometric functions, we can specify a well-behaved $\Omega$ and an analytic branch to make it single-valued and analytic on $\Omega$.
+
+However, for certain functions like  $\log $, for some $\Omega$ it is impossible to find a single-valued analytic branch. For example, $\log$ is not analytic on $\mathbb{C}\setminus\{0\}$, which we shall prove later.
+\end{remark}
+
+\begin{theorem}{The Inverse Function Theorem}{The Inverse Function Theorem}
+	Let $f: \Omega \rightarrow \mathbb{C}$ be an analytic function on a region $\Omega$ and let $z_0\in\Omega$ be a point such that $f'(z_0) \neq 0$. Then there exists a neighborhood $U$ of $z_0$ such that $f$ is bijective from $U$ onto its image $f(U)$, and the inverse function $f^{-1}$ is also analytic on $f(U)$. The derivative of the inverse function at the point $w_0 = f(z_0)$ is given by
+	\begin{equation*}
+		Df^{-1}(w_0) = \frac{1}{f'(z_0)}
+	\end{equation*}
+\end{theorem}
+\begin{proof}
+	The inverse function theorem for $\mathbb{R}^2$ states that
+	\begin{quote}
+		Let $f: \mathbb{R}^2 \rightarrow \mathbb{R}^2$ be a continuously differentiable function and let $Df(z_0)$ be the Jacobian matrix of $f$ at $z_0$. If $\det Df(z_0) \neq 0$, then there exists a neighborhood $U$ of $z_0$ such that $f$ is a bijection from $U$ onto its image $f(U)$, and the inverse function $f^{-1}$ is also continuously differentiable on $f(U)$. The derivative of the inverse function at $w_0 = f(z_0)$ is given by
+		\begin{equation*}
+			Df^{-1}(w_0) = \left( Df(z_0) \right)^{-1}
+		\end{equation*}
+	\end{quote}
+
+	Now, if $f$ is analytic, we see it as a function $\Omega \rightarrow \mathbb{R}^2$, then it is continuously differentiable, and we have $\det f(z_0) = \left|f'(z_0)\right|^2 \neq 0$. The inverse function $f$ is also continuously differentiable, and we verify the Cauchy-Riemann equations for $g = f^{-1}$: Let $f=u+iv,g=\alpha + i \beta$, using $Df \cdot Dg = I_2$, we have
+	{\everymath{\displaystyle}
+	\begin{equation*}
+	\begin{pmatrix}
+		\frac{\partial u}{\partial x} & \frac{\partial u}{\partial y} \\
+		\frac{\partial v}{\partial x} & \frac{\partial v}{\partial y}
+	\end{pmatrix}
+	\begin{pmatrix}
+		\frac{\partial \alpha}{\partial x} & \frac{\partial \alpha}{\partial y} \\
+		\frac{\partial \beta}{\partial x} & \frac{\partial \beta}{\partial y}
+	\end{pmatrix}=
+	\begin{pmatrix}
+		1 & 0 \\
+		0 & 1
+	\end{pmatrix}
+	\end{equation*}
+	The Cauchy-Riemann equations for $f$ imply that
+	\begin{equation*}
+	\begin{pmatrix}
+		\frac{\partial u}{\partial x} & \frac{\partial u}{\partial y} \\
+		\frac{\partial v}{\partial x} & \frac{\partial v}{\partial y}
+	\end{pmatrix}=
+	\begin{pmatrix}
+		a&b\\
+		-b&a
+	\end{pmatrix}
+	\end{equation*}
+	Therefore,
+	\begin{equation*}
+	\begin{pmatrix}
+		\frac{\partial \alpha}{\partial x} & \frac{\partial \alpha}{\partial y} \\
+		\frac{\partial \beta}{\partial x} & \frac{\partial \beta}{\partial y}
+	\end{pmatrix}= \frac{1}{a^2+b^2}
+	\begin{pmatrix}
+		a&-b\\
+		b&a
+	\end{pmatrix}
+	\end{equation*}
+}
+Therefore, the Cauchy-Riemann equations hold for $g$, and thus $g$ is analytic on $f(U)$. The derivative of the inverse function is given by chain rule.
+\end{proof}
+
+\begin{proposition}{The Analytic Branch of Multivalue Functions}{The Analytic Branch of Multivalue Functions}
+\begin{itemize}
+	\item The root function is the inverse of the power function $z^n$ for $n\in\mathbb{N}$, which is analytic on $\mathbb{C}\setminus\{0\}$. For each slice that has the form
+		\begin{equation*}
+		\Omega = \left\{ z\in \mathbb{C}: \arg z\in ( \frac{2 \pi k}{n}, \frac{2 \pi (k+1)}{n}), z\neq 0 \right\}
+		\end{equation*}
+		The function $z \mapsto z^n$ is bijective, and the image is $\mathbb{C} - [0,+\infty )$. The inverse function $z \mapsto z^{1/n}$ is analytic.
+	\item The logarithm function is the inverse of the exponential function, which is analytic on $\mathbb{C}\setminus\{0\}$. For each slice that has the form
+		\begin{equation*}
+		\Omega = \left\{ z\in \mathbb{C}: \im z\in (2 \pi k, 2 \pi (k+1)), z\neq 0 \right\}
+		\end{equation*}
+		The function $z \mapsto e^z$ is bijective, and the image is $\mathbb{C} - [0,+\infty )$. The inverse function $z \mapsto \log z$ is analytic.
+	\item The inverse trigonometric functions are the inverses of the trigonometric functions, which are analytic on $\mathbb{C}$. For each slice that has the form
+		\begin{equation*}
+		\Omega = \left\{ z\in \mathbb{C}: \re z\in (2 \pi k, 2 \pi (k+1)), \im z>0 (\text{ or } <0) \right\}
+		\end{equation*}
+		The function $z \mapsto \cos z$ is bijective, and the image is $\mathbb{C} - [-1,+\infty )$. The inverse function $z \mapsto \arcsin z$ is analytic.
+
+		We can also see this using the composite function
+		\begin{equation*}
+			\arccos z = \pm i \log \left( z + \sqrt{z^2-1} \right)
+		\end{equation*}
+\end{itemize}
+\end{proposition}
+
+\begin{proposition}{The derivatives of inverse functions}{The derivatives of inverse functions}
+\begin{itemize}
+\item The logarithm function:
+	\begin{equation*}
+	\frac{d}{dz} \log z = \frac{1}{z}
+	\end{equation*}
+\item The root function:
+	\begin{equation*}
+	\frac{d}{dz} z^{1/n} = \frac{1}{n} z^{\frac{1}{n}-1}
+	\end{equation*}
+\item The inverse trigonometric functions:
+	\begin{itemize}
+	\item $\arcsin z$:
+		\begin{equation*}
+		\frac{d}{dz} \arcsin z = \frac{1}{\sqrt{1-z^2}}
+		\end{equation*}
+	\item $\arccos z$:
+		\begin{equation*}
+		\frac{d}{dz} \arccos z = -\frac{1}{\sqrt{1-z^2}}
+		\end{equation*}
+	\item $\arctan z$:
+		\begin{equation*}
+		\frac{d}{dz} \arctan z = \frac{1}{1+z^2}
+		\end{equation*}
+	\end{itemize}
+\end{itemize}
+\end{proposition}
+
+For a complicated multivalue function it takes some effort to fine the branch that is analytic on a given open set, usually a cut of $\mathbb{C}$. The key is to find a suitable slice of the complex plane that avoids the branch cuts of the function.
+
+\begin{example}{Branch Cut of Multivalue Functions}{Branch Cut of Multivalue Functions}
+\begin{itemize}
+\item $f(z) = \sqrt{1-z}+\sqrt{1+z}$.
+
+	For $\sqrt{z}$ a cut through arbitrary rays from $0$ would do. So we can cut $(-\infty ,-1] \cup [1,+\infty )$.
+\item $\log \log z$.
+
+	Cutting $(-\infty ,0]$ would have an image $\left|\im z\right| < \pi$. If the image should also cut the negative real axis, we can cut $(-\infty ,1]$, for $e^{(-\infty ,0]} = (0,1]$.
+\end{itemize}
+
+A more general way will be introduced via Cauchy integral later.
+\end{example}
+
+In $\mathbb{C}$ and open connected set is path-connected, so we can have the constant theorem and the mean value theorem for analytic functions.
+
+\begin{theorem}{The Constant Theorem}{The Constant Theorem}
+An analytic function $f$ on a region $\Omega$ is constant if and only if its derivative is zero everywhere in $\Omega$.
+
+Also, $f$ is constant iff either $\re f, \im f, \arg f, \left|f\right|$ is constant on $\Omega$.
+\end{theorem}
+\begin{proof}
+Let $f=u+iv$, then the derivative being zero means that all partial derivatives of $u$ and $v$ are zero, which means that $u$ and $v$ are constant functions (joining a path would do). Therefore, $f$ is constant.
+
+If $u$ is constant, then
+\begin{equation*}
+f'(z) = \frac{\partial u}{\partial x} - i \frac{\partial u}{\partial y} = 0
+\end{equation*}
+so do $v$.
+
+If $u^2+v^2$ is constant, then
+\begin{equation*}
+	u \frac{\partial u}{\partial x} + v \frac{\partial v}{\partial x} = 0 \qquad \text{and} \qquad u \frac{\partial u}{\partial y} + v \frac{\partial v}{\partial y} = -u \frac{\partial v}{\partial x} + v \frac{\partial u}{\partial x} = 0
+\end{equation*}
+The equations has non-zero solutions if the coefficient determinant $u^2+v^2 = 0$. If $u^2+v^2 = 0$ at a point, then it is constant due to our assumption that modulus is constant. Then $f=0$ everywhere. If not, then the partial derivatives are zero, and thus $f$ is constant.
+
+Finally, if $\arg z$ is constant, then $u=kv$ for some constant $k$, but $u-kv$ is the real part of $(1+ik)f$. So $f$ is constant.
+\end{proof}
+
+
+\section{Conformal Mappings}
+
+Suppose an arc $\gamma:z=z(t), \alpha \leq t\leq \beta$, contained in a reigion $\Omega$. A continuous function $f: \Omega \rightarrow \mathbb{C}$ maps $\gamma$ to the arc $\gamma': w=w(t)=f(z(t))$ in the $w$-plane. 
+
+If $f$ is analytic in $\Omega$, and $z'$ exists, we say
+\begin{equation}
+w'(t) = f'(z(t)) z'(t)
+\end{equation}
+For a point $z_0=z(t_0)$, if $z'(t_0)\neq 0, f'(z_0)\neq 0$, then $\gamma'$ has a tangent at $t_0$, the direction of the tangent is given by
+\begin{equation*}
+\Arg w'(t_0) = \Arg f'(z_0) + \Arg z'(t_0)
+\end{equation*}
+From $z$-space to $w$-space, the angle of the tangent is rotated by $\Arg f'(z_0)$, the rotation does not depend on the curve. For each curve passing through $z_0$, the rotation would be the same. Curves passing $z_0$ having the same tangent are mapped to curves passing $w_0=f(z_0)$ having the same tangent. The angle of two curves is invariant under the mapping, so we say that $f$ is a \textbf{conformal mapping} at $z_0$.
+
+\begin{definition}{Conformal Mapping}{Conformal Mapping}
+A function $f$ is conformal at a point $z_0\in\Omega$ if it is analytic in a neighborhood of $z_0$ and $f'(z_0)\neq 0$.
+\end{definition}
+
+About the modulus of $\left|f'(z_0)\right|$, we have
+\begin{equation*}
+\lim_{z \to z_0} \frac{\left|f(z)-f(z_0)\right|}{\left|z-z_0\right|} = \left|f'(z_0)\right|
+\end{equation*}
+
+Which means a segment at $z_0$ would stretch by a factor of $\left|f'(z_0)\right|$ in the $w$-plane. Together the conformality of $f$ means in an infinite small neighborhood of $z_0$, the transformation $f$ :
+\begin{itemize}
+	\item Rotates an angle by $\Arg f'(z_0)$.
+	\item Stretches a segment by a factor of $\left|f'(z_0)\right|$.
+\end{itemize}
+
+We shall see that the converse also holds for either case.
+\begin{theorem}{Criterions for Conformal Mapping}{Criterions for Conformal Mapping}
+Let $f: \Omega \rightarrow \mathbb{C}$ (thought of $\Omega_{\mathbb{R}} \rightarrow \mathbb{R}^2$) has continuous partial derivatives whose Jacobian determinant is nonzero. If one of the following conditions holds, then $f$ or $\overline{f}$ is conformal at $z_0\in\Omega$:
+\begin{itemize}
+\item The Jacobian matrix $J$ preserves angles at $z_0$.
+\item The Jacobian matrix $J$ multiples the length of segments at $z_0$ by a constant.
+\end{itemize}
+\end{theorem}
+\begin{proof}
+These are two sufficient conditions for $J$ to be a multiple of an orthonormal matrix.
+\end{proof}
+
+If $\overline{f}$ is conformal, then $f$ is called indirectly conformal. 
+\begin{definition}{Topological Mapping}{Topological Mapping}
+	If $f$ is bijective and both $f$ and $f^{-1}$ are continuous, then $f$ is called a \textbf{topological mapping} or a \textbf{homeomorphism}.
+\end{definition}
+The inverse function theorem states that if $f$ is analytic and $f'(z_0)\neq 0$, then $f$ is a homeomorphism in a neighborhood of $z_0$. The inverse function $f^{-1}$ is also analytic, and the derivative is given by the inverse of $f'(z_0)$.
+
+However, if $f'(z)\neq 0$ for all $z\in \Omega$, we cannot say that $f$ is topological at $\Omega$, it maybe not a bijection. This may lead us to the concept of Riemann surfaces.
+
+\subsection{Length and Area}
+It is easy to notice that the length under a conformal mapping is multiplied by $\left|f'(z_0)\right|$, and area is multiplied by $\left|f'(z_0)\right|^2$. More rigorously:
+
+$f$ is conformal.
+\begin{itemize}
+\item Let  $\gamma$ be a continuously differentiable arc, with $z=z(t)$, then
+	\begin{equation*}
+		L(\gamma) = \int_{\alpha}^{\beta} \left|z'(t)\right| dt
+	\end{equation*}
+	The length of the image arc would be
+	\begin{equation*}
+		L(\gamma') = \int_{\alpha}^{\beta} \left|f'(z(t)) z'(t)\right| dt = \int_{\alpha}^{\beta} \left|f'(z(t))\right| \left|z'(t)\right| dt
+	\end{equation*}
+	We can write it as
+	\begin{equation*}
+		L(\gamma) = \int _{\gamma} | \mathrm{d}z| \qquad \text{and} \qquad L(\gamma') = \int_{\gamma'} | \mathrm{d}w| = \int_{\gamma} \left|f'(z)\right| | \mathrm{d}z|
+	\end{equation*}
+	the $\left|\mathrm{d} z\right|$ here is the same as $\mathrm{d} s$ is analysis.
+\item For a point set $E$ whose area is given
+	\begin{equation*}
+		A(E) = \iint_E \mathrm{d}x \mathrm{d}y
+	\end{equation*}
+	The area of the image set $f(E)$ is given by
+	\begin{equation*}
+		A(f(E)) = \iint_{E} \left|u_xv_y-u_yv_x\right|\mathrm{d}x \mathrm{d}y = \iint_E \left|f'(z)\right|^2 \mathrm{d}x \mathrm{d}y
+	\end{equation*}
+\end{itemize}
+
+\section{Linear Transformations}
+
+The first-order rational functions are conformal and topological on the extended complex plane. They have remarkable geometrical properties, and we can use them to do transformations that may simplify matters.
+
+\subsection{The Linear Group}
+A linear fractional transformation has the form
+\begin{equation}
+	w=S(z) = \frac{az+b}{cz+d}, \qquad a,b,c,d\in\mathbb{C}, ad-bc\neq 0
+\end{equation}
+We assume that $S(\infty ) = a / c$ and $S(-d / c) = \infty $.
+It has an inverse
+\begin{equation}
+	z=S^{-1}(w) = \frac{dw-b}{-cw+a}, \qquad a,b,c,d\in\mathbb{C}, ad-bc\neq 0
+\end{equation}
+It is obvious that $S$ is topological on $\mathbb{C}*$, and the inverse is also topological.
+\begin{remark}
+We shall see that the extended complex plane is metrizable, with distances on the Riemann sphere.
+\end{remark}
+
+We say that the linear fractional transformation $S$ is normalized if $ad-bc=1$. (Every linear fractional transformation can be normalized by dividing $a,b,c,d$ by $ad-bc$, changing the sign of the coefficients would make no change.)
+
+We can write the linear fractional transformation in matrix form: Letting $z=\frac{z_1}{z_2}$ and $w=\frac{w_1}{w_2}$, we have $w=Sz$ iff
+\begin{equation*}
+	\begin{pmatrix}
+		w_1 \\
+		w_2
+	\end{pmatrix}
+	=
+	\begin{pmatrix}
+		a & b \\
+		c & d
+	\end{pmatrix}
+	\begin{pmatrix}
+		z_1 \\
+		z_2
+	\end{pmatrix}
+\end{equation*}
+In this way we can see that the linear fractional transformation forms a group. And the normalized linear fractional transformations form a subgroup of the group, denoted by $\mathrm{SL}(2,\mathbb{C})$.
+
+Three special linear fractional transformations are of particular interest:
+\begin{itemize}
+\item The parallel translation: $w=z+\alpha$.
+\item Stretching and Rotation: $w = kz$.
+\item The inversion: $w = \frac{1}{z}$.
+\end{itemize}
+Every linear fractional transformation can be expressed as a composition of these three transformations. We say that the linear transformation has 3 degrees of freedom.
+
+\subsection{The Cross Ratio}
+Given 3 distinct points $z_2,z_3,z_4\in \mathbb{C}^*$, there is a linear transformation $S$ such that $S(z_2)=0$, $S(z_3)=1$, and $S(z_4)=\infty$. The transformation is given by
+\begin{equation}
+	Sz = \frac{z-z_3}{z-z_4} / \frac{z_2-z_3}{z_2-z_4}
+\end{equation}
+If one of $z_2,z_3,z_4$ is $\infty $, then it reduces to
+\begin{equation}
+	Sz = \frac{z-z_3}{z-z_4}, \qquad \frac{z_2-z_4}{z-z_4}, \qquad \frac{z-z_2}{z_2-z_3}
+\end{equation}
+respectively.
+
+\begin{definition}{The Cross Ratio}{The Cross Ratio}
+The cross ratio $(z_1,z_2,z_3,z_4)$ is the image of $z_1$ under the linear transformation $S$ that maps $z_2,z_3,z_4$ to $0,1,\infty $, respectively. It is given by
+\begin{equation}
+	(z_1,z_2,z_3,z_4) = \frac{(z_1-z_3)(z_2-z_4)}{(z_1-z_4)(z_2-z_3)}
+\end{equation}
+\end{definition}
+
+\begin{remark}
+The linear transformation above is uniquely determined by $z_2,z_3,z_4$.
+\begin{proof}
+If $S,T$ satisfies the condition, then $ST^{-1}$ would leave $0,1,\infty $ invariant. Letting $\displaystyle ST^{-1}z = \frac{az+b}{cz+d}$, we have
+\begin{equation*}
+	\frac{b}{d} = 0 \qquad \frac{a+b}{c+d} = 1 \qquad \frac{a}{c} = \infty
+\end{equation*}
+which means that $b=c=0,a=d$. So $ST^{-1}(z) = z$. $S=T$.
+\end{proof}
+
+We can see the cross ratio as some properties relate to the four points. It characterizes some properties of the four points, such as collinearity and concyclicity. The cross ratio is invariant under linear fractional transformations.
+
+We can also say that
+\begin{equation*}
+	(z_1,z_2,z_3,z_4) = ((z_1,z_2,z_3,z_4), 0, 1, \infty )
+\end{equation*}
+\end{remark}
+
+\begin{theorem}{The Invariance of Cross Ratio}{The Invariance of Cross Ratio}
+If $z_1,z_2,z_3,z_4\in \mathbb{C}^*$ are distinct, and $T$ is any linear fractional transformation, then the cross ratio is invariant under $T$:
+\begin{equation}
+	(Tz_1,Tz_2,Tz_3,Tz_4) = (z_1,z_2,z_3,z_4)
+\end{equation}
+\end{theorem}
+\begin{proof}
+Let $Sz = (z,z_2,z_3,z_4)$, then $ST^{-1}$ maps $Tz_2,Tz_3,Tz_4$ to $0,1,\infty $, respectively. So we have
+\begin{equation*}
+	(Tz_1,Tz_2,Tz_3,Tz_4) = ST^{-1}(Tz_1) = Sz_1 = (z_1,z_2,z_3,z_4)
+\end{equation*}
+\end{proof}
+
+Using this property it is easy to get the linear transformation if given $z_1,z_2,z_3 \mapsto w_1,w_2,w_3$. It must obey
+\begin{equation}
+	(w,w_1,w_2,w_3) = (z,z_1,z_2,z_3)
+\end{equation}
+Solving the equation we shall get $z \mapsto w(z)$.
+
+\begin{theorem}{Concyclicity and Collinearity}{Concyclicity and Collinearity}
+The cross ratio $(z_1,z_2,z_3,z_4) \in \mathbb{R}$ iff the four points lies on a straight line or on a circle.
+\end{theorem}
+\begin{proof}
+From elementary geometry we know that the opposite angles of a cyclic quadrilateral are supplementary, so using
+\begin{equation*}
+	\Arg (z_1,z_2,z_3,z_4) = \Arg \frac{z_1-z_3}{z_1-z_4} - \Arg \frac{z_2-z_3}{z_2-z_4}
+\end{equation*}
+would do.
+
+For an analytical proof, we need only the fact that the real axis under arbitrary linear fractional transformation is mapped to a circle or a line. Let $T^{-1}$ be the linear transformation, then $Tw\in \mathbb{R}$, that $Tw = \overline{Tw}$. So we have
+\begin{equation*}
+	\frac{aw+b}{cw+d} = \frac{\overline{a}\ \overline{w}+\overline{b}}{\overline{c}\ \overline{w}+\overline{d}}
+\end{equation*}
+\begin{equation*}
+	\left( a \overline{c} - \overline{a} c \right) w \overline{w} + \left( a \overline{d} - \overline{b} c \right) w + \left( b \overline{c} - \overline{a} d \right) \overline{w} + \left( b \overline{d} - \overline{b} d \right) = 0
+\end{equation*}
+
+If $a \overline{c} - c \overline{a} = 0$, then this is the equation of a straight line, otherwise, we have
+\begin{equation*}
+	\left|w + \frac{\overline{a}d-\overline{c}b}{\overline{a}c-\overline{c}a}\right| = \left|\frac{ad-bc}{\overline{a}c-\overline{c}a}\right|
+\end{equation*}
+This is a circle.
+\end{proof}
+
+\begin{corollary}{Geometry of Linear Transformations}{Geometry of Linear Transformations}
+A linear transformation takes circles or lines to circles or lines.
+
+For any two circle or line, there exists a linear transformation that maps one to the other.
+\end{corollary}
+\begin{proof}
+Let $C_1$ and $C_2$ be two circles or lines, then we can find three points $z_1,z_2,z_3\in C_1$ and three points $w_1,w_2,w_3\in C_2$. We can find a linear transformation $T$ such that $Tz_i = w_i$, for $i=1,2,3$. 
+
+Then we have $\forall z\in C_1, (z,z_1,z_2,z_3)\in \mathbb{R}$ so $(Tz,Tz_1,Tz_2,Tz_3)\in \mathbb{R}$ so $Tz\in C_2$. Also, $\forall z\in C_2, T^{-1}(z)\in C_1$. Therefore, $T$ is surjective, thus $T(C_1) = C_2$.
+\end{proof}
+
+\subsection{Symmetry}
+For linear transformations with real coefficients, that is, $a,b,c,d\in\mathbb{R}$:
+\begin{itemize}
+\item $T(\mathbb{R}) = \mathbb{R}$.
+\item $T \overline{z} = \overline{Tz}$.
+\end{itemize}
+
+\begin{proposition}{Real Transformations}{Real Transformations}
+If $T(\mathbb{R})=\mathbb{R}$, then $\forall z\in \mathbb{C}$, $T \overline{z} = \overline{Tz}$ and $T$ can have real coefficients. (We say ``can'' for the coefficients maybe multiplied by a common factor.)
+\end{proposition}
+\begin{proof}
+Assume that $T$ takes $\mathbb{R}$ to $\mathbb{R}$. Letting $\displaystyle Tz = \frac{az+b}{cz+d}$.
+
+Taking $z=0$, we have $d=0$ or $b / d\in \mathbb{R}$.
+\begin{itemize}
+\item If $d=0$, then $c\neq 0$, taking $z= \infty $ would give $a / c\in \mathbb{R}$. Taking $z=1$ we get $b / c\in \mathbb{R}$. So $a' = a / c, b' = b / c, c'=1,d'=0$ would do.
+\item If $d\neq 0$, then it takes similar discussion.
+\end{itemize}
+\end{proof}
+
+In the general case, we have $T(\mathbb{R})$ being a circle or a line $C$, and we say $w=Tz$ and $w*=T \overline{z}$ are symmetric with respect to $C$.
+
+\begin{definition}{Symmetry}{Symmetry}
+If $C \subseteq \mathbb{C}$ is a line or circle, and $w,w^*\in \mathbb{C}$. Let $T$ be any linear transformation that $T(C) = \mathbb{R}$. If $\overline{Tw} = Tw^*$, then we say that $w$ and $w^*$ are symmetric with respect to $C$.
+\end{definition}
+We shall prove that the symmetry does not depend on the choice of $T$.
+\begin{proof}
+	If $S,T$ both takes $C$ to $\mathbb{R}$, then $ST^{-1}$ takes $\mathbb{R}$ to $\mathbb{R}$. If $\overline{Tw} = Tw^*$, then $Sw^* = ST^{-1}Tw^* = ST^{-1} \overline{Tw} = \overline{ST^{-1}Tw} = \overline{Sw}$. 
+\end{proof}
+
+Therefore, we rewrite the symmetry as
+\begin{theorem}{Criterion for Symmetry}{Criterion for Symmetry}
+	The points $z,z^*$ are symmetric with respect to a line or circle $C$ iff $(z^*,z_1,z_2,z_3) = \overline{(z,z_1,z_2,z_3)}$ for some distinct points $z_1,z_2,z_3\in C$.
+\end{theorem}
+
+The symmetric function $z \mapsto z^*$ is a bijection of $\mathbb{C} \rightarrow \mathbb{C}$, called a reflection. The only points that are symmetric to themselves are those on $C$.
+
+\begin{remark}
+Note that reflection is NOT a linear transformation, just like the conjugation transform. However, two reflection would be a linear transformation.
+
+Any reflection would have the form $TST^{-1}$, where $T$ is a linear transformation that takes $\mathbb{R}$ to $C$ and $S$ is the conjugate operation.
+\end{remark}
+
+Now we consider the geometrical implications of symmetry.
+\begin{itemize}
+\item Suppose $C$ is a straight line, we take $z_3 = \infty $. Then we have
+	\begin{equation*}
+	\frac{z^*-z_2}{z_1-z_2} = \frac{\overline{z}-\overline{z_2}}{\overline{z_1}-\overline{z_2}}
+	\end{equation*}
+	Taking absolute values we get $\left|z^*-z_2\right| = \left|z-z_2\right|$, as $z_2$ can take any point on the line, and $z,z^*$ are on the different half planes (taking $\im$ ), so $C$ is the bisecting normal of the segment $zz^*$.
+\item If $C$ is a finite circle with center $a$ and radius $R$, then using the invariance of cross ratio we have
+	\begin{equation*}
+	\overline{(z,z_1,z_2,z_3)} = \overline{(z-a,z_1-a,z_2-a,z_3-a)}
+	\end{equation*}
+	As $\left|z_1-a\right| = \left|z_2-a\right| = \left|z_3-a\right| = R$, so we have
+	\begin{equation*}
+	\begin{aligned}
+		\overline{(z,z_1,z_2,z_3)} &= \left(\overline{z}-\overline{a}, \frac{R^2}{z_1-a}, \frac{R^2}{z_2-a}, \frac{R^2}{z_3-a}\right) \\
+					   &= \left(\frac{R^2}{\overline{z}-\overline{a}}+a,z_1,z_2,z_3\right) \text{ Using the cross ratio invariance}
+	\end{aligned}
+	\end{equation*}
+	Therefore, as have $\displaystyle z^* = \frac{R^2}{\overline{z}-\overline{a}}+a$, or
+	\begin{equation}
+		(z^*-a) \overline{(z-a)} = R^2
+	\end{equation}
+	Note that the distances $\left|z^*-a\right|\left|z-a\right| = R^2$ being a constant, and the ratio  $(z^*-a) / (z-a)\in \mathbb{R}$. Therefore, the points $z^*$ and $z$ are on the same line with $a$.
+\end{itemize}
+
+\begin{figure}[ht]
+    \centering
+    \incfig{symmetric-points-to-a-circle}
+    \caption{Symmetric Points to a Circle}
+    \label{fig:symmetric-points-to-a-circle}
+\end{figure}
+
+\begin{theorem}{The Symmetric Principle}{The Symmetric Principle}
+$T$ is a linear transform, and $C_1,C_2$ are circles or lines. If $T$ maps $C_1$ to $C_2$, then if $z^*,z$ are symmetric with respect to $C_1$, then $Tz^*,Tz$ are symmetric with respect to $C_2$.
+\end{theorem}
+\begin{proof}
+Both taking the point to be conjugate to $\mathbb{R}$.
+\end{proof}
+
+We can use this principle to find transformations $T$. If $z_1\in C_1$ maps to $z_2\in C_2$, and $z_2$ mapping to $w_2$ are not on $C_1$, then we can solve
+\begin{equation*}
+	(w,w_1,w_2,w_2^*) = (z,z_1,z_2,z_2^*)
+\end{equation*}
+to find the transformation $T$.
+
+\subsection{Oriented Circles}
+The extended complex plane is homeomorphic to $S_1$ rather than $R^2$. So topologically, we need two charts to analyze the derivative of linear transformation. One is just $\mathbb{C}$, the other $\mathbb{C}\cup \left\{ \infty  \right\} - \left\{ 0 \right\}$, by the inversion $z \mapsto 1/z$.
+
+Because a linear transformation $S(z)$ is analytic, and
+\begin{equation}
+	 S'(z) = \frac{ad-bc}{(cz+d)^2}
+\end{equation}
+is not zero for $z\neq -d / c, \infty $. We can see that the angle of two intersecting circle is preserved under linear transformations.
+
+\begin{definition}{Orientation of Circles}{Orientation of Circles}
+Let $z_1,z_2,z_3$ be an ordered triple on $C$. A point $z$ not on $C$ is said to be on the right of $C$ if $\im (z,z_1,z_2,z_3) > 0$, and on the left of $C$ if $\im (z,z_1,z_2,z_3) < 0$.
+
+This definition formulates what we mean by clockwise and counterclockwise orientation of circles.
+\end{definition}
+
+We shall see that there are only two orientations. For a given circle, there are two regions, one is called left, and the other is called right, depending on which triple we use. The orientation of the circle is determined by the triple.
+\begin{proof}
+The invariance of cross ratio means that we only need to consider $C$ being $\mathbb{R}$. Now
+\begin{equation*}
+	(z,z_1,z_2,z_3) = \frac{az+b}{cz+d}, \qquad a,b,c,d\in \mathbb{R}, ad-bc\neq 0
+\end{equation*}
+The coefficients depend on the triple. We have
+\begin{equation*}
+	\im (z,z_1,z_2,z_3) = \frac{ad-bc}{\left|cz+d\right|^2}\im z
+\end{equation*}
+Now we see that the distinction of right and left only depends on the upper and lower plane, which is right and which left depends on the triple, more specifically, the determinant $ad-bc$.
+\end{proof}
+
+\begin{remark}
+If we draw an arrow $z_1 \rightarrow z_2 \rightarrow z_3$, then the left and right regions are determined by the left and right direction of the arrow.
+
+We define the points to the left of the circle are called \textbf{inside} the circle, and the points to the right of the circle are called \textbf{outside} the circle.
+\end{remark}
+
+\subsection{Families of Circles}
+We can use circles to visualize the linear transformations.
+
+Consider
+\begin{equation*}
+w = k \cdot \frac{z-a}{z-b}
+\end{equation*}
+Then $a \mapsto 0, b \mapsto \infty $.
+\begin{itemize}
+\item Circles that pass through $a,b$ are mapped to circles that pass through $0,\infty $, which are straight lines passing through $0$.
+\item Concentric circles centered at $0$ in $w$-plane are given by $\left|w\right| = \rho$, the preimage is
+	\begin{equation*}
+	\left|\frac{z-a}{z-b}\right| = \frac{\rho}{\left|k\right|}
+	\end{equation*}
+	These are Apollonius circles, with limit points $a,b$.
+\end{itemize}
+
+\begin{definition}{Circular Net}{Circular Net}
+	Let $C_1$ be the circles passing $a,b$, and $C_2$ be the Apollonius circles with limit points $a,b$. The family of circles $C_1\cup C_2$ is called a \textbf{circular net} with respect to $a,b$.
+\end{definition}
+
+\begin{proposition}{Properties of Circular Nets}{Properties of Circular Nets}
+\begin{itemize}
+\item $\forall z\in C$, there is exactly one circle in $C_1$ that passes through $z$, and exactly one circle in $C_2$ that passes through $z$.
+\item Every circle in $C_1$ intersects every circle in $C_2$ at two points, with right angles.
+\item Reflection of one circle in $C_1$: Transfer every $C_2$ onto itself, and $C_1$ onto another $C_1$.
+\item Reflection of one circle in $C_2$: Transfer every $C_1$ onto itself, and $C_2$ onto another $C_2$.
+\item The limit points $a,b$ are symmetric with respect to every circle in $C_2$, and not symmetric with respect to any other circle.
+\end{itemize}
+\end{proposition}
+\begin{proof}
+All these can be proven by mapping this to the $w$-plane.
+\end{proof}
+
+\begin{figure}[ht]
+    \centering
+    \incfig{circular-nets}
+    \caption{Circular Nets}
+    \label{fig:circular-nets}
+\end{figure}
+
+\begin{remark}
+Geometrically speaking,
+\begin{itemize}
+\item The circles in $C_1$ are defined by
+	\begin{equation*}
+		\arg \frac{z-a}{z-b} = \text{constant}
+	\end{equation*}
+\item The circles in $C_2$ are defined by
+	\begin{equation*}
+		\left| \frac{z-a}{z-b} \right| = \text{constant}
+	\end{equation*}
+\end{itemize}
+\end{remark}
+
+If a linear transformation takes $a,b$ to $a',b'$, it can be written by
+\begin{equation}\label{eq:linear-transformation-with-fixed-points}
+	\frac{w-a'}{w-b'} = k \cdot \frac{z-a}{z-b}
+\end{equation}
+It can be seen as a composition of first bringing $a,b$ to $0,\infty $, then to $a',b'$ by inverse transformation. It is clear that the transformation takes $C_1$ to $C_1'$ and $C_2$ to $C_2'$, where $C_1'$ is the circles passing through $a',b'$, and $C_2'$ is the Apollonius circles with limit points $a',b'$.
+
+The following are some special cases.
+\begin{itemize}
+\item If $a'=a,b'=b$, we say $a,b$ are fixed points of $T$. In this case, the whole circular net is would map onto itself. The transformation can be visualized by studying $k$.
+	\begin{itemize}
+	\item Taking $\arg$ we see that $C_1$ circles are changed to circles adding $\arg k$.
+	\item Taking modulus we see that $C_2$ circles are changed to circles multiplying $\left|k\right|$.
+	\end{itemize}
+\item Additionally, if $k\in \mathbb{R}$, then $C_1$ does not change, (if $k>0$ then the orientation of $C_1$ is preserved, if $k<0$ then the orientation is reversed). We call the transformation \textbf{Hyperbolic}.
+\item If $\left|k\right|=1$, then $C_2$ does not change, and we call the transformation \textbf{Elliptic}.
+\item Every general transformation can be written as a composition of hyperbolic and elliptic transformations. (This is quite obvious, we can write $k = r e^{i \theta}$. And the form of the two sides of equation \ref{eq:linear-transformation-with-fixed-points} is preserved.)
+\end{itemize}
+
+Now we introduce another type of circular nets. Consider writing a linear transformation in the form
+\begin{equation}
+w = \frac{\omega}{z-a} + c
+\end{equation}
+As $a \mapsto \infty $, the circles passing through $a$ becomes straight lines. The preimage of parallel lines are mutually tangent circles at $a$. (This can be seen by geometry, proof is easy)
+
+\begin{figure}[ht]
+    \centering
+    \incfig{parallel-lines-and-cotangent-circles}
+    \caption{Parallel Lines and Cotangent Circles}
+    \label{fig:parallel-lines-and-cotangent-circles}
+\end{figure}
+
+The product of the diameter and the distance to the line is a constant $w$. To sets of cotangent circles may map to the $x-y$ grid in the $w$-plane.
+
+\begin{remark}
+We can see the case as the limit case of the circular nets with two fixed points, where both Apollonius circle and the circles passing through the fixed points are degenerated cotangent ones. We also denote them $C_1$ and $C_2$.
+
+The direction of the tangents is given by $\arg w$, as is seen.
+\end{remark}
+
+\begin{figure}[ht]
+    \centering
+    \incfig{circular-nets-of-one-fixed-point}
+    \caption{Circular Nets of One Fixed Point}
+    \label{fig:circular-nets-of-one-fixed-point}
+\end{figure}
+
+Any linear transformation taking $a$ to $a'$ can be written as
+\begin{equation}
+	\frac{\omega'}{w-a'} = \frac{\omega}{z-a} + c
+\end{equation}
+If $a=a'$ is the only fixed point, then we have $\omega=\omega'$ and
+\begin{equation*}
+	\frac{\omega}{w-a} = \frac{\omega}{z-a} + c
+\end{equation*}
+A multiplicative parameter is arbitrary, assume $c\in \mathbb{R}$ and every $C_1$ is mapped onto itself, so we say the transformation is \textbf{Parabolic}, which are flows of $C_2$.
+
+The fixed points of a linear transformation can be found by solving
+\begin{equation}
+	z = \frac{\alpha z + \beta}{\gamma z + \delta}
+\end{equation}
+If it has two distinct roots, then the transformation is hyperbolic or ecliptic. However, if the two roots are the same, then the transformation is parabolic. The condition for a parabolic transformation is:
+\begin{equation}
+	(\alpha - \delta)^2 = 4 \beta \gamma
+\end{equation}
+
+\begin{itemize}
+	\item If the equation has two distinct roots $a,b$, we can write it in the form \ref{eq:linear-transformation-with-fixed-points}, and use the circular nets to visualize the transformation.
+	\item To visualize parabolic transformations, we write it in the nets with one fixed point.
+\end{itemize}
+A linear function that is neither hyperbolic, elliptic, or parabolic is called \textbf{Loxodromic}.
+
+\section{Elementary Conformal Mappings}
+
+The visualization of conformal mappings is very important in complex analysis, as it gives us a direct intuition of analytic functions.
+
+\subsection{Level Curves}
+When a point-to-point visualization is hard to interpret, we can use curve families of known nature to gain a more direct intuition.
+
+\begin{definition}{Level Curves}{Level Curves}
+	If $f: \Omega \rightarrow \mathbb{C}$ are determined by the real functions $f=u+iv$, then the curves defined by $u(x,y)=c$ or $v(x,y)=c$ for some constant $c$ are called the \textbf{level curves} of $f$.
+\end{definition}
+It is of conformal nature that the level curves of $u$ and $v$ are orthogonal to each other.
+
+In a more general sense, any orthogonal net curves can be used to visualize the conformal mapping. As we did for linear transformations.
+
+\paragraph{The Power $w = z^{\alpha}$}
+
+We use the polar coordinate chart here. Let $S(\varphi_1,\varphi_2)$ be the sector defined
+\begin{equation}
+	S(\varphi_1,\varphi_2) = \left\{ z = re^{i\varphi} : r> 0, \varphi_1< \varphi < \varphi_2 \right\}
+\end{equation}
+This is indeed a region. The power function has the property
+\begin{equation*}
+	\left|w\right| = \left|z\right|^{\alpha} \qquad \text{and} \qquad \arg w = \alpha \arg z
+\end{equation*}
+(Well we take one branch of the multivalue function). So that $f(S(\varphi_1,\varphi_2)) = S(\alpha \varphi_1, \alpha \varphi_2)$. It is analytic for certain domain $S(\varphi_1,\varphi_2)$. The derivative
+\begin{equation*}
+D z^{\alpha} = D e^{\alpha \log z} = \alpha \frac{w}{z}
+\end{equation*}
+
+\paragraph{The Exponential Function $w = e^z$}
+
+This one is well to understand. Some examples include
+\begin{itemize}
+\item Cartesian chart to polar chart.
+\item Straight lines to logarithmic spirals. (Circles and rays maybe)
+\end{itemize}
+
+\subsection{A Brief Survey of Conformal Mappings}
+
+Our ultimate goal is to map a region $\Omega_1$ to another $\Omega_2$. It is advisable to do it in two parts:
+\begin{itemize}
+\item Mapping $\Omega_1$ to a disk or half plane.
+\item Mapping the disk or half plane to $\Omega_2$.
+\end{itemize}
+We shall later prove that this is possible for any region whose boundary is a simple closed curve.
+
+Now our tools are: linear transformations, the exponential function, and the power function, the logarithm. They have properties that transform circles and lines to each other, so their use are limited to regions bounded by circles or lines.
+
+\begin{example}{Conformal Mappings to Half Plane or Circle}{Conformal Mappings to Half Plane or Circle}
+We start by considering a region bounded by \textbf{two circular arcs.}
+\begin{itemize}
+\item If the two intersection points are $a,b$, we use $z_1 = (z-a) / (z-b)$ to make it to a sector.
+\item An appropriate power would make it into a half plane.
+\item If the two circles are tangent, then using $z_1 = 1 / (z-a)$ will make it into a parallel strip. And a suitable exponential function would do the trick.
+\end{itemize}
+
+Now we map $\mathbb{C}-[-1,1]$ to a circle.
+\begin{itemize}
+	\item Use $\displaystyle z_1 = \frac{z+1}{z-1}$ to get $\mathbb{C} - (-\infty ,0]$. 
+	\item Use $z_2 = \sqrt{z_1}$ to get $\left\{ z: \re z>0 \right\}$.
+	\item Use $\displaystyle w = \frac{z_2-1}{z_2+1}$ to get the unit disk.
+\end{itemize}
+The overall mapping is
+\begin{equation}\label{eq:segment-to-disk}
+z = \frac{1}{2} \left(w + \frac{1}{w}\right) \text{ and } w = z - \sqrt{z^2-1}
+\end{equation}
+\end{example}
+
+We take a closer look at the mapping \ref{eq:segment-to-disk}. Let $w = \rho e^{i \theta}$, where $\rho<1$ or $>1$, then we have
+\begin{equation*}
+	x = \frac{1}{2} \left(\rho + \frac{1}{\rho}\right) \cos \theta, \qquad
+	y = \frac{1}{2} \left(\rho - \frac{1}{\rho}\right) \sin \theta
+\end{equation*}
+For circle and rays in $w$-plane, we eliminate $\rho$ and $\theta$ respectively,
+\begin{equation*}
+	\frac{x^2}{\left(\frac{1}{2}(\rho + \frac{1}{\rho})\right)^2} + \frac{y^2}{\left(\frac{1}{2}(\rho - \frac{1}{\rho})\right)^2} = 1
+\end{equation*}
+\begin{equation*}
+	\frac{x^2}{\cos ^2 \theta} + \frac{y^2}{\sin ^2 \theta} = 1
+\end{equation*}
+
+The circles maps to eclipses, and the rays to hyperbolas. The mapping is conformal, and the angles are preserved as perpendicular intersections.
+
+Another less trivial example, we consider the cubic polynomial $w = a_0z^3+a_1z^2+a_2z+a_3$. We can reduce it to $w = z^3-3z$ easily. (Setting $z=z_1-a_1 / 3a_0$ to cancel out quadratic terms and normalize it)
+
+Using the transformation \ref{eq:segment-to-disk}, we let
+\begin{equation*}
+z = \zeta + \frac{1}{\zeta}
+\end{equation*}
+take $\zeta$ to lay in either the inside or outside the disk. Then we have
+\begin{equation*}
+w = \zeta^3+\frac{1}{\zeta^3}.
+\end{equation*}
+The total effect is eclipse $\rightarrow $ circle $\rightarrow $ stretching rotation circle $\rightarrow $ eclipse. Or simply stretching rotation along the eclipse.
+
+\subsection{A Brief Survey on Riemann Surfaces}
+For non-surjective maps, the image of regions would overlap. We can see it as different layers of the same $\mathbb{C}$ plane. This is the original intuition of Riemann surfaces. However, we shall not formally define the concept, just to give some intuitive understanding.
+
+\begin{example}{Riemann Surfaces}{Riemann Surfaces}
+For the simple power $z^n$ where $n>1,n\in \mathbb{Z}$, the Riemann surfaces are like spirals around a vertical axis. After $n$ turns we shall end up at the beginning.
+
+We see it has fairly well topological properties, with locally Euclidean and all that.
+
+The exponent $e^z$ is the same, but with endless spirals.
+\end{example}
+
+A \textbf{fundamental region} is a region that maps to the whole space except for some cuts in a one-to-one manner. Identifying Riemann surfaces simply include Identifying fundamental regions and sticking different layers together according to the edge of the fundamental regions.
+
+\end{document}

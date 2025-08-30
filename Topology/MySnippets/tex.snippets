@@ -1,0 +1,30 @@
+global !p
+def env(name):
+    [x,y] = vim.eval("vimtex#env#is_inside('" + name + "')") 
+    return x != '0' and x != '0'
+def math():
+    return vim.eval('vimtex#syntax#in_mathzone()') == '1'
+
+def comment(): 
+    return vim.eval('vimtex#syntax#in_comment()') == '1'
+
+
+endglobal
+
+priority 10000
+
+context "math()"
+snippet TT "topology" wA
+\mathcal{T}
+endsnippet
+
+context "math()"
+snippet BB "basis" wA
+\mathcal{B}
+endsnippet
+
+context "math()"
+snippet '({[A-Z]})(\d)' "subscript" irA
+`!p
+snip.rv = match.group(1) + "_" + match.group(2)`
+endsnippet

@@ -1,0 +1,401 @@
+\documentclass[../main.tex]{subfiles}
+
+
+\begin{document}
+\chapter{Inner Product Space}
+
+In this part, we add geometric features (angles, distances) to vector spaces via inner products.
+
+\begin{plainblackenv}
+We assume $\mathbb{F}$ denotes $\mathbb{R}$ or $\mathbb{C}$.
+\end{plainblackenv}
+
+\section{Inner Products and Norms}
+\subsection{Inner Products}
+The intuition of inner products comes form the dot product we defined on $\mathbb{R}^n$, with $\boldsymbol{x}\cdot \boldsymbol{y} = x_1y_1+\ldots +x_ny_n$, which indicates the Euclidean metric $\| x \| = \sqrt{x_1^2+\ldots +x_n^2}$. For complex spaces however, we have $\left|\lambda\right|^2 = \lambda \overline{\lambda}$. So we incline to use conjugate for complex vector spaces, such that $\|z\|^2 = w_1\overline{z_1}+\ldots +w_n \overline{z_n}$.
+
+\begin{definition}{Inner Product}{Inner Product}
+An inner product on $V$ is a function $V \times V \rightarrow  \mathbb{F}$, denoted $\left<u,v\right>$ such that:
+\begin{itemize}
+\item \emph{Positivity: } $\forall v\in V, \left<v,v\right> \geq 0$.
+\item \emph{Definiteness:} $\left<v,v\right> = 0 \leftrightarrow v=0$.
+\item \emph{Additivity in first slot:} $\forall u,v,w\in \mathbb{F},\left<u+v,w\right> = \left<u,w\right> + \left<v,w\right>$
+\item  \emph{Homogeneity in first slot:} $\forall u,v\in V, \forall \lambda \in \mathbb{F}, \left<\lambda u,v\right> = \lambda \left<u,v\right>.$
+\item \emph{Conjugate Symmetry:} $\forall u,v\in V, \left<u,v\right> = \overline{\left<v,u\right>}$.
+\end{itemize}
+
+An inner product space is a vector space $V$ along with  an inner product on $V$.
+\end{definition}
+
+The most common inner product is the Euclidean product on $\mathbb{F}^n$ given by:
+\begin{equation*}
+\forall u,v\in \mathbb{F}^n, \left<u,v\right> = \sum_{i=1}^{n} u_i \overline{ v_i}
+\end{equation*}
+
+We can give a inner product for $C[-1,1]$ by
+\begin{equation*}
+\left<f,g\right> = \int_{-1}^1 f(x)g(x) \mathrm{d}x
+\end{equation*}
+
+\begin{theorem}{Basic Properties of Inner Products}{Basic Properties of Inner Products}
+\begin{itemize}
+\item For each $v\in V$, the map $f: V \rightarrow \mathbb{F}, v \mapsto \left<u,v\right>$ is a linear map.
+\item $\forall v\in V, \left<v,0\right> = \left<0,v\right> = 0$.
+\item $\forall u,v,w\in V, \left<u,v+w\right> = \left<u,v\right> + \left<u,w\right>$.
+\item $\forall \lambda\in \mathbb{F},u,v\in V, \left<u,\lambda v\right>  = \overline{\lambda} \left<u,v\right>$.
+\end{itemize}
+\end{theorem}
+
+\subsection{Norms}
+
+\begin{definition}{Norms}{Norms}
+$\forall v\in V$, the norm of $v$, denoted by $\|v\|$, is defined by
+\begin{equation*}
+\|v\| = \sqrt{\left<v,v\right>}.
+\end{equation*}
+\end{definition}
+
+\begin{proposition}{Properties of Norm}{Properties of Norm}
+Suppose $v\in V$, then 
+\begin{enumerate}
+	\item $\|v\| = 0 \leftrightarrow v=0$.
+	\item $\forall \lambda\in \mathbb{F},\|\lambda v\| = \left|\lambda\right| \|v\|$.
+\end{enumerate}
+\end{proposition}
+
+\begin{definition}{Orthogonal}{Orthogonal}
+$u,v\in V$ are called orthogonal if $\left<u,v\right> =0$.
+\end{definition}
+The order of $u,v$ does not matter for $\left<u,v\right> = 0 \leftrightarrow \left<v,u\right> =0$.
+
+\begin{proposition}{Pythagorean Theorem}{Pythagorean Theorem}
+Suppose $v,w\in V$, If $v,u$ are orthogonal, then
+\begin{equation*}
+\|u+v\|^2 = \|u\|^2+ \|v\|^2
+\end{equation*}
+\end{proposition}
+
+Next we formalize the idea of projection. We want to write a $u=cv+w$ where $\left<v,w\right> =0$.
+
+\begin{figure}[H]
+    \centering
+    \incfig{projection}
+    \caption{Projection}
+    \label{fig:projection}
+\end{figure}
+We have $u=cv+(u-cv)$. Therefore we have
+\begin{equation*}
+0= \left<u-cv,v\right> = \left<u,v\right> - c \|v\|^2
+\end{equation*}
+Then we write,
+\begin{equation*}
+u = \frac{\left<u,v\right>}{\|v\|^2} v + \left(u- \frac{\left<u,v\right>}{\|v\|^2}v\right)
+\end{equation*}
+
+This is called an orthogonal decomposition.
+
+\begin{theorem}{Cauchy-Schwartz Inequality}{Cauchy-Schwartz Inequality}
+Suppose $u,v\in V$, then
+\begin{equation*}
+\left|\left<u,v\right>\right| \leq  \|u\| \|v\|
+\end{equation*}
+This equality holds iff $u,v$ are linear dependent.
+\end{theorem}
+\begin{proof}
+\begin{equation*}
+\|u\|^2 = \|\frac{\left<u,v\right>}{\|v\|^2}v\|^2 + \|w\|^2 = \frac{\left|\left<u,v\right>\right|^2}{\|v\|^2} + \|w\|^2 \geq \frac{\left|\left<u,v\right>\right|^2}{\|v\|^2}
+\end{equation*}
+\end{proof}
+
+The next result is triangle inequality.
+\begin{theorem}{Triangle Inequality}{Triangle Inequality}
+Suppose $u,v\in V$, then
+\begin{equation*}
+\|u+v\| \leq \|u\|+\|v\|
+\end{equation*}
+\end{theorem}
+
+\begin{proposition}{Parallelogram Equality}{Parallelogram Equality}
+Suppose $u,v\in V$, then
+\begin{equation*}
+\|u+v\|^2 + \|u-v\|^2 = 2 \left(\|u\|^2 + \|v\|^2\right)
+\end{equation*}
+\end{proposition}
+
+\subsection{Extension of Inner Product}
+\begin{itemize}
+\item Suppose $V_1, \ldots ,V_m$ are inner product space. Then
+\begin{equation*}
+\left<(u_1, \ldots ,u_m),(v_1, \ldots ,v_m)\right> = \left<u_1,v_1\right> +\ldots +\left<u_m,v_m\right> 
+\end{equation*}
+Is an inner product on $V_1 \times \cdots \times V_m$.
+
+\item Suppose $V$ is a real vector space, for $u,v,w,x\in V$, then define
+	\begin{equation*}
+	\left<u+iv,w+ix\right>_{\mathbb{C}} = \left<u,w\right> + \left<v,x\right> + \left(\left<v,w\right> - \left<u,x\right>\right)i
+	\end{equation*}
+	makes $V_{\mathbb{C}}$ into a complex inner product space. (Well, as you can see, it has the same structure of $(a+bi) \cdot (c+di) = (a+bi)(c-di)$, the standard definition of inner product on $\mathbb{C}^n$ )
+\end{itemize}
+
+\section{Orthonormal Bases}
+
+\begin{definition}{Orthonormal}{Orthonormal}
+A list of vectors is called orthonormal if each vector in the list has norm $1$ and is orthogonal to other vectors in the list. That is, 
+\begin{equation*}
+\left< v_i, v_j\right>  = \delta_{i,j} = 
+\begin{cases}
+	1, & j=k\\
+	0, & j\neq k
+\end{cases}
+\end{equation*}
+
+An orthonormal basis is a orthonormal list of vectors that forms a basis.
+\end{definition}
+
+We have many properties of orthonormal lists. For example,
+\begin{equation*}
+\|a_1e_1+\ldots +a_ne_n\|^2 = \|a_1\|^2 +\ldots +\|a_n\|^2
+\end{equation*}
+\begin{proposition}{Linear Independence of Orthonormal}{Linear Independence of Orthonormal}
+Every orthonormal list of vectors in $V$ is linear independent.
+\end{proposition}
+\begin{proof}
+\begin{equation*}
+a_1e_1+\ldots +a_ne_n = 0
+\end{equation*}
+Therefore we have $\|a_1\|^2+\ldots +\|a_n\|^2=0$.
+\end{proof}
+
+Writing a vector in orthonormal basis $e_1, \ldots ,e_n$, we have
+\begin{itemize}
+\item $v=\left<v,e_1\right>e_1 + \ldots + \left<v,e_n\right> e_n $
+\item $\|v\|^2 = \left|\left<v,e_1\right>\right|^2 +\ldots + \left|\left<v,e_n\right> \right|^2$
+\item $\left<u,v\right> = \left<u,e_1\right> \overline{\left<v,e_1\right> } + \ldots + \left<u,e_n\right> \overline{\left<v,e_n\right> }$
+\end{itemize}
+
+\subsection{Gram Schmidt Procedure}
+We now give a way to construct an orthogonal basis form an arbitrary basis of $V$. The intuition of this procedure is projecting the vectors onto the orthogonal space of previous vectors.
+
+\begin{plainblackenv}
+Suppose $v_1, \ldots ,v_m$ is a linear independent list of vectors in $V$, Let $f_1=v_1$, define $f_k$ inductively as:
+\begin{equation*}
+f_k = v_k - \frac{\left<v_k,f_1\right> }{\|f_1\|^2}f_1 - \ldots -\frac{\left<v_k,f_{k-1}\right> }{\|f_{k-1}\|^2}f_{k-1}
+\end{equation*}
+
+Then $f_1, \ldots ,f_n$ is an orthogonal basis. Let $\displaystyle e_i = \frac{f_i}{\|f_i\|}$, then $e_1, \ldots ,e_n$ is an orthonormal basis.
+\end{plainblackenv}
+
+Now we have
+\begin{corollary}{Existence of Orthonormal Basis}{Existence of Orthonormal Basis}
+Every inner product space has an orthonormal basis.
+
+Every orthonormal list extends to an orthonormal basis.
+\end{corollary}
+
+It is natural to think that there is some connection between the upper-triangle matrix.
+\begin{theorem}{Upper-triangle matrices on Orthonormal Basis}{Upper-triangle matrices on Orthonormal Basis}
+Suppose $V$ is finite dimensional and $T\in \mathscr{L}(V)$. Then $T$ has an upper-triangle form then $T$ has an upper-triangle form of some orthonormal basis. 
+\end{theorem}
+\begin{proof}
+Suppose $T$ has an upper triangle matrix for some basis $v_1, \ldots ,v_n$, applying the Gram-Schmidt Procedure to $e_1, \ldots ,e_n$ we have
+\begin{equation*}
+\vspan (v_1, \ldots ,v_k) = \vspan (e_1, \ldots ,e_k), \forall k
+\end{equation*}
+\end{proof}
+
+Applying it to the complex vector space, we have
+\begin{theorem}{Schur's Theorem}{Schurs Theorem}
+Every operator on a finite dimensional complex inner product space has an upper-triangle matrix with respect to some orthonormal basis.
+\end{theorem}
+
+\subsection{Linear Fuunctionals on Inner Product Space}
+We have seen that $\forall v\in V$, the function $u \mapsto \left<v,u\right>$ is a linear functional on $V$. We shall show that every linear functional has this form.
+
+\begin{theorem}{Riesz Representation Theorem}{Riesz Representation Theorem}
+Suppose $V$ is finite dimensional and $\varphi$ is a linear functional on $V$. Then there is a unique $v\in V$ such that
+\begin{equation*}
+\forall u\in V,\varphi(u) = \left<u,v\right>
+\end{equation*}
+
+Well, we can say that $\forall v\in V$, define $\varphi_v\in V'$ by
+\begin{equation*}
+\varphi_v(u) = \left<u,v\right>
+\end{equation*}
+then $v \mapsto \varphi_v$ is a bijection of $V \rightarrow  V'$. (Note that this map may not be linear)
+\end{theorem}
+This is not surprising as we view linear functionals as row vectors, and dot product has the same form.
+\begin{proof}
+We first construct a vector. Let $e_1, \ldots ,e_n$ be an orthonormal basis of $V$, then
+\begin{equation*}
+\begin{aligned}
+	\varphi(u) &= \varphi \left(\left<u,e_1\right>e_1+\ldots +\left<u_n,e_n\right> e_n \right)\\
+	&= \left<u,e_1\right> \varphi(e_1)+\ldots +\left<u,e_n\right> \varphi(e_n)\\
+	&=\left<u,\overline{\varphi(e_1)}e_1 +\ldots + \overline{\varphi(e_n)}e_n\right> 
+\end{aligned}
+\end{equation*}
+Let
+\begin{equation}
+v = \overline{\varphi(e_1)}e_1 +\ldots + \overline{\varphi(e_n)}e_n
+\end{equation}
+would do. For uniqueness let
+\begin{equation*}
+\forall u\in V, \varphi(u) = \left<u,v_1\right> = \left<u,v_2\right> 
+\end{equation*}
+then $0 = \left<u,v_1\right> -\left<u,v_2\right> = \left<u,v_1-v_2\right> $, then $v_1=v_2$.
+\end{proof}
+
+\begin{remark}
+The Riesz representation theorem implies that an inner product gives a homomorphism from $V'$ to $V$ with $\varphi \Leftrightarrow u$.
+\end{remark}
+
+
+\section{Orthogonal Complements and Minimization Problems}
+\subsection{Orthogonal Complements}
+\begin{definition}{Orthogonal Complements}{Orthogonal Complements}
+If $U$ is a subsset of $V$, then the orthogoanl complements of $U$, denoted $U^{\perp }$, is defined by
+\begin{equation}
+U^{\perp} = \left\{ v\in V : \forall u\in U,\left<u,v\right> = 0\right\}
+\end{equation}
+\end{definition}
+
+There is a very geometric image of the . It is the ``verticle set'' of $U$. And the following are some obvious consequences.
+
+\begin{proposition}{Properties of Orthogonal Complement}{Properties of Orthogonal Complement}
+\begin{enumerate}
+\item $\forall U \subseteq V$, $U^{\perp}$ is a subspace of $V$.
+\begin{proof}
+$\left<\lambda u_1+\mu u_2,v\right>  = \lambda \left<u_1,v\right> + \mu \left<u_2, v\right> $.
+\end{proof}
+\item $\forall U \subseteq V, U \cap U^{\perp} \subseteq \left\{ 0 \right\}$.
+\item $\forall G \subseteq H \subseteq V, H^{\perp} \subseteq G^{\perp}$.
+\end{enumerate}
+\end{proposition}
+
+Usually we care more about subsets $U$ that are subspaces of $V$.
+
+\begin{proposition}{Direct Sum and its Orthogonal Complement}{Direct Sum and its Orthogonal Complement}
+Suppose $U$ is a finite dimensional subspace of $V$, then
+\begin{equation}
+V = U \oplus U^{\perp}.
+\end{equation}
+\end{proposition}
+\begin{proof}
+First we show that $V=U+U^{\perp}$. Let $e_1, \ldots ,e_m$ be an orthonormal basis of $U$. Then $\forall v\in V$, we have
+\begin{equation*}
+	v = \underbrace{\left<v,e_1\right> e_1 +\cdots +\left<v,e_m\right> e_m}_{u} + \underbrace{ v-(\left<v,e_1\right> e_1 +\cdots +\left<v,e_m\right> e_m)}_{w}
+\end{equation*}
+then we have $\left<w,e_k\right>  = \left<v,e_k\right> - \left<v,e_k\right> =0$. So that $w\in U^{\perp}$. Also we know that $U\cap U^{\perp} = \left\{ 0 \right\}$, so $V = U \oplus U^{\perp}$.
+\end{proof}
+
+A simple corollary is that if $V$ is a finite dimensional vector space, we have
+\begin{equation*}
+\dim U^{\perp} = \dim V-\dim U
+\end{equation*}
+
+\begin{theorem}{Orthogonal Complement of Orthogonal Complement}{Orthogonal Complement of Orthogonal Complement}
+Suppose $U$ is finite dimensional subspace of $V$, then
+\begin{equation}
+	(U^{\perp})^{\perp} = U
+\end{equation}
+\end{theorem}
+\begin{proof}
+\begin{itemize}
+\item First we show $U \subseteq (U^{\perp})^{\perp}$. Suppose $u\in U$, then $\forall w\in U^{\perp}, \left<u,w\right> = 0$. We have $u\in (U^{\perp})^{\perp}$.
+\item The other side we suppose $v\in (U^{\perp})^{\perp}$. Then we can write $v=u+w$ where $u\in U \subseteq (U^{\perp})^{\perp}$ and $w\in U^{\perp}$. Hence we have $v-u=w\in U^{\perp}$, and also $v-u\in (U^{\perp})^{\perp}$ so $v-u=w=0$. Thus $v\in U$.
+\end{itemize}
+\end{proof}
+
+Next we give the formalization of orthogonal projection, a generalization of the projection onto a one-dimensional space above.
+\begin{definition}{Orthogonal Projection}{Orthogonal Projection}
+Suppose $U$ is a finite dimensional subspace of $V$. The orthogonal projection of $V$ onto $U$ is the operator $P_{U}\in \mathscr{L}(V)$ :
+\begin{equation}
+\forall v\in V, \text{ let }v=u+w,u\in U,w\in U^{\perp}, \text{ then }P_{U}v=u
+\end{equation}
+\end{definition}
+\begin{figure}[H]
+    \centering
+    \incfig{orthogonal-projection}
+    \caption{Orthogonal Projection}
+    \label{fig:orthogonal-projection}
+\end{figure}
+
+\begin{proposition}{Properties of Orthogonal Projection}{Properties of Orthogonal Projection}
+Suppose $U$ is a finite dimensional subspace of $V$, then
+\begin{itemize}
+\item $\forall u\in U,P_Uu=u$ and $\forall v\in U^{\perp}, P_Uv=0$.
+\item $\range P_U = U$ and $\snull P_U = U^{\perp}$.
+\item $\forall v\in V, v-P_Uv\in U^{\perp}$.
+\item $P_U^2=P_U$.
+\item If $e_1, \ldots ,e_m$ is an orthonormal basis of $U$, then
+	\begin{equation*}
+	P_Uv = \left<v,e_1\right> e_1+\ldots +\left<v,e_m\right> e_m
+	\end{equation*}
+\end{itemize}
+\end{proposition}
+
+Now we have a more clear review of the Riesz representation theorem. As $\varphi_v(u) = \left<u,v\right>$, then $v\in (\snull \varphi)^{\perp}$ to make $\left<u,v\right> =0$ whenever $\varphi_v(u)=0$. And $(\snull \varphi)^{\perp}$ has only one dimension unless $\varphi=0$.
+
+\subsection{Minimization Problems}
+We take about problems that includes finding $\|v-u\|$ as small as possible when $v\in V$ and $u\in U$.
+
+\begin{theorem}{Minimizing Distance}{Minimizing Distance}
+	Suppose $U$ is a finite dimensional subspace of $V$. Let $v\in V$, and $u\in U$. Then
+	\begin{equation}
+	\|v-P_Uv\| \leq \|v-u\|
+	\end{equation}
+where equality holds iff $u = P_Uv$.
+\end{theorem}
+
+\subsection{Pseudoinverse}
+Suppose $T\in \mathscr{L}(V,W)$ and $b\in W$, consider finding $x\in V$ such that
+\begin{equation*}
+Tx=b
+\end{equation*}
+If $T$ is invertible, the unique solution would be $x= T^{-1}b$. Even if the equation has no solution, we can still manage to find $x$ such that $\|Tx-b\|$ is as small as possible. There is where Pseudoinverse comes in.
+
+Restriction of a linear map to $(\snull T)^{\perp}$ would get what we want, as $(\snull T)^{\perp}$ is the $U$ in figure \ref{fig:orthogonal-projection}.
+\begin{proposition}{Restriction of a linear map}{Restriction of a linear map}
+Suppose $V$ is finite dimensional and $T\in \mathscr{L}(V,W)$. Then $T|_{(\snull T)^{\perp}}$ is a bijection of $(\snull T)^{\perp} \rightarrow \range T$.
+\end{proposition}
+\begin{proof}
+Obviously, $(\snull T)^{\perp}\cong V / \snull T\cong \range T$.
+\end{proof}
+
+Now we define the pseudoinverse $T^{\dagger}$. First we want $Tx = P_{\range T}b$ for minimal norm. Then as $x$ may have multiple choice, we restrict our discussion to $(\snull T)^{\perp}$.
+
+\begin{definition}{Pseudoinverse}{Pseudoinverse}
+Suppose $V$ is finite dimensional and $T\in \mathscr{L}(V,W)$. The pseudoinverse $T ^\dagger\in \mathscr{L}(W,V)$ is defined
+\begin{equation}
+\forall w\in W,T ^\dagger w = (T|_{(\snull T)^{\perp}})^{-1} P_{\range T}w
+\end{equation}
+\end{definition}
+We shall see that the pseudoinverse act like an inverse.
+
+\begin{proposition}{Properties of Pseudoinverse}{Properties of Pseudoinverse}
+\begin{itemize}
+\item If $T$ is invertible, then $T ^{-1}= T ^\dagger$.
+\item $T T ^\dagger = P_{\range T}$.
+\item $T ^\dagger T = P_{(\snull T)^{\perp}}$.
+\end{itemize}
+\end{proposition}
+
+\begin{remark}
+To solve the equation $Tx=b$, taking $x = T ^\dagger b$ gives the best fit to the equation so that $\|Tx-b\|$ is least possible. Also, for all vectors that makes $\|Tx-b\|$ equally small, $T ^\dagger b$ has the smallest norm, as we take $(\snull T)^{\perp}$.
+\end{remark}
+\begin{theorem}{Pseudoinverse provides the best approximate solution}{Pseudoinverse provides the best approximate solution}
+Suppose $V$ is finite dimensional, $T\in \mathscr{L}(V,W)$ and $b\in W$.
+\begin{itemize}
+\item If $x\in V$, then
+	\begin{equation*}
+	\|T(T ^\dagger b)-b\| \leq \|Tx-b\|
+	\end{equation*}
+	with equality holds iff $x\in T ^\dagger b+ \snull T$.
+\item If $x\in T ^\dagger b+\snull T$, then
+	\begin{equation*}
+	\|T ^\dagger b\|\leq \|x\|
+	\end{equation*}
+	with equality iff $x = T ^\dagger b$.
+\end{itemize}
+\end{theorem}
+
+\end{document}

@@ -1,0 +1,810 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\chapter{Abstract Integration}
+
+Riemann integral has successfully defined the integral of a function $f$ over an interval $[a,b]$ as the limit of Riemann sums. 
+\begin{equation*}
+\sum_{i=1}^{n} f(t_i) m(E_i)
+\end{equation*}
+where $E_i$ are disjoint intervals whose union in $[a,b]$. However, this approach has limitations, particularly when dealing with functions that are not well-behaved or when the domain is not a simple interval. Following by the original idea of Riemann, using sums to approximate the integral, we can generalize the sum to more general case.
+
+The generation of the ``length'' concept is called \textbf{measure}, and the process of defining the integral in this more general context is known as \textbf{abstract integration}.
+
+\section{The Extended $\mathbb{R}$ Line}
+We extend the real line $\mathbb{R}$ to include two points, $-\infty$ and $+\infty$, denoted as $\mathbb{R}_{\pm \infty}$. This allows us to handle limits and integrals that may diverge to infinity.
+
+Now we give a formal definition of the extended real line $\mathbb{R}_{\pm \infty}$.
+\begin{plainblackenv}
+	The \textbf{extended real line} $\mathbb{R}_{\pm \infty}$ is defined as the set $\mathbb{R}\cup \left\{ -\infty ,\infty  \right\}$ with the simple order relation defined as follows:
+	\begin{itemize}
+		\item For any $x,y\in \mathbb{R}$, we have $x < y$ the same as in $\mathbb{R}$.
+		\item For any $x\in \mathbb{R}$, we have $-\infty < x < +\infty$.
+	\end{itemize}
+	The operations $+, \cdot $ are defined on $\mathbb{R}_{\pm \infty} \times \mathbb{R}_{\pm \infty }$ as follows: ($+$ is not defined on $(+\infty ,-\infty )_p$ and $(-\infty ,+\infty )_p$)
+	\begin{itemize}
+		\item $+, \cdot $ follows commutative, associative and distributive laws, and both has identity. (The existence of inverse is dropped in the sense of infinity)
+		\item If $x,y\in \mathbb{R}$, then $x+y, x\cdot y$ are defined as in $\mathbb{R}$.
+		\item If $x\in \mathbb{R}$, then $x+(-\infty ) = -\infty $, $x+ (+\infty ) = +\infty $.
+		\item $+\infty + (+\infty ) = +\infty $, $-\infty + (-\infty ) = -\infty $.
+		\item If $x\in \mathbb{R}_{\pm \infty }$, then
+			\begin{itemize}
+			\item If $x>0$, then $x\cdot (+\infty ) = +\infty $, $x\cdot (-\infty ) = -\infty $.
+			\item If $x<0$, then $x\cdot (+\infty ) = -\infty $, $x\cdot (-\infty ) = +\infty $.
+			\item If $x=0$, then $0\cdot (+\infty ) = 0$, $0\cdot (-\infty ) = 0$.
+			\end{itemize}
+	\end{itemize}
+\end{plainblackenv}
+
+\begin{remark}
+	The last line, \textit{If $x=0$, then $0\cdot (+\infty ) = 0$, $0\cdot (-\infty ) = 0$}, is a special case that is not defined in the usual arithmetic of real numbers. It is included here to maintain consistency in the definition of multiplication in the extended real line, used in Lebesgue integration. It follows our intuition of the area of a line is zero.
+\end{remark}
+
+It is rather more common to consider the nonnegative (called positive in the following context) extended real line $\mathbb{R}_{\pm \infty }^+ = [0,+\infty ]$ with the same order relation and operations as above. The nonnegative extended real line is often used in measure theory and integration, especially when dealing with measures that are nonnegative. Here, the operations are defined fully, without ``bad cases'' like $+\infty -\infty $.
+
+\section{Measurability}
+
+We link the concept of measurable to continuity, as we did in Riemann integration. Therefore, we compare the concept of measurable space, measurable sets, measurable functions, to the topological space, open sets, continuous functions.
+
+\begin{definition}{$\sigma$-algebra}{sigma-algebra}
+A collection $\mathcal{M}$ of subsets of $X$ is called a $\sigma$-algebra in $X$ if:
+\begin{itemize}
+\item $X\in \mathcal{M}$.
+\item If $A\in \mathcal{M}$, then $A^c=X-A\in \mathcal{M}$.
+\item If $A_n\in \mathcal{M}$ for $n\in \mathbb{Z}_+$, then
+	\begin{equation*}
+		\bigcup_{n=1}^{\infty} A_n \in \mathcal{M}.
+	\end{equation*}
+\end{itemize}
+
+If $\mathcal{M}$ is a $\sigma$-algebra in $X$, then $(X, \mathcal{M})$ is called a \textbf{measurable space}, and members of $\mathcal{M}$ are called \textbf{measurable sets}.
+
+If $X$ is a measurable space, $Y$ is a topological space, and $f: X \rightarrow Y$ is said to be \textbf{measurable} if for every open set $U\subseteq Y$, the preimage $f^{-1}(U)$ is a measurable set in $X$.
+\end{definition}
+
+\begin{remark}
+The definition implies that $\emptyset \in \mathcal{M}$, and countable intersections of measurable sets are also measurable. This is because we can express intersections in terms of unions and complements:
+\begin{equation*}
+	\bigcap_{n=1}^{\infty} A_n = \left(\bigcup_{n=1}^{\infty} A_n^c\right)^c \text{(De Morgan's Law)}
+\end{equation*}
+
+An \textbf{algebra} is a collection of sets that is closed under finite unions and complements, but not necessarily countable unions. A $\sigma$-algebra is an algebra that is also closed under countable unions.
+\end{remark}
+
+\begin{theorem}{Subsets of Measurable Spaces}{Subsets of Measurable Spaces}
+	Let $(X, \mathcal{M})$ be a measurable space, and $A\subseteq X$ be a subset of $X$. Then we can define a $\sigma$-algebra $\mathcal{M}_A$ on $A$ as follows:
+	\begin{equation*}
+		\mathcal{M}_A = \left\{ E \cap A: E\in \mathcal{M} \right\}.
+	\end{equation*}
+\end{theorem}
+
+It is easy to see that $\mathcal{M}_A$ is a $\sigma$-algebra on $A$, and the restriction of the measurable function $f: X \rightarrow Y$ to $A$ is measurable with respect to $\mathcal{M}_A$.
+
+\begin{theorem}{Composition of Continuous or Measurable Functions}{Composition of Continuous or Measurable Functions}
+Let $Y,Z$ be topological spaces, and $g:Y \rightarrow Z$ be continuous, then
+\begin{itemize}
+\item If $X$ is a topological space, $f:X \rightarrow Y$ is continuous, then $g \circ f: X \rightarrow Z$ is continuous.
+\item If $X$ is a measurable space, $f:X \rightarrow Y$ is measurable, then $g \circ f: X \rightarrow Z$ is measurable.
+\end{itemize}
+\end{theorem}
+\begin{proof}
+Preimage of continuous functions of open sets is open.
+\end{proof}
+
+\begin{theorem}{Composition of Products}{Composition of Products}
+Let $X$ be measurable space, and $u,v: X \rightarrow \mathbb{R}$ be measurable. Let $Y$ be a topological space, and $\Phi: \mathbb{R}^2 \rightarrow Y$ be continuous. Then $\Phi \circ (u,v): X \rightarrow Y$ is measurable.
+\end{theorem}
+\begin{proof}
+We shall use the second countability of $\mathbb{R}^2$. Specifically the rational interval basis.
+
+Let $f(x) = (u(x),v(x))_p$. Then $h = \Phi\circ f$. We need only to prove the measurability of $f$. For a rational vertex rectangle $R=I_1 \times I_2 = (a,b) \times (c,d) \subseteq \mathbb{R}^2$, we have
+\begin{equation*}
+	f^{-1}(R) = u^{-1}(I_1) \cap v^{-1}(I_2).
+\end{equation*}
+which is a measurable set since $u$ and $v$ are measurable. Then for all open set $U \subseteq \mathbb{R}^2$, we have $U = \bigcup_{i=1}^{\infty } R_i$, so
+\begin{equation*}
+	f^{-1}(U) = \bigcup_{i=1}^{\infty} f^{-1}(R_i).
+\end{equation*}
+is a measurable set, hence $f$ is measurable.
+\end{proof}
+\begin{remark}
+We can change $\mathbb{R}$ to any second countable topological space, and the proof still holds. The key is that we can cover the space with countably many open sets, and the preimage of each open set is measurable.
+\end{remark}
+
+The following are some corollaries of the above theorem.
+\begin{itemize}
+	\item If $f: X \rightarrow \mathbb{C}, f(x) = u(x) + iv(x)$ where $u,v: X \rightarrow \mathbb{R}$ are measurable, then $f$ is measurable.
+	\item If $f:X \rightarrow \mathbb{C}$ is measurable, $f=u+iv$, then $u,v,|f|: X \rightarrow \mathbb{R}$ are measurable.
+	\item If $f,g: X \rightarrow \mathbb{C}$ or $\mathbb{R}$ are measurable, then $f+g, f-g, fg, f / g$ (if $g(x) \neq 0$) are measurable.
+	\item If $E \subseteq X$ is a measurable set, and let
+		\begin{equation}
+		\chi_E(x) =
+		\begin{cases}
+			1, & \text{if } x \in E, \\
+			0, & \text{if } x \notin E.
+		\end{cases}
+		\end{equation}
+		Then $\chi_E: X \rightarrow \mathbb{R}$ is measurable. The function $\chi_E$ is called the \textbf{characteristic function} or \textbf{indicator function} of the set $E$.
+\end{itemize}
+
+\begin{proposition}{Normalize a Complex Measurable Function}{Normalize a Complex Measurable Function}
+	Let $f: X \rightarrow \mathbb{C}$ be measurable, then there exists a measurable function $\alpha: X \rightarrow \mathbb{C}$ such that $\left|\alpha\right| = 1$, and $f = |f| \cdot \alpha$.
+\end{proposition}
+\begin{proof}
+Let $E = \left\{ x:f(x)=0 \right\}$, and $Y = \mathbb{C}-\left\{ 0 \right\}$, define $\varphi(z) = z / \left|z\right|$ for $z\in Y$, and let
+\begin{equation*}
+\alpha(x) = \varphi(f(x) + \chi_E(x)), \qquad x\in X
+\end{equation*}
+We have $E$ is a measurable set: for $E = X-f^{-1}(Y)$. Then $\alpha$ is measurable since $\varphi$ is continuous on $Y$, and $f$ is measurable.
+\end{proof}
+
+\begin{theorem}{Smallest $\sigma$-algebra}{Smallest sigma-algebra}
+	If $\mathcal{F}$ is any collection of subsets of $X$, then there exists a unique smallest $\sigma$-algebra $\mathcal{M}$ containing $\mathcal{F}$. That is, for any $\sigma$-algebra $\mathcal{N}$ containing $\mathcal{F}$, we have $\mathcal{M} \subseteq \mathcal{N}$.
+\end{theorem}
+\begin{proof}
+	Let $\Omega$ be the collection of all $\sigma$-algebras containing $\mathcal{F}$. Then $\Omega$ is non-empty since the power set of $X$ is a $\sigma$-algebra containing $\mathcal{F}$.
+
+	Let $\mathcal{M} = \bigcap \Omega$. Then $\mathcal{F} \subseteq \mathcal{M}$, and $\mathcal{M}$ is contained in all $\sigma$-algebras in $\Omega$. Showing that $\mathcal{M}$ is a $\sigma$-algebra is trivial.
+\end{proof}
+
+\begin{definition}{Borel Sets}{Borel Sets}
+	Let $X$ be a topological space. The \textbf{Borel $\sigma$-algebra} $\mathcal{B}(X)$ is the smallest $\sigma$-algebra containing all open sets in $X$, i.e., the topology of $X$. The sets in $\mathcal{B}(X)$ are called \textbf{Borel sets}.
+\end{definition}
+In particular, closed sets, countable unions, countable intersections, and complements of Borel sets are also Borel sets. As we see,
+\begin{itemize}
+	\item All countable unions of closed sets are called \textbf{$F_{\sigma}$ sets}.
+	\item All countable intersections of open sets are called \textbf{$G_{\delta}$ sets}.
+\end{itemize}
+
+Now we can consider any topological space $X$ as a measurable space with the Borel $\sigma$-algebra $\mathcal{B}(X)$. Any continuous function $f: X \rightarrow Y$ where $Y$ is a topological space, is measurable with respect to the Borel $\sigma$-algebra.
+
+Borel measurable mappings are often called \textbf{Borel functions}. They are important in analysis and probability theory, as they allow us to work with functions that are continuous or piecewise continuous, while still being able to define integrals and measures.
+
+\begin{proposition}{Borel Measurable Functions}{Borel Measurable Functions}
+Suppose $\mathcal{M}$ is a $\sigma$-algebra in $X$, and $Y$ is a topological space, let $f: X \rightarrow Y$.
+\begin{itemize}
+	\item If $\Omega$ is the collection of all sets $E \subseteq Y$ that $f^{-1}(E)\in \mathcal{M}$, then $\Omega$ is a $\sigma$-algebra in $Y$.
+	\item If $f$ is measurable and $E$ is a Borel set in $Y$, then $f^{-1}(E)\in \mathcal{M}$.
+	\item If $Y = [-\infty ,\infty ]$ be the extended $\mathbb{R}$ line, and $f^{-1}((\alpha,\infty ])\in \mathcal{M}$ for all $\alpha\in \mathbb{R}$, then $f$ is measurable.
+	\item If $f$ is measurable, $Z$ is a topological space, $g: Y \rightarrow Z$ is a Borel mapping, then $h=g\circ f$ is measurable.
+\end{itemize}
+\end{proposition}
+\begin{proof}
+All obvious. The first statement uses the closure condition of measurable sets. The second is just a corollary of the first. The third statement used the subbasis of $\mathbb{R}_{\pm \infty }$ and the second countability of $\mathbb{R}_{\pm \infty }$. The fourth statement uses the second statement.
+\end{proof}
+
+\begin{definition}{Upper and Lower Limit}{Upper and Lower Limit}
+Let $\left\{ a_n \right\}_{n=1}^{\infty }$ be a sequence in $\mathbb{R}_{\pm \infty }$, and let
+\begin{equation}
+	b_n = \sup_{k\geq n} a_k, \qquad c_n = \inf_{k\geq n} a_k.
+\end{equation}
+The \textbf{upper limit} of the sequence $\left\{ a_n \right\}$ is defined as
+\begin{equation}
+	\beta = \limsup_{n\rightarrow \infty } a_n = \lim_{n\rightarrow \infty } b_n,
+\end{equation}
+The \textbf{lower limit} of the sequence $\left\{ a_n \right\}$ is defined similarly as
+\begin{equation}
+	\gamma = \liminf_{n\rightarrow \infty } a_n = \lim_{n\rightarrow \infty } c_n.
+\end{equation}
+\end{definition}
+\begin{remark}
+	The limit exists because the sequence $\left\{ b_n \right\}$ and $\left\{ c_n \right\}$ are monotonic.
+\end{remark}
+
+\begin{theorem}{Limit of Function Sequences}{Limit of Function Sequences}
+	If $f_n: X \rightarrow [-\infty ,+\infty ]$ is measurable for all $n\in \mathbb{Z}_+$, then we have
+	\begin{equation*}
+		g = \sup_{n \geq 1} f_n, \qquad h = \limsup_{n\rightarrow \infty } f_n
+	\end{equation*}
+	are measurable functions. (the limits are defined pointwisely)
+\end{theorem}
+\begin{proof}
+	We shall prove that $g^{-1}((\alpha,\infty ]) = \bigcup_{n=1}^{\infty } f_n^{-1}((\alpha, \infty ])$. First, if $g(x) \leq \alpha$, then $f_n(x) \leq \alpha$ for all $n\in \mathbb{Z}_+$, also if $g(x) > \alpha$, then there exists $f_n(x) > \frac{1}{2}(g(x) - \alpha) > \alpha$.
+
+	The two statement holds obviously, as
+	\begin{equation*}
+	h = \inf_{k \geq 1} \left\{ \sup_{i\geq k}f_i \right\}
+	\end{equation*}
+\end{proof}
+
+\begin{corollary}{Measurability of Sequences Limit}{Measurability of Sequences Limit}
+\begin{itemize}
+\item The limit of every pointwise convergent sequence of $X \rightarrow \mathbb{C}$ is measurable.
+\item If $f,g: X \rightarrow [-\infty ,+\infty ]$ are measurable, then $\max \left\{ f,g \right\}$ and $\min \left\{ f,g \right\}$ are measurable. In particular, the positive and negative part of $f$ :
+	\begin{equation*}
+		f^+ = \max \left\{ f,0 \right\}, \qquad f^- = -\min \left\{ f,0 \right\}
+	\end{equation*}
+	are measurable.
+\end{itemize}
+\end{corollary}
+
+\section{Simple Functions}
+\begin{definition}{Simple Functions}{Simple Functions}
+	A complex function $s: X \rightarrow \mathbb{C}$ where $X$ is measurable space is called a \textbf{simple function} if the range of $s$ is finite.
+
+	Note that we exclude $\infty $.
+\end{definition}
+If we set $\alpha_1, \ldots ,\alpha_n$ be the range of $s$, then we can write $s$ as
+\begin{equation}
+	s = \sum_{i=1}^{n} \alpha_i \chi_{A_i}, \qquad A_i = s^{-1}(\alpha_i)
+\end{equation}
+It is obvious that $s$ is measurable if and only if each $A_i$ is measurable. (Using $\max \left\{ s,\alpha_i \right\}$ for each $i$).
+
+\begin{theorem}{Approaching by Simple Functions}{Approaching by Simple Functions}
+	Let $f:X \rightarrow [0,\infty ]$ be measurable, then there exists simple measurable functions $s_n: X \rightarrow [0,\infty ],n\in \mathbb{Z}_+$ such that
+	\begin{itemize}
+	\item $0\leq s_1\leq \cdots \leq f$.
+	\item $\lim_{n\rightarrow \infty } s_n(x) = f(x)$ for all $x\in X$.
+	\end{itemize}
+\end{theorem}
+\begin{proof}
+	We use a stairs function to approximate the identity $t \mapsto t$ in $\mathbb{R}$. Let $\delta_n = 2^{-n}$ and $k = k_n(t)$ be the unique integer that $k \delta_n \leq t< (k+1) \delta_n$. Define
+	\begin{equation*}
+		\varphi_n(t) =
+		\begin{cases}
+			k_n(t) \delta_n, & \text{if } 0\leq t<n, \\
+			n, & \text{if } t\geq n.
+		\end{cases}, \qquad t\in [0, \infty ]
+	\end{equation*}
+then each $\varphi_n$ is a Borel function on $[0,\infty ]$. We have
+\begin{equation*}
+	\lim_{n \to \infty } \varphi_n(t) = t, \qquad t\in [0,\infty ].
+\end{equation*}
+Setting $s_n = \varphi_n \circ f$, we have $s_n$ is a simple function, and according to proposition \ref{prop:Borel Measurable Functions}, $s_n$ is measurable.
+\end{proof}
+
+\begin{remark}
+The function we use is like a more and more dense stairs function, approximating the identity function. The limit of the sequence of simple functions $s_n$ converges pointwise to $f$. This is a common technique in measure theory to approximate more complex functions with simpler ones, making it easier to define integrals and other operations.
+\end{remark}
+
+\section{Measures}
+\begin{definition}{Measures}{Measures}
+	\begin{itemize}
+	\item A positive measure on a measurable space $(X, \mathcal{M})$ is a function $\mu: \mathcal{M} \rightarrow [0,\infty ]$ satisfying:
+		\begin{itemize}
+		\item To avoid trivial case, $\exists A\in \mathcal{M}, \mu(A) < \infty $.
+		\item Countable Additivity: If $\left\{ A_i \right\}_{i=1}^{\infty }$ is a countable disjoint collection of sets in $\mathcal{M}$, then
+			\begin{equation}
+			\mu\left(\bigcup_{i=1}^{\infty } A_i\right) = \sum_{i=1}^{\infty } \mu(A_i).
+			\end{equation}
+		\end{itemize}
+	\item A measure space is a measurable space with a positive measure defined on it, i.e., $(X, \mathcal{M}, \mu)$.
+	\item A complex measure is a function $\mu: \mathcal{M} \rightarrow \mathbb{C}$ that is countably additive, i.e., for any countable disjoint collection $\left\{ A_i \right\}_{i=1}^{\infty }$ in $\mathcal{M}$,
+		\begin{equation*}
+		\mu\left(\bigcup_{i=1}^{\infty } A_i\right) = \sum_{i=1}^{\infty } \mu(A_i).
+		\end{equation*}
+	We require absolute convergence here to avoid Riemann rearrangement theorem.
+	\end{itemize}
+\end{definition}
+
+\begin{proposition}{Positive Measures}{Positive Measures}
+Let $\mu$ be a positive measure on a $\sigma$-algebra $\mathcal{M}$, Then:
+\begin{itemize}
+\item $\mu(\emptyset ) = 0$.
+\item For finite $A_1, \ldots ,A_n\in \mathcal{M}$ are disjoint, we have
+	\begin{equation*}
+		\mu\left(\bigcup_{i=1}^{n} A_i\right) = \sum_{i=1}^{n} \mu(A_i).
+	\end{equation*}
+\item If $A,B\in \mathcal{M},A \subseteq B$, then $\mu(A) \leq \mu(B)$.
+\item If $A_i\in \mathcal{M},i\in \mathbb{Z}_+$, and 
+	\begin{equation*}
+	A_1 \subseteq A_2 \subseteq A_3 \subseteq \cdots 
+	\end{equation*}
+	and $\displaystyle A = \bigcup_{n=1}^{\infty } A_n$, then
+	\begin{equation*}
+		\mu(A) = \lim_{n\rightarrow \infty } \mu(A_n).
+	\end{equation*}
+\item If $A_i\in \mathcal{M},i\in \mathbb{Z}_+$, and
+	\begin{equation*}
+	A_1 \supseteq A_2 \supseteq A_3 \supseteq \cdots ,\qquad \mu(A_1) < \infty
+	\end{equation*}
+	and $\displaystyle A = \bigcap_{n=1}^{\infty } A_n$, then
+	\begin{equation*}
+		\mu(A) = \lim_{n\rightarrow \infty } \mu(A_n).
+	\end{equation*}
+\end{itemize}
+\end{proposition}
+\begin{proof}
+\begin{itemize}
+\item Take $\mu(A) < \infty $ would do.
+\item Take $A_{n+1} = A_{n+2} = \cdots = \emptyset $.
+\item $B=A\sqcup (B-A)$.
+\item $B_1=A_1, B_n = A_{n}-A_{n-1}$.
+\item $C_i = A_1-A_i$ would do.
+\end{itemize}
+\end{proof}
+
+\begin{example}{Measures}{Measures}
+\begin{itemize}
+	\item The Counting Measure: Let $\mathcal{M} = P(X)$ and for $E \subseteq X$, let $\mu(E) = \left|E\right|$, which is the number of points in $E$, if $E$ is infinite, then $\mu(E) = \infty $. This is a positive measure.
+	\item Unit Mass Measure: Let $\mathcal{M} = P(X)$, fix $x_0\in X$, let
+	\begin{equation*}
+		\mu(E) =
+		\begin{cases}
+			1, & \text{if } x_0 \in E, \\
+			0, & \text{if } x_0 \notin E.
+		\end{cases}
+	\end{equation*}
+\end{itemize}
+\end{example}
+
+\begin{theorem}{Measures on Subspaces}{Measures on Subspaces}
+	Let $(X, \mathcal{M}, \mu)$ be a measure space, and $A\in \mathcal{M}$ be a measurable set. Then we can define a measure $\mu_A$ on the measurable space $(A, \mathcal{M}_A)$, where $\mathcal{M}_A$ is the $\sigma$-algebra on $A$ defined in theorem \ref{thm:Subsets of Measurable Spaces} as follows:
+	\begin{equation*}
+		\mu_A(E) = \mu(E \cap A), \qquad E\in \mathcal{M}_A.
+	\end{equation*}
+\end{theorem}
+\begin{remark}
+In defining the measurable sets in subspaces, we do not require $A$ to be a measurable set, but we require $A$ to be a measurable set here in order to pass the measure to the subspace.
+
+It has been shown that all measurable spaces has a measure in the example above. If $A$ is not measurable, then we shall find another measure on it.
+\end{remark}
+
+\section{Integration of Positive Functions}
+We let $\mathcal{M}$ be a $\sigma$-algebra in $X$, and $\mu$ be a positive measure on $\mathcal{M}$.
+
+\begin{definition}{Integration of Positive Functions}{Integration of Positive Functions}
+	If $s: X \rightarrow [0,+\infty )$ is a simple measurable function, with the form
+	\begin{equation*}
+		s = \sum_{i=1}^{n} \alpha_i \chi_{A_i}, \qquad A_i\in \mathcal{M}, \alpha_i \in [0,+\infty ) \text{ are distinct values}
+	\end{equation*}
+	If $E\in \mathcal{M}$, we define
+	\begin{equation}
+		\int_E s \mathrm{d} \mu = \sum_{i=1}^{n} \alpha_i \mu(E \cap A_i).
+	\end{equation}
+	(The assumption $0 \cdot \infty =\infty $ is used here, in case $\mu(E \cap A_i) = \infty $ for some $i$.)
+
+	If $f: X \rightarrow [0,\infty ]$ is measurable, then we define the integral of $f$ over $E\in \mathcal{M}$ as
+	\begin{equation}
+		\int_E f \mathrm{d} \mu = \sup \int_E s \mathrm{d} \mu
+	\end{equation}
+	where $s$ runs over all simple measurable functions $s: X \rightarrow [0,\infty ]$ such that $0\leq s(x) \leq f(x)$ for all $x\in E$.
+
+	This integral is called the \textbf{Lebesgue integral} of $f$ over $E$ with respect to the measure $\mu$.
+\end{definition}
+
+\begin{remark}
+	A simple measurable function $s$ is a stair-shape function below $f$, and we can approach the integral of $f$ by taking the supremum of the integrals of all such simple functions. This is similar to the Riemann integral, where we approximate the area under the curve by using rectangles.
+
+	We notice that the integral can be seen as defined on the subset $E$ of $X$, with the subset measure. So we can assume $E = X$ without loss of generality when proving theorems about the Lebesgue integral.
+\end{remark}
+
+\begin{proposition}{Direct Results for Lebesgue Integral}{Direct Results for Lebesgue Integral}
+Let $f,g: X \rightarrow [0,\infty ]$ be measurable functions, and $\mu$ be a positive measure on $\mathcal{M}$.
+\begin{itemize}
+\item If $0\leq f\leq g$, then $\displaystyle \int_{E}f \mathrm{d} \mu \leq \int_{E}g \mathrm{d} \mu$.
+\item If $A \subseteq B,f\geq 0$, then $\displaystyle \int_{A}f \mathrm{d} \mu \leq \int_{B}f \mathrm{d} \mu$.
+\item If $c\in [0, \infty ), f\geq 0$, then $\displaystyle \int_{E}c f \mathrm{d} \mu = c \int_{E}f \mathrm{d} \mu$.
+\item If $f=0$, then $\displaystyle \int_{E}f \mathrm{d} \mu = 0$.
+\item If $\mu(E)=0$, then $\displaystyle \int_{E}f \mathrm{d} \mu = 0$.
+\item If $f\geq 0$ then $\displaystyle \int_E f \mathrm{d} \mu = \int_X \chi_E f \mathrm{d} \mu$.
+\end{itemize}
+\end{proposition}
+
+\begin{proposition}{Sum of Simple Function Integral}{Sum of Simple Function Integral}
+	Let $s, t: X \rightarrow [0,\infty ]$ be simple measurable functions, then for $E\in \mathcal{M}$, define
+	\begin{equation}
+	\varphi(E) = \int_E s \mathrm{d} \mu
+	\end{equation}
+	Then $\varphi$ is a positive measure on $\mathcal{M}$, and
+	\begin{equation}
+		\int_X (s+t) \mathrm{d} \mu = \int_X s \mathrm{d} \mu + \int_X t \mathrm{d} \mu.
+	\end{equation}
+\end{proposition}
+
+The measure here is like a weighting of the original length, if we take $s$ to be the identity, then $\varphi = \mu$.
+\begin{proof}
+	Let $\alpha_1, \ldots ,\alpha_n$ be the distinct values of $s$, and $\beta_1, \ldots ,\beta_m$ be the distinct values of $t$. And $A_i = s^{-1}(\alpha_i)$, $B_j = t^{-1}(\beta_j)$.
+
+	Then we can write $E = \bigsqcup_{i=1}^\infty E_i$, then we have $\varphi(\emptyset ) = 0$ and
+\begin{equation*}
+\begin{aligned}
+	\varphi(E) &= \sum_{i=1}^n \alpha_i \mu(E \cap A_i) = \sum_{i=1}^n \alpha_i \mu\left(\bigsqcup_{j=1}^\infty (E_i \cap A_j)\right) \\
+		   &= \sum_{i=1}^n \alpha_i \sum_{j=1}^\infty \mu(E_j \cap A_i) = \sum_{j=1}^\infty \sum_{i=1}^n \alpha_i \mu(E_j \cap A_i) \\
+		   &= \sum_{j=1}^\infty \varphi(E_j).
+\end{aligned}
+\end{equation*}
+
+Now we let $E_{ij} = A_i \cap B_j$, then we have
+\begin{equation*}
+	\int_{E_{ij}} (s+t) \mathrm{d} \mu = (\alpha_i + \beta_j) \mu(E_{ij}) = \alpha_i \mu(E_{ij}) + \beta_j \mu(E_{ij}) = \int_{E_{ij}} s \mathrm{d} \mu + \int_{E_{ij}} t \mathrm{d} \mu.
+\end{equation*}
+As $X = \bigsqcup_{i=1}^n \bigsqcup_{j=1}^m E_{ij}$, the first half implies the result.
+\end{proof}
+
+We shall see that the Lebesgue integral has satisfying limit properties.
+
+\begin{proposition}{Limit Properties of Lebesgue Integral}{Limit Properties of Lebesgue Integral}
+\begin{itemize}
+	\item Let $s: X \rightarrow [0,\infty ]$ be a simple measurable function and $E_i$ be measurable sets such that $E_1 \subseteq E_2 \subseteq \cdots $, and $E = \bigcup_{n=1}^{\infty } E_n$. Then the sequence $\int_{E_n} s \mathrm{d} \mu$ is non-decreasing, and
+	\begin{equation*}
+		\int_E s \mathrm{d} \mu = \lim_{n\rightarrow \infty } \int_{E_n} s \mathrm{d} \mu.
+	\end{equation*}
+\end{itemize}
+\end{proposition}
+\begin{proof}
+	Using the fact that the integral defines a measure and the fourth proposition in proposition \ref{prop:Positive Measures}.
+\end{proof}
+
+\begin{theorem}{Lebesgue's Monotone Convergence Theorem}{Lebesgues Monotone Convergence Theorem}
+	Let $f_n: X \rightarrow [0,\infty ]$ be a sequence of measurable functions such that
+	\begin{itemize}
+		\item $f_n \leq f_{n+1}$ for all $n\in \mathbb{Z}_+$.
+		\item $\lim_{n\rightarrow \infty } f_n(x) = f(x)$ for all $x\in X$.
+	\end{itemize}
+	Then $f$ is measurable, and
+	\begin{equation}
+		\lim_{n\rightarrow \infty } \int_X f_n \mathrm{d} \mu = \int_X f \mathrm{d} \mu.
+	\end{equation}
+\end{theorem}
+\begin{proof}
+	By theorem \ref{thm:Limit of Function Sequences}, $f$ is measurable. As $f_n\leq f_{n+1}\leq f$, then the sequence $\int_X f_n \mathrm{d} \mu$ is non-decreasing, and bounded above by $\int_X f \mathrm{d} \mu$. Therefore, there is $\alpha$ that
+	\begin{equation*}
+		\lim_{n\rightarrow \infty } \int_X f_n \mathrm{d} \mu = \alpha \leq \int_X f \mathrm{d} \mu
+	\end{equation*}
+	To prove the other side, let $0<c<1$ be a constant, and $s$ be a simple measurable function such that $0\leq s \leq f$, and define
+	\begin{equation*}
+		E_n = \left\{ x: f_n(x) \geq c s(x) \right\}.
+	\end{equation*}
+	Then $E_n$ is measurable because $g_n = f_n-cs$ is measurable and $E_n = g_n^{-1}([0,\infty ])$. Also we have $E_1 \subseteq E_2 \subseteq \cdots$, and $X = \bigcup_{n=1}^{\infty } E_n$ (obviously). We have
+	\begin{equation*}
+		\int_X f_n \mathrm{d} \mu \geq \int_{E_n} f_n \mathrm{d} \mu \geq c \int_{E_n} s \mathrm{d} \mu.
+	\end{equation*}
+	\begin{equation*}
+		\alpha \geq c\int_X s \mathrm{d} \mu, \qquad \forall c\in (0,1), \forall 0\leq s \leq f.
+	\end{equation*}
+	So we have
+	\begin{equation*}
+		\int_X f \mathrm{d} \mu \leq \alpha.
+	\end{equation*}
+\end{proof}
+
+\begin{remark}
+	Note that the monotone convergence theorem \ref{thm:Lebesgues Monotone Convergence Theorem} and proposition \ref{prop:Limit Properties of Lebesgue Integral} are very useful in proving theorems about Lebesgue integrals. They allow us to interchange limits and integrals for either the domain or the function.
+\end{remark}
+
+\begin{theorem}{Finite Sums of Integrals}{Finite Sums of Integrals}
+	Let $f,g:X \rightarrow [0,\infty ]$ be measurable functions, then
+	\begin{equation*}
+		\int_X (f+g) \mathrm{d} \mu = \int_X f \mathrm{d} \mu + \int_X g \mathrm{d} \mu.
+	\end{equation*}
+\end{theorem}
+\begin{proof}
+	There are sequences of simple measurable functions $s_n, t_n$ such that $0\leq s_n \leq f$, $0\leq t_n \leq g$, and $\lim_{n\rightarrow \infty } s_n(x) = f(x)$, $\lim_{n\rightarrow \infty } t_n(x) = g(x)$ for all $x\in X$. Then we have $s_n + t_n$ is a sequence of simple measurable functions such that $0\leq s_n + t_n \leq f+g$, and $\lim_{n\rightarrow \infty } (s_n + t_n)(x) = f(x) + g(x)$ for all $x\in X$. By the monotone convergence theorem and the sum of simple function integral (proposition \ref{prop:Sum of Simple Function Integral}), we have
+	\begin{equation*}
+		\int_X (f+g) \mathrm{d} \mu = \lim_{n\rightarrow \infty } \int_X (s_n + t_n) \mathrm{d} \mu = \lim_{n\rightarrow \infty } \left( \int_X s_n \mathrm{d} \mu + \int_X t_n \mathrm{d} \mu \right) = \int_X f \mathrm{d} \mu + \int_X g \mathrm{d} \mu.
+	\end{equation*}
+\end{proof}
+
+\begin{theorem}{Infinite Series and Integral}{Infinite Series and Integral}
+	If $f_n: X \rightarrow [0,\infty ]$ is a sequence of measurable functions and
+	\begin{equation*}
+		f = \sum_{n=1}^{\infty } f_n
+	\end{equation*}
+	then,
+	\begin{equation*}
+		\int_X f \mathrm{d} \mu = \sum_{n=1}^{\infty } \int_X f_n \mathrm{d} \mu.
+	\end{equation*}
+	(The integral and infinite series can be interchanged.)
+\end{theorem}
+\begin{proof}
+	Put $g_n = f_1+\cdots +f_n$ would do. (By the monotone convergence theorem \ref{thm:Lebesgues Monotone Convergence Theorem})
+\end{proof}
+
+\begin{remark}
+	If $\mu$ is the counting measure on a countable $X$, then theorem \ref{thm:Infinite Series and Integral} is just a statement about double series about nonnegative reals.
+	\begin{equation*}
+		\sum_{i=1}^{\infty } \sum_{j=1}^{\infty } a_{ij} = \sum_{j=1}^{n} \sum_{i=1}^{\infty } a_{ij}.
+	\end{equation*}
+\end{remark}
+
+\begin{lemma}{Fatou's Lemma}{Fatous Lemma}
+	If $f_n: X \rightarrow [0,\infty ]$ is a sequence of measurable functions, then
+	\begin{equation}
+	\int_X \liminf_{n\rightarrow \infty } f_n \mathrm{d} \mu \leq \liminf_{n\rightarrow \infty } \int_X f_n \mathrm{d} \mu.
+	\end{equation}
+\end{lemma}
+\begin{proof}
+	Let $g_n(x) = \inf_{i\geq n}f_i(x)$, then $g_n$ is measurable, and $g_n \leq f_n$ for all $n\in \mathbb{Z}_+$. By the monotone convergence theorem, we have
+	\begin{equation*}
+		\int_X g_n \mathrm{d} \mu \leq \int_X f_n \mathrm{d} \mu, \qquad \forall n\in \mathbb{Z}_+.
+	\end{equation*}
+	Also, $0\leq g_n \leq g_{n+1}$, and $\lim_{n\rightarrow \infty } g_n(x) = \liminf_{n\rightarrow \infty } f_n(x)$ for all $x\in X$. By the monotone convergence theorem, we have
+	\begin{equation*}
+		\int_X \liminf_{n\rightarrow \infty } f_n \mathrm{d} \mu = \lim_{n\rightarrow \infty } \int_X g_n \mathrm{d} \mu \leq \liminf_{n\rightarrow \infty } \int_X f_n \mathrm{d} \mu.
+	\end{equation*}
+\end{proof}
+
+Fautou's lemma can be interpreted as this:
+
+\begin{figure}[ht]
+    \centering
+    \incfig{fatous-lemma}
+    \caption{Fatou's Lemma}
+    \label{fig:fatou's-lemma}
+\end{figure}
+It is quite obvious that $\liminf \int_X f_n \mathrm{d} \mu$ is above the area of the lower envelope of the function $f_n$.
+
+\begin{theorem}{Integration and Measure}{Integration and Measure}
+	Suppose $f,g: X \rightarrow [0,\infty ]$ are measurable, and
+	\begin{equation}
+		\varphi(E) = \int_E f \mathrm{d} \mu, \qquad E\in \mathcal{M}.
+	\end{equation}
+	Then $\varphi$ is a measure on $\mathcal{M}$, and
+	\begin{equation}
+		\int_X g \mathrm{d} \varphi = \int_X g f \mathrm{d} \mu, \qquad E\in \mathcal{M}.
+	\end{equation}
+\end{theorem}
+\begin{proof}
+Let $E = \bigsqcup_{i=1}^{\infty }E_i$, where $E_i\in \mathcal{M}$, then we have
+\begin{equation*}
+	\chi_E f = \sum_{i=1}^{\infty } \chi_{E_i} f, \quad \varphi(E) = \int_X \chi_E f \mathrm{d} \mu, \quad \varphi(E_i) = \int_X \chi_{E_i} f \mathrm{d} \mu.
+\end{equation*}
+Using theorem \ref{thm:Infinite Series and Integral} we have
+\begin{equation*}
+	\varphi(E) = \sum_{i=1}^{\infty } \varphi(E_i)
+\end{equation*}
+Since $\varphi(\emptyset )=0$, then $\varphi$ is a measure.
+
+We've shown that if $g=\chi_E$ then
+\begin{equation*}
+	\int_X \chi_E \mathrm{d} \varphi = \varphi(E) = \int_E f \mathrm{d} \mu = \int_X \chi_E f \mathrm{d} \mu.
+\end{equation*}
+This implies that the result holds for all $g=s$, where $s$ is a simple measurable function. Let $g = \lim_{n \to \infty } s_i$, where $s_i$ is a sequence of simple measurable functions. Applying the monotone convergence theorem, we have
+\begin{equation*}
+	\int_X g \mathrm{d} \varphi = \int_X \lim_{n \to \infty } s_i \mathrm{d} \varphi = \lim_{n \to \infty } \int_X s_i f \mathrm{d} \mu = \int_X g f \mathrm{d} \mu.
+\end{equation*}
+The last equality follows from $gf = \lim_{n \to \infty } s_if$.
+\end{proof}
+
+\begin{remark}
+Sometimes, the result is denoted as
+\begin{equation}
+	\mathrm{d} \varphi = f \mathrm{d} \mu
+\end{equation}
+We do not formalize this donation.
+
+This theorem shows that an integration is just creating a measure, with the intuition of weighing the length.
+\end{remark}
+
+\section{Integration of Complex Functions}
+$\mu$ is a positive measure on a measurable space $(X, \mathcal{M})$.
+
+\begin{notation}{$L^1(\mu)$}{L1mu}
+We define $L^1(\mu)$ to be the collection of all complex measurable functions $f: X \rightarrow \mathbb{C}$ which
+\begin{equation}
+\int_X \left|f\right| \mathrm{d} \mu < \infty.
+\end{equation}
+Note that when $f$ is measurable, $\left|f\right|$ is automatically measurable, and the integral is well-defined.
+\end{notation}
+
+The members of $L^1(\mu)$ are called \textbf{Lebesgue integrable functions} or \textbf{Summable functions}.
+
+\begin{definition}{Complex Integral}{Complex Integral}
+	If $f=u+iv$, where $u,v: X \rightarrow [-\infty ,\infty ]$ are measurable functions, and $f\in L^1(\mu)$, then we define the integral of $f$ over $E\in \mathcal{M}$ as
+	\begin{equation}
+		\int_E f \mathrm{d} \mu = \int_E u^+ \mathrm{d} \mu - \int_E u^- \mathrm{d} \mu + i\left( \int_E v^+ \mathrm{d} \mu - \int_E v^- \mathrm{d} \mu \right).
+	\end{equation}
+	where $u^+$ and $u^-$ are the positive and negative part of $u$ (defined in corollary \ref{cor:Measurability of Sequences Limit}).
+
+	Note that $u^+\leq \left|u\right|< \left|f\right|$, etc. So the four integrals are all $< \infty $, and the operation is well-defined.
+\end{definition}
+
+Usually, we can define the integral of a measurable function $f: X \rightarrow \mathbb{R}_{\pm \infty }$ to be
+\begin{equation}
+	\int_E f \mathrm{d} \mu = \int_E f^+ \mathrm{d} \mu - \int_E f^- \mathrm{d} \mu,
+\end{equation}
+If at least one of the integrals is finite, then the integral is well-defined.
+
+\begin{theorem}{The Additivity of Complex Integral}{The Additivity of Complex Integral}
+	Suppose $f,g\in L^1(\mu)$ and $\alpha,\beta\in \mathbb{C}$, then $\alpha f + \beta g \in L^1(\mu)$, and
+	\begin{equation}
+	\int_X (\alpha f + \beta g) \mathrm{d} \mu = \alpha \int_X f \mathrm{d} \mu + \beta \int_X g \mathrm{d} \mu.
+	\end{equation}
+\end{theorem}
+\begin{proof}
+	The measurability follows from theorem \ref{thm:Composition of Products}. Also,
+	\begin{equation*}
+		\int_X \left|\alpha f+\beta g\right| \mathrm{d} \mu \leq \left|\alpha\right| \int_X \left|f\right| \mathrm{d} \mu + \left|\beta\right| \int_X \left|g\right| \mathrm{d} \mu < \infty.
+	\end{equation*}
+	Thus $\alpha f + \beta g \in L^1(\mu)$.
+	
+	The additivity follows from the definition.
+\end{proof}
+
+\begin{theorem}{The Fundamental Inequality}{The Fundamental Inequality}
+	If $f\in L^1(\mu)$, we have
+	\begin{equation}
+	\left| \int_X f \mathrm{d} \mu \right| \leq \int_X \left|f\right| \mathrm{d} \mu.
+	\end{equation}
+\end{theorem}
+\begin{proof}
+Let $z=\int_X f \mathrm{d} \mu$, then let $\left|z\right| = \alpha z$, where $\left|\alpha\right| = 1$, and $u$ be the real part of $\alpha f$, we have
+\begin{equation*}
+	\left|\int_X f \mathrm{d} \mu\right| = \alpha \int_X f \mathrm{d} \mu = \int_X \alpha f \mathrm{d} \mu = \int_X u \mathrm{d} \mu \leq \int_X \left|u\right| \mathrm{d} \mu = \int_X \left|\alpha f\right| \mathrm{d} \mu = \int_X \left|f\right| \mathrm{d} \mu.
+\end{equation*}
+\end{proof}
+
+
+We introduce another important convergence theorem.
+
+\begin{theorem}{Lebesgue's Dominated Convergence Theorem}{Lebesgues Dominated Convergence Theorem}
+	Suppose $f_n: X \rightarrow \mathbb{C}$ is a sequence of complex measurable functions such that
+	\begin{equation*}
+		f(x) = \lim_{n\rightarrow \infty } f_n(x), \qquad x\in X.
+	\end{equation*}
+	exists. If there is a function $g\in L^1(\mu)$ such that $\left|f_n(x)\right| \leq g(x)$ for all $n\in \mathbb{Z}_+$ and $x\in X$, then $f\in L^1(\mu)$, and
+	\begin{equation*}
+		\lim_{n \to \infty } \int_X \left|f_n-f\right| \mathrm{d} \mu = 0.
+	\end{equation*}
+	\begin{equation*}
+		 \lim_{n \to \infty } \int_X f_n \mathrm{d} \mu = \int_X f \mathrm{d} \mu
+	\end{equation*}
+\end{theorem}
+\begin{proof}
+	As $\left|f\right|\leq g$, then $f\in L^1(\mu)$. Since $\left|f_n-f\right|\leq 2g$, using Fatou's lemma \ref{lem:Fatou's Lemma} for $2g-\left|f_n-f\right|$, we have
+	\begin{equation*}
+		\int_X 2g \mathrm{d} \mu \leq \liminf_{n\rightarrow \infty } \int_X \left(2g - \left|f_n-f\right|\right) \mathrm{d} \mu = \int_X 2g \mathrm{d} \mu - \limsup_{n\rightarrow \infty } \int_X \left|f_n-f\right| \mathrm{d} \mu.
+	\end{equation*}
+	Thus we have
+	\begin{equation*}
+		\limsup_{n\rightarrow \infty } \int_X \left|f_n-f\right| \mathrm{d} \mu \leq 0.
+	\end{equation*}
+	This implies our result by the non-negativity of the integral and theorem \ref{thm:The Fundamental Inequality}.
+\end{proof}
+
+
+\section{Sets of Measure Zero}
+Let $P(x)$ be a property concerning $x\in X$, and $\mu$ is a measure on $\mathcal{M}$, let $E\in \mathcal{M}$, then we say that ``$P$ holds almost everywhere on $E$ '' iff
+\begin{equation*}
+\exists N\in \mathcal{M}, \mu(N)=0, \forall x\in E-N, P(x).
+\end{equation*}
+
+If $f,g$ are measurable functions, and if
+\begin{equation*}
+\mu(\left\{ x: f(x)\neq g(x) \right\}) = 0
+\end{equation*}
+Then we say $f=g$ \textbf{almost everywhere} (a.e.) $[\mu]$ on $X$. We also denote this as $f \sim g$ (a.e. $[\mu]$). It is easily seen that this is an equivalence relation on the set of measurable functions.
+
+If $f\sim g$ on $X$, then $\forall E\in \mathcal{M}$, we have
+\begin{equation*}
+	\int_E f \mathrm{d} \mu = \int_E g \mathrm{d} \mu.
+\end{equation*}
+\begin{proof}
+	Let $N = \left\{ x: f(x)\neq g(x) \right\}$, then $\mu(N)=0$, and $E-N$ is measurable. Then we have
+	\begin{equation*}
+		\int_E f \mathrm{d} \mu = \int_{E-N} f \mathrm{d} \mu = \int_{E-N} g \mathrm{d} \mu = \int_E g \mathrm{d} \mu.
+	\end{equation*}
+\end{proof}
+We can say that sets of measure zero are negligible in the sense of integration.
+
+We would want that every subsets of a negligible set is negligible, so we want that if $\mu(N)=0$, then every subset $A\subseteq N$ is also measurable and $\mu(A)=0$. We are pleased to say that for every $\mu$, we can extend $\mathcal{M}$ and $\mu$ to satisfy this property. We call the extended measure \textbf{complete}.
+
+\begin{theorem}{Complete Measure}{Complete Measure}
+	Let $(X, \mathcal{M}, \mu)$ be a measure space, and $\mathcal{M}^*$ be the set
+	\begin{equation*}
+	\mathcal{M}^* = \left\{ E \subseteq X: \exists A,B\in \mathcal{M}, A \subseteq E \subseteq B, \mu(B-A)=0 \right\}
+	\end{equation*}
+	Then $\mathcal{M}^*$ is a $\sigma$-algebra, and $\mu$ can be extended to a measure $\mu^*$ on $\mathcal{M}^*$ such that
+	\begin{equation*}
+	\mu^*(E) = \mu(A) = \mu(B).
+	\end{equation*}
+	The extended measure $\mu^*$ is called the \textbf{complete measure} of $\mu$, or \textbf{$\mu$-complete}.
+\end{theorem}
+\begin{proof}
+	First we verify that $\mu^*$ is well defined. For every $E\in \mathcal{M}^*$, if $A_1 \subseteq E \subseteq B_1, A_2 \subseteq E \subseteq B_2$ and $\mu(B_1-A_1)=\mu(B_2-A_2)=0$, then  we have
+	\begin{equation*}
+	A_1-A_2 \subseteq E-A_2 \subseteq B_2-A_2
+	\end{equation*}
+	so we have $\mu(A_1-A_2)=0$, then $\mu(A_1)=\mu(A_2)$.
+
+	Proving $\mathcal{M}^*$ is a $\sigma$-algebra requires some labor work.
+\end{proof}
+
+\begin{remark}
+	As functions are almost everywhere equal is indistinguishable in integration, we can expand a function defined on a set $E$ to include a set of measure zero, and the integral would not change. This is useful in many cases, such as when we want to extend a function defined on a set to the whole space.
+\end{remark}
+
+Now, we can call a function $f$ defined on $E \subseteq X$ measurable if $\mu(E^c)=0$ and $\forall V$ open, $f^{-1}(V)\cap E$ is measurable. This is a generalization to the definition of measurable functions on a measurable space $(X, \mathcal{M})$. If we define $f(x)=0,x\in E^c$, then we get a measurable function in the old sense.
+
+\begin{theorem}{Integral of Almost Measurable Series}{Integral of Almost Measurable Series}
+	Suppose $\left\{ f_n \right\}$ is a sequence of complex measurable functions defined almost everywhere on $X$, and
+	\begin{equation*}
+		\sum_{n=1}^{\infty} \int_X \left|f_n\right| \mathrm{d} \mu < \infty.
+	\end{equation*}
+	Then the series
+	\begin{equation*}
+		f(x) = \sum_{n=1}^{\infty} f_n(x)
+	\end{equation*}
+	converges almost everywhere on $X$, and $f\in L^1(\mu)$, and
+	\begin{equation*}
+		\int_X f \mathrm{d} \mu = \sum_{n=1}^{\infty} \int_X f_n \mathrm{d} \mu.
+	\end{equation*}
+\end{theorem}
+\begin{proof}
+	Let $S_n$ be the domain of $f_n$, then $\mu(S^n^c)=0$. Let $\varphi(x) = \sum_{n=1}^{\infty } \left|f_n(x)\right|$, defined on $S = \bigcap_{n=1}^{\infty } S_n$, then $\mu(S^c)=0$. Using theorem \ref{thm:Infinite Series and Integral}, we have
+	\begin{equation*}
+		\int_S \varphi \mathrm{d} \mu = \sum_{n=1}^{\infty } \int_X \left|f_n\right| \mathrm{d} \mu < \infty.
+	\end{equation*}
+	Let $E = \left\{ x\in S: \varphi(x) < \infty  \right\}$, then $\mu(E^c) = 0$, otherwise contradicting that the total integral is finite. Then the series converges absolutely everywhere on $E$. Then $\left|f(x)\right|\leq \varphi(x)$ on $E$, so $f\in L^1(\mu)$ on $E$. Now Lebsgue's dominated convergence theorem \ref{thm:Lebesgues Dominated Convergence Theorem} applies, and we have
+	\begin{equation*}
+		\int_E f \mathrm{d} \mu = \lim_{n\rightarrow \infty } \int_E S_n \mathrm{d} \mu = \lim_{n\rightarrow \infty } \sum_{i=1}^{n} \int_E f_i \mathrm{d} \mu = \sum_{i=1}^{\infty } \int_E f_i \mathrm{d} \mu.
+	\end{equation*}
+	Change $E$ to $X$ would not change the integral, as $\mu(E^c)=0$. 
+\end{proof}
+
+\begin{remark}
+	Even if $f_n$ is defined everywhere on $X$, then condition $\displaystyle \sum_{n=1}^{\infty} \int_X \left|f_n\right| \mathrm{d} \mu < \infty$ would still imply that the series converges almost everywhere on $X$.
+\end{remark}
+
+\begin{proposition}{Almost Everywhere Results}{Almost Everywhere Results}
+\begin{itemize}
+	\item Suppose $f:X \rightarrow [0,\infty ]$ is measurable, $E\in \mathcal{M}$ and $\displaystyle \int_E f \mathrm{d} \mu=0$, then $f(x)=0$ almost everywhere on $E$.
+	\item Suppose $f\in L^1(\mu)$ and $\displaystyle \int_E f \mathrm{d} \mu = 0$ for every $E\in \mathcal{M}$, then $f(x)=0$ almost everywhere on $X$.
+	\item Suppose $f\in L^1(\mu)$ and
+		\begin{equation*}
+			\left|\int_X f \mathrm{d} \mu\right| = \int_X \left|f\right| \mathrm{d} \mu = 0,
+		\end{equation*}
+		Then there is a constant $\alpha$ such that $\alpha f = \left|f\right|$ almost everywhere on $X$.
+\end{itemize}
+\end{proposition}
+\begin{proof}
+\begin{itemize}
+\item Let $A_n = \left\{ x\in E: f(x) >  1 / n\right\}$, for $n\in \mathbb{Z}_+$, then
+	\begin{equation*}
+		\frac{1}{n}\mu(A_n) \leq \int_{A_n} f \mathrm{d} \mu \leq \int_E f \mathrm{d} \mu = 0.
+	\end{equation*}
+	So $\mu(A_n)=0$ for all $n\in \mathbb{Z}_+$. Then $\left\{ x\in E: f(x)>0 \right\} = \bigcup_{n=1}^{\infty } A_n$, which is a countable union of sets of measure zero, so it is also a set of measure zero. Thus $f(x)=0$ almost everywhere on $E$.
+\item Let $f=u+iv$, and let $E = \left\{ x: u(x)>0 \right\}$, then
+	\begin{equation*}
+		\int_E u^+ \mathrm{d} \mu = \re \int_E f \mathrm{d} \mu = 0.
+	\end{equation*}
+\item In the proof of theorem \ref{thm:The Fundamental Inequality}, the equality holds iff
+	\begin{equation*}
+		\int_X (\left|u\right|-u) \mathrm{d} \mu = 0.
+	\end{equation*}
+	where $u$ is the real part of $\alpha f$. This means that $u\geq 0$ almost everywhere, or equivalently, $\alpha f \geq 0$ almost everywhere.
+\end{itemize}
+\end{proof}
+
+\begin{theorem}{The Average Value Theorem}{The Average Value Theorem}
+Suppose $\mu(X) < \infty $, and $f\in L^1(\mu)$, $S$ is a closed set in $\mathbb{C}$, and the average
+\begin{equation*}
+	A_E(f) = \frac{1}{\mu(E)} \int_E f \mathrm{d} \mu, \qquad E\in \mathcal{M}
+\end{equation*}
+We have $\forall E\in \mathcal{M}, \mu(E)>0 \rightarrow A_E(f)\in S$, then $f(x)\in S$ for almost every $x\in X$.
+\end{theorem}
+\begin{proof}
+Let $\Delta$ be a closed disc $D(\alpha,r) \subseteq \mathbb{C}$ with $\alpha \in S$ and $r>0$ such that $D(\alpha,r) \subseteq S^c$. Let $E = f^{-1}(\Delta)$, and we shall prove $\mu(E) = 0$.
+
+If $\mu(E) > 0$, then we have
+\begin{equation*}
+	\left|A_E(f) - \alpha\right| = \frac{1}{\mu(E)} \left|\int_E (f-\alpha) \mathrm{d} \mu\right| \leq \frac{1}{\mu(E)} \int_E \left|f-\alpha\right| \mathrm{d} \mu \leq  r.
+\end{equation*}
+This holds for all $r>0$, so we have $\left|A_E(f) - \alpha\right| = 0$, which implies $A_E(f) = \alpha \in S^c$. This contradicts the assumption that $A_E(f)\in S$.
+
+So we have $\mu(E)=0$, as $S^c$ is a countable union of closed discs, we have $\mu(f^{-1}(S^c)) = 0$.
+\end{proof}
+
+\begin{theorem}{Finite Container}{Finite Container}
+	Let $\left\{ E_k \right\}$ be a sequence of measurable sets such that
+	\begin{equation*}
+	\sum_{k=1}^{\infty } \mu(E_k) < \infty.
+	\end{equation*}
+	Then $\forall x\in X$, there are only finite many $k$ such that $x\in E_k$.
+\end{theorem}
+\begin{proof}
+	If $A \subseteq X$ is the set of all $x\in X$ such that $x\in E_k$ for infinitely many $k$, then we have to prove $\mu(A)=0$.
+
+	Let
+	\begin{equation*}
+		g(x) = \sum_{j=1}^{\infty } \chi_{E_j}(x).
+	\end{equation*}
+	Then $x\in A \Leftrightarrow g(x) = \infty $. We have
+	\begin{equation*}
+		\int_X g \mathrm{d} \mu = \sum_{k=1}^{\infty } \int_X \chi_{E_k} \mathrm{d} \mu = \sum_{k=1}^{\infty } \mu(E_k) < \infty.
+	\end{equation*}
+	Thus $g\in L^1(\mu)$.
+\end{proof}
+
+\end{document}

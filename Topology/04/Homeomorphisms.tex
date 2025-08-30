@@ -1,0 +1,169 @@
+\documentclass[../main.tex]{subfiles}
+
+
+\begin{document}
+\chapter{Homeomorphisms}
+
+In each branch of mathematics it is essential to recognize when two structures are equivalent. The equivalence of topological spaces are called homeomorphisms.
+
+\section{Subspaces}
+\begin{definition}{Subspaces}{Subspaces}
+Let $Y$ be a non-empty subset of a topological space $(X,\mathcal{T})$. The collection $\mathcal{T}_Y = \left\{ O\cap Y: O\in \mathcal{T} \right\}$ is a topology on $Y$ called the subspace topology. The topological space $(Y,\mathcal{T}_Y)$ is said to be a subspace of $(X,\mathcal{T})$.
+\end{definition}
+
+Well it is not hard to show that if $\mathcal{B}$ is a basis of $(X,\mathcal{T})$, then the set $\mathcal{B}_Y = \left\{ B\cap Y: B\in \mathcal{B} \right\}$ is a basis of $(Y,\mathcal{T}_Y)$.
+
+Also we have
+\begin{proposition}{Chain of Subspaces}{Chain of Subspaces}
+Let $A \subseteq B \subseteq X$ where $(X,\mathcal{T})$ is a topological space. Let $\mathcal{T}_B$ be the topology induced on $B$ by $\mathcal{T}$ and $\mathcal{T}_1,\mathcal{T}_2$ be topology induced on $A$ by $\mathcal{T}_B$ and $\mathcal{T}$, then $\mathcal{T}_1=\mathcal{T}_2$.
+
+That is, a subspace of a subspace is a subspace.
+\end{proposition}
+
+\subsection{Hausdorff Spaces or $T_2$-spaces}
+\begin{definition}{Hausdorff Spaces or $T_2$-spaces}{Hausdorff Spaces or T2-spaces}
+A topological space $(X,\mathcal{T})$ is a Hausdorff space ($T_2$-space) if
+\begin{equation*}
+\forall a,b\in X, a\neq b,\exists U,V\in \mathcal{T} (a\in U \land b\in V \land U\cap V = \emptyset )
+\end{equation*}
+\end{definition}
+
+This is a simultaneous 2-side separation compare to $T_1$-spaces, which only needs respective 2-side separation, and $T_0$-spaces only needs 1-side separation.
+
+Unsurprisingly we have: every $T_2$-space is a $T_1$-space.
+
+\subsection{Regular Spaces and $T_3$-spaces}
+\begin{definition}{Regular Spaces or $T_3$-Spaces}{Regular Spaces or T3-Spaces}
+A topological space $(X,\mathcal{T})$ is a regular space if
+\begin{equation*}
+\forall A \subseteq X, A\notin \mathcal{T}, \forall x\in X-A, \exists U,V\in \mathcal{T} (x\in U \land A \subseteq V \land U\cap V = \emptyset )
+\end{equation*}
+This is a two side separation between a point and a non-open set.
+
+If $(X,\mathcal{T})$ is regular and is a $T_1$-space, then is is said to be a $T_3$-space.
+\end{definition}
+\begin{figure}[H]
+    \centering
+    \incfig{regular-space}
+    \caption{Regular Space}
+    \label{fig:regular-space}
+\end{figure}
+
+\subsection{Homeomorphisms}
+We now turn to the notion of equivalent topological spaces.
+
+\begin{definition}{Homeomorphisms}{Homeomorphisms}
+Let $(X,\mathcal{T}_1)$ and $(Y,\mathcal{T}_2)$ be topological spaces. Then they are homeomorphic if there exists a bijection $f:X \rightarrow Y$ which has the following properties: 
+\begin{enumerate}
+	\item $\forall U\in \mathcal{T}_2, f^{-1}(U) \in \mathcal{T}_1$.
+	\item $\forall V\in \mathcal{T}_1, f(V) \in \mathcal{T}_2$.
+\end{enumerate}
+$f$ is said to be a homeomorphism between $(X,\mathcal{T}_1)$ and $(Y,\mathcal{T}_2)$. And we write $(X,\mathcal{T}_1) \cong (Y,\mathcal{T}_2)$.
+\end{definition}
+Well the two conditions of the bijection $f$ can be seen as a bijection $g: \mathcal{T}_1 \rightarrow  \mathcal{T}_2$ with $V \mapsto f(V)$. Catching our intuition of what it means to be identical.
+
+\begin{proposition}{Homeomorphisms is an equivalence relation}{Homeomorphisms is an equivalence relation}
+Homeomorphisms is an equivalence relation.
+\end{proposition}
+
+\begin{example}{Open Intervals in $\mathbb{R}$ is homeomorphic}{Open Intervals in mathbbR is homeomorphic}
+
+\begin{itemize}
+\item Every two non-open intervals $(a,b), (c,d) \in \mathbb{R}$ are homeomorphic.
+\item $\mathbb{R}$ is homeomorphic to $(-1,1)$ in Euclidean topology.
+\end{itemize}
+
+\end{example}
+\begin{proof}
+Give
+\begin{equation*}
+f:(0,1) \rightarrow  (a,b), f(x) = a(1-x)+bx
+\end{equation*}
+would enough. We also give
+\begin{equation*}
+g:(-1,1) \rightarrow \mathbb{R}, g(x) = \frac{x}{1-\left|x\right|}
+\end{equation*}
+\end{proof}
+
+As you can see, the homeomorphism to the ``infinite large plane'' is quite useful. We can use this to prove that a disk and a rectangle is homeomorphic, for they both $\cong \mathbb{R}^2$.
+
+\subsection{Group of Homeomorphisms}
+\begin{definition}{Group pf Homeomorphisms}{Group pf Homeomorphisms}
+Let $(X,\mathcal{T})$ be a topological space, and $G$ be the set of all homeomorphic of $X$ to itself. Then $G$ is a group under composition of functions.
+\end{definition}
+
+\section{Non-Homeomorphisms Spaces}
+It is usually harder to identify two spaces that are not homeomorphic to each other. We do this by observing some characteristic properties that two homeomorphic space have in common.
+
+\begin{proposition}{}{Connectedness and Homeomorphisms}
+Any topological space homeomorphic to a connected space is connected.
+\end{proposition}
+ The following are some properties preserved by homeomorphisms.
+ \begin{itemize}
+ \item Connectedness
+ \item $T_0$-space, $T_1$-space, $T_2$-space, $T_3$-space.
+ \item Regular space.
+ \item Satisfying the second axiom of countability.
+ \item Separable space.
+ \item Discrete Space, indiscrete space.
+ \item finite-closed topology, countable-closed topology.
+ \end{itemize}
+
+ We move on to identity the relationship of $\mathbb{R}$ and $\mathbb{R}^2$. The following states the connected subspaces of $\mathbb{R}$.
+ \begin{definition}{Interval}{Interval}
+ A subset $S \subseteq \mathbb{R}$ is said to be an interval if it has the property: 
+ \begin{equation*}
+ \forall x,z\in S, y\in \mathbb{R} (x<y<z \rightarrow y\in S)
+ \end{equation*}
+ \end{definition}
+
+ \begin{remark}
+ Note that every interval has the following form:
+ \begin{equation*}
+	 \left\{ a \right\}, [a,b],(a,b],(a,b),[a,b), \text{ and change some to infinity }.
+ \end{equation*}
+ \end{remark}
+
+ \begin{proposition}{Connected Subspaces of $\mathbb{R}$}{Connected Subspaces of mathbbR}
+ A subspace $S \subseteq \mathbb{R}$ is connected iff it is an interval.
+ \end{proposition}
+ \begin{proof}
+ First all intervals are connected.
+
+ Conversely, let $S$ be connected. Suppose $x,z\in S, y\in \mathbb{R},x<y<z, y\notin S$, then $(-\infty ,y)\cap S = (-\infty ,y]\cap S$ is a clopen subset, which is not trivial.
+\end{proof}
+
+This illustrate what we mean by connectedness.
+
+Now we show that $(0,1)$ is not homeomorphic to $[0,1]$. We give a result beneath.
+
+Let $f:(X,\mathcal{T})\rightarrow (Y,\mathcal{T}_1)$ be a homeomorphism. Let $a\in X$, then $X-\left\{ a \right\}$ is a subspace of $X$ and has induced topology $\mathcal{T}_2$. Also $Y-\left\{ f(a) \right\}$ has induced $\mathcal{T}_2$. Then $(X-\left\{ a \right\}, \mathcal{T}_2)$ is homeomorphic to $(Y-\left\{ f(a) \right\}, \mathcal{T}_3)$.
+
+\begin{corollary}{}{ab and cd}
+If $a,b,c,d\in \mathbb{R}$ with $a<b,c<d$, then
+\begin{enumerate}
+	\item $(a,b) \ncong [c,d)$.
+	\item $(a,b) \ncong [c,d]$.
+	\item $[a,b) \ncong [c,d]$
+\end{enumerate}
+\end{corollary}
+\begin{proof}
+Let $(X,\mathcal{T}) = [c,d)$ and $(T,\mathcal{T}_1) = (a,b)$. If the two is homeomorphic, we have $X-\left\{ c \right\}\cong Y-\left\{ y \right\}$ for some $y\in Y$. But $X-\left\{ c \right\}=(c,d)$ is connected, and $Y-\left\{ y \right\}$ is not.
+\end{proof}
+
+\subsection{Local Homeomorphisms}
+\begin{definition}{Local Homeomorphisms}{Local Homeomorphisms}
+Let $(X,\mathcal{T})$ and $(Y,\mathcal{T}_1)$ be topological spaces. A map $f:X \rightarrow Y$ is said to be a local homeomorphism if each point $x\in X$ has an open neighborhood $U$ such that the restriction $f|_U: U \rightarrow f(U)$ is a homeomorphism.
+\end{definition}
+\begin{remark}
+A local homeomorphism is a map that, in small neighborhoods, behaves like a homeomorphism (locally preserving structure), even if it might not be globally bijective or continuous in the inverse sense. This is useful for capturing the idea that local behavior can be simpler and well-understood (like Euclidean space), even if the global structure of a space is more complicated.
+\end{remark}
+
+\subsection{Semi-Open sets}
+\begin{definition}{Semi-Open Sets}{Semi-Open Sets}
+A subset $A$ of $(X,\mathcal{T})$ is a semi-open set if $O\in \mathcal{T}$ such that $O \subseteq A \subseteq \overline{O}$.
+\end{definition}
+
+There are 3 important ways of creating now topological spaces: forming subspaces, products and quotient spaces.
+
+\end{document}

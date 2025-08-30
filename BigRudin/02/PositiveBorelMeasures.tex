@@ -1,0 +1,243 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\chapter{Positive Borel Measures}
+
+We've seen that $L^1(\mu)$ is a vector space for every $\mu$ from theorem \ref{thm:The Additivity of Complex Integral}. For a given measure $\mu$, the mappings ($g$ is a bounded measurable function)
+\begin{equation*}
+	f \mapsto \int_X f \mathrm{d} \mu, \qquad f \mapsto \int_X fg \mathrm{d} \mu
+\end{equation*}
+are linear functionals on $L^1(\mu)$.
+
+We can also consider the mapping $\Lambda$, for every continuous function $f: [0,1] \rightarrow \mathbb{C}$, define
+\begin{equation*}
+	\Lambda f = \int_0^1 f(x) \mathrm{d} x.
+\end{equation*}
+where the integral is just the ordinary Riemann integral. Then $\Lambda$ is a linear functional on the space of continuous functions on $[0,1]$. This leads us to the construction of measures on $[0,1]$ and the Riesz representation theorem.
+
+\section{Preliminary Definitions}
+\begin{definition}{Semicontinuous}{Semicontinuous}
+Let $f$ be a real (or extended real) function on a topological space $X$. Then
+\begin{itemize}
+	\item $f$ is \textbf{lower semicontinuous} if $\left\{ x:f(x) > \alpha \right\}$ is open for every $\alpha \in \mathbb{R}$.
+	\item $f$ is \textbf{upper semicontinuous} if $\left\{ x:f(x) < \alpha \right\}$ is open for every $\alpha \in \mathbb{R}$.
+\end{itemize}
+\end{definition}
+Obviously, a real function is continuous if and only if it is both upper and lower semicontinuous.
+
+\begin{itemize}
+\item Characteristic functions of open sets are lower semicontinuous.
+\item Characteristic functions of closed sets are upper semicontinuous.
+\item The supremum of a family of lower semicontinuous functions is lower semicontinuous. The infimum of a family of upper semicontinuous functions is upper semicontinuous.
+\end{itemize}
+
+\begin{definition}{Support}{Support}
+Let $X$ be a topological space. The support of a function $f: X \rightarrow \mathbb{C}$ is defined as
+\begin{equation*}
+	\supp f = \overline{\left\{ x \in X: f(x) \neq 0 \right\}}.
+\end{equation*}
+The collection of all continuous complex functions on $X$ with compact support is denoted by $C_c(X)$.
+\end{definition}
+
+It is easy to see that $C_c(X)$ is a vector space. The support of $f+g$ lies in the union of the supports of $f$ and $g$, and it is compact for it is a closed subset of a compact set. Also, any linear combination of continuous functions is again a continuous function.
+
+\begin{proposition}{Range of $C_c(X)$}{Range of CcX}
+The range of any $f\in C_c(X)$ is a compact subset of $\mathbb{C}$.
+\end{proposition}
+\begin{proof}
+	The continuous image of a compact set is compact. Let $K$ be the support of $f$, then $f(K)$ is compact. Then $f(X) = f(K) \cup \left\{ 0 \right\}$ or $f(K)$ is compact as well.
+\end{proof}
+
+The following is a corollary of Urysohn's lemma, which consists of a locally compact Hausdorff space. Usual Urysohn's lemma states that for any two disjoint closed sets in a normal space, there exists a continuous function that separates them. It is usually proved by a sequence of rationally indexed open sets.
+
+\begin{theorem}{A Corollary of Urysohn's Lemma}{A Corollary of Urysohns Lemma}
+	Suppose $X$ is a locally compact Hausdorff space. $V$ is open in $X$ and $K \subseteq V$ is compact.
+
+	Then there exists a function $f\in C_c(X)$ such that
+	\begin{itemize}
+	\item $\forall x\in X,0\leq f(x)\leq 1$.
+	\item $\forall x\in K, f(x) = 1$.
+	\item The support of $f$ is contained in $V$. (This means $\forall x\in X-V,f(x)=0$.)
+	\end{itemize}
+\end{theorem}
+\begin{proof}
+	We do this by taking the one-point compactification of $X$, denoted $Y = X \cup \left\{ \infty  \right\}$. Then $Y$ is a normal space (compact Hausdorff implies normality). The open sets in $Y$ include:
+	\begin{itemize}
+	\item All open sets in $X$.
+	\item Sets of the form $Y-C$, where $C$ is a compact subset of $X$.
+	\end{itemize}
+	Let $V'$ be an open set that $\overline{K} \subseteq V', \overline{V'}\subseteq V$. (We shall see why later).
+
+	We denote $N = Y - V'$, then $N$ is closed in $Y$. As $Y-K$ is open, then $K$ is closed in $Y$. $K,N$ are disjoint closed sets in $Y$. 
+
+	There is a continuous function $g: Y \rightarrow [0,1]$ such that $g(K) = \left\{ 1 \right\}$ and $g(N) = \left\{ 0 \right\}$. Let $f = g|_X$. Then $f$ is continuous on $X$. As $g(\infty )=0$, then $\supp f = \supp g$ is compact (because it is a closed subset of a compact space). As $\left\{ x:f(x)\neq 0 \right\} \subseteq V'$, then $\supp f \subseteq \overline{V'}\subseteq V$ as desired.
+\end{proof}
+
+\begin{notation}{$\prec$}{prec}
+Let $X$ be a topological space, and $f\in C_c(X)$. We say
+\begin{itemize}
+\item $K\prec f$ if $K$ is a compact subset, $0\leq f\leq 1$ for $x\in X$, and $f(x) = 1$ for $x\in K$.
+\item $f \prec V$ if $V$ is an open set, $0\leq f\leq 1$ for $x\in X$, and $\supp f \subseteq V$.
+\item $K\prec f\prec V$ if $K\prec f$ and $f\prec V$.
+\end{itemize}
+\end{notation}
+
+In this notation, the corollary of Urysohn's lemma can be stated as follows: For any open set $V$ and compact set $K\subseteq V$, there exists a function $f\in C_c(X)$ such that $K\prec f\prec V$.
+
+\begin{theorem}{Partition of Unity}{Partition of Unity}
+	Suppose $V_1, \ldots ,V_n$ are open sets of a locally compact Hausdorff space $X$, and
+	\begin{equation*}
+	K \subseteq V_1 \cup \ldots \cup V_n
+	\end{equation*}
+	is a compact set. Then there exists functions $h_i\prec V_i$ such that
+	\begin{equation*}
+		\sum_{i=1}^n h_i(x) = 1 \quad \forall x\in K.
+	\end{equation*}
+	The functions $h_i$ are called a \textbf{partition of unity} on $K$, subordinate to the open sets $V_i$.
+\end{theorem}
+\begin{proof}
+	$\forall x\in K$, there exists $i$ and a neighborhood $W_x$ with compact closure such that $x\in W_x \subseteq V_i$. As $K$ is compact, there are points $x_1, \ldots ,x_m$ such that $K \subseteq W_{x_1} \cup \ldots \cup W_{x_m}$. Let
+	\begin{equation*}
+	H_i = \bigcup \left\{ \overline{W_{x_j}}: \overline{W_{x_j}} \subseteq V_i \right\}
+	\end{equation*}
+	Then $H_i$ is a compact closed set, and $H_i \subseteq V_i$. By the corollary of Urysohn's lemma, there exists functions $g_i\in C_c(X)$ that $H_i \prec g_i\prec V_i$. Define
+	\begin{equation*}
+		h_i(x) = (1-g_1)(1-g_2) \ldots (1-g_{i-1}) g_i.\qquad (h_1 = g_1)
+	\end{equation*}
+	We have $\supp h_i \subseteq \supp g_i \subseteq V_i$. We have
+	\begin{equation*}
+		\sum_{i=1}^{n} h_i(x) = 1 - (1-g_1)(1-g_2) \cdots (1-g_n).
+	\end{equation*}
+	As $\forall x\in K \subseteq H_1\cup \cdots \cup H_n$, at least one $g_i$ is $1$, so the sum is $1$ for all $x\in K$. 
+\end{proof}
+
+\begin{remark}
+The construction in the proof is a good way of letting $h_i=0$ for all $x\in H_1, \ldots ,H_{i-1}$, and still preserve continuity.
+\end{remark}
+
+\begin{figure}[ht]
+    \centering
+    \incfig{partition-of-unity}
+    \caption{Partition of Unity}
+    \label{fig:partition-of-unity}
+\end{figure}
+
+\section{The Riesz Representation Theorem}
+\begin{theorem}{Riesz Representation Theorem}{Riesz Representation Theorem}
+	Let $X$ be a locally compact Hausdorff space, and $\Lambda$ be a positive linear functional on $C_c(X)$, which means that
+	\begin{equation*}
+		\forall f\in C_c(X), f(X) \subseteq [0,\infty ) \rightarrow \Lambda f\in [0,\infty ).
+	\end{equation*}
+
+	Then there exists a $\sigma$-algebra $\mathcal{M}$ on $X$ containing all Borel sets, and a unique positive measure $\mu$ on $\mathcal{M}$ which satisfies
+	\begin{enumerate}
+		\item The representation property:
+		\begin{equation*}
+			\Lambda f = \int_X f \mathrm{d} \mu \quad \forall f\in C_c(X).
+		\end{equation*}
+	\item Compact measure finiteness: For every compact set $K\subseteq X$, $\mu(K) < \infty$. (Compact sets are closed in a Hausdorff space, so they are Borel sets.)
+	\item Open set lower limit (Outer Regular): For every $E\in \mathcal{M}$, we have
+		\begin{equation*}
+			\mu(E) = \inf \left\{ \mu(V): E \subseteq V, V\in \mathcal{T} \right\}
+		\end{equation*}
+	\item Compact set upper limit (Inner Regular): For every $E\in \mathcal{T}$ or $E\in \mathcal{M}\land \mu(E)<\infty $, we have
+		\begin{equation*}
+			\mu(E) = \sup \left\{ \mu(K): K \subseteq E, K \text{ compact } \right\}.
+		\end{equation*}
+	\item Zero measure closure (completeness): If $E \subseteq \mathcal{M}, A \subseteq E, \mu(E)=0$, then $A\in \mathcal{M}$.
+	\end{enumerate}
+\end{theorem}
+\begin{proof}
+	We denote $K$ to be a compact subset of $X$, and $V$ to be an open subset of $X$. 
+	\begin{itemize}
+		\item First we prove that $\mu$ is unique. The conditions 3,4 implies that if we know all $\mu(K)$ with $K$ compact, then we can determine $\mu(E)$ for all $E\in \mathcal{T}$, so we can determine $\mu$ for all $E\in \mathcal{M}$. So it suffices to prove that $\mu_1(K) = \mu_2(K)$ for all compact $K$.
+
+		If $\mu_1,\mu_2$ both holds, then for any $K$ compact and $\epsilon>0$, we can find an open set $V$ such that $K\subseteq V$ and $\mu_2(V) < \mu_2(K) + \epsilon$ (by 2,3). So by the corollary of Urysohn's lemma, there exists a function $f\in C_c(X)$ such that $K\prec f\prec V$. Then
+		\begin{equation*}
+			\mu_1(K) = \int_X \chi_K \mathrm{d} \mu_1 \leq \int_X f \mathrm{d} \mu_1 = \Lambda f = \int_X f \mathrm{d} \mu_2 \leq \int_X \chi_V \mathrm{d} \mu_2 = \mu_2(V) < \mu_2(K) + \epsilon.
+		\end{equation*}
+		So we have $\mu_1(K)\leq \mu_2(K)$, and by symmetry $\mu_1(K) = \mu_2(K)$.
+
+	\item \textbf{Construction of $\mu$ and $\mathcal{M}$}
+
+		For every open set $V \subseteq X$, define
+		\begin{equation*}
+		\mu(V) = \sup \left\{ \Lambda f: f\prec V \right\}
+		\end{equation*}
+		Using 3, we can determine $\mu(E)$ for every $E \subseteq X$. (We can see that if $E$ is open, for every $E \subseteq V$, we have $\mu(E) \leq \mu(V)$, so it is consistent).
+
+		We've defined $\mu$ for every subset of $X$. But it is not a measure. We need to specify a $\sigma$-algebra on which $\mu$ is a measure. Let $\mathcal{M}_F$ be the collection of $E \subseteq X$ satisfying following conditions
+		\begin{equation*}
+		\mu(E) < \infty \land \mu(E) = \sup \left\{ \mu(K): K \subseteq E, K \text{ compact } \right\}
+		\end{equation*}
+
+		And let $\mathcal{M}$ be
+		\begin{equation*}
+		\mathcal{M} = \left\{ E \subseteq X: \forall K \text{ compact }, E\cap K\in \mathcal{M}_F \right\}
+		\end{equation*}
+
+	\item \textbf{Proof that $\mathcal{M}$ and $\mu$ satisfies the condition}
+
+		3 holds by the definition. It is obvious that $\mu$ is monotone, if $A \subseteq B$ then $\mu(A) \leq \mu(B)$. We have $\mu(E)=0,A \subseteq E$ implies $E\in \mathcal{M}_F$,  and $E\in \mathcal{M}$, so $A\in \mathcal{M}$, so 5 holds. (Every zero measure set must be a supremum of the measure of its subsets.)
+
+		We also discover that $\Lambda$ is monotone: If $f\leq g$, then $\Lambda g = \Lambda f + \Lambda (g-f) \geq \Lambda f$.
+
+		\begin{itemize}
+		\item If $E_1, E_2, \ldots $ are arbitrary subsets of $X$, then
+			\begin{equation*}
+				\mu\left( \bigcup_{i=1}^\infty E_i \right) \leq \sum_{i=1}^{\infty } \mu(E_i).
+			\end{equation*}
+			\begin{proof}
+				We first show that
+				\begin{equation*}
+				\mu(V_1\cup V_2) \leq \mu(V_1) + \mu(V_2).
+				\end{equation*}
+				for open $V_1,V_2$. Choose $g\prec V_1\cup V_2$, then we can find $h_1\prec V_1$ and $h_2\prec V_2$ such that $h_1+h_2=1, \forall x\in \supp g$. Then $h_ig\prec V_i$, and $g=h_1g+h_2g$, so
+				\begin{equation*}
+				\Lambda g = \Lambda (h_1g)+\Lambda(h_2g) \leq \mu(V_1) + \mu(V_2).
+				\end{equation*}
+			\end{proof}
+		\end{itemize}
+	\end{itemize}
+\end{proof}
+
+\section{Regularity of Borel Measures}
+
+\begin{definition}{Borel Measures and Regularity}{Borel Measures and Regularity}
+	A measure $\mu$ defined on the $\sigma$-algebra of all Borel sets in a compact Hausdorff space $X$ is called a \textbf{Borel measure}.
+
+	If $\mu$ is positive, a Borel set $E \subseteq X$ is called
+	\begin{itemize}
+	\item Outer regularity:
+		\begin{equation*}
+			\mu(E) = \inf \left\{ \mu(V): E \subseteq V, V \text{ open } \right\}.
+		\end{equation*}
+	\item Inner regularity:
+		\begin{equation*}
+			\mu(E) = \sup \left\{ \mu(K): K \subseteq E, K \text{ compact } \right\}.
+		\end{equation*}
+	\end{itemize}
+	If every Borel set $E$ satisfies both outer and inner regularity, then $\mu$ is called a \textbf{regular Borel measure}.
+\end{definition}
+
+The measure constructed by the Riesz representation theorem is not always a regular Borel measure. We have outer regularity holds for every set, but inner regularity holds for all open sets and all $E\in \mathcal{M},\mu(E)<\infty $, others we cannot promise.
+
+However, a slight strengthening of conditions would give us a regular measure.
+
+\begin{definition}{$\sigma$-compact and $\sigma$-finite}{sigma-compact}
+	$X$ is a topological space.
+
+	\begin{itemize}
+	\item A set $E \subseteq X$ is called \textbf{$\sigma$-compact} if it can be expressed as a countable union of compact sets.
+	\item A set $E$ on a measure space $(X, \mathcal{M}, \mu)$ is called \textbf{$\sigma$-finite} if it is a countable union of sets $E_i \in \mathcal{M}$ such that $\mu(E_i) < \infty$ for all $i$.
+	\end{itemize}
+\end{definition}
+
+\begin{theorem}{Regular Borel Measure}{Regular Borel Measure}
+	Suppose $X$ is a locally compact, $\sigma$-compact Hausdorff space. If $\mathcal{M},\mu$ follows from the Riesz representation theorem conditions, then they have the following properties
+	\begin{itemize}
+	\item If $E\in \mathcal{M},\epsilon>0$, then there exists closed $F$ and open $V$ such that  $F \subseteq E \subseteq V, \mu(V-F)<\epsilon$.
+	\end{itemize}
+\end{theorem}
+
+\end{document}

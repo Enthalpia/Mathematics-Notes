@@ -1,0 +1,1269 @@
+\documentclass[../main.tex]{subfiles}
+
+
+\begin{document}
+\chapter{Linear Maps}
+
+\begin{plainblackenv}
+Standing Assumption
+\tcblower\par
+\begin{itemize}
+\item $\mathbb{F}$ denotes $\mathbb{R}$ or $\mathbb{C}$.
+\item $U,V,W$ denotes vector spaces.
+\end{itemize}
+\end{plainblackenv}
+
+\section{Vector Space of Linear Maps}
+This is one of the key definitions of linear algebra.
+\begin{definition}{Linear Maps}{Linear Maps}
+A \emph{linear map} from $V$ to $W$ is a function $T:V \rightarrow W$ with the following properties.
+\begin{itemize}
+	\item \textbf{Activity: } $\forall u,v \in V,T(u+v) = T(u) + T(v)$
+	\item \textbf{Homogeneity: } $\forall \lambda \in \mathbb{F},v \in V, T(\lambda v) = \lambda T(v)$.
+\end{itemize}
+
+We often denote $Tv$ for $T(v)$ for linear maps.
+\end{definition}
+
+\begin{notation}{$\mathscr{L}(V,W)$ and $\mathscr{L}(V)$}{linear maps}
+	\begin{itemize}
+	\item The set of linear maps form $V$ to $W$ is denoted $\mathscr{L}(V,W)$.
+	\item The set of linear maps from $V$ to $V$ is denoted $\mathscr{L}(V)$, that is, $\mathscr{L}(V) = \mathscr{L}(V,V)$.
+	\end{itemize}
+\end{notation}
+
+\begin{example}{Linear Map}{Linear Map}
+\begin{itemize}
+\item \textbf{zero}
+
+	The zero operator $0\in \mathscr{L}(V,W)$ is defined by
+	\begin{equation*}
+	\forall v\in V,0v=0
+	\end{equation*}
+\item \textbf{Identity Operator}
+
+	The identity operator $1\in \mathscr{L}(V)$ is defined as
+	\begin{equation*}
+	\forall v\in V, 1v=v
+	\end{equation*}
+\item \textbf{Differentiation}
+
+	Define $D \in \mathscr{L}(\mathscr{P}(\mathbb{R}))$ by
+	\begin{equation*}
+	Dp=p'
+	\end{equation*}
+\item \textbf{Integration}
+
+	Define $T \in \mathscr{L}(\mathscr{P}(\mathbb{R}),\mathbb{R})$ by
+	\begin{equation*}
+	Tp=\int_0^1 p(x) \mathrm{d}x
+	\end{equation*}
+\end{itemize}
+\end{example}
+
+We now describe linear maps by the basis.
+\begin{lemma}{Linear Map Lemma}{Linear Map Lemma}
+Suppose $v_1, \ldots ,v_n$ is a basis of $V$ and $w_1, \ldots ,w_n \in W$. Then there exists a unique linear map $T:V \rightarrow W$ such that
+\begin{equation*}
+Tv_k=w_k
+\end{equation*}
+for all $k=1, \ldots ,n$.
+\end{lemma}
+\begin{proof}
+\begin{itemize}
+\item \textbf{Existence: } We define $\forall v\in V$, let $v=c_1v_1+\ldots +c_nv_n$ 
+	\begin{equation}
+	Tv = c_1w_1+\ldots +c_nw_n
+	\end{equation}
+	It is easy to check that $T$ is a linear map.
+\item \textbf{Uniqueness: } If $Tv_k=w_k$ then $\forall v=c_1v_1+\ldots +c_nv_n\in V$ 
+	\begin{equation*}
+	Tv=c_1w_1+\ldots +c_nw_n
+	\end{equation*}
+	is uniquely determined.
+\end{itemize}
+\end{proof}
+
+\subsection{Algebraic Operations on $\mathscr{L}(V,W)$}
+
+We begin with addition and scalar multiplication.
+\begin{definition}{Addition and Scalar Multiplication on $\mathscr{L}(V,W)$}{Addition And Scalar Multiplication On L(V,W)}
+Suppose $S,T \in \mathscr{L}(V,W)$ and $\lambda\in \mathbb{F}$. Define
+\begin{itemize}
+\item $S+T: \forall v\in V, (S+T)v = Sv+Tv$
+\item $\lambda T: \forall v\in V, (\lambda T)v = \lambda (Tv)$
+\end{itemize}
+\end{definition}
+Note that it is easy to check that $S+T \in \mathscr{L}(V,W)$ and $\lambda T\in \mathscr{L}(V,W)$.
+
+\begin{theorem}{$\mathscr{L}(V,W)$ is a vector space}{LVW Is A Vector Space}
+	$\mathscr{L}(V,W)$ is a vector space with the definition in \ref{def:Addition And Scalar Multiplication On L(V,W)}.
+\end{theorem}
+
+We now define another operation on $\mathscr{L}(V,W)$ : Multiplication.
+\begin{definition}{Product of linear maps}{Product Of Linear Maps}
+If $T,S\in \mathscr{L}(V,W)$, then the \emph{product} $ST\in \mathscr{L}(V,W)$ is defined as
+\begin{equation}
+	\forall v\in V, (ST)v = S(Tv)
+\end{equation}
+that is, $ST$ is just $S \circ T$ of functions.
+\end{definition}
+
+\begin{theorem}{Algebraic properties of products }{Algebraic Properties Of Products }
+\begin{itemize}
+\item \textbf{Associativity: }$T_1(T_2T_3) = (T_1T_2)T_3$
+\item \textbf{Identity: } $\forall T\in \mathscr{L}(V,W), TI=IT=T$
+\item \textbf{Distribution: }$(S_1+S_2)T = S_1T+S_2T$ and $T(S_1+S_2) = TS_1+TS_2$
+\end{itemize}
+\end{theorem}
+\begin{remark}
+Note that the addition and multiplication on $\mathscr{L}(V,W)$ forms a commutative ring with identity. 
+
+\emph{Multiplication of linear maps are not necessary to be commutative!}
+\end{remark}
+
+\begin{theorem}{}{0to0}
+Suppose $T\in \mathscr{L}(V,W)$ then
+\begin{equation*}
+T(0) = 0
+\end{equation*}
+\end{theorem}
+\begin{proof}
+T(0) = T(0+0) = T(0)+T(0)
+\end{proof}
+
+\begin{theorem}{the form of linear maps}{The Form Of Linear Maps}
+Suppose $T\in \mathscr{L}(\mathbb{F}^n,\mathbb{F}^m)$, then $\exists A_{jk}\in \mathbb{F}$ for $j=1, \ldots ,m$ and $k=1, \ldots ,n$ such that
+\begin{equation}
+T(x_1, \ldots ,x_n) = (\sum_{i=1}^{n} A_{1i}x_i, \ldots ,\sum_{i=1}^{n} A_{mi}x_i)
+\end{equation}
+\end{theorem}
+\begin{proof}
+Let $\boldsymbol{e_i}$ denote the $i^\text{th}$ standard basis of $\mathbb{F}^n$. Let
+\begin{equation*}
+T \boldsymbol{e_i} = (A_{1i}, \ldots ,A_{mi})
+\end{equation*}
+Because
+\begin{equation*}
+	(x_1, \ldots ,x_n) = \sum_{i=1}^{n} x_i e_i
+\end{equation*}
+Then
+\begin{equation*}
+T(x_1, \ldots ,x_n) = (\sum_{i=1}^{n} A_{1i}x_i, \ldots ,\sum_{i=1}^{n} A_{mi}x_i)
+\end{equation*}
+\end{proof}
+
+In the last chapter, we see that $V \cong \mathbb{F}^n$, now we state that $\mathscr{L}(V,W) \cong \mathscr{L}(\mathbb{F}^n,\mathbb{F}^m)$ similarly.
+\begin{theorem}{The Structure of $\mathscr{L}(V,W)$}{The Structure Of LVW}
+If $\dim V = n,\dim W = m$, then $\mathscr{L}(V,W)\cong \mathscr{L}(\mathbb{F}^n,\mathbb{F}^m)$ in the sense of addition, scalar multiplication and multiplication.
+\end{theorem}
+\begin{proof}
+Let $v_1, \ldots ,v_n$ be a basis of $V$, and $w_1, \ldots ,w_m$ be a basis of $W$. We take a bijection $F:\mathscr{L}(V,W) \rightarrow  \mathscr{L}(\mathbb{F}_n,\mathbb{F}_m)$, such that
+\begin{equation}
+\begin{aligned}
+	T: & \quad T(c_1v_1+\ldots +c_nv_n) = a_1w_1+\ldots +a_mw_m \\
+	F(T): & \quad F(T)(c_1, \ldots ,c_n) = (a_1, \ldots ,a_m)
+\end{aligned}
+\end{equation}
+would do.
+\end{proof}
+
+Using this isomorphism, the result of theorem \ref{thm:The Form Of Linear Maps} can be used for arbitrary $\mathscr{L}(V,W)$.
+
+
+\begin{example}{}{Linear Map2}
+\begin{itemize}
+\item Suppose $V$ is finite-dimensional and $T\in \mathscr{L}(V)$. Then $T$ is a scalar multiple of the identity iff $\forall S\in \mathscr{L}(V), ST=TS$.
+
+	\begin{proof}
+	The left to right side is easy. To resolve the other side, we only need to verify the validity of $V=\mathbb{F}^n$. We let 
+	\begin{equation*}
+	S_i(x_1, \ldots ,x_n) = x_i \boldsymbol{e_i}
+	\end{equation*}
+
+	\end{proof}
+\end{itemize}
+\end{example}
+
+
+\section{Null Space and Ranges}
+\subsection{Null Space and Injectivity}
+
+\begin{definition}{Null Space}{Null Space}
+	Let $T\in \mathscr{L}(V,W)$, then the null space of $T$ is defined as the subset of $V$ that maps to $0$.
+	\begin{equation}
+	\null T = \left\{ v\in V:Tv=0 \right\}
+	\end{equation}
+\end{definition}
+\begin{theorem}{Null Space is a Subspace}{Null Space Is A Subspace}
+Suppose $T\in \mathscr{L}(V,W)$, then $\snull T$ is a subspace of $V$.
+\end{theorem}
+\begin{proof}
+\begin{itemize}
+\item Obviously, $0\in \snull T$.
+\item If $v_1,v_2\in \snull T$, then $T(v_1+v_2) = Tv_1+Tv_2=0$ as well.
+\item If $v\in \snull T$, then $T(\lambda v) = \lambda Tv=0$.
+\end{itemize}
+\end{proof}
+
+\begin{remark}
+In fact, the linear map is just a homomorphism. The null space is the kernel, the ideal of the homomorphism. To understand it this way, the following statement would seem obvious.
+\end{remark}
+
+\begin{theorem}{Null Space and Injectivity}{Null Space And Injectivity}
+Let $T\in \mathscr{L}(V,W)$, then $\snull T = \left\{ 0 \right\} \leftrightarrow T \text{ is injective }$.
+\end{theorem}
+\begin{proof}
+If $\snull T = \left\{ 0 \right\}$, then if $Tu=Tv$, we have  $T(u-v)=0$, then $u-v\in \snull T$, then  $u=v$, thus  $T$ is injective.
+\end{proof}
+
+\subsection{Range and Surjectivity}
+\begin{definition}{Range}{Range}
+For $T\in \mathscr{L}(V,W)$, the range of $T$ is the subset of $W$ defined as
+\begin{equation}
+\range T = \left\{ Tu:u\in V \right\}
+\end{equation}
+\end{definition}
+\begin{theorem}{Range is a subspace}{Range Is A Subspace}
+If $T\in \mathscr{L}(V,W)$ then $\range T$ is a subspace of $W$.
+\end{theorem}
+\begin{proof}
+\begin{itemize}
+\item $0\in \range T$.
+\item addition and scalar multiplication is also closed.
+\end{itemize}
+\end{proof}
+
+\begin{definition}{Surjective}{Surjective}
+A function $T:V \rightarrow  W$ is surjective if $\range T = W$.
+\end{definition}
+
+\subsection{Fundamental Theorem of Linear Maps}
+\begin{theorem}{Fundamental Theorem of Linear Maps}{Fundamental Theorem Of Linear Maps}
+Suppose $V$ is finite-dimensional and $T\in \mathscr{L}(V,W)$, then $\range T$ is finite dimensional and
+\begin{equation}
+\dim V = \dim \snull T + \dim \range T
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Let $u_1, \ldots ,u_m$ be a basis of $\snull T$, then $\dim \snull T=m$. Expand it to a basis of $V$ 
+\begin{equation*}
+u_1, \ldots ,u_m, v_1, \ldots ,v_n
+\end{equation*}
+We shall prove that
+\begin{equation*}
+Tv_1, \ldots ,Tv_n
+\end{equation*}
+is a basis of $\range T$.
+
+$\forall v\in V$, let $v= a_1u_1+\ldots +a_mu_m + b_1v_1+\ldots +b_nv_n$. Then we have
+\begin{equation*}
+Tv= b_1Tv_1+\ldots +b_nTv_n
+\end{equation*}
+That is, $Tv_1, \ldots ,Tv_n$ spans $\range T$.
+
+To show that $Tv_1, \ldots ,Tv_n$ is linearly independent, if
+\begin{equation*}
+c_1Tv_1+\ldots +c_nTv_n=0
+\end{equation*}
+then
+\begin{equation*}
+T(c_1v_1+\ldots +c_nv_n)=0
+\end{equation*}
+that is,
+\begin{equation*}
+c_1v_1+\ldots +c_nv_n\in \snull T
+\end{equation*}
+let
+\begin{equation*}
+c_1v_1+\ldots +c_nv_n = d_1u_1+\ldots +d_mu_m
+\end{equation*}
+then $c_1=\ldots =c_n=0$ as desired.
+\end{proof}
+
+\begin{remark}
+This proof is quite elegant, and it also gives us a picture of linear maps. We can see linear maps from a higher dimensional vector space to a lower one (note that the range dimension is always $\leq $ the domain) as losing some dimension of freedom. The dimensions that are lost forms the null space.
+\end{remark}
+
+\begin{theorem}{Linear maps to a lower dimensional space}{Linear Maps To A Lower Dimensional Space}
+Suppose $V$ and $W$ are finite-dimensional. $\dim V > \dim W$. Then there are no injective linear map from $V$ to $W$.
+\end{theorem}
+\begin{proof}
+$\dim \snull T >0$ would suffice.
+\end{proof}
+\begin{theorem}{Linear maps to a higher dimensional space}{Linear Maps To A Higher Dimensional Space}
+Suppose $V$ and $W$ are finite-dimensional. $\dim V < \dim W$. Then there are no surjective linear map from $V$ to $W$.
+\end{theorem}
+\begin{proof}
+\begin{equation*}
+\dim \range T \leq \dim V < \dim W
+\end{equation*}
+\end{proof}
+
+Linear maps have important consequences for linear equations. We can express the theory of linear equations in terms of linear maps. Consider the homogeneous system of linear equations 
+\begin{equation}
+\begin{cases}
+	\displaystyle \sum_{k=1}^{n} A_{1k}x_k=0\\
+	\displaystyle \quad \vdots \\
+	\displaystyle \sum_{k=1}^{n} A_{mk}x_k=0
+\end{cases}
+\end{equation}
+
+Clearly $x_1=\ldots =x_n=0$ is a trivial solution to the equation. The question is whether other solution exists.
+
+Define a linear map $T: \mathbb{F}^n \rightarrow \mathbb{F}^m$ by
+\begin{equation}
+T(x_1, \ldots ,x_n) = \left(\sum_{k=1}^{n} A_{1k}x_k, \ldots ,\sum_{k=1}^{n} A_{mk}x_k\right)
+\end{equation}
+
+Then the equation becomes $T(x_1, \ldots ,x_n)=0$. That is, we want to find $\snull T$.
+
+Using the result of theorem \ref{thm:Linear Maps To A Lower Dimensional Space}, we have:
+\begin{theorem}{Homogeneous system of linear equations}{Homogeneous System Of Linear Equations}
+A homogeneous system of linear equations with more variables the equations has nonzero solutions.
+\end{theorem}
+
+For an inhomogeneous system of linear equations,
+\begin{equation}
+\begin{cases}
+	\displaystyle \sum_{k=1}^{n} A_{1k}x_k = c_1\\
+	\displaystyle \vdots \\
+	\displaystyle \sum_{k=1}^{n} A_{mk}x_k = c_m
+\end{cases}
+\end{equation}
+
+This is analogous to $T(x_1, \ldots ,x_n) = (c_1, \ldots ,c_m)$. Using theorem \ref{thm:Linear Maps To A Higher Dimensional Space}, we have
+\begin{theorem}{Inhomogeneous system of linear equations}{Inhomogeneous System Of Linear Equations}
+An inhomogeneous system of linear equations with more equations than variables has no solutions for some choice of constant terms.
+\end{theorem}
+
+It is obvious that the equation has solution iff $(c_1, \ldots ,c_m) \in \range T$.
+\subsection{Some Result}
+
+\begin{itemize}
+\item Suppose $V$ is finite dimensional and $T\in \mathscr{L}(V,W)$, then $\exists \text{ a subspace }U$ such that
+	\begin{equation*}
+	U\cap \snull T = \left\{ 0 \right\} \text{   and   }\range T = \left\{ Tu:u\in U \right\}
+	\end{equation*}
+
+\item Suppose there is a linear map on $V$ whose null space and range in finite dimensional, then $V$ is finite dimensional.
+	\begin{proof}
+	Suppose $u_1, \ldots ,u_n$ spans $\snull T$ and $w_1, \ldots ,w_m$ spans $\range T$. Let $w_k = Tv_k$ for $k=1, \ldots ,m$. Then $u_1, \ldots ,u_n, v_1, \ldots ,v_m$ spans $V$.
+	\end{proof}
+
+\item Suppose $V$ is finite dimensional and $T\in \mathscr{L}(V,W)$, $U$ is a subspace of $W$. Then $\left\{ v\in V: Tv \in U \right\}$ is a subspace of $V$, and 
+	\begin{equation}
+	\dim \left\{ v\in V: Tv\in U \right\} = \dim\snull T + \dim \left(U\cap\range T\right)
+	\end{equation}
+
+	\begin{proof}
+	In fact, we shall interpret $T$ as $T: \left\{ v\in V: Tv\in U \right\} \rightarrow  W$ would suffice.
+	\end{proof}
+
+\item Suppose $U$ and $V$ are finite dimensional and $S\in \mathscr{L}(V,W)$ and $T\in \mathscr{L}(U,V)$, then 
+	\begin{equation}
+	\dim \snull ST \leq \dim\snull S + \dim \snull T
+	\end{equation}
+	\begin{proof}
+	\begin{equation*}
+	\begin{aligned}
+		\dim \snull ST &= \dim \left\{ u \in U: Tu \in \snull S \right\} \\
+			       &= \dim \snull T + \dim (\snull S \cap \range T)\\
+			       &\leq \dim\snull S + \dim\snull T
+	\end{aligned}
+	\end{equation*}
+	\end{proof}
+\item Suppose $U$ and $V$ are finite-dimensional, and $S\in \mathscr{L}(V,W), T\in \mathscr{L}(U,V)$, then
+	\begin{equation}
+	\dim\range ST \leq \min \left\{ \dim\range S, \dim\range T \right\}
+	\end{equation}
+	\begin{proof}
+	Obvious.
+	\end{proof}
+\item Suppose $V,W$ are real vector spaces and $T\in \mathscr{L}(V,W)$, define $T_{\mathbb{C}}: V_{\mathbb{C}} \rightarrow  W_{\mathbb{C}}$ such that $\forall u,v\in V$
+	\begin{equation}
+	T_{\mathbb{C}}(u+iv) = Tu+iTv
+	\end{equation}
+	then
+	\begin{enumerate}
+		\item $T_{\mathbb{C}}$ is a complex linear map from $V_{\mathbb{C}}$ to $W_{\mathbb{C}}$.
+		\item $T_{\mathbb{C}}$ is injective iff $T$ is injective.
+		\item $\range T_{\mathbb{C}} = W_{\mathbb{C}}$ iff $\range T = W$.
+	\end{enumerate}
+\end{itemize}
+
+
+
+\section{Matrices}
+\subsection{Representing a Linear Map by a Matrix}
+
+Matrices is a good way to visualize the structure of linear maps as is shown in theorem \ref{thm:The Form Of Linear Maps}.
+
+\begin{definition}{Matrices $A_{jk}$}{Matrices}
+Suppose $m,n\in \mathbb{Z}_{\geq 0}$. An $m$-by-$n$ matrix is a rectangular array of elements is $\mathbb{F}$ with $m$ rows and $n$ columns.
+\begin{equation*}
+\begin{pmatrix}
+	A_{1,1} & \cdots  & A_{1,n}\\
+	\vdots  &  & \vdots \\
+	A_{m,1} & \cdots  & A_{m,n}
+\end{pmatrix}
+\end{equation*}
+\end{definition}
+
+Now we define matrix of linear map.
+\begin{definition}{Matrix of a linear map}{Matrix Of A Linear Map}
+	Suppose $T\in \mathscr{L}(V,W)$, and $v_1, \ldots ,v_n$ is a basis of $V$ and $w_1, \ldots ,w_m$ is a basis of $W$. Then the matrix of $T$ respect of these basis is  $\mathscr{M}(T)$ 
+	\begin{equation}
+	\mathscr{M}(T) = 
+	\begin{pmatrix}
+	A_{1,1} & A_{1,2} & \cdots & A_{1,n} \\
+	A_{2,1} & A_{2,2} & \cdots & A_{2,n} \\
+	\vdots & \vdots & \ddots & \vdots \\
+	A_{m,1} & A_{m,2} & \cdots & A_{m,n} \\
+	\end{pmatrix}
+	\end{equation}
+	where $A_{j,k}$ are defined by
+	\begin{equation}
+	Tv_k = A_{1,k}w_1 +\ldots +A_{m,k}w_m
+	\end{equation}
+\end{definition}
+
+\begin{remark}
+Note that the matrix $\mathscr{M}(T)$ depends on the basis which we choose.
+
+If $T$ is a linear map $T: \mathbb{F}^n \rightarrow \mathbb{F}^m$, then usually we take the standard basis.
+\end{remark}
+
+\subsection{Addition and Scalar Multiplication of Matrices}
+We define the sum of two matrix of the same size as follows
+\begin{definition}{Matrix Addition}{Matrix Addition}
+\begin{equation}
+\begin{pmatrix}
+A_{1,1} & A_{1,2} & \cdots & A_{1,n}\\
+A_{2,1} & A_{2,2} & \cdots & A_{2,n}\\
+\vdots & \vdots & \ddots & \vdots \\
+A_{m,1} & A_{m,2} & \cdots & A_{m,n}
+\end{pmatrix}
++
+\begin{pmatrix}
+C_{1,1} & C_{1,2} & \cdots & C_{1,n}\\
+C_{2,1} & C_{2,2} & \cdots & C_{2,n}\\
+\vdots & \vdots & \ddots & \vdots \\
+C_{m,1} & C_{m,2} & \cdots & C_{m,n}
+\end{pmatrix}
+=
+\begin{pmatrix}
+A_{1,1}+C_{1,1} & A_{1,2}+C_{1,2} & \cdots & A_{1,n}+C_{1,n}\\
+A_{2,1}+C_{2,1} & A_{2,2}+C_{2,2} & \cdots & A_{2,n}+C_{2,n}\\
+\vdots & \vdots & \ddots & \vdots \\
+A_{m,1}+C_{m,1} & A_{m,2}+C_{m,2} & \cdots & A_{m,n}+C_{m,n}
+\end{pmatrix}
+\end{equation}
+\end{definition}
+This is because
+\begin{theorem}{Matrix of the sum of linear maps}{Matrix Of The Sum Of Linear Maps}
+Suppose $S,T\in \mathscr{L}(V,W)$, then $\mathscr{M}(S+T)=\mathscr{M}(S)+\mathscr{M}(T)$.
+\end{theorem}
+
+\begin{definition}{Scalar Multiplication of Linear Maps}{Scalar Multiplication Of Linear Maps}
+We define
+\begin{equation}
+\lambda 
+\begin{pmatrix}
+A_{1,1} & A_{1,2} & \cdots & A_{1,n}\\
+A_{2,1} & A_{2,2} & \cdots & A_{2,n}\\
+\vdots & \vdots & \ddots & \vdots \\
+A_{m,1} & A_{m,2} & \cdots & A_{m,n}
+\end{pmatrix}
+=
+\begin{pmatrix}
+\lambda A_{1,1} & \lambda A_{1,2} & \cdots & \lambda A_{1,n}\\
+\lambda A_{2,1} & \lambda A_{2,2} & \cdots & \lambda A_{2,n}\\
+\vdots & \vdots & \ddots & \vdots \\
+\lambda A_{m,1} & \lambda A_{m,2} & \cdots & \lambda A_{m,n}
+\end{pmatrix}
+\end{equation}
+\end{definition}
+
+\begin{theorem}{Matrix of the scalar product of linear maps}{Matrix Of The Scalar Product Of Linear Maps}
+Suppose $T\in \mathscr{L}(V,W)$, then $\mathscr{M}(\lambda T) = \lambda \mathscr{M}(T)$.
+\end{theorem}
+
+As addition and scalar multiplication is defined, then not surprisingly, matrices is a vector space.
+\begin{notation}{$\mathbb{F}^{m,n}$}{Fmn}
+For positive integers $m,n$, the set of all $m$-by-$n$ matrices with entries in $\mathbb{F}$ in denoted by $\mathbb{F}^{m,n}$. It is a vector space.
+\end{notation}
+\begin{theorem}{Dimension of $\mathbb{F}^{m,n}$}{Dimension Of Fmn}
+\begin{equation}
+\dim \mathbb{F}^{m,n} = mn
+\end{equation}
+\end{theorem}
+\begin{remark}
+as any linear map can be represented as a matrix, we have $\mathscr{L}(V,W)\cong \mathbb{F}^{m,n}$ if $\dim V=n$ and $\dim W=m$.
+\end{remark}
+
+\subsection{Matrix Multiplication}
+
+Consider finite-dimensional vector spaces $U,V,W$. Let basis
+\begin{itemize}
+\item $u_1, \ldots ,u_p$ for $U$.
+\item $v_1, \ldots ,v_n$ for $V$.
+\item $w_1, \ldots ,w_m$ for $W$.
+\end{itemize}
+Consider linear maps $T: U \rightarrow V$ and $S: V \rightarrow  W$. We want to define a matrix multiplication such that
+\begin{equation*}
+\mathscr{M}(ST) = \mathscr{M}(S)\mathscr{M}(T)
+\end{equation*}
+
+Suppose $\mathscr{M}(S)=A$ and $\mathscr{M}(T)=B$. For $1\leq k\leq p$, we have
+\begin{equation*}
+\begin{aligned}
+(ST)u_k &= S \left(\sum_{r=1}^{k} B_{r,k}v_r\right) \\
+	&= \sum_{r=1}^{n} B_{r.k}Sv_r \\
+	&= \sum_{r=1}^{n} B_{r,k} \sum_{j=1}^{m} A_{j,r}w_j \\
+	&= \sum_{j=1}^{m} \left(\sum_{r=1}^{n} A_{j,r}B_{r,k}\right)w_j
+\end{aligned}
+\end{equation*}
+Therefore, we have
+\begin{definition}{Matrix Multiplication}{Matrix Multiplication}
+Suppose $A \in \mathbb{F}^{m,n}$ and $B\in \mathbb{F}^{n,p}$. Then define $AB\in \mathbb{F}^{m,p}$ such that
+\begin{equation}
+	(AB)_{j,k} = \sum_{r=1}^{n} A_{j,r}B_{r,k}.
+\end{equation}
+\end{definition}
+\begin{remark}
+Matrix multiplication is not commutative.
+\end{remark}
+
+\begin{theorem}{Matrix of product of linear map}{Matrix Of Product Of Linear Map}
+If $T\in \mathscr{L}(U,V)$ and $S\in \mathscr{L}(V,W)$, then $\mathscr{M}(S,T) = \mathscr{M}(S)\mathscr{M}(T)$
+\end{theorem}
+
+\begin{notation}{Row and Column vectors}{Row And Column Vectors}
+Suppose $A\in \mathbb{F}^{m,n}$.
+\begin{itemize}
+\item If $1\leq j\leq m$ then $A_{j,.}$ denotes the $j^\text{th}$ row of $A$.
+	\begin{equation*}
+	A_{j,.} = 
+	\begin{pmatrix}
+		A_{j,1} & A_{j,2} & \cdots & A_{j,n}
+	\end{pmatrix}
+	\end{equation*}
+\item If $1\leq k\leq n$ then $A_{.,k}$ denotes the $k^\text{th}$ column of $A$.
+	\begin{equation*}
+	A_{.,k} = 
+	\begin{pmatrix}
+	A_{1,k}\\A_{2,k}\\\vdots \\A_{m,k}
+	\end{pmatrix}
+	\end{equation*}
+\end{itemize}
+\end{notation}
+
+\begin{theorem}{Entry equals row times column}{Entry Equals Row Times Column}
+Suppose $A\in \mathbb{F}^{m,n},B\in \mathbb{F}^{n,p}$. Then
+\begin{equation*}
+	(AB)_{j,k} = A_{j,.} \cdot B_{.,k}
+\end{equation*}
+\end{theorem}
+\begin{example}{}{}
+We have:
+\begin{itemize}
+\item $(AB)_{.,k} = AB_{.,k}$, that is
+	\begin{equation*}
+	A
+	\begin{pmatrix}
+		B_{.,1} & B_{.,2} & \cdots & B_{.,p}
+	\end{pmatrix}
+	=
+	\begin{pmatrix}
+		AB_{.,1} & AB_{.,2} & \cdots & AB_{.,p}
+	\end{pmatrix}
+	\end{equation*}
+\item $(AB)_{j,.} = A_{j,.}B$, that is
+	\begin{equation*}
+	\begin{pmatrix}
+	A_{1,.}\\A_{2,.}\\\vdots \\A_{m,.}
+	\end{pmatrix}
+	B
+	=
+	\begin{pmatrix}
+	A_{1,.}B\\A_{2,.}B\\\vdots \\A_{m,.}B
+	\end{pmatrix}
+	\end{equation*}
+\end{itemize}
+\end{example}
+
+\begin{theorem}{Linear Combination}{Linear Combination}
+Suppose $A\in \mathbb{F}^{m,n}$ and $\displaystyle b= 
+\begin{pmatrix}
+b_1\\\vdots \\b_n
+\end{pmatrix}
+$, then
+\begin{equation*}
+Ab = b_1A_{.,1}+\ldots +b_nA_{.,n}
+\end{equation*}
+
+Similarly, if $c = 
+\begin{pmatrix}
+	c_1&\cdots &c_m
+\end{pmatrix}
+$, then
+\begin{equation*}
+cA = c_1A_{1,.}+\ldots +c_mA_{m,.}
+\end{equation*}
+\end{theorem}
+
+We expand the full content of the theorem as follows:
+\begin{equation}
+\begin{pmatrix}
+A_{1,1} & A_{1,2} & \cdots & A_{1,n}\\
+A_{2,1} & A_{2,2} & \cdots & A_{2,n}\\
+\vdots & \vdots & \ddots & \vdots \\
+A_{m,1} & A_{m,2} & \cdots & A_{m,n}
+\end{pmatrix}
+\begin{pmatrix}
+b_1\\b_2\\\vdots \\b_n
+\end{pmatrix}
+=
+b_1
+\begin{pmatrix}
+A_{1,1}\\A_{2,1}\\\vdots \\A_{m,1}
+\end{pmatrix}
++\ldots +
+b_n
+\begin{pmatrix}
+A_{1,n}\\A_{2,n}\\\vdots \\A_{m,n}
+\end{pmatrix}
+\end{equation}
+
+And that
+
+\begin{equation*}
+\begin{pmatrix}
+	c_1&c_2&\cdots &c_m
+\end{pmatrix}
+\begin{pmatrix}
+A_{1,1} & A_{1,2} & \cdots & A_{1,n}\\
+A_{2,1} & A_{2,2} & \cdots & A_{2,n}\\
+\vdots & \vdots & \ddots & \vdots \\
+A_{m,1} & A_{m,2} & \cdots & A_{m,n}
+\end{pmatrix}
+=
+c_1
+\begin{pmatrix}
+	A_{1,1}&\cdots &A_{a,n}
+\end{pmatrix}
++\ldots +
+c_m
+\begin{pmatrix}
+	A_{m,1}&\cdots &A_{m,n}
+\end{pmatrix}
+\end{equation*}
+
+\subsection{Column-Row Factorization and Rank of a Matrix}
+\begin{definition}{Column and Row Rank}{Column And Row Rank}
+Suppose $A\in \mathbb{F}^{m,n}$
+\begin{itemize}
+\item The column rank of $A$ is the dimension of the span of row of $A$ in $\mathbb{F}^{1,n}$.
+\item The row rank of $A$ is the dimension of the span of columns of $A$ in $\mathbb{F}^{m,1}$.
+\end{itemize}
+\end{definition}
+
+We now define the transpose of a matrix.
+
+\begin{definition}{Transpose}{Transpose}
+Suppose $A\in \mathbb{F}^{m,n}$, define the transpose of $A$ be $A^t\in \mathbb{F}^{n,m}$.
+\begin{equation*}
+	(A^t)_{k.j} = A_{j,k}
+\end{equation*}
+\end{definition}
+
+That is if
+\begin{equation*}
+A = 
+\begin{pmatrix}
+A_{1,1} & A_{1,2} & \cdots & A_{1,n}\\
+A_{2,1} & A_{2,2} & \cdots & A_{2,n}\\
+\vdots & \vdots & \ddots & \vdots \\
+A_{m,1} & A_{m,2} & \cdots & A_{m,n}
+\end{pmatrix}
+\end{equation*}
+then
+\begin{equation*}
+A^t=
+\begin{pmatrix}
+A_{1,1} & A_{2,1} & \cdots & A_{m,1}\\
+A_{1,2} & A_{2,2} & \cdots & A_{m,2}\\
+\vdots & \vdots & \ddots & \vdots \\
+A_{1,n} & A_{2,n} & \cdots & A_{n,m}
+\end{pmatrix}
+\end{equation*}
+\begin{remark}
+In fact, transposition is a linear map.
+\end{remark}
+
+\begin{theorem}{Algebraic Properties of Transposition}{Algebraic Properties Of Transposition}
+\item $(A+B)^t = A^t+B^t$.
+\item $(\lambda A)^t = \lambda A^t$.
+\item $(AB)^t = B^tA^t$.
+\end{theorem}
+
+\begin{theorem}{Column-Row Factorization}{Column-Row Factorization}
+Suppose $A\in \mathbb{F}^{m,n}$, and column rank $c>1$, then there exists $C\in \mathbb{F}^{m,c}$ and $R\in \mathbb{F}^{c,n}$, such that $A=CR$.
+\end{theorem}
+\begin{proof}
+As the definition of column rank, the list $A_{.,1}, \ldots ,A_{.,n}$ can be reduced to a basis of its span, which has length $c$. Putting together, we denote it $C\in \mathbb{F}^{m,c}$.
+
+Let $A_{.,k} = C R_{.,k}$, we get a $R\in \mathbb{F}^{c,n}$.
+\end{proof}
+
+\begin{theorem}{Column Rank equals Row Rank}{Column Rank Equals Row Rank}
+Suppose $A\in \mathbb{F}^{m,n}$, then the column rank of $A$ equals the row rank.
+\end{theorem}
+\begin{proof}
+Let $c$ be the column rank. Let $A=CR$ be the column-row factorization. Then we have
+\begin{equation*}
+A_{j,.} = C_{j,.}R
+\end{equation*}
+therefore, row rank $\leq c$.
+
+However, taking $A^t$ we have
+\begin{equation*}
+\text{ column rank of }A = \text{ row rank of }A^t \leq \text{ column rank of }A^t = \text{ row rank of }A
+\end{equation*}
+that is, column rank $=$ row rank.
+\end{proof}
+
+\begin{definition}{Rank}{Rank}
+The rank of $A\in F^{m,n}$ is the column/row rank of $A$, denoted $\rank A$
+\end{definition}
+
+
+\section{Invertibility and Isomorphisms}
+\subsection{Invertible Linear Maps}
+\begin{definition}{Invertible and Inverse}{Invertible And Inverse}
+\begin{itemize}
+\item A linear map $T\in \mathscr{L}(V,W)$ is invertible if there exists a linear map $S\in \mathscr{L}(W,V)$ such that $ST=I_{V}$ and $TS=I_{W}$.
+\item This $S$ is called the inverse of $T$, denoted $T^{-1}$.
+\end{itemize}
+\end{definition}
+\begin{theorem}{Inverse is Unique}{Inverse Is Unique}
+An invertible linear map has a unique inverse.
+\end{theorem}
+\begin{proof}
+Suppose $S_1,S_2$ are inverse of $T$.
+\begin{equation*}
+S_1=S_1I = S_1(TS_2) = (S_1T)S_2 = IS_2=S_2
+\end{equation*}
+\end{proof}
+
+\begin{theorem}{Invertibility Conditions}{Invertibility Conditions}
+A linear map in invertible iff it is injective and surjective.
+
+Futhermore, if $V,W$ are finite dimensional and $\dim V=\dim W$, then injectivity $\leftrightarrow $ surjectivity.
+\end{theorem}
+
+\begin{proof}
+Because from the fundamental theorem of linear map
+\begin{equation*}
+\dim V=  \dim \snull T + \dim \range T
+\end{equation*}
+If $T$ is injective, then $\dim \snull T=0$, then $\dim \range T = \dim V=\dim W$, then $T$ is surjective.
+\end{proof}
+
+\begin{theorem}{$ST=I \leftrightarrow TS=I$}{STTS}
+Suppose $\dim V=\dim W<\infty $, $S\in \mathscr{L}(V,W), T\in \mathscr{L}(W,V)$, then
+\begin{equation*}
+ST=I \leftrightarrow TS=I
+\end{equation*}
+\end{theorem}
+
+
+\begin{proof}
+If $ST=I$, then if $v\in V$ and $Tv=0$, then 
+\begin{equation*}
+v=Iv=STv=S 0=0
+\end{equation*}
+Thus $T$ is injective. Then by \ref{thm:Invertibility Conditions}, $T$ is invertible, we have
+
+\begin{equation*}
+S = STT^{-1} = T^{-1}
+\end{equation*}
+thus $TS=TT^{-1}=I$ as desired.
+\end{proof}
+
+
+\subsection{Isomorphic Vector Spaces}
+
+\begin{definition}{Isomorphism}{Isomorphism}
+An \textbf{isomorphism} is an invertible linear map. Two vector spaces are called isomorphic if there there is an isomorphism from one to the other.
+\end{definition}
+\begin{remark}
+This definition of isomorphism is a simplified version. The intuition of isomorphism is that two algebraic structures are indistinguishable. That is, for vector spaces $V$ and $W$. They are isomorphic iff there exists a bijection $T:V \rightarrow W$ such that:
+\begin{itemize}
+\item $T(v_1+v_2)=Tv_1+Tv_2$.
+\item $T(\lambda v) = \lambda Tv$.
+\end{itemize}
+
+This is exactly the definition of linear maps. Furthermore, every linear map is a homomorphism.
+\end{remark}
+
+\begin{theorem}{Dimension and Isomorphism}{Dimension And Isomorphism}
+Two finite dimensional vector spaces over $\mathbb{F}$ are isomorphic iff they have the same dimension.
+\end{theorem}
+\begin{proof}
+This is extremely obvious. If $v_1, \ldots ,v_n$ is a basis of $V$, then $Tv_1, \ldots ,Tv_n$ is a basis of $W$.
+\end{proof}
+
+Therefore we have the earlier statement
+\begin{itemize}
+\item  $\dim V=n$ then $V\cong \mathbb{F}^n$.
+\item $\dim V=n$ and $\dim W=m$ then $\mathscr{L}(V,W)\cong \mathbb{F}^{m,n}$
+\end{itemize}
+
+
+\subsection{Linear Map Thought of as Matrix Multiplication}
+\begin{definition}{Matrix of Vectors}{Matrix Of Vectors}
+If $V$ is a finite dimensional vector space, and $v_1, \ldots ,v_n$ is a basis.  Let $v= b_1v_1+\ldots +b_nv_n$, then the matrix of $v$ respect to these basis is
+\begin{equation}
+	\mathscr{M}(v) = 
+\begin{pmatrix}
+b_1\\b_2\\\vdots \\b_n
+\end{pmatrix}
+\end{equation}
+\end{definition}
+
+Note that the matrix of $v$ depends on the basis we choose.
+\begin{remark}
+We can understand the matrix $\mathscr{M}$ as an isomorphism from $V$ to $\mathbb{F}^{n,1}$.
+\end{remark}
+
+If we define this way, linear maps are like matrix multiplication. For a linear map $T: V \rightarrow W$, we first choose the basis $v_1, \ldots ,v_n$ for $V$ and $w_1, \ldots ,w_m$ for $W$. If we have
+\begin{equation*}
+\mathscr{M}(T) = 
+\begin{pmatrix}
+A_{1,1} & A_{1,2} & \cdots & A_{1,n}\\
+A_{2,1} & A_{2,2} & \cdots & A_{2,n}\\
+\vdots & \vdots & \ddots & \vdots \\
+A_{m,1} & A_{m,2} & \cdots & A_{m,n}
+\end{pmatrix}
+, \quad
+\mathscr{M}(v)= 
+\begin{pmatrix}
+b_1\\b_2\\\vdots \\b_n
+\end{pmatrix}
+\end{equation*}
+
+Then we have $\mathscr{M}(Tv) = \mathscr{M}(T)\mathscr{M}(v)$ as expected.
+
+\begin{remark}
+Each linear map indicates a linear map from $\mathbb{F}^{n,1}$ to $\mathbb{F}^{m,1}$. As matrix representations depends on  the choice of basis, one objection of the later chapters is how to find a basis that makes the matrix as simply as possible.
+\end{remark}
+
+No bases are in sight in the statement of the next result. Although $\mathscr{M}(T)$ in the next result depends on a choice of bases of $V$ and $W$, the next result
+shows that the column rank of $\mathscr{M}(T)$ is the same for all such choices (because
+range $T$ does not depend on a choice of basis).
+
+\begin{theorem}{Dimension and Column Rank}{Dimension And Column Rank}
+For $T\in \mathscr{L}(V,W)$, dimension of $\range T = \rank \mathscr{M}(T)$
+\end{theorem}
+
+\subsection{Change of Basis}
+
+In the part we denote
+\begin{equation}
+\mathscr{M}(T,(v_1, \ldots ,v_n),(w_1, \ldots ,w_m))
+\end{equation}
+To the matrix representation of $T$ under basis $v_1, \ldots ,v_n$ and $w_1, \ldots ,w_m$. We also simplify notation if $T\in \mathscr{L}(V)$ and we use the same basis for domain and range.
+\begin{equation*}
+\mathscr{M}(T,(v_1, \ldots ,v_n)) = \mathscr{M}(T,(v_1, \ldots ,v_n), (v_1, \ldots ,v_n))
+\end{equation*}
+
+\begin{definition}{Identity Matrix}{Identity Matrix}
+We denote identity matrix $I$ for the identity map which use the same basis. That is, $\mathscr{M}(I)=I$
+\begin{equation}
+I=
+\begin{pmatrix}
+	1&0&\cdots &0\\
+	0&1&\cdots &0\\
+	\vdots &\vdots &\ddots &\vdots \\
+	0&0&\cdots &1
+\end{pmatrix}
+\end{equation}
+\end{definition}
+\begin{definition}{Inverse of Matrix}{Inverse Of Matrix}
+If square matrix $A,B$ satisfies $AB=BA=I$ then $B$ is the inverse of $A$, denote
+\begin{equation*}
+B=A ^{-1}
+\end{equation*}
+\end{definition}
+
+Following are some algebraic properties of inverse.
+\begin{itemize}
+\item $\left(A ^{-1}\right)^{-1}=A$.
+\item $\left(AB\right)^{-1} = B ^{-1}A ^{-1}$.
+\end{itemize}
+
+\begin{theorem}{Matrix of Product of linear maps}{Matrix Of Product Of Linear Maps}
+Suppose $T\in \mathscr{L}(U,V)$ and $S\in \mathscr{L}(V,W)$, $u_1, \ldots ,u_m$ is a basis of $U$, $v_1, \ldots , v_m$ is a basis of $V$, $w_1, \ldots , w_p$ is a basis of $W$.
+\begin{equation*}
+\mathscr{M}(ST,u_i,w_i) = \mathscr{M}(S,v_i,w_i)\mathscr{M}(T,u_i,v_i)
+\end{equation*}
+\end{theorem}
+
+\begin{theorem}{matrix of identity operator}{Matrix Of Identity Operator}
+Suppose $v_1, \ldots , v_n$ and $u_1, \ldots , u_n$ are basis of $V$, then
+\begin{equation}
+\mathscr{M}(I,u_i,v_i) \quad \text{ and }\quad \mathscr{M}(I,v_i,u_i)
+\end{equation}
+are inverses to each other.
+\end{theorem}
+
+The next result shows how to change basis.
+\begin{theorem}{Change Basis Formula}{Change Basis Formula}
+Suppose $T\in \mathscr{L}(V)$, and $v_1, \ldots , v_n$ and $u_1, \ldots , u_n$ are basis of $V$. Let
+\begin{itemize}
+\item $A=\mathscr{M}(T,u_i)$.
+\item $B=\mathscr{M}(T,v_i)$.
+\item $C=\mathscr{M}(T,u_i,v_i)$
+\end{itemize}
+Then we have
+\begin{equation}
+A = C ^{-1}BC
+\end{equation}
+\end{theorem}
+
+
+\section{Products and Quotients of Vector Spaces}
+
+\subsection{Products of Vector Spaces}
+\begin{definition}{Products of vector space}{Products Of Vector Space}
+Let $V_1, \ldots ,V_m$ be vector spaces over $\mathbb{F}$. Then define the product $V_1 \times \ldots \times V_m$ be:
+\begin{equation}
+V_1 \times \ldots \times V_m = \left\{ (v_1, \ldots , v_m): v_i\in V_i \right\}
+\end{equation}
+with
+\begin{itemize}
+\item \textbf{Addition: } $(v_1, \ldots , v_m) + (u_1, \ldots , u_m) = (v_1+u_1, \ldots ,v_m+u_m)$
+\item \textbf{Scalar Multiplication: } $\lambda (v_1, \ldots , v_m) = (\lambda v_1, \ldots ,\lambda v_m)$
+\end{itemize}
+\end{definition}
+
+It is obvious that the product of vector spaces is a vector space
+\begin{theorem}{Dimension of Products of Vector Spaces}{Dimension Of Products Of Vector Spaces}
+\begin{equation}
+\dim (V_1 \times \ldots \times V_m) = \dim V_1+\ldots +\dim V_m
+\end{equation}
+\end{theorem}
+\begin{proof}
+For each $V_i$ there is a basis $B_i$. Then the $i^\text{Th}$ slot is filled with some vector in $B_i$ and others are $0$ forms a basis of $V_1 \times \ldots \times V_k$.
+\end{proof}
+
+\begin{theorem}{Products and sums}{Products And Sums}
+Suppose that $V_1, \ldots ,V_m$ are subspaces of $V$. Define a linear map $\Gamma: V_1 \times \ldots \times V_m \rightarrow  V_1+\ldots +V_m$ as:
+\begin{equation*}
+\Gamma(v_1, \ldots ,v_m) = v_1+\ldots +v_m
+\end{equation*}
+
+Then $V_1+\ldots +V_m$ is a direct sum iff $\Gamma$ is injective.
+\end{theorem}
+\begin{proof}
+$\Gamma$ is injective iff $\snull \Gamma = \left\{ (0, \ldots ,0) \right\}$, that is equivalent to
+\begin{equation*}
+v_1+\ldots +v_m=0 \rightarrow v_1=\ldots =v_m=0
+\end{equation*}
+\end{proof}
+
+\begin{corollary}{a sum is a direct sum if and only if dimensions add up}{A Sum Is A Direct Sum If And Only If Dimensions Add Up}
+Suppose $V_1, \ldots ,V_m$ is subspaces of $V$. Then $V_1+\ldots +V_m$ is direct sum iff
+\begin{equation*}
+\dim (V_1+\ldots +V_m) = \dim V_1+\ldots +\dim V_m
+\end{equation*}
+\end{corollary}
+\begin{proof}
+Note that $\Gamma$ is already surjective.
+
+If $V_1+\ldots +V_m$ is a direct sum, then $\Gamma$ is injective, that is, $\dim (V_1+\ldots +V_m) = \dim (V_1 \times \ldots \times V_m)$.
+
+The other way, if the dimension adds, then by the fundamental theorem of linear maps, $\snull \Gamma = 0$, that is, $\Gamma$ is injective.
+\end{proof}
+
+\subsection{Quotient Spaces}
+
+Subspaces are kernels of sum homomorphisms. To defined Quotient Spaces, we begin with translates.
+\begin{definition}{Translate}{Translate}
+For $v\in V$ and $U$ a subset of $V$. Let
+\begin{equation}
+v+U = \left\{ v+u: u\in U \right\}
+\end{equation}
+be a translate of $U$.
+\end{definition}
+
+\begin{theorem}{two translates of a subspace are equal or disjoint}{Two Translates Of A Subspace Are Equal Or Disjoint}
+Suppose $U$ is a subspace of $V$ and $v,w\in V$. Then
+\begin{equation*}
+v+U=w+U \lor v+U\cap w+U = \emptyset 
+\end{equation*}
+
+In fact, $v+U=w+U$ iff  $v-w\in U$.
+\end{theorem}
+
+This is just the same as groups. As the addition in vector spaces is an Abelian group, we are not surprised to see that every subspace is a normal subgroup.
+
+\begin{definition}{Quotient Spaces}{Quotient Spaces}
+If $U$ is a subspace of $V$. Defined quotient space
+\begin{equation}
+V / U = \left\{ v+U : v\in V \right\}
+\end{equation}
+
+We define Addition and Scalar multiplication as follows.
+\begin{itemize}
+\item $(v_1+U)+(v_2+U) = (v_1+v_2)+U$ 
+\item $\lambda (v+U) = (\lambda v)+U$
+\end{itemize}
+Then quotient space becomes a vector space. And we have 
+ \begin{equation*}
+V \cong U \times V / U
+\end{equation*}
+\end{definition}
+
+The homomorphism is called the quotient map
+\begin{definition}{Quotient map}{Quotient Map}
+The quotient map $\pi: V \rightarrow V / U$ is defined
+\begin{equation*}
+\pi (v) = v+U
+\end{equation*}
+\end{definition}
+
+\begin{theorem}{Dimension of quotient space}{Dimension Of Quotient Space}
+If $U$ is a subspace of $V$, then
+\begin{equation*}
+\dim V / U = \dim V-\dim U
+\end{equation*}
+\end{theorem}
+
+We clearly have the isomorphism theorems.
+\begin{theorem}{The First Isomorphism Theorem}{The First Isomorphism Theorem}
+Suppose $T\in \mathscr{L}(V,W)$, then
+\begin{equation}
+V / \snull T \cong \range T
+\end{equation}
+\end{theorem}
+
+
+\section{Duality}
+\subsection{Dual Space and Dual Map}
+\begin{definition}{Linear Functional}{Linear Functional}
+A linear functional is an element of $\mathscr{L}(V,\mathbb{F})$
+\end{definition}
+\begin{definition}{Dual Space}{Dual Space}
+For a vector space $V$, its dual space $V'$ is defined as 
+\begin{equation*}
+V' = \mathscr{L}(V,\mathbb{F})
+\end{equation*}
+\end{definition}
+
+Therefore, we have
+\begin{theorem}{Dimension of Dual Space}{Dimension Of Dual Space}
+\begin{equation}
+\dim V' = \dim V
+\end{equation}
+\end{theorem}
+
+Next we consider the basis of dual space. Given a basis of $V$. The matrix representation of a dual space is
+\begin{equation*}
+\begin{pmatrix}
+	a_1&a_2&\cdots &a_n
+\end{pmatrix}
+\end{equation*}
+Like the row vector while elements in $V$ is column vector. In this way, its standard basis is very clear.
+
+\begin{definition}{Dual Basis}{Dual Basis}
+If $v_1, \ldots ,v_n$ is a basis of $V$. The standard basis of dual space is
+\begin{equation}
+\varphi_j(v_k) = \delta_{jk} = 
+\begin{cases}
+	1, &\text{ if } k=j\\
+	0, & \text{ if }k\neq j
+\end{cases}
+\end{equation}
+\end{definition}
+
+\begin{remark}
+The standard basis of dual space acts as extraction of coefficients of linear combination. For $v\in V$, we have
+\begin{equation*}
+v = \sum_{i=1}^{n} \varphi_i(v)v_i
+\end{equation*}
+\end{remark}
+
+We do the same for linear maps.
+\begin{definition}{Dual map}{Dual Map}
+Suppose $T\in \mathscr{L}(V,W)$, The dual map of $T$ is the linear map $T'\in \mathscr{L}(W',V')$ defined for each $\varphi \in W'$ by
+\begin{equation}
+T'(\varphi) = \varphi \circ T
+\end{equation}
+\end{definition}
+
+\begin{example}{Dual Map of Differentiation linear map}{Dual Map Of Differentiation Linear Map}
+Define $D: \mathscr{P}(\mathbb{R}) \rightarrow  \mathscr{P}(\mathbb{R})$ by $Dp=p'$. Suppose $\varphi (p) = \int_0^1 p(x) \mathrm{d}x$, then
+\begin{equation*}
+D'(\varphi)(p) = (\varphi \circ D)(p)=\varphi(p') = p(1)-p(0)
+\end{equation*}
+\end{example}
+
+\begin{theorem}{Algebraic Properties of Dual Maps}{Algebraic Properties Of Dual Maps}
+Suppose $S,T\in \mathscr{L}(V,W)$ then
+\begin{itemize}
+\item $(S+T)' = S'+T'$ 
+\item $(\lambda T)' = \lambda T'$ 
+\item $(ST)' = T'S'$
+\end{itemize}
+\end{theorem}
+\begin{proof}
+the last one
+\begin{equation*}
+	(ST)'(\varphi) = \varphi \circ (ST) = (\varphi\circ S)\circ T = T'(\varphi\circ S) = (T'S')(\varphi)
+\end{equation*}
+\end{proof}
+
+\subsection{Null Space and Range of Dual Linear Maps}
+Our goal is to describe $\snull T'$ and $\range T'$ in terms of $\snull T$ and $\range T$.
+\begin{definition}{Annihilator}{Annihilator}
+For $U \subseteq V$, the annihilator of $U$, denoted $U^0$, is defined by
+\begin{equation}
+U^0 = \left\{ \varphi\in V': \forall u\in U, \varphi(u) = 0 \right\}
+\end{equation}
+\end{definition}
+
+\begin{remark}
+We can see annihilators as some generalization of orthogonality without specifying an inner product on the vector space. $\varphi(u)$ corresponds to $\varphi \cdot u$.
+\end{remark}
+
+\begin{theorem}{Annihilator is a subspace}{Annihilator Is A Subspace}
+Suppose $U \subseteq V$, then $U^0$ is a subspace of $V$.
+\end{theorem}
+\begin{proof}
+\begin{itemize}
+\item First $0\in U^0$.
+\item The addition and multiplication is easy to verify.
+\end{itemize}
+\end{proof}
+
+\begin{theorem}{The dimension of the annihilator}{The Dimension Of The Annihilator}
+Suppose $V$ is a finite dimensional vector space and $U$ is a subspace of $V$, then 
+\begin{equation*}
+\dim U^0 = \dim V-\dim U
+\end{equation*}
+\end{theorem}
+\begin{proof}
+Let  $i\in \mathscr{L}(U,V)$ be the inclusion map defined $\forall u\in U,i(u)=u$. Thus $i'\in \mathscr{L}(V',U')$ is a linear map and $\snull i'=U^0$. Because $\snull i' = \left\{ \varphi \in V' : \varphi \circ i = 0 \right\}$, that is, $\varphi(u)=0$
+
+We have 
+\begin{equation*}
+\dim\range i' +\dim \snull i' = \dim V'
+\end{equation*}
+then
+\begin{equation*}
+\dim U+\dim U^0 = \dim V
+\end{equation*}
+\end{proof}
+\begin{corollary}{}{cor2}
+Suppose $V$ is a finite dimensional vector space, $U$ is a subspace of $V$, then
+\begin{itemize}
+\item $U^0=\left\{ 0 \right\} \leftrightarrow U=V$ 
+\item $U^0=V' \leftrightarrow U = \left\{ 0 \right\}$
+\end{itemize}
+\end{corollary}
+
+\begin{theorem}{The Null Space of $T'$}{The Null Space Of T'}
+Suppose $V,W$ are finite dimensional and $T\in \mathscr{L}(V,W)$, then
+\begin{itemize}
+	\item $\snull T' = (\range T)^0$ (this is also right when $V,W$ are not finite dimensional)
+	\item $\dim\range T'=\dim\range T$
+	\item $\dim\snull T' = \dim\snull T+\dim W-\dim V$
+\end{itemize}
+\end{theorem}
+\begin{proof}
+\begin{enumerate}
+	\item First suppose $\varphi\in \snull T'$, then $\varphi\circ T=0$. Hence
+		\begin{equation*}
+		0=(\varphi\circ T)(v) = \varphi(Tv) \forall v\in V
+		\end{equation*}
+		thus $\varphi\in(\range T)^0$. The other way is the same.
+
+		(An intuitive understanding is that $A^tv=0 \Leftrightarrow v^t$ is orthogonal to $\range A$.)
+	\item We have
+		 \begin{equation*}
+		\dim\range T'=\dim\range T
+		\end{equation*}
+		From above
+\end{enumerate}
+\end{proof}
+\begin{remark}
+We can see $T$ and $T'$ as the same matrix 
+\begin{equation*}
+T = 
+\begin{pmatrix}
+A_{1,1} & A_{1,2} & \cdots & A_{1,n}\\
+A_{2,1} & A_{2,2} & \cdots & A_{2,n}\\
+\vdots & \vdots & \ddots & \vdots \\
+A_{m,1} & A_{m,2} & \cdots & A_{m,n}
+\end{pmatrix}
+\end{equation*}
+But $T$ takes column vectors from the right, while $T'$ takes row vectors from the left. The null space of $T'$ and the annihilator of $\range T$ both is the row vectors that makes $T$ zero.
+
+The second and third results are merely row rank $=$ column rank.
+\end{remark}
+
+\begin{theorem}{$T$ is surjective iff $T'$ is injective}{Surjective = Injective}
+Suppose $V,W$ are finite dimensional vector spaces, $T\in \mathscr{L}(V,W)$, then
+\begin{equation*}
+T \text{ is surjective } \leftrightarrow T' \text{ is injective }
+\end{equation*}
+\end{theorem}
+\begin{proof}
+$T$ is  surjective iff $\range T=W$ iff $(\range T)^0 = \snull T' = \left\{ 0 \right\}$ iff $T'$ is injective.
+\end{proof}
+
+\begin{theorem}{Range of $T'$}{Range Of T'}
+Suppose $V,W$ are finite dimensional vector spaces. $T\in \mathscr{L}(V,W)$, then
+\begin{itemize}
+\item $\dim \range T' = \dim \range T$.
+\item $\range T' = (\snull T)^0$.
+\end{itemize}
+\end{theorem}
+\begin{proof}
+The second one, if $\varphi\in \range T$, then $\exists \psi\in W'$ such that $\varphi = T'(\psi)$, If  $v\in \snull T$, then
+\begin{equation*}
+\varphi(v) = (T'(\psi))(v)=(\psi\circ T)(v) = \psi(Tv) = \psi(0)=0
+\end{equation*}
+Hence $\varphi\in (\snull T)^0$. And we have
+\begin{equation*}
+\dim \range T' = \dim (\snull T)^0
+\end{equation*}
+\end{proof}
+
+\begin{remark}
+This is easily understand because dual spaces are relative.
+\end{remark}
+
+\begin{theorem}{$T$ is injective = $T'$ is surjective}{Injective = Surjective}
+Suppose $V,W$ are finite dimensional vector spaces, $T\in \mathscr{L}(V,W)$, then
+\begin{equation*}
+T \text{ is injective } \leftrightarrow T' \text{ is surjective }
+\end{equation*}
+\end{theorem}
+
+\subsection{Matrix of Dual of Linear Maps}
+
+We've used many intuition from matrices so far. Here is a summary.
+\begin{theorem}{Matrix of $T'$}{Matrix Of T'}
+Suppose $V,W$ are finite dimensional vector spaces, $T\in \mathscr{L}(V,W)$, then
+\begin{equation*}
+\mathscr{M}(T') = (\mathscr{M}(T))^t
+\end{equation*}
+\end{theorem}
+
+
+\end{document}

@@ -1,0 +1,82 @@
+\documentclass{mathnote}
+
+\title{Smooth Manifolds}
+
+\begin{document}
+\maketitle
+
+In simple terms, smooth manifolds are spaces that locally look like $\mathbb{R}^n$, and on which we can do calculus. We can visualize them like smooth plane curves like circles and parabolas.
+
+The simplest manifold and topological manifolds, which encode just the properties of what we mean by ``locally look like $\mathbb{R}^n$ ''. However, to do calculus (volume, curvature, etc.), we need a stronger restriction -- the notion of smoothness. Intuitively, we can describe smoothness by having a tangent structure that moves continuously from point to point. For more sophisticated applications we can restrict it to be embedded in some ambient Euclidean vector space. The structure of this ambient space is superfluous that is not guaranteed by the internal structure of the manifold itself.
+
+Also, it is evidently that we cannot define smoothness solely by topological structure. A circle and a square are homeomorphic topological space, but we all agree that square is not smooth but circle is. Therefore, we should think a smooth manifold has two layers of structure: topological manifolds and smoothness.
+
+\section{Topological Manifolds}
+\begin{definition}{Topological Manifolds}{Topological Manifolds}
+Suppose $(M,\mathcal{T})$ is a topological space, we say that $M$ is a topological manifold of dimension $n$ if it has the following property:
+\begin{itemize}
+\item $M$ is a Hausdorff space. $\forall p\neq q$ in $M$, there are disjoint open sets $U,V \subseteq M$ such that $p\in U,q\in V$.
+\item $M$ is second-countable. There exists a countable basis for the topology of $M$.
+\item $M$ is locally Euclidean of dimension $n$ : Each point of $M$ has a neighborhood that is homeomorphic to an open subset of $\mathbb{R}^n$, in the Euclidean topology. We call the $n$ here the dimension of the topological manifold, denoted $\dim M$.
+\end{itemize}
+
+The last property can be expressed explicitly as: $\forall p\in M, \exists$ open set $U \subseteq M,p\in U$ and $\hat{U}\subseteq \mathbb{R}^n$ such that $U \cong \hat{U}$.
+\end{definition}
+
+\begin{remark}
+We can change the definition to letting $U$ to be homeomorphic to some open balls in $\mathbb{R}^n$. This is equivalent to the original definition.
+
+\begin{proof}
+If we have a neighborhood that is homeomorphic to a open subspace of $\mathbb{R}^n$, then we have an open ball subspace that would do.
+\end{proof}
+
+We also abbreviate $M$ being a topological manifold of dimension  $n$ by $M^n$. It is worth mentioning that we do not consider spaces with mixed dimensions, like a disjoint union of a plane and a line. The dimension here is global to all the point in the space.
+\end{remark}
+
+\begin{theorem}{Topological Invariant of Dimension}{Topological Invariant of Dimension}
+A nonempty $n$-dimensional topological manifold cannot be homeomorphic to an  $m$-dimensional manifold unless $m=n$.
+\end{theorem}
+\begin{remark}
+The empty set satisfies the definition of a topological manifold of dimension $n$ for every $n$. But in most circumstances we shall just ignore the trivial case.
+\end{remark}
+
+A basic example of an $n$-dimensional topological space is $\mathbb{R}^n$ itself. As every metrizable space is Hausdorff and $\left\{ B(a,r)\mid a\in \mathbb{Q}^n, r\in \mathbb{Q} \right\}$ is a countable basis.
+
+\subsection{Coordinate Chart}
+
+\begin{definition}{Coordinate Chart}{Coordinate Chart}
+Let $M$ be a topological manifold of dimension $n$, a coordinate chart on $M$ is a pair $(U, \varphi)$, where $U$ is an open set of $M$ and $\varphi: U \rightarrow \hat{U}$ is a homeomorphism from  $U$ to an open subset $\hat{U} = \varphi(U) \subseteq \mathbb{R}^n$.
+\end{definition}
+By the definition of a topological manifold, $\forall p\in M$, we can find a neighborhood where we can define a $(U,\varphi)$.
+\begin{itemize}
+\item If $\varphi(p) = 0$, we say that the chart is centered at $p$. (We can always find a chart centered at $p$ by subtracting $\varphi(p)$.
+\item Given a $(U,\varphi)$, we say $U$ a coordinate domain. If $\varphi(U)$ is a ball, we say $U$ a coordinate ball.
+\item $\varphi$ is called a (local) coordinate map. And the component functions $(x^1, \ldots , x^n)$ of $\varphi$ are called local coordinates on $U$. We have $\varphi(p) = \left(x^1(p), \ldots ,x^n(p)\right)$.
+\end{itemize}
+
+\subsection{Examples}
+
+\begin{example}{Graphs of Continuous Functions}{Graphs of Continuous Functions}
+Let $U \subseteq \mathbb{R}^n$ be an open set. And $f: U \rightarrow \mathbb{R}^k$ be a continuous function. The graph of $f$ is the subset of $\mathbb{R}^n \times \mathbb{R}^k$ defined by
+\begin{equation}
+\Gamma(f) = \left\{ (x,y)\in \mathbb{R}^n \times \mathbb{R}^k: x\in U \land y = f(x) \right\}
+\end{equation}
+with the subspace topology. Let $\pi: \mathbb{R}^n \times \mathbb{R}^k \rightarrow \mathbb{R}^n$ be the projection map, and let $\varphi: \Gamma(f) \rightarrow U$ be the restriction of $\pi$ to $\Gamma(f)$.
+
+\begin{equation*}
+\varphi(x,y) = x, (x,y)\in \Gamma(f)
+\end{equation*}
+Then $\Gamma(f)$ is a topological manifold of dimension $n$. $(\Gamma(f),\varphi)$ is a global coordinate chart.
+\end{example}
+\begin{example}{Spheres}{Spheres}
+For each $n\in \mathbb{N}$, the uni sphere $\mathbb{S}^n$ is a subspace of $\mathbb{R}^{n+1}$, and a local part (hemisphere would do) is the graph of a continuous mapping.
+\end{example}
+\begin{example}{Projective Spaces}{Projective Spaces}
+The $n$-dimensional real projective space $\mathbb{R}\mathbb{P}^n$, is defined as $(X,\mathcal{T})$, where
+\begin{itemize}
+\item $X$ is the 1-dimensional linear subspaces of  $\mathbb{R}^n$. (The lines that cross the origin)
+\item $\mathcal{T}$ is the quotient topology.
+\end{itemize}
+\end{example}
+
+\end{document}

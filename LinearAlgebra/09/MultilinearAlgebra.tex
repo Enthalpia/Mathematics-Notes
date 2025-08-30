@@ -1,0 +1,384 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\chapter{Multilinear Algebra and Determinants}
+
+We investigate the bilinear forms and quadratic forms on a vector space.
+
+\begin{plainblackenv}
+Standing Assumptions:
+\begin{itemize}
+\item $\mathbb{F}$ denotes $\mathbb{R}$ or $\mathbb{C}$.
+\item $V,W$ are finite dimensional nonzero vector spaces over $\mathbb{F}$.
+\end{itemize}
+\end{plainblackenv}
+
+\section{Bilinear Forms and Quadratic Forms}
+\subsection{Bilinear Forms}
+Well actually a bilinear form should be phrased as ``bilinear functional''.
+
+\begin{definition}{Bilinear Forms}{Bilinear Forms}
+a bilinear form on $V$ is a function $\beta: V \times V \rightarrow \mathbb{F}$ such that
+\begin{equation*}
+v \mapsto \beta(v,u) \quad \text{ and }\quad v \mapsto \beta(u,v)
+\end{equation*}
+are both linear functionals.
+\end{definition}
+
+This explicitly means that $\beta$ satisfies:
+\begin{itemize}
+\item $\beta(au+bv,w) = a \beta(u,w) + b \beta(v,w)$.
+\item $\beta(u,av+bw) = a \beta(u,v) + b \beta(u,w)$.
+\end{itemize}
+Note that a bilinear form differs from inner products, it does not require symmetry. Also, a bilinear form is usually not a linear functional from $V \times V \rightarrow \mathbb{F}$, for $\beta(u_1+u_2,v_1+v_2)\neq \beta(u_1,v_1)+\beta(u_2,v_2)$.
+
+\begin{definition}{$V^{(2)}$}{V2}
+The set of bilinear forms is denoted $V^{(2)}$.
+\end{definition}
+It is easy to see that $V^{(2)}$ is indeed a vector space with the usual addition and scalar multiplication of functions. We usually represent a bilinear form by a matrix.
+
+\begin{definition}{Matrix of a Bilinear Form}{Matrix of a Bilinear Form}
+Suppose $\beta$ is a bilinear form on $V$ and $e_1, \ldots ,e_n$ is a basis of $V$. The matrix of $\beta$ to the basis is defined to be $\mathscr{M}(\beta) \in \mathbb{F}^{n \times n}$:
+\begin{equation*}
+\mathscr{M}(\beta) _{j,k} = \beta(e_j,e_k)
+\end{equation*}
+\end{definition}
+This can be seen as the bilinear form on $\mathbb{F}^{n}$, for $V\cong \mathbb{F}^{n}$, this is quite natural. The result also implies that $V^{(2)}\cong \mathbb{F}^{n \times n}$. Also, in matrix form, if $(v_1,v_2)\in \mathbb{F}^{n}\times \mathbb{F}^{n}$, then we have
+\begin{equation*}
+\beta(v_1,v_2) = v_1^T \mathscr{M}(\beta) v_2.
+\end{equation*}
+
+\begin{corollary}{Dimension of $V^{(2)}$}{Dimension of V2}
+The map $\beta \rightarrow \mathscr{M}(\beta)$ above is an isomorphism of $V^{(2)}\rightarrow \mathbb{F}^{n \times n}$.
+
+Therefore, $\dim V^{(2)} = (\dim V)^2$.
+\end{corollary}
+
+\begin{proposition}{Composition of a Bilinear Form and an Operator}{Composition of a Bilinear Form and an Operator}
+Suppose $\beta\in V^{(2)}$ and $T\in \mathscr{L}(V)$, then defined $\alpha,\rho\in V^{(2)}$
+\begin{equation*}
+\alpha(u,v) = \beta(u,Tv)\qquad \rho(u,v) = \beta(Tu,v)
+\end{equation*}
+We have
+\begin{equation*}
+\mathscr{M}(\alpha) = \mathscr{M}(\beta)\mathscr{M}(T) \qquad \mathscr{M}(\rho) = \mathscr{M}(T)^t \mathscr{M}(\beta)
+\end{equation*}
+\end{proposition}
+
+\begin{proposition}{Change of Basis of Bilinear Forms}{Change of Basis of Bilinear Forms}
+Suppose $\beta\in V^{(2)}$ and $e_k,f_k$ are basis of $V$. $A$ and $B$ are matrices of $\beta$ to $e_k$ and $f_k$. Let $C = \mathscr{M}(I,e_k,f_k)$, then
+\begin{equation}
+A = C^tBC
+\end{equation}
+\end{proposition}
+
+\begin{remark}
+We notice that this change of basis formula is different from that of change of basis, which is $A = C ^{-1}BC$.
+
+We shall clarify that the nature of bilinear functions and operators are different. The transplantation of previous theorems may sometimes fail. We are confident to say that for $\mathbb{F}=\mathbb{R}$, for a symmetric matrix $A$, there is a $C$ that $C^tC=I$ and $C^tAC$ is symmetric according to the real spectral theorem. But for an arbitrary $\mathbb{F}$ we need to restate the base-changing condition.
+\end{remark}
+
+\subsection{Symmetric Bilinear Forms}
+
+\begin{definition}{Symmetric Bilinear Forms}{Symmetric Bilinear Forms}
+A bilinear form $\rho\in V^{(2)}$ is called symmetric if
+\begin{equation*}
+\forall u,w\in V,\rho(u,w) = \rho(w,u)
+\end{equation*}
+The set of symmetric bilinear forms is denoted $V_{\text{sym}}^{(2)}$.
+\end{definition}
+
+The next result follows directly form the spectral theorem.
+\begin{theorem}{Symmetric Bilinear Forms are Diagonalizable}{Symmetric Bilinear Forms are Diagonalizable}
+Suppose $\rho\in V^{(2)}$. Then the following are equivalent.
+\begin{itemize}
+\item $\rho$ is a symmetric bilinear form.
+\item $\mathscr{M}(\rho,e_k)$ is a symmetric matrix for every basis of $V$.
+\item $\mathscr{M}(\rho,e_k)$ is a symmetric matrix for some basis of $V$.
+\item $\mathscr{M}(\rho,e_k)$ is a diagonal matrix for some basis $e_1, \ldots ,e_n$ of $V$.
+\end{itemize}
+
+Suppose $V$ is a real inner product space, and $\rho$ a symmetric bilinear form on $V$, then there is an orthonormal basis of $V$ to which $\rho$ has a diagonal matrix.
+\end{theorem}
+\begin{proof}
+Suppose $\rho$ is a symmetric bilinear form. Suppose $e_1, \ldots ,e_n$ is a basis of $V$ then $\rho(e_j,e_k)=\rho(e_k,e_j)$ for $\rho$ is symmetric. Thus $\mathscr{M}(\rho,e_i)$ is a symmetric matrix. $2 \rightarrow 3$ is obvious and showing $3 \rightarrow 1$ requires mere expanding from basis.
+
+To prove that $1 \rightarrow 3$ we use induction on $n=\dim V$. If $n=1$ then the result holds. If the result holds for less dimension then $n$, then if $\rho=0$, then the matrix is $0$. If $\rho\neq 0$, then $\exists u,v\in V, \rho(u,v)\neq 0$, we have
+\begin{equation*}
+2 \rho(u,v) = \rho(u+w,u+w)-\rho(u,u)-\rho(v,v)\neq 0
+\end{equation*}
+Hence there exists $v\in V, \rho(v,v)\neq 0$. Let $U = \left\{ u\in V: \rho(u,v)=0 \right\}$, then $U$ is the null space of the linear functional $u \mapsto \rho(u,v)$. We have $U\neq 0$ so $\dim U = n-1$ which means there is a basis $e_1, \ldots ,e_{n-1}$ such that $\rho|_{U \times U}$ has a diagonal matrix. Also, $e_1, \ldots ,e_{n-1},v$ is a basis of $V$. And $\rho(v,e_k)=\rho(e_k,v)=0$, so the matrix to this basis is diagonal.
+\end{proof}
+
+\subsection{Alternating Bilinear Forms}
+
+\begin{definition}{Alternating Bilinear Form}{Alternating Bilinear Form}
+A bilinear form is called alternating if
+\begin{equation*}
+\forall v\in V,\alpha(v,v)=0
+\end{equation*}
+The set of alternating bilinear forms is denoted $V_{\text{alt}}^{(2)}$.
+\end{definition}
+
+There is a more intuitive definition that relate to skew matrices.
+\begin{theorem}{Characterization of Alternating Bilinear Forms}{Characterization of Alternating Bilinear Forms}
+A bilinear form $\alpha$ on $V$ is alternating iff
+\begin{equation*}
+\forall u,v\in V, \alpha(u,v) = -\alpha(v,u)
+\end{equation*}
+\end{theorem}
+\begin{proof}
+\begin{equation*}
+\begin{aligned}
+	0&=\alpha(u+w,u+w)\\
+	 &=\alpha(u,u) + \alpha(u,w)+\alpha(w,u)+\alpha(w,w)\\
+	 &=\alpha(u,w)+\alpha(w,u)
+\end{aligned}
+\end{equation*}
+\end{proof}
+
+There is an obvious decomposition of bilinear forms into symmetric and alternating forms:
+\begin{theorem}{Symmetric-Alternating Decomposition}{Symmetric-Alternating Decomposition}
+\begin{equation}
+V^{(2)} = V_{\text{sym}}^{(2)} + V_{\text{alt}}^{(2)}
+\end{equation}
+\end{theorem}
+\begin{proof}
+Setting
+\begin{equation*}
+\rho(u,w) = \frac{1}{2}\left(\beta(u,w) + \beta(w,u)\right) \qquad \alpha(u,w) = \frac{1}{2} \left(\beta(u,w) - \beta(w,u)\right)
+\end{equation*}
+We'll have $\beta=\rho+\alpha$.
+\end{proof}
+
+\subsection{Quadratic Forms}
+\begin{definition}{Quadratic Form}{Quadratic Form}
+For $\beta\in V^{(2)}$, define a function $q_{\beta}:V \rightarrow \mathbb{F}$ by setting $q_{\beta} = \beta(v,v)$.
+
+A function $q: V \rightarrow \mathbb{F}$ is called a quadratic form on $V$ if there is a $\beta\in V^{(2)}$ such that $q=q_{\beta}$.
+\end{definition}
+
+It is easy to see that $q_{\beta} = 0$ iff $\beta$ is alternating.
+\begin{proof}
+	By the definition of alternating forms would suffice.
+\end{proof}
+
+On $\mathbb{F}^{n}$, a quadratic form is usually represented as
+\begin{equation}
+q(x_1, \ldots ,x_n) = \sum_{k=1}^{n} \sum_{j=1}^{n} A_{j,k}x_jx_k.
+\end{equation}
+
+The definition of a quadratic form require the mere existence of an associated bilinear form, it is easy to see that the bilinear forms corresponding to the specific quadratic form is not unique.
+
+\begin{theorem}{Characterization of Quadratic Forms}{Characterization of Quadratic Forms}
+Suppose $q: V \rightarrow \mathbb{F}$. Then the following are equivalent.
+\begin{itemize}
+\item $q$ is a quadratic form.
+\item There exists a \emph{unique} symmetric bilinear form $\rho\in V_{\text{sym}}^{(2)}$ such that $q = q_{\beta}$.
+\item $\forall \lambda\in \mathbb{F},v\in V$, we have $q(\lambda v) = \lambda^2q(v)$, and the function
+	\begin{equation*}
+		(u,w) \mapsto q(u+w)-q(u)-q(w)
+	\end{equation*}
+	is a symmetric bilinear form on $V$.
+\item The previous result hold specifically for $\lambda=2$. (Or $\lambda=\lambda_0$.)
+\end{itemize}
+\end{theorem}
+\begin{proof}
+\begin{itemize}
+\item If $q$ is a quadratic form, we let $q=q_{\beta}$ where $\beta\in V^{(2)}$. Let $\beta = \rho+\alpha$, where $\rho$ is symmetric. Then $q_{\beta} = q_{\rho}$ for $q_{\alpha}=0$.
+\item $q(\lambda v) = \rho(\lambda v,\lambda v) = \lambda^2 \rho(v,v)$. And the next part is obvious.
+\item Clearly $3 \rightarrow 4$.
+\item Letting
+	\begin{equation*}
+	\rho(u,w) = \frac{1}{2} \left(q(u+w)-q(u)-q(w)\right)
+	\end{equation*}
+	Then,
+	\begin{equation*}
+	\rho(v,v) = \frac{4q(v)-2q(v)}{2} = q(v)
+	\end{equation*}
+\end{itemize}
+\end{proof}
+
+\begin{remark}
+We have the set of quadratic forms $\cong V_{\text{sym}}^{(2)}$.
+\end{remark}
+
+By the spectral theorem, any symmetric matrix can be diagonized.
+\begin{theorem}{The Diagonalization of Quadratic Forms}{The Diagonalization of Quadratic Forms}
+Suppose $q$ is a quadratic form on $V$.
+\begin{itemize}
+\item There is a basis $e_1, \ldots ,e_n\in V$ and $\lambda_1, \ldots ,\lambda_n\in \mathbb{F}$ such that:
+	\begin{equation*}
+	q(x_1e_1+\cdots +x_ne_n) = \lambda_1 x_1^2+\cdots +\lambda_nx_n^2.
+	\end{equation*}
+	For all $x_1, \ldots ,x_n\in \mathbb{F}$.
+\item If $\mathbb{F}=\mathbb{R}$ and $V$ is an inner product space, then a basis can be chosen to be orthonormal.
+\end{itemize}
+\end{theorem}
+
+
+\section{Alternating Multilinear Forms}
+\subsection{Multilinear Forms}
+We give a similar definition of multilinear forms (functionals), which is a natural generalization of bilinear forms.
+
+\begin{definition}{$m$-linear form, $V^{(m)}$}{m-linear form Vm}
+For any $m\in \mathbb{Z}_+$, an $m$-linear form on $V$ is a function $\beta: V^m \rightarrow \mathbb{F}$, such that for each $k\in \left\{ 1, \ldots ,m \right\}$ and $\forall u_1, \ldots ,u_m\in V$, the function
+\begin{equation*}
+v \mapsto \beta(u_1, \ldots ,u_{k-1}, v,u_{k+1}, \ldots ,u_m)
+\end{equation*}
+is a linear map $V \rightarrow \mathbb{F}$.
+
+The set of $m$-linear forms is denoted $V^{(m)}$.
+\end{definition}
+
+\begin{definition}{Alternating Forms}{Alternating Forms}
+Suppose $m\in \mathbb{Z}_+$.
+\begin{itemize}
+\item A $m$-linear form $\alpha$ on $V$ is called alternating if $\alpha(v_1, \ldots ,v_m)=0$ if there is some $v_j=v_k$ for some $j\neq k$.
+\item The set of alternating $m$-linear form on $V$ is denoted $V_{\text{alt}}^{(m)}$.
+\end{itemize}
+\end{definition}
+
+\begin{theorem}{Alternating Multilinear Forms and Linear Independence}{Alternating Multilinear Forms and Linear Independence}
+Suppose $m\in \mathbb{Z}_+$ and $\alpha\in V_{\text{alt}}^{(m)}$ on $V$. Then if $v_1, \ldots ,v_m$ is a linear dependent list on $V$ then
+\begin{equation*}
+\alpha(v_1, \ldots ,v_m)=0
+\end{equation*}
+\end{theorem}
+\begin{proof}
+There is $v_k$ that is a linear combination of previous vectors. Let $v_k = b_1v_1+\cdots + b _{k-1}v_{k-1}$. then
+\begin{equation*}
+\begin{aligned}
+	\alpha(v_1, \ldots ,v_m) &= \alpha \left(v_1, \ldots ,v_{k-1}, \sum_{=1}^{k-1} b_jv_j, v_{k+1}, \ldots ,v_m\right)\\
+ &= \sum_{j=1}^{k-1} \alpha(v_1, \ldots ,v_{k-1}, b_jv_j, v_{k+1}, \ldots ,v_m)\\
+ &=0
+\end{aligned}
+\end{equation*}
+\end{proof}
+
+\begin{corollary}{An upper limit for nonzero alternating multilinear forms}{An upper limit for nonzero alternating multilinear forms}
+Suppose $m >\dim V$, then $0$ is the only alternating multilinear $m$-forms.
+\end{corollary}
+
+\begin{theorem}{Alternating Multilinear Forms and Permutations}{Alternating Multilinear Forms and Permutations}
+Suppose $m\in \mathbb{Z}_+$ and $\alpha\in V_{\text{alt}}^{(m)}$. Then
+\begin{equation*}
+\alpha(v_{j_1}, \ldots ,v_{j_m}) = \sign(j_1, \ldots ,j_m) \alpha(v_1, \ldots ,v_m).
+\end{equation*}
+Where $\sign $ is the permutation number (odd $-1$, and even $1$).
+\end{theorem}
+\begin{proof}
+We prove this by swapping the first two entries gives a factor $-1$:
+\begin{equation*}
+0=\alpha(v_1+v_2, v_1+v_2, v_3, \ldots ,v_m) = \alpha(v_1, v_2,v_3, \ldots ,v_m) + \alpha(v_2,v_1,v_3, \ldots ,v_m)
+\end{equation*}
+\end{proof}
+
+\begin{theorem}{The $(\dim V)$-multilinear alternating form}{The dim V-multilinear alternating form}
+Let $n=\dim V$. Let $e_1, \ldots ,e_n$ be a basis of $V$ and $v_1, \ldots ,v_n\in V$. Let
+\begin{equation*}
+v_k = \sum_{j=1}^{n} b _{k,j}e_j
+\end{equation*}
+Then
+\begin{equation*}
+	\alpha(v_1, \ldots ,v_n) = \alpha(e_1, \ldots ,e_n) \sum_{(j_1, \ldots ,j_n)\in \operatorname{perm} n} \sign (j_1, \ldots ,j_n) b _{1,j_1} \cdots b _{n,j_n}.
+\end{equation*}
+\end{theorem}
+
+Therefore, the space $V_{\text{alt}}^{(\dim V)}$ has dimension $1$. (We only need to construct a nonzero one).
+
+\section{Determinants}
+
+\begin{notation}{$\alpha_T$}{alphaT}
+Suppose $m\in \mathbb{Z}_+$ and $T\in \mathscr{L}(V)$. For  $\alpha\in V_{\text{alt}}^{(m)}$, define $\alpha_T\in V_{\text{alt}}^{(m)}$ by
+\begin{equation*}
+\alpha_T(v_1, \ldots ,v_m) = \alpha(Tv_1, \ldots ,Tv_m)
+\end{equation*}
+\end{notation}
+
+\begin{remark}
+We can easily show that the function $\alpha \mapsto \alpha_T$ is a linear operator on $V_{\text{alt}}^{(m)}$. As $\dim V_{\text{alt}}^{(m)} = 1$. Therefore, we define the determinant of the operator to be the multiple coefficient.
+\end{remark}
+
+\begin{definition}{Determinants}{Determinants}
+Suppose $T\in \mathscr{L}(V)$, Then determinant of $T$, denoted by $\det T$ is defined to be the unique number in $\mathbb{F}$ such that
+\begin{equation*}
+\alpha_T = (\det T) \alpha
+\end{equation*}
+for all $\alpha\in V_{\text{alt}}^{(m)}$.
+
+The determinant of a matrix is defined by the determinant of the corresponding operator.
+\end{definition}
+
+\begin{remark}
+We shall see that when $\alpha(v_1, \ldots ,v_m)$ stands for the ``volume'' of the vectors, then the determinant is the ``volume change ratio'' after the operator $T$.
+\end{remark}
+
+\begin{theorem}{Determinant is an alternating multilinear form}{Determinant is an alternating multilinear form}
+Suppose $n\in \mathbb{Z}_+$, then the map that takes a list $v_1 , \ldots ,v_n\in \mathbb{F}^n$ to $\det (v_1, \ldots ,v_n)$ is an alternating $n$-linear form on $\mathbb{F}^n$.
+\end{theorem}
+\begin{proof}
+For the standart basis we have $\det T = \det (v_1, \ldots ,v_n)$. Let $\alpha$ be a multilinear form that $\alpha(e_1, \ldots ,e_n)=1$, then
+\begin{equation*}
+\det (v_1, \ldots ,v_n) = \det T \alpha(e_1, \ldots ,e_n) = \alpha(v_1, \ldots ,v_n).
+\end{equation*}
+\end{proof}
+
+This result implies several familiar consequences. The formula of determinant of a matrix is
+\begin{equation}
+	\det A = \sum_{(j_1, \ldots ,j_n)\in \operatorname{perm} n} \sign (j_1, \ldots ,j_n) A _{1,j_1} \cdots A _{n,j_n}.
+\end{equation}
+
+For upper-triangular matrices with diagonal entries $\lambda_1, \ldots ,\lambda_n$ we have
+\begin{equation}
+\det A = \lambda_1 \cdots \lambda_n
+\end{equation}
+
+\subsection{Properties of Determinants}
+\begin{theorem}{Determinants are Multiplicative}{Determinants are Multiplicative}
+\begin{itemize}
+\item Suppose $S,T\in \mathscr{L}(V)$, then $\det (ST) = \det S \det T$.
+\item For square matrices $A,B\in \mathbb{F}^{n \times n}$, we have $\det(AB) = \det A\det B$.
+\end{itemize}
+\end{theorem}
+\begin{proof}
+Let $\dim V=n$, we have
+\begin{equation*}
+\begin{aligned}
+	\alpha_{ST}(v_1, \ldots ,v_n) &= \alpha(STv_1, \ldots ,STv_n)\\
+	      &= (\det S) \alpha(Tv_1, \ldots ,Tv_n)\\
+	      &= (\det S)(\det T) \alpha(v_1, \ldots ,v_n)
+\end{aligned}
+\end{equation*}
+Therefore we have $\det (ST) = \det S \det T$.
+\end{proof}
+
+\begin{theorem}{Invertible and Nonzero Determinant}{Invertible and Nonzero Determinant}
+An operator $T\in \mathscr{L}(V)$ is invertible iff $\det T\neq 0$. Furthermore, $\det (T ^{-1}) = 1 / \det T$.
+\end{theorem}
+\begin{proof}
+Suppose $T$ is invertible, then $T T ^{-1}=I$, then $\det T \det (T ^{-1}) = 1$. Thus $\det T\neq 0$.
+
+Suppose $\det T\neq 0$, $\forall v\neq 0$, let $v,e_2, \ldots ,e_n$ be a basis, then
+\begin{equation*}
+\alpha(Tv,Te_2, \ldots ,Te_n) = (\det T) \alpha(v,e_2, \ldots ,e_n)\neq 0
+\end{equation*}
+Therefore $Tv\neq 0$.
+\end{proof}
+
+\begin{theorem}{Eigenvalues and Determinants}{Eigenvalues and Determinants}
+Suppose $T\in \mathscr{L}(V)$, and $\lambda\in \mathbb{F}$. Then $\lambda$ is an eigenvalue iff $\det(T- \lambda I)=0$.
+\end{theorem}
+\begin{proof}
+$\lambda$ is an eigenvalue iff $T- \lambda I$ is invertible.
+\end{proof}
+
+
+\begin{theorem}{Determinant is a Similarity Invariant}{Determinant is a Similarity Invariant}
+Suppose $T\in \mathscr{L}(V)$, and $S: W \rightarrow V$ is an invariant linear map, then
+\begin{equation*}
+\det (S ^{-1}TS) = \det T
+\end{equation*}
+\end{theorem}
+
+\end{document}

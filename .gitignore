@@ -1,0 +1,12 @@
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex.gz
+*.toc
+
+# ignore all PDF files except main.pdf in the main directory
+*.pdf
+!main.pdf
+/*.pdf

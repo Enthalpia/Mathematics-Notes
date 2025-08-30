@@ -1,0 +1,819 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\chapter{Complex Integration}
+
+\section{Fundamental Theorems}
+Similar to the real case, we have definite and indefinite integrals for complex field.
+
+\subsection{Line Integral}
+A direct generalization of the real integral is the integral of a function $f: [a,b] \subseteq \mathbb{R} \rightarrow \mathbb{C}$. If $f(t) = u(t)+iv(t)$, then
+\begin{equation}
+	\int_a^b f(t) \mathrm{d} t = \int_a^b u(t) \mathrm{d} t + i \int_a^b v(t) \mathrm{d} t
+\end{equation}
+It has similar properties as the real integral, such as linearity, additivity, and monotonicity. If $c\in \mathbb{C}$ we have
+\begin{equation*}
+	\int_a^b c f(t) \mathrm{d} t = c \int_a^b f(t) \mathrm{d} t
+\end{equation*}
+and if $a \leq b$ the fundamental inequality holds:
+\begin{equation*}
+	\left| \int_a^b f(t) \mathrm{d} t \right| \leq \int_a^b |f(t)| \mathrm{d} t
+\end{equation*}
+
+This would naturally turn to our definition of a complex line integral.
+
+\begin{definition}{Complex Line Integral}{Complex Line Integral}
+	Let $\gamma$ be a piecewise differentiable arc with equation $z=z(t)$, $a\leq t\leq b$. If $f: \gamma \rightarrow \mathbb{C}$ is continuous on $\gamma$, then the complex line integral of $f$ along $\gamma$ is defined as
+	\begin{equation}
+		\int_{\gamma} f(z) \mathrm{d} z = \int_a^b f(z(t)) z'(t) \mathrm{d} t
+	\end{equation}
+\end{definition}
+It is easy to show that the definition is invariant under reparametrization.
+
+\begin{remark}
+The integral can be defined by the Riemann sum just like the real case. If $\gamma$ is a polygonal arc, then the integral can be computed as
+\begin{equation}
+	\int_{\gamma} f(z) \mathrm{d} z =\lim \sum_{k=1}^n f(z_k) (z_k - z_{k-1})
+\end{equation}
+where $z_k$ are the points on $\gamma$ with max distance tend to zero.
+\end{remark}
+
+\begin{proposition}{Some Properties of Line Integrals}{Some Properties of Line Integrals}
+Similar of that of $\mathbb{R}^2$, we have
+\begin{itemize}
+	\item The reverse direction of $\gamma$ is $-\gamma$, then
+		\begin{equation}
+			\int_{-\gamma} f(z) \mathrm{d} z = -\int_{\gamma} f(z) \mathrm{d} z
+		\end{equation}
+	\item Additive to the arcs:
+		\begin{equation}
+			\int_{\gamma_1 + \gamma_2} f(z) \mathrm{d} z = \int_{\gamma_1} f(z) \mathrm{d} z + \int_{\gamma_2} f(z) \mathrm{d} z
+		\end{equation}
+	\item Expanding the integral, if $f=u+iv$ we have
+		\begin{equation*}
+			\int_{\gamma} f(z) \mathrm{d} z = \int_{\gamma} u \mathrm{d} x - v \mathrm{d} y + i \int_{\gamma} v \mathrm{d} x + u \mathrm{d} y
+		\end{equation*}
+	\item For respect to the arc length, we have
+		\begin{equation*}
+			\int_{\gamma} f(z) \mathrm{d} s = \int_{\gamma} f(z) \left|\mathrm{d} z\right| = \int_a^b f(z(t)) \left|z'(t)\right| \mathrm{d} t
+		\end{equation*}
+		And the fundamental inequality holds:
+		\begin{equation*}
+			\left| \int_{\gamma} f(z) \mathrm{d} s \right| \leq \int_{\gamma} |f(z)| \mathrm{d} s
+		\end{equation*}
+\end{itemize}
+\end{proposition}
+
+For integrals of the conjugate, we have
+\begin{equation}
+	\int_{\gamma} f(z) \overline{\mathrm{d} z} = \overline{\int_{\gamma} \overline{f(z)} \mathrm{d} z}
+\end{equation}
+So we can write:
+\begin{equation*}
+\begin{aligned}
+	\int_{\gamma}f(z) \mathrm{d} x &= \frac{1}{2} \left( \int_{\gamma} f(z) \mathrm{d} z + \int_{\gamma} f(z) \overline{\mathrm{d} z} \right) \\
+	\int_{\gamma}f(z) \mathrm{d} y &= \frac{1}{2i} \left( \int_{\gamma} f(z) \mathrm{d} z - \int_{\gamma} f(z) \overline{\mathrm{d} z} \right)
+\end{aligned}
+\end{equation*}
+
+\subsection{Rectifiable Arcs}
+\begin{definition}{Rectifiable Arcs}{Rectifiable Arcs}
+The length of an arc can be defined as the least upper bound of the sums of the lengths of the polygonal arcs that approximate it. That is,
+\begin{equation*}
+	\left|z(t_1)-z(t_0)\right| + \cdots + \left|z(t_n)-z(t_{n-1})\right| = \sum_{k=1}^n \left|z(t_k)-z(t_{k-1})\right|
+\end{equation*}
+where $a = t_0 < t_1 < \cdots < t_n = b$ is a partition of the interval $[a,b]$. The arc is said to be rectifiable if the length is finite.
+\end{definition}
+
+It is easy to show that piecewise differentiable arcs are rectifiable.
+
+When $\gamma$ is rectifiable, we can define the integral with respect to the arc length:
+\begin{definition}{Integral with Respect to Arc Length}{Integral with Respect to Arc Length}
+	Let $\gamma$ be a rectifiable arc, then the integral of $f$ with respect to the arc length is defined as
+	\begin{equation}
+		\int_{\gamma} f(z) \mathrm{d} s = \lim \sum_{k=1}^n f(z_k) \left|z_k - z_{k-1}\right|
+	\end{equation}
+\end{definition}
+
+\subsection{Line Integral As Functions of Arcs}
+If $p,q: \mathbb{R}^2 \rightarrow \mathbb{R}^2$ are continuous in $\Omega$, and $\gamma$ is any piecewise differentiable arc in $\Omega$, then we have a function
+\begin{equation}
+	\gamma \mapsto \int_{\gamma} p \mathrm{d} x + q \mathrm{d} y
+\end{equation}
+This is a functional on the space of arcs in $\Omega$. In analysis, we've known that the integral is zero for every closed curve is called a \textbf{conservative field}.
+
+\begin{quote}
+	Let $p,q$ be continuously differentiable on a region $\Omega \subseteq \mathbb{R}^2$. The line integral $ \displaystyle \int_{\gamma} p \mathrm{d} x + q \mathrm{d} y$ is independent of the path $\gamma$ if and only if there exists a function $U: \Omega \rightarrow \mathbb{R}^2$ such that $\displaystyle p = \frac{\partial U}{\partial x}$ and $\displaystyle q = \frac{\partial U}{\partial y}$.
+
+	The function $U$ is called a \textbf{potential function} of the field $(p,q)$, and it is unique up to an additive constant.
+\end{quote}
+
+Now, when do a continuous function $f: \mathbb{C}\rightarrow \mathbb{C}$ has a primitive function $F$ such that $F'=f$ ?
+
+Let $f=u+iv$, then we have
+\begin{equation*}
+	u = \frac{\partial F}{\partial x}, \quad v = \frac{\partial F}{\partial y}
+\end{equation*}
+Comparing to the last theorem, we have
+\begin{theorem}{Indefinite Integralizable Functions}{Indefinite Integralizable Functions}
+	If $f$ is continuous, and has continuous partial derivatives in a simply connected domain $\Omega \subseteq \mathbb{C}$, then there exists a function $F: \Omega \rightarrow \mathbb{C}$ such that $F'=f$ iff the integral $\displaystyle \int_{\gamma} f(z) \mathrm{d} z$ is only dependent on the endpoints of $\gamma$ and not on the path taken.
+\end{theorem}
+NOTE that the region can have holes, but it must be simply connected.
+
+An immediate example shows that
+\begin{equation}
+\int_{\gamma} (z-a)^n \mathrm{d} z = 0, n\in \mathbb{N}
+\end{equation}
+As $(z-a)^n$ has a primitive function $\displaystyle F(z) = \frac{(z-a)^{n+1}}{n+1}$, which is analytic on $\mathbb{C}$. If $n<0,n\neq -1$, then the result also holds for any closed curves that do not pass through $a$.
+
+For $n=-1$, the result does not hold, for a circle $C: z=a+ \rho e^{it},0\leq t\leq 2 \pi$, we have
+\begin{equation}
+	\int_C \frac{\mathrm{d} z}{z-a} = \int_0^{2\pi} i \rho e^{it} \cdot \frac{1}{\rho e^{it}} \mathrm{d} t = 2 \pi i
+\end{equation}
+\begin{remark}
+This implies that it is impossible to define a single-valued branch of $\log (z-a)$ in an annulus $\rho_1 < |z-a| < \rho_2$.
+\end{remark}
+
+\subsection{Cauchy's Integral Theorem for Rectangles}
+
+Let $R$ be a rectangle defined $a\leq x\leq b,c\leq y\leq d$. Let the boundary (counterclockwise) be $\partial R$. (Note that $R$ is closed, so not a region)
+
+\begin{theorem}{Cauchy's Integral Theorem on Rectangles}{Cauchys Integral Theorem on Rectangles}
+If $f$ is analytic on $R$, (on an open region containing $R$), then
+\begin{equation}
+	\int_{\partial R} f(z) \mathrm{d} z = 0
+\end{equation}
+\end{theorem}
+\begin{proof}
+Let
+\begin{equation*}
+	\eta(R) = \int_{\partial R} f(z) \mathrm{d} z
+\end{equation*}
+Divide $R$ into four congruent rectangles $R^{(1)}, R^{(2)}, R^{(3)}, R^{(4)}$ with the same orientation as $R$, then we have
+\begin{equation*}
+	\eta(R) = \eta(R^{(1)}) + \eta(R^{(2)}) + \eta(R^{(3)}) + \eta(R^{(4)})
+\end{equation*}
+We have one of the four rectangles $R^{(k)}$, denoted by $R_1$, having
+\begin{equation*}
+\left|\eta(R_1)\right| \geq \frac{1}{4} \left|\eta(R)\right|
+\end{equation*}
+
+Repeat the process and get $R \supset R_1 \supset R_2 \supset \cdots$, we have
+\begin{equation*}
+	\left|\eta(R_n)\right| \geq \frac{1}{4^n} \left|\eta(R)\right|
+\end{equation*}
+
+From the nested chain of closed sets, we have a $z^*\in R_n$ for all $n$, so for given $\epsilon>0$, there exists $\delta>0$ such that $\forall z, \left|z-z^*\right|<\delta$, we have
+\begin{equation*}
+\left|\frac{f(z)-f(z^*)}{z-z^*} - f'(z^*)\right| < \epsilon
+\end{equation*}
+Choose large enough $n$ that $R_n \subseteq \left\{ z: \left|z-z^*\right|<\delta \right\}$. From theorem \ref{thm:Indefinite Integralizable Functions}, we have
+\begin{equation*}
+	\int_{\partial R_n} \mathrm{d} z = 0, \qquad \int_{\partial R_n} z \mathrm{d} z = 0
+\end{equation*}
+So we write
+\begin{equation*}
+	\eta(R_n) = \int_{\partial R_n} \left( f(z) - f(z^*) - (z-z^*) f'(z^*) \right) \mathrm{d} z
+\end{equation*}
+Let $d_n,L_n$ denote the diagonal length and perimeter of $R_n$, so we have $d_n = 2^{-n}d, L_n = 2^{-n}L$, so
+\begin{equation*}
+	\left|\eta(R_n)\right| \leq \epsilon \int_{\partial R_n} \left|z-z^*\right| \left|\mathrm{d} z\right| \leq \epsilon d_n L_n = \epsilon 4^{-n} d L
+\end{equation*}
+So we get
+\begin{equation*}
+\left|\eta(R)\right| \leq \epsilon dL
+\end{equation*}
+As $\epsilon$ can be arbitrarily small, we have $\eta(R) = 0$.
+\end{proof}
+
+Now we weaken the conditions step by step.
+
+\begin{theorem}{Cauchy's Theorem on Stained Rectangles}{Cauchys Theorem on Stained Rectangles}
+Let $R'$ be a rectangle $R$ omitting a finite number of interior points $\zeta_i$, if  $f$ is analytic on $R'$ and 
+\begin{equation*}
+\lim_{z \to \zeta_i} (z-\zeta_i) f(z) = 0, i=1,2,\ldots,n
+\end{equation*}
+holds, then
+\begin{equation}
+	\int_{\partial R} f(z) \mathrm{d} z = 0
+\end{equation}
+\end{theorem}
+\begin{proof}
+We shall only consider one point, as $R$ can be splited into several rectangles $R_i$ with at most one hole.
+
+Let $R_0$ be a small rectangle surrounding $\zeta$, splitting shows that
+\begin{equation*}
+	\int_{\partial R} f(z) \mathrm{d} z = \int_{\partial R_0} f(z) \mathrm{d} z
+\end{equation*}
+For any $\epsilon>0$, choose small enough $R_0$ that
+\begin{equation*}
+\left|f(z)\right|\leq \frac{\epsilon}{\left|z-\zeta\right|}
+\end{equation*}
+Thus,
+\begin{equation*}
+	\left|\int_{\partial R}f(z) \mathrm{d} z\right| \leq \epsilon \int_{\partial R_0} \frac{\left|\mathrm{d} z\right|}{\left|z-\zeta\right|} \leq 8 \epsilon
+\end{equation*}
+\end{proof}
+
+Note the condition holds automatically if $f$ is bounded on $R'$.
+
+\subsection{Cauchy's Theorem in Disk}
+Let $\Delta$ denote an open disk $\left|z-z_0\right|<\rho$.
+\begin{theorem}{Cauchy's Theorem on Disk}{Cauchys Theorem on Disk}
+If $f(z)$ is analytic in an open disk $\Delta$. Then
+\begin{equation}
+\int_{\gamma} f(z) \mathrm{d} z = 0
+\end{equation}
+for every closed curve $\gamma$ in $\Delta$.
+\end{theorem}
+
+\begin{figure}[ht]
+    \centering
+    \incfig{diagram-of-f(z)}
+    \caption{Diagram of F(z)}
+    \label{fig:diagram-of-f(z)}
+\end{figure}
+
+\begin{proof}
+	Let $\displaystyle F(z) = \int_{\sigma} f(z)\mathrm{d} z$, where $\sigma$ is the rectangular route (either up or down is the same) from $z_0$ to $z$ as shown in Figure \ref{fig:diagram-of-f(z)}. Then by the two routes respectively, we have
+	\begin{equation*}
+		\frac{\partial F}{\partial x} = f(z), \quad \frac{\partial F}{\partial y} = i f(z)
+	\end{equation*}
+	Therefore, $F$ follows the Cauchy-Riemann equations, and $F'(z) = f(z)$.
+\end{proof}
+Similarly, we also have
+\begin{theorem}{Cauchy's Theorem on Disk with Holes}{Cauchy's Theorem on Disk with Holes}
+	Let $\Delta'$ be an open disk $\left|z-z_0\right|<\rho$ omitting a finite number of interior points $\zeta_i$, if $f$ is analytic on $\Delta'$ and
+	\begin{equation*}
+		\lim_{z \to \zeta_i} (z-\zeta_i) f(z) = 0, i=1,2,\ldots,n
+	\end{equation*}
+	then
+	\begin{equation*}
+		\int_{\gamma} f(z) \mathrm{d} z = 0
+	\end{equation*}
+	for every closed curve $\gamma$ in $\Delta'$.
+\end{theorem}
+
+\section{Cauchy's Integral Formula}
+
+\subsection{The Index of a Point}
+This formulate our notion of how many times a closed curve winds around a point not on the curve.
+
+\begin{lemma}{The Index Lemma}{The Index Lemma}
+	If $\gamma$ is a piecewise differentiable closed curve in $\mathbb{C}$, and $a$ is a point not on $\gamma$, then there exists $n\in \mathbb{Z}$ that
+	\begin{equation}
+		\int_{\gamma} \frac{\mathrm{d} z}{z-a} = 2 \pi i n
+	\end{equation}
+\end{lemma}
+\begin{proof}
+The simplest proof is computation. Let $\gamma:z=z(t)$, where $\alpha\leq t\leq \beta$, so we have
+\begin{equation*}
+h(t) = \int_{\alpha}^t \frac{z'(t)}{z(t)-a} \mathrm{d} t
+\end{equation*}
+it is continuous and differentiable on $[\alpha,\beta]$.
+\begin{equation*}
+	h'(t) = \frac{z'(t)}{z(t)-a}
+\end{equation*}
+Multiplying to the left, we have the derivative of the function $e^{-h(t)}(z(t)-a)$ is zero. So we have
+\begin{equation*}
+	e^{h(t)} = \frac{z(t)-a}{z(\alpha)-a}
+\end{equation*}
+Since $z(\alpha)=z(\beta)$, we have $e^{h(\beta)} = 1$, so $h(\beta) = 2 \pi i n$ for some integer $n$.
+
+\begin{definition}{Index of a Point to a Curve}{Index of a Point to a Curve}
+	If $\gamma$ is a piecewise differentiable closed curve in $\mathbb{C}$, and $a$ is a point not on $\gamma$, then the index of $a$ to $\gamma$ is defined as
+	\begin{equation}
+		n(\gamma,a) = \frac{1}{2\pi i} \int_{\gamma} \frac{\mathrm{d} z}{z-a}
+	\end{equation}
+	$n$ is also called the winding number of $\gamma$ around $a$.
+\end{definition}
+
+The following are some properties of the index:
+\begin{itemize}
+\item It is clear that $n(-\gamma,a) = -n(\gamma,a)$.
+\item If $\gamma$ lies in an open disk, and $a$ is outside of the open disk, then $n(\gamma,a) = 0$.
+\end{itemize}
+
+A closed curve $\gamma$ is a closed point set, and its complement is open so can be divided into components as open regions. We say $\gamma$ determines these regions.
+
+\begin{theorem}{Regions by a Closed Curve}{Regions by a Closed Curve}
+The function $a \mapsto n(\gamma,a)$ is constant for each region determined by $\gamma$.
+\end{theorem}
+\begin{proof}
+As two points in a region can be joined by a polygonal path. We only need to prove when the segment $ab$ does not meet $\gamma$ and lies in the same region.
+
+Outside the segment the function $\displaystyle \frac{z-a}{z-b}$ is never real and $\leq 0$. Then $\displaystyle \log \frac{z-a}{z-b}$ can be analytically defined on $\mathbb{C}-(-\infty ,0]$. Its derivative is what we want:
+\begin{equation*}
+	\frac{\mathrm{d}}{\mathrm{d} z} \log \frac{z-a}{z-b} = \frac{1}{z-a} - \frac{1}{z-b}
+\end{equation*}
+Therefore, we have
+\begin{equation*}
+	\int_{\gamma} \frac{\mathrm{d} z}{z-a} - \int_{\gamma} \frac{\mathrm{d} z}{z-b} = 0
+\end{equation*}
+\end{proof}
+
+Specifically, if $\left|a\right|$ is sufficiently large, then $n(\gamma,a) = 0$. So the index is zero for the unbounded region determined by $\gamma$.
+
+The case where $n(\gamma,a)=1$ is worth noting. For convenience, we want $a=0$.
+
+\begin{lemma}{When Index is 1}{When Index is 1}
+Let $z_1,z_2$ be points on a closed curve $\gamma$ which does not pass through $0$. Following the direction of the curve, we denote $\gamma_1$ be the subarc from $z_1$ to $z_2$, and $\gamma_2$ be the subarc from $z_2$ to $z_1$. Also assume $\im z_1 <0,\im z_2>0$. If $\gamma_1$ does not intersect the negative real axis, and $\gamma_2$ does not intersect the positive real axis, then $n(\gamma,0)=1$.
+\end{lemma}
+
+\begin{figure}[ht]
+    \centering
+    \incfig{when-index-is-1}
+    \caption{When Index is 1}
+    \label{fig:when-index-is-1}
+\end{figure}
+\begin{proof}
+Well this is a how we formulate our intuition of winding the origin once.
+
+Take a small circle around the origin, and the origin belongs to the unbounded region of the two sides, so we have $n(\gamma,0) = n(C,0)=1$.
+\end{proof}
+
+\subsection{The Integral Formula}
+
+Let $f(z)$ be analytic on an open disk $\Delta$. Let $\gamma$ be a closed piecewise differentiable curve in $\Delta$ and $a$ be a point not on $\gamma$.
+
+We apply Cauchy's theorem on disks with holes \ref{thm:Cauchy's Theorem on Disk with Holes} for the function
+\begin{equation}
+F(z) = \frac{f(z)-f(a)}{z-a}
+\end{equation}
+We have
+\begin{equation}
+	\int_{\gamma} F(z) \mathrm{d} z = 0
+\end{equation}
+\begin{equation}
+	\int_{\gamma} \frac{f(z)}{z-a} \mathrm{d} z = f(a) \int_{\gamma} \frac{\mathrm{d} z}{z-a}
+\end{equation}
+
+\begin{theorem}{Cauchy's Integral Theorem}{Cauchys Integral Theorem}
+Suppose $f$ is analytic on an open disk $\Delta$ (there can be exceptional points $\zeta_j$, such that $\lim_{z \to \zeta_j} (z-\zeta_j)f(z) =0$), and $\gamma$ be a closed piecewise differentiable curve in $\Delta$ and $a$ is a point not on $\gamma$. Then
+\begin{equation}
+	n(\gamma,a) f(a) = \frac{1}{2\pi i} \int_{\gamma} \frac{f(z)}{z-a} \mathrm{d} z
+\end{equation}
+NOTE here $a$ may not be in $\Delta$.
+\end{theorem}
+
+\begin{remark}
+	The region which $f$ is analytic on may also be not a disk, as long as theorem \ref{thm:Cauchy's Theorem on Disk with Holes} holds, we can still apply the theorem.
+\end{remark}
+
+An immediate usage is when $n(\gamma,a)=1$, we have
+\begin{equation}
+	f(a) = \frac{1}{2\pi i} \int_{\gamma} \frac{f(z)}{z-a} \mathrm{d} z, \quad a\notin \gamma, n(\gamma,a)=1
+\end{equation}
+This is called the Cauchy's integral formula.
+
+\subsection{Higher Order Derivatives}
+The Cauchy's integral formula provided us with a powerful tool to study the local properties of analytic functions.
+
+\begin{lemma}{Derivatives Under Integral}{Derivatives Under Integral}
+	The function $\varphi(z,t)$ is defined for $z\in \Omega$ and $t\in [\alpha,\beta]$ and is continuous. If $\forall t, z \mapsto \varphi(z,t)$ is analytic, then
+	\begin{equation}
+	F(z) = \int_{\alpha}^{\beta} \varphi(z,t) \mathrm{d} t
+	\end{equation}
+	is analytic in $\Omega$ and
+	\begin{equation}
+	F'(z) = \int_{\alpha}^{\beta} \frac{\partial \varphi(z,t)}{\partial z}\mathrm{d} t
+	\end{equation}
+\end{lemma}
+\begin{proof}
+	Using the definition, we have
+	\begin{equation*}
+	\frac{F(z)-F(z_0)}{z-z_0} = \int_{\alpha}^{\beta} \frac{\varphi(z,t)-\varphi(z_0,t)}{z-z_0} \mathrm{d} t
+	\end{equation*}
+	Just like the real case, get a small closed space around $z_0$, and continuity of $\varphi$ in a closed set implies uniform continuity. Using the $\epsilon-\delta$ language it is easy.
+\end{proof}
+
+Let $f$ be analytic on the region $\Omega$. For a point $a\in \Omega$ consider its $\delta$-neighborhood $\Delta = N_\delta(a) = \{ z: |z-a|<\delta \}$ contained in $\Omega$.  In $\Delta$ we have a circle $C$ around $a$, so we have
+\begin{equation*}
+	f(z) = \frac{1}{2 \pi i} \int_C \frac{f(\zeta)}{\zeta - z} \mathrm{d} \zeta, \qquad \forall z \text{ inside }C
+\end{equation*}
+Provided that the derivative can be done inside the integral, we have
+\begin{equation}
+	f'(z) = \frac{1}{2 \pi i} \int_C \frac{f(\zeta)}{(\zeta - z)^2} \mathrm{d} \zeta, \qquad \forall z \text{ inside }C
+\end{equation}
+And higher order derivatives can be computed similarly:
+\begin{equation}\label{eq:Cauchy's Integral Formula for Derivatives}
+	f^{(n)}(z) = \frac{n!}{2 \pi i} \int_C \frac{f(\zeta)}{(\zeta - z)^{n+1}} \mathrm{d} \zeta, \qquad \forall z \text{ inside }C
+\end{equation}
+As the choice of $a$ is arbitrary in $\Omega$, we've proven that $f$ has arbitrary order derivatives in $\Omega$.
+
+The following are some classical results of Cauchy's integral formula.
+\begin{theorem}{Morera's Theorem}{Moreras Theorem}
+	Let $f$ be continuous on a region $\Omega \subseteq \mathbb{C}$. If for every closed curve $\gamma$ in $\Omega$, we have
+	\begin{equation}
+		\int_{\gamma} f(z) \mathrm{d} z = 0
+	\end{equation}
+	then $f$ is analytic on $\Omega$.
+\end{theorem}
+\begin{proof}
+We know that $f$ is the derivative of some analytic function $F$ on $\Omega$. So $f$ is analytic.
+\end{proof}
+
+\begin{theorem}{Cauchy's Estimation}{Cauchys Estimation}
+	Let $f$ be analytic on a disk $\Delta$ with radius $r$ centered at $a$. Then for any $z\in \Delta$, we have
+	\begin{equation}
+		\left|f^{(n)}(z)\right| \leq \frac{M}{r^n} n!, \quad M = \max_{\left|\zeta-a\right|=r} \left|f(\zeta)\right|
+	\end{equation}
+\end{theorem}
+\begin{proof}
+We use Cauchy's integral formula \ref{eq:Cauchy's Integral Formula for Derivatives}. If we have $\left|f(z)\right|\leq M$ for all $z\in C$, then let the radius of the circle $C$ be $r$, we have
+	\begin{equation}
+		\left|f^{(n)}(z)\right| = \left|\frac{n!}{2 \pi i} \int_C \frac{f(\zeta)}{(\zeta - z)^{n+1}} \mathrm{d} \zeta\right| \leq \frac{M n!}{r^n}
+	\end{equation}
+\end{proof}
+
+\begin{theorem}{Liouville's Theorem}{Liouvilles Theorem}
+	Let $f$ be a bounded analytic function on $\mathbb{C}$. Then $f$ is constant.
+\end{theorem}
+\begin{proof}
+	For $n=1$ we have 
+	\begin{equation*}
+		\left|f'(z)\right| \leq \frac{M}{r}, \forall r>0
+	\end{equation*}
+	So we have $f'(z)=0$.
+\end{proof}
+This leads to a trivial proof of the fundamental theorem of algebra: Every non-constant complex polynomial $p(z)$ has at least one root in $\mathbb{C}$.
+\begin{proof}
+	Suppose $P(z)$ is a polynomial with degree $n\geq 1$. Then $f(z) = 1 / P(z)$ is bounded and analytic if there are no roots. By Liouville's theorem, $f(z)$ is constant, which contradicts.
+\end{proof}
+
+\section{Local Properties of Analytic Functions}
+
+\subsection{Removable Singularities and Taylor's Formula}
+
+We've shown that the Cauchy's Theorem holds for regions that have finite exceptional points $\zeta_j$. However, we will see that these are not actual singularities. They can be filled and thus producing a whole analytic function on the entire region.
+
+\begin{theorem}{Removable Singularities}{Removable Singularities}
+	If $\Omega$ is an open region, and $\Omega'$ is contracted by $\Omega$ omitting a point $a$. Suppose $f$ is analytic on $\Omega'$. Then there is an analytic function $g$ on $\Omega$ which $\forall z\in \Omega', g(z) = f(z)$ iff we have
+	\begin{equation*}
+	\lim_{z \to a} (z-a)f(z) = 0
+	\end{equation*}
+	The extended function $g$ is unique.
+\end{theorem}
+\begin{proof}
+The necessity and uniqueness is trivial to notice. To prove sufficiency we let $D$ be an open disk that $\overline{D} \subseteq \Omega$ with center $a$. Define $g(z) = f(z)$ for $z\notin D$ and
+\begin{equation*}
+g(z) = \frac{1}{2 \pi i}\int_{\partial D} \frac{f(\zeta) \mathrm{d} \zeta}{\zeta-z}, \qquad z\in D
+\end{equation*}
+Then $g$ is the desired function.
+\end{proof}
+
+If $f$ is analytic on $\Omega$ and $a\in \Omega$, we apply the theorem to the function
+\begin{equation*}
+	F(z) = \frac{f(z) - f(a)}{z-a}
+\end{equation*}
+Then $F(z)$ has an analytic extension on $\Omega$, denoted $f_1(z)$ with $f_1(z) = f'(a)$. Resume the construction, we have
+\begin{equation}
+\begin{aligned}
+	f(z) &= f(a) + (z-a) f_1(z)\\
+	f_1(z) &= f(a) + (z-a) f_2(z)\\
+	       &\cdots \cdots \\
+	f_{n-1}(z) &= f(a) + (z-a) f_n(z)\\
+\end{aligned}
+\end{equation}
+Getting together, we have
+\begin{equation*}
+f(z) = f(a) + (z-a)f_1(a) + (z-a)^2f_2(a) + \cdots + (z-a)^{n-1}f_{n-1}(a) + (z-a)^n f_n(z)
+\end{equation*}
+Taking $n^{\text{th}}$ derivative, we have
+\begin{equation*}
+f^{(n)}(a) = n!f_n(a)
+\end{equation*}
+
+\begin{theorem}{Taylor's Theorem}{Taylors Theorem}
+	If $f$ is analytic on $\Omega$ and $a\in \Omega$, then
+	\begin{equation*}
+	f(z) = \sum_{k=0}^{n-1} \frac{1}{k!}f^{(k)}(a) (z-a)^k + f_n(z)(z-a)^n
+	\end{equation*}
+	Where $f_n$ is analytic in $\Omega$.
+\end{theorem}
+For $z\in D$, writing
+\begin{equation*}
+f_n(z) = \frac{1}{2 \pi i}\int_{\partial D} \frac{f_n(\zeta)}{\zeta-z}\mathrm{d} \zeta = \frac{1}{2 \pi i}\int_{\partial D} \frac{f(\zeta)}{(\zeta-a)^n(\zeta-z)} \mathrm{d} \zeta - R(z)
+\end{equation*}
+The integrals in $R(z)$ has the form
+\begin{equation*}
+F_{\nu} = \int_{\partial D} \frac{\mathrm{d} \zeta}{(\zeta-a)^{\nu}(\zeta-z)}, \qquad \nu \geq 1
+\end{equation*}
+Taking it as a function of $a$. We have
+\begin{equation*}
+F_1 = \frac{1}{z-a}\int_{\partial D} \left(\frac{1}{\zeta-z}-\frac{1}{\zeta-a}\right)\mathrm{d} \zeta = 0
+\end{equation*}
+Then we have
+\begin{equation*}
+F_{\nu+1} = \frac{1}{\nu!} \frac{\mathrm{d}^{\nu}F_1}{\mathrm{d} a^{\nu}} = 0
+\end{equation*}
+Therefore, $R=0$ and we have
+\begin{equation}\label{eq:Evaluation of fn}
+f_n(z) = \frac{1}{2 \pi i}\int_{\partial D} \frac{f(\zeta) \mathrm{d} \zeta}{(\zeta-a)^{n}(\zeta-z)}, \qquad z\in D
+\end{equation}
+
+\subsection{Zeros and Poles}
+We'll see that local properties of an analytic function has surprising influence on the global properties of the function.
+
+\begin{theorem}{All Derivatives Zero}{All Derivatives Zero}
+	Let $f$ be analytic on $\Omega$ and $a\in \Omega$. If $f^{(n)}(a) = 0$ for all $n\geq 0$, then $f(z) = 0$ for all $z\in \Omega$.
+\end{theorem}
+\begin{proof}
+We write
+\begin{equation*}
+f(z) = f_n(z) (z-a)^n
+\end{equation*}
+according to Taylor's theorem. An estimation of $f_n$ can be obtained by equation \ref{eq:Evaluation of fn}: If $M = \max \left\{ f(z): z\in \partial D \right\}$ and the radius of $\partial D$ is $R$, then we have
+\begin{equation*}
+	\left|f_n(z)\right| \leq \frac{1}{2 \pi }\int_{\partial D} \frac{M \left|\mathrm{d} \zeta\right|}{R^n(R-\left|z-a\right|)} = \frac{M}{R^n} \cdot \frac{R}{R-\left|z-a\right|}
+\end{equation*}
+Thus we have
+\begin{equation*}
+\left|f(z)\right| \leq \left(\frac{\left|z-a\right|}{R}\right)^n \frac{MR}{R-\left|z-a\right|}, \qquad \forall z\in D, \forall n\in \mathbb{N}
+\end{equation*}
+As $\left|z-a\right| / R < 1$, we have $f(z) = 0$ for all $z\in D$.
+
+To show that $f(z)=0$ for all $z\in \Omega$, we denote
+\begin{equation*}
+E_1 = \left\{ z\in \Omega: \forall n\in \mathbb{N}, f^{(n)}(z) = 0 \right\}, \qquad E_2=\Omega-E_1
+\end{equation*}
+We have $E_1$ being open, as for any $z\in E_1$, we can find a disk $D$ such that $f(z) = 0$ for all $n\geq 0$. $E_2$ is also open for the derivatives of $f$ is continuous. Therefore, the connectedness of $\Omega$ implies that $E_1 = \Omega$ as $a\in E_1$.
+\end{proof}
+
+\paragraph{Local Properties of Zeros}
+
+Now, if $f$ is not identically zero on $\Omega$, then if $f(a) = 0$, there exists a smallest $n\in \mathbb{N}$ that $f^{(n)}(a) \neq 0$. We call $a$ a \textbf{zero of $f$ of order $n$}. Now it is possible to write
+\begin{equation}
+	f(z) = (z-a)^n f_n(z), \qquad \text{ where } f_n \text{ is analytic on } \Omega \text{ and } f_n(a) \neq 0
+\end{equation}
+\begin{remark}
+We can see that the zeros of a nontrivial analytic function has the same local properties as the polynomials, which can also be written in this form.
+\end{remark}
+
+As $f_n$ is continuous, there is a neighborhood $D$ of $a$ such that $f_n(z) \neq 0$ for all $z\in D$. In that neighborhood, $a$ is the only zero of $f$. Thus \textbf{All zeros of a nontrivial analytic function are isolated}.
+
+An equivalent formulation is as follows:
+\begin{quote}
+	$f,g$ are analytic on $\Omega$. If there is a set $S \subseteq \Omega$ containing a limit point in $S$, such that $f(z) = g(z)$ for all $z\in S$, then $f(z) = g(z)$ for all $z\in \Omega$.
+\end{quote}
+Particularly, if $f$ is analytic on a subreigion $\Omega' \subseteq \Omega$, and $f(z) = 0$ holds in $\Omega'$, then $f(z) = 0$ for all $z\in \Omega$. This is true for all subspaces $\Omega'$ that do not reduce to points, like lines, curves, etc.
+
+\paragraph{Poles}
+
+If a function $f$ is analytic on $\Omega-\left\{ a \right\}$, then we say $a$ is an \textbf{isolated singularity} of $f$ on $\Omega$. We've already considered removable singularities. Since we can extend the function to a whole analytic function on $\Omega$, there is no need for further discussion.
+
+Let $a$ be an isolated singularity of $f$. If $\displaystyle \lim_{z \to a} f(z) = \infty $, then we say $a$ is a \textbf{pole} of $f$. In a near neighborhood $\Omega'$ of $a$, we have $f(z)\neq 0$, and the function $g(z) = 1 / f(z)$ is defined and analytic on $\Omega'-\left\{ a \right\}$. As $\lim_{z \to a} g(z) = 0$, then $a$ is a removable singularity of $g$, with $g(a) = 0$. The zero $a$ has finite order $h$, with $g(z) = (z-a)^hg_h(z),g_h(a)\neq 0$. So we write
+\begin{equation}
+	f(z) = (z-a)^{-h} f_h(z), \qquad \text{ where } f_h \text{ is analytic on } \Omega' \text{ and } f_h(a) \neq 0
+\end{equation}
+The number $h$ is called the \textbf{order of the pole} of $f$ at $a$. Similar to the zeros, we can see that the poles of a nontrivial analytic function is also isolated. (This is partly because our definition of poles require a limit process, which is not possible for a non-isolated singularity.)
+
+\begin{remark}
+	There are singularities that are not removable and not poles. The limit process near such singularities does not exist.
+\end{remark}
+
+\begin{definition}{Meromorphic}{Meromorphic}
+	A function $f$ is called \textbf{meromorphic} on $\Omega$ if it is analytic on $\Omega$ except for some isolated singularities, which are all poles.
+\end{definition}
+
+\begin{proposition}{The Operations of Meromorphics}{The Operations of Meromorphics}
+	The sum, difference, product, and quotient of two non-trivial(not zero) meromorphic functions is also meromorphic. The composition of a meromorphic function with an analytic function is also meromorphic.
+\end{proposition}
+
+\begin{proof}
+	For any point $z$, we can write $f(z) = (z-z_0)^n f_n(z)$, where $f_n(z_0)\neq 0$, for a non-zero, non-pole point, $n=0$ would do. Substituting this for $f,g$ it is easy to verify the result.
+\end{proof}
+
+To make a clear classification of isolated singularities, we consider the expressions (where $\alpha\in \mathbb{R}$)
+\begin{enumerate}
+\item $\displaystyle \lim_{z \to a} \left|z-a\right|^{\alpha}\left|f(z)\right| = 0$.
+\item $\displaystyle \lim_{z \to a} \left|z-a\right|^{\alpha}\left|f(z)\right| = \infty$.
+\end{enumerate}
+
+If $f=0$, then 1 always holds, and 2 never holds.
+
+If $f$ is not trivial, and 1 holds for certain $\alpha_0$, then it holds for $\forall \alpha\geq \alpha_0$. Let $m\geq \alpha_0$ be an integer, then $(z-a)^mf(z)$ has a removable singularity that is a zero of finite order $k\in \mathbb{Z}_+$, so we have $(z-a)^mf(z) = (z-a)^kf_h(z)$, letting $h = m-k$, we have $f(z) = (z-a)^{-h} f_h(z)$, where $f_h$ is analytic on $\Omega'$ and $f_h(a)\neq 0$. Therefore, 1 holds for all $\alpha>h$, and 2 holds for all $\alpha\leq h$.
+
+If 2 holds for certain $\alpha_0$, then it holds for $\forall \alpha\leq \alpha_0$. We have a similar discussion with the same result as above.
+
+We conclude that there are three possibilities for an isolated singularity $a$ of a nontrivial function $f$:
+\begin{enumerate}[label=(\roman*)]
+	\item 1 holds for all $\alpha\in \mathbb{R}$, then $f=0$.
+	\item There is an integer $h$ such that 1 holds for all $\alpha>h$ and 2 holds for all $\alpha\leq h$. The integer $h$ is called the \textbf{algebraic order} of the singularity. It is positive for a pole, negative for a zero, and zero for a non-zero, non-pole analytic point.
+	\item Neither 1 nor 2 holds for any $\alpha\in \mathbb{R}$. Such singularities are called \textbf{essential isolated singularities}.
+\end{enumerate}
+
+If $a$ is a pole of order $h$, apply Taylor's theorem to the analytic function $(z-a)^hf(z)$, we have
+\begin{equation*}
+	(z-a)^hf(z) = B_h + B_{h-1}(z-a) + \cdots + B_1(z-a)^{h-1} + \varphi(z) (z-a)^h
+\end{equation*}
+where $\varphi(z)$ is analytic at $z=a$. Thus, we have
+\begin{equation}
+	f(z) = \frac{B_h}{(z-a)^h} + \frac{B_{h-1}}{(z-a)^{h-1}} + \cdots + \frac{B_1}{z-a} + \varphi(z)
+\end{equation}
+The part $\displaystyle \frac{B_h}{(z-a)^h} + \frac{B_{h-1}}{(z-a)^{h-1}} + \cdots + \frac{B_1}{z-a}$ is called the \textbf{singular part} of $f$ at $a$.
+
+
+The essential isolated singularity is more complicated. We can not write it in a similar form as above. The neighborhood of an essential singularity can come close to any value in $\mathbb{C}$ and $\infty $, as we shall see.
+
+\begin{theorem}{Weierstrass Theorem for Essential Isolated Singularities}{Weierstrass Theorem for Essential Isolated Singularities}
+	Let $f$ be analytic on $\Omega-\left\{ a \right\}$, where $a$ is an essential isolated singularity of $f$. Let $c\in \mathbb{C}$ be any number. Then for any neighborhood $\Omega'$ and any $r>0$, there exists a point $z_0\in \Omega',z_0\neq a$ such that
+	\begin{equation*}
+		\left|f(z_0)-c\right| < r
+	\end{equation*}
+	and there exists a point $z_1\in \Omega',z_1\neq a$ such that
+	\begin{equation*}
+		\left|f(z_1)\right| > \frac{1}{r}
+	\end{equation*}
+\end{theorem}
+\begin{proof}
+	If it is not true, there exists $A\in \mathbb{C},r>0$ and a neighborhood $\Omega'$ of $a$ such that $\forall z\in \Omega',z\neq a$, we have $\left|f(z)-A\right| \geq r$. Then $\forall \alpha<0$, we have
+	\begin{equation*}
+		\lim_{z \to a} \left|z-a\right|^{\alpha} \left|f(z)-A\right| = \infty 
+	\end{equation*}
+	Well, $a$ is not a essential isolated singularity of $f-A$, so there exists $\beta\in \mathbb{R}_+$ that
+	\begin{equation*}
+		\lim_{z \to a} \left|z-a\right|^{\beta} \left|f(z)-A\right| = 0
+	\end{equation*}
+	As $\lim_{z \to a} \left|z-a\right|^{\beta}\left|A\right| = 0$, we have
+	\begin{equation*}
+		\lim_{z \to a} \left|z-a\right|^{\beta} \left|f(z)\right| = 0
+	\end{equation*}
+	Contradicting that $a$ is an essential isolated singularity of $f$.
+
+	The infinity part is similar, if $\left|f(z)\right| \leq 1 / r$, then $\forall \alpha>0$, we have $\lim_{z \to a} \left|z-a\right|^{\alpha} \left|f(z)\right| = 0$, contradicting again.
+\end{proof}
+
+\paragraph{Treating Infinity as a Point}
+The notion of isolated singularity can also apply to $\infty $. The neighborhood of $\infty $ is seen as an open region containing some $\left\{ z: \left|z\right|>R \right\}$. We can transfer the neighborhood of $\infty $ to the neighborhood of $0$ by letting $\displaystyle g(z) = f(\frac{1}{z})$.
+
+If we have $g(z) = z^hg_h(z)$, then $f(z) = g(\frac{1}{z}) = z^{-h}f_h(z)$, where $f_h(z) = g_h(\frac{1}{z})$. The classification of removable singularities, poles, and essential isolated singularities can be done similarly by consulting equations
+\begin{equation*}
+\lim_{z \to \infty} \frac{\left|f(z)\right|}{\left|z\right|^{\alpha}} = 0, \quad \lim_{z \to \infty} \frac{\left|f(z)\right|}{\left|z\right|^{\alpha}} = \infty
+\end{equation*}
+If the singularity is non-trivial and non-essential, then there is a interger $h$ such that the first limit holds for all $\alpha>h$ and the second limit holds for all $\alpha\leq h$. The integer $h$ is called the \textbf{algebraic order} of $f$ at $\infty $. It is positive for a pole, negative for a zero, and zero for a non-zero, non-pole analytic point.
+
+The singular part expansion and Weierstrass theorem can also be done similarly.
+
+
+\subsection{The Local Mapping}
+We want to determine the number of zeros of an analytic function. Consider $f$ is an analytic function (not identically zero) on an open disk  $\Delta$. Let $\gamma$ be a closed curve in $\Delta$ that $\forall z\in \gamma, f(z)\neq 0$. For simplicity we only consider $f$ has finite zeros, denoted $z_1,z_2, \ldots ,z_n$ with multiplicity equals order. So we can write
+\begin{equation}
+	f(z) = (z-z_1)(z-z_2)\cdots (z-z_n)g(z)
+\end{equation}
+where $g$ is analytic on $\Omega$, and $\forall z\in \Omega, g(z)\neq 0$. Taking the logarithm (analytic for a small neighborhood of each point), we have
+\begin{equation}
+	\frac{f'(z)}{f(z)} = \frac{1}{z-z_1} + \frac{1}{z-z_2} + \cdots + \frac{1}{z-z_n} + \frac{g'(z)}{g(z)}
+\end{equation}
+for any $z\neq z_j$ in $\Delta$, particularly for $z\in \gamma$. We can integrate this on $\gamma$. Since $g(z)\neq 0$ on $\Omega$, from Cauchy's Theorem we have
+\begin{equation*}
+\int_{\gamma} \frac{g'(z)}{g(z)} \mathrm{d} z = 0
+\end{equation*}
+
+The definition of index yields
+\begin{equation}
+	n(\gamma,z_1) + \cdots + n(\gamma,z_n) = \frac{1}{2\pi i} \int_{\gamma} \frac{f'(z)}{f(z)} \mathrm{d} z
+\end{equation}
+
+If $f$ has infinite zeros, then we choose a concentric smaller open disk $\Delta'$ that $\gamma \subseteq \Delta', \overline{\Delta'} \subseteq \Delta$ (This is possible due to normality). Then the compactness of $\overline{\Delta'}$ and the isolation of zeros implies that $f$ has only finitely many zeros in $\overline{\Delta'}$, and the above equation still holds, as the zeros outside do not contribute to the sum.
+
+\begin{theorem}{Number of Zeros}{Number of Zeros}
+	Let $f$ be analytic on an open disk $\Delta$ (not identically zero), and $z_j$ are distinct zeros of $f$ that has order $m_j$. Then for every closed curve $\gamma$ in $\Delta$ that does not pass through any $z_j$, we have
+	\begin{equation}
+		\sum_{j} m_j n(\gamma,z_j) = \frac{1}{2\pi i} \int_{\gamma} \frac{f'(z)}{f(z)} \mathrm{d} z 
+	\end{equation}
+	The sum has only finite terms that are not zero.
+\end{theorem}
+The function $w = f(z)$ maps $\gamma$ into a closed curve $\Gamma$ in the $w$-plane. And we have
+\begin{equation*}
+	\int_{\Gamma} \frac{\mathrm{d} w}{w} = \int_{\gamma} \frac{f'(z)}{f(z)} \mathrm{d} z
+\end{equation*}
+Therefore, we have
+\begin{equation}
+	n(\Gamma,0) = \sum_{j} m_j n(\gamma,z_j)
+\end{equation}
+\begin{remark}
+	When $\gamma$ is a circle, then all $n(\gamma,z_j)$ are either $0$ or $1$, and the number of zeros are calculated by theorem \ref{thm:Number of Zeros}.
+\end{remark}
+
+To find the roots of $f(z) = a$, apply theorem \ref{thm:Number of Zeros} to the function $g(z) = f(z) - a$. The zeros of $g$ are the roots of $f(z) = a$, denoted as $z_j(a)$, so we have
+\begin{equation}
+	\sum_{j} m_j(a) n(\gamma,z_j(a)) = \frac{1}{2\pi i} \int_{\gamma} \frac{g'(z)}{g(z)} \mathrm{d} z = \frac{1}{2\pi i} \int_{\gamma} \frac{f'(z)}{f(z)-a} \mathrm{d} z
+\end{equation}
+\begin{equation}
+	n(\Gamma,a) = \sum_{j} m_j(a) n(\gamma,z_j(a))
+\end{equation}
+If $a,b$ are in the same region determined by $\Gamma$, then $n(\Gamma,a) = n(\Gamma,b)$, so we have
+\begin{equation}
+	\sum_{j} m_j(a) n(\gamma,z_j(a)) = \sum_{j} m_j(b) n(\gamma,z_j(b))
+\end{equation}
+
+\begin{theorem}{Local Variation of Roots}{Local Variation of Roots}
+	If $f$ is analytic at a neighborhood of $z_0$ and $f(z_0)=w_0$, and $f(z)-w_0$ has a zero of order $m$ at $z_0$. Then $\forall \epsilon>0$ that $z_0$ is the only zero of $f(z)-w_0$ in $\overline{N_\epsilon(z_0)}$, there exists $\delta>0$ such that $\forall w$ that $\left|w-w_0\right|<\delta$, $f(z)-w$ has exactly $m$ zeros counting multiplicity in $N_\epsilon(z_0)$.
+\end{theorem}
+\begin{proof}
+Letting $\gamma$ be the circle $\partial N_{\epsilon}(z_0)$. Taking $\delta$ such that $N_{\delta}(w_0)\cap f(\gamma) = \emptyset $ would do.
+\end{proof}
+\begin{remark}
+	If we take small enough $\epsilon$, then $f'(z)\neq 0$ for all $z\in N_\epsilon(z_0)-\left\{ z_0 \right\}$. In this case, $\forall a\in w_0$, the $m$ roots of $f(z) = a$ are all simple (of order $1$).
+\end{remark}
+
+\begin{corollary}{Image of Analytic Function on Open Sets}{Image of Analytic Function on Open Sets}
+A nonconstant analytic function maps open sets onto open sets.
+\end{corollary}
+\begin{proof}
+	Let $f$ be analytic on $\Omega$ and nonconstant, and $a\in \Omega$. Let $w_0 = f(a)$, then $f(z)-w_0$ has a zero of order $n\geq 1$ at $a$. Choose $\epsilon>0$ such that $N_\epsilon(a) \subseteq \Omega$ and $f(z)-w_0$ has no other zeros in $\overline{N_\epsilon(a)}$. By theorem \ref{thm:Local Variation of Roots}, there exists $\delta>0$ such that $\forall w\in N_\delta(w_0)$, $f(z)-w$ has exactly $n$ zeros in $N_\epsilon(a)$. Therefore, $N_\delta(w_0) \subseteq f(N_\epsilon(a))$, so $f(\Omega)$ is open.
+\end{proof}
+
+\begin{figure}[ht]
+    \centering
+    \incfig{local-mapping-of-an-analytic-function}
+    \caption{Local Mapping of an Analytic Function}
+    \label{fig:local-mapping-of-an-analytic-function}
+\end{figure}
+
+
+If the order of the zero is $m=1$, then $f$ is 1-1 on $f^{-1}(N_{\delta}(w_0)) \subseteq N_{\epsilon}(z_0)$. This is an open set due to continuity of $f$. We can take a smaller $\epsilon'$ such that $N_{\epsilon'}(z_0) \subseteq f^{-1}(N_{\delta}(w_0))$. Then $f$ is injective on $N_{\epsilon'}(z_0)$, and thus a homeomorphism onto its image.
+
+\begin{corollary}{Local Homeomorphism}{Local Homeomorphism}
+	If $f(z)$ is analytic at $z_0$ with $f'(z_0)\neq 0$, then there exists a neighborhood $N_\epsilon(z_0)$ such that $f$ is conformal and is a homeomorphism from $N_\epsilon(z_0)$ onto its image.
+\end{corollary}
+\begin{remark}
+Note that $f$ is analytic at $z_0$ means that it is analytic on a neighborhood of $z_0$. The condition $f'(z_0)\neq 0$ is equivalent to the condition that $f(z)-f(z_0)$ has a zero of order $1$ at $z_0$.
+\end{remark}
+
+The inverse mapping is also conformal due to the inverse function theorem.
+
+For order $n>1$, we write
+\begin{equation*}
+	f(z) - w_0 = (z-z_0)^n g(z)
+\end{equation*}
+where $g$ is analytic at $z_0$ and $g(z_0)\neq 0$. Choose $\epsilon>0$ such that $g(z)\in N_{\delta}(g(z_0))$ for all $z\in \Omega=N_{\epsilon}(z_0)$, where $\delta<\left|g(z_0)\right| \sin \pi / n$ (thus the disk lies completely in a $1 / n$ sector). In this neighborhood we define an analytic branch of $h(z) = \sqrt[n]{g(z)}$. As $g(\Omega)$ lies in a $1 / n$ sector, we do not need a branch cut.
+\begin{equation*}
+	f(z) - w_0 = \zeta^n(z), \qquad \zeta(z) = (z-z_0)h(z)
+\end{equation*}
+As $\zeta'(z_0) = h(z_0)\neq 0$, then $\zeta$ is a homeomorphism on a neighborhood of $z_0$. The function $w = w_0+\zeta^n$ is familiar.
+
+\begin{figure}[ht]
+    \centering
+    \incfig{the-local-properties-of-analytic-functions}
+    \caption{The Local Properties of Analytic Functions $(n=3)$}
+    \label{fig:the-local-properties-of-analytic-functions}
+\end{figure}
+
+\section{The Maximum Principle}
+
+\begin{theorem}{The Maximum Principle}{The Maximum Principle}
+If $f$ is analytic and not constant in a region $\Omega$, then $\left|f\right|$ has no maximum value in $\Omega$.
+\end{theorem}
+\begin{proof}
+	Assume $z_0\in \Omega$ and $\left|f(z_0)\right| = M = \max_{z\in \Omega} \left|f(z)\right|$. Then let $D$ be a neighborhood of $z_0$ such that $D \subseteq \Omega$. Then $f(D)$ is a neighborhood of $f(z_0)$, and it contains some $w_0$ such that $\left|w_0\right| > M$.
+\end{proof}
+
+A restatement of the maximum principle is as follows:
+\begin{quote}
+	If $f$ is analytic on a region $\Omega$ and $E$ is a closed bounded subset of $\Omega$, then $\left|f\right|$ has a maximum value on $E$, which is taken on the boundary of $E$.
+\end{quote}
+The existence is due to the compactness of $E$, and the continuity of $f$. The maximum principle is then used to show that the maximum value is not taken in the interior of $E$.
+
+Another computational proof is as follows:
+\begin{proof}
+Let $D$ be a small disk centered at $z_0$ such that $\overline{D} \subseteq \Omega$. Then we have
+\begin{equation*}
+	f(z_0) = \frac{1}{2\pi i} \int_{\partial D} \frac{f(\zeta)}{\zeta-z_0} \mathrm{d} \zeta = \frac{1}{2\pi} \int_0^{2\pi} f(z_0 + Re^{i\theta}) \mathrm{d} \theta
+\end{equation*}
+\begin{equation*}
+	\left|f(z_0)\right| \leq \frac{1}{2\pi} \int_0^{2\pi} \left|f(z_0 + Re^{i\theta})\right| \mathrm{d} \theta
+\end{equation*}
+Suppose $\left|f(z_0)\right|$ is a maximum, then $f$ is constant on $D$. Which is a contradiction to the assumption that $f$ is not constant in $\Omega$.
+\end{proof}
+
+Now consider that $f$ is analytic on an open set $D = \left\{ z: \left|z\right|<R \right\}$ and continuous on $\overline{D}$. If $\left|f\right|\leq M$ for $z\in \partial D$, then we have $\left|f\right|\leq M$ for $z\in D$. There is a point $z_0\in D$ that $\left|f(z_0)\right| = M$ iff $f$ is a constant with norm $M$. So if we know that there is $f(z_1)<M$, we may want a better approximation.
+
+\begin{theorem}{Schwarz Lemma}{Schwarz Lemma}
+	Let $f$ be analytic on $D=\left\{ z: \left|z\right|<1 \right\}$ and satisfies
+	\begin{itemize}
+	\item $f(0)=0$.
+	\item $\forall z\in D, \left|f(z)\right| \leq 1$.
+	\end{itemize}
+	Then $\left|f(z)\right|\leq \left|z\right|$ and $\left|f'(0)\right|\leq 1$.
+
+	If $(\exists z_0\in D,z_0\neq 0,\left|f(z_0)\right|=\left|z_0\right|) \lor \left|f'(0)\right|=1$, then $\exists c\in \mathbb{C},\left|c\right|=1$ that $f(z) = cz$.
+\end{theorem}
+\begin{proof}
+Letting
+\begin{equation*}
+	f_1(z) = 
+	\begin{cases}
+		f(z) / z & \text{if } z\neq 0\\
+		f'(0) & \text{if } z=0
+	\end{cases}
+\end{equation*}
+This can be thought of an extended function of $f(z) / z$ thus is analytic on $D$. On $\partial D$, we have $\left|f_1(z)\right| = \left|f(z)\right| \leq 1$. By the maximum principle, we have $\left|f_1(z)\right|\leq 1$ for all $z\in D$. Therefore, $\left|f(z)\right| \leq \left|z\right|$ and $\left|f'(0)\right| = \left|f_1(0)\right|\leq 1$.
+
+If either of the conditions hold, then $f_1(z)=c$.
+\end{proof}
+
+Generally speaking, if 
+
+\end{document}

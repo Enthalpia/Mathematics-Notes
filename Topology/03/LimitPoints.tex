@@ -1,0 +1,208 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\chapter{Limit Points}
+
+In analysis we often consider sequences of points in a metric space.  The limit of a sequence is a point that the sequence gets arbitrarily close to as the index goes to infinity. In topology however, sometimes it is not easy to depict a metric, so we need a more general concept of a limit. And this process will make us understand better of closed set as well.
+
+Another important notion is connectedness. Intuitively, a set is connected if it is in one piece. We will see that this notion is closely related to the concept of limit points.
+
+\section{Limit Points and Closure}
+If $(X,\mathcal{T})$ is a topological space it is usual to refer elements of $X$ as \emph{points}.
+\begin{definition}{Limit Point}{Limit Point}
+	Let $A$ be a subset of a topological space $(X,\mathcal{T})$. A point $x\in X$ is a \emph{limit point} of $A$ if every open set containing $x$ contains a point of $A$ different from $x$. That is
+	\begin{equation*}
+		\forall U\in \mathcal{T}(x\in U \rightarrow \exists a\neq x, a \in A\cap U) \rightarrow x \text{ is a limit point of } A.
+	\end{equation*}
+	Not a limit point mean that $\exists U\in \mathcal{T}, x\in U$ and $U-\left\{ x \right\} \subseteq X-A$.
+\end{definition}
+\begin{figure}[H]
+    \centering
+    \incfig{limit-points}
+    \caption{Limit Points}
+    \label{fig:limit-points}
+\end{figure}
+\begin{remark}
+	This is what we mean by ``there are points of $A$ arbitrarily close to $x$'' without explicitly representing distances. 
+
+	On a more familiar note, there can be a limit point of a set that is not in the set itself, just like $0$ of $(0,1)$ in Euclidean topology of $\mathbb{R}$ (The $x$ in figure \ref{fig:limit-points}). 
+
+	Also, There are points in the set that are not limit points. Like $0$ in $\left\{ 0 \right\}\cup (1,2)$, (The $y$ in figure \ref{fig:limit-points})
+\end{remark}
+
+The next proposition is useful to identify closed sets.
+\begin{theorem}{Closed Sets and Limit Points}{Closed Sets And Limit Points}
+	Let $A$ be a subset of the topological space $(X,\mathcal{T})$. Then $A$ is closed if and only if it contains all its limit points.
+\end{theorem}
+\begin{proof}
+\begin{itemize}
+\item Assume $A$ is closed in $(X,\mathcal{T})$. If $p\in X-A$ is a limit point of $A$, then $X-A$ is an open set containing an element of $A$, contradicts.
+\item Assume $A$ contains all its limit points. $\forall x\in X-A$ is not a limit point, so $\exists U\in \mathcal{T}$ such that $x\in U$ and $\forall a\neq x, a\notin A\cap U$. With $x\notin A$, this means $A\cap U = \emptyset $, thus $x\in U \subseteq X-A$, so $X-A$ is open.
+\end{itemize}
+\begin{figure}[ht]
+    \centering
+    \incfig{closed-sets-and-limit-points}
+    \caption{Closed Sets and Limit Points}
+    \label{fig:closed-sets-and-limit-points}
+\end{figure}
+\end{proof}
+\begin{corollary}{}{cor1}
+Let $A$ be a subset of $(X,\mathcal{T})$, and $A'$ be the set of all limit points of $A$, then $A\cup A'$ is closed. (Meaning that $A\cup A'$ would not produce any other limit points)
+\end{corollary}
+\begin{proof}
+Let $p\in X-(A\cup A')$, then $p$ is not a limit point of $A$, so $\exists U\in \mathcal{T}$ with $p\in U$ and $U\cap A = \left\{ p \right\}\text{ or }\emptyset $. But $p\notin A$, so $U\cap A = \emptyset$. 
+
+$\forall x\in U$, because $U$ is an open set with $U\cap A = \emptyset $ so $x$ is not a limit point of $A$, so $U\cap A' = \emptyset $, so $p\in U \subseteq X - (A\cup A')$. Therefore $A\cup A'$ is closed.
+\end{proof}
+
+\begin{definition}{Closure}{Closure}
+Let $A$ be a subset of $(X,\mathcal{T})$, and $A'$ be the set of all limit points of $A$. Denote $\overline{A} = A\cup A'$ be the \emph{closure} of $A$. ($\overline{A}$ is closed)
+\end{definition}
+\begin{remark}
+In fact, $\overline{A}$ is the smallest closed set that contains $A$. That is, it is the intersection of all closed set containing $A$. We shall prove this.
+\end{remark}
+\begin{proposition}{Closure is Smallest}{Closure Is Smallest}
+Let $S,T$ be non-empty subsets of $(X,\mathcal{T})$ with $S \subseteq T$.
+\begin{enumerate}
+\item If $p$ is a limit point of $S$, then it is also a limit point of $T$.
+	\begin{proof}
+	This is quite straightforward using $S \subseteq T$.
+	\end{proof}
+\item Therefore, if $B$ is a closed set containing $A$, then $B$ must also contains $A'$.
+\end{enumerate}
+\end{proposition}
+
+\begin{example}{Closure of Rationals}{Closure Of Rationals}
+In Euclidean topology, $\overline{\mathbb{Q}} = \mathbb{R}$.
+\begin{proof}
+Suppose $\exists x\in \mathbb{R}-\overline{\mathbb{Q}}$. As $\mathbb{R}-\overline{\mathbb{Q}}$ is open in $\mathbb{R}$ and open intervals are basis, so there is some open interval $x\in (a,b) \subseteq \mathbb{R}-\overline{\mathbb{Q}}$, contradicts.
+\end{proof}
+\end{example}
+
+Note that this example really catches what we mean by ``dense''.
+\begin{definition}{Dense}{Dense}
+Let $A$ be a subset of $(X,\mathcal{T})$. Then $A$ is said to be \emph{dense} in $X$ if $\overline{A} = X$.
+\end{definition}
+\begin{example}{Dense sets}{Dense Sets}
+\begin{itemize}
+\item Let $(X,\mathcal{T})$ be a discrete space. Then the only dense subset of $X$ is $X$ itself. (Since every subset is closed)
+\end{itemize}
+\end{example}
+
+\begin{theorem}{Condition for Dense sets}{Condition For Dense Sets}
+Let $A$ be a subset of $(X,\mathcal{T})$, then $A$ is dense in $X$ if and only if $\forall U\in \mathcal{T}, U\neq \emptyset $ we have $A\cap U \neq \emptyset $.
+\end{theorem}
+\begin{proof}
+\begin{itemize}
+\item If $A$ is dense, and there is $U\in \mathcal{T}$ such that $U\neq \emptyset $ and $U \subseteq X-A$, Then $\forall x\in U$, $x$ is not a limit point of $A$, and $x\notin A$, so $x\notin \overline{A}$, contradicts.
+\item Conversely, if $\forall U\in \mathcal{T}, U\neq \emptyset $ we have $A\cap U \neq \emptyset $, then $\forall x\in X$ is a limit point of $A$, just using the definition.
+\end{itemize}
+\end{proof}
+
+
+\subsection{Intersections}
+\begin{theorem}{Intersections of closures}{Intersections Of Closures}
+Let $A$ and $B$ be subsets of a topological space $(X,\mathcal{T})$. Then
+\begin{equation}
+\overline{A\cap B} \subseteq \overline{A}\cap \overline{B}
+\end{equation}
+\end{theorem}
+\begin{proof}
+$\forall x\in X-\overline{A}$, we have $U\in \mathcal{T}$ such that $x\in U \subseteq X- \overline{A}$. $x$ is not a limit point of $A$, so it is not a limit point of $A\cap B$. So $x\in X- \overline{A\cap B}$. So $\overline{A}^c \subseteq \overline{A\cap B}^c$. Similarly $\overline{B}^c \subseteq \overline{A\cap B}^c$. So \overline{A\cap B} \subseteq \overline{A}\cap \overline{B}
+\end{proof}
+
+Note that it can be $\overline{A\cap B} \neq \overline{A}\cap \overline{B}$. For $A = \left\{ \frac{1}{n}: n\in \mathbb{Z}_+ \right\}$ and $B = \left\{ -\frac{1}{n}: n\in \mathbb{Z}_+ \right\}$ would do.
+
+\section{Neighbourhoods}
+\begin{definition}{Neighbourhoods}{Neighbourhoods}
+Let $(X,\mathcal{T})$ be a topological space.  $N \subseteq X$ and $p\in N$. Then $N$ is a neighbourhood of $x$ if $\exists U\in \mathcal{T}$ such that $p\in U \subseteq N$.
+\end{definition}
+Well, this actually depicts our intuition of $p$ being ``in'' the interior of a set. Like $[-1,1]$ is a neighbourhood of $0$ but $[0,1]$ is not in the sense of Euclidean topology. It is a slacker condition that open sets containing $x$.
+
+We can reduce the condition of limit points to neighbourhoods.
+\begin{proposition}{Neighbourhoods and Limit Points}{Neighbourhoods And Limit Points}
+Let $A$ be a subset of a topological space $(X,\mathcal{T})$.
+\begin{enumerate}
+\item A point $x\in X$ is a \emph{limit point} of $A$ if and only if every neighbourhood containing $x$ contains a point of $A$ different from $x$.
+\item $A$ is closed iff $\forall x\in X-A$ there is a neighbourhood $N$ of $x$ such that $N \subseteq X-A$.
+\item $A\in \mathcal{T}$ iff $\forall x\in A$ there exists a neighbourhood $N$ of  $x$ such that $N \subseteq A$.
+\item $A$ is dense in $X$ if and only if for every neighbourhood $N\neq \emptyset $ of $x$ we have $A\cap N \neq \emptyset $
+\end{enumerate}
+\end{proposition}
+
+\subsection{Separable Spaces}
+\begin{definition}{Separable Spaces}{Separable Spaces}
+A topological space $(X,\mathcal{T})$ is said to be separable if it has a dense subset which is countable.
+\end{definition}
+
+\subsection{Interior of a Set}
+\begin{definition}{Interior of a Set}{Interior Of A Set}
+Let $(X,\mathcal{T})$ be a topological space and $A \subseteq X$. The largest open set contained in $A$ is called the \emph{interior} of $A$, denoted $\Int A$. That is, it is the union of all open sets contained in $A$.
+\end{definition}
+
+\begin{theorem}{Interior of a Set}{Interior Of A Set}
+Let $(X,\mathcal{T})$ be a topological space and $A \subseteq X$. Then
+\begin{equation*}
+\Int A = X - \overline{X-A}
+\end{equation*}
+\end{theorem}
+\begin{proof}
+First we have $X-\overline{X-A}$ is an open set contained in $A$, so $X-\overline{X-A} \subseteq \Int A$.
+
+Let $U \subseteq A$ be an open set. Then any point in $U$ is not a limit point of $X-A$, so $U \subseteq X-\overline{X-A}$, so $\Int A \subseteq X-\overline{X-A}$.
+\end{proof}
+\begin{corollary}{Density and Interior}{Density and Interior}
+$A$ is dense in $(X,\mathcal{T})$ iff $\Int (X-A) = \emptyset $.
+\end{corollary}
+
+This theorem gives an explicit expression of interior of a set. It can also be seen as a definition, thought less clear then definition \ref{def:Interior Of A Set}.
+
+\begin{proposition}{Operations on Interiors of sets}{Operations on Interiors of sets}
+In a topological space $(X,\mathcal{T})$ let $A_i \subseteq X$.
+\begin{enumerate}
+	\item $\Int (A_1\cap A_2) \subseteq  \Int A_1 \cap \Int A_2$.
+	\item $\Int A_1 \cup \Int A_2 \subseteq \Int (A_1\cup A_2) $.
+\end{enumerate}
+\end{proposition}
+
+The next theorem we shall see that the dense part of a set has the same limit points as the original set.
+\begin{theorem}{Dense part of a set}{Dense part of a set}
+Let $S$ be a dense set of $(X,\mathcal{T})$, then $\forall U \in \mathcal{T}, \overline{S\cap U} = \overline{U}$.
+\end{theorem}
+
+\subsection{The Sorgenfrey Line}
+Let $\mathcal{B} = \left\{ [a,b) : a\in \mathbb{R},b\in \mathbb{Q},a<b \right\}$. Then
+\begin{enumerate}
+	\item $\mathcal{B}$ is the basis of a topology $\mathcal{T}_1$ on $\mathbb{R}$. The topological space is called the Sorgenfrey line.
+	\item If  $\mathcal{T}$ is the Euclidean topology on $\mathbb{R}$, then $\mathcal{T} \subset \mathcal{T}_1$.
+	\item $\forall a,b\in \mathbb{R}$ with $a<b$, then $[a,b)$ is a clopen set in  $(\mathbb{R},\mathcal{T}_1)$.
+	\item The Sorgenfrey line is a separable space.
+	\item The Sorgenfrey line does not satisfies the second axiom of countability.
+\end{enumerate}
+
+\section{Connectedness}
+Looking more closely at clopen set, we shall observe that nontrivial clopen set would indicate some kind of separation. If $(X,\mathcal{T})$ is a topological space, and $U \in X$ is a nontrivial clopen sets, then $U^c$ is also a clopen set.  Each $U$ and $U^c$ can be seen as topological spaces themselves, satisfying the axioms at the own case. So $U$ can be seen as the joint of two spaces.
+
+\begin{definition}{Connectedness}{Connectedness}
+Let $(X,\mathcal{T})$ be a topological space. Then it is said to be connected iff the only clopen sets are $\emptyset $ and $X$.
+\end{definition}
+
+We have $\mathbb{R}$ is connected by following.
+
+\begin{proposition}{}{R is connected}
+Let $T$ be a clopen set of $\mathbb{R}$, then either $T=\mathbb{R}$ or $T=\emptyset $.
+\end{proposition}
+\begin{proof}
+	Suppose $T\neq \mathbb{R}$ and $T\neq \emptyset $, then there is an element $x\in T$ and $z\in \mathbb{R}-T$, assume $x<z$. Let $S=T\cap [x,z]$, then $S$ is closed. (To limit our discussion).
+
+	Let $p = \sup S$, then $p\in S$. Also $z\in \mathbb{R}-S$ so $p<z$. But $T$ is also an open set so $p\in (a,b) \subseteq T$, let $p<t<\min \left\{ b,z \right\}$, so $t\in T$ and $t\in [p,z]$. Thus $t\in S$, contradicts.
+\end{proof}
+
+\begin{theorem}{Condition for Not Connected}{Condition for Not Connected}
+Let $(X,\mathcal{T})$ be any topological space. Then $(X,\mathcal{T})$ is not connected iff it has proper non-empty disjoint open subsets $A,B$ such that $X = A\cup B$.
+\end{theorem}
+\begin{proof}
+This is obvious since $A = X-B$ is closed.
+\end{proof}
+
+\end{document}

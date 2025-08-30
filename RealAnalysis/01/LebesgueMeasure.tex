@@ -1,0 +1,700 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+
+\chapter{Lebesgue Measure}
+\section{The Extended $\mathbb{R}$ Line}
+We extend the real line $\mathbb{R}$ to include two points, $-\infty$ and $+\infty$, denoted as $\mathbb{R}_{\pm \infty}$. This allows us to handle limits and integrals that may diverge to infinity.
+
+Now we give a formal definition of the extended real line $\mathbb{R}_{\pm \infty}$.
+\begin{plainblackenv}
+	The \textbf{extended real line} $\mathbb{R}_{\pm \infty}$ is defined as the set $\mathbb{R}\cup \left\{ -\infty ,\infty  \right\}$ with the simple order relation defined as follows:
+	\begin{itemize}
+		\item For any $x,y\in \mathbb{R}$, we have $x < y$ the same as in $\mathbb{R}$.
+		\item For any $x\in \mathbb{R}$, we have $-\infty < x < +\infty$.
+	\end{itemize}
+	The operations $+, \cdot $ are defined on $\mathbb{R}_{\pm \infty} \times \mathbb{R}_{\pm \infty }$ as follows: ($+$ is not defined on $(+\infty ,-\infty )_p$ and $(-\infty ,+\infty )_p$)
+	\begin{itemize}
+		\item $+, \cdot $ follows commutative, associative and distributive laws, and both has identity. (The existence of inverse is dropped in the sense of infinity)
+		\item If $x,y\in \mathbb{R}$, then $x+y, x\cdot y$ are defined as in $\mathbb{R}$.
+		\item If $x\in \mathbb{R}$, then $x+(-\infty ) = -\infty $, $x+ (+\infty ) = +\infty $.
+		\item $+\infty + (+\infty ) = +\infty $, $-\infty + (-\infty ) = -\infty $.
+		\item If $x\in \mathbb{R}_{\pm \infty }$, then
+			\begin{itemize}
+			\item If $x>0$, then $x\cdot (+\infty ) = +\infty $, $x\cdot (-\infty ) = -\infty $.
+			\item If $x<0$, then $x\cdot (+\infty ) = -\infty $, $x\cdot (-\infty ) = +\infty $.
+			\item If $x=0$, then $0\cdot (+\infty ) = 0$, $0\cdot (-\infty ) = 0$.
+			\end{itemize}
+	\end{itemize}
+\end{plainblackenv}
+
+\begin{remark}
+	The last line, \textit{If $x=0$, then $0\cdot (+\infty ) = 0$, $0\cdot (-\infty ) = 0$}, is a special case that is not defined in the usual arithmetic of real numbers. It is included here to maintain consistency in the definition of multiplication in the extended real line, used in Lebesgue integration. It follows our intuition of the area of a line is zero.
+\end{remark}
+
+It is rather more common to consider the nonnegative (called positive in the following context) extended real line $\mathbb{R}_{\pm \infty }^+ = [0,+\infty ]$ with the same order relation and operations as above. The nonnegative extended real line is often used in measure theory and integration, especially when dealing with measures that are nonnegative. Here, the operations are defined fully, without ``bad cases'' like $+\infty -\infty $.
+
+\section{Measurability}
+
+We link the concept of measurable to continuity, as we did in Riemann integration. Therefore, we compare the concept of measurable space, measurable sets, measurable functions, to the topological space, open sets, continuous functions.
+
+\begin{definition}{$\sigma$-algebra}{sigma-algebra}
+A collection $\mathcal{M}$ of subsets of $X$ is called a $\sigma$-algebra in $X$ if:
+\begin{itemize}
+\item $X\in \mathcal{M}$.
+\item If $A\in \mathcal{M}$, then $A^c=X-A\in \mathcal{M}$.
+\item If $A_n\in \mathcal{M}$ for $n\in \mathbb{Z}_+$, then
+	\begin{equation*}
+		\bigcup_{n=1}^{\infty} A_n \in \mathcal{M}.
+	\end{equation*}
+\end{itemize}
+
+If $\mathcal{M}$ is a $\sigma$-algebra in $X$, then $(X, \mathcal{M})$ is called a \textbf{measurable space}, and members of $\mathcal{M}$ are called \textbf{measurable sets}.
+
+If $X$ is a measurable space, $Y$ is a topological space, and $f: X \rightarrow Y$ is said to be \textbf{measurable} if for every open set $U\subseteq Y$, the preimage $f^{-1}(U)$ is a measurable set in $X$.
+\end{definition}
+
+\begin{remark}
+The definition implies that $\emptyset \in \mathcal{M}$, and countable intersections of measurable sets are also measurable. This is because we can express intersections in terms of unions and complements:
+\begin{equation*}
+	\bigcap_{n=1}^{\infty} A_n = \left(\bigcup_{n=1}^{\infty} A_n^c\right)^c \text{(De Morgan's Law)}
+\end{equation*}
+
+An \textbf{algebra} is a collection of sets that is closed under finite unions and complements, but not necessarily countable unions. A $\sigma$-algebra is an algebra that is also closed under countable unions.
+\end{remark}
+
+\begin{theorem}{Subsets of Measurable Spaces}{Subsets of Measurable Spaces}
+	Let $(X, \mathcal{M})$ be a measurable space, and $A\subseteq X$ be a subset of $X$. Then we can define a $\sigma$-algebra $\mathcal{M}_A$ on $A$ as follows:
+	\begin{equation*}
+		\mathcal{M}_A = \left\{ E \cap A: E\in \mathcal{M} \right\}.
+	\end{equation*}
+\end{theorem}
+
+It is easy to see that $\mathcal{M}_A$ is a $\sigma$-algebra on $A$, and the restriction of the measurable function $f: X \rightarrow Y$ to $A$ is measurable with respect to $\mathcal{M}_A$.
+
+\begin{theorem}{Composition of Continuous or Measurable Functions}{Composition of Continuous or Measurable Functions}
+Let $Y,Z$ be topological spaces, and $g:Y \rightarrow Z$ be continuous, then
+\begin{itemize}
+\item If $X$ is a topological space, $f:X \rightarrow Y$ is continuous, then $g \circ f: X \rightarrow Z$ is continuous.
+\item If $X$ is a measurable space, $f:X \rightarrow Y$ is measurable, then $g \circ f: X \rightarrow Z$ is measurable.
+\end{itemize}
+\end{theorem}
+\begin{proof}
+Preimage of continuous functions of open sets is open.
+\end{proof}
+
+\begin{theorem}{Composition of Products}{Composition of Products}
+Let $X$ be measurable space, and $u,v: X \rightarrow \mathbb{R}$ be measurable. Let $Y$ be a topological space, and $\Phi: \mathbb{R}^2 \rightarrow Y$ be continuous. Then $\Phi \circ (u,v): X \rightarrow Y$ is measurable.
+\end{theorem}
+\begin{proof}
+We shall use the second countability of $\mathbb{R}^2$. Specifically the rational interval basis.
+
+Let $f(x) = (u(x),v(x))_p$. Then $h = \Phi\circ f$. We need only to prove the measurability of $f$. For a rational vertex rectangle $R=I_1 \times I_2 = (a,b) \times (c,d) \subseteq \mathbb{R}^2$, we have
+\begin{equation*}
+	f^{-1}(R) = u^{-1}(I_1) \cap v^{-1}(I_2).
+\end{equation*}
+which is a measurable set since $u$ and $v$ are measurable. Then for all open set $U \subseteq \mathbb{R}^2$, we have $U = \bigcup_{i=1}^{\infty } R_i$, so
+\begin{equation*}
+	f^{-1}(U) = \bigcup_{i=1}^{\infty} f^{-1}(R_i).
+\end{equation*}
+is a measurable set, hence $f$ is measurable.
+\end{proof}
+\begin{remark}
+We can change $\mathbb{R}$ to any second countable topological space, and the proof still holds. The key is that we can cover the space with countably many open sets, and the preimage of each open set is measurable.
+\end{remark}
+
+The following are some corollaries of the above theorem.
+\begin{itemize}
+	\item If $f: X \rightarrow \mathbb{C}, f(x) = u(x) + iv(x)$ where $u,v: X \rightarrow \mathbb{R}$ are measurable, then $f$ is measurable.
+	\item If $f:X \rightarrow \mathbb{C}$ is measurable, $f=u+iv$, then $u,v,|f|: X \rightarrow \mathbb{R}$ are measurable.
+	\item If $f,g: X \rightarrow \mathbb{C}$ or $\mathbb{R}$ are measurable, then $f+g, f-g, fg, f / g$ (if $g(x) \neq 0$) are measurable.
+	\item If $E \subseteq X$ is a measurable set, and let
+		\begin{equation}
+		\chi_E(x) =
+		\begin{cases}
+			1, & \text{if } x \in E, \\
+			0, & \text{if } x \notin E.
+		\end{cases}
+		\end{equation}
+		Then $\chi_E: X \rightarrow \mathbb{R}$ is measurable. The function $\chi_E$ is called the \textbf{characteristic function} or \textbf{indicator function} of the set $E$.
+\end{itemize}
+
+\begin{proposition}{Normalize a Complex Measurable Function}{Normalize a Complex Measurable Function}
+	Let $f: X \rightarrow \mathbb{C}$ be measurable, then there exists a measurable function $\alpha: X \rightarrow \mathbb{C}$ such that $\left|\alpha\right| = 1$, and $f = |f| \cdot \alpha$.
+\end{proposition}
+\begin{proof}
+Let $E = \left\{ x:f(x)=0 \right\}$, and $Y = \mathbb{C}-\left\{ 0 \right\}$, define $\varphi(z) = z / \left|z\right|$ for $z\in Y$, and let
+\begin{equation*}
+\alpha(x) = \varphi(f(x) + \chi_E(x)), \qquad x\in X
+\end{equation*}
+We have $E$ is a measurable set: for $E = X-f^{-1}(Y)$. Then $\alpha$ is measurable since $\varphi$ is continuous on $Y$, and $f$ is measurable.
+\end{proof}
+
+\begin{theorem}{Smallest $\sigma$-algebra}{Smallest sigma-algebra}
+	If $\mathcal{F}$ is any collection of subsets of $X$, then there exists a unique smallest $\sigma$-algebra $\mathcal{M}$ containing $\mathcal{F}$. That is, for any $\sigma$-algebra $\mathcal{N}$ containing $\mathcal{F}$, we have $\mathcal{M} \subseteq \mathcal{N}$.
+\end{theorem}
+\begin{proof}
+	Let $\Omega$ be the collection of all $\sigma$-algebras containing $\mathcal{F}$. Then $\Omega$ is non-empty since the power set of $X$ is a $\sigma$-algebra containing $\mathcal{F}$.
+
+	Let $\mathcal{M} = \bigcap \Omega$. Then $\mathcal{F} \subseteq \mathcal{M}$, and $\mathcal{M}$ is contained in all $\sigma$-algebras in $\Omega$. Showing that $\mathcal{M}$ is a $\sigma$-algebra is trivial.
+\end{proof}
+
+\begin{definition}{Borel Sets}{Borel Sets}
+	Let $X$ be a topological space. The \textbf{Borel $\sigma$-algebra} $\mathcal{B}(X)$ is the smallest $\sigma$-algebra containing all open sets in $X$, i.e., the topology of $X$. The sets in $\mathcal{B}(X)$ are called \textbf{Borel sets}.
+\end{definition}
+In particular, closed sets, countable unions, countable intersections, and complements of Borel sets are also Borel sets. As we see,
+\begin{itemize}
+	\item All countable unions of closed sets are called \textbf{$F_{\sigma}$ sets}.
+	\item All countable intersections of open sets are called \textbf{$G_{\delta}$ sets}.
+\end{itemize}
+
+Now we can consider any topological space $X$ as a measurable space with the Borel $\sigma$-algebra $\mathcal{B}(X)$. Any continuous function $f: X \rightarrow Y$ where $Y$ is a topological space, is measurable with respect to the Borel $\sigma$-algebra.
+
+Borel measurable mappings are often called \textbf{Borel functions}. They are important in analysis and probability theory, as they allow us to work with functions that are continuous or piecewise continuous, while still being able to define integrals and measures.
+
+\begin{proposition}{Borel Measurable Functions}{Borel Measurable Functions}
+Suppose $\mathcal{M}$ is a $\sigma$-algebra in $X$, and $Y$ is a topological space, let $f: X \rightarrow Y$.
+\begin{itemize}
+	\item If $\Omega$ is the collection of all sets $E \subseteq Y$ that $f^{-1}(E)\in \mathcal{M}$, then $\Omega$ is a $\sigma$-algebra in $Y$.
+	\item If $f$ is measurable and $E$ is a Borel set in $Y$, then $f^{-1}(E)\in \mathcal{M}$.
+	\item If $Y = [-\infty ,\infty ]$ be the extended $\mathbb{R}$ line, and $f^{-1}((\alpha,\infty ])\in \mathcal{M}$ for all $\alpha\in \mathbb{R}$, then $f$ is measurable.
+	\item If $f$ is measurable, $Z$ is a topological space, $g: Y \rightarrow Z$ is a Borel mapping, then $h=g\circ f$ is measurable.
+\end{itemize}
+\end{proposition}
+\begin{proof}
+All obvious. The first statement uses the closure condition of measurable sets. The second is just a corollary of the first. The third statement used the subbasis of $\mathbb{R}_{\pm \infty }$ and the second countability of $\mathbb{R}_{\pm \infty }$. The fourth statement uses the second statement.
+\end{proof}
+
+\begin{definition}{Upper and Lower Limit}{Upper and Lower Limit}
+Let $\left\{ a_n \right\}_{n=1}^{\infty }$ be a sequence in $\mathbb{R}_{\pm \infty }$, and let
+\begin{equation}
+	b_n = \sup_{k\geq n} a_k, \qquad c_n = \inf_{k\geq n} a_k.
+\end{equation}
+The \textbf{upper limit} of the sequence $\left\{ a_n \right\}$ is defined as
+\begin{equation}
+	\beta = \limsup_{n\rightarrow \infty } a_n = \lim_{n\rightarrow \infty } b_n,
+\end{equation}
+The \textbf{lower limit} of the sequence $\left\{ a_n \right\}$ is defined similarly as
+\begin{equation}
+	\gamma = \liminf_{n\rightarrow \infty } a_n = \lim_{n\rightarrow \infty } c_n.
+\end{equation}
+\end{definition}
+\begin{remark}
+	The limit exists because the sequence $\left\{ b_n \right\}$ and $\left\{ c_n \right\}$ are monotonic.
+\end{remark}
+
+\begin{theorem}{Limit of Function Sequences}{Limit of Function Sequences}
+	If $f_n: X \rightarrow [-\infty ,+\infty ]$ is measurable for all $n\in \mathbb{Z}_+$, then we have
+	\begin{equation*}
+		g = \sup_{n \geq 1} f_n, \qquad h = \limsup_{n\rightarrow \infty } f_n
+	\end{equation*}
+	are measurable functions. (the limits are defined pointwisely)
+\end{theorem}
+\begin{proof}
+	We shall prove that $g^{-1}((\alpha,\infty ]) = \bigcup_{n=1}^{\infty } f_n^{-1}((\alpha, \infty ])$. First, if $g(x) \leq \alpha$, then $f_n(x) \leq \alpha$ for all $n\in \mathbb{Z}_+$, also if $g(x) > \alpha$, then there exists $f_n(x) > \frac{1}{2}(g(x) - \alpha) > \alpha$.
+
+	The two statement holds obviously, as
+	\begin{equation*}
+	h = \inf_{k \geq 1} \left\{ \sup_{i\geq k}f_i \right\}
+	\end{equation*}
+\end{proof}
+
+\begin{corollary}{Measurability of Sequences Limit}{Measurability of Sequences Limit}
+\begin{itemize}
+\item The limit of every pointwise convergent sequence of $X \rightarrow \mathbb{C}$ is measurable.
+\item If $f,g: X \rightarrow [-\infty ,+\infty ]$ are measurable, then $\max \left\{ f,g \right\}$ and $\min \left\{ f,g \right\}$ are measurable. In particular, the positive and negative part of $f$ :
+	\begin{equation*}
+		f^+ = \max \left\{ f,0 \right\}, \qquad f^- = -\min \left\{ f,0 \right\}
+	\end{equation*}
+	are measurable.
+\end{itemize}
+\end{corollary}
+
+
+\section{Introduction to Lebesgue Measure}
+The Riemann integral is a classical tool for calculating the area under curves, built by partitioning the domain of a function into intervals and summing up the contributions from each part. Lebesgue measure generalizes our concept of length, area, and volume, allowing us to assign sizes to a wider variety of sets. The Lebesgue integral takes a different perspective: instead of partitioning the domain, it groups points according to their function values and measures the size of these groups. This approach enables us to integrate functions with significant discontinuities and provides powerful tools for handling limits and convergence.
+
+We now proceed to construct a group of subsets of the extended real line $\mathbb{R}_{\pm \infty }$ that has length, called \emph{Lebesgue measurable sets} $\mathcal{M}$, and a set function taking Lebesgue measurable sets to their length, called \emph{Lebesgue measure}, denoted $m: \mathcal{M} \rightarrow [0, \infty ]$, satisfying the following properties:
+
+\begin{itemize}
+	\item The Lebesgue measurable sets is a $\sigma$-algebra containing all open sets and closed sets of $\mathbb{R}_{\pm \infty }$.
+	\item The measure of an interval is its length.
+		\begin{equation*}
+			m(I) = l(I) = \text{ difference of end points of } I
+		\end{equation*}
+	\item The measure is translationally invariant.
+		\begin{equation*}
+			\forall E\in \mathcal{M}, \forall a\in \mathbb{R}, E+a\in \mathcal{M}, \text{ and } m(E+a) = m(E)
+		\end{equation*}
+	\item Measure is countably additive for disjoint unions. If $\left\{ _k \right\}_{k=1}^{\infty }$ is a set of disjoint sets in $\mathcal{M}$, then
+		\begin{equation*}
+			m\left( \bigsqcup_{k=1}^{\infty } E_k \right) = \sum_{k=1}^{\infty } m(E_k)
+		\end{equation*}
+\end{itemize}
+
+We will see that it is not possible to construct a set function $m$ satisfying these properties for all subsets of $\mathbb{R}_{\pm \infty }$. However, we can construct such a set function for a large class of sets, which includes all open and closed sets, and many other sets that arise in analysis.
+
+\section{Lebesgue Outer Measure}
+Let $I$ be an interval in $\mathbb{R}$. The \emph{length} of $I$, denoted $l(I)$, is defined as the difference between the endpoints of the interval. For example, if $I = [a, b]$, then $l(I) = b - a$. If $I$ is unbounded, then $l(I) = \infty$.
+
+\begin{definition}{Lebesgue Outer Measure}{Lebesgue Outer Measure}
+Let $\mathcal{M}^* = P(\mathbb{R})$, $A \subseteq \mathbb{R}$. Let $\left\{ I_k \right\}_{k=1}^{\infty }$ be any countable collection of bounded open interval in $\mathbb{R}$ that covers $A$. Define $m^* : \mathcal{M}^* \rightarrow [0,\infty ]$ by
+	\begin{equation*}
+		m^*(A) = \inf \left\{ \sum_{k=1}^{\infty } l(I_k) : A \subseteq \bigcup_{k=1}^{\infty } I_k, I_k \text{ are bounded open intervals} \right\}
+	\end{equation*}
+	The function $m^*$ is called the \emph{Lebesgue outer measure}.
+\end{definition}
+\begin{itemize}
+\item We have $m^*(\emptyset )=0$ directly from the definition.
+\item $m^*$ is monotone. For any $A,B \subseteq \mathbb{R}$, we have
+	\begin{equation*}
+		A \subseteq B \rightarrow m^*(A) \leq m^*(B)
+	\end{equation*}
+\item A countable set has zero Lebesgue outer measure. For any countable set $A \subseteq \mathbb{R}$, we can cover it with intervals of arbitrarily small total length (take $l(I_k) = \epsilon / 2^k$ ). Thus, we have $m^*(A)=0$.
+\item The outer measure of an interval is its length.
+	\begin{proof}
+		For closed bounded intervals $I = [a, b]$, the interval $(a-\epsilon,b+\epsilon)$ covers $I$ for any $\epsilon>0$, so $m^*([a,b]) \leq b-a$. As $[a,b]$ is compact, any open covering of $[a,b]$ has a finite subcovering $\mathcal{I} = \left\{ I_k: 1\leq k\leq n \right\}$. We now prove
+		\begin{equation*}
+		\sum_{k=2}^{n} l(I_k) \geq b-a.
+		\end{equation*}
+		Choose $a\in J_1\in \mathcal{I}$. If $\sup J_1>b$, then we're done, otherwise $\sup J_1\in (a,b]$. Choose $\sup J_1\in J_2\in \mathcal{I}$, then $J_2\neq J_1$, and continue this process $m$ times until it ends. (it will end before $n$ times). Denote $J_k = (a_k,b_k)$, and we have $a_1<a<b<b_m$. Also $a _{k+1} < b_k$.
+		\begin{equation*}
+			\sum_{k=1}^{m} l(J_k) = \sum_{k=1}^{m} (b_k-a_k) \geq b-a.
+		\end{equation*}
+
+		For any bounded interval $I$ and $\epsilon>0$, take closed bounded interval $J_1,J_2$ that $J_1 \subseteq I \subseteq J_2, l(J_1)> l(I)- \epsilon, l(J_2)<l(I)+ \epsilon$. The monotone property of $m^*$ gives us
+		\begin{equation*}
+			m^*(I) \geq m^*(J_1) \geq l(J_1) \text{ and } m^*(I) \leq m^*(J_2) \leq l(J_2).
+		\end{equation*}
+		which means $m^*(I) = l(I)$.
+
+		For an unbounded interval, $\forall n\in \mathbb{Z}_+$, there is a closed bounded interval $J_n \subseteq I, l(J_n) = n$, so $m^*(I) = \infty =l(I)$.
+	\end{proof}
+\item Outer measure is translationally invariant. $\forall A \subseteq \mathbb{R}, y\in \mathbb{R}, m^*(A+y) = m^*(A)$.
+	\begin{proof}
+		$\left\{ I_k \right\}$ is an open cover of $A$ iff $\left\{ I_k+y \right\}$ is an open cover of $A+y$.
+	\end{proof}
+\item Outer measure is countably subadditive. If $\left\{ E_k \right\}$ is any countable collection of sets (not necessarily disjoint), we have
+	\begin{equation*}
+		m^*\left( \bigcup_{k=1}^{\infty } E_k \right) \leq \sum_{k=1}^{\infty } m^*(E_k).
+	\end{equation*}
+	Specifically, taking $E_k = \emptyset $ for all $k>n$, we have
+	\begin{equation*}
+		m^*\left( \bigcup_{k=1}^{n} E_k \right) \leq \sum_{k=1}^{n} m^*(E_k).
+	\end{equation*}
+	\begin{proof}
+		If there exists $E_k$ with infinite outer measure, we're done. So we assume that all $E_k$ has finite outer measure. Let $\epsilon>0$, then $\forall k\in \mathbb{Z}_+$, there is a countable collection of open intervals $\left\{ I_{k,j} \right\}_{j=1}^{\infty }$ such that 
+		\begin{equation*}
+			E_k \subseteq \bigcup_{j=1}^{\infty } I_{k,j},\qquad \sum_{j=1}^{\infty } l(I_{k,j}) < m^*(E_k) + \frac{\epsilon}{2^k}.
+		\end{equation*}
+		Now $\left\{ I_{k,j}: k,j\in \mathbb{Z}_+ \right\}$ is an open cover of $\displaystyle \bigcup_{k=1}^{\infty } E_k$, and we have
+		\begin{equation*}
+			m^*\left( \bigcup_{k=1}^{\infty } E_k \right) \leq \sum_{k=1}^{\infty } \sum_{j=1}^{\infty } l(I_{k,j}) < \sum_{k=1}^{\infty } m^*(E_k) + \epsilon.
+		\end{equation*}
+		Since $\epsilon$ is arbitrary, we have our result.
+	\end{proof}
+\end{itemize}
+
+\section{The $\sigma$-algebra of Lebesgue Measurable Sets}
+
+As we see, the outer measure fails to be countably additive, so we cannot use it directly as a measure. However, we can construct a $\sigma$-algebra of sets for which the outer measure is countably additive.
+
+\begin{definition}{Lebesgue Measurable Sets}{Lebesgue Measurable Sets}
+	A set $E \subseteq \mathbb{R}$ is Lebesgue measurable if
+	\begin{equation}
+	\forall A \subseteq \mathbb{R}, m^*(A) = m^*(A \cap E) + m^*(A \cap E^c)
+	\end{equation}
+	The set of Lebesgue measurable sets is denoted by $\mathcal{M}$. The function $m: \mathcal{M} \rightarrow [0,\infty ]$ defined by $m(E) = m^*(E)$ for all $E\in \mathcal{M}$ is called the Lebesgue measure.
+\end{definition}
+
+We shall prove that it is indeed a $\sigma$-algebra, and $m$ is a measure on it.
+\begin{itemize}
+\item Obviously, $\mathbb{R}\in \mathcal{M}$.
+\item $E\in \mathcal{M} \Leftrightarrow E^c\in \mathcal{M}$ for symmetry.
+\item Any set of zero outer measure is measurable. (The $\sigma$-algebra is complete.)
+	\begin{proof}
+	Let $m^*(E) = 0$, and $A  \subseteq \mathbb{R}$. We have
+	\begin{equation*}
+	m^*(A\cap E) + m^*(A\cap E^c) \leq m^*(E) + m^*(A) = m^*(A)
+	\end{equation*}
+	Also $A = (A\cap E) \cup (A\cap E^c)$, by the subadditivity of $m^*$, we have equality.
+	\end{proof}
+\item $\mathcal{M}$ is closed under finite union.
+	\begin{proof}
+		First we show that the union of two measurable sets is measurable. Let $E_1,E_2 \in \mathcal{M}$, and $A \subseteq \mathbb{R}$. We have
+		\begin{equation*}
+			\begin{aligned}
+			m^*(A) &= m^*(A \cap E_1) + m^*(A \cap E_1^c) \\
+			       &= m^*(A \cap E_1) + m^*((A \cap E_1^c) \cap E_2) + m^*((A \cap E_1^c) \cap E_2^c) \\
+			       &\geq  m^*((A \cap E_1) \cup (A \cap E_1^c\cap E_2)) + m^*(A \cap (E_1\cup E_2)^c) \\
+			       &= m^*(A \cap (E_1\cup E_2)) + m^*(A \cap (E_1\cup E_2)^c).
+			\end{aligned}
+		\end{equation*}
+		So using the subadditivity of $m^*$, we have equality. Finite union follows by induction.
+	\end{proof}
+\item $m$ has finite additivity on $\mathcal{M}$. If $E_1,E_2, \ldots ,E_n \in \mathcal{M}$ are pairwise disjoint and $A \subseteq \mathbb{R}$, then
+	\begin{equation*}
+		m^*\left( A\cap \bigcup_{k=1}^{n} E_k \right) = \sum_{k=1}^{n} m^*(A \cap E_k).
+	\end{equation*}
+	\begin{proof}
+		By induction. It is obviously true for $n=1$, assuming it is true for $n-1$, we have
+		\begin{equation*}
+			A \cap \bigcup_{k=1}^{n} E_k \cap E_n = A \cap E_n, \qquad A \cap \bigcup_{k=1}^{n} E_k \cap E_n^c = A \cap \bigcup_{k=1}^{n-1} E_k
+		\end{equation*}
+		because of disjointedness. By the measurability of $E_n$, we have
+		\begin{equation*}
+			m^*(A \cap \bigcup_{k=1}^{n} E_k) = m^*(A \cap E_n) + m^*(A \cap \bigcup_{k=1}^{n-1} E_k) = \sum_{k=1}^{n} m^*(A \cap E_k).
+		\end{equation*}
+	\end{proof}
+
+	\begin{remark}
+	Hereby, we've shown that $\mathcal{M}$ is an algebra.
+
+	For every countable union of measurable sets $E_1,E_2, \ldots $, we can define a countable disjoint measurable sets with the same union by
+	\begin{equation*}
+		E_k' = E_k - \bigcup_{j=1}^{k-1} E_j, \qquad k=1,2,\ldots ,n. \qquad (E_1'=E_1)
+	\end{equation*}
+	$E_k'$ is measurable because $\mathcal{M}$ is an algebra.
+	\end{remark}
+\item $\mathcal{M}$ is closed under countable union. 
+	\begin{proof}
+		Let $\displaystyle E = \bigsqcup_{k=1}^{\infty } E_k$, we loss no generality by assuming that $E_k$ are pairwise disjoint. For any $A \subseteq \mathbb{R}$, define $\displaystyle F_n = \bigsqcup_{k=1}^{n} E_k$, we have $F_n$ is measurable, and $E^c \subseteq F_n^c$,
+		\begin{equation*}
+		m^*(A) = m^*(A \cap F_n) + m^*(A \cap F_n^c) \geq \sum_{k=1}^{n} m^*(A \cap E_k) + m^*(A \cap E^c).
+		\end{equation*}
+		This holds for all $n\in \mathbb{Z}_+$, so we have, by the countable subadditivity of $m^*$,
+		\begin{equation*}
+			m^*(A) \geq \sum_{k=1}^{\infty } m^*(A \cap E_k) + m^*(A \cap E^c) \geq m^*(A \cap E) + m^*(A \cap E^c).
+		\end{equation*}
+		Thus $E$ is measurable.
+	\end{proof}
+\end{itemize}
+
+\begin{remark}
+Now we've proven that $\mathcal{M}$ is a $\sigma$-algebra. But we haven't tried to identify some specific measurable sets. We try intervals.
+\end{remark}
+
+\begin{theorem}{Intervals are Measurable}{Intervals are Measurable}
+	Every interval in $\mathbb{R}$ is measurable.
+\end{theorem}
+\begin{proof}
+	As $\mathcal{M}$ is a $\sigma$-algebra. We only need to show that the open interval $(a,\infty )$ is measurable. Let $A \subseteq \mathbb{R}$, assume $a\notin A$, otherwise delete $a$ from $A$, as $\left\{ a \right\}$ has zero measure, it does not affect the outer measure. We define
+	\begin{equation*}
+		A_1 = A \cap (a,\infty ), \qquad A_2 = A \cap (-\infty ,a)
+	\end{equation*}
+	For any countable open covering $\left\{ I_k \right\}_{k=1}^{\infty }$ of $A$, we define $I_k' = I_k \cap (a,\infty ), I_k'' = I_k \cap (-\infty ,a)$. Then $\left\{ I_k' \right\}_{k=1}^{\infty }$ is an open covering of $A_1$, and $\left\{ I_k'' \right\}_{k=1}^{\infty }$ is an open covering of $A_2$. By the definition of outer measure, we have
+	\begin{equation*}
+		m^*(A_1)\leq \sum_{k=1}^{\infty } l(I_k') \text{ and } m^*(A_2)\leq \sum_{k=1}^{\infty } l(I_k'').
+	\end{equation*}
+	Giving that
+	\begin{equation*}
+		m^*(A_1) + m^*(A_2) \leq \sum_{k=1}^{\infty } l(I_k') + \sum_{k=1}^{\infty } l(I_k'') = \sum_{k=1}^{\infty } l(I_k).
+	\end{equation*}
+	Taking infimum over all countable open coverings of $A$, we have
+	\begin{equation*}
+		m^*(A_1) + m^*(A_2) = m^*(A_1) + m^*(A_1^c) \leq m^*(A)
+	\end{equation*}
+	completing the proof.
+\end{proof}
+
+\begin{definition}{Borel Sets}{Borel Sets}
+	The \emph{Borel $\sigma$-algebra} $\mathcal{B}$ on $\mathbb{R}$ is the smallest $\sigma$-algebra containing all open sets in $\mathbb{R}$. It is the intersection of all $\sigma$-algebras containing all open sets in $\mathbb{R}$.
+\end{definition}
+
+As $\mathbb{R}$ is second-countable, every open set is a countable union of open intervals, so every open set is measurable. So we conclude that $\mathcal{M}$ contains all Borel sets.
+
+\begin{theorem}{Closure under Translation}{Closure under Translation}
+	For any $E\in \mathcal{M}$ and $a\in \mathbb{R}$, we have $E+a \in \mathcal{M}$.
+\end{theorem}
+\begin{proof}
+Obvious.
+\end{proof}
+
+\section{Outer and Inner Approximation}
+
+We introduce two characterizations of Lebesgue measurable sets: one based on inner approximation of closed sets and the other on outer approximation of open sets.
+
+First, sets has excision property: If $A \subseteq B \subseteq \mathbb{R}, m^*(A) < \infty $, then
+\begin{equation*}
+	m^*(B) = m^*(A) + m^*(B - A).
+\end{equation*}
+
+\begin{theorem}{Outer and Inner Approximation}{Outer and Inner Approximation}
+Let $E \subseteq \mathbb{R}$, then $E\in \mathcal{M}$ is equivalent to each of the following conditions:
+
+\textbf{Outer Approximation:}
+\begin{itemize}
+\item $\forall \epsilon>0$, there exists an open set $O$ such that $E \subseteq O$ and $m^*(O-E) < \epsilon$.
+\item There is a $G_{\delta}$ set $G$ such that $E \subseteq G$ and $m^*(G) = m^*(E)$.
+\end{itemize}
+
+\textbf{Inner Approximation:}
+\begin{itemize}
+	\item $\forall \epsilon>0$, there exists a closed set $F$ such that $F \subseteq E$ and $m^*(E-F) < \epsilon$.
+	\item There is a $F_{\sigma }$ set $F$ such that $F \subseteq E$ and $m^*(F) = m^*(E)$.
+\end{itemize}
+\end{theorem}
+\begin{proof}
+	We establish the equivalence of measreability and outer approximation first. Assume $E$ is measurable, and $\epsilon>0$. If $m^*(E)<\infty $, there exists a countable collection of open intervals $\left\{ I_k \right\}_{k=1}^{\infty }$ covering $E$ such that
+	\begin{equation*}
+		\sum_{k=1}^{\infty } l(I_k) < m^*(E) + \epsilon.
+	\end{equation*}
+	Let $O = \bigcup_{k=1}^{\infty } I_k$, then $O$ is an open set covering $E$ and
+	\begin{equation*}
+		m^*(O) \leq \sum_{k=1}^{\infty } l(I_k) < m^*(E) + \epsilon.
+	\end{equation*}
+	Therefore, we have $m^*(O-E) = m^*(O) - m^*(E) < \epsilon$. (Her we use the measurability of $E$ to ensure finite additivity of $m^*$.)
+
+	When $m^*(E) = \infty $, then the second countability of $\mathbb{R}$ gives us $E$ can be written as a countable disjoint union of $E_k$, each has finite outer measure. For each $E_k$, there exists an open set $O_k$ such that $E_k \subseteq O_k$ and $m^*(O_k) < m^*(E_k) + \epsilon / 2^k$. Let $O = \bigcup_{k=1}^{\infty } O_k$, then $O$ is an open set covering $E$ and
+	\begin{equation*}
+		O-E = \bigcup_{k=1}^{\infty } O_k - E \subseteq \bigcup_{k=1}^{\infty } (O_k - E_k).
+	\end{equation*}
+	Using subadditivity of $m^*$, we have
+	\begin{equation*}
+		m^*(O-E) \leq \sum_{k=1}^{\infty } m^*(O_k - E_k) < \epsilon.
+	\end{equation*}
+
+	If the condition holds, then for $k\in \mathbb{Z}_+$, define $O_k$ be an open set containing $E$ and $m^*(O_k-E) < 1 / k$, then $O = \bigcup_{k=1}^{\infty } O_k$ is a $G_{\delta}$ set such that $E \subseteq O$ and $m^*(G-E) = 0$.
+
+	Finally, if the second condition holds, as $G$ and $G-E$ is measurable (zero outer measure sets are measurable), we have $E$ measurable.
+
+	The Inner approximation is similar. Using $E$ measurable iff $E^c$ measurable, and the complement of a $F_{\sigma}$ set is a $G_{\delta}$ set, we can prove the inner approximation is equivalent to the outer approximation.
+
+\end{proof}
+
+
+\begin{theorem}{Approximation by Open Intervals}{Approximation by Open Intervals}
+	Let $E \subseteq \mathbb{R}$ be measurable with finite outer measure, then for any $\epsilon > 0$, there exists a finite collection of disjoint open intervals $\left\{ I_k \right\}_{k=1}^{n}$, with $O = \bigcup_{k=1}^{n} I_k$, such that
+	\begin{equation*}
+		m^*(O-E) + m^*(E-O) < \epsilon
+	\end{equation*}
+\end{theorem}
+\begin{proof}
+	There is an open set $\mathcal{U}$ that $E \subseteq \mathcal{U}, m^*(\mathcal{U}-E) < \epsilon / 2$. Then $\mathcal{U}$ also has finite outer measure. Let $\mathcal{U} = \bigcup_{k=1}^{\infty } I_k$, where $I_k$ are disjoint open intervals (The components of an open interval covering of $\mathcal{U}$ ). Then we have
+	\begin{equation*}
+		\sum_{k=1}^{n} l(I_k) \leq m^*(\mathcal{U}) < \infty
+	\end{equation*}
+	So the series $\sum_{k=1}^{\infty } l(I_k)$ converges, and there exists $N\in \mathbb{Z}_+$ such that
+	\begin{equation*}
+		\sum_{k=N+1}^{\infty } l(I_k) < \epsilon / 2
+	\end{equation*}
+	Define $O = \bigcup_{k=1}^{N} I_k$, then $O-E \subseteq \mathcal{U}-E$, so
+	\begin{equation*}
+		m^*(O-E) < m^*(\mathcal{U}-E) < \epsilon / 2
+	\end{equation*}
+	On the other hand, $E-O \subseteq \bigcup_{k=N+1}^{\infty } I_k$, so we have our result.
+\end{proof}
+
+
+\section{Countable Additivity of Lebesgue Measure}
+
+\begin{theorem}{Countable Additivity of Lebesgue Measure}{Countable Additivity of Lebesgue Measure}
+	If $\left\{ E_k \right\}_{k=1}^{\infty }$ is a countable collection of disjoint measurable sets, then
+	\begin{equation*}
+		m\left( \bigsqcup_{k=1}^{\infty } E_k \right) = \sum_{k=1}^{\infty } m(E_k).
+	\end{equation*}
+\end{theorem}
+\begin{proof}
+We have
+\begin{equation*}
+	m^*\left( \bigsqcup_{k=1}^{\infty } E_k \right) \geq m^* \left( \bigcup_{k=1}^{n} E_k \right) = \sum_{k=1}^{n} m^*(E_k)
+\end{equation*}
+for all $n\in \mathbb{Z}_+$, so
+\begin{equation*}
+	m^*\left( \bigsqcup_{k=1}^{\infty } E_k \right) \geq \sum_{k=1}^{\infty } m^*(E_k).
+\end{equation*}
+The other side follows from the subadditivity of $m^*$.
+\end{proof}
+
+\begin{remark}
+	The Lebesgue measure is a measure on the Lebesgue measurable sets $\mathcal{M}$, and it is invariant under translation, and assigns the length to intervals. 
+\end{remark}
+
+We say a collection of sets $\left\{ E_k \right\}_{k=1}^{\infty }$ is ascending if $E_k \subseteq E_{k+1}$ for all $k\in \mathbb{Z}_+$, descending if $E_k \supseteq E_{k+1}$ for all $k\in \mathbb{Z}_+$.
+
+\begin{theorem}{The Continuity of Measure}{The Continuity of Measure}
+	Lebesgue measure possess the following continuity properties:
+	\begin{itemize}
+	\item If $\left\{ A_k \right\}_{k=1}^{\infty }$ is an ascending sequence of measurable sets, then
+		\begin{equation*}
+			m \left(\bigcup_{k=1}^{\infty } A_k\right) = \lim_{k \to \infty } m(A_k).
+		\end{equation*}
+	\item If $\left\{ A_k \right\}_{k=1}^{\infty }$ is a descending sequence of measurable sets with $m(A_1) < \infty $, then
+		\begin{equation*}
+			m \left(\bigcap_{k=1}^{\infty } A_k\right) = \lim_{k \to \infty } m(A_k).
+		\end{equation*}
+	\end{itemize}
+\end{theorem}
+\begin{proof}
+\begin{itemize}
+\item Setting $C_k = A_k - A_{k-1}$ would make it back to countable additivity.
+\item Using $A_k' = A_1-A_k$, transform it to the union case.
+\end{itemize}
+\end{proof}
+
+\begin{theorem}{Almost Everywhere}{Almost Everywhere}
+	For a measurable set $E$, we say a property holds \emph{almost everywhere} on $E$ if there is a subset $E_0 \subseteq E, m(E_0)=0$ such that the property holds for all $x\in E-E_0$.
+\end{theorem}
+
+\begin{theorem}{The Borel-Cantelli Lemma}{The Borel-Cantelli Lemma}
+	If $\left\{ E_k \right\}_{k=1}^{\infty }$ is a sequence of measurable sets such that $\sum_{k=1}^{\infty } m(E_k) < \infty $, then almost every point in $\mathbb{R}$ lies in only finitely many $E_k$.
+\end{theorem}
+\begin{proof}
+If $x\in \mathbb{R}$ belongs to infinite many $E_k$, then
+\begin{equation*}
+\forall n\in \mathbb{Z}_+, x\in \bigcup_{k=n}^{\infty } E_k.
+\end{equation*}
+So we have $\displaystyle x\in \bigcap_{n=1}^{\infty } \left( \bigcup_{k=n}^{\infty } E_k \right)$. We have
+\begin{equation*}
+	m \left(\bigcup_{k=n}^{\infty } E_k\right) \leq \sum_{k=n}^{\infty } m(E_k) \leq \sum_{k=1}^{\infty } m(E_k) < \infty.
+\end{equation*}
+By continuity of measure, we have
+\begin{equation*}
+	m \left(\bigcap_{n=1}^{\infty } \left( \bigcup_{k=n}^{\infty } E_k \right) \right) = \lim_{n \to \infty } m \left(\bigcup_{k=n}^{\infty } E_k \right) \leq \lim_{n \to \infty } \sum_{k=n}^{\infty } m(E_k) = 0.
+\end{equation*}
+\end{proof}
+
+\section{Non-measurable Sets}
+
+We've shown that all subsets of measure zero are measurable, and all Bored sets are measurable. However, there are sets that are not Lebesgue measurable. 
+
+\begin{lemma}{Disjoint Translation and Zero Measure}{Disjoint Translation and Zero Measure}
+Let $E$ be a bounded measurable set. If there is a bounded countably infinite set $\Lambda \subseteq \mathbb{R}$ such that the translations $\left\{ \lambda + E: \lambda\in \Lambda \right\}$ are pairwise disjoint, then $m(E) = 0$.
+\end{lemma}
+\begin{proof}
+	We have $\displaystyle \bigcup_{\lambda\in \Lambda} (\lambda+E) $ is bounded and measurable so has finite measure. However, as disjointedness we have
+	\begin{equation*}
+		m\left( \bigcup_{\lambda\in \Lambda} (\lambda+E) \right) = \sum_{\lambda\in \Lambda} m(\lambda+E) = \sum_{\lambda\in \Lambda} m(E).
+	\end{equation*}
+	therefore, $m(E)=0$.
+\end{proof}
+
+For any nonempty set $E \subseteq \mathbb{R}$, define an equivalence relation $\sim: a\sim b \Leftrightarrow b-a\in \mathbb{Q}$. By the axiom of choice, there is a set $\mathcal{C}_E$ containing exactly one element from each equivalence class $E / \sim$.  We have
+ \begin{itemize}
+	 \item The difference of any two elements in $\mathcal{C}_E$ is irrational. For any set $\Lambda \subseteq \mathbb{Q}$, the translations $\left\{ \lambda + \mathcal{C}_E: \lambda\in \Lambda \right\}$ are pairwise disjoint.
+	 \item For any $x\in E$, there is a unique $c\in \mathcal{C}_E$ and $q\in \mathbb{Q}$ such that $x = c + q$.
+\end{itemize}
+
+\begin{theorem}{Viali Theorem}{Viali Theorem}
+	Let $E \in \mathcal{M}$ having $m(E) > 0$, then there exists a subset that is not measurable.
+\end{theorem}
+\begin{proof}
+Let $E$ be the union of bounded measurable subsets. This can be done by finding a countable many disjoint intervals that covers $E$, and taking intersection of $E$ with each interval. Some of then has measure $>0$ due do countability additivity.
+
+So we assume $E$ is bounded, and $E \subseteq [-b,b]$, othrerwise let it to be one subset that is bounded and has positive measure. Let $\mathcal{C}_E$ be a choice set of $E / \mathbb{Q} \rightarrow E$ as above. If $\mathcal{C}_E$ is measurable, let $\Lambda = \mathbb{Q}\cap [-2b,2b]$, so we have
+\begin{equation*}
+	E \subseteq \bigcup_{\lambda\in \Lambda} (\lambda + \mathcal{C}_E).
+\end{equation*}
+The right side is measurable and bounded, so the monotonicity shows the right side has finite and positive measure. So
+\begin{equation*}
+	0<m(E) \leq m\left( \bigcup_{\lambda\in \Lambda} (\lambda + \mathcal{C}_E) \right) = \sum_{\lambda\in \Lambda} m(\lambda + \mathcal{C}_E) = \sum_{\lambda\in \Lambda} m(\mathcal{C}_E)<\infty 
+\end{equation*}
+As $\Lambda$ is infinite, this is impossible.
+\end{proof}
+
+\begin{corollary}{Strictly Inequality Can Hold}{Strictly Inequality Can Hold}
+	There exists disjoint sets $A,B \subseteq \mathbb{R}$ such that
+	\begin{equation*}
+	m^*(A \cup B) < m^*(A) + m^*(B).
+	\end{equation*}
+\end{corollary}
+\begin{proof}
+Otherwise by the definition of Lebesgue outer measure, we have every set is measurable, which contradicts the Viali theorem.
+\end{proof}
+
+
+\section{The Cantor Set and the Cantor-Lebesgue Function}
+Two questions arise naturally:
+\begin{quote}
+	\textbf{Question 1:} If a set has measure zero, does it have to be countable?
+	
+	\textbf{Question 2:} If a set is Lebesgue measurable, does it have to be Borel?
+\end{quote}
+We've shown that the inverse of these questions are true, but the answers to these questions are negative.
+
+We introduce the Cantor set as follows:
+\begin{itemize}
+\item Let $C_0$ be the interval $[0,1]$.
+\item Delete the open middle third interval $(\frac{1}{3},\frac{2}{3})$ from $C_0$, we have $C_1 = [0,\frac{1}{3}] \cup [\frac{2}{3},1]$.
+\item For each $C_n$ is a union of disjoint closed intervals, delete the open middle third interval from each of them, we have $C_{n+1}$.
+\item Define the Cantor set $C = \bigcap_{n=0}^{\infty } C_n$.
+\end{itemize}
+
+\begin{remark}
+	The sequence $C_k$ is a decreasing sequence of closed sets, and $C$ is a closed set.
+
+	Each $C_k$ contains $2^k$ disjoint closed intervals, each of length $\frac{1}{3^k}$. The total length of these intervals is
+	\begin{equation*}
+		m(C_k) = \left( \frac{2}{3} \right)^k.
+	\end{equation*}
+\end{remark}
+
+\begin{proposition}{Cantor Set}{Cantor Set}
+The Cantor set $C$ is closed, uncountable, and has measure zero.
+\end{proposition}
+\begin{proof}
+	The monotonicity shows that $m(C) < (2 / 3)^k$ for each $k\in \mathbb{Z}_+$, so $m(C) = 0$.
+
+	If $C$ is countable, let $C = \left\{ c_k \right\}_{k=1}^{\infty }$. Let $F_1$ be one of the intervals in $C_1$ that do not contain $c_1$, and $F_2$ be one of the intervals in $C_2$ that is in $F_1$ and do not contain $c_2$, and so on. Then we have a decreasing sequence of closed intervals $F_k$ such that $c_k \notin F_k$ for all $k\in \mathbb{Z}_+$. The length of $F_k$ is $\frac{1}{3^k}$, so the intersection of all $F_k$ is a single point in $C$ but not equal to any $c_k$. This contradicts the assumption that $C$ is countable.
+
+	Finally, $C$ is closed because it is the intersection of closed sets.
+\end{proof}
+
+\begin{remark}
+	Well, in ternary expansion we can see that the Cantor set is the set of all numbers in $[0,1]$ whose ternary expansion does not contain the digit $1$. So it is obviously uncountable.
+\end{remark}
+
+We say a function is increasing if $f(x_1) \leq f(x_2)$ whenever $x_1 < x_2$. Strictly increasing if $f(x_1) < f(x_2)$ whenever $x_1 < x_2$.
+
+We now define the Cantor-Lebesgue function $f: [0,1] \rightarrow [0,1]$ as follows:
+\begin{itemize}
+	\item Let $O_k = [0,1]-C_k$. Define $O = \bigcup_{k=1}^{\infty } O_k$, then $O = [0,1]-C$. We define $f$ on $O$
+	\item For $x\in O_k$, let $I_1,I_2,\ldots ,I_{2^k-1}$ be the intervals in $O_k$, left to right, assigned each interval a number
+		\begin{equation*}
+			\left\{ \frac{1}{2^k}, \frac{2}{2^k}, \ldots ,\frac{2^k-1}{2^k} \right\}
+		\end{equation*}
+	\item For each $x\in O$, we have $x\in O_k$ for some $k\in \mathbb{Z}_+$, define $f(x)$ to be the number assigned to the interval containing $x$ in $O_k$. This definition is consistent, for the same interval in different $O_k$ has the same assigned number, as is easily seen from the construction.
+	\item For $x\in C$, define
+		\begin{equation*}
+		f(0)=0, \qquad f(x) = \sup \left\{ f(t) : t\in O\cap [0,x) \right\} \text{ for }x\in C-\left\{ 0 \right\}
+		\end{equation*}
+\end{itemize}
+
+\begin{proposition}{Cantor-Lebesgue Function}{Cantor-Lebesgue Function}
+	The Cantor-Lebesgue function $f$ is continuous, increasing, and $f([0,1]) = [0,1]$. Its derivative exists on $O = [0,1]-C$, and is zero.
+\end{proposition}
+\begin{proof}
+	It is obviously that $f$ is increasing. For $a<b$ both in $O$, choose a $k$ that contains both would do. If $a\in C$, if $b\in O$, then as $f$ is increasing on $O$, we have $f(a) = \sup \left\{ f(t) : t\in O\cap [0,a) \right\} \leq f(b)$.
+
+	For continuity, $f$ is continuous on $O$ obviously. For $x_0\in C$, for sufficiently large $k$, we have $1 / 2^k < \epsilon$, then closest two intervals in $O_k$ on either side of $x_0$ only differs by less than $\epsilon$, as $f$ is increasing, $f$ is continuous at $x_0$.
+
+	The intermidiate value theorem shows that $f([0,1]) = [0,1]$. And the derivative of $f$ is zero on $O$.
+\end{proof}
+
+\begin{proposition}{Cantor Function Plus Identity}{Cantor Function Plus Identity}
+	Let $f$ be the Cantor-Lebesgue function, then the function $g: [0,1] \rightarrow [0,2]$ defined by
+	\begin{equation*}
+		g(x) = f(x) + x
+	\end{equation*}
+	is a strictly increasing continuous function, and $g([0,1]) = [0,2]$, with additional properties:
+	\begin{itemize}
+		\item $g(C)\in \mathcal{M}$, and $m(g(C)) > 0$.
+		\item $\exists S \subseteq C, g(S)\notin \mathcal{M}$.
+	\end{itemize}
+	where $C$ is the Cantor set.
+\end{proposition}
+\begin{proof}
+	We have $[0,1] = C \sqcup O$, so we have $[0,2] = g(C) \sqcup g(O)$. As $g^{-1}$ is continuous, $g(O)$ is open, and $g(C)$ is closed. It is obvious that $m(O_k) = m(g(O_k))$, so the continuity of measure shows that $m(g(O)) = m(O) = 1$, therefore, $g(C)$ is measurable and $m(g(C)) = 1$.
+
+	From Viali theorem, we know $g(C)$ has a non-measurable subset $S'$, but $S=g^{-1}(S')$ is measurable because it has zero outer measure.
+\end{proof}
+
+\begin{corollary}{Lebesgue measurable sets not Borel set}{Lebesgue measurable sets not Borel set}
+	There exists a Lebesgue measurable set $E$ such that $E\notin \mathcal{B}$, the Borel $\sigma$-algebra.
+\end{corollary}
+\begin{proof}
+	If not, obviously $g$ is a Borel function, so for any Borel set $B$, $g^{-1}(B)$ is also a Borel set (from proposition \ref{prop:Borel Measurable Functions}). But $g^{-1}(S')$ is not a Borel set, so $S'$ is not a Borel set, which contradicts the assumption.
+\end{proof}
+
+
+\end{document}
