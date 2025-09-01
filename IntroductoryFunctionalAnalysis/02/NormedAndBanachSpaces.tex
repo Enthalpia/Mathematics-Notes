@@ -1,0 +1,373 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\chapter{Normed Spaces and Banach Spaces}
+
+We've encountered vector spaces in our study of linear algebra, and now a brief review of some concepts of infinite dimensional vector spaces.
+
+A linear combination of vectors $x_1, x_2, \ldots, x_n$ in a vector space $V$ over a field $\mathbb{F}$ is an expression of the form
+\begin{equation*}
+	\alpha_1 x_1 + \alpha_2 x_2 + \cdots + \alpha_n x_n,
+\end{equation*}
+where $\alpha_1, \alpha_2, \ldots, \alpha_n$ are scalars in $\mathbb{F}$. The set of all linear combinations of a given set of vectors is called the span of those vectors. NOTE that linear combinations are finite sums.
+
+\begin{definition}{Linear Independence}{Linear Independence}
+	A set of vectors $\{x_1, x_2, \ldots, x_n\}$ in a vector space $V$ is said to be linearly independent if
+	\begin{equation*}
+		\alpha_1 x_1 + \alpha_2 x_2 + \cdots + \alpha_n x_n = 0 \rightarrow \alpha_1 = \alpha_2 = \cdots = \alpha_n = 0.
+	\end{equation*}
+
+	An arbitrary set of vectors is linearly independent if every nonempty finite subset is linearly independent. Otherwise, the set is said to be linearly dependent.
+\end{definition}
+
+If $X$ is a vector space, and $Y \subseteq X$, if every vector in $X$ can be expressed as a linear combination of vectors in $Y$, then $Y$ is called a spanning set for $X$. If $Y$ is both linearly independent and spanning, then $Y$ is called a (Hamel) basis for $X$.
+
+\begin{definition}{Hamel Basis}{Hamel Basis}
+	A Hamel basis (or algebraic basis) of a vector space $V$ over a field $\mathbb{F}$ is a set of vectors in $V$ that is linearly independent and spans $V$.
+\end{definition}
+
+\begin{theorem}{Existence of Basis}{Existence of Basis}
+	Every vector space has a Hamel basis.
+
+	All Hamel bases of a vector space have the same cardinality, called the dimension of the vector space.
+
+	Any proper subspace of a finite-dimensional vector space has strictly lower dimension.
+\end{theorem}
+
+\section{Normed Spaces and Banach Spaces}
+
+\begin{definition}{Norms}{Norms}
+	A norm on a vector space $V$ over a field $\mathbb{F}=\mathbb{R}$ or $\mathbb{C}$ is a function $\|\cdot\|: V \rightarrow [0, \infty)$ that satisfies the following properties for all $x, y \in V$ and all scalars $\alpha \in \mathbb{F}$:
+	\begin{enumerate}
+		\item (Positive Definiteness) $\|x\| = 0$ if and only if $x = 0$.
+		\item (Homogeneity) $\|\alpha x\| = |\alpha| \|x\|$.
+		\item (Triangle Inequality) $\|x + y\| \leq \|x\| + \|y\|$.
+	\end{enumerate}
+
+	A vector space equipped with a norm is called a normed vector space or simply a normed space.
+\end{definition}
+
+A normed space is a metric space with the metric induced by the norm, defined as $d(x, y) = \|x - y\|$ for all $x, y \in V$.
+
+\begin{definition}{Banach Spaces}{Banach Spaces}
+	A Banach space is a normed vector space that is complete with respect to the metric induced by the norm.
+\end{definition}
+
+From the triangle inequality, we can derive the reverse triangle inequality:
+\begin{equation*}
+	\|x - y\| \geq \left|\|x\| - \|y\|\right|.
+\end{equation*}
+which would imply that the norm function is continuous.
+
+\begin{theorem}{Continuity of Norm}{Continuity of Norm}
+	The norm function $\|\cdot\|: V \rightarrow [0, \infty)$ is continuous.
+\end{theorem}
+
+\begin{example}{Normed Spaces and Banach Spaces}{Normed Spaces and Banach Spaces}
+	\begin{itemize}
+		\item The Euclidean space $\mathbb{R}^n$ and unitary space $\mathbb{C}^n$ with the standard Euclidean norm $\|x\|_2 = \sqrt{x_1^2 + x_2^2 + \cdots + x_n^2}$ is a Banach space.
+		\item Space of sequences $\ell^p$ for $1 \leq p < \infty$ with the norm $\|x\|_p = \left( \sum_{i=1}^\infty |x_i|^p \right)^{1/p}$ is a Banach space.
+		\item The space of bounded sequences $\ell^\infty$ with the supremum norm $\|x\|_\infty = \sup_i |x_i|$ is a Banach space.
+		\item The space of continuous functions $C([a, b])$ with the supremum norm $\|f\|_\infty = \sup_{x \in [a, b]} |f(x)|$ is a Banach space.
+	\end{itemize}
+\end{example}
+
+\begin{example}{Incomplete Normed Spaces}{Incomplete Normed Spaces}
+	\begin{itemize}
+		\item The space of rational numbers $\mathbb{Q}$ with the absolute value norm.
+		\item The space of polynomials on $[0, 1]$ with the supremum norm.
+		\item The space of continuous functions on $[0, 1]$ with the $L^1$ norm $\|f\|_1 = \int_0^1 |f(x)| \, dx$.
+	\end{itemize}
+\end{example}
+
+\paragraph{Completion of Continuity Spaces, $L^2[a, b]$}
+
+The vector space of all continuous functions $[a,b] \rightarrow \mathbb{R}$ with the $L^2$ norm
+\begin{equation}
+	\|f\|_2 = \left( \int_a^b |f(x)|^2 \, dx \right)^{1/2}
+\end{equation}
+
+As we've seen, this space is not complete. However, we can construct its completion, denoted by $L^2[a, b]$, which consists of equivalence classes of Cauchy sequences of continuous functions under the $L^2$ norm. We shall prove that this is a Banach space later, (we haven't defined the extended norm yet).
+
+More generally, for $1 \leq p < \infty$, we can define the space $L^p[a, b]$ as the completion of the space of continuous functions on $[a, b]$ with respect to the $L^p$ norm
+\begin{equation}
+	\|f\|_p = \left( \int_a^b |f(x)|^p \, dx \right)^{1/p}
+\end{equation}
+
+\begin{lemma}{Transition Invariance of Norm Induced Metrics}{Transition Invariance of Norm Induced Metrics}
+	Let $V$ be a vector space over a field $\mathbb{F}$ with a norm $\|\cdot\|$. The metric $d(x, y) = \|x - y\|$ induced by the norm is translation invariant, meaning that for any $x, y, z \in V$,
+	\begin{equation*}
+		d(x + z, y + z) = d(x, y).
+	\end{equation*}
+	For any $\alpha\in \mathbb{F}$ and $x, y \in V$,
+	\begin{equation*}
+		d(\alpha x, \alpha y) = |\alpha| d(x, y).
+	\end{equation*}
+\end{lemma}
+
+From this we can see that not all metric spaces can be induced by a norm, for example, the space $s$ from the Riemannian metric is not translation invariant.
+
+\section{Further Properties of Normed Spaces}
+A subspace of a vector space is a subset that is also a vector space under the same operations. A closed subspace of a normed space is a subspace that is also a closed set in the metric induced by the norm.
+
+\begin{theorem}{Subspaces of Banach Space}{Subspaces of Banach Space}
+	A subspace $Y$ of a Banach space $X$ is a Banach space if and only if $Y$ is closed in $X$.
+\end{theorem}
+
+Convergence and series are defined similar to that in analysis. A sequence $\{x_n\}$ in a normed space $X$ converges to $x \in X$ if $\|x_n - x\| \rightarrow 0$ as $n \rightarrow \infty$. A series $\sum_{n=1}^\infty x_n$ in $X$ converges to $x \in X$ if the sequence of partial sums $S_N = \sum_{n=1}^N x_n$ converges to $x$. Absolutely convergence is defined as $\sum_{n=1}^\infty \|x_n\| < \infty$.
+
+\begin{theorem}{Convergence and Absolute Convergence}{Convergence and Absolute Convergence}
+	In a normed space $X$, every absolutely convergent series converges iff $X$ is a Banach space.
+\end{theorem}
+
+\begin{definition}{Schauder Basis}{Schauder Basis}
+	A Schauder basis of a normed space $X$ is a sequence $\{x_n\}$ in $X$ such that for every $x \in X$, there exists a unique sequence of scalars $\{\alpha_n\}$ such that
+	\begin{equation*}
+		x = \sum_{n=1}^\infty \alpha_n x_n,
+	\end{equation*}
+	where the series converges in the norm of $X$.
+\end{definition}
+
+It is clear that if $V$ has a Schauder basis, then $V$ is separable, since the set of all finite linear combinations of basis vectors with rational coefficients is a countable dense subset of $V$. However, the converse is not true; there exist separable Banach spaces without a Schauder basis.
+
+\begin{theorem}{Completion of Normed Spaces}{Completion of Normed Spaces}
+	Let $X$ be a normed space. There exists a Banach space $\overline{X}$, called the completion of $X$, and an isometric embedding $J: X \rightarrow \overline{X}$ such that $J(X)$ is dense in $\overline{X}$. The completion is unique up to isometric isomorphism.
+\end{theorem}
+
+\section{Finite Dimensional Normed Spaces}
+
+\begin{lemma}{Lower Bound on Linear Combinations}{Lower Bound on Linear Combinations}
+	Let $X$ be a normed space, and let $\{x_1, x_2, \ldots, x_n\}$ be a linearly independent set in $X$. There exists a constant $c > 0$ such that for any scalars $\alpha_1, \alpha_2, \ldots, \alpha_n$,
+	\begin{equation*}
+		\left\|\sum_{i=1}^n \alpha_i x_i\right\| \geq c \sum_{i=1}^n |\alpha_i|.
+	\end{equation*}
+\end{lemma}
+\begin{proof}
+	Let $s = \sum_{i=1}^n |\alpha_i|$. If $s = 0$, then all $\alpha_i = 0$ and the inequality holds trivially. If $s > 0$, define $\beta_i = \alpha_i / s$, so that $\sum_{i=1}^n |\beta_i| = 1$. We need to show that there exists $c > 0$ such that
+	\begin{equation*}
+		\left\|\sum_{i=1}^n \beta_i x_i\right\| \geq c.
+	\end{equation*}
+	Suppose this is false, then for every $m \in \mathbb{N}$, there exist scalars $\beta_i^{(m)}$ with $\sum_{i=1}^n |\beta_i^{(m)}| = 1$ such that $y_m = \sum_{i=1}^n \beta_i^{(m)} x_i$ satisfies $\|y_m\| < 1/m$. The sequence $\{y_m\}$ converges to $0$ in norm. Since the set $\{\beta_i^{(m)}\}$ is bounded, by the Bolzano-Weierstrass theorem, there exists a convergent subsequence $\{\beta_i^{(m_k)}\}$ converging to $\beta_i$. The limit satisfies $\sum_{i=1}^n |\beta_i| = 1$ and
+	\begin{equation*}
+		0 = \lim_{k \to \infty} y_{m_k} = \sum_{i=1}^n \beta_i x_i.
+	\end{equation*}
+	Since $\{x_i\}$ is linearly independent, all $\beta_i = 0$, contradicting $\sum_{i=1}^n |\beta_i| = 1$. Thus, such a $c > 0$ must exist.
+\end{proof}
+
+\begin{theorem}{Closedness of Finite Dimensional Subspace}{Closedness of Finite Dimensional Subspace}
+	Every finite dimensional subspace of a normed space is closed.
+\end{theorem}
+\begin{proof}
+	This is because any finite dimensional normed space is isomorphic to $\mathbb{R}^n$ or $\mathbb{C}^n$, which are complete, hence closed.
+\end{proof}
+
+Also, all norms on a finite dimensional vector space leads to the same topology.
+
+\begin{definition}{Equivalent Norms}{Equivalent Norms}
+	A norm $\|\cdot\|_1$ is said to be equivalent to another norm $\|\cdot\|_2$ on a vector space $V$ if there exist positive constants $c$ and $C$ such that for all $x \in V$,
+	\begin{equation*}
+		c \|x\|_1 \leq \|x\|_2 \leq C \|x\|_1.
+	\end{equation*}
+\end{definition}
+This is motivated by:
+\begin{quote}
+	Two norms are equivalent if and only if they induce the same topology on the vector space.
+\end{quote}
+
+\begin{theorem}{Norms in Finite Dimensional Vector Spaces}{Norms in Finite Dimensional Vector Spaces}
+	All norms on a finite dimensional vector space are equivalent.
+\end{theorem}
+
+\begin{theorem}{Riesz's Lemma}{Rieszs Lemma}
+	Let $X$ be a normed space, and let $Y$ be a proper closed subspace of $X$. For any $\epsilon \in (0, 1)$, there exists a vector $x \in X$ with $\|x\| = 1$ such that for all $y \in Y$,
+	\begin{equation*}
+		\|x - y\| > \epsilon.
+	\end{equation*}
+\end{theorem}
+\begin{proof}
+	Consider $v\in X-Y$ and denote
+	\begin{equation*}
+		a = \inf_{y\in Y} \|v - y\|.
+	\end{equation*}
+	Since $Y$ is a proper closed subspace, $a > 0$. Take $\epsilon\in (0,1)$ and choose $y_0\in Y$ such that
+	\begin{equation*}
+		a\leq \|v - y_0\| \leq \frac{a}{\epsilon}.
+	\end{equation*}
+	Let $z = (v - y_0)/\|v - y_0\|$, then $\|z\| = 1$. For any $y\in Y$, we have
+	\begin{equation*}
+		\|z - y\| = \frac{\|v - (y_0 + \|v - y_0\| y)\|}{\|v - y_0\|} \geq \frac{a}{\|v - y_0\|} > \epsilon.
+	\end{equation*}
+\end{proof}
+
+\begin{theorem}{Finite Dimension and Unit Ball Compactness}{Finite Dimension and Unit Ball Compactness}
+	A normed space $X$ is finite dimensional if and only if its closed unit ball $\{x \in X : \|x\| \leq 1\}$ is compact.
+\end{theorem}
+\begin{proof}
+	If $X$ is finite dimensional, then it is isomorphic to $\mathbb{R}^n$ or $\mathbb{C}^n$, and the closed unit ball is compact by the Heine-Borel theorem.
+
+	Conversely, suppose $X$ is infinite dimensional. We will show that the closed unit ball is not compact. By Riesz's lemma, we can construct a sequence $\{x_n\}$ in $X$ such that $\|x_n\| = 1$ and $\|x_n - x_m\| > 1/2$ for all $n \neq m$. This sequence has no convergent subsequence, hence the closed unit ball is not compact.
+\end{proof}
+
+\section{Bounded and Continuous Linear Operators}
+\begin{definition}{Bounded Linear Operators}{Bounded Linear Operators}
+	Let $X$ and $Y$ be normed spaces over the same field $\mathbb{F}$. A linear operator $T: X \rightarrow Y$ is said to be bounded if there exists a constant $C \geq 0$ such that for all $x \in X$,
+	\begin{equation*}
+		\|T(x)\|_Y \leq C \|x\|_X.
+	\end{equation*}
+	The smallest such constant $C$ is called the operator norm of $T$, denoted by $\|T\|$.
+\end{definition}
+
+We can also interpret it as all normalized vectors in $X$ are mapped to a bounded set in $Y$.
+
+\begin{definition}{Norm of Operator}{Norm of Operator}
+	The operator norm of a bounded linear operator $T: X \rightarrow Y$ is defined as
+	\begin{equation*}
+		\|T\| = \sup_{\|x\|_X = 1} \|T(x)\|_Y.
+	\end{equation*}
+\end{definition}
+It is easy to see that the operator norm satisfies the properties of a norm.
+
+\begin{example}{Operators}{Operators}
+	\begin{itemize}
+		\item The identity operator $I: X \rightarrow X$ defined by $I(x) = x$ for all $x \in X$ has operator norm $\|I\| = 1$.
+		\item The zero operator $0: X \rightarrow Y$ defined by $0(x) = 0$ for all $x \in X$ has operator norm $\|0\| = 0$.
+		\item The differentiation operator $D: C^1([a, b]) \rightarrow C([a, b])$ defined by $D(f) = f'$ is unbounded with respect to the supremum norm.
+		\item The integration operator $T: C([0, 1]) \rightarrow C([0, 1])$ defined by
+			\begin{equation*}
+				T(f)(x) = \int_0^1 k(t, \tau) f(\tau) \mathrm{d} \tau,
+			\end{equation*}
+			where $k(t, \tau)$ is a continuous function on $[0, 1] \times [0, 1]$, is a bounded linear operator with respect to the supremum norm.
+	\end{itemize}
+\end{example}
+
+\begin{theorem}{Boundedness on Finite Demension}{Boundedness on Finite Demension}
+	Let $X$ and $Y$ be normed spaces over the same field $\mathbb{F}$. If $X$ is finite dimensional, then every linear operator $T: X \rightarrow Y$ is bounded.
+\end{theorem}
+\begin{proof}
+This is easily seen by noting that the norm is the largest singular value of the matrix representing the linear operator, which is finite.
+\end{proof}
+
+\begin{theorem}{Continuity and Boundedness}{Continuity and Boundedness}
+	Let $X$ and $Y$ be normed spaces over the same field $\mathbb{F}$. Let $T: X \rightarrow Y$ be a linear operator. Then
+	\begin{itemize}
+		\item $T$ is continuous if and only if $T$ is bounded.
+		\item If $T$ is continuous at a single point, then $T$ is continuous everywhere.
+	\end{itemize}
+\end{theorem}
+\begin{proof}
+\begin{itemize}
+	\item For $T=0$ it is trivial, let $T\neq 0$. If $T$ is bounded, then for any $\epsilon > 0$, let $\delta = \epsilon / \|T\|$. For any $x, y \in X$ with $\|x - y\| < \delta$, we have
+		\begin{equation*}
+			\|T(x) - T(y)\| = \|T(x - y)\| \leq \|T\| \|x - y\| < \|T\| \delta = \epsilon.
+		\end{equation*}
+		Hence, $T$ is continuous.
+
+	\item Conversely, if $T$ is continuous at $x_0$, then for $\epsilon = 1$, there exists $\delta > 0$ such that for all $x \in X$ with $\|x - x_0\| < \delta$, we have $\|T(x) - T(x_0)\| < 1$. For any $x \in X$, let $y = x_0 + \frac{\delta}{2\|x - x_0\|}(x - x_0)$ if $x \neq x_0$, otherwise let $y = x_0$. Then $\|y - x_0\| < \delta$, and
+		\begin{equation*}
+			\|T(x) - T(x_0)\| = \frac{2\|x - x_0\|}{\delta} \|T(y) - T(x_0)\| < \frac{2\|x - x_0\|}{\delta}.
+		\end{equation*}
+		This shows that $T$ is bounded with $\|T\| \leq 2/\delta$.
+\end{itemize}
+\end{proof}
+
+\begin{corollary}{Continuity and Null Space}{Continuity and Null Space}
+	Let $X$ and $Y$ be normed spaces over the same field $\mathbb{F}$. Let $T: X \rightarrow Y$ be a linear operator. If $T$ is continuous/bounded then 
+	\begin{itemize}
+		\item $x_n \rightarrow x$ in $X$ implies $T(x_n) \rightarrow T(x)$ in $Y$.
+		\item its null space $\snull T = \{x \in X : T(x) = 0\}$ is closed in $X$. 
+	\end{itemize}
+\end{corollary}
+\begin{proof}
+\begin{itemize}
+	\item This is just the definition of continuity.
+	\item For every $x\in \overline{\snull T}$ there exists a sequence $\{x_n\}\subseteq \snull T$ such that $x_n\rightarrow x$. By continuity of $T$, we have $T(x_n)\rightarrow T(x)$. Since $T(x_n) = 0$ for all $n$, we have $T(x) = 0$. Hence, $x\in \snull T$, which shows that $\snull T$ is closed.
+\end{itemize}
+\end{proof}
+
+\begin{proposition}{Products of Operator Norm}{Products of Operator Norm}
+	Let $X$, $Y$, and $Z$ be normed spaces over the same field $\mathbb{F}$. Let $T: X \rightarrow Y$ and $S: Y \rightarrow Z$ be bounded linear operators. Then the composition $S \circ T: X \rightarrow Z$ is a bounded linear operator, and
+	\begin{equation*}
+		\|S \circ T\| \leq \|S\| \|T\|.
+	\end{equation*}
+\end{proposition}
+
+\begin{theorem}{Bounded Linear Extension}{Bounded Linear Extension}
+	Let $X$ be a normed space, and let $Y$ be a dense subspace of $X$. Let $Z$ be a Banach space. If $T: Y \rightarrow Z$ is a bounded linear operator, then there exists a unique bounded linear operator $\overline{T}: X \rightarrow Z$ such that $\overline{T}|_Y = T$ and $\|\overline{T}\| = \|T\|$.
+\end{theorem}
+\begin{proof}
+	By construction, for every $x\in X$, there exists a sequence $\{y_n\}\subseteq Y$ such that $y_n\rightarrow x$. Since $T$ is bounded, $\{T(y_n)\}$ is a Cauchy sequence in $Z$. Since $Z$ is Banach, there exists a limit $\overline{T}(x) = \lim_{n\rightarrow \infty} T(y_n)$. It is easy to see that $\overline{T}$ is linear and bounded with $\|\overline{T}\| = \|T\|$. Uniqueness follows from the density of $Y$ in $X$.
+\end{proof}
+
+\section{Linear Functionals and Dual Spaces}
+
+\begin{definition}{Linear Functionals}{Linear Functionals}
+	Let $X$ be a vector space over a field $\mathbb{F}$. A linear functional on $X$ is a linear operator $f: X \rightarrow \mathbb{F}$. (Here, $\mathbb{F}$ is considered as a one-dimensional vector space over itself, with the absolute value norm.)
+
+	The set of all linear functionals on $X$ is denoted by $X^*$ and is called the algebraic dual space of $X$. The set of all bounded linear functionals on a normed space $X$ is denoted by $X'$ and is called the (continuous) dual space of $X$.
+\end{definition}
+
+\begin{example}{Linear Functionals}{Linear Functionals}
+	\begin{itemize}
+		\item The norm function $\|\cdot\|: X \rightarrow [0, \infty)$ is not a linear functional.
+		\item The inner product $f(x) = a \cdot x$ for a fixed vector $a \in \mathbb{R}^n$ is a linear functional on $\mathbb{R}^n$. In fact, $\|f\| = \|a\|$.
+		\item Definite integral $f(g) = \int_a^b g(x) \, dx$ is a linear functional on $C([a, b])$ with the supremum norm. In fact, $\|f\| = b - a$.
+		\item Space $\ell^2$: for any fixed $a = (a_n) \in \ell^2$, the map $f(x) = \sum_{n=1}^\infty a_n x_n$ is a linear functional on $\ell^2$. In fact, $\|f\| = \|a\|_2$.
+	\end{itemize}
+\end{example}
+
+\paragraph{The Double Dual Space}
+Consider a mapping $C: X \rightarrow X^{**}$ defined by $C(x)(f) = f(x)$ for all $f \in X^*$. It is called the canonical embedding of $X$ into its double dual space $X^{**}$. $C$ is a linear operator but may not be surjective. If $C$ is surjective, then $X$ is said to be algebraically reflexive.
+
+\begin{theorem}{Finite Dimension Reflexivity}{Finite Dimension Reflexivity}
+	Let $X$ be a finite dimensional normed space. Then $X$ is algebraically reflexive.
+\end{theorem}
+\begin{proof}
+Simply due to same dimension.
+\end{proof}
+
+Let $X,Y$ be vector spaces over the same field $\mathbb{F}$. The set of all linear operators from $X$ to $Y$ is denoted by $L(X,Y)$. If $X$ and $Y$ are normed spaces, the set of all bounded linear operators from $X$ to $Y$ is denoted by $B(X,Y)$.
+
+\begin{theorem}{Space $B(X,Y)$}{Space BXY}
+	Let $X$ and $Y$ be normed spaces over the same field $\mathbb{F}$. Then $B(X,Y)$ is a normed space with the operator norm.
+
+	If $Y$ is a Banach space, then $B(X,Y)$ is also a Banach space.
+\end{theorem}
+\begin{proof}
+	The first part is obvious. For completeness, we consider a Cauchy sequence $\{T_n\}$ in $B(X,Y)$. For each $x\in X$, $\{T_n(x)\}$ is a Cauchy sequence in $Y$. Since $Y$ is Banach, there exists a limit $T(x) = \lim_{n\rightarrow \infty} T_n(x)$. It is easy to see that $T$ is linear and bounded with $\|T\| = \lim_{n\rightarrow \infty} \|T_n\|$. Hence, $B(X,Y)$ is Banach.
+\end{proof}
+
+We notice that the continuous dual space $X'$ is just $B(X, \mathbb{F})$. It is a Banach space with the operator norm.
+
+\begin{theorem}{Dual Space Completeness}{Dual Space Completeness}
+	Let $X$ be a normed space over a field $\mathbb{F}$. Then its continuous dual space $X'$ is a Banach space with the operator norm.
+\end{theorem}
+
+\begin{example}{Dual Spaces}{Dual Spaces}
+	\begin{itemize}
+		\item For any finite dimensional normed space $X$, its dual space $X'$ is also finite dimensional with the same dimension as $X$, which is isomorphic to $\mathbb{F}^n$.
+		\item The dual space of $\ell^1$ is $\ell^\infty$.
+			\begin{proof}
+			A Schauder basis of $\ell^1$ is given by the standard unit vectors $e_n = (0, 0, \ldots, 1, 0, \ldots)$ with $1$ in the $n$-th position. For any bounded linear functional $f \in (\ell^1)'$, define a sequence $\gamma_n = f(e_n)$.
+
+			For any $x = (x_n) \in \ell^1$, we have
+			\begin{equation*}
+				f(x) = f\left(\sum_{n=1}^\infty x_n e_n\right) = \sum_{n=1}^\infty x_n f(e_n) = \sum_{n=1}^\infty x_n \gamma_n.
+			\end{equation*}
+			which is because the continuity of $f$. As $f$ is bounded, we have
+			\begin{equation*}
+				|\gamma_k| = |f(e_k)| \leq \|f\| \|e_k\|_1 = \|f\|.
+			\end{equation*}
+			So $\gamma = (\gamma_n) \in \ell^\infty$. Conversely, for any $\gamma \in \ell^\infty$, the map $f(x) = \sum_{n=1}^\infty x_n \gamma_n$ defines a bounded linear functional on $\ell^1$ with $\|f\| = \|\gamma\|_\infty$. Hence, $(\ell^1)'$ is isometrically isomorphic to $\ell^\infty$.
+			\end{proof}
+		\item The dual space of $\ell^p$ for $1 < p < \infty$ is $\ell^q$, where $1/p + 1/q = 1$.
+			\begin{proof}
+			Let $f \in (\ell^p)'$. Define a sequence $\gamma_n = f(e_n)$, where $e_n$ is the standard unit vector in $\ell^p$. For any $x = (x_n) \in \ell^p$, we have
+			\begin{equation*}
+				f(x) = \sum_{n=1}^\infty x_n \gamma_n.
+			\end{equation*}
+			From the Holder's inequality, it is easy.
+			\end{proof}
+	\end{itemize}
+\end{example}
+
+\end{document}

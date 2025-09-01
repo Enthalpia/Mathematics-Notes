@@ -178,4 +178,22 @@ Uniform limit of continuous functions is continuous.
 	\end{itemize}
 \end{example}
 
+\section{Completion of Metric Spaces}
+
+\begin{theorem}{Completion Theorem}{Completion Theorem}
+	For any metric space $(X, d)$, there exists a complete metric space $(\overline{X}, \overline{d})$ and an isometric embedding $i: X \to \overline{X}$ such that $i(X)$ is dense in $\overline{X}$. This space $(\overline{X}, \overline{d})$ is called the \textbf{completion} of $(X, d)$. The space $(\overline{X}, \overline{d})$ is unique up to isometry.
+\end{theorem}
+
+\begin{proof}
+	We prove this by constructing the completion explicitly. Let $(X, d)$ be a metric space. Let $(x_n)$ and $(y_n)$ be two Cauchy sequences in $X$. We say that $(x_n)$ is equivalent to $(y_n)$, denoted by $(x_n) \sim (y_n)$, if
+	\begin{equation*}
+		\lim_{n \to \infty} d(x_n, y_n) = 0
+	\end{equation*}
+	This follows our intuition of ``having the same limit''. It is easy to check that this is an equivalence relation. Let $\overline{X}$ be the set of all equivalence classes of Cauchy sequences in $X$. Then we define a metric $\overline{d}$ on $\overline{X}$ by
+	\begin{equation*}
+		\overline{d}([(x_n)], [(y_n)]) = \lim_{n \to \infty} d(x_n, y_n)
+	\end{equation*}
+	And we have our result.
+\end{proof}
+
 \end{document}

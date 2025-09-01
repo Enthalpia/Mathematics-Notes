@@ -1,0 +1,131 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+
+\chapter{Inner Product and Hilbert Spaces}
+\section{Inner Product Spaces}
+
+An inner product space is a vector space equipped with an inner product, which allows for the definition of angles and lengths. Formally, an inner product on a vector space $V$ over the field $\mathbb{R}$ or $\mathbb{C}$ is a function $\langle \cdot, \cdot \rangle : V \times V \to \mathbb{R}$ (or $\mathbb{C}$) that satisfies the following properties for all $u, v, w \in V$ and scalar $c$:
+\begin{enumerate}
+    \item \textbf{Conjugate Symmetry:} $\langle u, v \rangle = \overline{\langle v, u \rangle}$
+    \item \textbf{Linearity in the First Argument:} $\langle cu + w, v \rangle = c\langle u, v \rangle + \langle w, v \rangle$
+    \item \textbf{Positive-Definiteness:} $\langle v, v \rangle \geq 0$ with equality if and only if $v = 0$
+\end{enumerate}
+
+An inner product can induce a norm on the vector space defined by $\|v\| = \sqrt{\langle v, v \rangle}$. This norm satisfies the properties of a normed vector space.
+
+Hence inner product spaces are also normed vector spaces. Hilbert spaces are complete inner product spaces, meaning that every Cauchy sequence in the space converges to a limit within the space. And every Hilbert space is a Banach space.
+
+\begin{definition}{Hilbert Spaces}{Hilbert Spaces}
+	A Hilbert space is a complete inner product space.
+\end{definition}
+
+Simple calculation shows an important inequality in inner product spaces.
+\begin{equation}
+	\|x+y\|^2 + \|x-y\|^2 = 2\|x\|^2 + 2\|y\|^2
+\end{equation}
+called the \textbf{parallelogram law}. We shall show that there exists norms that do not satisfy the parallelogram law, and hence cannot be induced by any inner product.
+
+Orthogonality is a key concept in inner product spaces. We say that two vectors $u$ and $v$ are orthogonal if $\langle u, v \rangle = 0$. This concept extends to sets of vectors, where a set is orthogonal if every pair of distinct vectors in the set is orthogonal.
+
+\begin{example}{Hilbert Spaces}{Hilbert Spaces}
+	\begin{itemize}
+		\item The Euclidean space $\mathbb{R}^n$ and the unitary space $\mathbb{C}^n$ with the standard inner product $\langle x, y \rangle = \sum_{i=1}^n x_i \overline{y_i}$ are finite-dimensional Hilbert spaces.
+		\item Space $L^2[a,b]$ with $[a,b] \rightarrow \mathbb{C}$: The inner product is defined as $\langle f, g \rangle = \int_a^b f(x) \overline{g(x)} \mathrm{d} x$. This space is complete with respect to the norm induced by this inner product.
+
+			This space is the completion of the space of continuous functions $C[a,b]$ under the same inner product.
+		\item Hilbert sequence space $\ell^2$: The inner product is defined as $\langle x, y \rangle = \sum_{n=1}^\infty x_n \overline{y_n}$.
+	\end{itemize}
+\end{example}
+
+\begin{example}{Norm spaces and not Inner product}{Norm spaces and not Inner product}
+	\begin{itemize}
+		\item The space $\ell^p$ for $p\neq 2$ with the norm $\|x\|_p = \left(\sum_{n=1}^\infty |x_n|^p\right)^{1/p}$ is a Banach space but not a Hilbert space since the norm does not satisfy the parallelogram law.
+		\item Space $C[a,b]$ with the norm $\|f\|_\infty = \max_{x \in [a,b]} |f(x)|$ is a Banach space but not a Hilbert space.
+			\begin{proof}
+				Take $f(x) = 1$ and $g(x) = x$ on $[0,1]$. Then $\|f+g\|_\infty = \max_{x \in [0,1]} |1+x| = 2$ and $\|f-g\|_\infty = \max_{x \in [0,1]} |1-x| = 1$. However, $\|f\|_\infty = 1$ and $\|g\|_\infty = 1$. Thus, the parallelogram law does not hold.
+			\end{proof}
+	\end{itemize}
+\end{example}
+
+If we know a norm is induced by an inner product, we can recover the inner product from the norm using the polarization identity:
+\begin{equation}
+	\begin{aligned}
+		\re \langle x, y \rangle &= \frac{1}{4}(\|x+y\|^2 - \|x-y\|^2)\\
+		\im \langle x, y \rangle &= \frac{1}{4}(\|x+iy\|^2 - \|x-iy\|^2)\\
+	\end{aligned}
+\end{equation}
+which is called the \textbf{polarization identity}.
+
+\section{Properties of Inner Product Spaces}
+
+\begin{lemma}{Schwarz Inequality}{Schwarz Inequality}
+	In an inner product space, for any vectors $x$ and $y$, the following inequality holds:
+	\begin{equation}
+		|\langle x, y \rangle| \leq \|x\| \|y\|
+	\end{equation}
+	Equality holds if and only if $x$ and $y$ are linearly dependent.
+
+	The norm also satisfies the triangle inequality:
+	\begin{equation}
+		\|x + y\| \leq \|x\| + \|y\|
+	\end{equation}
+	Equality holds if and only if $x$ and $y$ are positively linearly dependent. ( $y=0$ or $x=cy$ for some $c\geq 0$)
+\end{lemma}
+
+\begin{lemma}{Continuity of Inner Product}{Continuity of Inner Product}
+	In a inner product space, if $x_n \rightarrow x$ and $y_n \rightarrow y$, then $\langle x_n, y_n \rangle \rightarrow \langle x, y \rangle$.
+\end{lemma}
+\begin{proof}
+\begin{equation*}
+	\left|\left<x_n,y_n\right> - \left<x,y\right>\right| \leq \left|\left<x_n,y_n - y\right>\right| + \left|\left<x_n - x,y\right>\right| \leq \|x_n\|\|y_n - y\| + \|x_n - x\|\|y\| \rightarrow 0
+\end{equation*}
+\end{proof}
+
+\begin{theorem}{Completion of Inner product Space}{Completion of Inner product Space}
+	Every inner product space can be completed to a Hilbert space. Specifically, if $V$ is an inner product space, there exists a Hilbert space $H$ such that $V$ is dense in $H$ and the inner product on $V$ extends to an inner product on $H$. The space $H$ is uniquely determined up to isomorphism.
+\end{theorem}
+\begin{proof}
+We can see that there is a Banach space $H$, on which we define the inner product via limits
+\begin{equation*}
+	\langle x, y \rangle = \lim_{n \to \infty} \langle x_n, y_n \rangle
+\end{equation*}
+\end{proof}
+
+The similar result for subspaces is listed below. Let $Y$ be a subspace of a Hilbert space $H$, then
+\begin{itemize}
+	\item $Y$ is complete if and only if $Y$ is closed in $H$.
+	\item If $Y$ is finite-dimensional, then $Y$ is complete.
+	\item If $H$ is separable, then $Y$ is separable.
+\end{itemize}
+
+\section{Orthogonal Complements and Projections}
+
+In a metric space, the distance from a point to a set is defined as
+\begin{equation}
+	d(x, A) = \inf_{a \in A} d(x, a)
+\end{equation}
+Roughly speaking, the distance is the smallest distance from the point to any point in the closure of the set. Whether such a point exists or is unique raises the question of projections in metric spaces. In a Hilbert space, we have the following theorem.
+
+\begin{theorem}{Minimizing Vectors}{Minimizing Vectors}
+	Let $X$ be an inner product space and $M\neq \emptyset $ is a convex and complete subset of $X$. Then for any $x\in X$, there exists a unique $y\in M$ such that
+	\begin{equation}
+		\|x-y\| = d(x,M) = \inf_{z\in M} \|x-z\|
+	\end{equation}
+\end{theorem}
+\begin{proof}
+\begin{itemize}
+	\item \textbf{Existence:} Let $\delta = d(x,M)$. There exists a sequence $\{y_n\} \subset M$ such that $\delta_n = \|x - y_n\| \to \delta$. We will show that $\{y_n\}$ is a Cauchy sequence. As
+		\begin{equation*}
+			\|y_n - y_m\|^2 = \|(y_n - x) - (y_m - x)\|^2 \leq 2\delta_n^2 + 2\delta_m^2 - 4 \delta^2
+		\end{equation*}
+		Then $y_n \rightarrow y$ is what we want.
+	\item \textbf{Uniqueness:} Suppose there are two such points $y_1, y_2 \in M$. Then by the parallelogram law,
+		\begin{equation*}
+			2\|x - y_1\|^2 + 2\|x - y_2\|^2 = \|2x - (y_1 + y_2)\|^2 + \|y_1 - y_2\|^2
+		\end{equation*}
+		Since $M$ is convex, $\frac{y_1 + y_2}{2} \in M$, and hence $\|2x - (y_1 + y_2)\| \geq 2\delta$. Thus $\|y_1 - y_2\|^2 \leq 0$, which implies $y_1 = y_2$.
+\end{itemize}
+\end{proof}
+
+\end{document}
