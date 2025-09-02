@@ -114,18 +114,435 @@ Roughly speaking, the distance is the smallest distance from the point to any po
 	\end{equation}
 \end{theorem}
 \begin{proof}
+	\begin{itemize}
+		\item \textbf{Existence:} Let $\delta = d(x,M)$. There exists a sequence $\{y_n\} \subset M$ such that $\delta_n = \|x - y_n\| \to \delta$. We will show that $\{y_n\}$ is a Cauchy sequence. As
+			\begin{equation*}
+				\|y_n - y_m\|^2 = \|(y_n - x) - (y_m - x)\|^2 \leq 2\delta_n^2 + 2\delta_m^2 - 4 \delta^2
+			\end{equation*}
+			Then $y_n \rightarrow y$ is what we want.
+		\item \textbf{Uniqueness:} Suppose there are two such points $y_1, y_2 \in M$. Then by the parallelogram law,
+			\begin{equation*}
+				2\|x - y_1\|^2 + 2\|x - y_2\|^2 = \|2x - (y_1 + y_2)\|^2 + \|y_1 - y_2\|^2
+			\end{equation*}
+			Since $M$ is convex, $\frac{y_1 + y_2}{2} \in M$, and hence $\|2x - (y_1 + y_2)\| \geq 2\delta$. Thus $\|y_1 - y_2\|^2 \leq 0$, which implies $y_1 = y_2$.
+	\end{itemize}
+\end{proof}
+
+\begin{lemma}{Orthogonality of Minimizing Vectors}{Orthogonality of Minimizing Vectors}
+	Let $X$ be an inner product space and $M\neq \emptyset $ is a and complete subspace of $X$. For any $x\in X$, if there exists a $y\in M$ such that $\|x-y\| = d(x,M)$, then $x-y$ is orthogonal to $M$.
+\end{lemma}
+\begin{proof}
+	For any $z\in M$ and $t\in \mathbb{R}$, we have
+	\begin{equation*}
+		\|x - (y + tz)\|^2 = \|x - y\|^2 + 2t \re \langle x - y, z \rangle + t^2 \|z\|^2 \geq \|x - y\|^2
+	\end{equation*}
+	which implies $\re \langle x - y, z \rangle = 0$. Replacing $z$ by $iz$, we get $\im \langle x - y, z \rangle = 0$. Thus $\langle x - y, z \rangle = 0$ for all $z\in M$.
+\end{proof}
+
+The orthonormal complement of a subspace $M$ is defined as
+\begin{equation}
+	M^\perp = \{x\in X: \langle x, y \rangle = 0, \forall y\in M\}
+\end{equation}
+which is all vectors orthogonal to $M$.
+
+\begin{theorem}{Orthogonal Complements Decomposition}{Orthogonal Complements Decomposition}
+	Let $Y$ be any closed subspace of a Hilbert space $H$. Then
+	\begin{equation}
+		H = Y \oplus Y^\perp
+	\end{equation}
+\end{theorem}
+\begin{proof}
+	Since $Y$ is closed, then $Y$ is complete. Since $Y$ is a subspace, it is convex. By the minimizing vector theorem, for any $x\in H$, there exists a unique $y\in Y$ such that $\|x-y\| = d(x,Y)$. By the orthogonality of minimizing vectors lemma, $x-y \in Y^\perp$. The uniqueness is obvious. If $x=y_1 + z_1 = y_2 + z_2$ where $y_1,y_2\in Y$ and $z_1,z_2\in Y^\perp$, then $y_1 - y_2 = z_2 - z_1 \in Y \cap Y^\perp = \{0\}$, which implies $y_1 = y_2$ and $z_1 = z_2$.
+\end{proof}
+
+\begin{remark}
+	Here we call $y$ the orthogonal projection of $x$ onto $Y$, denoted by $P_Y x$. The mapping $P_Y: H \to Y$ is a linear operator with $\|P_Y\| = 1$ if $Y \neq \{0\}$.
+\end{remark}
+
+\begin{lemma}{Null Space}{Null Space}
+	Let $Y$ be a closed subspace of a Hilbert space $H$. Then
+	\begin{equation}
+		Y^\perp = \snull(P_Y) = \{x\in H: P_Y x = 0\}
+	\end{equation}
+\end{lemma}
+
+In general we have $M^\perp$ is closed vector space for $M \subseteq H$. And we have
+\begin{equation*}
+	M \subseteq (M^\perp)^\perp
+\end{equation*}
+because $x\in M \rightarrow x\perp M^\perp \rightarrow x\in (M^\perp)^\perp$.
+
+\begin{lemma}{Closed Subspace and Double Complement}{Closed Subspace and Double Complement}
+	Let $Y$ be a closed subspace of a Hilbert space $H$. Then
+	\begin{equation}
+		Y = (Y^\perp)^\perp
+	\end{equation}
+\end{lemma}
+\begin{proof}
+	This is easily seen by the orthogonal complements decomposition theorem \ref{thm:Orthogonal Complements Decomposition}.
+\end{proof}
+
+\begin{lemma}{Criterion for Dense set}{Criterion for Dense set}
+	Let $H$ be a Hilbert space and $M\subseteq H$. Then $\vspan M$ is dense in $H$ if and only if $M^\perp = \{0\}$.
+\end{lemma}
+\begin{proof}
 \begin{itemize}
-	\item \textbf{Existence:} Let $\delta = d(x,M)$. There exists a sequence $\{y_n\} \subset M$ such that $\delta_n = \|x - y_n\| \to \delta$. We will show that $\{y_n\}$ is a Cauchy sequence. As
-		\begin{equation*}
-			\|y_n - y_m\|^2 = \|(y_n - x) - (y_m - x)\|^2 \leq 2\delta_n^2 + 2\delta_m^2 - 4 \delta^2
-		\end{equation*}
-		Then $y_n \rightarrow y$ is what we want.
-	\item \textbf{Uniqueness:} Suppose there are two such points $y_1, y_2 \in M$. Then by the parallelogram law,
-		\begin{equation*}
-			2\|x - y_1\|^2 + 2\|x - y_2\|^2 = \|2x - (y_1 + y_2)\|^2 + \|y_1 - y_2\|^2
-		\end{equation*}
-		Since $M$ is convex, $\frac{y_1 + y_2}{2} \in M$, and hence $\|2x - (y_1 + y_2)\| \geq 2\delta$. Thus $\|y_1 - y_2\|^2 \leq 0$, which implies $y_1 = y_2$.
+	\item $\Rightarrow$: If $V = \vspan M$ is dense in $H$, and $x\in M^\perp$, then $x\in \overline{V}=H$. So there is a sequence $\{x_n\} \subset V$ such that $x_n \to x$. Since $x\perp M$, then $x\perp V$. Thus $\|x\|^2 = \langle x, x \rangle = \lim_{n\to\infty} \langle x, x_n \rangle = 0$, which implies $x=0$.
+	\item $\Leftarrow$: If $M^\perp = \{0\}$, then if $x\perp V$, then $x=0$. So $V^\perp = \{0\}$. By the double complement lemma, $\overline{V} = (V^\perp)^\perp = H$.
 \end{itemize}
 \end{proof}
+
+\section{Orthonormal Sets and Sequences}
+
+\begin{definition}{Orthonormal Sets}{Orthonormal Sets}
+	Let $X$ be an inner product space. A set of vectors $M \subseteq X$ is called orthonormal if for any $x,y \in M$,
+	\begin{equation}
+		\langle x, y \rangle = \begin{cases}
+			1 & \text{if } x = y\\
+			0 & \text{if } x \neq y
+		\end{cases}
+	\end{equation}
+	An orthogonal set is defined similarly, except that the condition for $x=y$ is removed.
+\end{definition}
+
+An orthonormal set is linearly independent. If $e_1 , \ldots ,e_n$ are orthonormal, and $\sum_{k=1}^n \alpha_k e_k = 0$, then for any $j$,
+\begin{equation*}
+	\left<\sum_{k} \alpha_k e_k,e_j \right> = \alpha_j = 0
+\end{equation*}
+
+\begin{example}{Orthonormal Sets}{Orthonormal Sets}
+	\begin{itemize}
+		\item Euclidean space $\mathbb{R}^n$ and unitary space $\mathbb{C}^n$: The standard basis vectors $e_i$ where the $i$-th component is 1 and all other components are 0 form an orthonormal set.
+		\item Hilbert sequence space $\ell^2$: The standard basis vectors $e_n = (0,0,\ldots,1,0,\ldots)$ where the 1 is in the $n$-th position form an orthonormal set.
+		\item Space $L^2[a,b]$: The set of functions $\displaystyle \{e^{2\pi i n x/(b-a)}\}_{n \in \mathbb{Z}}$ forms an orthonormal set with respect to the inner product $\displaystyle \langle f, g \rangle = \int_a^b f(x) \overline{g(x)} \mathrm{d} x$. Called the Fourier basis.
+	\end{itemize}
+\end{example}
+
+\begin{theorem}{Bessel Inequality}{Bessel Inequality}
+	Let $\{e_k\}$ be an orthonormal sequence in an inner product space $X$. Then for any $x\in X$,
+	\begin{equation}
+		\sum_{k=1}^\infty |\langle x, e_k \rangle|^2 \leq \|x\|^2
+	\end{equation}
+\end{theorem}
+\begin{proof}
+	Let $Y_n = \vspan\{e_1, e_2, \ldots, e_n\}$ and $P_n$ be the orthogonal projection onto $Y_n$. Then
+	\begin{equation*}
+		\|x - P_n x\|^2 = \|x\|^2 - \|P_n x\|^2 = \|x\|^2 - \sum_{k=1}^n |\langle x, e_k \rangle|^2 \geq 0
+	\end{equation*}
+	Taking $n \to \infty$, we get the desired result.
+\end{proof}
+
+Now we turn to the convergence of sequences from orthogonal sequences.
+
+\begin{theorem}{Convergence of Orthonormal Series}{Convergence of Orthonormal Series}
+	Let $\{e_k\}$ be an orthonormal sequence in a Hilbert space $H$ and $\{c_k\}$ be a sequence of scalars. Then
+	\begin{itemize}
+		\item The series $\sum_{k=1}^\infty c_k e_k$ converges in $H$ if and only if $\sum_{k=1}^\infty |c_k|^2 < \infty$.
+		\item If the series converges to $x\in H$, then $c_k = \langle x, e_k \rangle$ for all $k$ and we can write
+			\begin{equation*}
+				x = \sum_{k=1}^\infty \langle x, e_k \rangle e_k
+			\end{equation*}
+			The coefficients $\langle x, e_k \rangle$ are called the Fourier coefficients of $x$ with respect to the orthonormal sequence $\{e_k\}$.
+		\item For any $x\in H$, let $c_k = \langle x, e_k \rangle$. Then the series $\sum_{k=1}^\infty c_k e_k$ converges to some $x_0 \in H$.
+	\end{itemize}
+\end{theorem}
+\begin{proof}
+\begin{itemize}
+	\item Let $s_n = \sum_{k=1}^n c_k e_k$, and $\sigma_n = \sum_{k=1}^n |c_k|^2$. Then for $n>m$,
+		\begin{equation*}
+			\|s_n - s_m\|^2 = \sum_{k=m+1}^n |c_k|^2 = \sigma_n - \sigma_m
+		\end{equation*}
+		So $\{s_n\}$ is a Cauchy sequence if and only if $\{\sigma_n\}$ is a Cauchy sequence, which is equivalent to $\sum_{k=1}^\infty |c_k|^2 < \infty$.
+	\item We already have for finite $s_n$:
+		\begin{equation*}
+			\langle s_n, e_j \rangle = c_j, \qquad j \leq n
+		\end{equation*}
+		Letting $n \to \infty$, we get $\langle x, e_j \rangle = c_j$.
+	\item From Bessel's inequality, we have $\sum_{k=1}^\infty |c_k|^2 \leq \|x\|^2 < \infty$. So the series converges to some $x_0 \in H$.
+\end{itemize}
+\end{proof}
+
+\begin{lemma}{Countable Fourier Coefficient}{Countable Fourier Coefficient}
+	Let $X$ be an inner product space and $\{e_{\alpha}\}$ be an orthonormal set in $X$. For any $x\in X$, there are only countably many nonzero Fourier coefficients $\langle x, e_{\alpha} \rangle$.
+\end{lemma}
+\begin{proof}
+	For any $n\in \mathbb{N}$, there are only finitely many $\alpha$ such that $|\langle x, e_{\alpha} \rangle| \geq \frac{1}{n}$, because otherwise $\sum_{\alpha} |\langle x, e_{\alpha} \rangle|^2$ would diverge. Thus the set of $\alpha$ such that $\langle x, e_{\alpha} \rangle \neq 0$ is at most countable.
+\end{proof}
+
+For those nonzero Fourier coefficients, we can index them as a sequence $\{e_k\}$, and then we have
+\begin{equation*}
+	x_0 = \sum_{k=1}^\infty \langle x, e_k \rangle e_k
+\end{equation*}
+We now show that the limit does not depend on the order of the sequence.
+\begin{proof}
+	Let $w_1,w_2, \ldots $ be a rearrangement of $e_1, e_2, \ldots$. We let $w_{m(n)} = e_n$, where $m$ is a bijection $\mathbb{Z}_+ \rightarrow \mathbb{Z}_+$. Set
+	\begin{equation*}
+		\alpha_n = \langle x, e_n \rangle, \qquad \beta_n = \langle x, w_n \rangle
+	\end{equation*}
+	And let
+	\begin{equation*}
+		x_1 = \sum_{n=1}^\infty \alpha_n e_n, \qquad x_2 = \sum_{n=1}^\infty \beta_n w_n
+	\end{equation*}
+	So we have
+	\begin{equation*}
+		\langle x_1 - x_2, e_k \rangle = \alpha_k - \beta_{m^{-1}(k)} = 0
+	\end{equation*}
+	So
+	\begin{equation*}
+		\|x_1 - x_2\|^2 = \langle x_1-x_2, \sum_{k=1}^\infty \langle x_1 - x_2, e_k \rangle e_k \rangle = 0
+	\end{equation*}
+\end{proof}
+
+\section{Total Orthonormal Sets}
+
+\begin{definition}{Total Orthonormal Set}{Total Orthonormal Set}
+	Let $X$ be an inner product space. A set $M$ in $X$ is called total if $\vspan M$ is dense in $X$. An orthonormal set that is total is called a total orthonormal set.
+
+	A total orthonormal set is called an orthonormal basis.
+\end{definition}
+\begin{remark}
+	Note that an orthonormal basis is not necessarily a Hamel basis.
+\end{remark}
+
+\begin{theorem}{Existence of Orthonormal Basis}{Existence of Orthonormal Basis}
+	Every Hilbert space has an orthonormal basis.
+
+	All orthonormal bases of a Hilbert space have the same cardinality, called the Hilbert dimension of the space. If $H=0$, we define its Hilbert dimension to be 0.
+\end{theorem}
+\begin{proof}
+Using Zorn's lemma, postponing the proof.
+\end{proof}
+
+We cannot add or delete any vector from an orthonormal basis and still have an orthonormal basis.
+
+\begin{theorem}{Totality of orthonormal basis}{Totality of orthonormal basis}
+	Let $X$ be an inner product space and $M \subseteq X$.
+	\begin{itemize}
+		\item If $M$ is total, then
+			\begin{equation*}
+				x\perp M \implies x=0
+			\end{equation*}
+		\item If $X$ is complete and $x\perp M \implies x=0$, then $M$ is total. Which means $M$ is total iff $M^\perp = \{0\}$.
+	\end{itemize}
+\end{theorem}
+\begin{proof}
+Taking the completion of $X$ would do.
+\end{proof}
+
+\begin{theorem}{Parseval Equality}{Parseval Equality}
+	An orthonormal set $\{e_{\alpha}\}$ in a Hilbert space $H$ is total if and only if for any $x\in H$,
+	\begin{equation}
+		\|x\|^2 = \sum_{k=1}^\infty |\langle x, e_k \rangle|^2
+	\end{equation}
+	the summation being over all $\alpha$ such that $\langle x, e_{\alpha} \rangle \neq 0$.
+\end{theorem}
+\begin{proof}
+\begin{itemize}
+	\item $\Rightarrow$: If $\{e_{\alpha}\}$ is total, then for any $x\in H$, let $c_k = \langle x, e_k \rangle$. Then the series $\sum_{k=1}^\infty c_k e_k$ converges to some $x_0 \in H$. By Bessel's inequality,
+		\begin{equation*}
+			\|x - x_0\|^2 = \|x\|^2 - \sum_{k=1}^\infty |\langle x, e_k \rangle|^2
+		\end{equation*}
+		Since $\{e_{\alpha}\}$ is total, $x - x_0 = 0$. Thus we get the desired result.
+	\item $\Leftarrow$: If $M$ is not total, then $M^\perp \neq \{0\}$. So there exists $x\in H$ such that $x\perp M$ and $x\neq 0$. Then $\langle x, e_k \rangle = 0$ for all $k$, but $\|x\|^2 > 0$. Thus the equality does not hold.
+\end{itemize}
+\end{proof}
+
+\begin{theorem}{Separable Hilbert Space}{Separable Hilbert Space}
+	Let $H$ be a Hilbert space. Then
+	\begin{itemize}
+		\item If $H$ is separable, then every orthonormal basis of $H$ is countable.
+		\item If $H$ has a countable orthonormal basis, then $H$ is separable.
+	\end{itemize}
+\end{theorem}
+\begin{proof}
+\begin{itemize}
+	\item If $H$ is separable, $B$ be any dense subset of $H$ and $M$ any orthonormal set, then any two distinct element $x,y\in M$ have distance $\sqrt{2}$. Let $N_x,N_y$ be the open balls of radius $\frac{\sqrt{2}}{3}$ centered at $x$ and $y$ respectively. Then $N_x \cap N_y = \emptyset$. Since $B$ is dense in $H$, there exists $b_x \in B \cap N_x$ and $b_y \in B \cap N_y$. Thus we have a one-to-one mapping from $M$ to a subset of $B$. Since $B$ is countable, then $M$ is countable.
+	\item Let $e_1, e_2, \ldots $ be a countable orthonormal basis of $H$. Let $Y$ be the set of all finite linear combinations of $e_k$ with rational coefficients. Then $Y$ is countable and dense in $H$. Thus $H$ is separable.
+\end{itemize}
+\end{proof}
+
+\begin{theorem}{Isomorphic Hilbert Spaces}{Isomorphic Hilbert Spaces}
+	Two Hilbert spaces are isomorphic if and only if they have the same Hilbert dimension.
+\end{theorem}
+\begin{proof}
+If two Hilbert spaces have the same Hilbert dimension, then we can find an orthonormal basis in each space with the same cardinality. We can define a linear isometry between the two spaces by mapping the basis vectors of one space to the corresponding basis vectors of the other space. This mapping can be extended to the entire space by linearity and continuity, resulting in an isomorphism between the two Hilbert spaces.
+\end{proof}
+
+\section{Representation of Functionals on Hilbert Spaces}
+\begin{theorem}{Riesz Representation Theorem}{Riesz Representation Theorem}
+	Let $H$ be a Hilbert space. For every bounded linear functional $f$ on $H$, there exists a unique vector $y\in H$ such that
+	\begin{equation}
+		f(x) = \langle x, y \rangle, \quad \forall x\in H
+	\end{equation}
+	Furthermore, $\|f\| = \|y\|$.
+\end{theorem}
+\begin{proof}
+\begin{itemize}
+	\item \textbf{Step 1: Existence} If $f=0$, then we can take $y=0$. Now suppose $f\neq 0$. Let $N = \snull(f) = \{x\in H: f(x) = 0\}$. Then $N$ is a closed subspace of $H$. Since $f\neq 0$, $N \neq H$. Let $z_0\in N^\perp$ and $z_0 \neq 0$. (Intuitively, a multiple of $z_0$ is what we want. In fact using $f(cz_0) = \left<cz_0,cz_0\right>$, we may take $\displaystyle c = \frac{\overline{f(z_0)}}{\|z_0\|^2}$.) Let
+		\begin{equation*}
+			y = \frac{\overline{f(z_0)}}{\|z_0\|^2} z_0
+		\end{equation*}
+		Then we have
+		\begin{equation*}
+			f(x) - \langle x, y \rangle = f(x) - \frac{f(z_0)}{\|z_0\|^2} \langle x, z_0 \rangle = \frac{1}{\|z_0\|^2} \left< f(x) z_0 - f(z_0) x, z_0 \right>
+		\end{equation*}
+		Since $f(f(x) z_0 - f(z_0) x) = 0$, then $f(x) z_0 - f(z_0) x \in N$. So $f(x) z_0 - f(z_0) x \perp z_0$. Thus $f(x) = \langle x, y \rangle$ for all $x\in H$.
+	\item \textbf{Step 2: Uniqueness} If there are two such vectors $y_1$ and $y_2$, then for any $x\in H$,
+		\begin{equation*}
+			\langle x, y_1 - y_2 \rangle = 0
+		\end{equation*}
+		which implies $y_1 - y_2 = 0$. (Take $x = y_1 - y_2$.)
+	\item \textbf{Step 3: Norm equality} We have
+		\begin{equation*}
+			|f(x)| = |\langle x, y \rangle| \leq \|x\| \|y\|
+		\end{equation*}
+		So $\|f\| \leq \|y\|$. On the other hand, taking $x = y$, we have
+		\begin{equation*}
+			\|f\| \geq \frac{|f(y)|}{\|y\|} = \frac{|\langle y, y \rangle|}{\|y\|} = \|y\|
+		\end{equation*}
+		Hence $\|f\| = \|y\|$.
+\end{itemize}
+\end{proof}
+
+\begin{remark}
+	The Riesz representation theorem shows that the dual space of a Hilbert space is isomorphic to the Hilbert space itself, and gives a concrete representation of the bounded linear functionals on the space.
+\end{remark}
+
+\begin{lemma}{Inner Product and Zero}{Inner Product and Zero}
+	If $X$ is an inner product space and $\forall x\in X, \langle x, y \rangle = 0$, then $y=0$.
+\end{lemma}
+
+A more general version of inner product is the sesquilinear form, which is a function $B: X \times Y \to \mathbb{C}$ satisfying
+\begin{itemize}
+	\item $B(x_1 + x_2, y) = B(x_1, y) + B(x_2, y)$
+	\item $B(x, y_1 + y_2) = B(x, y_1) + B(x, y_2)$
+	\item $B(\alpha x, y) = \alpha B(x, y)$
+	\item $B(x, \beta y) = \overline{\beta} B(x, y)$
+\end{itemize}
+If $X,Y$ are normed spaces and if there is a $c\in \mathbb{R}$ such that for all $x\in X$ and $y\in Y$,
+\begin{equation*}
+	|B(x,y)| \leq c \|x\| \|y\|
+\end{equation*}
+then $B$ is called a bounded sesquilinear form. And the norm of $B$ is defined as
+\begin{equation*}
+	\|B\| = \inf \{c: |B(x,y)| \leq c \|x\| \|y\|, \forall x\in X, y\in Y\}
+\end{equation*}
+from here we can generalize the Riesz representation theorem to the following theorem.
+\begin{theorem}{Representation of Bounded Sesquilinear Forms}{Representation of Bounded Sesquilinear Forms}
+	Let $H_1$ and $H_2$ be Hilbert spaces and $B: H_1 \times H_2 \to \mathbb{C}$ be a bounded sesquilinear form. Then there exists a unique bounded linear operator $T: H_1 \to H_2$ such that
+	\begin{equation}
+		B(x,y) = \langle Tx, y \rangle, \quad \forall x\in H_1, y\in H_2
+	\end{equation}
+	Furthermore, $\|B\| = \|T\|$.
+\end{theorem}
+\begin{proof}
+	As $\overline{B(x,y)}$ is linear for $y$, then there is a unique $z=T(x)$ such that $\overline{B(x,y)} = \langle y, z \rangle$. So $B(x,y) = \langle T(x), y \rangle$. The rest is easy.
+\end{proof}
+
+\section{Hilbert Adjoint Operators}
+
+\begin{definition}{Hilbert Adjoint Operators}{Hilbert Adjoint Operators}
+	Let $T: H_1 \rightarrow H_2$ be a bounded linear operator between two Hilbert spaces $H_1$ and $H_2$. The Hilbert adjoint operator of $T$ is the unique bounded linear operator $T^*: H_2 \rightarrow H_1$ such that
+	\begin{equation}
+		\langle Tx, y \rangle = \langle x, T^* y \rangle, \quad \forall x\in H_1, y\in H_2
+	\end{equation}
+	The norm of $T^*$ satisfies $\|T^*\| = \|T\|$.
+\end{definition}
+
+We now show the existence, uniqueness and norm equality of the Hilbert adjoint operator.
+\begin{proof}
+\begin{itemize}
+	\item \textbf{Existence and Uniqueness:} Let $B(y,x) = \langle y, Tx \rangle$. Then $B$ is a bounded sesquilinear form. By the representation of bounded sesquilinear forms theorem, there exists a unique bounded linear operator $T^*: H_2 \to H_1$ such that $B(y,x) = \langle T^*y,  x \rangle$. Thus we have $\langle Tx, y \rangle = \langle x, T^* y \rangle$.
+	\item \textbf{Norm equality:} We have
+		\begin{equation*}
+			|B(y,x)| = |\langle y, Tx \rangle| \leq \|y\| \|Tx\| \leq \|T\| \|x\| \|y\|
+		\end{equation*}
+		So $\|B\| \leq \|T\|$. On the other hand, we have
+		\begin{equation*}
+			\|B\| = \sup_{x,y\neq 0} \frac{|\langle Tx, y \rangle|}{\|x\| \|y\|} \geq \sup_{x,Tx\neq 0} \frac{|\left<Tx,Tx\right>|}{\|x\| \|Tx\|} = \sup_{x,Tx\neq 0} \frac{\|Tx\|}{\|x\|} = \|T\|
+		\end{equation*}
+		Hence $\|B\| = \|T\|$. Similarly, we can show that $\|B\| = \|T^*\|$. Thus $\|T^*\| = \|T\|$.
+\end{itemize}
+\end{proof}
+
+
+\begin{lemma}{Zero Operator}{Zero Operator}
+	Let $X,Y$ be inner product spaces and $Q: X \to Y$ be a bounded linear operator. Then
+	\begin{itemize}
+		\item $Q=0$ if and only if $\langle Qx, y \rangle = 0$ for all $x\in X,y\in Y$.
+		\item If $Y=X$, then $Q=0$ if and only if $\langle Qx, x \rangle = 0$ for all $x\in X$.
+	\end{itemize}
+\end{lemma}
+\begin{proof}
+The first one is obvious, and the second one can be proved by polarization identity.
+\begin{equation*}
+	4\langle Qx, y \rangle = \langle Q(x+y), x+y \rangle - \langle Q(x-y), x-y \rangle + i\langle Q(x+iy), x+iy \rangle - i\langle Q(x-iy), x-iy \rangle
+\end{equation*}
+\end{proof}
+
+\begin{proposition}{Propositions of Hilbert Adjoint Operators}{Propositions of Hilbert Adjoint Operators}
+	Let $H_1,H_2$ be Hilbert spaces and $S,T: H_1 \rightarrow H_2$ be a bounded linear operator. Then
+	\begin{enumerate}
+		\item Additivity and Homogeneity: $(S+T)^* = S^* + T^*$ and $(\alpha T)^* = \overline{\alpha} T^*$ for any $\alpha \in \mathbb{C}$. 
+		\item Involution: $(T^*)^* = T$.
+		\item Product: If $H_3$ is another Hilbert space and $R: H_2 \rightarrow H_3$ is a bounded linear operator, then $(RT)^* = T^* R^*$.
+		\item Isometry: $\|T^* T\| = \|T\|^2$.
+		\item $T^*T = 0$ if and only if $T=0$.
+	\end{enumerate}
+\end{proposition}
+
+\section{Self-Adjoint, Normal and Unitary Operators}
+
+\begin{definition}{Self-Adjoint, Normal and Unitary Operators}{Self-Adjoint, Normal and Unitary Operators}
+	Let $H$ be a Hilbert space and $T: H \to H$ be a bounded linear operator. Then
+	\begin{itemize}
+		\item $T$ is called self-adjoint if $T = T^*$.
+		\item $T$ is called normal if $TT^* = T^* T$.
+		\item $T$ is called unitary if $T^* T = TT^* = I$, where $I$ is the identity operator on $H$.
+	\end{itemize}
+\end{definition}
+
+\begin{theorem}{Self-Adjoint and Real Inner Product}{Self-Adjoint and Real Inner Product}
+	Let $T: H \to H$ be a bounded linear operator on a COMPLEX Hilbert space $H$. Then $T$ is self-adjoint if and only if $\langle Tx, x \rangle \in \mathbb{R}$ for all $x\in H$.
+\end{theorem}
+
+\begin{proposition}{Properties of Self-Adjoint Operators}{Properties of Self-Adjoint Operators}
+	Let $S,T$ be self-adjoint operators on a Hilbert space $H$. Then
+	\begin{itemize}
+		\item $ST$ is self-adjoint if and only if $ST = TS$.
+		\item Sequence: If $\{T_n\}$ is a sequence of self-adjoint operators converging to $T$ in the operator norm, then $T$ is self-adjoint.
+			\begin{proof}
+			From
+			\begin{equation*}
+				\|T-T^*\| \leq \|T-T_n\| + \|T_n - T_n^*\| + \|T_n^* - T^*\| = 2\|T-T_n\|
+			\end{equation*}
+			\end{proof}
+	\end{itemize}
+\end{proposition}
+
+\begin{proposition}{Properties of Unitary Operators}{Properties of Unitary Operators}
+	Let $U,V$ be unitary operators on a Hilbert space $H$. Then
+	\begin{itemize}
+		\item Isometry: $\|Ux\| = \|x\|$ for all $x\in H$.
+		\item Norm: $\|U\| = 1$ if $H \neq \{0\}$.
+		\item Inverse: $U^{-1} = U^*$ is also unitary.
+		\item Product: $UV$ is also unitary.
+	\end{itemize}
+\end{proposition}
+
+\begin{theorem}{Criterion of Unitary}{Criterion of Unitary}
+	Let $H$ be a Complex Hilbert space and $T: H \to H$ be a bounded linear operator. Then $T$ is unitary if and only if $T$ is surjective and $\|Tx\| = \|x\|$ for all $x\in H$.
+\end{theorem}
+\begin{proof}
+	Suppose $T$ is surjective and $\|Tx\| = \|x\|$ for all $x\in H$. Then $T$ is injective. So $T$ is invertible. We have
+	\begin{equation*}
+		\left<T^*Tx,x\right> = \left<Tx,Tx\right> = \left<x,x\right>
+	\end{equation*}
+	So $\left<(T^*T-I)x,x\right> = 0$ for all $x\in H$. By the lemma \ref{lem:Zero Operator}, $T^*T = I$. Since $T$ is surjective, $TT^* = I$. Thus $T$ is unitary.
+\end{proof}
+
+\begin{remark}
+	An isometric operator need not be unitary if it is not surjective. For example, the unilateral shift operator on $\ell^2$ defined by $T(x_1,x_2,x_3,\ldots) = (0,x_1,x_2,x_3,\ldots)$ is isometric but not unitary.
+\end{remark}
 
 \end{document}
