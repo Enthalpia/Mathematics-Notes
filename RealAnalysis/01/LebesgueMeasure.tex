@@ -162,7 +162,9 @@ Suppose $\mathcal{M}$ is a $\sigma$-algebra in $X$, and $Y$ is a topological spa
 \end{itemize}
 \end{proposition}
 \begin{proof}
-All obvious. The first statement uses the closure condition of measurable sets. The second is just a corollary of the first. The third statement used the subbasis of $\mathbb{R}_{\pm \infty }$ and the second countability of $\mathbb{R}_{\pm \infty }$. The fourth statement uses the second statement.
+All obvious. The first statement uses the closure condition of measurable sets. The second is just a corollary of the first.(Let $\Omega = \left\{ E \subseteq Y: f^{-1}(E)\in \mathcal{M} \right\}$, then $\Omega$ is a $\sigma$-algebra. As all open sets in $Y$ are $\in \Omega$, then $\Omega$ contains the Borel set).
+
+The third statement used the subbasis of $\mathbb{R}_{\pm \infty }$ and the second countability of $\mathbb{R}_{\pm \infty }$. The fourth statement uses the second statement.
 \end{proof}
 
 \begin{definition}{Upper and Lower Limit}{Upper and Lower Limit}
@@ -210,9 +212,22 @@ The \textbf{lower limit} of the sequence $\left\{ a_n \right\}$ is defined simil
 \end{itemize}
 \end{corollary}
 
-
 \section{Introduction to Lebesgue Measure}
 The Riemann integral is a classical tool for calculating the area under curves, built by partitioning the domain of a function into intervals and summing up the contributions from each part. Lebesgue measure generalizes our concept of length, area, and volume, allowing us to assign sizes to a wider variety of sets. The Lebesgue integral takes a different perspective: instead of partitioning the domain, it groups points according to their function values and measures the size of these groups. This approach enables us to integrate functions with significant discontinuities and provides powerful tools for handling limits and convergence.
+
+\begin{definition}{Positive Measures}{Positive Measures}
+	\begin{itemize}
+	\item A positive measure on a measurable space $(X, \mathcal{M})$ is a function $\mu: \mathcal{M} \rightarrow [0,\infty ]$ satisfying:
+		\begin{itemize}
+		\item To avoid trivial case, $\exists A\in \mathcal{M}, \mu(A) < \infty $.
+		\item Countable Additivity: If $\left\{ A_i \right\}_{i=1}^{\infty }$ is a countable disjoint collection of sets in $\mathcal{M}$, then
+			\begin{equation}
+			\mu\left(\bigsqcup_{i=1}^{\infty } A_i\right) = \sum_{i=1}^{\infty } \mu(A_i).
+			\end{equation}
+		\end{itemize}
+	\item A measure space is a measurable space with a positive measure defined on it, i.e., $(X, \mathcal{M}, \mu)$.
+	\end{itemize}
+\end{definition}
 
 We now proceed to construct a group of subsets of the extended real line $\mathbb{R}_{\pm \infty }$ that has length, called \emph{Lebesgue measurable sets} $\mathcal{M}$, and a set function taking Lebesgue measurable sets to their length, called \emph{Lebesgue measure}, denoted $m: \mathcal{M} \rightarrow [0, \infty ]$, satisfying the following properties:
 
@@ -255,7 +270,7 @@ Let $\mathcal{M}^* = P(\mathbb{R})$, $A \subseteq \mathbb{R}$. Let $\left\{ I_k 
 	\begin{proof}
 		For closed bounded intervals $I = [a, b]$, the interval $(a-\epsilon,b+\epsilon)$ covers $I$ for any $\epsilon>0$, so $m^*([a,b]) \leq b-a$. As $[a,b]$ is compact, any open covering of $[a,b]$ has a finite subcovering $\mathcal{I} = \left\{ I_k: 1\leq k\leq n \right\}$. We now prove
 		\begin{equation*}
-		\sum_{k=2}^{n} l(I_k) \geq b-a.
+		\sum_{k=1}^{n} l(I_k) \geq b-a.
 		\end{equation*}
 		Choose $a\in J_1\in \mathcal{I}$. If $\sup J_1>b$, then we're done, otherwise $\sup J_1\in (a,b]$. Choose $\sup J_1\in J_2\in \mathcal{I}$, then $J_2\neq J_1$, and continue this process $m$ times until it ends. (it will end before $n$ times). Denote $J_k = (a_k,b_k)$, and we have $a_1<a<b<b_m$. Also $a _{k+1} < b_k$.
 		\begin{equation*}
@@ -301,11 +316,15 @@ As we see, the outer measure fails to be countably additive, so we cannot use it
 
 \begin{definition}{Lebesgue Measurable Sets}{Lebesgue Measurable Sets}
 	A set $E \subseteq \mathbb{R}$ is Lebesgue measurable if
-	\begin{equation}
+	\begin{equation}\label{eq:Lebesgue Measurable Criterion}
 	\forall A \subseteq \mathbb{R}, m^*(A) = m^*(A \cap E) + m^*(A \cap E^c)
 	\end{equation}
 	The set of Lebesgue measurable sets is denoted by $\mathcal{M}$. The function $m: \mathcal{M} \rightarrow [0,\infty ]$ defined by $m(E) = m^*(E)$ for all $E\in \mathcal{M}$ is called the Lebesgue measure.
 \end{definition}
+
+\begin{remark}
+	The intuition follows from the countable additivity. If $E$ is measurable, we would want for all measurable set $A$ having the property \ref{eq:Lebesgue Measurable Criterion}. A slight loosening gives the current result.
+\end{remark}
 
 We shall prove that it is indeed a $\sigma$-algebra, and $m$ is a measure on it.
 \begin{itemize}
@@ -414,10 +433,16 @@ Obvious.
 
 We introduce two characterizations of Lebesgue measurable sets: one based on inner approximation of closed sets and the other on outer approximation of open sets.
 
-First, sets has excision property: If $A \subseteq B \subseteq \mathbb{R}, m^*(A) < \infty $, then
+First, measurable sets has excision property: If $A$ is a measurable set and $B$ is arbitrary, $A \subseteq B \subseteq \mathbb{R}, m^*(A) < \infty $, then
 \begin{equation*}
-	m^*(B) = m^*(A) + m^*(B - A).
+	m^*(B) - m^*(A) = m^*(B - A).
 \end{equation*}
+
+\begin{proof}
+\begin{equation*}
+	m^*(B) = m^*(B\cap A) + m^*(B\cap A^c) = m^*(A) + m^*(B-A).
+\end{equation*}
+\end{proof}
 
 \begin{theorem}{Outer and Inner Approximation}{Outer and Inner Approximation}
 Let $E \subseteq \mathbb{R}$, then $E\in \mathcal{M}$ is equivalent to each of the following conditions:
@@ -425,13 +450,13 @@ Let $E \subseteq \mathbb{R}$, then $E\in \mathcal{M}$ is equivalent to each of t
 \textbf{Outer Approximation:}
 \begin{itemize}
 \item $\forall \epsilon>0$, there exists an open set $O$ such that $E \subseteq O$ and $m^*(O-E) < \epsilon$.
-\item There is a $G_{\delta}$ set $G$ such that $E \subseteq G$ and $m^*(G) = m^*(E)$.
+\item There is a $G_{\delta}$ set $G$ such that $E \subseteq G$ and $m^*(G-E) = 0$.
 \end{itemize}
 
 \textbf{Inner Approximation:}
 \begin{itemize}
 	\item $\forall \epsilon>0$, there exists a closed set $F$ such that $F \subseteq E$ and $m^*(E-F) < \epsilon$.
-	\item There is a $F_{\sigma }$ set $F$ such that $F \subseteq E$ and $m^*(F) = m^*(E)$.
+	\item There is a $F_{\sigma }$ set $F$ such that $F \subseteq E$ and $m^*(E-F) = 0$.
 \end{itemize}
 \end{theorem}
 \begin{proof}
@@ -443,7 +468,7 @@ Let $E \subseteq \mathbb{R}$, then $E\in \mathcal{M}$ is equivalent to each of t
 	\begin{equation*}
 		m^*(O) \leq \sum_{k=1}^{\infty } l(I_k) < m^*(E) + \epsilon.
 	\end{equation*}
-	Therefore, we have $m^*(O-E) = m^*(O) - m^*(E) < \epsilon$. (Her we use the measurability of $E$ to ensure finite additivity of $m^*$.)
+	Therefore, we have $m^*(O-E) = m^*(O) - m^*(E) < \epsilon$. (Here we use the measurability of $E$ to ensure finite additivity of $m^*$.)
 
 	When $m^*(E) = \infty $, then the second countability of $\mathbb{R}$ gives us $E$ can be written as a countable disjoint union of $E_k$, each has finite outer measure. For each $E_k$, there exists an open set $O_k$ such that $E_k \subseteq O_k$ and $m^*(O_k) < m^*(E_k) + \epsilon / 2^k$. Let $O = \bigcup_{k=1}^{\infty } O_k$, then $O$ is an open set covering $E$ and
 	\begin{equation*}
@@ -470,7 +495,7 @@ Let $E \subseteq \mathbb{R}$, then $E\in \mathcal{M}$ is equivalent to each of t
 	\end{equation*}
 \end{theorem}
 \begin{proof}
-	There is an open set $\mathcal{U}$ that $E \subseteq \mathcal{U}, m^*(\mathcal{U}-E) < \epsilon / 2$. Then $\mathcal{U}$ also has finite outer measure. Let $\mathcal{U} = \bigcup_{k=1}^{\infty } I_k$, where $I_k$ are disjoint open intervals (The components of an open interval covering of $\mathcal{U}$ ). Then we have
+	There is an open set $\mathcal{U}$ that $E \subseteq \mathcal{U}, m^*(\mathcal{U}-E) < \epsilon / 2$. Then $\mathcal{U}$ also has finite outer measure. Let $\mathcal{U} = \bigcup_{k=1}^{\infty } I_k$, where $I_k$ are disjoint open intervals (The components of $\mathcal{U}$ are connected open sets). Then we have
 	\begin{equation*}
 		\sum_{k=1}^{n} l(I_k) \leq m^*(\mathcal{U}) < \infty
 	\end{equation*}
@@ -497,7 +522,7 @@ Let $E \subseteq \mathbb{R}$, then $E\in \mathcal{M}$ is equivalent to each of t
 \begin{proof}
 We have
 \begin{equation*}
-	m^*\left( \bigsqcup_{k=1}^{\infty } E_k \right) \geq m^* \left( \bigcup_{k=1}^{n} E_k \right) = \sum_{k=1}^{n} m^*(E_k)
+	m^*\left( \bigsqcup_{k=1}^{\infty } E_k \right) \geq m^* \left( \bigsqcup_{k=1}^{n} E_k \right) = \sum_{k=1}^{n} m^*(E_k)
 \end{equation*}
 for all $n\in \mathbb{Z}_+$, so
 \begin{equation*}

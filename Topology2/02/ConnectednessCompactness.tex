@@ -76,14 +76,14 @@ The union of a collection of connected subspaces of $X$ that has a point in comm
 Let $A \subseteq X$ be connected, if $A \subseteq B \subseteq \overline{A}$, then $B$ is connected.
 \end{theorem}
 \begin{proof}
-If $B = C\cup D$ a separation, then $A \subseteq C$ or $D$, let $A \subseteq C$. As $C$ is closed, so $\overline{A} \subseteq C$ and $B \subseteq C$.
+	If $B = C\cup D$ a separation, then $A \subseteq C$ or $D$, let $A \subseteq C$. As $C$ is closed, so $\overline{A} \subseteq \overline{C}$ so $B \subseteq \overline{C}$. As $\overline{C}\cap D=\emptyset $, we have $D = \emptyset $.
 \end{proof}
 
 \begin{theorem}{Image of a Connected Space}{Image of a Connected Space}
 The image of a connected space under a continuous function is connected. That is, if $f: X \rightarrow Y$ is continuous and $X$ is connected, then $f(X)$ is connected.
 \end{theorem}
 \begin{proof}
-	Let $f(X) = C \cup D$ be a separation, then $f^{-1}(C)$ and $f^{-1}(D)$ are open in $X$, and they are a separation of $X$. Thus, $X$ is disconnected, contradiction.
+	Restricting $Y$ to $f(X)$, then $f: X \rightarrow f(X)$ is continuous. Let $f(X) = C \cup D$ be a separation, then $f^{-1}(C)$ and $f^{-1}(D)$ are open in $X$, and they are a separation of $X$. Thus, $X$ is disconnected, contradiction.
 \end{proof}
 
 \begin{theorem}{Products of Finite Connected Spaces}{Products of Finite Connected Spaces}
@@ -116,9 +116,9 @@ When we ask if arbitrary products of connected spaces are connected, the answer 
 \begin{proof}
 Let $X = \prod_{\alpha \in J} X_{\alpha}$, $z\in X$ be a given point. Let $\sigma \subseteq J$ be a finite set, and $V_{\sigma} \subseteq X$ be defined as:
 \begin{equation*}
-V_{\sigma} = \left\{ x\in X: \forall \alpha \notin \sigma, x_{\alpha} = z_{\alpha} \right\}
+	V_{\sigma} = \left\{ x\in X: \forall \alpha \notin \sigma, x_{\alpha} = z_{\alpha} \right\} \cong \prod_{\alpha \in \sigma} X_{\alpha}
 \end{equation*}
-Then $U_{\sigma}$ is a finite product of connected spaces, so it is connected by theorem \ref{thm:Products of Finite Connected Spaces}.
+Then $V_{\sigma}$, being the space of all $x\in X$ that different from $z$ only in the index in $\sigma$, is a finite product of connected spaces, so it is connected by theorem \ref{thm:Products of Finite Connected Spaces}.
 
 Next we define
 \begin{equation*}
@@ -194,8 +194,9 @@ If $L$ is a linear continuum with the order topology, then $L$ is connected, and
 So $\mathbb{R}$ is connected, and so are all its intervals and rays.
 
 \begin{theorem}{Intermediate Value Theorem}{Intermediate Value Theorem}
-	Let $X$ be connected and $Y$ an ordered set with order topology. Let $f:X \rightarrow Y$ be continuous. If $a,b\in X$ and $r$ is between $f(a)$ and $f(b)$, then there exists $c\in [a,b]$ such that $f(c) = r$.
+	Let $X$ be connected and $Y$ an ordered set with order topology. Let $f:X \rightarrow Y$ be continuous. If $a,b\in X$ and $r$ is between $f(a)$ and $f(b)$, then there exists $c\in X$ such that $f(c) = r$.
 \end{theorem}
+
 \begin{proof}
 	Let $A = f(X)\cap (-\infty ,r)$ and $B = f(X)\cap (r,+\infty )$. If there are no point $c$ in $[a,b]$ such that $f(c) = r$, then $f(a)\in A$ and $f(b)\in B$, and $A\cup B = f(X)$, so $A,B$ is a separation of $X$, contradicting to the fact that the continuous image of a connected space is connected.
 \end{proof}
@@ -755,7 +756,7 @@ Usually ``local'' means true in every neighborhood ``arbitrary small''. Now we g
 	Let $X$ be a Hausdorff space. Then $X$ is local compact iff $\forall x\in X,\forall $ neighborhood $U$ of $x$, there exists a neighborhood $V$ of $x$ such that $\overline{V}$ is compact and $\overline{V} \subseteq U$.
 \end{theorem}
 \begin{proof}
-	Then $\Lightarrow$ part is obvious. For the $\Reftarrow$ part, let $x\in X$ and $U$ be a neighborhood of $x$. Taking the one-point compactification $Y$ of $X$, let $C=Y-U$, then $C$ is closed and compact in $Y$. According to lemma \ref{lem:Compact Subspaces of Hausdorff Space}, we choose separation $V,W$ of $x,C$, then $\overline{V}$ would do. 
+	Then $\Leftarrow$ part is obvious. For the $\Rightarrow$ part, let $x\in X$ and $U$ be a neighborhood of $x$. Taking the one-point compactification $Y$ of $X$, let $C=Y-U$, then $C$ is closed and compact in $Y$. According to lemma \ref{lem:Compact Subspaces of Hausdorff Space}, we choose separation $V,W$ of $x,C$, then $\overline{V}$ would do. 
 \end{proof}
 
 \begin{corollary}{Subspaces of Locally Compact Hausdorff Spaces}{Subspaces of Locally Compact Hausdorff Spaces}

@@ -1,0 +1,215 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\chapter{Complete Metric Spaces and Function Spaces}
+Completeness is a fundamental concept in analysis, referring to a property of metric spaces that, while metric in nature, underlies many important topological theorems. The most familiar example is Euclidean space, but another key example is the space $C(X, Y)$ of all continuous functions from a space $X$ to a metric space $Y$, which is complete in the uniform metric if $Y$ is complete. This chapter examines such examples, demonstrates the completeness of $C(X, Y)$ in the uniform metric, and constructs the Peano space-filling curve as an application. It also explores the relationship between compactness and completeness, leading to Ascoli's theorem about compact subsets of function spaces. Finally, the chapter discusses alternative topologies on $C(X, Y)$ and proves a general version of Ascoli's theorem.
+
+\section{Complete Metric Spaces}
+
+\begin{definition}{Cauchy Sequence and Completeness}{Cauchy Sequence and Completeness}
+	Let $(X,d)$ be a metric space, and a sequence $(x_n)$ in $X$ is a Cauchy sequence in $(X,d)$ if it satisfies:
+	\begin{equation}
+		\forall \epsilon > 0, \exists N \in \mathbb{N}, \forall m,n > N, d(x_n, x_m) < \epsilon.
+	\end{equation}
+	A metric space $(X,d)$ is complete if every Cauchy sequence in $X$ converges to a limit in $X$.
+\end{definition}
+
+\begin{remark}
+	Of course every convergent sequence is a Cauchy sequence, but the converse is not true in general. For example, the space of rational numbers $\mathbb{Q}$ with the usual metric is not complete.
+\end{remark}
+
+\begin{theorem}{Closed Subspace of Complete Spaces}{Closed Subspace of Complete Spaces}
+	A closed subspace of a complete metric space is complete. (in the restricted metric)
+\end{theorem}
+\begin{proof}
+	Well, a Cauchy sequence in the closed subspace is also a Cauchy sequence in the complete space, so it converges to some point in the complete space. Since the subspace is closed, the limit point is also in the subspace.
+\end{proof}
+
+\begin{proposition}{Standard Bounded Metric and Completeness}{Standard Bounded Metric and Completeness}
+	$X$ is complete under $d$ if and only if $X$ is complete under the standard bounded metric $\overline{d}(x,y) = \min \left\{d(x,y),1  \right\}$.
+\end{proposition}
+This is quite obvious as a sequence is Cauchy under $d$ if and only if it is Cauchy under $\overline{d}$, and a sequence converges under $d$ if and only if it converges under $\overline{d}$.
+
+\begin{lemma}{Subsequence Criterion for Completeness}{Subsequence Criterion for Completeness}
+	A metric space $(X,d)$ is complete if and only if every Cauchy sequence in $X$ has a convergent subsequence.
+\end{lemma}
+\begin{proof}
+The $\Rightarrow$ side obvious, taking the original sequence would do.
+
+For the $\Leftarrow$ side, let $(x_n)$ be a Cauchy sequence in $X$. Let $(x_{n_i})$ is a convergent subsequence of $(x_n)$, and let $x = \lim_{i \to \infty} x_{n_i}$. For any $\epsilon > 0$, there exists $N$ that
+\begin{equation*}
+	d(x_n,x_m) < \epsilon/2, \forall m,n > N.
+\end{equation*}
+Also, there exists $I$ that $n_I>N$ and
+\begin{equation*}
+	d(x_{n_i}, x) < \epsilon/2, \forall i > I.
+\end{equation*}
+So for any $n > N$, we have
+\begin{equation*}
+	d(x_n, x) \leq d(x_n, x_{n_I}) + d(x_{n_I}, x) < \epsilon/2 + \epsilon/2 = \epsilon.
+\end{equation*}
+\end{proof}
+
+\begin{theorem}{Completeness of $\mathbb{R}^k$}{Completeness of mathbbRk}
+	$\mathbb{R}^k$ is complete under the usual metric $d(x,y) = \sqrt{\sum_{i=1}^k (x_i - y_i)^2}$ and the square metric $\rho(x,y) = \max_{1 \leq i \leq k} |x_i - y_i|$.
+\end{theorem}
+\begin{proof}
+	\textbf{Proof of $(\mathbb{R}^k,\rho)$}, let $(x_n)$ be a Cauchy sequence in $(\mathbb{R}^k,\rho)$, it is easy to see that $x_n$ is bounded in some cube $[-M,M]^k$. Since $[-M,M]^k$ is compact, it is sequentially compact from theorem \ref{thm:Equivalence of Compactness in Metric Spaces}. So $(x_n)$ has a convergent subsequence $(x_{n_i})$ that converges to some $x \in [-M,M]^k$. From lemma \ref{lem:Subsequence Criterion for Completeness}, $(x_n)$ converges to $x$.
+
+	\textbf{Proof of $(\mathbb{R}^k,d)$}, equivalently.
+\end{proof}
+
+\begin{theorem}{Compact Metric Spaces are Complete}{Compact Metric Spaces are Complete}
+	Every compact metric space is complete.
+\end{theorem}
+\begin{proof}
+	From theorem \ref{thm:Equivalence of Compactness in Metric Spaces} and lemma \ref{lem:Subsequence Criterion for Completeness}.
+\end{proof}
+
+Now we deal with the product space $\mathbb{R}^{\mathbb{Z}_+}$.
+
+\begin{lemma}{Convergence in Product Space}{Convergence in Product Space}
+	Let $X = \prod X_{\alpha}$ be a product space, and $(x_n)$ be a sequence in $X$. Then $(x_n)$ converges to $x \in X$ if and only if for each $\alpha$, the sequence $(\pi_{\alpha}(x_n))$ converges to $\pi_{\alpha}(x)$ in $X_{\alpha}$.
+\end{lemma}
+\begin{proof}
+The $\Rightarrow$ side is obvious as continuity preserve convergence.
+
+For the $\Leftarrow$ side, let $U = \prod U_{\alpha}$ be a basis containing $x$, for $U_{\alpha} \neq X_{\alpha}$, choose $N_{\alpha}$ that $\pi_{\alpha}(x_n) \in U_{\alpha}$ for all $n > N_{\alpha}$. Let $N = \max \{N_{\alpha}\}$, then for all $n > N$, $x_n \in U$.
+\end{proof}
+
+\begin{theorem}{Compactness of $\mathbb{R}^{\mathbb{Z}_+}$}{Compactness of mathbbRmathbbZ+}
+	There is a metric for $\mathbb{R}^{\mathbb{Z}_+}$ that makes $\mathbb{R}^{\mathbb{Z}_+}$ a complete metric space.
+\end{theorem}
+\begin{proof}
+	Let $\overline{d}$ be the standard bounded metric on $\mathbb{R}$, and define a metric $D$ on $\mathbb{R}^{\mathbb{Z}_+}$ by
+	\begin{equation}
+		D(x,y) = \sup \left\{\frac{\overline{d}(x_n,y_n)}{n} : n \in \mathbb{Z}_+ \right\}.
+	\end{equation}
+	Then $D$ induces the product topology on $\mathbb{R}^{\mathbb{Z}_+}$, from theorem \ref{thm:Metrization of mathbbRmathbbZ+}.
+
+	Now we prove that $\mathbb{R}^{\mathbb{Z}_+}$ is complete with $D$: Take $x_n$ be a Cauchy sequence, and
+	\begin{equation*}
+		\overline{d}(\pi_i(x), \pi_i(y)) \leq i D(x,y).
+	\end{equation*}
+	So for a fixed $i$, $(\pi_i(x_n))$ is a Cauchy sequence in $(\mathbb{R},\overline{d})$. From lemma \ref{lem:Convergence in Product Space} we have that $(x_n)$ converges.
+\end{proof}
+
+\begin{example}{Non-complete Spaces}{Non-complete Spaces}
+	\begin{itemize}
+		\item The space $\mathbb{Q}$ of rational numbers with the usual metric is not complete. For example, the sequence
+			\begin{equation*}
+				1, 1.4, 1.41, 1.414, 1.4142, \ldots
+			\end{equation*}
+			is a Cauchy sequence in $\mathbb{Q}$ that does not converge to a rational number.
+		\item The space $(-1,1)$ is not complete under the usual metric. For example, the sequence
+			\begin{equation*}
+				0, 0.9, 0.99, 0.999, 0.9999, \ldots
+			\end{equation*}
+			is a Cauchy sequence in $(-1,1)$ that does not converge to a point in $(-1,1)$.
+	\end{itemize}
+\end{example}
+
+We now turn to $\mathbb{R}^J$ when $J$ is not countable. Well actually, this is not even metrizable with the product topology, see example \ref{exp:Spaces that are not Metrizable}. We turn to the topology induced by the uniform metric.
+
+From definition \ref{def:Uniform Metric}, we know that if $(Y,d)$ is a topological space, then $\overline{\rho}$ is a metric defined by
+\begin{equation}
+	\overline{\rho}(x,y) = \sup \{\overline{d}(x_{\alpha}, y_{\alpha}) : \alpha \in J \}, \quad \overline{d} = \min \{d,1\}.
+\end{equation}
+Or written in function form, $Y^J$ is the set of all functions from $J$ to $Y$, and
+\begin{equation}
+	\overline{\rho}(f,g) = \sup \{\overline{d}(f(\alpha), g(\alpha)) : \alpha \in J \}, \quad \overline{d} = \min \{d,1\}.
+\end{equation}
+
+\begin{theorem}{Completeness in Uncountable Products}{Completeness in Uncountable Products}
+	If $(Y,d)$ is a complete metric space, then $(Y^J, \overline{\rho})$ is a complete metric space, for any set $J$.
+\end{theorem}
+\begin{proof}
+	If $(Y,d)$ is complete, so is $(Y,\overline{d})$. Suppose $f_n$ is a Cauchy sequence in $(Y^J, \overline{\rho})$. For each $\alpha \in J$, $f_n(\alpha)$ is a Cauchy sequence in $(Y,\overline{d})$ (see proof of theorem \ref{thm:Completeness of mathbbRmathbbZ+}), so it converges to some $f(\alpha) \in Y$. Let $f$ be the function defined by $f(\alpha) = \lim_{n \to \infty} f_n(\alpha)$ for each $\alpha \in J$. We show that $f_n$ converges to $f$ in $(Y^J, \overline{\rho})$:
+
+	For any $\epsilon > 0$, there exists $N$ such that for all $m,n > N$, $\overline{\rho}(f_n, f_m) < \epsilon / 2$. We have
+	\begin{equation*}
+		\overline{d}(f_n(\alpha), f(\alpha)) = \lim_{m \to \infty} \overline{d}(f_n(\alpha), f_m(\alpha)) \leq \epsilon / 2, \forall n > N, \forall \alpha \in J.
+	\end{equation*}
+	So we have $\overline{\rho}(f_n, f) \leq \epsilon / 2 < \epsilon$ for all $n > N$.
+\end{proof}
+
+Now to be more specific, we may consider the function space $Y^X$ where $X$ is a topological space.
+
+\begin{theorem}{Continuous and Bounded Functions}{Continuous and Bounded Functions}
+	Let $X$ be a topological space and $(Y,d)$ be a metric space. Let $\mathscr{C}(X,Y)$ be the set of all continuous functions from $X$ to $Y$, and $\mathscr{B}(X,Y)$ be the set of all bounded functions from $X$ to $Y$.
+
+	Then both $\mathscr{C}(X,Y)$ and $\mathscr{B}(X,Y)$ are closed subsets of $(Y^X, \overline{\rho})$. In particular, if $(Y,d)$ is complete, then both $\mathscr{C}(X,Y)$ and $\mathscr{B}(X,Y)$ are complete metric space under the uniform metric.
+\end{theorem}
+\begin{proof}
+	For $\mathscr{C}(X,Y)$ it is just the uniform limit throrem \ref{thm:Uniform Limit Theorem}, for $\mathscr{B}(X,Y)$ it is also obvious.
+\end{proof}
+
+\begin{definition}{Sup Metric}{Sup Metric}
+	Let $X$ be a topological space and $(Y,d)$ be a metric space. The sup metric on $\mathscr{B}(X,Y)$ is defined by
+	\begin{equation}
+		\rho(f,g) = \sup \{d(f(x), g(x)) : x \in X \}.
+	\end{equation}
+\end{definition}
+In fact, in $\mathscr{B}(X,Y)$, $\rho$ and $\overline{\rho}$ are equivalent metrics. And $\overline{\rho}$ is just the standard bounded metric of $\rho$.
+
+If $X$ is compact, then every continuous function from $X$ to $Y$ is bounded, so $\mathscr{C}(X,Y) \subset \mathscr{B}(X,Y)$. And if $Y$ is complete, then $\mathscr{C}(X,Y)$ is complete under the sup metric.
+
+We now show that every metric space can be isometrically embedded in a complete metric space. Meaning that it is just some part of a complete metric space just like $\mathbb{Q} \subseteq \mathbb{R}$.
+
+\begin{theorem}{Completion of Metric Spaces}{Completion of Metric Spaces}
+	Let $(X,d)$ be a metric space. There exists a complete metric space $(X',d')$ and an isometric embedding $f : X \to X'$.
+
+	The subspace $\overline{f(X)}$ in $Y$ is a complete metric space containing $f(X)$ as a dense subset and is called the completion of $X$.
+\end{theorem}
+\begin{proof}
+	Let $\mathscr{B}(X,\mathbb{R})$ be the set of all bounded functions from $X$ to $\mathbb{R}$, let $x_0\in X$, and given $a\in X$. Define $\phi_a:X \rightarrow \mathbb{R}$ by
+	\begin{equation*}
+		\phi_a(x) = d(a,x) - d(x,x_0).
+	\end{equation*}
+	The triangle inequality shows that $\left|\phi_a(x)\right| \leq d(a.x_0)$ which is bounded.
+
+	Define $\Phi: X \rightarrow \mathscr{B}(X,\mathbb{R}), \Phi(a) = \phi_a$. We prove that $\Phi$ is an isometric embedding:
+	\begin{equation*}
+		\rho(\phi_a,\phi_b) = \sup \left\{|\phi_a(x) - \phi_b(x)| : x \in X \right\} = \sup \left\{|d(a,x) - d(b,x)| : x \in X \right\} = d(a,b).
+	\end{equation*}
+\end{proof}
+
+\begin{theorem}{Uniqueness of Completion}{Uniqueness of Completion}
+	Let $X$ be a metric space. If $h:X \rightarrow Y$ and $h':X \rightarrow Y'$ are isometric embeddings of $X$ into complete metric spaces $Y$ and $Y'$ such that both $h(X)$ and $h'(X)$ are dense in $Y$ and $Y'$, respectively, then there exists an isometry $g:Y \rightarrow Y'$ such that $g \circ h = h'$.
+\end{theorem}
+
+\section{Compactness in Metric Spaces}
+We've already shown in theorem \ref{thm:Equivalence of Compactness in Metric Spaces} that in metric spaces, compactness, limit point compactness and sequential compactness are equivalent.
+
+Following the equivalence, every compact metric space is sequentially compact, and thus complete. But the converse is not true, for example, $\mathbb{R}$ is complete but not compact.
+
+\begin{definition}{Totally Bounded}{Totally Bounded}
+	A metric space $(X,d)$ is totally bounded if for every $\epsilon > 0$, there exists a finite cover of $X$ by open balls of radius $\epsilon$.
+\end{definition}
+
+\begin{proposition}{Properties of Totally Boundedness}{Properties of Totally Boundedness}
+	\begin{itemize}
+		\item Totally boundedness implies boundedness, but not conversely. For example, $\mathbb{R}$ is bounded in $\overline{d}(x,y) = \min \left\{ \left|x-y\right|,1 \right\}$ but not totally bounded.
+		\item Under $d(x,y) = \left|x-y\right|$. $\mathbb{R}$ is complete but not totally bounded. The subspace $(-1,1)$ is totally bounded but not complete. The subspace $[0,1]$ is both complete and totally bounded.
+	\end{itemize}
+\end{proposition}
+
+\begin{theorem}{Compactness of Metric Spaces}{Compactness of Metric Spaces}
+	A metric space is compact if and only if it is complete and totally bounded.
+\end{theorem}
+\begin{proof}
+\begin{itemize}
+	\item The $\Rightarrow$ side is from theorem \ref{thm:Compact Metric Spaces are Complete} and the definition of compactness.
+	\item Let $X$ be complete and totally bounded, and prove that $X$ is sequentially compact. Let $(x_n)$ be a sequence in $X$. Since $X$ is totally bounded, there exists a finite cover of $X$ by open balls of radius $1$. So some ball contains infinitely many terms of the sequence. Call this ball $B_1$, and let $(x_{1,n})$ be the subsequence of $(x_n)$ consisting of all terms that lie in $B_1$.
+
+		Next, since $X$ is totally bounded, there exists a finite cover of $X$ by open balls of radius $1/2$. So some ball contains infinitely many terms of the sequence $(x_{1,n})$. Call this ball $B_2$, and let $(x_{2,n})$ be the subsequence of $(x_{1,n})$ consisting of all terms that lie in $B_2$.
+
+		Continuing in this way, we obtain a sequence of nested balls $B_k$ of radius $1/k$, each containing infinitely many terms of the previous subsequence. Let $(x_{k,n})$ be the subsequence of $(x_{k-1,n})$ consisting of all terms that lie in $B_k$. Now define a new sequence $(y_k)$ by letting $y_k = x_{k,k}$. Then $(y_k)$ is a subsequence of $(x_n)$, and for $m,n > N$, both $y_m$ and $y_n$ lie in the ball $B_N$ of radius $1/N$. So
+		\begin{equation*}
+			d(y_m,y_n) < 2/N.
+		\end{equation*}
+		This shows that $(y_k)$ is a Cauchy sequence in $X$, and since $X$ is complete, $(y_k)$ converges to some point in $X$. Thus every sequence in $X$ has a convergent subsequence, and so $X$ is sequentially compact.
+\end{itemize}
+\end{proof}
+
+\end{document}

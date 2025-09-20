@@ -70,7 +70,7 @@ Suppose $X$ is second countable.
 \begin{proof}
 	Let $\mathcal{B}$ be a countable basis of $X$.
 	\begin{itemize}
-		\item Let $\mathcal{A}$ be a countable basis of $X$, then for every $n\in \mathbb{Z}_+$, choose $A_n\in \mathcal{A}$ that $B_n \subseteq A_n$. Then $A_n$ is a countable subcovering of $\mathcal{B}$.
+		\item Let $\mathcal{A}$ be an open covering of $X$, then for every $n\in \mathbb{Z}_+$, choose $A_n\in \mathcal{A}$ that $B_n \subseteq A_n$. Then $A_n$ is a countable subcovering of $\mathcal{B}$.
 		\item For every $n\in \mathbb{Z}_+$, choose $x_n\in B_n$, then $D = \left\{ x_n \right\}$ is dense. $\forall x\in X$, every basis element containing $x$ intersects $D$, so $x\in \overline{D}$.
 	\end{itemize}
 \end{proof}
@@ -110,7 +110,6 @@ The separation axioms are a set of conditions that describe how distinct points 
 		\item A space $X$ is \textbf{T1} (Frechet) if for every pair of distinct points $x,y\in X$, there exists an open set containing $x$ but not $y$ and vice versa.
 		\item A space $X$ is \textbf{T2} (Hausdorff) if for every pair of distinct points $x,y\in X$, there exist disjoint open sets containing $x$ and $y$ respectively.
 		\item A space $X$ is \textbf{T3} (Regular) if it is T1 and for every closed set $F$ and point $x\notin F$, there exists disjoint open sets containing $x$ and $F$ respectively.
-		\item A space $X$ is 
 		\item A space $X$ is \textbf{T4} (Normal) if it is T1 and for every pair of disjoint closed sets, there exist disjoint open sets containing them.
 		\item A space $X$ is \textbf{T5} (completely normal) if it is T1 and for every pair of separated sets, there exist disjoint open sets containing them. Two sets $A,B$ are \textbf{separated} if $A\cap \overline{B} = \emptyset$ and $B\cap \overline{A} = \emptyset$.
 	\end{itemize}
@@ -175,8 +174,9 @@ There is NO analogous statement for $T_4$ spaces. The subspace and product of no
 \begin{theorem}{Regular Second Countable Implies Normal}{Regular Second Countable Implies Normal}
 Let $X$ be a second countable regular space. Then $X$ is normal.
 \end{theorem}
+
 \begin{proof}
-Let $\mathcal{B}$ be a countable basis, and $A,B$ are disjoint closed set in $X$. $\forall x\in A$, there is a neighborhood $U_x$ that does not intersect $B$. Using regularity, let $V_x$ be a neighborhood that $\overline{V_x} \subseteq U$, and $B_x\in \mathcal{B}, x\in B_x \subseteq V_x$. So we construct a countable cover of $A$ by $B_x$, denoted $U = \bigcup_{n=1}^{\infty } U_n$.
+Let $\mathcal{B}$ be a countable basis, and $A,B$ are disjoint closed set in $X$. $\forall x\in A$, there is a neighborhood $U_x$ that does not intersect $B$. Using regularity, let $V_x$ be a neighborhood that $\overline{V_x} \subseteq U$, and $B_x\in \mathcal{B}, x\in B_x \subseteq V_x$. So we construct a countable cover of $A$ by $B_x$, denoted $U = \bigcup_{n=1}^{\infty } U_n$. (The element $U_n$ are the countable $B_x$ that cover $A$.)
 
 Similarly, we construct a countable cover $V = \bigcup_{n=1}^{\infty } V_n$ of $B$. Now we construct $U',V'$ that are disjoint.
 
@@ -213,14 +213,28 @@ Let $X$ be a metrizable space. Then $X$ is normal.
 	which is a contradiction.
 \end{proof}
 
+\begin{figure}[ht]
+    \centering
+    \incfig{metrizable-and-normal}
+    \caption{Metrizable and Normal}
+    \label{fig:metrizable-and-normal}
+\end{figure}
+
 \begin{theorem}{Compact Hausdorff Implies Normal}{Compact Hausdorff Implies Normal}
 Let $X$ be a compact Hausdorff space. Then $X$ is normal.
 \end{theorem}
 \begin{proof}
-	First we prove $X$ is regular. For all $F$ closed and $x\notin F$, since $X$ is Hausdorff, there exist disjoint open sets $U_x,V_x$ such that $x\in U_x$ and $F\subseteq V_x$. There are finite $x$ that $\bigcup V_x $ covers $F$, taking the intersection of all $U_x$ would do. (Finiteness)
+	First we prove $X$ is regular. For all $F$ closed and $x\notin F$, since $X$ is Hausdorff, for all $y\in F$, there exist disjoint open sets $U_y,V_y$ such that $x\in U_y$ and $y\in V_y$. There are finite $y$ that $\bigcup V_y $ covers $F$, taking the intersection of all $U_y$ would do. (Finiteness)
 
 	Similar argument applies to show that $X$ is normal.
 \end{proof}
+
+\begin{figure}[ht]
+    \centering
+    \incfig{compact-hausdorff-and-regularity}
+    \caption{Compact Hausdorff and Regularity}
+    \label{fig:compact-hausdorff-and-regularity}
+\end{figure}
 
 \begin{theorem}{Order Topology is Normal}{Order Topology is Normal}
 Let $X$ be a simply ordered set with the order topology. Then $X$ is normal.
@@ -286,6 +300,13 @@ We can prove a weaker statement:
 	\end{itemize}
 \end{proof}
 
+\begin{figure}[ht]
+    \centering
+    \incfig{urysohn-lemma}
+    \caption{Urysohn Lemma}
+    \label{fig:urysohn-lemma}
+\end{figure}
+
 \begin{definition}{Separation by Continuous Functions}{Separation by Continuous Functions}
 	If $A,B \subseteq X$, and $\exists $ a continuous function $f: X \rightarrow [0,1]$ such that $f(A) = \left\{ 0 \right\}$ and $f(B) = \left\{ 1 \right\}$, we say that $A$ and $B$ can be \textbf{separated by continuous functions}.
 \end{definition}
@@ -334,14 +355,189 @@ The sets $\mathbb{R}_l^2$ and $S_{\Omega}\times \overline{S_{\Omega}}$ are compl
 
 We use two versions of proof here, both has generalizations.
 \begin{theorem}{Urysohn Metrization Theorem}{Urysohn Metrization Theorem}
-	Let $X$ be a second countable normal space. Then $X$ is metrizable.
+	Let $X$ be a second countable regular space. Then $X$ is metrizable.
 \end{theorem}
+\begin{proof}
+	From theorem \ref{thm:Regular Second Countable Implies Normal}, we have $X$ being second countable normal. We shall prove that $X$ is metrizable be imbedding it into a known metrizable space $Y$.
+\begin{itemize}
+	\item \textbf{Step 1:} Lemma: \emph{There exists a countable collection of continuous function $f_n: X \rightarrow [0,1]$ that $\forall x_0\in X$ and $\forall $ neighborhood $U$ of $x_0$, there exists $n$ such that $f_n(x_0) > 0$ and $f_n(X-U) = \left\{ 0 \right\}$.}
+
+		By normality of $X$ and Urysohn lemma, we have the required function $f$ exists for each pair $(x,U)$. Our goal is to limit the quantity. Let $\left\{ B_n \right\}$ be a countable basis of $X$, for each $n,m\in \mathbb{Z}_+, \overline{B_n} \subseteq B_m$ (from normality this pair exists and has infinite), from Urysohn lemma choose c continuous function $g_{n,m}: X \rightarrow [0,1]$ that $g_{n,m}(\overline{B_n}) = \left\{ 1 \right\},g_{n,m}(X-B_m) = \left\{ 0 \right\}$. Then the collection $g_{n,m}$ is countable and satisfies our condition. (Choose $x_0\in B_m \in U$ and $x_0\in B_n,\overline{B_n}\in B_m$).
+
+	\item \textbf{Step 2: First Version of Proof} Given the function in step 1 and take $\mathbb{R}^{\mathbb{Z}_+}$ in the product topology. Define $F:X \rightarrow \mathbb{R}^{\mathbb{Z}_+}$ that
+		\begin{equation}
+			F(x) = (f_1(x),f_2(x), \ldots )
+		\end{equation}
+		Then we conclude that $F$ is an imbedding.
+
+		First $F$ is continuous: from \ref{thm:Continuity of Products} and $f_n$ is continuous. $F$ is injective: $\forall x\neq y$, we have have and $n$ that $f_n(x)>0$ and $f_n(y)=0$. So $F(x)\neq F(y)$.
+
+		Finally, $F$ is a homeomorphism $X \rightarrow Z=F(X)$. Let $U\in \mathcal{T}_X$, let $z_0\in F(U), z_0=F(x_0)$. Take $N$ that $f_N(x_0)>0$ and $f_N(X-U) = \left\{ 0 \right\}$. Define
+		\begin{equation*}
+			V = \pi_N^{-1}((0,+\infty ))
+		\end{equation*}
+		in $\mathbb{R}^{\mathbb{Z}_+}$, and $W = V\cap Z$. Then $W$ is open in $Z$. We assert that $z_0\in W \subseteq F(U)$: First $z_0\in W$ for $z_N = f_N(x_0)>0$. Then $W \subseteq F(U)$ because if $z\in W$, then $z=F(x)$ for some $x\in X$, and $\pi_N(z)\in (0,\infty )$. Since $\pi_N(z) = f_N(x)$ so we have $x\in U$, so $z\in F(U)$.
+
+		So we've proved that $F$ is an imbedding of $X$ in $\mathbb{R}^{\mathbb{Z}_+}$.
+	\item \textbf{Step 3: Second Version of Proof} In this version, we still use $\mathbb{R}^{\mathbb{Z}_+}$ but do not use the product topology, instead, we use the uniform topology induced by the metric space $(\mathbb{R}^{\mathbb{Z}_+}, \overline{\rho})$. Actually, we imbed it on $[0,1]^{\mathbb{Z}_+}$, on which $\overline{\rho}$ is defined
+		\begin{equation*}
+			\overline{\rho}(x,y) = \rho(x,y) = \sup \left\{ \left|x_i-y_i\right| \right\}
+		\end{equation*}
+
+		Let $f_n$ be constructed by step 1, assume $f_n(x) < 1 / n$ for all $x\in X$, (dividing $n$ would do) Define $F: X \rightarrow [0,1]^{\mathbb{Z}_+}$ by
+		\begin{equation*}
+			F(x) = (f_1(x), f_2(x), \ldots )
+		\end{equation*}
+		First, $F$ is injective from step 2, and $F$ maps open sets to open sets in product topology so does in uniform topology, which is finer.
+
+		To prove $F$ being continuous, (we cannot use theorem \ref{thm:Continuity of Products} because we're not using product topology now). Let $x_0\in X$ and $\epsilon>0$, and we find a neighborhood $U$ of $x_0$ that
+		\begin{equation*}
+			x\in U \rightarrow \rho(F(x),F(x_0)) < \epsilon
+		\end{equation*}
+		choose $N$ that $1 / N < \epsilon / 2$. For each $n\in \left\{ 1, \ldots ,N \right\}$ choose a neighborhood $U_n$ of $x_0$ that
+		\begin{equation*}
+			\forall x\in U_n, \left|f_n(x)-f_n(x_0)\right| \leq \frac{\epsilon}{2}
+		\end{equation*}
+		Denote $U = \bigcap_{n=1}^{N} U_n$ would do. For $x\in U$, if $n<N$ we have $\left|f_n(x)-f_n(x_0)\right|\leq \frac{\epsilon}{2}$ and if $n\geq N$, we have $\left|f_n(x)-f_n(x_0)\right|\leq \frac{1}{N} \leq \frac{\epsilon}{2}$. So we have
+		\begin{equation*}
+			\rho(F(x),F(x_0)) = \sup_{n\in \mathbb{Z}_+} \left|f_n(x)-f_n(x_0)\right| \leq \frac{\epsilon}{2} < \epsilon
+		\end{equation*}
+		\begin{remark}
+			The condition means that $F$ is only prominently different from zero at low indices.
+		\end{remark}
+\end{itemize}
+\end{proof}
+
+\begin{figure}[ht]
+    \centering
+    \incfig{urysohn-metrization-theorem}
+    \caption{Urysohn Metrization Theorem}
+    \label{fig:urysohn-metrization-theorem}
+\end{figure}
+
+The step 2 from the proof of Urysohn Metrization Theorem also proved a stronger result:
 
 \begin{theorem}{Imbedding Theorem}{Imbedding Theorem}
 	Let $X$ be a T1 space. Suppose $\left\{ f_{\alpha} \right\}_{\alpha\in J}$ is a family of continuous functions from $X$ to $\mathbb{R}$ such that
 	\begin{equation*}
-	\forall x_0\in X, \forall \text{ neighborhood $U$ of $x_0$, } 
+	\forall x_0\in X, \forall \text{ neighborhood $U$ of $x_0$, } \exists \alpha\in J, f_{\alpha}(x_0)>0\land f_{\alpha}(X-U) = \left\{ 0 \right\}.
 	\end{equation*}
+	Then the function $F: X \rightarrow \mathbb{R}^{J}, x \mapsto (f_{\alpha}(x))_{\alpha\in J}$ is an imbedding of $X$ is $\mathbb{R}^{J}$. If $f_{\alpha}$ maps $X$ to $[0,1]$, then $F$ imbeds $X$ in $[0,1]^{J}$. (All in the product topology)
 \end{theorem}
+
+A family of continuous functions that satisfies this condition is said to \textbf{separate points from closed sets in $X$}. And a completely regular space (T3.5) has exactly this property. Reversely, the space $[0,1]^J$ is also completely regular due to theorem \ref{thm:Subspaces and Products of Completely Regular Spaces}, so we have
+
+\begin{theorem}{Characterization of Completely Regular Space}{Characterization of Completely Regular Space}
+	A space $X$ is completely regular iff it is homeomorphic to some subspace of $[0,1]^J$ for some $J$.
+\end{theorem}
+
+\section{The Tietze Extension Theorem}
+
+The Tietze extension theorem is a direct consequence of the Urysohn lemma. It extends a continuous function defined on a subspace of $X$ to the whole space $X$.
+
+\begin{theorem}{Tietze Extension Theorem}{Tietze Extension Theorem}
+	Let $X$ be a normal space. Let $A \subseteq X$ be closed.
+	\begin{itemize}
+		\item Let $f:A \rightarrow [a,b]$ be any continuous function. Then there exists a continuous function $\overline{f}: X \rightarrow [a,b]$ such that $\overline{f}|_A = f$.
+		\item Let $f:A \rightarrow \mathbb{R}$ be any continuous function. Then there exists a continuous function $\overline{f}: X \rightarrow \mathbb{R}$ such that $\overline{f}|_A = f$.
+	\end{itemize}
+\end{theorem}
+\begin{proof}
+The idea would be to construct a uniformly convergent sequence $s_n$ of continuous function.
+\begin{itemize}
+	\item \textbf{Step 1: } Consider $f: A \rightarrow [-r,r]$. We construct a continuous $g:X \rightarrow \mathbb{R}$ that
+		\begin{itemize}
+			\item $\left|g(x)\right| \leq \frac{1}{3}r$ for all $x\in X$.
+			\item $\left|f(x)-g(x)\right| \leq \frac{2}{3}r$ for all $x\in A$.
+		\end{itemize}
+\end{itemize}
+\end{proof}
+
+\section{Imbedding of Manifolds}
+We've already know that every second countable regular space is metrizable can can be imbedded in $\mathbb{R}^{\mathbb{Z}_+}$. But for manifolds, we can do better to induce then in a finite dimensional Euclidean space.
+
+\begin{definition}{Manifold}{Manifold}
+	An $m$-manifold is a Hausdorff second countable space $X$ such that every point $x\in X$ has a neighborhood homeomorphic to an open set in $\mathbb{R}^m$.
+\end{definition}
+
+We shall prove that a compact manifold (thus normal from \ref{thm:Compact Hausdorff Implies Normal}) can be imbedded in a finite dimensional Euclidean space. (This is also true for non-compact manifolds, but the proof is more complicated.)
+
+\begin{theorem}{Support}{Support}
+	Let $X$ be a topological space, and $f:X \rightarrow \mathbb{R}$ be a continuous function. The \textbf{support} of $f$ is the closure of the set $\left\{ x\in X, f(x)\neq 0 \right\}$, denoted $\supp (f)$. i.e
+	\begin{equation}
+		\supp f = \overline{f^{-1}(\mathbb{R}-\left\{ 0 \right\})}
+	\end{equation}
+\end{theorem}
+Thus if $x\notin \supp f$ then there is a neighborhood $U$ of $x$ such that $f(U) = \left\{ 0 \right\}$.
+
+\begin{definition}{Partition of Unity}{Partition of Unity}
+	Let $\left\{ U_1, \ldots ,U_n \right\}$ be a finite collection of open sets that cover $X$. A family of continuous functions
+	\begin{equation}
+		\phi_i: X \rightarrow [0,1], \qquad i=1, \ldots ,n
+	\end{equation}
+	is a \textbf{partition of unity} dominated by $\left\{ U_i \right\}$ if
+	\begin{itemize}
+		\item $\forall i, \supp(\phi_i) \subseteq U_i$.
+		\item $\forall x\in X, \sum_{i=1}^{n} \phi_i(x) = 1$.
+	\end{itemize}
+\end{definition}
+
+\begin{remark}
+	A support is like the nonzero bump of a function, and a partition of unity is like that every position is covered by some bump, and the sum of all bumps at each position is 1.
+\end{remark}
+
+\begin{theorem}{Existence of Partition of Unity}{Existence of Partition of Unity}
+	Let $X$ be a normal space, and $\left\{ U_1, \ldots ,U_n \right\}$ be a finite open cover of $X$. Then there exists a partition of unity dominated by $\left\{ U_i \right\}$.
+\end{theorem}
+\begin{proof}
+\begin{itemize}
+	\item \textbf{Step 1: } We shall prove that we can shrink $\left\{ U)i \right\}$ a little to an open covering $\left\{ V_i \right\}$ that $\overline{V_i} \subseteq U_i$ for all $i$. Proceed by induction.
+
+		The set $A = X-(U_2\cup \cdots \cup U_n)$ is closed, and $A \subseteq U_1$. Using normality, take open $V_1$ that $A \subseteq V_1,\overline{V_1}\subseteq U_1$. Then $V_1, U_2, \ldots ,U_n$ covers $X$. The following proceed in an obvious way.
+	\item \textbf{Step 2:} Let $\left\{ V_i \right\}$ be as in step 1, and also choose an open covering $\left\{ W_i \right\}$ that $\overline{W_i} \subseteq V_i$. By Urysohn lemma, choose continuous functions
+		\begin{equation*}
+			\psi_i: X \rightarrow [0,1], \qquad \psi_i(\overline{W_i}) = \left\{ 1 \right\}, \psi_i(X-V_i) = \left\{ 0 \right\}.
+		\end{equation*}
+		Then $\supp \psi_i \subseteq \overline{V_i} \subseteq U_i$. As $\left\{ W_i \right\}$ covers $X$, $\forall x\in X, \exists i$ such that $x\in W_i$, so $\psi_i(x) = 1$. Thus $\Psi(x) = \sum_{i=1}^{n} \psi_i(x) \geq 1$ for all $x\in X$. Denote
+		\begin{equation*}
+			\phi_i(x) = \frac{\psi_i(x)}{\Psi(x)}
+		\end{equation*}
+		would do.
+\end{itemize}
+\end{proof}
+
+\begin{figure}[ht]
+    \centering
+    \incfig{partition-of-unity}
+    \caption{Partition of Unity}
+    \label{fig:partition-of-unity}
+\end{figure}
+
+\begin{theorem}{Imbedding of Compact Manifolds}{Imbedding of Compact Manifolds}
+	Let $X$ be a compact $m$-manifold. Then there exists an imbedding of $X$ in $\mathbb{R}^{N}$ for some $N\in \mathbb{Z}_+$.
+\end{theorem}
+\begin{proof}
+	Cover $X$ my finite many open sets $\left\{ U_1, \ldots ,U_n \right\}$, each homeomorphic to an open set in $\mathbb{R}^m$ (this is possible form compactness: every point has a neighborhood homeomorphic to an open set in $\mathbb{R}^m$, and we can extract a finite subcover). Let $g_i:U_i \rightarrow \mathbb{R}^m$ be imbeddings.
+
+	Being compact Hausdorff, $X$ is normal from theorem \ref{thm:Compact Hausdorff Implies Normal}, so we can find a partition of unity $\left\{ \phi_i \right\}$ dominated by $\left\{ U_i \right\}$. Let $A_i = \supp \phi_i$, define $h_i:X \rightarrow \mathbb{R}^m$ by
+	\begin{equation*}
+		h_i(x) = 
+		\begin{cases}
+			\phi_i(x) g_i(x), &\text{ if } x\in U_i \\
+			0, &\text{ if } x\notin A_i
+		\end{cases}
+	\end{equation*}
+	\begin{remark}
+		Here $h_i$ is the stretching of image of $g_i$ by $\phi_i$.
+	\end{remark}
+	Then $h_i$ is well-defined and continuous. Define
+	\begin{equation*}
+		F: X \rightarrow \mathbb{R}^n \times (\mathbb{R}^m)^n \cong \mathbb{R}^{n(m+1)}, \qquad F(x) = (\phi_1(x), \ldots ,\phi_n(x), h_1(x), \ldots ,h_n(x))
+	\end{equation*}
+	So $F$ is continuous. Suppose $F(x) = F(y)$, then $\phi_i(x) = \phi_i(y)$ for all $i$. Since $\sum \phi_i(x) = 1$, there exists $i$ such that $\phi_i(x) > 0$, so $\phi_i(y) > 0$ and $x,y\in U_i$. Then $h_i(x) = h_i(y)$ gives us $g_i(x) = g_i(y)$, so $x=y$. Thus $F$ is injective.
+
+	We have $F$ being an imbedding from theorem 
+	\ref{thm:Homeomorphism by Compactness}, as $X$ is compact and $\mathbb{R}^{n(m+1)}$ is Hausdorff, so $F$ is a homeomorphism of $X$ onto $F(X)$.
+\end{proof}
 
 \end{document}

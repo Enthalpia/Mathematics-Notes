@@ -271,6 +271,26 @@ Thus $P'(z)\neq 0$
 
 A sharper formulation is that the smallest convex polygon that contains all zeros of $P(z)$ also contains all zeros of $P'(z)$. (as a convex polygon can be made up of half plains).
 
+\begin{theorem}{Enestr\"om-Kakeya Theorem}{Enestrom-Kakeya Theorem}
+If $P(z) = a_0+a_1z+\ldots +a_nz^n$ with $0<a_0\leq a_1\leq \ldots \leq a_n$, then all zeros of $P(z)$ lies in $\left|z\right|\leq 1$.
+\end{theorem}
+\begin{proof}
+	For $\left|z\right|>1$, we have
+	\begin{equation*}
+		(z-1)P(z) = a_nz^{n+1} + (a_{n-1}-a_n)z^n + \ldots + (a_0-a_1)z - a_0
+	\end{equation*}
+	Using the triangle inequality, we have
+	\begin{equation*}
+		\begin{aligned}
+			\left|(z-1)P(z)\right| &\geq \left|a_n\right|\left|z\right|^{n+1} - \left|a_{n-1}-a_n\right|\left|z\right|^n - \ldots - \left|a_0-a_1\right|\left|z\right| - \left|a_0\right| \\
+			&= a_n \left|z\right|^{n+1} - (a_n - a_{n-1})\left|z\right|^n - \ldots - (a_1 - a_0)\left|z\right| - a_0 \\
+			&= \left|z\right|^{n+1} \left(a_n - \frac{a_n - a_{n-1}}{\left|z\right|} - \ldots - \frac{a_1 - a_0}{\left|z\right|^n} - \frac{a_0}{\left|z\right|^{n+1}}\right) \\
+			&> \left|z\right|^{n+1} \left(a_n - (a_n - a_{n-1}) - \ldots - (a_1 - a_0) - a_0\right) \\
+			&= 0
+		\end{aligned}
+	\end{equation*}
+\end{proof}
+
 \subsection{Rational Functions}
 We turn to rational functions
 \begin{equation}
