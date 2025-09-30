@@ -1,0 +1,237 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\chapter{Orientation}
+
+Many special functions (e.g., Bessel functions, Legendre polynomials, etc.) arise as solutions to differential equations that model physical phenomena. Each of them is related to one of the two most important second-order linear differential equations: the hypergeometric equation and the confluent hypergeometric equation.
+
+\begin{definition}{(Confluent) Hypergeometric Equations}{Confluent Hypergeometric Equations}
+	The \textbf{hypergeometric equation} is given by
+	\begin{equation}\label{eq:hypergeometric-equation}
+		x(1-x) u''(x) + [c - (a+b+1)x] u'(x) - ab u(x) = 0,
+	\end{equation}
+	and the \textbf{confluent hypergeometric equation} is given by
+	\begin{equation}\label{eq:confluent-hypergeometric-equation}
+		x u''(x) + (c - x) u'(x) - a u(x) = 0.
+	\end{equation}
+	where the parameters $a,b,c$ are complex constants.
+\end{definition}
+
+Some functions are not so closely related to these equations, including the gamma, beta, zeta, elliptic functions and the Painlev\'e transcendents.
+
+\section{Power Series Solutions}
+
+\subsection{The Recursive Second-Order Linear Differential Equations}
+The general homogeneous second-order linear differential equation is given by
+\begin{equation}
+	p(x) u''(x) + q(x) u'(x) + r(x) u(x) = 0,
+\end{equation}
+with $\exists x,p(x) \neq 0$. We assume that $p,q,r$ are analytic at some neighborhood of the origin.
+
+Consider a analytic solution $u$ at a neighborhood of the origin. Then for a small enough radius of convergence $R>0$, we can express $u,p,q,r$ as power series:
+\begin{equation}
+	u(x) = \sum_{n=0}^{\infty} u_n x^n, \quad p(x) = \sum_{n=0}^{\infty} p_n x^n, \quad q(x) = \sum_{n=0}^{\infty} q_n x^n, \quad r(x) = \sum_{n=0}^{\infty} r_n x^n,
+\end{equation}
+Substituting these into the differential equation, we have
+\begin{equation*}
+	\begin{aligned}
+		0 &= p(x) u''(x) + q(x) u'(x) + r(x) u(x) \\
+		&= \left(\sum_{n=0}^{\infty} p_n x^n\right) \left(\sum_{n=2}^{\infty} n(n-1) u_n x^{n-2}\right) + \left(\sum_{n=0}^{\infty} q_n x^n\right) \left(\sum_{n=1}^{\infty} n u_n x^{n-1}\right) + \left(\sum_{n=0}^{\infty} r_n x^n\right) \left(\sum_{n=0}^{\infty} u_n x^n\right) \\
+		&= \sum_{n=0}^{\infty} \left( \sum_{j+k=n, j,k \geq 0} (k+2)(k+1) p_j u_{k+2} + \sum_{j+k=n, j,k \geq 0} (k+1) q_j u_{k+1} + \sum_{j+k=n, j,k \geq 0} r_j u_k \right) x^n.
+	\end{aligned}
+\end{equation*}
+
+So we have the recurrence relation
+\begin{equation}
+	\sum_{j+k=n, j,k \geq 0} (k+2)(k+1) p_j u_{k+2} + \sum_{j+k=n, j,k \geq 0} (k+1) q_j u_{k+1} + \sum_{j+k=n, j,k \geq 0} r_j u_k = 0, \quad n=0,1,2,\ldots
+\end{equation}
+The first two equations ($n=0,1$) are given:
+\begin{equation*}
+	\begin{aligned}
+		n=0: \quad & 2 p_0 u_2 + q_0 u_1 + r_0 u_0 = 0, \\
+		n=1: \quad & 6 p_0 u_3 + 2 p_1 u_2 + 2 q_0 u_2 + q_1 u_1 + r_1 u_0 + r_0 u_1 = 0.
+	\end{aligned}
+\end{equation*}
+
+Generally this is a second-order recurrence relation. However, we are interested in the case when a first-order recurrence relation can be obtained.
+\begin{definition}{Recursive Equations}{Recursive Equations}
+	A second-order linear differential equation is called \textbf{recursive} if:
+	\begin{itemize}
+		\item The solution $u$ is analytic at a neighborhood of the origin.
+		\item The recurrence relation for the coefficients $u_n$ can be expressed as a first-order recurrence relation:
+		\begin{equation}
+			u_{n+1} = f(n) u_n, \quad n=0,1,2,\ldots
+		\end{equation}
+	\end{itemize}
+\end{definition}
+
+If the condition holds, we have $u_1$ is uniquely determined by $u_0$. Then we have $p_0=0, q_0 \neq 0$. Also, $u_2$ is uniquely determined by $u_1$, so we have $r_1=0, p_1 + q_0 \neq 0$.
+
+Continue the process, for each $n$, we only have $u_{n+1}$ determined by $u_n$. We have
+\begin{equation}
+	p_i=0, \quad i = 0, \geq 3; \quad q_i=0, \quad i \geq 2; \quad r_i=0, \quad i \geq 1.
+\end{equation}
+And the (possibly) non-zero coefficients are $p_1, p_2, q_0, q_1, r_0$. The differential equation is then
+\begin{equation}
+	(p_2 x^2 + p_1 x) u''(x) + (q_1 x + q_0) u'(x) + r_0 u(x) = 0.
+\end{equation}
+
+And the $n$-th equation is given by
+\begin{equation}
+	((n+1)n p_1 + (n+1) q_0) u_{n+1} + (n(n-1) p_2 + n q_1 + r_0) u_n = 0.
+\end{equation}
+For special values some coefficients of $u_{n+1}$ or $u_n$ may be zero. In these cases, either
+\begin{itemize}
+	\item The recurrence relation is not possible to be expressed as a first-order relation (breaks the definition).
+	\item The solution is a polynomial (terminates the relation).
+\end{itemize}
+We shall assume that the coefficients are such that neither of these happens. Now
+\begin{equation}
+	u_{n+1} = -\frac{n(n-1) p_2 + n q_1 + r_0}{(n+1)(n p_1 + q_0)} u_n.
+\end{equation}
+\begin{itemize}
+	\item If $u_0=0$, then $u_n=0$ for all $n$. This is the trivial solution.
+	\item If $u_0 \neq 0$, and $p_1=0, p_2 \neq 0$, then
+		\begin{equation*}
+			\left|\frac{u_{n+1}}{u_n}\right| = \left|\frac{n(n-1) p_2 + n q_1 + r_0}{(n+1) q_0}\right| \sim \frac{|p_2|}{|q_0|} n \rightarrow \infty , \quad n \to \infty,
+		\end{equation*}
+		So it diverges for any $x \neq 0$.
+	\item If $p_1=p_2=0$, then the equation is first-order.
+\end{itemize}
+Therefore, for a non-trivial solution, we must have $p_1 \neq 0$. Up to normalization (a linear change in $x$ and a multiplication by a constant, giving 2 degrees of freedom), we have the two cases: (three if you consider the special case \ref{eq:degenerate-confluent-hypergeometric-equation})
+\begin{itemize}
+	\item $p_1,p_2\neq 0$, then we can set $p_1=-1, p_2=1$, which gives the hypergeometric equation \eqref{eq:hypergeometric-equation}.
+		\begin{equation}
+			x(1-x) u''(x) + (q_0 + q_1 x) u'(x) + r_0 u(x) = 0.
+		\end{equation}
+	\item $p_1 \neq 0, p_2=0$, 
+		\begin{itemize}
+			\item If $q_1\neq 0$, then we can set $p_1=1, q_1=-1$, which gives the confluent hypergeometric equation \eqref{eq:confluent-hypergeometric-equation}.
+			\begin{equation}
+				x u''(x) + (q_0 - x) u'(x) + r_0 u(x) = 0.
+			\end{equation}
+		\item If $q_1=0, r_0 \neq 0$, then we can set $p_1=1, r_0=1$, which gives
+			\begin{equation}\label{eq:degenerate-confluent-hypergeometric-equation}
+				x u''(x) + q_0 u'(x) + u(x) = 0.
+			\end{equation}
+			However, we can verify that this is just a special case of the confluent hypergeometric equation by a change of variables (gauge transformation). LATER
+		\item If $q_1=r_0=0$, then we can set $p_1=1$, which gives
+			\begin{equation}
+				x u''(x) + q_0 u'(x) = 0.
+			\end{equation}
+			This is a first-order equation in $u'$.
+		\end{itemize}
+\end{itemize}
+
+\subsection{The Recursive First-Order Linear Differential Equations}
+We can use the same method for the first-order linear differential equation.
+\begin{equation}
+	q(x) u'(x) + r(x) u(x) = 0,
+\end{equation}
+with $q,r$ analytic at a neighborhood of the origin. Assume $u$ is analytic at a neighborhood of the origin, we can express $u,q,r$ as power series. And the recurrence relation is given by
+\begin{equation}
+	\sum_{j+k=n, j,k \geq 0} (k+1) q_j u_{k+1} + \sum_{j+k=n, j,k \geq 0} r_j u_k = 0, \quad n=0,1,2,\ldots
+\end{equation}
+The first two equations ($n=0,1$) are given:
+\begin{equation*}
+	\begin{aligned}
+		n=0: \quad & q_0 u_1 + r_0 u_0 = 0, \\
+		n=1: \quad & 2 q_0 u_2 + q_1 u_1 + r_1 u_0 + r_0 u_1 = 0.
+	\end{aligned}
+\end{equation*}
+The recursive condition gives
+\begin{equation*}
+	q_0\neq 0, q_i=0, \quad i \geq 2; \quad r_i=0, \quad i \geq 1.
+\end{equation*}
+And the (possibly) non-zero coefficients are $q_0, q_1, r_0$. The differential equation is then
+\begin{equation}
+	(q_1 x + q_0) u'(x) + r_0 u(x) = 0.
+\end{equation}
+And the $n$-th equation is given by
+\begin{equation}
+	((n+1) q_0) u_{n+1} + (n q_1 + r_0) u_n = 0, \qquad u_{n+1} = -\frac{n q_1 + r_0}{(n+1) q_0} u_n.
+\end{equation}
+Thus the equation has two cases:
+\begin{itemize}
+	\item If $q_1 \neq 0$, then we can set $q_1=1, q_0=-1$.
+		\begin{equation}
+			(1 - x) u'(x) - a u(x) = 0,
+		\end{equation}
+		whose solution is $u(x) = C (1 - x)^a$.
+	\item If $q_1=0, r_0 \neq 0$, then we can set $q_0=1, r_0=1$.
+		\begin{equation}
+			u'(x) + u(x) = 0,
+		\end{equation}
+		whose solution is $u(x) = C e^{-x}$.
+\end{itemize}
+
+\subsection{The Confluent Hypergeometric Functions}
+
+\begin{definition}{Pochhammer Symbol}{Pochhammer Symbol}
+	The \textbf{Pochhammer symbol} (or rising factorial) is defined as
+	\begin{equation}
+		(a)_n = a(a+1)(a+2)\cdots(a+n-1), \quad n=1,2,3,\ldots; \qquad (a)_0 = 1.
+	\end{equation}
+\end{definition}
+\begin{definition}{Confluent Hypergeometric Functions}{Confluent Hypergeometric Functions}
+	The \textbf{confluent hypergeometric function of the first kind} (or Kummer's function) is defined as the solution to the confluent hypergeometric equation \eqref{eq:confluent-hypergeometric-equation} that is analytic at the origin and satisfies $u(0)=1$:
+	\begin{equation}
+		M(a; c; x) = \sum_{n=0}^{\infty} \frac{(a)_n}{(c)_n} \frac{x^n}{n!}, \qquad c \neq 0, -1, -2, \ldots
+	\end{equation}
+\end{definition}
+We shall prove that this is indeed a convergent solution to the confluent hypergeometric equation \eqref{eq:confluent-hypergeometric-equation}.
+\begin{proof}
+	Here $p_1=1, p_2=0, q_0=c, q_1=-1, r_0=-a$. The recurrence relation is given by
+	\begin{equation*}
+		u_{n+1} = -\frac{n(n-1) p_2 + n q_1 + r_0}{(n+1)(n p_1 + q_0)} u_n = \frac{n + a}{(n+1)(n + c)} u_n.
+	\end{equation*}
+	Starting with $u_0=1$, we have
+	\begin{equation*}
+		u_n = \frac{(a)_n}{(c)_n} \frac{1}{n!}.
+	\end{equation*}
+
+	The convergence can be verified by the ratio test:
+	\begin{equation*}
+		\left|\frac{u_{n+1}}{u_n}\right| = \left|\frac{n + a}{(n+1)(n + c)}\right| \sim \frac{1}{n} \rightarrow 0, \quad n \to \infty.
+	\end{equation*}
+	So the radius of convergence is $R=\infty$. So $M$ is an entire function.
+\end{proof}
+
+Form the series definition, we can see the recurrence relations like
+\begin{equation}
+	(a-c+1)M(a; c; x) - a M(a+1; c; x) + (c-1) M(a; c-1; x) = 0.
+\end{equation}
+
+\section{The Gamma and Beta Functions}
+
+The gamma function arises from the function equation $\Gamma(z+1) = z \Gamma(z)$, which is a special case of the recurrence relations we have seen. The beta function is closely related to the gamma function.
+\begin{equation*}
+	\Gamma(z) = \int_0^{\infty} t^{z-1} e^{-t} \mathrm{d} t, \quad \re(z) > 0,
+\end{equation*}
+\begin{equation*}
+	B(x,y) = \int_0^1 t^{x-1} (1-t)^{y-1} \mathrm{d} t, \quad \re(x), \re(y) > 0,
+\end{equation*}
+The Pochhammer symbol can be represented as Gamma functions:
+\begin{equation}
+	(a)_n = \frac{\Gamma(a+n)}{\Gamma(a)}.
+\end{equation}
+So we have
+\begin{equation*}
+	\begin{aligned}
+		\frac{(a)_n}{(c)_n} &= \frac{\Gamma(a+n)}{\Gamma(a)} \cdot \frac{\Gamma(c)}{\Gamma(c+n)}\\
+				    &= \frac{\Gamma(c)}{\Gamma(a) \Gamma(c-a)} B(a+n, c-a) \\
+				    &= \frac{\Gamma(c)}{\Gamma(a) \Gamma(c-a)} \int_0^1 t^{a+n-1} (1-t)^{c-a-1} \mathrm{d} t.
+	\end{aligned}
+\end{equation*}
+Therefore we have
+\begin{equation}
+	\begin{aligned}
+		M(a; c; x) &= \sum_{n=0}^{\infty} \frac{(a)_n}{(c)_n} \frac{x^n}{n!} \\
+			    &= \frac{\Gamma(c)}{\Gamma(a) \Gamma(c-a)} \int_0^1 t^{a-1} (1-t)^{c-a-1} \left( \sum_{n=0}^{\infty} \frac{(t x)^n}{n!} \right) \mathrm{d} t \\
+			    &= \frac{\Gamma(c)}{\Gamma(a) \Gamma(c-a)} \int_0^1 t^{a-1} (1-t)^{c-a-1} e^{t x} \mathrm{d} t.
+	\end{aligned}
+\end{equation}
+
+
+
+\end{document}

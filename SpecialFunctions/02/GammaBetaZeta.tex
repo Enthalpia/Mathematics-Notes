@@ -1,0 +1,30 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\chapter{The Gamma, Beta, and Zeta Functions}
+
+\section{The Gamma and Beta Functions}
+The Gamma function, denoted by $\Gamma(z)$, is introduced as an extension of the factorial function to complex numbers, first found by Leonhard Euler. It is originally defined as an improper integral:
+\begin{equation}
+    \Gamma(z) = \int_0^\infty t^{z-1} e^{-t} \, dt, \quad \text{for } \Re(z) > 0.
+\end{equation}
+which is analytic on the right half-plane. The Gamma function satisfies the functional equation:
+\begin{equation}
+    \Gamma(z+1) = z \Gamma(z), \qquad (z)_n \Gamma(z) = \Gamma(z+n),
+\end{equation}
+Which follows:
+\begin{equation}
+	\Gamma(n+1) = n!, \quad n \in \mathbb{N}.
+\end{equation}
+
+\begin{theorem}{Extension of Gamma Functions}{Extension of Gamma Functions}
+	The Gamma function can be extended to a meromorphic function on the whole complex plane, with simple poles at the non-positive integers $0,-1,-2, \ldots $. The residues at these poles are given by:
+	\begin{equation}
+		\text{Res}(\Gamma, -n) = \frac{(-1)^n}{n!}, \quad n = 0, 1, 2, \ldots
+	\end{equation}
+	The extension continuous to satisfy the functional equation $\Gamma(z+1) = z \Gamma(z)$ for all $z \in \mathbb{C} - \{0, -1, -2, \ldots\}$.
+\end{theorem}
+
+
+
+\end{document}
