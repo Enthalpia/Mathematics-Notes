@@ -178,4 +178,290 @@ Therefore, the radius of convergence is at least the distance from $z_0$ to the 
 	Where the coefficients are uniquely determined by the Taylor series.
 \end{notation}
 
+Therefore, finding the Taylor series coefficients of $f(z)$ is equivalent to finding the polynomial $P_n$ that $f(z) - P_n(z) = [z^{n+1}]$ has a zero of order at least $n+1$ at $z=0$. We can say that no matter the degree of $P_n$ is larger than $n$, the coefficients of $P_n$ up to $z^n$ are uniquely determined.
+\begin{proof}
+	Assume there are two such polynomials $P_n$ and $Q_n$, then $P_n(z)-Q_n(z) = [z^{n+1}]$. Assume that $P_n(z)-Q_n(z) = a_k z^k + a_{k+1} z^{k+1} + \cdots + a_m z^m$ with $a_k \neq 0$ and $k\leq n$, then $P_n(z)-Q_n(z)$ has a zero of order $k\leq n$ at $z=0$, which is a contradiction.
+\end{proof}
+
+Therefore, we cay easily say that if
+\begin{equation*}
+	f(z) = P_n(z) + [z^{n+1}], \qquad g(z) = Q_n(z) + [z^{n+1}],
+\end{equation*}
+\begin{equation*}
+	f(z)g(z) = P_n(z)Q_n(z) + [z^{n+1}],
+\end{equation*}
+So as to determine the Taylor series of $fg$ at $z=0$ up to $z^n$, we only need to determine the product of the polynomials $P_n$ and $Q_n$ up to $z^n$. Explicitly, we have:
+
+\begin{proposition}{Taylor Series of Operation of Functions}{Taylor Series of Operation of Functions}
+	Let $f$ and $g$ be analytic in the region $\Omega$ and $z_0\in \Omega$. The Taylor series of $f$ and $g$ at $z_0$ are
+	\begin{equation*}
+		f(z) = \sum_{k=0}^{\infty} \frac{f^{(k)}(z_0)}{k!} (z-z_0)^k, \qquad z\in D
+	\end{equation*}
+	\begin{equation*}
+		g(z) = \sum_{k=0}^{\infty} \frac{g^{(k)}(z_0)}{k!} (z-z_0)^k, \qquad z\in D
+	\end{equation*}
+	if $D$ is an open disk centered at $z_0$ contained in $\Omega$. Then $f(z)$ and $g(z)$ can be expressed as power series in $D$, which converge uniformly to $f(z)$ and $g(z)$ on every compact subset of $D$.
+
+	Moreover,
+	\begin{itemize}
+		\item For any constant $c\in \mathbb{C}$, the Taylor series of $cf$ at $z_0$ is
+			\begin{equation*}
+				c f(z) = \sum_{k=0}^{\infty} c \frac{f^{(k)}(z_0)}{k!} (z-z_0)^k, \qquad z\in D.
+			\end{equation*}
+		\item The Taylor series of $f+g$ at $z_0$ is
+			\begin{equation*}
+				f(z) + g(z) = \sum_{k=0}^{\infty} \left( \frac{f^{(k)}(z_0)}{k!} + \frac{g^{(k)}(z_0)}{k!} \right) (z-z_0)^k, \qquad z\in D.
+			\end{equation*}
+		\item The Taylor series of $fg$ at $z_0$ is
+			\begin{equation*}
+				f(z) g(z) = \sum_{k=0}^{\infty} \left( \sum_{j=0}^k \frac{f^{(j)}(z_0)}{j!} \frac{g^{(k-j)}(z_0)}{(k-j)!} \right) (z-z_0)^k, \qquad z\in D.
+			\end{equation*}
+		\item If $g(z_0)\neq 0$, then the Taylor series of $f / g$ at $z_0$ can be determined by:
+
+			First letting $R_n$ be such that $P_n = Q_n R_n + [z^{n+1}]$, then taking the coefficients of $R_n$ up to $z^n$ to be the coefficients of the Taylor series of $f / g$ at $z_0$ up to $z^n$. Explicitly, we have
+			\begin{equation*}
+				\frac{f(z)}{g(z)} = \sum_{k=0}^{\infty} r_k (z-z_0)^k, \qquad z\in D,
+			\end{equation*}
+	This is because $f-R_ng = [z^{n+1}]$. And as $g(z_0)\neq 0$, $f / g - R_n = [z^{n+1}]$.
+	\item For the composite function $f(g(z))$, for simplicity let $z_0=0$ and $g(0)=0$, then set
+		\begin{equation*}
+			f(w) = P_n(w) + [w^{n+1}], \qquad g(z) = Q_n(z) + [z^{n+1}], \quad Q_n(0)=0,
+		\end{equation*}
+		Then we have
+		\begin{equation*}
+			f(g(z)) = P_n(Q_n(z) + [z^{n+1}]) + [z^{n+1}] = P_n(Q_n(z)) + [z^{n+1}].
+		\end{equation*}
+	\item For the inverse function $f^{-1}(z)$, let $z_0=0$ and $f(0)=0$, assume $f'(0)\neq 0$ so there is a local homeomorphism inverse function. Let $f(z) = P_n(z) + [z^{n+1}]$ and $f^{-1}(z) = Q_n(z) + [z^{n+1}]$ with $P_n(0)=Q_n(0)=0$, then we have
+		\begin{equation*}
+			z = f(f^{-1}(z)) = P_n(Q_n(z)) + [z^{n+1}].
+		\end{equation*}
+		The proof of exiestence and uniqueness of $Q_n$ is due to the Lagrange Inversion Theorem.
+	\end{itemize}
+\end{proposition}
+
+\begin{theorem}{Lagrange Inversion Theorem}{Lagrange Inversion Theorem}
+	Let $f$ be analytic in the region $\Omega$ and $z_0\in \Omega$. The Taylor series of $f$ at $z_0$ is
+	\begin{equation*}
+		f(z) = \sum_{k=0}^{\infty} \frac{f^{(k)}(z_0)}{k!} (z-z_0)^k, \qquad z\in D
+	\end{equation*}
+	if $D$ is an open disk centered at $z_0$ contained in $\Omega$. Then $f(z)$ can be expressed as a power series in $D$, which converges uniformly to $f(z)$ on every compact subset of $D$.
+
+	Moreover, if $f'(z_0)\neq 0$, then there exists a local inverse function $f^{-1}$ such that $f^{-1}(f(z))=z$ for all $z$ in a neighborhood of $z_0$. The Taylor series of $f^{-1}$ at $w_0=f(z_0)$ is
+	\begin{equation*}
+		f^{-1}(w) = z_0 + \sum_{n=1}^{\infty} \frac{(w-w_0)^n}{n!} \left[ \frac{\mathrm{d}^{n-1}}{\mathrm{d} z^{n-1}} \left( \frac{z-z_0}{f(z)-w_0} \right)^n \right]_{z=z_0}, \qquad w\in D',
+	\end{equation*}
+	where $D'$ is an open disk centered at $w_0$ contained in the range of the local inverse function.
+	
+\end{theorem}
+
+\subsection{The Laurent Series}
+
+A series of the form
+\begin{equation*}
+	b_0 + b_1 z^{-1} + b_2 z^{-2} + \cdots + b_n z^{-n} + \cdots
+\end{equation*}
+can be viewed as a power series in $1 / z$. So it will converge in a region of the form $\left|z\right|>R$ for some $R>0$ and diverge for $\left|z\right|<R$.
+
+For a more general form is called a Laurent series:
+\begin{definition}{Laurent Series}{Laurent Series}
+	A Laurent series centered at $z_0$ is a series of the form
+	\begin{equation}
+		\sum_{n=-\infty}^{\infty} a_n (z-z_0)^n
+	\end{equation}
+	where $a_n \in \mathbb{C}$ for all $n\in \mathbb{Z}$.
+\end{definition}
+A Laurent series can be viewed as the sum of two series: a power series in $z-z_0$ and a power series in $1 / (z-z_0)$. It would converge iff both series converge. Suppose the power series converges for $\left|z-z_0\right|<R_2$ and the other converges for $\left|z-z_0\right|>R_1$, then the Laurent series converges in the annulus $R_1<\left|z-z_0\right|<R_2$. Note that if $R_1 \geq R_2$, then there is no convergence region.
+
+Conversely, we can start with an analytic function whose analyticity domain contains an annulus $R_1 < \left|z - a\right| < R_2$, then we can represent it as a Laurent series in that annulus.
+
+\begin{theorem}{Laurent's Theorem}{Laurents Theorem}
+	Let $f$ be analytic in the annulus $R_1<\left|z-a\right|<R_2$. Then $f$ can be represented as a Laurent series
+	\begin{equation*}
+		f(z) = \sum_{n=-\infty}^{\infty} a_n (z-a)^n, \qquad R_1<\left|z-a\right|<R_2,
+	\end{equation*}
+	where
+	\begin{equation*}
+		a_n = \frac{1}{2 \pi i} \int_{\left|\zeta-a\right|=r } \frac{f(\zeta)}{(\zeta-a)^{n+1}} \mathrm{d} \zeta, \qquad R_1<r<R_2.
+	\end{equation*}
+	The series converges uniformly to $f$ on every compact subset of the annulus.
+\end{theorem}
+\begin{proof}
+	We try to represent $f = f_1+f_2$, and DEFINE
+	\begin{equation*}
+		f_1(z) = \frac{1}{2 \pi i} \int_{\left|\zeta-a\right|=r } \frac{f(\zeta)}{\zeta-z} \mathrm{d} \zeta, \qquad \left|z-a\right|<r<R_2,
+	\end{equation*}
+	\begin{equation*}
+		f_2(z) = -\frac{1}{2 \pi i} \int_{\left|\zeta-a\right|=r } \frac{f(\zeta)}{\zeta-z} \mathrm{d} \zeta, \qquad R_1<r<\left|z-a\right|.
+	\end{equation*}
+	Both integral is irrelevant to the choice of $r$ in the given range. By Cauchy's integral formula, we have $f(z)=f_1(z)+f_2(z)$ for $R_1<\left|z-a\right|<R_2$. (Adding the two integrals means integrate via two circles with opposite orientation, which $\sim 0$).
+
+	Also, we can see that $f_1$ is an analytic function in $\left|z-a\right|<R_2$ and $f_2$ is an analytic function in $\left|z-a\right|>R_1$. So we can expand them as power series:
+	\begin{equation*}
+		f_1(z) = \sum_{n=0}^{\infty} A_n (z-a)^n, \qquad \left|z-a\right|<R_2, A_n = \frac{1}{2 \pi i} \int_{\left|\zeta-a\right|=r } \frac{f(\zeta)}{(\zeta-a)^{n+1}} \mathrm{d} \zeta,
+	\end{equation*}
+	For $f_2$ we consider the transformation $z = 1 / z' + a, \zeta = 1 / \zeta' + a$, then
+	\begin{equation*}
+		f_2(1/z' + a) = \frac{1}{2 \pi i}\int_{\left|\zeta'\right|=1/r} \frac{f(1/\zeta' + a)}{\zeta'-z'} \frac{z'}{\zeta'} \mathrm{d} \zeta' = \sum_{n=0}^{\infty} B_n (z')^n, \qquad \left|z'\right|<1/R_1,
+	\end{equation*}
+	where
+	\begin{equation*}
+		\begin{aligned}
+			B_n &= \frac{1}{n!} \left[ \frac{\mathrm{d}^n}{\mathrm{d} (z')^n} \int_{\left|\zeta'\right|=1/r} \frac{f(1/\zeta' + a)}{\zeta'-z'} \frac{z'}{\zeta'} \mathrm{d} \zeta' \right]_{z'=0} \\
+			    &= \frac{1}{2 \pi i} \int_{\left|\zeta'\right|=1/r} \frac{f(1/\zeta' + a)}{(\zeta')^{n+1}} \mathrm{d} \zeta' \\
+			    &= \frac{1}{2 \pi i} \int_{\left|\zeta-a\right|=r} f(\zeta) (\zeta-a)^{n-1} \mathrm{d} \zeta.
+		\end{aligned}
+	\end{equation*}
+	\begin{equation*}
+		f_2(z) = \sum_{n=0}^{\infty} B_n (1/(z-a))^n = \sum_{n=-\infty}^{-1} B_{-n} (z-a)^n, \qquad \left|z-a\right|>R_1.
+	\end{equation*}
+	In all, we can write:
+	\begin{equation*}
+		f(z) = \sum_{n=-\infty}^{\infty} a_n (z-a)^n, \qquad R_1<\left|z-a\right|<R_2, \qquad a_n = \frac{1}{2 \pi i} \int_{\left|\zeta-a\right|=r } \frac{f(\zeta)}{(\zeta-a)^{n+1}} \mathrm{d} \zeta.
+	\end{equation*}
+\end{proof}
+
+The situation can be easily extended to $R_1=0$.
+
+\section{Partial Fractions and Factorization}
+
+There are two ways to represent a rational function: partial fractions and factorization of both numerator and denominator. Both are based on the fundamental theorem of algebra. We shall do this in a more general setting, that is, meromorphic functions.
+
+\subsection{Partial Fractions}
+Assume $f$ is meromorphic in a region $\Omega$, for each pole $b _{\nu}$ there is a neighborhood that contains no other poles. So we can write the Laurent series of $f$ at $b_{\nu}$:
+\begin{equation*}
+	P_{\nu}(\frac{1}{z-b_{\nu}}) + \text{ positive power series of } (z-b_{\nu}),
+\end{equation*}
+where $P_{\nu}$ is a polynomial in $1/(z-b_{\nu})$ without constant term. There are also finite terms in $P_{\nu}$ because $b_{\nu}$ is a pole and $\lim_{z\to b_{\nu}} f(z)(z-b_{\nu})^m = c \neq \infty $ for some $m\in \mathbb{Z}_+$.
+
+Then we can subtract all these principal parts from $f$:
+\begin{equation}
+	f(z) = \sum_{\nu} P_{\nu}(\frac{1}{z-b_{\nu}}) + g(z).
+\end{equation}
+For there are at most countable poles in $\Omega$, the sum is well-defined. However, there are generally infinite poles and the sum may not converge. So we need to introduce some convergence factors to make the sum convergent. There is no harm done if we substract some analytic functions from $P_{\nu}$, as long as we add them to $g(z)$.
+
+\begin{theorem}{Mittag-Leffler Theorem}{Mittag-Leffler Theorem}
+	Let $\left\{ b _{\nu} \right\}$ be a sequence of complex numbers with $\lim_{\nu \to \infty } b _{\nu} = \infty $, and $P_{\nu}$ be polynomials without constant term. Then there exists meromorphic function $f$ in $\mathbb{C}$ whose poles are exactly at $b_{\nu}$ and the principal part of the Laurent series of $f$ at $b_{\nu}$ is $P_{\nu}(1/(z-b_{\nu}))$. And it can be expressed as
+	\begin{equation}
+		f(z) = \sum_{\nu=1}^{\infty} \left[ P_{\nu}(\frac{1}{z-b_{\nu}}) - p_{\nu}(z) \right] + g(z),
+	\end{equation}
+	where $p_{\nu}(z)$ are polynomials chosen such that the series absolutely converges, and $g(z)$ is an entire function (analytic in $\mathbb{C}$).
+\end{theorem}
+\begin{proof}
+	Suppose $b_{\nu} \neq 0$ for all $\nu$, otherwise we can just perform a slight translation. The function $P_{\nu}(1/(z-b_{\nu}))$ is analytic in $\left|z\right|<\left|b_{\nu}\right|$. So we can expand it as a Taylor series at $z=0$. Choose $p_{\nu}(z)$ to be a partial sum of the Taylor series at $z=0$, ending at the degree $n_{\nu}$.
+
+	From the proof of theorem \ref{thm:All Derivatives Zero}, we know that if the maximum of $\left|P_{\nu}\right|$ for $\left|z\right|=\left|b _{\nu}\right| / 2$ is $M_{\nu}$, then
+	\begin{equation*}
+		\left|P_{\nu}(\frac{1}{z-b_{\nu}}) - p_{\nu}(z)\right| \leq 2 M_{\nu} \left( \frac{2 \left|z\right|}{\left|b_{\nu}\right|} \right)^{n_{\nu}+1}, \qquad \left|z\right|\leq \frac{\left|b_{\nu}\right|}{4}.
+	\end{equation*}
+	We choose $n_{\nu}$ such that
+	\begin{equation*}
+		2^{n_{\nu}} \geq M_{\nu} 2^{\nu}
+	\end{equation*}
+	For any $R$, there are only finite $\nu$ such that $\left|b_{\nu}\right|\leq 4R$. For sufficiently large $\nu$, that all $\left|b_{\nu}\right|>4R$, we have
+	\begin{equation*}
+		\left|P_{\nu}(\frac{1}{z-b_{\nu}}) - p_{\nu}(z)\right| \leq 2 M_{\nu} \left( \frac{2R}{\left|b_{\nu}\right|} \right)^{n_{\nu}+1} \leq 2M_{\nu} \left( \frac{1}{2} \right)^{n_{\nu}+1} \leq 2^{-\nu}.
+	\end{equation*}
+	So if we omit the first finite terms, the series converges uniformly and absolutely on $\left|z\right|\leq R$. As $R$ is arbitrary, the series converges uniformly and absolutely on every compact subset of $\mathbb{C}$. So the sum is meromorphic in $\mathbb{C}$ with poles exactly at $b_{\nu}$ and the principal part of the Laurent series of $f$ at $b_{\nu}$ is $P_{\nu}(1/(z-b_{\nu}))$.
+\end{proof}
+
+\begin{remark}
+	Conversely, we can say that given a meromorphic function $f$ in $\mathbb{C}$ with poles at $b_{\nu}$, and the principal part of the Laurent series of $f$ at $b_{\nu}$ is $P_{\nu}(1/(z-b_{\nu}))$. Then we can find a suitable $g$ that has the same poles and principal parts, so $f-g$ is entire. If we merge the $f-g$ into the $g$ in the theorem, then we have the same form as in the theorem expressing $f$.
+
+	For a slight clarification, if $f$ is meromorphic in $\mathbb{C}$ with infinitely many poles, then the poles must have a limit point at $\infty$. This is because any closed subset of $\mathbb{C}$ is compact, so there are only finite poles in that.
+\end{remark}
+
+\begin{example}{The Mittag-Leffler Theorem}{The Mittag-Leffler Theorem}
+	\begin{itemize}
+		\item Consider the function $\displaystyle \frac{\pi^2}{\sin ^2 \pi z}$. It has poles at all integers, and the principal part of the Laurent series at $n\in \mathbb{Z}$ is $\displaystyle \frac{1}{(z-n)^2}$. So we can express it as
+			\begin{equation*}
+				\frac{\pi^2}{\sin^2 \pi z} = \sum_{n=-\infty}^{\infty} \frac{1}{(z-n)^2} + g(z),
+			\end{equation*}
+		where $g(z)$ is an entire function. We prove that $g(z) = 0$. First notice that both sides have period $1$, so does $g(z)$. Also if we let $z = x + iy$ then
+		\begin{equation*}
+			|\sin \pi z|^2 = \cosh^2 \pi y - \cos^2 \pi x
+		\end{equation*}
+		which means that $\pi^2 / \sin^2 \pi z$ tends uniformly to $0$ as $y\to \pm \infty$. And the series also tends uniformly to $0$ as $y\to \pm \infty$. So $g(z)$ tends to $0$ uniformly as $y\to \pm \infty$. As $g(z)$ is periodic, it is bounded in $\mathbb{C}$. By Liouville's theorem, $g(z)$ is a constant. So $g(z)=0$.
+
+		So we can infer that $g$ is bounded in $0\leq x\leq 1$ and from periodicity, it is bounded in $\mathbb{C}$. By Liouville's theorem, $g$ is a constant. As $g(iy)\to 0$ as $y\to \pm \infty$, we have $g(z)=0$. Therefore,
+			\begin{equation*}
+				\frac{\pi^2}{\sin^2 \pi z} = \sum_{n=-\infty}^{\infty} \frac{1}{(z-n)^2}.
+			\end{equation*}
+		\item Consider taking the integral of both sides, and the integral of the left side is $-\pi \cot \pi z$. The integral of the right side is inner compact uniform convergent in every domain that does not contain any integer. However, the series of $1 / (z-n)$ does not converge. So we need to introduce some convergence factors. We can take
+			\begin{equation*}
+				\sum_{n \neq 0} \left( \frac{1}{z-n} + \frac{1}{n} \right) + \frac{1}{z} = \sum_{n \neq 0} \frac{z}{n(z-n)} + \frac{1}{z}.
+			\end{equation*}
+			So we have
+			\begin{equation*}
+				\pi \cot \pi z = \frac{1}{z} + \sum_{n \neq 0} \frac{z}{n(z-n)} + C = \frac{1}{z} + \sum_{n=1}^{\infty} \frac{2z}{z^2-n^2} + C.
+			\end{equation*}
+			For both sides are odd functions, $C=0$. Therefore,
+			\begin{equation*}
+				\pi \cot \pi z = \frac{1}{z} + \sum_{n=1}^{\infty} \frac{2z}{z^2-n^2}.
+			\end{equation*}
+		\item Conversely, we now study the sum
+			\begin{equation*}
+				\lim_{m \to \infty } \sum_{n=-m}^{m} \frac{(-1)^n}{z-n} = \frac{1}{z} + \sum_{n=1}^{\infty} (-1)^n \left( \frac{1}{z-n} + \frac{1}{z+n} \right) = \frac{1}{z} + \sum_{n=1}^{\infty} (-1)^n \frac{2z}{z^2-n^2}.
+			\end{equation*}
+			Which obviously is a meromorphic function with poles at all integers. Separate the odd and even terms, we have
+			\begin{equation*}
+				\sum_{n=-(2k+1)}^{2k+1} \frac{(-1)^n}{z-n} = \sum_{n=-k}^{k} \frac{1}{z-2n} - \sum_{n=-k-1}^{k} \frac{1}{z-(2n+1)}.
+			\end{equation*}
+			which has limit
+			\begin{equation*}
+				\frac{\pi}{2} \cot \frac{\pi z}{2} - \frac{\pi}{2} \cot \frac{\pi (z-1)}{2} = \frac{\pi}{\sin \pi z}.
+			\end{equation*}
+			So we have
+			\begin{equation}
+				\frac{\pi}{\sin \pi z} = \frac{1}{z} + \sum_{n=1}^{\infty} (-1)^n \frac{2z}{z^2-n^2} = \limit_{m \to \infty } \sum_{n=-m}^{m} \frac{(-1)^n}{z-n}.
+			\end{equation}
+	\end{itemize}
+\end{example}
+
+\subsection{Infinite Products}
+An infinite product is an expression of the form
+\begin{equation}
+	\prod_{n=1}^{\infty} (1 + a_n), \qquad a_n \in \mathbb{C}, a_n \neq -1.
+\end{equation}
+Taking the logarithm, we have
+\begin{equation*}
+	\sum_{n=1}^{\infty} \log (1 + a_n).
+\end{equation*}
+where the branch of the logarithm is chosen to be the principal branch. Denote
+\begin{equation*}
+	P_n = \prod_{k=1}^n (1 + a_k), \qquad S_n = \sum_{k=1}^n \log (1 + a_k).
+\end{equation*}
+Then we have $P_n = e^{S_n}$. If $S_n \rightarrow S$, then $P_n \rightarrow e^S$. So the infinite product converges to $e^S$. Conversely, if $P_n \rightarrow P$, then it is not necessary that $S_n \rightarrow \log P$ in the principle branch. But we shall prove that if $P \neq 0$, then there exists an integer $m$ such that $S_n \rightarrow \log P + 2m \pi i$.
+\begin{proof}
+	SORRY
+\end{proof}
+
+\begin{theorem}{Infinite Products}{Infinite Products}
+	The infinite product $\prod_{n=1}^{\infty} (1 + a_n)$ converges to a nonzero limit iff the series $\sum_{n=1}^{\infty} \log (1 + a_n)$ converges to a limit in the principal branch.
+\end{theorem}
+
+Furthermore, as
+\begin{equation*}
+	\lim_{z \to 0} \frac{\log (1 + z)}{z} = 1,
+\end{equation*}
+
+We say that the infinite product converges absolutely if $\sum_{n=1}^{\infty} \log (1 + a_n)$ converges absolutely. And we have the following theorem:
+
+\begin{theorem}{Absolute Convergence of Infinite Products}{Absolute Convergence of Infinite Products}
+	The infinite product $\prod_{n=1}^{\infty} (1 + a_n)$ converges absolutely iff the series $\sum_{n=1}^{\infty} |a_n|$ converges.
+\end{theorem}
+
+\begin{remark}
+	For uniform convergence we can say the same. We define that an infinite product $\prod_{n=1}^{\infty} (1 + a_n(z))$ converges uniformly in a set $E$ if the series $\sum_{n=1}^{\infty} \log (1 + a_n(z))$ converges uniformly in $E$.
+\end{remark}
+
+\subsection{Canonical Products}
+\begin{definition}{Entire Functions}{Entire Functions}
+	A function $f$ is entire if it is analytic in $\mathbb{C}$.
+\end{definition}
+
+If $g$ is an entire function so is $f = e^g$ and $\forall z, f(z)\neq 0$. Conversely, if $f$ is entire and $\forall z, f(z)\neq 0$, then we can say that there exists an entire function $g$ such that $f = e^g$.
+\begin{proof}
+	Consider $f' / f$, which is analytic in $\mathbb{C}$. So there exists an entire function $g$ such that $g' = f' / f$. We have $f(z) e^{-g(z)}$ has zero derivative, so $f(z) = e^{g(z)+C}$.
+\end{proof}
+
 \end{document}

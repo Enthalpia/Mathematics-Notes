@@ -1,0 +1,700 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\chapter{Second Order Differential Equations}
+
+As is said in the introduction, many special functions come from second order differential equations known as the confluent hypergeometric equation and the hypergeometric equation.
+
+\section{Transformation and Symmetry}
+We denote $p,q,r,f,u,v, \ldots $ to be real functions define on a finite/infinite interval $I = (a,b) \subseteq \mathbb{R}$, and $p>0$ on $I$. All functions are assumed to have continuous second-order derivatives on $I$.
+
+The general linear second order differential equation is given by
+\begin{equation*}
+	p(x) u''(x) + q(x) u'(x) + r(x) u(x) = f(x).
+\end{equation*}
+The corresponding homogeneous equation is given by
+\begin{equation*}
+	p(x) u''(x) + q(x) u'(x) + r(x) u(x) = 0.
+\end{equation*}
+The associated differential operator is given by
+\begin{equation*}
+	L = p(x) D^2 + q(x) D + r(x) I,
+\end{equation*}
+
+\begin{definition}{Gauge Transformation}{Gauge Transformation}
+	A gauge transformation is a transformation of the form
+	\begin{equation*}
+		u(x) = \varphi(x) v(x), \qquad \varphi(x) \neq 0, \quad \forall x \in I.
+	\end{equation*}
+\end{definition}
+Taking the gauge transformation into the general linear second order differential equation, we have
+\begin{equation*}
+	p(x)(\varphi''(x)v(x) + 2\varphi'(x)v'(x) + \varphi(x)v''(x)) + q(x)(\varphi'(x)v(x) + \varphi(x)v'(x)) + r(x)\varphi(x)v(x) = f(x).
+\end{equation*}
+Dividing by $\varphi(x)$, we have
+\begin{equation*}
+	p(x)v''(x) + \left(2p(x)\frac{\varphi'(x)}{\varphi(x)} + q(x)\right)v'(x) + \left(p(x)\frac{\varphi''(x)}{\varphi(x)} + q(x)\frac{\varphi'(x)}{\varphi(x)} + r(x)\right)v(x) = \frac{f(x)}{\varphi(x)}.
+\end{equation*}
+The associated differential operator is given by
+\begin{equation*}
+	L_{\varphi} = p(x) D^2 + \left(2p(x)\frac{\varphi'(x)}{\varphi(x)} + q(x)\right) D + \left(p(x)\frac{\varphi''(x)}{\varphi(x)} + q(x)\frac{\varphi'(x)}{\varphi(x)} + r(x)\right) I.
+\end{equation*}
+
+\begin{itemize}
+	\item If we take
+		\begin{equation*}
+			\frac{\varphi'(x)}{\varphi(x)} = -\frac{q(x)}{2p(x)},
+		\end{equation*}
+		then the first derivative term vanishes.
+	\item We can also symmetrize the operator.
+\end{itemize}
+
+Consider the weighted inner product space $L^2_w(a,b)$ with weight function $w(x) > 0$ on $(a,b)$, consisting of all real measurable functions $f$ such that
+\begin{equation*}
+	\int_a^b |f(x)|^2 w(x) \mathrm{d} x < \infty.
+\end{equation*}
+and the inner product is defined by
+\begin{equation*}
+	\langle f, g \rangle_w = \int_a^b f(x) g(x) w(x) \mathrm{d} x.
+\end{equation*}
+
+\begin{definition}{Symmetric Operator}{Symmetric Operator}
+	The operator $L$ is said to be self-adjoint (symmetric) with respect to the inner product $\langle \cdot, \cdot \rangle_w$ if for every twice continuously differentiable functions $u,v$ that vanishes outside some closed subinterval of $(a,b)$, we have
+	\begin{equation}
+		\langle L u, v \rangle_w = \langle u, L v \rangle_w.
+	\end{equation}
+\end{definition}
+
+\begin{remark}
+	The set of all such functions is dense in $L^2_w(a,b)$.
+\end{remark}
+
+\begin{theorem}{The Form of Symmetric Operator}{The Form of Symmetric Operator}
+	The operator $L$ is self-adjoint with respect to the inner product $\langle \cdot, \cdot \rangle_w$ if and only if
+	\begin{equation}
+		L = p \frac{\mathrm{d}^2}{\mathrm{d} x^2} + \frac{(pw)'}{w} \frac{\mathrm{d}}{\mathrm{d} x} + r I = \frac{1}{w} \frac{\mathrm{d}}{\mathrm{d} x} \left( p w \frac{\mathrm{d}}{\mathrm{d} x}\right) + r I,
+	\end{equation}
+\end{theorem}
+\begin{proof}
+	The sufficiency is easy to check by integration by parts: we have
+	\begin{equation*}
+		\begin{aligned}
+			\langle L u, v \rangle_w &= \int_a^b \left( p u'' + \frac{(pw)'}{w} u' + r u \right) v w \mathrm{d} x \\
+			&= \int_a^b p u'' v w \mathrm{d} x + \int_a^b (pw)' u' v \mathrm{d} x + \int_a^b r u v w \mathrm{d} x \\
+			&= \left[ p u' v w \right]_a^b - \int_a^b (p u' v w)' \mathrm{d} x + \int_a^b (pw)' u' v \mathrm{d} x + \int_a^b r u v w \mathrm{d} x \\
+			&= -\int_a^b p u' v' w \mathrm{d} x - \int_a^b (pw)' u' v \mathrm{d} x + \int_a^b (pw)' u' v \mathrm{d} x + \int_a^b r u v w \mathrm{d} x \\
+			&= -\int_a^b p u' v' w \mathrm{d} x + \int_a^b r u v w \mathrm{d} x = \langle u, L v \rangle_w.
+		\end{aligned}
+	\end{equation*}
+	because of symmetry.
+
+	For the necessity, we have
+	\begin{equation*}
+		\begin{aligned}
+			\langle L u, v \rangle_w &= \int_a^b (p u'' + q u' + r u) v w \mathrm{d} x \\
+			&= \int_a^b p u'' v w \mathrm{d} x + \int_a^b q u' v w \mathrm{d} x + \int_a^b r u v w \mathrm{d} x \\
+			&= \left[ p u' v w \right]_a^b - \int_a^b (p u' v w)' \mathrm{d} x + \int_a^b q u' v w \mathrm{d} x + \int_a^b r u v w \mathrm{d} x \\
+			&= -\int_a^b p u' v' w \mathrm{d} x - \int_a^b (p w)' u' v \mathrm{d} x + \int_a^b q u' v w \mathrm{d} x + \int_a^b r u v w \mathrm{d} x.
+		\end{aligned}
+	\end{equation*}
+	By symmetry, we have
+	\begin{equation*}
+		-\int_a^b (p w)' u' v \mathrm{d} x + \int_a^b q u' v w \mathrm{d} x = -\int_a^b (p w)' v' u \mathrm{d} x + \int_a^b q v' u w \mathrm{d} x.
+	\end{equation*}
+	Therefore,
+	\begin{equation*}
+		\int_a^b \left( q w - (p w)' \right) u' v \mathrm{d} x = \int_a^b \left( q w - (p w)' \right) v' u \mathrm{d} x.
+\end{equation*}
+	Since $u,v$ are arbitrary, we have
+	\begin{equation*}
+		q(x) w(x) - (p(x) w(x))' = 0,
+	\end{equation*}
+	due to the fundamental lemma of calculus of variations,	which gives
+	\begin{equation*}
+		q(x) = \frac{(p(x) w(x))'}{w(x)}.
+	\end{equation*}
+\end{proof}
+
+\begin{theorem}{Existence of Weight Function}{Existence of Weight Function}
+	For any second order linear differential operator
+	\begin{equation*}
+		L = p(x) D^2 + q(x) D + r(x) I,
+	\end{equation*}
+	there exists a weight function $w(x) > 0$ on $(a,b)$, unique up to a multiplicative constant, such that $L$ is self-adjoint with respect to the inner product $\langle \cdot, \cdot \rangle_w$.
+\end{theorem}
+\begin{proof}
+	From the previous theorem, we need to solve
+	\begin{equation*}
+		q(x) = \frac{(p(x) w(x))'}{w(x)} = \frac{p'(x) w(x) + p(x) w'(x)}{w(x)} = p'(x) + p(x) \frac{w'(x)}{w(x)},
+	\end{equation*}
+	i.e.
+	\begin{equation*}
+		\frac{w'(x)}{w(x)} = \frac{q(x) - p'(x)}{p(x)}.
+	\end{equation*}
+	This is a first order linear differential equation, and the solution is given by
+	\begin{equation*}
+		w(x) = C \exp \left( \int \frac{q(x) - p'(x)}{p(x)} \mathrm{d} x \right),
+	\end{equation*}
+	where $C$ is an arbitrary constant. Since $p(x) > 0$ on $(a,b)$, we can choose $C > 0$ such that $w(x) > 0$ on $(a,b)$.
+\end{proof}
+
+\begin{theorem}{Existence of Gauge Transformation}{Existence of Gauge Transformation}
+	For any second order linear differential operator and any weight function $w(x) > 0$ on $(a,b)$,
+	\begin{equation*}
+		L = p(x) D^2 + q(x) D + r(x) I,
+	\end{equation*}
+	there exists a gauge transformation $u(x) = \varphi(x) v(x)$, $\varphi(x) \neq 0$ on $(a,b)$, such that the transformed operator
+	\begin{equation*}
+		L_{\varphi} = p(x) D^2 + \left(2p(x)\frac{\varphi'(x)}{\varphi(x)} + q(x)\right) D + \left(p(x)\frac{\varphi''(x)}{\varphi(x)} + q(x)\frac{\varphi'(x)}{\varphi(x)} + r(x)\right) I,
+	\end{equation*}
+	is self-adjoint with respect to the inner product $\langle \cdot, \cdot \rangle_w$.
+\end{theorem}
+\begin{proof}
+	From the previous theorem, we need to solve
+	\begin{equation*}
+		2p(x)\frac{\varphi'(x)}{\varphi(x)} + q(x) = \frac{(p(x) w(x))'}{w(x)} = p'(x) + p(x) \frac{w'(x)}{w(x)},
+	\end{equation*}
+	i.e.
+	\begin{equation*}
+		\frac{\varphi'(x)}{\varphi(x)} = \frac{p'(x) - q(x)}{2p(x)} + \frac{1}{2} \frac{w'(x)}{w(x)}.
+	\end{equation*}
+	This is a first order linear differential equation, and the solution is given by
+	\begin{equation*}
+		\varphi(x) = C \sqrt{w(x)} \exp \left( \int \frac{p'(x) - q(x)}{2p(x)} \mathrm{d} x \right),
+	\end{equation*}
+	where $C$ is an arbitrary constant. Since $w(x) > 0$ on $(a,b)$, we can choose $C \neq 0$ such that $\varphi(x) \neq 0$ on $(a,b)$.
+\end{proof}
+
+\begin{definition}{Unitary Operators}{Unitary Operators}
+	Consider the spaces $L^2_{w_1}(a,b)$ and $L^2_{w_2}(a,b)$ with weight functions $w_1(x) > 0$ and $w_2(x) > 0$ on $(a,b)$. A linear operator $T: L^2_{w_1}(a,b) \to L^2_{w_2}(a,b)$ is said to be unitary if it is bijective and
+	\begin{equation*}
+		\langle T f, T g \rangle_{w_2} = \langle f, g \rangle_{w_1}
+	\end{equation*}
+	for every second order continuously differentiable functions $f,g$ that vanishes outside some closed subinterval of $(a,b)$.
+
+	If $L_1,L_2$ are linear operators on $L^2_{w_1}(a,b)$ and $L^2_{w_2}(a,b)$ respectively, then $L_1$ and $L_2$ are said to be unitarily equivalent if there exists a unitary operator $T: L^2_{w_1}(a,b) \to L^2_{w_2}(a,b)$ such that
+	\begin{equation*}
+		L_2 = T L_1 T^{-1}.
+	\end{equation*}
+\end{definition}
+
+\begin{theorem}{Existence of Identity Weight}{Existence of Identity Weight}
+	Any self-adjoint second order linear differential operator with respect to the weight function $w(x) > 0$ on $(a,b)$ is unitarily equivalent to a self-adjoint second order linear differential operator with respect to the weight function $1$ on $(a,b)$ by a gauge transformation.
+\end{theorem}
+\begin{proof}
+	Consider the gauge transformation $\tilde{u}(x) = \sqrt{w(x)} u(x)$, $\sqrt{w(x)} \neq 0$ on $(a,b)$.
+	\begin{itemize}
+		\item Unitary: we have
+			\begin{equation*}
+				\langle \tilde{u}, \tilde{v} \rangle = \int_a^b \tilde{u}(x) \tilde{v}(x) \mathrm{d} x = \int_a^b u(x) v(x) w(x) \mathrm{d} x = \langle u, v \rangle_w.
+			\end{equation*}
+		\item Weight 1 self-adjoint: we have
+			\begin{equation*}
+				\tilde{L} = T L T^{-1}
+			\end{equation*}
+			Then we have
+			\begin{equation*}
+				\langle \tilde{L} \tilde{u}, \tilde{v} \rangle = \langle T L u, T v \rangle = \langle L u, v \rangle_w = \langle u, L v \rangle_w = \langle T u, T L v \rangle = \langle \tilde{u}, \tilde{L} \tilde{v} \rangle.
+			\end{equation*}
+	\end{itemize}
+\end{proof}
+
+\begin{remark}
+	The gauge transformation is a linear bijection.
+\end{remark}
+
+A second way to transform a second order linear differential equation is to change the variable. Consider a second continuously differentiable function $y = y(x)$ with $u(x) = \tilde{u}(y(x))$. Then we have
+\begin{equation*}
+	u'(x) = \tilde{u}'(y(x)) y'(x),\qquad u''(x) = \tilde{u}''(y(x)) (y'(x))^2 + \tilde{u}'(y(x)) y''(x).
+\end{equation*}
+In particular, if $y'(x) \neq 0$ on $(a,b)$, then we can rewrite the general linear second order differential equation as
+\begin{equation*}
+	p(x) y'^2(x) \tilde{u}''(y) + \left( p(x) y''(x) + q(x) y'(x) \right) \tilde{u}'(y) + r(x) \tilde{u}(y) = f(x).
+\end{equation*}
+If we take
+\begin{equation*}
+	y'(x) = \frac{1}{\sqrt{p(x)}}, \qquad y(x) = \int_{x_0}^x \frac{1}{\sqrt{p(x)}} \mathrm{d} x,
+\end{equation*}
+then it satisfies $y'(x) \neq 0$ on $(a,b)$ and the first derivative term vanishes. Thus, we have
+\begin{equation*}
+	\tilde{u}''(y) + \left( \frac{p'(x)}{2p(x)} + \frac{q(x)}{\sqrt{p(x)}} \right) \tilde{u}'(y) + \frac{r(x)}{p(x)} \tilde{u}(y) = \frac{f(x)}{p(x)}.
+\end{equation*}
+writing $x = x(y)$, we have
+\begin{equation*}
+	\tilde{u}''(y) + \tilde{q}(y) \tilde{u}'(y) + \tilde{r}(y) \tilde{u}(y) = \tilde{f}(y),
+\end{equation*}
+Then we can eliminate the first derivative term by a gauge transformation. The resulting compound transformation is given by
+\begin{equation}
+	\tilde{u}(y) = \varphi(y) v(y), \qquad \varphi(y) = \exp \left( -\frac{1}{2} \int \tilde{q}(y) \mathrm{d} y \right).
+\end{equation}
+called the Liouville transformation.
+
+\section{Exiestence and Uniqueness}
+
+\begin{theorem}{Solution Space}{Solution Space}
+	Consider the homogeneous second order linear differential equation
+	\begin{equation*}
+		p(x) u''(x) + q(x) u'(x) + r(x) u(x) = 0,
+	\end{equation*}
+	on the interval $(a,b)$, where $p,q,r$ are continuous on $(a,b)$ and $p(x) > 0$ on $(a,b)$. Then the set of all solutions is a two-dimensional vector space.
+\end{theorem}
+\begin{theorem}{Unique Solution}{Unique Solution}
+	Given a point $x_0\in I$ and two real numbers $c_0,c_1$, there exists a unique solution $u$ of the initial value problem
+	\begin{equation*}
+		\begin{cases}
+			p(x) u''(x) + q(x) u'(x) + r(x) u(x) = 0, \\
+			u(x_0) = c_0, \\
+			u'(x_0) = c_1,
+		\end{cases}
+	\end{equation*}
+\end{theorem}
+\begin{corollary}{Simple Zero}{Simple Zero}
+	If $u$ is a nontrivial solution of the homogeneous second order linear differential equation, then its zeros are simple, i.e. if $u(x_0) = 0$ for some $x_0 \in (a,b)$, then $u'(x_0) \neq 0$.
+\end{corollary}
+
+\subsection{Wronskians and Green's Functions}
+\begin{definition}{Wronskian}{Wronskian}
+	Given two functions $u_1,u_2$ that are twice continuously differentiable on $(a,b)$, their Wronskian is defined by
+	\begin{equation*}
+		W(x) = \begin{vmatrix}
+			u_1(x) & u_2(x) \\
+			u_1'(x) & u_2'(x)
+		\end{vmatrix} = u_1(x) u_2'(x) - u_1'(x) u_2(x).
+	\end{equation*}
+\end{definition}
+
+\begin{theorem}{Criterion for Linear Independence}{Criterion for Linear Independence}
+	Suppose $u_1,u_2$ are two solutions of the homogeneous second order linear differential equation on $(a,b)$. Then $u_1,u_2$ are linearly independent if and only if their Wronskian $W(x) \neq 0$ for some $x \in (a,b)$. In fact, if $W(x_0) \neq 0$ for some $x_0 \in (a,b)$, then $W(x) \neq 0$ for all $x \in (a,b)$.
+\end{theorem}
+\begin{proof}
+	We have
+	\begin{equation*}
+		pW' = p(u_1 u_2'' - u_1'' u_2) = -q(u_1 u_2' - u_1' u_2) = -qW,
+	\end{equation*}
+	which means that $W$ is either identically zero or never zero on $(a,b)$.
+
+	If $u_1,u_2$ are linearly dependent, then $u_2 = c u_1$ for some constant $c$, which gives $W(x) = 0$ for all $x \in (a,b)$. Conversely, if $u_1,u_2$ are linearly independent and $W=0$, then take a subinterval where $u_1 \neq 0$, we have
+	\begin{equation*}
+		\left(\frac{u_2}{u_1}\right)' = \frac{W}{u_1^2} = 0,
+	\end{equation*}
+	Then $u_2 = c u_1$ on the subinterval. Then $u_2-cu_1$ is a solution that vanishes on the subinterval, which is the unique solution of the initial value problem with $u(x_0) = 0$ and $u'(x_0) = 0$ for some $x_0$ in the subinterval. Thus, $u_2-cu_1 = 0$ on $(a,b)$, which is a contradiction.
+\end{proof}
+
+Now consider the solution of the non-homogeneous second order linear differential equation
+\begin{equation*}
+	p(x) u''(x) + q(x) u'(x) + r(x) u(x) = f(x).
+\end{equation*}
+that has the form
+\begin{equation}
+	u(x) = \int_{x_0}^x G(x,y) f(y) \mathrm{d} y,
+\end{equation}
+Then we have
+\begin{equation*}
+	u'(x) = \int_{x_0}^x G_x(x,y) f(y) \mathrm{d} y + G(x,x) f(x),
+\end{equation*}
+\begin{equation*}
+	u''(x) = \int_{x_0}^x G_{xx}(x,y) f(y) \mathrm{d} y + 2 G_x(x,x) f(x) + G(x,x) f'(x).
+\end{equation*}
+Substituting into the non-homogeneous second order linear differential equation, we have
+\begin{equation*}
+	\begin{aligned}
+		& p(x) \left( \int_{x_0}^x G_{xx}(x,y) f(y) \mathrm{d} y + 2 G_x(x,x) f(x) + G(x,x) f'(x) \right) \\
+		& + q(x) \left( \int_{x_0}^x G_x(x,y) f(y) \mathrm{d} y + G(x,x) f(x) \right) + r(x) \int_{x_0}^x G(x,y) f(y) \mathrm{d} y = f(x).
+	\end{aligned}
+\end{equation*}
+or
+\begin{equation*}
+	\begin{aligned}
+		& \int_{x_0}^x \left( p(x) G_{xx}(x,y) + q(x) G_x(x,y) + r(x) G(x,y) \right) f(y) \mathrm{d} y \\
+		& + \left( 2 p(x) G_x(x,x) + q(x) G(x,x) \right) f(x) + p(x) G(x,x) f'(x) = f(x).
+	\end{aligned}
+\end{equation*}
+Which takes us to the initial value problem for every $y$:
+\begin{equation}
+	\begin{cases}
+		p(x) G_{xx}(x,y) + q(x) G_x(x,y) + r(x) G(x,y) = 0, \\
+		G_x(y,y) = 0, \\
+		p(y) G(y,y) = 1.
+	\end{cases}
+\end{equation}
+The first equation implies that
+\begin{equation}
+	G(x,y) = v_1(y) u_1(x) + v_2(y) u_2(x),
+\end{equation}
+The remaining two equations give
+\begin{equation}
+	G(x,y) = \frac{u_1(y) u_2(x) - u_2(y) u_1(x)}{p(y) W(y)}.
+\end{equation}
+
+So the unique solution theorem \ref{thm:Unique Solution} also holds for the non-homogeneous second order linear differential equation.
+
+In order to satisfy more general boundary conditions, that is, given the values of $u$ or $u'$ at the two endpoints of the interval, we need to modify the Green's function. We look for a solution of the form
+\begin{equation}
+	u(x) = \int_{y<x} G_+(x,y) f(y) \mathrm{d} y + \int_{y>x} G_-(x,y) f(y) \mathrm{d} y,
+\end{equation}
+where $G_-(\cdot ,y)$ satisfies the left boundary condition and $G_+(\cdot ,y)$ satisfies the right boundary condition. Then if $u_{\pm}$ are two solutions of the homogeneous second order linear differential equation satisfying the left and right boundary conditions respectively, then we have
+\begin{equation}
+	G_-(x,y) = \frac{u_-(x) u_+(y)}{p(y) W(y)}, \qquad G_+(x,y) = \frac{u_+(x) u_-(y)}{p(y) W(y)}.
+\end{equation}
+
+\begin{theorem}{Sturm Comparison Theorem}{Sturm Comparison Theorem}
+	Suppose $u_1,u_2$ are two nontrivial solutions of the homogeneous second order linear differential equations
+	\begin{equation*}
+		p(x) u_1''(x) + q(x) u_1'(x) + r_1(x) u_1(x) = 0,
+	\end{equation*}
+	\begin{equation*}
+		p(x) u_2''(x) + q(x) u_2'(x) + r_2(x) u_2(x) = 0,
+	\end{equation*}
+	on the interval $(a,b)$, where $p,q_1,q_2,r_1,r_2$ are continuous on $(a,b)$ and $p(x) > 0$ on $(a,b)$. If $r_1(x) < r_2(x)$ on $(a,b)$, and $u_1$ has two consecutive zeros at $x=c,d \in (a,b)$, then $u_2$ has at least one zero in $(c,d)$.
+\end{theorem}
+\begin{proof}
+	The condition and conclusion is invariant under gauge transformation and division by $p(x)$. Thus, we can assume that $p(x) = 1$ and $q(x) = 0$ on $(a,b)$.
+
+	Assume that $u_1$ has no zeros in $(c,d)$, otherwise replace $d$ by the first zero of $u_1$ in $(c,d)$ (simple zeros are isolated). Thenwe can assume that $u_1(x) > 0$ on $(c,d)$, otherwise replace $u_1$ by $-u_1$. If $u_2$ has no zeros in $(c,d)$, then we can assume that $u_2(x) > 0$ on $(c,d)$, otherwise replace $u_2$ by $-u_2$. Then we have
+	\begin{equation*}
+		W'(x) = u_1 u_2'' - u_1'' u_2 = (r_1(x) - r_2(x)) u_1(x) u_2(x) \leq 0,
+	\end{equation*}
+	We also have
+	\begin{equation*}
+		u_1'(c) > 0, \qquad u_1'(d) < 0,
+	\end{equation*}
+	which gives
+	\begin{equation*}
+		W(c) = -u_1'(c) u_2(c) \leq  0, \qquad W(d) = -u_1'(d) u_2(d) \geq 0,
+	\end{equation*}
+	So $W=0$ on $(c,d)$, so $u_1=cu_2$ satisfies the same equation, which is a contradiction.
+\end{proof}
+
+There are some generalizations:
+\begin{theorem}{Generalized Sturm Comparison Theorem}{Generalized Sturm Comparison Theorem}
+	Suppose $u_1,u_2$ are two nontrivial solutions of the homogeneous second order linear differential equations
+	\begin{equation*}
+		p(x) u_j''(x) + q(x) u_j'(x) + r_j(x) u_j(x) = 0, \qquad j=1,2,
+	\end{equation*}
+	and $r_1<r_2$ on $(a,b)$. If $u_1(c)=0$ for some $c \in (a,b)$, and $\lim_{x \to a} W(x) = 0$ or $\lim_{x \to b} W(x) = 0$, then $u_2$ has at least one zero in $(a,b)$.
+\end{theorem}
+\begin{corollary}{Monotonicity of Zeros}{Monotonicity of Zeros}
+	Suppose $u(x,t),0\leq t<T$ is a solution of the homogeneous second order linear differential equation
+	\begin{equation*}
+		p(x) u_{xx}(x,t) + q(x) u_x(x,t) + r(x,t) u(x,t) = 0,
+	\end{equation*}
+	Suppose there is $a\in I$ that
+	\begin{equation*}
+		\forall t\in [0,T), u(a,t) = 0 \quad \lor \quad \forall t\in [0,T), u_x(a,t) = 0,
+	\end{equation*}
+	Let $a<x_1(t)<x_2(t)< \cdots $ denote the zeros of $u(\cdot,t)$ in $(a,b)$, if $r(x,t)$ is continuous and increasing in $t$ for each fixed $x\in (a,b)$, then each $x_k(t)$ is decreasing in $t$. (May not be continuous because there may be new zeros appear.)
+\end{corollary}
+
+\begin{theorem}{Sturm Oscillation Theorem}{Sturm Oscillation Theorem}
+	Suppose $w>0$ and $r<0$ on $(c,d)$ and real nontrivial function $u$ satisfies:
+	\begin{equation*}
+		(wu')'(x) + r(x) u(x) = 0, \qquad x\in (c,d),
+	\end{equation*}
+	then $u$ has at most one zero on $(c,d)$.
+
+	If $uu'>0$ in a subinterval $(c,c+\epsilon)$ or $\lim_{x \to d} u(x)=0$, then $u$ has no zeros on $(c,d)$.
+\end{theorem}
+\begin{proof}
+	Suppose there is $a\in (c,d)$ that $u(a)=0$, then assume $u'(a)>0$. Then $u,u'>0$ for some small subinterval $(a,a+\epsilon)$.
+\end{proof}
+
+\section{Polynomials as Eigenfunctions}
+We can extend the self-adjoint operator to a larger subset of $L^2$. Suppose that $I$ is a bounded interval $(a,b)$ and $w,w',p,p',q,r$ extends as continuous functions to $[a,b]$. Our previous calculations shows that for any twice continuously differentiable functions $u,v$ on $[a,b]$, we have
+\begin{equation}
+	\langle L u, v \rangle_w - \langle u, L v \rangle_w = [p w (u' v - u v')]_a^b.
+\end{equation}
+where $L$ is self-adjoint. but how to prove p is a polynomial? maybe it is not a polyomial? prove that p is a poluynomialSo some boundary conditions are needed to make the right hand side vanish. Some common boundary conditions are:
+\begin{itemize}
+	\item Dirichlet boundary condition: $u(a) = u(b) = 0$.
+	\item Neumann boundary condition: $u'(a) = u'(b) = 0$.
+	\item Robin boundary condition: $u'(a) + \alpha u(a) = 0$, $u'(b) + \beta u(b) = 0$, where $\alpha,\beta$ are constants.
+	\item Periodic boundary condition: $u(a) = u(b)$, $u'(a) = u'(b)$.
+\end{itemize}
+
+From linear algebra we know that eigenfunctions of a self-adjoint operator with different eigenvalues are orthogonal. In fact, if $L u = \lambda u$ and $L v = \mu v$ with $\lambda \neq \mu$, then
+\begin{equation*}
+	\lambda \langle u, v \rangle_w = \langle L u, v \rangle_w = \langle u, L v \rangle_w = \mu \langle u, v \rangle_w,
+\end{equation*}
+
+What we want to ask is under what condition that the eigenfunctions of $L$ includes polynomials of all degrees.
+
+The self-adjoint operator $L$ has the form
+\begin{equation}
+	L = p(x) D^2 + \frac{(p(x) w(x))'}{w(x)} D + r(x) I,
+\end{equation}
+Suppose that there are polynomials of degrees $0,1,2, \ldots $ that are eigenfunctions of $L$. So the polynomial space $P_k$ of degree at most $k$ lies in the domain of $L$ for every $k=0,1,2,\ldots$, which means
+\begin{equation}
+	\int_a^b x^{2n} w(x) \mathrm{d} x < \infty, \qquad n=0,1,2,\ldots
+\end{equation}
+\begin{itemize}
+	\item Take $u_0=1$ we have $Lu_0=r$ so $r$ is a constant. For simplicity then, assume $r=0$, otherwise adding $r$ to the eigenvalue and eigenfunction.
+	\item Take $u_1=x$, we have
+		\begin{equation*}
+			L u_1 = \frac{(p w)'}{w} = p' + p \frac{w'}{w},
+		\end{equation*}
+		being a polynomial of degree at most $1$.
+	\item Taking $u_2 = \frac{1}{2}x^2$, we have
+		\begin{equation*}
+			L u_2 = p + x \frac{(p w)'}{w} = p + x (p' + p \frac{w'}{w}) = p + x L u_1.
+		\end{equation*}
+		being a polynomial of degree at most $2$.
+		This means that $p$ is a polynomial of degree at most $2$.
+	\item The symmetry condition requires
+		\begin{equation*}
+			\langle L u, v \rangle_w - \langle u, L v \rangle_w = [p w (u' v - u v')]_a^b = 0,
+		\end{equation*}
+		for any polynomials $u,v$. So we need
+		\begin{equation*}
+			\lim_{x \to a^+} p(x) w(x) = 0, \qquad \lim_{x \to b^-} p(x) w(x) = 0.
+		\end{equation*}
+\end{itemize}
+
+By normalizations we reduces to 5 cases:
+\begin{itemize}
+	\item \textbf{CASE 1}: $p$ is a constant, so we take $p=1$. Then $w' / w$ has degree at most $1$, so $w$ is of the form
+		\begin{equation*}
+			w(x) = e^{h(x)}, \qquad h(x) = a x^2 + b x + c,
+		\end{equation*}
+		A linear change of variable and dividing by a constant gives
+		\begin{equation*}
+			w(x) =  e^{-x},e^{\pm x^2},
+		\end{equation*}
+		In the first case, the convergence condition requires $a>-\infty $. However, the symmetry condition cannot be satisfied. In the second case, the symmetry condition requires
+		\begin{equation*}
+			w(x) = e^{-x^2}, \qquad I = \mathbb{R}.
+		\end{equation*}
+		In this case, the operator reads:
+		\begin{equation}
+			L = D^2 - 2x D. \qquad  I = \mathbb{R}, \qquad w(x) = e^{-x^2}.
+		\end{equation}
+		The eigenpolynomials are the Hermite polynomials. Taking the coefficient of $x^n$ in $L x^n = \lambda_n x^n + \text{lower order terms}$ gives $\lambda_n = -2n$.
+		\begin{equation}
+			L \psi_n + 2n \psi_n = 0, \qquad n=0,1,2,\ldots
+		\end{equation}
+		Using a unitary transformation we have
+		\begin{equation*}
+			\tilde{\psi_n} = \psi_n e^{-x^2/2}, \qquad \tilde{L} = D^2 - x^2 + 1, \qquad \tilde{w(x)} = 1,
+		\end{equation*}
+	\item \textbf{CASE 2}: $p$ is a linear polynomial, A linear change of variable normalize it to $p=x$. Then
+		\begin{equation*}
+			p' + p \frac{w'}{w} = 1 + x \frac{w'}{w} = a x + b \qquad \frac{w'}{w} = b + \frac{\alpha}{x}, \qquad w(x) = x^{\alpha} e^{b x},
+		\end{equation*}
+		The symmetry condition $I = \mathbb{R}_+$ or $\mathbb{R}_-$. Assume $I = \mathbb{R}_+$, otherwise replace $x$ by $-x$ and times $-1$ to all. The convergence condition requires $b<0$ and $\alpha > -1$. Thus we have
+		\begin{equation}
+			L = x D^2 + (\alpha + 1 - x) D, \qquad I = \mathbb{R}_+, \qquad w(x) = x^{\alpha} e^{-x}, \qquad \alpha > -1.
+		\end{equation}
+		where we assume $b=-1$ by taking $x \rightarrow bx$. The eigenvalues are $\lambda_n = -n$. The eigenpolynomials are the Laguerre polynomials.
+		\begin{equation}
+			L \psi_n + n \psi_n = 0, \qquad n=0,1,2,\ldots
+		\end{equation}
+		Using a unitary transformation we have
+		\begin{equation*}
+			\tilde{\psi_n} = \psi_n x^{\alpha/2} e^{-x/2}, \qquad \tilde{L} = x D^2 + D - \frac{x}{4} - \frac{\alpha^2}{4x} + \frac{\alpha + 1}{2}, \qquad \tilde{w(x)} = 1,
+		\end{equation*}
+	\item \textbf{CASE 3}: $p$ is a quadratic polynomial with two distinct real roots. A linear change of variable normalize it to $p=1-x^2$. Then
+		\begin{equation*}
+			p' + p \frac{w'}{w} = -2x + (1-x^2) \frac{w'}{w} = a x + b \qquad \frac{w'}{w} = \frac{b + (a+2)x}{1-x^2} = \frac{\beta}{1+x} - \frac{\alpha}{1-x}.
+		\end{equation*}
+		which gives by the symmetry condition,
+		\begin{equation*}
+			w(x) = (1-x)^{\alpha} (1+x)^{\beta}, \qquad \alpha,\beta > -1, \qquad I = (-1,1).
+		\end{equation*}
+		The eigenvalues are $\lambda_n = -n(n+\alpha+\beta+1)$. The eigenpolynomials are the Jacobi polynomials.
+		\begin{equation}
+			L \psi_n + n(n+\alpha+\beta+1) \psi_n = 0, \qquad n=0,1,2,\ldots
+		\end{equation}
+		If we rescale to $p=x(1-x)$, then
+		\begin{equation*}
+			w(x) = x^{\alpha} (1-x)^{\beta}, \qquad \alpha,\beta > -1, \qquad I = (0,1).
+		\end{equation*}
+		The operator is
+		\begin{equation}
+			L = x(1-x) D^2 + (\alpha + 1 - (\alpha + \beta + 2)x) D, \quad I = (0,1),
+		\end{equation}
+		corresponding to the hypergeometric operator with
+		\begin{equation*}
+			(a,b,c) = (\alpha + \beta + 1, 0, \alpha + 1).
+		\end{equation*}
+	\item \textbf{CASE 4}: $p$ is a quadratic polynomial with double complex roots. A linear change of variable normalize it to $p=1+x^2$. Then
+		\begin{equation*}
+			p' + p \frac{w'}{w} = 2x + (1+x^2) \frac{w'}{w} = a x + b \qquad \frac{w'}{w} = \frac{b - (2-a)x}{1+x^2}.
+		\end{equation*}
+		The symmetry condition requires 
+		\begin{equation*}
+			w(x) = e^{\beta \arctan x} (1+x^2)^{\alpha}
+		\end{equation*}
+		but there is no interval $I$ such that the convergence and symmetry conditions are satisfied.
+	\item \textbf{CASE 5}: $p$ is a quadratic polynomial with double roots, so we normalize $p=x^2$. We would have
+		\begin{equation*}
+			w(x) = x^{\alpha} \exp \left(\frac{\beta}{x}\right)
+		\end{equation*}
+		but there is no interval $I$ such that the convergence and symmetry conditions are satisfied.
+\end{itemize}
+
+So we have the following theorem:
+\begin{theorem}{Bochner's Theorem}{Bochner's Theorem}
+	Suppose $L$ is a self-adjoint second order linear differential operator on an interval $I=(a,b)$ with weight function $w(x) > 0$ on $(a,b)$ and $w,w',p,p',q,r$ extends as continuous functions to $[a,b]$. If the eigenfunctions of $L$ includes polynomials of all degrees, then $L$ is one of the following operators (up to a linear change of variable and addition of a constant to the eigenvalue):
+	\begin{itemize}
+		\item Hermite operator:
+			\begin{equation}\label{eq:Hermite}
+				L = D^2 - 2x D, \qquad I = \mathbb{R}, \qquad w(x) = e^{-x^2}.
+			\end{equation}
+		\item Laguerre operator:
+			\begin{equation}\label{eq:Laguerre}
+				L = x D^2 + (\alpha + 1 - x) D, \qquad I = \mathbb{R}_+, \qquad w(x) = x^{\alpha} e^{-x}, \qquad \alpha > -1.
+			\end{equation}
+		\item Jacobi operator:
+			\begin{equation}\label{eq:Jacobi_1}
+				\begin{aligned}
+					L &= (1-x^2) D^2 + (\beta - \alpha - (\alpha + \beta + 2)x) D \\
+					w(x) &= (1-x)^{\alpha} (1+x)^{\beta}, \quad I = (-1,1), \quad \alpha,\beta > -1.
+				\end{aligned}
+			\end{equation}
+			or
+			\begin{equation}\label{eq:Jacobi_2}
+				\begin{aligned}
+					L &= x(1-x) D^2 + (\alpha + 1 - (\alpha + \beta + 2)x) D \\
+					w(x) &= x^{\alpha} (1-x)^{\beta}, \quad I = (0,1), \quad \alpha,\beta > -1.
+				\end{aligned}
+			\end{equation}
+	\end{itemize}
+	
+\end{theorem}
+
+\begin{remark}
+	Some names are special cases of the Jacobi polynomials:
+	\begin{itemize}
+		\item The Gegenbauer (or ultraspherical) polynomials: $\alpha = \beta = \lambda - 1/2$.
+		\item The Legendre polynomials: $\alpha = \beta = 0$.
+		\item The Chebyshev polynomials of the first kind: $\alpha = \beta = -1/2$.
+		\item The Chebyshev polynomials of the second kind: $\alpha = \beta = 1/2$.
+	\end{itemize}
+\end{remark}
+
+There is a sense that case 1 reduce to case 2. We see that both $L$ and $w$ is unchanged when we replace $x$ by $-x$ in equation \eqref{eq:Hermite}, and map even function to even function and odd function to odd function.
+
+An even function $f(x) = g(x^2)$, then
+\begin{equation*}
+	f'(x) = 2x g'(x^2), \qquad f''(x) = 4x^2 g''(x^2) + 2 g'(x^2).
+\end{equation*}
+\begin{equation*}
+	L f(x) = 4x^2 g''(x^2) + 2(1-2x^2) g'(x^2) = 4 t g''(t) + 2(1-2t) g'(t) = \tilde{L} g(t),
+\end{equation*}
+where $t=x^2$. Then
+\begin{equation*}
+	p(t) = 4t, \qquad w(t) = t^{-1/2} e^{-t}, \qquad I = \mathbb{R}_+, \qquad \tilde{L} = 4t D^2 + 2(1-2t) D,
+\end{equation*}
+which is a special case of the Laguerre operator \eqref{eq:Laguerre} with $\alpha = -1/2$.
+
+An odd function $f(x) = x g(x^2)$, then
+\begin{equation*}
+	f'(x) = g(x^2) + 2x^2 g'(x^2), \qquad f''(x) = 4x g'(x^2) + 4x^3 g''(x^2).
+\end{equation*}
+\begin{equation*}
+	L f(x) = 4x^3 g''(x^2) + 2(3-2x^2) x g'(x^2) - 2x g(x^2) = x \tilde{L} g(t),
+\end{equation*}
+where $t=x^2$. Then
+\begin{equation*}
+	p(t) = 4t, \qquad w(t) = t^{1/2} e^{-t}, \qquad I = \mathbb{R}_+, \qquad \tilde{L} = 4t D^2 + 2(3-2t) D,
+\end{equation*}
+which is a special case of the Laguerre operator \eqref{eq:Laguerre} with $\alpha = 1/2$.
+
+This means that the even Hermite polynomials are the Laguerre polynomials with $\alpha = -1/2$ and the odd Hermite polynomials are the Laguerre polynomials with $\alpha = 1/2$ times $x$. (up to some normalization constants)
+
+
+These polynomials are also related by certain limiting relations. In case 3, we may normalize the weight function by
+\begin{equation*}
+	\begin{aligned}
+		w_{\alpha,\beta}(x) &= \frac{2^{-\alpha - \beta - 1}}{B(\alpha + 1, \beta + 1)} (1-x)^{\alpha} (1+x)^{\beta}, \\
+				    &= \frac{2^{-\alpha - \beta - 1}\Gamma(\alpha + \beta + 2)}{\Gamma(\alpha + 1) \Gamma(\beta + 1)} (1-x)^{\alpha} (1+x)^{\beta},
+	\end{aligned}
+\end{equation*}
+so that
+\begin{equation*}
+	\int_{-1}^1 w_{\alpha,\beta}(x) \mathrm{d} x = 1.
+\end{equation*}
+
+If we take $\beta=\alpha>0,x = y / \sqrt{\alpha}$ then
+\begin{equation*}
+	w_{\alpha,\alpha} \mathrm{d} x = \frac{2^{-2\alpha - 1} \Gamma(2\alpha + 2)}{\Gamma(\alpha + 1)^2} \left(1 - \frac{y^2}{\alpha}\right)^{\alpha} \frac{\mathrm{d} y}{\sqrt{\alpha}}
+\end{equation*}
+the interval becomes $y\in (-\sqrt{\alpha},\sqrt{\alpha})$. As $\alpha \to \infty$, we have convergence to the Hermite weight function
+\begin{equation*}
+	w(y) = \pi^{-1/2} e^{-y^2}
+\end{equation*}
+
+\begin{remark}
+	The Hermite polynomials are limits of the Jacobi polynomials with some rescaling. A rigorous proof is omitted here.
+\end{remark}
+
+If we take
+\begin{equation*}
+	\tilde{w}_{\alpha,\beta} = \frac{1}{B(\alpha + 1, \beta + 1)} x^{\alpha} (1-x)^{\beta}, \qquad x\in (0,1),
+\end{equation*}
+and $\beta>0,x = y / \beta$, so
+\begin{equation*}
+	\tilde{w}_{\alpha,\beta} \mathrm{d} x = \frac{\beta^{-\alpha - 1}}{B(\alpha + 1, \beta + 1)} y^{\alpha} \left(1 - \frac{y}{\beta}\right)^{\beta} \mathrm{d} y,
+\end{equation*}
+when $\beta \to \infty$, we have convergence to the Laguerre weight function
+\begin{equation*}
+	w_{\alpha}(y) = \frac{1}{\Gamma(\alpha + 1)} y^{\alpha} e^{-y}, \qquad y\in (0,\infty).
+\end{equation*}
+\begin{remark}
+	The Laguerre polynomials are limits of the Jacobi polynomials with some rescaling. A rigorous proof is omitted here.
+\end{remark}
+
+\section{Maxima and Minima}
+
+In order to study the solution of the eigenvalue problem
+\begin{equation}
+	p(x)u''(x) + q(x) u'(x) + \lambda u(x) = 0, \qquad \lambda>0
+\end{equation}
+it is convenient to introduce the auxiliary function
+\begin{equation}
+	V(x) = u^2(x) + \frac{p(x)}{\lambda} (u'(x))^2.
+\end{equation}
+
+\begin{proposition}{Maxima Criterion}{Maxima Criterion}
+	The relative maxima of $|u(x)|$ are increasing to $x$ in any interval where $p'-2q>0$, and decreasing where $p'-2q<0$.
+\end{proposition}
+We mean that if $p'-2q>0$ on some interval and $x_1,x_2$ are two consecutive relative maxima of $|u|$ in the interval, then $|u(x_1)| < |u(x_2)|$.
+\begin{proof}
+	As he zeros of $u'$ are simple (following the same equation), so they determine the relative extrema of $u$. At such a point $x_0$, we have $V(x_0) = u^2(x_0)$ and we have
+	\begin{equation*}
+		V'(x) = 2u u' + \frac{p'}{\lambda} (u')^2 + \frac{2p}{\lambda} u' u'' = \frac{p'-2q}{\lambda} (u')^2, \forall x
+	\end{equation*}
+	Thus $V$ increases where $p'-2q>0$ and decreases where $p'-2q<0$. 
+\end{proof}
+
+This can apply to some other types of equations.
+\begin{proposition}{}{Maxima Criterion 2}
+	Consider the equation
+	\begin{equation*}
+		(wu')' + ru=0
+	\end{equation*}
+	where $w>0,r>0$. Then the relative maxima of $|u(x)|$ are increasing to $x$ in any interval where $(wr)'<0$, and decreasing where $(wr)'>0$.
+
+	If the equation holds in $(a,b]$ and $(wr)'\leq 0$ in the interval, then
+	\begin{equation*}
+		u^2(x) \leq u^2(b) + \frac{w(b)}{r(b)} (u'(b))^2, \qquad x\in (a,b]
+	\end{equation*}
+\end{proposition}
+\begin{proof}
+	Let
+	\begin{equation*}
+		W(x) = u^2(x) + \frac{(w(x)u'(x))^2}{w(x) r(x)} \qquad W'(x) = -(wr)' \frac{(u')^2}{r^2}
+	\end{equation*}
+\end{proof}
+
+\begin{example}{The Extrema of Polynomial Eigenfunctions}{The Extrema of Polynomial Eigenfunctions}
+	\begin{itemize}
+		\item For the Hermite polynomials, we have $p=1,q=-2x$, so $p'-2q=4x>0$ for $x>0$. Thus the relative maxima of $|H_n(x)|$ are increasing for $x>0$ and decreasing for $x<0$.
+		\item For the Laguerre polynomials, we have $p=x,q=\alpha + 1 - x$, so $p'-2q=1-2\alpha - 2 + 2x = 2x-2 \alpha - 1$. Thus the relative maxima of $|L_n^{(\alpha)}(x)|$ are increasing for $x>\alpha + 1/2$ and decreasing for $x<\alpha + 1/2$.
+		\item For the Jacobi polynomials, we have $p=1-x^2,q=\beta - \alpha - (\alpha + \beta + 2)x$, so $p'-2q=-2x - 2\beta + 2\alpha + 2 + 2(\alpha + \beta + 2)x = 2(\alpha - \beta) + 2(\alpha + \beta + 1)x$. Thus the relative maxima of $|P_n^{(\alpha,\beta)}(x)|$ are increasing for $x>(\beta - \alpha)/(\alpha + \beta + 1)$ and decreasing for $x<(\beta - \alpha)/(\alpha + \beta + 1)$.
+	\end{itemize}
+\end{example}
+
+\section{Equations and Transformations}
+
+
+\end{document}

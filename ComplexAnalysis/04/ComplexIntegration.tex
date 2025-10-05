@@ -577,6 +577,13 @@ The number $h$ is called the \textbf{order of the pole} of $f$ at $a$. Similar t
 	A function $f$ is called \textbf{meromorphic} on $\Omega$ if it is analytic on $\Omega$ except for some isolated singularities, which are all poles.
 \end{definition}
 
+\begin{theorem}{Countable Poles for Meromorphic Functions}{Countable Poles for Meromorphic Functions}
+	If $f$ is meromorphic on $\Omega$, then the poles of $f$ are at most countable and have no limit points in $\Omega$.
+\end{theorem}
+\begin{proof}
+	As poles are isolated, we can find a neighborhood $U_z$ for each pole $z$ that contains no other poles. As $\Omega$ is the subset of $\mathbb{C}$, which is second countable, we can find a countable basis for $\Omega$. Take $z\in B_z \subseteq U_z$, where $B_z$ is in the countable basis. Then each pole corresponds to a distinct element in the countable basis, so the poles are at most countable.
+\end{proof}
+
 \begin{proposition}{The Operations of Meromorphics}{The Operations of Meromorphics}
 	The sum, difference, product, and quotient of two non-trivial(not zero) meromorphic functions is also meromorphic. The composition of a meromorphic function with an analytic function is also meromorphic.
 \end{proposition}
@@ -1159,14 +1166,14 @@ Another application is to determine the number of zeros of an analytic function 
 The left of equation \eqref{eq:Argument Principle} is $n(\Gamma,0)$ where $\Gamma$ is the image $f(\gamma)$. We would have $n(\Gamma,0)=0$ if $\Gamma$ lies in a disk not containing the origin.
 
 \begin{theorem}{Rouch\'e's Theorem}{Rouches Theorem}
-	Let $\gamma\sim 0$ in $\Omega$ and $n(\gamma,z)=0$ or $1$ for $\forall z\notin \gamma$. Suppose $f,g$ are analytic in $\Omega$ and satisfy $\left|f(z)-g(z)\right|<\left|f(z)\right|$ on $\gamma$. Then $f,g$ has the same number of zeros enclosed by $\gamma$. (This means the zeros of $f$ and $g$ that has index 1 with respect to $\gamma$, counting multiplicities)
+	Let $\gamma\sim 0$ in $\Omega$ and $n(\gamma,z)=0$ or $1$ for $\forall z\notin \gamma$. Suppose $f,g$ are analytic in $\Omega$ and satisfy $\left|f(z)-g(z)\right|<\left|f(z)\right|$ on $\gamma$. Then $f,g$ has the same number of zeros enclosed by $\gamma$. (Enclosure means the zeros of $f$ and $g$ that has index 1 with respect to $\gamma$, counting multiplicities)
 \end{theorem}
 \begin{proof}
 Well the assumption shows that $f(z),g(z)\neq 0$ on $\gamma$. And we have
 \begin{equation*}
-	\left|\frac{f(z)}{g(z)}-1\right|<1, \qquad \forall z\in \gamma
+	\left|\frac{g(z)}{f(z)}-1\right|<1, \qquad \forall z\in \gamma
 \end{equation*}
-Let $F(z) = f(z) / g(z)$ then we have $n(F(\gamma),0)=0$, as the image curve lies on the disk radius 1 centered at 1. By the argument principle, we have our result.
+Let $F(z) = g(z) / f(z)$ then we have $n(F(\gamma),0)=0$, as the image curve lies on the disk radius 1 centered at 1. By the argument principle, we have our result. (That is, $F$ has the same number of zeros and poles inside $\gamma$.)
 \end{proof}
 
 An application involves finding the number of zeros of $f$ in a closed disk neighborhood of a point $a$. We approximate $f$ by Taylor's Theorem:
