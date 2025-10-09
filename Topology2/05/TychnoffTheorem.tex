@@ -3,5 +3,163 @@
 \begin{document}
 \chapter{The Tychonoff Theorem}
 
+\section{The Tychonoff Theorem}
+In previous chapters, we discussed the compactness of the product of two compact spaces $X \times Y$, by covering sliced $x \times Y$ by finite subcovers and then using these to cover $X \times Y$. However, it is rather tricky to extend this argument to an arbitrary product of compact spaces, one must well-order the index set and use transfinite induction. Another way is to tackle the problem is to use the closed set definition of compactness, using Zorn's lemma.
+
+For simplicity, consider the product of two compact spaces $X_1 \times X_2$. Let $\mathcal{A}$ be a collection of closed subsets of $X_1 \times X_2$ with the finite intersection property, that is, any finite intersection of elements of $\mathcal{A}$ is non-empty. We want to show that the intersection of all elements of $\mathcal{A}$ is non-empty.
+
+\begin{itemize}
+	\item The projection collection $\{\pi_1(A) : A \in \mathcal{A}\}$ is a collection of closed subsets of $X$ with the finite intersection property, so are their closure $\{\overline{\pi_1(A)} : A \in \mathcal{A}\}$. Since $X$ is compact, $\bigcap_{A \in \mathcal{A}} \overline{\pi_1(A)}$ is non-empty. The result holds for $\pi_2$ also.
+	\item Take $x_1 \in \bigcap_{A \in \mathcal{A}} \overline{\pi_1(A)}$ and $x_2 \in \bigcap_{A \in \mathcal{A}} \overline{\pi_2(A)}$. We wish that $x_1 \times x_2 \in \bigcap_{A \in \mathcal{A}} A$. However, this is not necessarily true. Consider the following counterexample: $X_1=X_2=[0,1]$ and $p = (1 / 3,1 / 3)_p, q = (1 / 2,2 / 3)_p$, then $\mathcal{A}$ being all elliptical closed sets with $p,q$ as focii has the finite intersection property, but we show that $(1 / 2, 1 / 2)_p \notin A$ for any $A \in \mathcal{A}$. To get a valid point, we need to choose on the segment $pq$.
+
+	So we need a better choice of $x_1, x_2$, the current choice is to free.
+	\item We can expand the collection $\mathcal{A}$ to $\mathcal{D}$, retaining the finite intersection property. For example, we can add all all circles with $p$ as center. This forces us to choose $x_1 = 1 / 3$ and $x_2 = 1 / 3$. The new collection still has the finite intersection property.
+	\item To determine the correct expansion, considering choosing $\mathcal{D}$ ``as large as possible'', so that no larger collection containing $\mathcal{D}$ has the finite intersection property. This is where Zorn's lemma comes in.
+\end{itemize}
+
+\begin{remark}
+	Note that we do not use the closedness of elements of $\mathcal{A}$ until the very end, when we need to show the closed set formulation of compactness. We may as well begin with an arbitrary collection of subsets of $X$ with the finite intersection property, and expand it to a maximal such collection.
+\end{remark}
+
+\begin{figure}[ht]
+    \centering
+    \incfig{conterexample-for-product-common-point}
+    \caption{Conterexample for Product Common Point}
+    \label{fig:conterexample-for-product-common-point}
+\end{figure}
+
+\begin{lemma}{Maximal Collection with Finite Intersection Property}{Maximal Collection with Finite Intersection Property}
+	Let $X$ be any set, and $\mathcal{A} \subseteq P(X)$ having the finite intersection property. Then there exists a collection $\mathcal{D} \subseteq P(X)$ such that $\mathcal{A} \subseteq \mathcal{D}$, $\mathcal{D}$ has the finite intersection property, and any collection of subsets of $X$ properly containing $\mathcal{D}$ does not have the finite intersection property.
+
+	The collection $\mathcal{D}$ is called a \textbf{maximal collection with the finite intersection property} containing $\mathcal{A}$. Then
+	\begin{itemize}
+		\item Any finite intersection of elements of $\mathcal{D}$ is an element of $\mathcal{D}$.
+		\item If $A \subseteq X$ such that $A \cap D \neq \emptyset$ for all $D \in \mathcal{D}$, then $A \in \mathcal{D}$.
+	\end{itemize}
+\end{lemma}
+\begin{proof}
+	Let the set
+	\begin{equation*}
+		\mathscr{A} = \{\mathcal{C} \subseteq P(X) : \mathcal{A} \subseteq \mathcal{C}, \mathcal{C} \text{ has the finite intersection property}\}.
+	\end{equation*}
+	The partial order is given by set inclusion. For any chain $\mathscr{B} \subseteq \mathscr{A}$, let
+	\begin{equation*}
+		\mathcal{E} = \bigcup_{\mathcal{C} \in \mathscr{B}} \mathcal{C}.
+	\end{equation*}
+	We shall show that $\mathcal{E} \in \mathscr{A}$, so that $\mathcal{E}$ is an upper bound of $\mathscr{B}$. Clearly, $\mathcal{A} \subseteq \mathcal{E}$. To show that $\mathcal{E}$ has the finite intersection property, let $E_1, E_2, \ldots, E_n \in \mathcal{E}$. Then for each $i$, there exists $\mathcal{C}_i \in \mathscr{B}$ such that $E_i \in \mathcal{C}_i$. Since $\mathscr{B}$ is a chain, there exists some $\mathcal{C} \in \mathscr{B}$ such that $\mathcal{C}_i \subseteq \mathcal{C}$ for all $i$. Thus $E_i \in \mathcal{C}$ for all $i$, and since $\mathcal{C}$ has the finite intersection property, we have $\bigcap_{i=1}^n E_i \neq \emptyset$. By Zorn's lemma, $\mathscr{A}$ has a maximal element $\mathcal{D}$, which is the desired collection.
+
+	The two properties follows smoothly from the maximally of $\mathcal{D}$. For the first property, if not, joining the finite intersection to $\mathcal{D}$ gives a larger collection with the finite intersection property, contradicting maximality. For the second property, if not, joining $A$ to $\mathcal{D}$ gives a larger collection with the finite intersection property, contradicting maximality.
+\end{proof}
+
+\begin{remark}
+	The maximal collection $\mathcal{D}$ is not unique. For example, if $X = \{1,2\}$ and $\mathcal{A} = \{X\}$, then both $\mathcal{D}_1 = \{\{1\}, X\}$ and $\mathcal{D}_2 = \{\{2\}, X\}$ are maximal collections with the finite intersection property containing $\mathcal{A}$.
+\end{remark}
+
+\begin{theorem}{Tychonoff Theorem}{Tychonoff Theorem}
+	Let $\{X_\alpha : \alpha \in J\}$ be an indexed family of compact topological spaces. Then the product space $X = \prod_{\alpha \in J} X_\alpha$ is compact in the product topology.
+\end{theorem}
+\begin{proof}
+	Let $\mathcal{A}$ be a collection of subsets of $X$ with the finite intersection property. We prove the collection $\bigcap_{A\in \mathcal{A}} \overline{A}$ is non-empty, where the closure is taken in $X$. By Lemma \ref{lem:Maximal Collection with Finite Intersection Property}, choose $\mathcal{D}$ a maximal collection with the finite intersection property containing $\mathcal{A}$. For each $\alpha \in J$, let $\pi_{\alpha}$ be the projection map from $X$ to $X_{\alpha}$, and let
+	\begin{equation*}
+		x_{\alpha} \in \bigcap_{D \in \mathcal{D}} \overline{\pi_{\alpha}(D)},
+	\end{equation*}
+	the intersection is not empty since $\{\overline{\pi_{\alpha}(D)} : D \in \mathcal{D}\}$ is a collection of closed subsets of the compact space $X_{\alpha}$ with the finite intersection property. Let $x = (x_{\alpha})_{\alpha \in J} \in X$. We show that $x \in \overline{D}$ for all $D \in \mathcal{D}$, which implies that $x \in \overline{A}$ for all $A \in \mathcal{A}$ since $\mathcal{A} \subseteq \mathcal{D}$.
+
+	From the second property of Lemma \ref{lem:Maximal Collection with Finite Intersection Property}, we know that all subbasis $\pi_{\beta}^{-1} (U_{\beta})$ containing $x$ intersects $D$, because $x_{\beta} \in \overline{\pi_{\beta}(D)}$ implies $\pi_{\beta}(D) \cap U_{\beta} \neq \emptyset$. Since finite intersections of subbasis elements form a basis, any basis element containing $x$ intersects $D$. Thus $x \in \overline{D}$ for all $D \in \mathcal{D}$.
+\end{proof}
+
+
+\section{The Stone-\v{C}ech Compactification}
+
+We have already studied one-point compactification, which is some sense the minimal compactification. The Stone-\v{C}ech compactification is the maximal compactification.
+
+\begin{definition}{Compactification}{Compactification}
+	A compactification of a space $X$ is a compact Hausdorff space $Y$ that $\overline{X}=Y$. Two compactification $Y_1, Y_2$ of $X$ are said to be equivalent if there exists a homeomorphism $f : Y_1 \to Y_2$ such that $f(x) = x$ for all $x \in X$.
+\end{definition}
+
+If $X$ has a compactification, then $X$ is completely regular because $Y$ is completely regular. Conversely, if $X$ is completely regular, then $X$ has a compactification because $X$ can be embedded in some $[0,1]^J$.
+
+\begin{lemma}{Compactification by Imbedding}{Compactification by Imbedding}
+	Let $X$ be a space, and $h: X \rightarrow Z$ be an imbedding of $X$ into a compact Hausdorff space $Z$. Then there is a compactification $Y$ of $X$ that there is an imbedding $H: Y \rightarrow Z$ that $H|_X = h$. $Y$ is uniquely determined up to equivalence.
+
+	We call $Y$ the compactification of $X$ induced by the imbedding $h$.
+\end{lemma}
+\begin{proof}
+	Let $X_0 = h(X) \subseteq Z$, and $Y_0 = \overline{X_0} \subseteq Z$. Then $Y_0$ is compact Hausdorff so is a compactification of $X_0$.
+
+	Now we construct $Y$: let $Y$ be the set $X \cup (Y_0 - X_0)$, and define $H : Y \to Y_0$ by
+	\begin{equation*}
+		H(y) = \begin{cases}
+			h(y) & y \in X \\
+			y & y \in Y_0 - X_0
+		\end{cases}.
+	\end{equation*}
+	Then $H$ is a bijection. We give $Y$ the topology such that $H$ is a homeomorphism. Then $Y$ is a compactification of $X$, and $H|_X = h$.
+\end{proof}
+
+\begin{proposition}{Criterion for Compactifiablility}{Criterion for Compactifiablility}
+	A space $X$ has a compactification if and only if $X$ is completely regular.
+\end{proposition}
+
+Usually there are various ways to compactify a given space.
+\begin{example}{Compactification}{Compactification}
+	Compactify $(0,1) \subseteq \mathbb{R}$:
+	\begin{itemize}
+		\item Take $h:(0,1) \rightarrow S^1$ by $h(x) = (\cos 2\pi x, \sin 2\pi x)$, then the compactification induced by $h$ is $S^1$, which is just the one-point compactification.
+		\item Take $h:(0,1) \rightarrow [0,1]$ by $h(x) = x$, then the compactification induced by $h$ is $[0,1]$.
+		\item Take $h:(0,1) \rightarrow [0,1]^2$ by $h(x) = (x, \sin 1 / x)_p$, then the compactification induced by $h$ is the topologist's sine curve.
+	\end{itemize}
+\end{example}
+
+For many occasions, we wish that a continuous real function on $X$ can be extended to a continuous real function on the compactification. First, $f$ must be bounded, since the image $f(Y)$ is compact in $\mathbb{R}$ thus is bounded. But this is not sufficient, taking $f(x) = \sin 1 / x$ on $(0,1)$ for example.
+\begin{remark}
+	In the third case, $f$ can be extended to the compactification: Take the composite function $\pi_2\circ H$, that $x \rightarrow x \times \sin 1 / x \rightarrow \sin 1 / x$.
+
+	But in the first and second case, it can't.
+
+	Actually, this gives us an idea, that to extend a whole collection of bounded continuous functions on $X$, we can use them as component functions for an imbedding on $\mathbb{R}^J$ for some $J$, and thereby get a compactification for which every function in the collection can be extended.
+\end{remark}
+This gives us the intuition behind the Stone-\v{C}ech compactification.
+
+\begin{theorem}{Stone-\v{C}ech Compactification}{Stone-vCech Compactification}
+	Let $X$ be a completely regular space. There exists a compactification of $X$ that every bounded continuous map $f: X \rightarrow \mathbb{R}$ extends uniquely to a continuous map $\overline{f}: Y \rightarrow \mathbb{R}$.
+\end{theorem}
+\begin{proof}
+	Let $\left\{ f_{\alpha} \right\}_{\alpha\in J}$ be the collection of all bounded continuous functions from $X$ to $\mathbb{R}$. For each $\alpha \in J$, let $I_{\alpha}$ be a closed bounded interval containing the image of $f_{\alpha}$. Specifically, choose
+	\begin{equation*}
+		I_{\alpha} = [\inf f_{\alpha}(X), \sup f_{\alpha}(X)].
+	\end{equation*}
+	Then define
+	\begin{equation*}
+		h: X \rightarrow \prod_{\alpha \in J} I_{\alpha}, \qquad h(x) = (f_{\alpha}(x))_{\alpha \in J}.
+	\end{equation*}
+	By the Tychonoff theorem, $\prod_{\alpha \in J} I_{\alpha}$ is compact Hausdorff. Since $X$ is completely regular, $h$ separates points from closed sets, so $h$ is an imbedding. Let $Y$ be the compactification of $X$ induced by $h$. Then there is a unique imbedding $H: Y \rightarrow \prod_{\alpha \in J} I_{\alpha}$ such that $H|_X = h$. Take $\overline{f} = \pi_{\alpha} \circ H$, where $\pi_{\alpha}$ is the projection map from $\prod_{\alpha \in J} I_{\alpha}$ to $I_{\alpha}$. Then $\overline{f}$ is the desired extension of $f$.
+\end{proof}
+
+The uniqueness follows from the next lemma.
+\begin{lemma}{Uniqueness of Extended Functions}{Uniqueness of Extended Functions}
+	Let $A \subseteq X$, and $f:A \rightarrow Z$ be a continuous map, where $Z$ is Hausdorff. Then there exists at most one continuous map $\overline{f}: \overline{A} \rightarrow Z$ such that $\overline{f}|_A = f$.
+\end{lemma}
+\begin{proof}
+	Suppose that there are two such maps $\overline{f}_1, \overline{f}_2$. Let $x \in \overline{A}$, such that $\overline{f}_1(x) \neq \overline{f}_2(x)$. Since $Z$ is Hausdorff, there exist disjoint open neighborhoods $U_1, U_2$ of $\overline{f}_1(x), \overline{f}_2(x)$ respectively. Then $\overline{f}_1^{-1}(U_1)$ and $\overline{f}_2^{-1}(U_2)$ are disjoint open neighborhoods of $x$ in $\overline{A}$. Since $x \in \overline{A}$, there exists some $a \in A$ such that $a \in \overline{f}_1^{-1}(U_1) \cap \overline{f}_2^{-1}(U_2)$. But then $\overline{f}_1(a) = f(a) = \overline{f}_2(a)$, contradicting the disjointness of $U_1$ and $U_2$. Thus $\overline{f}_1 = \overline{f}_2$.
+\end{proof}
+
+\begin{theorem}{Universal Property of Stone-\v{C}ech Compactification}{Universal Property of Stone-vCech Compactification}
+	Let $X$ be a completely regular space, and $Y$ be the Stone-\v{C}ech compactification of $X$. Given any continuous map $f: X \rightarrow C$, where $C$ is a compact Hausdorff space, there exists a unique continuous map $\overline{f}: Y \rightarrow C$ such that $\overline{f}|_X = f$.
+\end{theorem}
+\begin{proof}
+	Note that $C$ is completely regular so can be imbeded into $[0,1]^J$ form some $J$. So assume $C \subseteq [0,1]^J$, the for each bounded real $f_{\alpha}$, there is a unique extension $g_{\alpha}:Y \rightarrow \mathbb{R}$, and $g:Y \rightarrow \mathbb{R}^J$ where $g(y) = (g_{\alpha}(y))_{\alpha \in J}$. Then $g|_X = f$, and $g(Y) \subseteq C$ since $g$ is continuous and
+	\begin{equation*}
+		g(Y) = g(\overline{X}) \subseteq \overline{g(X)} = \overline{f(X)} \subseteq \overline{C} = C.
+	\end{equation*}
+	thereby giving the desired extension $\overline{f} = g$. The uniqueness follows from the uniqueness of each $g_{\alpha}$.
+\end{proof}
+
+\begin{theorem}{Uniqueness of Stone-\v{C}ech Compactification}{Uniqueness of Stone-vCech Compactification}
+	Let $X$ be a completely regular space, and $Y_1, Y_2$ be two Stone-\v{C}ech compactifications of $X$. Then $Y_1$ and $Y_2$ are equivalent.	
+\end{theorem}
+\begin{proof}
+	Consider the inclusion $j_2: X \rightarrow Y_2$, which is a continuous map, from theorem \ref{thm:Universal Property of Stone-vCech Compactification}, we may extend $j_2$ to $f_2: Y_1 \rightarrow Y_2$ being a continous map. Similarly, we may extend the inclusion $j_1: X \rightarrow Y_1$ to $f_1: Y_2 \rightarrow Y_1$ being a continuous map. Then $f_1 \circ f_2: Y_1 \rightarrow Y_1$ is a continuous map such that $(f_1 \circ f_2)|_X = id_X$. By the uniqueness of extension, $f_1 \circ f_2 = id_{Y_1}$. Similarly, $f_2 \circ f_1 = id_{Y_2}$. Thus $f_1, f_2$ are homeomorphisms, and $Y_1, Y_2$ are equivalent.
+\end{proof}
 
 \end{document}

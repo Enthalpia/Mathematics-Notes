@@ -1,0 +1,52 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\chapter{Metrization Theorems and Paracompactness}
+
+The Urysohn Metrization Theorem states that a topological space is metrizable if it is regular and has a countable basis. And we hope to strengthen the condition to give an equivalent condition.
+
+We know that the regularity is necessary, but the second countability is not. The eventual conclusion involves a new notion called locally finiteness.
+
+Another way to say a basis $\mathcal{B}$ is countable is that $\mathcal{B}$ can be expressed in
+\begin{equation*}
+	\mathcal{B} = \bigcup_{n\in \mathbb{Z}_+} \mathcal{B}_n, \qquad \text{where each } \mathcal{B}_n \text{ is finite.} 
+\end{equation*}
+It is rather aukward, but it gives us a hint to weaken the second countability condition: The Nagata-Smirnov condition, by means of local finiteness.
+
+
+\section{Local Finiteness}
+\begin{definition}{Local Finiteness}{Local Finiteness}
+	Let $X$ be a topological space. A collection $\mathcal{A}$ of subsets of $X$ is said to be \textbf{locally finite} if for every $x \in X$, there exists an open neighborhood $U$ of $x$ such that $U$ intersects only finitely many elements of $\mathcal{A}$.
+\end{definition}
+
+\begin{example}{Local Finiteness}{Local Finiteness}
+	\begin{itemize}
+		\item The collection $\mathcal{A} = \left\{ (n,n+2): n\in \mathbb{Z} \right\}$ is locally finite in $\mathbb{R}$.
+		\item The collection $\mathcal{B} = \left\{ (1, 1 / n): n \in \mathbb{Z}^+ \right\}$ is locally finite in $(0,1)$ but not in $\mathbb{R}$.
+	\end{itemize}
+\end{example}
+
+\begin{proposition}{Properties of Local Finiteness}{Properties of Local Finiteness}
+	Let $X$ be a topological space and let $\mathcal{A}$ be a locally finite collection of subsets of $X$. Then
+	\begin{itemize}
+		\item Every subcollection of $\mathcal{A}$ is locally finite.
+		\item The collection $\mathcal{B} = \left\{ \overline{A} : A \in \mathcal{A} \right\}$ is locally finite.
+		\item $\overline{\bigcup_{A \in \mathcal{A}} A} = \bigcup_{A \in \mathcal{A}} \overline{A}$.
+	\end{itemize}
+\end{proposition}
+\begin{proof}
+	First one is trivial. For the second one, note that any open set intersecting $\overline{A}$ needs to intersect $A$. For the last one, we let
+	\begin{equation*}
+		Y = \bigcup_{A \in \mathcal{A}} A.
+	\end{equation*}
+	In general, we have $\overline{Y} \supseteq \bigcup_{A \in \mathcal{A}} \overline{A}$. For the other direction, let $x \in \overline{Y}$ and let $U$ be an open neighborhood of $x$ intersecting $Y$. Since $\mathcal{A}$ is locally finite, there exists an open neighborhood $V$ of $x$ intersecting only finitely many elements of $\mathcal{A}$, say $A_1, A_2, \ldots, A_n$. Then $x$ is in one of $\overline{A_i}$: of not, then $U - \bigcup_{i=1}^n \overline{A_i}$ is an open neighborhood of $x$ not intersecting $Y$, a contradiction.
+\end{proof}
+
+
+\begin{remark}
+	An analogous concept is a \textbf{local finite index family} $\left\{ A_{\alpha} \right\}_{\alpha \in J}$, where $J$ is an index set. (This allows repeat sets). It is obvious that a local finite index family is a local finite collection if it is local finite as a collection of sets and there are at most finite multiple repeat non-empty set in the family.
+\end{remark}
+
+
+
+\end{document}

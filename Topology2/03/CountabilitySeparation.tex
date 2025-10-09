@@ -360,7 +360,7 @@ We use two versions of proof here, both has generalizations.
 \begin{proof}
 	From theorem \ref{thm:Regular Second Countable Implies Normal}, we have $X$ being second countable normal. We shall prove that $X$ is metrizable be imbedding it into a known metrizable space $Y$.
 \begin{itemize}
-	\item \textbf{Step 1:} Lemma: \emph{There exists a countable collection of continuous function $f_n: X \rightarrow [0,1]$ that $\forall x_0\in X$ and $\forall $ neighborhood $U$ of $x_0$, there exists $n$ such that $f_n(x_0) > 0$ and $f_n(X-U) = \left\{ 0 \right\}$.}
+	\item \textbf{Step 1:} Lemma: \emph{There exists a countable collection of continuous function $f_n: X \rightarrow [0,1]$ that $\forall x_0\in X$ and $\forall $ neighborhood $U$ of $x_0$, there exists $n$ such that $f_n(x_0) > 0$ and $f_n(X-U) = \left\{ 0 \right\}$.} (Like a ``bump'' function that lumps at $x_0$ and vanishes outside $U$.)
 
 		By normality of $X$ and Urysohn lemma, we have the required function $f$ exists for each pair $(x,U)$. Our goal is to limit the quantity. Let $\left\{ B_n \right\}$ be a countable basis of $X$, for each $n,m\in \mathbb{Z}_+, \overline{B_n} \subseteq B_m$ (from normality this pair exists and has infinite), from Urysohn lemma choose c continuous function $g_{n,m}: X \rightarrow [0,1]$ that $g_{n,m}(\overline{B_n}) = \left\{ 1 \right\},g_{n,m}(X-B_m) = \left\{ 0 \right\}$. Then the collection $g_{n,m}$ is countable and satisfies our condition. (Choose $x_0\in B_m \in U$ and $x_0\in B_n,\overline{B_n}\in B_m$).
 

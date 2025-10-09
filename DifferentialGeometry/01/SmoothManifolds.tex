@@ -1,9 +1,7 @@
-\documentclass{mathnote}
-
-\title{Smooth Manifolds}
+\documentclass[../main.tex]{subfiles}
 
 \begin{document}
-\maketitle
+\chapter{Smooth Manifolds}
 
 In simple terms, smooth manifolds are spaces that locally look like $\mathbb{R}^n$, and on which we can do calculus. We can visualize them like smooth plane curves like circles and parabolas.
 
@@ -78,5 +76,19 @@ The $n$-dimensional real projective space $\mathbb{R}\mathbb{P}^n$, is defined a
 \item $\mathcal{T}$ is the quotient topology.
 \end{itemize}
 \end{example}
+
+\begin{example}{Product Manifold}{Product Manifold}
+	Suppose $M_1, \ldots ,M_k$ are topological manifolds of dimension $n_1, \ldots , n_k$ respectively. Then the product space $M_1 \times \ldots \times M_k$ is a topological manifold of dimension $n_1 + \ldots + n_k$.
+\end{example}
+\begin{proof}
+	The Hausdorff and second-countable properties follows from the product topology itself. Given any point $p = (p_1, \ldots ,p_k) \in M_1 \times \ldots \times M_k$, we can find a neighborhood $U_i$ of $p_i$ such that $U_i \cong \hat{U}_i \subseteq \mathbb{R}^{n_i}$. Then $U = U_1 \times \ldots \times U_k$ is a neighborhood of $p$ and homeomorphic to $\hat{U}_1 \times \ldots \times \hat{U}_k \subseteq \mathbb{R}^{n_1 + \ldots + n_k}$.
+\end{proof}
+
+\subsection{Topological Properties of Manifolds}
+We shall see that manifolds have a well-behaved topological structure, thanks to the Hausdorff and second-countable properties.
+
+\begin{lemma}{Precompact Coordinate Balls}{Precompact Coordinate Balls}
+	Every topological manifold has a basis of precompact coordinate balls. (Precompact means its closure is compact)
+\end{lemma}
 
 \end{document}
