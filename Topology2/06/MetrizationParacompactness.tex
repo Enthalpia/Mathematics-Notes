@@ -9,10 +9,9 @@ We know that the regularity is necessary, but the second countability is not. Th
 
 Another way to say a basis $\mathcal{B}$ is countable is that $\mathcal{B}$ can be expressed in
 \begin{equation*}
-	\mathcal{B} = \bigcup_{n\in \mathbb{Z}_+} \mathcal{B}_n, \qquad \text{where each } \mathcal{B}_n \text{ is finite.} 
+	\mathcal{B} = \bigcup_{n\in \mathbb{Z}_+} \mathcal{B}_n, \qquad \text{where each } \mathcal{B}_n \text{ is finite.}
 \end{equation*}
 It is rather aukward, but it gives us a hint to weaken the second countability condition: The Nagata-Smirnov condition, by means of local finiteness.
-
 
 \section{Local Finiteness}
 \begin{definition}{Local Finiteness}{Local Finiteness}
@@ -42,11 +41,204 @@ It is rather aukward, but it gives us a hint to weaken the second countability c
 	In general, we have $\overline{Y} \supseteq \bigcup_{A \in \mathcal{A}} \overline{A}$. For the other direction, let $x \in \overline{Y}$ and let $U$ be an open neighborhood of $x$ intersecting $Y$. Since $\mathcal{A}$ is locally finite, there exists an open neighborhood $V$ of $x$ intersecting only finitely many elements of $\mathcal{A}$, say $A_1, A_2, \ldots, A_n$. Then $x$ is in one of $\overline{A_i}$: of not, then $U - \bigcup_{i=1}^n \overline{A_i}$ is an open neighborhood of $x$ not intersecting $Y$, a contradiction.
 \end{proof}
 
-
 \begin{remark}
 	An analogous concept is a \textbf{local finite index family} $\left\{ A_{\alpha} \right\}_{\alpha \in J}$, where $J$ is an index set. (This allows repeat sets). It is obvious that a local finite index family is a local finite collection if it is local finite as a collection of sets and there are at most finite multiple repeat non-empty set in the family.
 \end{remark}
 
+\begin{definition}{Countably Local Finite}{Countably Local Finite}
+	A collection $\mathcal{A}$ of subsets of a topological space $X$ is said to be \textbf{countably locally finite} if $\mathcal{A}$ can be expressed in
+	\begin{equation*}
+		\mathcal{A} = \bigcup_{n\in \mathbb{Z}_+} \mathcal{A}_n, \qquad \text{where each } \mathcal{A}_n \text{ is locally finite.}
+	\end{equation*}
+	This is also called $\sigma$-locally finite.
+\end{definition}
+Both a countable collection and a locally finite collection are countably locally finite.
 
+\begin{definition}{Refinement}{Refinement}
+	Let $\mathcal{A}$ and $\mathcal{B}$ be collections of subsets of a set $X$. We say that $\mathcal{B}$ is a \textbf{refinement} of $\mathcal{A}$ if for every $B \in \mathcal{B}$, there exists an $A \in \mathcal{A}$ such that $B \subseteq A$. (This means that $\mathcal{B}$ is finer than $\mathcal{A}$.)
+
+	If the elements in $\mathcal{B}$ are open sets in $X$, then we say that $\mathcal{B}$ is an \textbf{open refinement} of $\mathcal{A}$. If they are closed sets, then we say that $\mathcal{B}$ is a \textbf{closed refinement} of $\mathcal{A}$.
+\end{definition}
+
+\begin{lemma}{Existence of Locally Finite Open Refinement}{Existence of Locally Finite Open Refinement}
+	Let $X$ be a metrizable space, and $\mathcal{A}$ be an open cover of $X$. Then there is an open covering $\mathcal{E}$ of $X$ which is a locally finite open refinement of $\mathcal{A}$.
+\end{lemma}
+\begin{proof}
+	SORRY
+\end{proof}
+
+\section{The Nagata-Smirnov Metrization Theorem}
+Now we give an equivalent condition for metrizability.
+
+\begin{definition}{$F_{\sigma}$ and $G_{\delta}$ Sets}{Fsigma and Gdelta Sets}
+	Let $X$ be a topological space. A subset $A$ of $X$ is called an \textbf{$F_{\sigma}$-set} if $A$ can be expressed as a countable union of closed sets in $X$. A subset $B$ of $X$ is called a \textbf{$G_{\delta}$-set} if $B$ can be expressed as a countable intersection of open sets in $X$.
+\end{definition}
+
+\begin{lemma}{Countably Locally Finite Basis in a Regular Space}{Countably Locally Finite Basis in a Regular Space}
+	Let $X$ be a regular space with a countably locally finite basis $\mathcal{B}$, then $X$ is normal and every closed set in $X$ is a $G_{\delta}$-set.
+\end{lemma}
+\begin{proof}
+	SORRY
+\end{proof}
+
+\begin{lemma}{Closed $G_{\delta}$ Sets}{Closed Gdelta Sets}
+	Let $X$ be normal, and let $A$ be a closed $G_{\delta}$-set in $X$. Then there is a continuous function $f: X \to [0,1]$ such that $f(x) = 0$ for all $x \in A$ and $f(x) > 0$ for all $x \notin A$.
+\end{lemma}
+\begin{proof}
+	Write $A = \bigcap_{n=1}^{\infty} U_n$, where each $U_n$ is open in $X$. Since $X$ is normal, for each $n$ there is a continuous function $f_n: X \to [0,1]$ such that $f_n(x) = 0$ for all $x \in A$ and $f_n(x) = 1$ for all $x \in X - U_n$ (Urysohn's Lemma). Now define
+	\begin{equation*}
+		f(x) = \sum_{n=1}^{\infty} \frac{f_n(x)}{2^n}.
+	\end{equation*}
+	Then $f$ is continuous due to uniform convergence, and $f(x) = 0$ for all $x \in A$ and $f(x) > 0$ for all $x \notin A$, because there is an $n$ such that $x \notin U_n$, so $f_n(x) = 1$.
+\end{proof}
+
+\begin{theorem}{The Nagata-Smirnov Metrization Theorem}{The Nagata-Smirnov Metrization Theorem}
+	For a topological space $X$, then $X$ is metrizable if and only if $X$ is regular and has a $\sigma$-locally finite basis.
+\end{theorem}
+\begin{proof}
+	SORRY
+\end{proof}
+
+\section{Paracompactness}
+This is another generalization of compactness: Recall that a space is compact if every open cover has a finite subcover. We can reformulate it as:
+\begin{quote}
+	A space is compact if every open cover has a finite open refinement.
+\end{quote}
+
+So we can generalized it:
+\begin{definition}{Paracompactness}{Paracompactness}
+	A topological space $X$ is said to be \textbf{paracompact} if every open cover of $X$ has a locally finite open refinement.
+\end{definition}
+
+\begin{example}{Paracompact Space}{Paracompact Space}
+	$\mathbb{R}^n$ is paracompact: Let $X = \mathbb{R}^n$, and let $\mathcal{A}$ be an open cover of $X$. Let $B_m$ be the radius $m\in \mathbb{N}$ open ball centered at the origin ($B_0 = \emptyset$). Then for $m$, choose finite subcover $\mathcal{A}_m$ of $\mathcal{A}$ covering $\overline{B_m}$. Denote
+	\begin{equation*}
+		\mathcal{C}_m = \left\{ A \cap (X - \overline{B_{m-1}}) : A \in \mathcal{A}_m \right\}.
+	\end{equation*}
+	Then easily $\mathcal{C} = \bigcup_{m=1}^{\infty} \mathcal{C}_m$ is a locally finite open refinement of $\mathcal{A}$.
+\end{example}
+
+\begin{proposition}{Properties of Paracompact Spaces}{Properties of Paracompact Spaces}
+	\begin{itemize}
+		\item Every compact space is paracompact.
+		\item The subspace of a paracompact space is NOT NECESSARILY paracompact.
+		\item A closed subspace of a paracompact space is paracompact.
+	\end{itemize}
+\end{proposition}
+
+\begin{theorem}{Paracompact Hausdorff Spaces are Normal}{Paracompact Hausdorff Spaces are Normal}
+	Every paracompact Hausdorff space $X$ is normal.
+\end{theorem}
+\begin{proof}
+	This is rather similar to the proof of theorem \ref{thm:Compact Hausdorff Implies Normal}, we first prove that $X$ is regular. Let $a\in X$ and $B$ be a closed set not containing $a$. For each $b \in B$, choose $U_b\in \mathcal{T}, a\notin \overline{U_b}$. Cover $X$ with all $U_b$ and $X-B$, and choose a locally finite open refinement $\mathcal{C}$. Let $\mathcal{D} \subseteq \mathcal{C}$ be all sets that intersects $B$, then $\mathcal{D}$ covers $B$.
+
+	Moreover, if $D\in \mathcal{D}$, then $D$ lies in some $U_b$, so $a\notin \overline{D}$. Let
+	\begin{equation*}
+		V = \bigcup_{D\in \mathcal{D}} D, \Rightarrow \overline{V} = \bigcup_{D\in \mathcal{D}} \overline{D} \Rightarrow a\notin \overline{V}.
+	\end{equation*}
+	then regularity is proved. For normality, repeat the process would do.
+\end{proof}
+
+\begin{theorem}{Closed Subspaces of Paracompact Spaces}{Closed Subspaces of Paracompact Spaces}
+	Every closed subspace of a paracompact space is paracompact.
+\end{theorem}
+\begin{proof}
+	Let $X$ be a paracompact space, and let $Y$ be a closed subspace of $X$. Let $\mathcal{A}$ be an open cover of $Y$ with open sets in $X$. Cover $X$ with $\mathcal{A}$ and $X-Y$, and choose a locally finite open refinement $\mathcal{C}$, then intersecting elements of $\mathcal{C}$ with $Y$ would do.
+\end{proof}
+
+\begin{remark}
+	\begin{itemize}
+		\item A paracompact subspace of a Hausdorff space is NOT NECESSARILY closed. Well, $(0,1)$ is paracompact, homeomorphic to $\mathbb{R}$, but not closed in $\mathbb{R}$.
+		\item A subspace of a paracompact space is NOT NECESSARILY paracompact.
+		\item The product of two paracompact spaces is NOT NECESSARILY paracompact. Like $\mathbb{R}_l^2$.
+		\item The space $\mathbb{R}^{\mathbb{Z}_+}$ is paracompact in both product and uniform topology. It is not known that whether the box topology is paracompact.
+		\item $\mathbb{R}^J$ is not paracompact for uncountable $J$, for $\mathbb{R}^J$ is Hausdorff but not normal.
+	\end{itemize}
+\end{remark}
+
+We shall see that every metrizable space is paracompact.
+\begin{lemma}{Michael's Lemma}{Michael's Lemma}
+	Let $X$ be regular, then the following are equivalent:
+
+	Every open cover of $X$ has a refinement that is:
+	\begin{itemize}
+		\item An open cover that is $\sigma$-locally finite.
+		\item A covering that is locally finite.
+		\item A closed cover that is locally finite.
+		\item An open cover that is locally finite.
+	\end{itemize}
+\end{lemma}
+\begin{proof}
+	SORRY
+\end{proof}
+
+\begin{theorem}{Every Metrizable Space is Paracompact}{Every Metrizable Space is Paracompact}
+	Every metrizable space is paracompact.
+\end{theorem}
+\begin{proof}
+	Let $X$ be a metrizable space, and from lemma \ref{lem:Existence of Locally Finite Open Refinement}, every open cover of $X$ has a $\sigma$-locally finite open refinement. Since $X$ is regular, by Michael's lemma, every open cover of $X$ has a locally finite open refinement, so $X$ is paracompact.
+\end{proof}
+
+\begin{theorem}{Every Regular Lindel\"of Space is Paracompact}{Every Regular Lindelof Space is Paracompact}
+	Every regular Lindel\"of space is paracompact. (A Lindel\"of space is a space in which every open cover has a countable subcover.)
+\end{theorem}
+\begin{proof}
+	A countable subcover is obviously a $\sigma$-local finite refinement, using Michael's lemma would do.
+\end{proof}
+
+One more intersecting features of paracompact spaces is the existence of partitions of unity.
+
+\begin{definition}{Partitions of Unity}{Partitions of Unity}
+	Let $\left\{ U_{\alpha} \right\}_{\alpha\in J}$ be an indexed open covering of $X$, then an indexed family of continuous functions
+	\begin{equation*}
+		\phi_{\alpha}: X \to [0,1], \quad \alpha \in J
+	\end{equation*}
+	is called a \textbf{partition of unity} on $X$ dominated by $\left\{ U_{\alpha} \right\}_{\alpha\in J}$ if
+	\begin{itemize}
+		\item $\forall \alpha\in J, \supp \phi_{\alpha} \subseteq U_{\alpha}$.
+		\item The indexed family $\left\{ \supp \phi_{\alpha} \right\}$ is locally finite.
+		\item $\forall x \in X, \sum_{\alpha\in J} \phi_{\alpha}(x) = 1$.
+	\end{itemize}
+	(The sum is well-defined due to local finiteness: there are only finitely many non-zero terms.)
+\end{definition}
+
+Now, we construct partitions of unity in paracompact Hausdorff spaces.
+
+\begin{lemma}{Shrinking Lemma}{Shrinking Lemma}
+	Let $X$ be a paracompact Hausdorff space, and let $\left\{ U_{\alpha} \right\}_{\alpha\in J}$ be an open cover of $X$. Then there is a local finite indexed family open cover $\left\{ V_{\alpha} \right\}_{\alpha\in J}$ of $X$ such that $\overline{V_{\alpha}} \subseteq U_{\alpha}$ for each $\alpha \in J$.
+\end{lemma}
+\begin{proof}
+	SORRY
+\end{proof}
+
+\begin{remark}
+	Sometimes we say that $\left\{ V_{\alpha} \right\}_{\alpha\in J}$ is a \textbf{precise refinement} of $\left\{ U_{\alpha} \right\}_{\alpha\in J}$ if $\overline{V_{\alpha}} \subseteq U_{\alpha}$ for each $\alpha \in J$.
+\end{remark}
+
+\begin{theorem}{Existence of Partitions of Unity}{Existence of Partitions of Unity}
+	Let $X$ be a paracompact Hausdorff space, and let $\left\{ U_{\alpha} \right\}_{\alpha\in J}$ be an open cover of $X$. Then there is a partition of unity on $X$ dominated by $\left\{ U_{\alpha} \right\}_{\alpha\in J}$.
+\end{theorem}
+\begin{proof}
+	SORRY
+\end{proof}
+
+Partitions of unity are very useful in patching local constructed functions to a global one.
+
+\begin{theorem}{Patch Theorem}{Patch Theorem}
+	Let $X$ be a paracompact Hausdorff space, and let $\mathcal{C}$ be a collection of subsets of $X$. For each $C\in \mathcal{C}$, let $\epsilon_{C}>0$. If $\mathcal{C}$ is locally finite, then there is a continuous function $f: X \to \mathbb{R}_+$ such that for each $C\in \mathcal{C}$, $f(x) \leq \epsilon_C$ for all $x \in C$.
+\end{theorem}
+\begin{proof}
+SORRY
+\end{proof}
+
+\section{The Smirnov Metrization Theorem}
+
+\begin{definition}{Locally Metrizable}{Locally Metrizable}
+	A topological space $X$ is said to be \textbf{locally metrizable} if for each $x \in X$, there is a neighborhood $U$ of $x$ that is metrizable.
+\end{definition}
+
+\begin{theorem}{The Smirnov Metrization Theorem}{The Smirnov Metrization Theorem}
+	A topological space $X$ is metrizable if and only if $X$ is paracompact, Hausdorff, and locally metrizable.
+\end{theorem}
 
 \end{document}
