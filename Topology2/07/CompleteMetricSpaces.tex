@@ -34,20 +34,20 @@ This is quite obvious as a sequence is Cauchy under $d$ if and only if it is Cau
 	A metric space $(X,d)$ is complete if and only if every Cauchy sequence in $X$ has a convergent subsequence.
 \end{lemma}
 \begin{proof}
-The $\Rightarrow$ side obvious, taking the original sequence would do.
+	The $\Rightarrow$ side obvious, taking the original sequence would do.
 
-For the $\Leftarrow$ side, let $(x_n)$ be a Cauchy sequence in $X$. Let $(x_{n_i})$ is a convergent subsequence of $(x_n)$, and let $x = \lim_{i \to \infty} x_{n_i}$. For any $\epsilon > 0$, there exists $N$ that
-\begin{equation*}
-	d(x_n,x_m) < \epsilon/2, \forall m,n > N.
-\end{equation*}
-Also, there exists $I$ that $n_I>N$ and
-\begin{equation*}
-	d(x_{n_i}, x) < \epsilon/2, \forall i > I.
-\end{equation*}
-So for any $n > N$, we have
-\begin{equation*}
-	d(x_n, x) \leq d(x_n, x_{n_I}) + d(x_{n_I}, x) < \epsilon/2 + \epsilon/2 = \epsilon.
-\end{equation*}
+	For the $\Leftarrow$ side, let $(x_n)$ be a Cauchy sequence in $X$. Let $(x_{n_i})$ is a convergent subsequence of $(x_n)$, and let $x = \lim_{i \to \infty} x_{n_i}$. For any $\epsilon > 0$, there exists $N$ that
+	\begin{equation*}
+		d(x_n,x_m) < \epsilon/2, \forall m,n > N.
+	\end{equation*}
+	Also, there exists $I$ that $n_I>N$ and
+	\begin{equation*}
+		d(x_{n_i}, x) < \epsilon/2, \forall i > I.
+	\end{equation*}
+	So for any $n > N$, we have
+	\begin{equation*}
+		d(x_n, x) \leq d(x_n, x_{n_I}) + d(x_{n_I}, x) < \epsilon/2 + \epsilon/2 = \epsilon.
+	\end{equation*}
 \end{proof}
 
 \begin{theorem}{Completeness of $\mathbb{R}^k$}{Completeness of mathbbRk}
@@ -72,9 +72,9 @@ Now we deal with the product space $\mathbb{R}^{\mathbb{Z}_+}$.
 	Let $X = \prod X_{\alpha}$ be a product space, and $(x_n)$ be a sequence in $X$. Then $(x_n)$ converges to $x \in X$ if and only if for each $\alpha$, the sequence $(\pi_{\alpha}(x_n))$ converges to $\pi_{\alpha}(x)$ in $X_{\alpha}$.
 \end{lemma}
 \begin{proof}
-The $\Rightarrow$ side is obvious as continuity preserve convergence.
+	The $\Rightarrow$ side is obvious as continuity preserve convergence.
 
-For the $\Leftarrow$ side, let $U = \prod U_{\alpha}$ be a basis containing $x$, for $U_{\alpha} \neq X_{\alpha}$, choose $N_{\alpha}$ that $\pi_{\alpha}(x_n) \in U_{\alpha}$ for all $n > N_{\alpha}$. Let $N = \max \{N_{\alpha}\}$, then for all $n > N$, $x_n \in U$.
+	For the $\Leftarrow$ side, let $U = \prod U_{\alpha}$ be a basis containing $x$, for $U_{\alpha} \neq X_{\alpha}$, choose $N_{\alpha}$ that $\pi_{\alpha}(x_n) \in U_{\alpha}$ for all $n > N_{\alpha}$. Let $N = \max \{N_{\alpha}\}$, then for all $n > N$, $x_n \in U$.
 \end{proof}
 
 \begin{theorem}{Compactness of $\mathbb{R}^{\mathbb{Z}_+}$}{Compactness of mathbbRmathbbZ+}
@@ -97,15 +97,15 @@ For the $\Leftarrow$ side, let $U = \prod U_{\alpha}$ be a basis containing $x$,
 \begin{example}{Non-complete Spaces}{Non-complete Spaces}
 	\begin{itemize}
 		\item The space $\mathbb{Q}$ of rational numbers with the usual metric is not complete. For example, the sequence
-			\begin{equation*}
-				1, 1.4, 1.41, 1.414, 1.4142, \ldots
-			\end{equation*}
-			is a Cauchy sequence in $\mathbb{Q}$ that does not converge to a rational number.
+		      \begin{equation*}
+			      1, 1.4, 1.41, 1.414, 1.4142, \ldots
+		      \end{equation*}
+		      is a Cauchy sequence in $\mathbb{Q}$ that does not converge to a rational number.
 		\item The space $(-1,1)$ is not complete under the usual metric. For example, the sequence
-			\begin{equation*}
-				0, 0.9, 0.99, 0.999, 0.9999, \ldots
-			\end{equation*}
-			is a Cauchy sequence in $(-1,1)$ that does not converge to a point in $(-1,1)$.
+		      \begin{equation*}
+			      0, 0.9, 0.99, 0.999, 0.9999, \ldots
+		      \end{equation*}
+		      is a Cauchy sequence in $(-1,1)$ that does not converge to a point in $(-1,1)$.
 	\end{itemize}
 \end{example}
 
@@ -124,12 +124,14 @@ Or written in function form, $Y^J$ is the set of all functions from $J$ to $Y$, 
 	If $(Y,d)$ is a complete metric space, then $(Y^J, \overline{\rho})$ is a complete metric space, for any set $J$.
 \end{theorem}
 \begin{proof}
-	If $(Y,d)$ is complete, so is $(Y,\overline{d})$. Suppose $f_n$ is a Cauchy sequence in $(Y^J, \overline{\rho})$. For each $\alpha \in J$, $f_n(\alpha)$ is a Cauchy sequence in $(Y,\overline{d})$ (see proof of theorem \ref{thm:Completeness of mathbbRmathbbZ+}), so it converges to some $f(\alpha) \in Y$. Let $f$ be the function defined by $f(\alpha) = \lim_{n \to \infty} f_n(\alpha)$ for each $\alpha \in J$. We show that $f_n$ converges to $f$ in $(Y^J, \overline{\rho})$:
+	If $(Y,d)$ is complete, so is $(Y,\overline{d})$. Suppose $f_n$ is a Cauchy sequence in $(Y^J, \overline{\rho})$. For each $\alpha \in J$, $f_n(\alpha)$ is a Cauchy sequence in $(Y,\overline{d})$, so it converges to some $f(\alpha) \in Y$. Let $f$ be the function defined by $f(\alpha) = \lim_{n \to \infty} f_n(\alpha)$ for each $\alpha \in J$. We show that $f_n$ converges to $f$ in $(Y^J, \overline{\rho})$:
 
 	For any $\epsilon > 0$, there exists $N$ such that for all $m,n > N$, $\overline{\rho}(f_n, f_m) < \epsilon / 2$. We have
 	\begin{equation*}
 		\overline{d}(f_n(\alpha), f(\alpha)) = \lim_{m \to \infty} \overline{d}(f_n(\alpha), f_m(\alpha)) \leq \epsilon / 2, \forall n > N, \forall \alpha \in J.
 	\end{equation*}
+	(follows from the continuity of metric proposition \ref{prop:Continuity of Metric} and theorem \ref{thm:Continuity and Convergence})
+
 	So we have $\overline{\rho}(f_n, f) \leq \epsilon / 2 < \epsilon$ for all $n > N$.
 \end{proof}
 
@@ -178,6 +180,61 @@ We now show that every metric space can be isometrically embedded in a complete 
 	Let $X$ be a metric space. If $h:X \rightarrow Y$ and $h':X \rightarrow Y'$ are isometric embeddings of $X$ into complete metric spaces $Y$ and $Y'$ such that both $h(X)$ and $h'(X)$ are dense in $Y$ and $Y'$, respectively, then there exists an isometry $g:Y \rightarrow Y'$ such that $g \circ h = h'$.
 \end{theorem}
 
+\section{A Space Filling Curve}
+An application for the completeness of $\mathcal{C}(X,Y)$ in the uniform metric when $Y$ is complete.
+\begin{theorem}{Peano's Curve}{Peano's Curve}
+	Let $I = [0,1]$, there exists a continuous surjective map $f:I \rightarrow I^2$.
+\end{theorem}
+
+\begin{figure}[ht]
+    \centering
+    \incfig{transformation-of-path}
+    \caption{Transformation of Path}
+    \label{fig:transformation-of-path}
+\end{figure}
+
+\begin{figure}[ht]
+    \centering
+    \incfig{peano-curve-construction}
+    \caption{Peano Curve Construction}
+    \label{fig:peano-curve-construction}
+\end{figure}
+
+\begin{proof}
+	\textbf{Step 1}: We construct a sequence of continuous functions and taking the limit. First we define an operation on paths:
+
+	Let $J^2$ be any square, and $g: [a,b] \rightarrow J^2$ be a path that looks like the following figure. Take a transformation $T$ that maps $g$ to $g':[a,b] \rightarrow J^2$ as follows:
+
+	\textbf{Step 2}: Define a sequence of paths $f_n: I \rightarrow I^2$ as follows:
+	\begin{itemize}
+		\item Let $f_0:I \rightarrow I^2$ be the first triangle picture in step 1.
+		\item Apply the transformation $T$ to $f_0$ to get $f_1$.
+		\item Apply the transformation $T$ to each small square in $f_n$ to get $f_{n+1}$.
+	\end{itemize}
+
+	\textbf{Step 3}: Take
+	\begin{equation*}
+		d(x,y) = \max \{|x_1 - y_1|, |x_2 - y_2|\}, \quad \rho(f,g) = \sup \{d(f(t), g(t)) : t \in I \}.
+	\end{equation*}
+	Because $I^2$ is closed in $\mathbb{R}^2$, it is complete, so $\mathcal{C}(I,I^2)$ is complete under $\rho$. We prove that $f_n$ is a Cauchy sequence in $\mathcal{C}(I,I^2)$: When passing the operator, the distance of the to functions is at most $A^2$, where $A$ is the edge length of the square. So passing form $f_n$ to $f_{n+1}$, we have $\rho(f_n,f_{n+1}) \leq  1 / 2^n$. Then
+	\begin{equation*}
+		\rho(f_n,f_{n+m}) \leq \sum_{i=n}^{n+m-1} \rho(f_i,f_{i+1}) \leq \sum_{i=n}^{n+m-1} \frac{1}{2^i} < \frac{1}{2^{n-1}}.
+	\end{equation*}
+	So $f_n$ is a Cauchy sequence, and it converges to some $f \in \mathcal{C}(I,I^2)$.
+
+	\textbf{Step 4}: We prove that $f$ is surjective: For any $x\in I^2$, the distance between $x$ and $f_n$ $< 1 / 2^n$, so for every $\epsilon > 0$, there exists $N$ that
+	\begin{equation*}
+		\rho(f_N, f) < \frac{\epsilon}{2}, \qquad \frac{1}{2^N} < \frac{\epsilon}{2}.
+	\end{equation*}
+	Then as $\exists t_0\in I, d(x,f_N(t_0))<1 / 2^N$, then
+	\begin{equation*}
+		d(x,f(t_0)) \leq d(x,f_N(t_0)) + d(f_N(t_0),f(t_0)) < \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon.
+	\end{equation*}
+	So we have every neighborhood of $x$ intersects $f(I)$, so $x \in \overline{f(I)} = f(I)$. We also have $I$ is compact and $f$ continuous, so $f(I)$ is compact, thus closed. So $f(I) = I^2$.
+\end{proof}
+
+
+
 \section{Compactness in Metric Spaces}
 We've already shown in theorem \ref{thm:Equivalence of Compactness in Metric Spaces} that in metric spaces, compactness, limit point compactness and sequential compactness are equivalent.
 
@@ -198,18 +255,18 @@ Following the equivalence, every compact metric space is sequentially compact, a
 	A metric space is compact if and only if it is complete and totally bounded.
 \end{theorem}
 \begin{proof}
-\begin{itemize}
-	\item The $\Rightarrow$ side is from theorem \ref{thm:Compact Metric Spaces are Complete} and the definition of compactness.
-	\item Let $X$ be complete and totally bounded, and prove that $X$ is sequentially compact. Let $(x_n)$ be a sequence in $X$. Since $X$ is totally bounded, there exists a finite cover of $X$ by open balls of radius $1$. So some ball contains infinitely many terms of the sequence. Call this ball $B_1$, and let $(x_{1,n})$ be the subsequence of $(x_n)$ consisting of all terms that lie in $B_1$.
+	\begin{itemize}
+		\item The $\Rightarrow$ side is from theorem \ref{thm:Compact Metric Spaces are Complete} and the definition of compactness.
+		\item Let $X$ be complete and totally bounded, and prove that $X$ is sequentially compact. Let $(x_n)$ be a sequence in $X$. Since $X$ is totally bounded, there exists a finite cover of $X$ by open balls of radius $1$. So some ball contains infinitely many terms of the sequence. Call this ball $B_1$, and let $(x_{1,n})$ be the subsequence of $(x_n)$ consisting of all terms that lie in $B_1$.
 
-		Next, since $X$ is totally bounded, there exists a finite cover of $X$ by open balls of radius $1/2$. So some ball contains infinitely many terms of the sequence $(x_{1,n})$. Call this ball $B_2$, and let $(x_{2,n})$ be the subsequence of $(x_{1,n})$ consisting of all terms that lie in $B_2$.
+		      Next, since $X$ is totally bounded, there exists a finite cover of $X$ by open balls of radius $1/2$. So some ball contains infinitely many terms of the sequence $(x_{1,n})$. Call this ball $B_2$, and let $(x_{2,n})$ be the subsequence of $(x_{1,n})$ consisting of all terms that lie in $B_2$.
 
-		Continuing in this way, we obtain a sequence of nested balls $B_k$ of radius $1/k$, each containing infinitely many terms of the previous subsequence. Let $(x_{k,n})$ be the subsequence of $(x_{k-1,n})$ consisting of all terms that lie in $B_k$. Now define a new sequence $(y_k)$ by letting $y_k = x_{k,k}$. Then $(y_k)$ is a subsequence of $(x_n)$, and for $m,n > N$, both $y_m$ and $y_n$ lie in the ball $B_N$ of radius $1/N$. So
-		\begin{equation*}
-			d(y_m,y_n) < 2/N.
-		\end{equation*}
-		This shows that $(y_k)$ is a Cauchy sequence in $X$, and since $X$ is complete, $(y_k)$ converges to some point in $X$. Thus every sequence in $X$ has a convergent subsequence, and so $X$ is sequentially compact.
-\end{itemize}
+		      Continuing in this way, we obtain a sequence of nested balls $B_k$ of radius $1/k$, each containing infinitely many terms of the previous subsequence. Let $(x_{k,n})$ be the subsequence of $(x_{k-1,n})$ consisting of all terms that lie in $B_k$. Now define a new sequence $(y_k)$ by letting $y_k = x_{k,k}$. Then $(y_k)$ is a subsequence of $(x_n)$, and for $m,n > N$, both $y_m$ and $y_n$ lie in the ball $B_N$ of radius $1/N$. So
+		      \begin{equation*}
+			      d(y_m,y_n) < 2/N.
+		      \end{equation*}
+		      This shows that $(y_k)$ is a Cauchy sequence in $X$, and since $X$ is complete, $(y_k)$ converges to some point in $X$. Thus every sequence in $X$ has a convergent subsequence, and so $X$ is sequentially compact.
+	\end{itemize}
 \end{proof}
 
 \end{document}

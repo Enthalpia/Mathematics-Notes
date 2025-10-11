@@ -928,6 +928,21 @@ Clearly the condition implies $U$ being open. Conversely, if $U$ is open, $\fora
     \label{fig:openness-in-metric-spaces}
 \end{figure}
 
+\begin{proposition}{Continuity of Metric}{Continuity of Metric}
+	Let $(X,d)$ be a metric space. Then the metric $d: X \times X \rightarrow \mathbb{R}$ is continuous, where $X\times X$ has the product topology and $\mathbb{R}$ has the standard topology.
+
+	Also, $x \mapsto d(x,y)$ is continuous for fixed $y\in X$.
+\end{proposition}
+\begin{proof}
+Let $(x_0,y_0) \in X \times X$, and $\epsilon>0$. Let $\delta = \frac{\epsilon}{2}$. Then for $(x,y) \in B(x_0,\delta) \times B(y_0,\delta)$, we have
+\begin{equation*}
+|d(x,y) - d(x_0,y_0)| \leq |d(x,y) - d(x_0,y)| + |d(x_0,y) - d(x_0,y_0)| \leq d(x,x_0) + d(y,y_0) < 2\delta = \epsilon
+\end{equation*}
+So $d$ is continuous.
+
+The second part follows from the Restricting of Domain rule of continuous functions.
+\end{proof}
+
 \begin{example}{Metric Topology}{Metric Topology}
 \begin{itemize}
 \item The standard metric on $\mathbb{R}$ is $d(x,y) = |x-y|$, the metric topology is the standard topology on $\mathbb{R}$.
