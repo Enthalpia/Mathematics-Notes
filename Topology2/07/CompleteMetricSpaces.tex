@@ -19,10 +19,12 @@ Completeness is a fundamental concept in analysis, referring to a property of me
 \end{remark}
 
 \begin{theorem}{Closed Subspace of Complete Spaces}{Closed Subspace of Complete Spaces}
-	A closed subspace of a complete metric space is complete. (in the restricted metric)
+	In a complete space, any closed subspace is complete, and any complete subspace is closed.
 \end{theorem}
 \begin{proof}
-	Well, a Cauchy sequence in the closed subspace is also a Cauchy sequence in the complete space, so it converges to some point in the complete space. Since the subspace is closed, the limit point is also in the subspace.
+	First, a Cauchy sequence in the closed subspace is also a Cauchy sequence in the complete space, so it converges to some point in the complete space. Since the subspace is closed, the limit point is also in the subspace.
+
+	Next, let $Y$ be a complete subspace of a complete space $X$. Let $x$ be a limit point of $Y$, then there exists a sequence $(y_n)$ in $Y$ that converges to $x$. So $(y_n)$ is a Cauchy sequence in $Y$, and it converges to some point in $Y$. But the limit is unique, so $x \in Y$.
 \end{proof}
 
 \begin{proposition}{Standard Bounded Metric and Completeness}{Standard Bounded Metric and Completeness}
@@ -181,7 +183,7 @@ We now show that every metric space can be isometrically embedded in a complete 
 \end{theorem}
 
 \section{A Space Filling Curve}
-An application for the completeness of $\mathcal{C}(X,Y)$ in the uniform metric when $Y$ is complete.
+An application for the completeness of $\mathscr{C}(X,Y)$ in the uniform metric when $Y$ is complete.
 \begin{theorem}{Peano's Curve}{Peano's Curve}
 	Let $I = [0,1]$, there exists a continuous surjective map $f:I \rightarrow I^2$.
 \end{theorem}
@@ -216,11 +218,11 @@ An application for the completeness of $\mathcal{C}(X,Y)$ in the uniform metric 
 	\begin{equation*}
 		d(x,y) = \max \{|x_1 - y_1|, |x_2 - y_2|\}, \quad \rho(f,g) = \sup \{d(f(t), g(t)) : t \in I \}.
 	\end{equation*}
-	Because $I^2$ is closed in $\mathbb{R}^2$, it is complete, so $\mathcal{C}(I,I^2)$ is complete under $\rho$. We prove that $f_n$ is a Cauchy sequence in $\mathcal{C}(I,I^2)$: When passing the operator, the distance of the to functions is at most $A^2$, where $A$ is the edge length of the square. So passing form $f_n$ to $f_{n+1}$, we have $\rho(f_n,f_{n+1}) \leq  1 / 2^n$. Then
+	Because $I^2$ is closed in $\mathbb{R}^2$, it is complete, so $\mathscr{C}(I,I^2)$ is complete under $\rho$. We prove that $f_n$ is a Cauchy sequence in $\mathscr{C}(I,I^2)$: When passing the operator, the distance of the to functions is at most $A^2$, where $A$ is the edge length of the square. So passing form $f_n$ to $f_{n+1}$, we have $\rho(f_n,f_{n+1}) \leq  1 / 2^n$. Then
 	\begin{equation*}
 		\rho(f_n,f_{n+m}) \leq \sum_{i=n}^{n+m-1} \rho(f_i,f_{i+1}) \leq \sum_{i=n}^{n+m-1} \frac{1}{2^i} < \frac{1}{2^{n-1}}.
 	\end{equation*}
-	So $f_n$ is a Cauchy sequence, and it converges to some $f \in \mathcal{C}(I,I^2)$.
+	So $f_n$ is a Cauchy sequence, and it converges to some $f \in \mathscr{C}(I,I^2)$.
 
 	\textbf{Step 4}: We prove that $f$ is surjective: For any $x\in I^2$, the distance between $x$ and $f_n$ $< 1 / 2^n$, so for every $\epsilon > 0$, there exists $N$ that
 	\begin{equation*}
@@ -268,5 +270,237 @@ Following the equivalence, every compact metric space is sequentially compact, a
 		      This shows that $(y_k)$ is a Cauchy sequence in $X$, and since $X$ is complete, $(y_k)$ converges to some point in $X$. Thus every sequence in $X$ has a convergent subsequence, and so $X$ is sequentially compact.
 	\end{itemize}
 \end{proof}
+
+We can apply this to find the compact subsets of $\mathscr{C}(X,\mathbb{R}^n)$ in the uniform topology. We know that a subset of $\mathbb{R}^n$ is compact iff it is closed and bounded. But this is not true in $\mathscr{C}(X,\mathbb{R}^n)$. We need additional conditions called equicontinuity.
+
+\begin{definition}{Equicontinuity}{Equicontinuity}
+	Let $(Y,d)$ be a metric space, and $\mathcal{F}$ be a subset of $\mathscr{C}(X,Y)$. Then $\mathcal{F}$ is equicontinuous at $x_0 \in X$ if for every $\epsilon > 0$, there exists a neighborhood $U$ of $x_0$ such that
+	\begin{equation*}
+		\forall f\in \mathcal{F}, \forall x \in U, d(f(x), f(x_0)) < \epsilon.
+	\end{equation*}
+	$\mathcal{F}$ is equicontinuous on $X$ if it is equicontinuous at each point of $X$.
+\end{definition}
+
+\begin{remark}
+	This means that we can choose a common $\delta$ for all functions in $\mathcal{F}$ to make them continuous at $x_0$. Note that this concept relies on the chosen metric $d$.
+\end{remark}
+
+\begin{lemma}{Totally Bounded Implies Equicontinuity}{Totally Bounded Implies Equicontinuity}
+	Let $X$ be a topological space, and $(Y,d)$ be a metric space. If $\mathcal{F} \subseteq \mathscr{C}(X,Y)$ is totally bounded in the uniform metric, then $\mathcal{F}$ is equicontinuous under $d$.
+\end{lemma}
+\begin{proof}
+	Assume $\mathcal{F}$ is totally bounded. For any $0 < \epsilon < 1, x_0\in X$, set $\delta = \epsilon / 3$, cover $\mathcal{F}$ by finite open balls
+	\begin{equation*}
+		B(f_i, \delta), i = 1,2,\ldots,n.
+	\end{equation*}
+	where $f_i \in \mathcal{F}$. Since $f_i$ is continuous at $x_0$, there exists a neighborhood $U_i$ of $x_0$ such that
+	\begin{equation*}
+		d(f_i(x), f_i(x_0)) < \delta, \forall x \in U_i.
+	\end{equation*}
+	Take $U = \bigcap_{i=1}^n U_i$, then for any $f \in \mathcal{F}$, there exists $i$ such that $\rho(f,f_i) < \delta$, so for any $x \in U$,
+	\begin{equation*}
+		d(f(x), f(x_0)) \leq d(f(x), f_i(x)) + d(f_i(x), f_i(x_0)) + d(f_i(x_0), f(x_0)) < \delta + \delta + \delta = \epsilon.
+	\end{equation*}
+\end{proof}
+
+Now we can prove the classical version of Ascoli's theorem. First we give a partial converse to the above lemma.
+
+\begin{lemma}{Equicontinuity Implies Totally Bounded}{Equicontinuity Implies Totally Bounded}
+	Let $X$ be a compact topological space, and $(Y,d)$ be a compact metric space. If $\mathcal{F} \subseteq \mathscr{C}(X,Y)$ is equicontinuous under $d$, then $\mathcal{F}$ is totally bounded in the uniform and sup metrics.
+\end{lemma}
+\begin{proof}
+	Since $X$ is compact, then $\mathscr{C}(X,Y) \subseteq \mathscr{B}(X,Y)$, and the sup metric is well defined. Here total boundedness under the uniform and sup metrics are equivalent.
+
+	For any $\epsilon > 0$, set $\delta = \epsilon / 3$, for all $a\in X$, there exists a neighborhood $U_a$ of $a$ such that
+	\begin{equation*}
+		\forall f\in \mathcal{F}, \forall x \in U_a, d(f(x), f(a)) < \delta.
+	\end{equation*}
+	Cover $X$ by such $U_a$, and there is a finite subcover, denoted $U_{a_i} = U_i$. Cover $Y$ by finite open balls $V_1, \ldots ,V_m$ with diameter $< \delta$.
+
+	Let $J$ be the set of all functions $\alpha: \{1,2,\ldots,n\} \rightarrow \{1,2,\ldots,m\}$. For each $\alpha \in J$, define
+	\begin{equation*}
+		J' = \left\{ \alpha\in J: \exists f\in \mathcal{F}, \forall i=1, \ldots ,k, f(a_i)\in V_{\alpha(i)} \right\}
+	\end{equation*}
+	This selects only those $\alpha$ in $J$ that correspond to some function in $\mathcal{F}$ that follows the pattern specified by $\alpha$. The set isn't empty because for any $f\in \mathcal{F}$, we can define $\alpha$ by letting $\alpha(i)$ be the index of a ball containing $f(a_i)$.
+
+	For each $\alpha \in J'$, choose $f_{\alpha} \in \mathcal{F}$ corresponding to $\alpha$. We prove that the open balls $B(f_{\alpha}, \epsilon)$, $\alpha \in J'$ cover $\mathcal{F}$:
+
+	Let $f \in \mathcal{F}$, there exists $\alpha \in J'$ such that $f(a_i) \in V_{\alpha(i)}$ for each $i$. Then for any $x \in X$, there exists $i$ such that $x \in U_i$, so
+	\begin{equation*}
+		d(f(x), f_{\alpha}(x)) \leq d(f(x), f(a_i)) + d(f(a_i), f_{\alpha}(a_i)) + d(f_{\alpha}(a_i), f_{\alpha}(x)) < \delta + \delta + \delta = \epsilon.
+	\end{equation*}
+	So we have $\rho(f, f_{\alpha}) < \epsilon$, thus $f \in B(f_{\alpha}, \epsilon)$.
+\end{proof}
+
+
+\begin{definition}{Pointwise Bounded}{Pointwise Bounded}
+	Let $X$ be a topological space, and $(Y,d)$ be a metric space. A subset $\mathcal{F}$ of $\mathscr{C}(X,Y)$ is pointwise bounded if for each $x \in X$, the set $\mathcal{F}_a = \{f(x) : f \in \mathcal{F}\}$ is a bounded subset of $Y$.
+\end{definition}
+
+\begin{theorem}{Ascoli's Theorem (Classical)}{Ascolis Theorem Classical}
+	Let $X$ be a compact space, and $(\mathbb{R}^n,d)$ be a metric space either in the square metric or the Euclidean metric. Give $\mathscr{C}(X,\mathbb{R}^n)$ the uniform topology. A subspace $\mathcal{F}$ of $\mathscr{C}(X,\mathbb{R}^n)$ has compact closure if and only if $\mathcal{F}$ is equicontinuous and pointwise bounded.
+\end{theorem}
+\begin{proof}
+	SORRY
+\end{proof}
+
+\begin{corollary}{Compact Subspace of Continuous Functions}{Compact Subspace of Continuous Functions}
+	Let $X$ be a compact space, and $(\mathbb{R}^n,d)$ be a metric space either in the square metric or the Euclidean metric. Give $\mathscr{C}(X,\mathbb{R}^n)$ the uniform topology. A subspace $\mathcal{F}$ of $\mathscr{C}(X,\mathbb{R}^n)$ is compact if and only if $\mathcal{F}$ is closed, equicontinuous and bounded.
+\end{corollary}
+\begin{proof}
+	In a metric space, a compact space is closed and bounded, so it has compact closure, and thus is equicontinuous and pointwise bounded. Conversely, if $\mathcal{F}$ is closed, equicontinuous and bounded, then it is pointwise bounded, so it has compact closure, thus is compact.
+\end{proof}
+
+
+\section{Pointwise and Compact Convergence}
+There are other useful topologies on $\mathscr{C}(X,Y)$, such as the topology of pointwise convergence, the topology of compact convergence and the compact-open topology.
+
+\begin{definition}{Topology of Pointwise Convergence}{Topology of Pointwise Convergence}
+	For a point $x\in X$ and an open set $U \subseteq Y$, let
+	\begin{equation}
+		S(x,U) = \{f \in Y^X : f(x) \in U \}.
+	\end{equation}
+	The topology of pointwise convergence on $Y^X$ is the topology generated by the subbasis consisting of all sets of the form $S(x,U)$.
+
+	It is just the product topology on $Y^X$.
+\end{definition}
+
+\begin{theorem}{Pointwise Convergence}{Pointwise Convergence}
+	A sequence $(f_n)$ in $Y^X$ converges to $f \in Y^X$ in the topology of pointwise convergence if and only if for each $x \in X$, the sequence $(f_n(x))$ converges to $f(x)$ in $Y$.
+\end{theorem}
+
+\begin{example}{Pointwise Convergence}{Pointwise Convergence}
+	Consider $[0,1] \rightarrow  \mathbb{R}$, then $f_n(x) = x^n$ converges to
+	\begin{equation*}
+		f(x) = \begin{cases}
+			0, & 0 \leq x < 1 \\
+			1, & x = 1
+		\end{cases}
+	\end{equation*}
+	in the topology of pointwise convergence, but $f$ is not continuous.
+\end{example}
+
+We may wonder that if there is a ``middle'' topology that lies between the uniform topology and the topology of pointwise convergence that ensure the limit of a convergent sequence of continuous functions is continuous. The answer is yes, the topology of compact convergence.
+
+\begin{definition}{Topology of Compact Convergence}{Topology of Compact Convergence}
+	Let $(Y,d)$ be a metric space, and $X$ be a topological space. Given $f\in Y^X$, a compact subset $C$ of $X$ and $\epsilon > 0$, let
+	\begin{equation*}
+		B_C(f,\epsilon) = \{g \in Y^X : \sup \{d(f(x), g(x)) : x \in C\} < \epsilon \}.
+	\end{equation*}
+	Then all such $B_C(f,\epsilon)$ form a basis for a topology on $Y^X$, called the topology of compact convergence.
+\end{definition}
+\begin{remark}
+	It is fairly easy to notice that this topology lies between the uniform topology and the pointwise topology. The former requires the supremum to be small on the whole space, while the latter only requires it to be small on some finite points. Now the supremum is required to be small on every compact subset.
+\end{remark}
+
+\begin{theorem}{Compact Convergence}{Compact Convergence}
+	Let $(Y,d)$ be a metric space, and $X$ be a topological space. A sequence $(f_n)$ in $Y^X$ converges to $f \in Y^X$ in the topology of compact convergence if and only if for every compact subset $C$ of $X$, the sequence $(f_n|_C)$ converges to $f|_C$ in the uniform topology on $\mathscr{C}(C,Y)$.
+\end{theorem}
+\begin{proof}
+	Obvious.
+\end{proof}
+
+\begin{definition}{Compactly Generated}{Compactly Generated}
+	A topological space $X$ is compactly generated if for all $A \subseteq X$:
+	\begin{equation*}
+		\forall \text{ compact } C \subseteq X, A\cap C \in \mathcal{T}_C \rightarrow A \in \mathcal{T}.
+	\end{equation*}
+	Or equivalently, $A$ is closed in $X$ if for every compact subset $C$ of $X$, $A \cap C$ is closed in $C$.
+\end{definition}
+The equivalence is easy to prove. And we shall see that it is a fairly mild restriction on the space.
+
+\begin{lemma}{Compact Generated Spaces}{Compact Generated Spaces}
+	Locally compact spaces or first countable spaces are compactly generated.
+\end{lemma}
+\begin{proof}
+	\textbf{Locally Compact Spaces}, let $A \subseteq X$ such that for every compact subset $C$ of $X$, $A \cap C$ is open in $C$, then given $x\in A$, take a neighborhood $U$ that lies in a compact $C$. Then $A \cap C$ is open in $C$, so $A\cap U$ is open in $U$, hence open in $X$. So $A$ is open in $X$.
+
+	\textbf{First Countable Spaces}, If $B\cap C$ is closed in $C$ for all compact $C$, let $x\in \overline{B}$, take a sequence $(x_n)$ in $B$ that converges to $x$ (from first countable). Then the subspace
+	\begin{equation*}
+		C = \left\{ x \right\} \cup \left\{ x_n: n\in \mathbb{Z}_+ \right\}
+	\end{equation*}
+	is compact, so $B\cap C$ is closed in $C$, thus $x\in B\cap C \subseteq B$. So $B$ is closed in $X$.
+\end{proof}
+
+\begin{theorem}{Continuity in Compactly Generated Spaces}{Continuity in Compactly Generated Spaces}
+	Let $X$ be a compactly generated space. Then a function $f:X \rightarrow Y$ is continuous if and only if for every compact subset $C$ of $X$, the restriction $f|_C$ is continuous.
+\end{theorem}
+\begin{proof}
+	For any open $V \subseteq Y$, then for any $C \subseteq X$:
+	\begin{equation*}
+		f^{-1}(V) \cap C = (f|_C)^{-1}(V).
+	\end{equation*}
+	If $C$ is compact, then $f|_C$ is continuous, so $(f|_C)^{-1}(V)$ is open in $C$. Thus $f^{-1}(V)$ is open in $X$, so $f$ is continuous.
+\end{proof}
+
+\begin{remark}
+	This clearly shows where our intuition of compact generation comes from.
+\end{remark}
+
+\begin{theorem}{Closedness of Continuity Space in Compact Convergence}{Closedness of Continuity Space in Compact Convergence}
+	Let $X$ be a compactly generated space, and $(Y,d)$ be a metric space. Then $\mathscr{C}(X,Y)$ is closed in $Y^X$ under the topology of compact convergence.
+\end{theorem}
+\begin{proof}
+	Let $f \in \overline{\mathscr{C}(X,Y)}$, we prove that $f$ is continuous: For any compact subset $C$ of $X$, choose $f_n\in \mathscr{C}(X,Y)$ that lies in $B_C(f,1 / n)$. Then $f_n|_C$ converges to $f|_C$ in the uniform topology on $\mathscr{C}(C,Y)$, so $f|_C$ is continuous. From theorem \ref{thm:Continuity in Compactly Generated Spaces}, $f$ is continuous.
+\end{proof}
+
+\begin{corollary}{Inner Compact Convergence Theorem}{Inner Compact Convergence Theorem}
+	Let $X$ be a compactly generated space, and $(Y,d)$ be a complete metric space. If a continuous sequence $(f_n)$ in $\mathscr{C}(X,Y)$ converges to $f$ in the topology of compact convergence, then $f \in \mathscr{C}(X,Y)$.
+\end{corollary}
+
+The relation of the three topologies is summarized as follows:
+\begin{theorem}{Relation of Function Space Topologies}{Relation of Function Space Topologies}
+	Let $X$ be a topological space, and $(Y,d)$ be a metric space. Then we have the relation of topologies on $Y^X$:
+	\begin{equation}
+		\text{ pointwise convergence } \subseteq \text{ compact convergence } \subseteq \text{ uniform convergence.}
+	\end{equation}
+	where the first inclusion is an equality if $X$ is discrete, and the second inclusion is an equality if $X$ is compact.
+\end{theorem}
+
+\begin{remark}
+	All three topologies make use of the metric $d$ on $Y$, but we found that the poitwise convergence topology does not depend on the choice of $d$. In fact, it is just the product topology on $Y^X$. A natural question is whether there is a generalization of the compact convergence topology to general topological spaces.
+\end{remark}
+
+\begin{definition}{Compact-Open Topology}{Compact-Open Topology}
+	Let $X$ and $Y$ be topological spaces. Given a compact subset $C$ of $X$ and an open set $U \subseteq Y$, let
+	\begin{equation*}
+		S(C,U) = \{f \in Y^X : f(C) \subseteq U \}.
+	\end{equation*}
+	The compact-open topology on $Y^X$ is the topology generated by the subbasis consisting of all sets of the form $S(C,U)$.
+\end{definition}
+And it coincides with the compact convergence topology when $Y$ is a metric space, obviously.
+
+\begin{theorem}{Conincidence of Compact-Open Topology}{Coincidence of Compact Convergence and Compact-Open Topology}
+	Let $X$ be a topological space, and $(Y,d)$ be a metric space. Then the topology of compact convergence on $\mathscr{C}(X,Y)$ coincides with the compact-open topology.	
+\end{theorem}
+\begin{proof}
+SORRY
+\end{proof}
+
+\begin{corollary}{Independence of Metric of Compact Convergence}{Independence of Metric of Compact Convergence}
+	Let $X$ be a topological space, and $Y$ be a topological space that is metrizable. Then the topology of compact convergence on $\mathscr{C}(X,Y)$ does not depend on the choice of metric on $Y$.
+\end{corollary}
+
+\begin{remark}
+	The compact convergence shows that it is both continuous on $x$ and $f$, in some sense, this is called joint continuity. And it is fairly useful in many areas, such as functional analysis and algebraic topology.
+\end{remark}
+
+\begin{theorem}{Evaluation Map}{Evaluation Map}
+	Let $X$ be locally compact Hausdorff, and $\mathscr{C}(X,Y)$ be the compact-open topology. Then the map
+	\begin{equation}
+		e: X \times \mathscr{C}(X,Y) \rightarrow Y, \quad e(x,f) = f(x)
+	\end{equation}
+	is continuous. We call $e$ the evaluation map.
+\end{theorem}
+\begin{proof}
+	Take $(x,f)\in X \times \mathscr{C}(X,Y)$, and an open neighborhood $V \subseteq Y$ of $f(x)$. By the continuity of $f$, and the local compact Hausdorff of $X$, choose an open neighborhood $U$ of $x$ that $\overline{U}$ is compact and $f(U) \subseteq V$. Consider $U \times S(\overline{U},V)$, if $(y,g) \in U \times S(\overline{U},V)$, then $g(\overline{U}) \subseteq V$, so $g(y) \in V$. Thus $e(U \times S(\overline{U},V)) \subseteq V$, so $e$ is continuous.
+\end{proof}
+
+\begin{figure}[ht]
+    \centering
+    \incfig{the-evaluation-map}
+    \caption{The Evaluation Map}
+    \label{fig:the-evaluation-map}
+\end{figure}
 
 \end{document}
