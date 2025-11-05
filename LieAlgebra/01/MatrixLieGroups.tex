@@ -1,0 +1,515 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\chapter{Matrix Lie Groups}
+
+\section{Definition and Examples}
+Roughly speaking, a \textbf{Lie group} is a \textbf{continuous group} that is described by several real parameters. In this book we consider only \textbf{matrix Lie groups}, which are Lie groups that can be represented as groups of matrices, such as $SL(2;\mathbb{R})$ which consists of all $2 \times 2$ real matrices with determinant equal to $1$. This can be thought of as a subset of $\mathbb{R}^4$ where $f(a,b,c,d) = ad-bc=1$.
+
+Now suppose $f$ is a smooth function on $\mathbb{R}^k$ and consider $E = \left\{ x\in \mathbb{R}^k: f(x) = c \right\}$. If $\nabla f(x) \neq 0$ for all $x \in E$, then $E$ is a smooth surface of dimension $k-1$. This is a consequence of the \textbf{Implicit Function Theorem}. In this sense, $SL(2;\mathbb{R})$ is a smooth manifold of dimension $3$.
+
+\begin{definition}{The General Linear Group}{The General Linear Group}
+	The general linear group over $\mathbb{F}$ is defined as all invertible $n \times n$ matrices with entries from $\mathbb{F}$. Usually, $\mathbb{F}$ is either $\mathbb{R}$ or $\mathbb{C}$. It is denoted by $GL(n;\mathbb{F})$. The group operation in $GL(n;\mathbb{F})$ is matrix multiplication.
+\end{definition}
+
+We shall denote all $n \times n$ matrices with entries from $\mathbb{F}$ by $M_{n}(\mathbb{F})$. Note that $GL(n;\mathbb{F})$ is a subset of $M_{n}(\mathbb{F}) \cong \mathbb{F}^{n^2}$.
+
+\begin{definition}{Matrix Lie Groups}{Matrix Lie Groups}
+	A \textbf{matrix Lie group} is a closed subgroup $G$ of $GL(n;\mathbb{C})$ for some $n$. Here, \textbf{closed} means closed in the standard subspace topology on $GL(n;\mathbb{C}) \subseteq \mathbb{C}^{n^2} \cong \mathbb{R}^{2n^2}$.
+\end{definition}
+\begin{remark}
+	Note that this does not necessarily mean that $G$ is closed as a subset of $M_{n}(\mathbb{C})\cong \mathbb{C}^{n^2}$. (The space $GL(n;\mathbb{C})$ itself is open in $M_{n}(\mathbb{C})$ since the determinant is a continuous function and $GL(n;\mathbb{C}) = \left\{ A \in M_{n}(\mathbb{C}): \det(A) \neq 0 \right\} = \det^{-1}(\mathbb{C} \setminus \{0\})$.)
+
+	All topological notions such as continuity, convergence, and closedness in matrix Lie groups are with respect to the subspace topology inherited from $GL(n;\mathbb{C})$.
+\end{remark}
+
+\begin{example}{The Irrational Line in a Torus}{The Irrational Line in a Torus}
+	Take $a$ be an irrational real number and consider the set
+	\begin{equation*}
+		G = \left\{ \begin{pmatrix}
+			e^{i t} & 0         \\
+			0       & e^{i a t}
+		\end{pmatrix} : t \in \mathbb{R} \right\}.
+	\end{equation*}
+	This is a subgroup of $GL(2;\mathbb{C})$ since the product of two such matrices is again of the same form and the inverse of such a matrix is also of the same form. However, $G$ is not closed in $GL(2;\mathbb{C})$. To see this, consider the sequence of matrices
+	\begin{equation*}
+		A_n = \begin{pmatrix}
+			e^{i 2 \pi n} & 0               \\
+			0             & e^{i a 2 \pi n}
+		\end{pmatrix} = \begin{pmatrix}
+			1 & 0               \\
+			0 & e^{i a 2 \pi n}
+		\end{pmatrix}.
+	\end{equation*}
+	Since $a$ is irrational, the sequence $\left\{ e^{i a 2 \pi n} \right\}_{n=1}^{\infty}$ is dense in the unit circle $\left\{ e^{i \theta} : \theta \in \mathbb{R} \right\}$. Thus, the sequence $\left\{ A_n \right\}_{n=1}^{\infty}$ has limit points of the form
+	\begin{equation*}
+		A = \begin{pmatrix}
+			1 & 0            \\
+			0 & e^{i \theta}
+		\end{pmatrix}
+	\end{equation*}
+	for any $\theta \in \mathbb{R}$. However, none of these limit points (except when $\theta = 0$) are in $G$. Therefore, $G$ is not closed in $GL(2;\mathbb{C})$.
+
+	Obviously, the closure of $G$ in $GL(2;\mathbb{C})$ is
+	\begin{equation*}
+		\overline{G} = \left\{ \begin{pmatrix}
+			e^{i \theta_1} & 0              \\
+			0              & e^{i \theta_2}
+		\end{pmatrix} : \theta_1, \theta_2 \in \mathbb{R} \right\},
+	\end{equation*}
+	which is isomorphic to the $2$-torus $S^1 \times S^1$.
+\end{example}
+
+\begin{example}{Matrix Lie Groups}{Matrix Lie Groups}
+	Here are some examples of matrix Lie groups:
+	\begin{itemize}
+		\item The general linear group $GL(n;\mathbb{R})$ and $GL(n;\mathbb{C})$.
+		\item The special linear group $SL(n;\mathbb{R}) = \left\{ A \in GL(n;\mathbb{R}) : \det(A) = 1 \right\}$ and $SL(n;\mathbb{C}) = \left\{ A \in GL(n;\mathbb{C}) : \det(A) = 1 \right\}$.
+		\item The orthogonal group $O(n) = \left\{ A \in GL(n;\mathbb{R}) : A^T A = I \right\}$.
+		\item The special orthogonal group $SO(n) = \left\{ A \in O(n) : \det(A) = 1 \right\}$.
+		\item The complex orthogonal group $O(n;\mathbb{C}) = \left\{ A \in GL(n;\mathbb{C}) : A^T A = I \right\}$.
+		\item The special complex orthogonal group $SO(n;\mathbb{C}) = \left\{ A \in O(n;\mathbb{C}) : \det(A) = 1 \right\}$.
+		\item The unitary group $U(n) = \left\{ A \in GL(n;\mathbb{C}) : A^* A = I \right\}$, where $A^*$ is the conjugate transpose of $A$.
+		\item The special unitary group $SU(n) = \left\{ A \in U(n) : \det(A) = 1 \right\}$.
+	\end{itemize}
+\end{example}
+
+\begin{notation}{Complex Inner Product}{Complex Inner Product}
+	NOTE!! In this book, we take the complex inner product to be linear in the second argument and conjugate linear in the first argument, i.e., the standard inner product on $\mathbb{C}^n$ is defined as
+	\begin{equation*}
+		\langle x, y \rangle = \sum_{i=1}^n \overline{x_i} y_i.
+	\end{equation*}
+\end{notation}
+
+\paragraph{Generalized Orthogonal Groups}
+We know that the orthogonal group $O(n)$ is the set of all linear transformations that preserve the symmetric bilinear form
+\begin{equation*}
+	(x,y) = \sum_{i=1}^n x_i y_i.
+\end{equation*}
+In general case, we shall consider the bilinear form on $\mathbb{R}^{n+k}$, where $n,k\in \mathbb{Z}_+$,
+\begin{equation*}
+	[x,y]_{n,k} = \sum_{i=1}^n x_i y_i - \sum_{j=n+1}^{n+k} x_j y_j.
+\end{equation*}
+The set of all linear transformations that preserve this bilinear form, i.e., the set of all $A \in GL(n+k;\mathbb{R})$ such that
+\begin{equation*}
+	[Ax,Ay]_{n,k} = [x,y]_{n,k}
+\end{equation*}
+for all $x,y \in \mathbb{R}^{n+k}$, is called the \textbf{generalized orthogonal group} and is denoted by $O(n,k)$. We also define the \textbf{special generalized orthogonal group} as
+\begin{equation*}
+	SO(n,k) = \left\{ A \in O(n,k) : \det(A) = 1 \right\}.
+\end{equation*}
+Both $O(n,k)$ and $SO(n,k)$ are matrix Lie groups. In particular, $O(3,1)$ is called the \textbf{Lorentz group} and plays an important role in the theory of special relativity.
+
+The matrix of the bilinear form $[\cdot,\cdot]_{n,k}$ is
+\begin{equation*}
+	I_{n,k} = \begin{pmatrix}
+		I_n & 0    \\
+		0   & -I_k
+	\end{pmatrix},
+\end{equation*}
+So we have $[x,y]_{n,k} = x^T I_{n,k} y$. Therefore, $A \in O(n,k)$ if and only if
+\begin{equation*}
+	A^T I_{n,k} A = I_{n,k}.
+\end{equation*}
+We still have $\det(A) = \pm 1$ for all $A \in O(n,k)$, so $SO(n,k)$ is indeed a subgroup of $O(n,k)$.
+
+\paragraph{Symplectic Groups}
+
+Consider the skew-symmetric bilinear form on $\mathbb{R}^{2n}$ defined by
+\begin{equation*}
+	\omega(x,y) = \sum_{i=1}^n (x_i y_{n+i} - x_{n+i} y_i).
+\end{equation*}
+The matrix of this bilinear form is
+\begin{equation*}
+	J = \begin{pmatrix}
+		0    & I_n \\
+		-I_n & 0
+	\end{pmatrix}.
+\end{equation*}
+The set of all linear transformations that preserve this bilinear form is called the \textbf{symplectic group} and is denoted by $Sp(n;\mathbb{R})$. We shall see that a matrix $A$ is in $Sp(n;\mathbb{R})$ if and only if
+\begin{equation*}
+	A^T J A = J.
+\end{equation*}
+A mere taking both sides' determinants shows that $\det(A) = \pm 1$ for all $A \in Sp(n;\mathbb{R})$. In fact, we have $\det(A) = 1$ for all $A \in Sp(n;\mathbb{R})$, so there is no need to define a special symplectic group.
+\begin{proof}
+	SORRY.
+\end{proof}
+The same goes for the complex case: $Sp(n;\mathbb{C})$ is the set of all $A \in GL(2n;\mathbb{C})$ that preserve the bilinear form. Same again, we have $\det(A) = 1$ for all $A \in Sp(n;\mathbb{C})$.
+
+We shall also define the \textbf{compalex symplectic group} as
+\begin{equation*}
+	Sp(n) = Sp(n;\mathbb{C}) \cap U(2n).
+\end{equation*}
+which means the set of all unitary matrices that preserve the bilinear form.
+
+\paragraph{The Euclidean and Poincar\'e Groups}
+The \textbf{Euclidean group} $E(n)$ is the group of all isometries of $\mathbb{R}^n$. They can be uniquely expressed as a composition of a translation and an orthogonal transformation. We denote its elements as $\{x,R\}$, where $x \in \mathbb{R}^n$ is the translation vector and $R \in O(n)$ is the orthogonal transformation. The group operation is given by
+\begin{equation}
+	\{x, R\} y = R y + x, \quad x,y \in \mathbb{R}^n, R \in O(n).
+\end{equation}
+\begin{itemize}
+	\item The identity element is $\{0, I\}$.
+	\item The inverse of $\{x, R\}$ is $\{-R^{-1} x, R^{-1}\}$.
+	\item The composition of two elements is given by
+	      \begin{equation*}
+		      \{x_1, R_1\} \{x_2, R_2\} = \{R_1 x_2 + x_1, R_1 R_2\}.
+	      \end{equation*}
+\end{itemize}
+
+We shall notice that $E_n$ is not a subgroup of $GL(n;\mathbb{R})$. However, it is isomorphic to the following subgroup of $GL(n+1;\mathbb{R})$:
+\begin{equation*}
+	G = \left\{ \begin{pmatrix}
+		R & x \\
+		0 & 1
+	\end{pmatrix} : R \in O(n), x \in \mathbb{R}^n \right\}.
+\end{equation*}
+it is a closed subgroup, so it is a matrix Lie group.
+
+Similarly, the \textbf{Poincar\'e group} $P(n,1)$ is the group of all isometries of the Minkowski space $\mathbb{R}^{n,1}$. Its elements can be uniquely expressed as a composition of a translation and a Lorentz transformation. We denote its elements as $\{x, \Lambda\}$, where $x \in \mathbb{R}^{n+1}$ is the translation vector and $\Lambda \in O(n,1)$ is the Lorentz transformation. It is isomorphic to the following subgroup of $GL(n+2;\mathbb{R})$:
+\begin{equation*}
+	G = \left\{ \begin{pmatrix}
+		\Lambda & x \\
+		0       & 1
+	\end{pmatrix} : \Lambda \in O(n,1), x \in \mathbb{R}^{n+1} \right\}.
+\end{equation*}
+it is a closed subgroup, so it is a matrix Lie group.
+
+\paragraph{The Heisenberg Group}
+The \textbf{Heisenberg group} $H$ is the set of all $3 \times 3$ upper triangular matrices with $1$'s on the diagonal, i.e.,
+\begin{equation*}
+	H = \left\{ \begin{pmatrix}
+		1 & a & b \\
+		0 & 1 & c \\
+		0 & 0 & 1
+	\end{pmatrix} : a,b,c \in \mathbb{R} \right\}.
+\end{equation*}
+It is easy to check that $H$ is a subgroup of $GL(3;\mathbb{R})$ and is closed, so it is a matrix Lie group.
+
+\paragraph{Some Classical Groups}
+Several groups that are not defined as matrices can be represented as matrix Lie groups.
+\begin{itemize}
+	\item The group $\mathbb{R}^*$ of all nonzero real numbers under multiplication is isomorphic to the matrix Lie group $GL(1;\mathbb{R})$ via the map $x \mapsto (x)$. The same goes for the group $\mathbb{C}^*$ of all nonzero complex numbers under multiplication, which is isomorphic to $GL(1;\mathbb{C})$.
+	\item The group $(\mathbb{R};+)$ of all real numbers under addition is isomorphic to the matrix Lie group
+	      \begin{equation*}
+		      G = \left\{ \begin{pmatrix}
+			      1 & t \\
+			      0 & 1
+		      \end{pmatrix} : t \in \mathbb{R} \right\}
+	      \end{equation*}
+	      and also to $GL(1;\mathbb{R})^+$, which is the set of $1 \times 1$ matrices with positive determinant, via the map $t \mapsto e^t$. The same goes for the group $(\mathbb{R}^n; +)$ of all $n$-tuples of real numbers under addition, which is isomorphic to the matrix Lie group
+	      \begin{equation*}
+		      G = \left\{ \begin{pmatrix}
+			      I_n & x \\
+			      0   & 1
+		      \end{pmatrix} : x \in \mathbb{R}^n \right\}
+	      \end{equation*}
+	\item The group $S^1$ of all complex numbers with absolute value $1$ under multiplication is isomorphic to the matrix Lie group $U(1)$.
+\end{itemize}
+
+\paragraph{The Compact Symplectic Group}
+The \textbf{compact symplectic group} $Sp(n)$ is defined as $Sp(n;\mathbb{C}) \cap U(2n)$, i.e., the set of all unitary matrices that preserve the standard symplectic form. It is a matrix Lie group.
+
+Another representation of the symplectic form is as follows.
+\begin{equation}
+	Sp(n) = \left\{
+	\begin{pmatrix}
+		A             & B            \\
+		-\overline{B} & \overline{A}
+	\end{pmatrix} : A,B \in M_n(\mathbb{C}),
+	\right\}.
+\end{equation}
+\begin{proof}
+	Suppose $X \in Sp(m)$ is written as
+	\begin{equation*}
+		X = \begin{pmatrix}
+			A & C \\
+			B & D
+		\end{pmatrix}
+	\end{equation*}
+	with $A, B, C, D \in M_m(\mathbb{C})$.
+
+	From the relations $X^t \Omega X = \Omega$ and $X^* X = I_{2m}$, we obtain
+	\begin{equation*}
+		\begin{aligned}
+			 & A^t C = C^t A, \qquad B^t D = D^t B, \qquad A^t D = C^t B + I_m, \qquad D^t A = B^t C + I_m, \\
+			 & \overline{A}^t B = -\overline{C}^t D, \qquad \overline{B}^t A = -\overline{D}^t C,           \\
+			 & \overline{A}^t A + \overline{C}^t C = I_m, \qquad \overline{B}^t B + \overline{D}^t D = I_m
+		\end{aligned}
+	\end{equation*}
+
+	To show $C = -\overline{B}$ and $D = \overline{A}$, consider
+	\begin{equation*}
+		\| C + \overline{B} \|^2 + \| \overline{D} - A \|^2 = \operatorname{Tr}\left[(C + \overline{B})^t (C + \overline{B}) + (\overline{D} - A)^t (\overline{D} - A)\right]
+	\end{equation*}
+	Expanding and using the above relations, we find this sum is zero, so $C + \overline{B} = 0$ and $\overline{D} - A = 0$, i.e. $C = -\overline{B}$ and $D = \overline{A}$.
+
+	Thus,
+	\begin{equation*}
+		Sp(m) = \left\{
+		\begin{pmatrix}
+			A & -\overline{B} \\
+			B & \overline{A}
+		\end{pmatrix}
+		\,:\,
+		A, B \in M_m(\mathbb{C}),
+		\quad
+		\overline{A}^T A + B^T \overline{B} = I_m,
+		\quad
+		\overline{A}^T B = B^T \overline{A}
+		\right\}
+	\end{equation*}
+\end{proof}
+
+Define a conjugate linear map $J: \mathbb{C}^{2n} \to \mathbb{C}^{2n}$ by
+\begin{equation*}
+	J(\alpha, \beta) = (-\overline{\beta}, \overline{\alpha}),
+\end{equation*}
+for all $z,w \in \mathbb{C}^{2n}$, we have
+\begin{equation*}
+	\omega(z,w) = \langle J z, w \rangle,
+\end{equation*}
+NOTE we take the inner product to be linear in the second argument, and conjugate linear in the first argument.
+\begin{proof}
+	Let $z = (\alpha, \beta)$ and $w = (\gamma, \delta)$, where $\alpha, \beta, \gamma, \delta \in \mathbb{C}^n$. Then
+	\begin{align*}
+		\langle J z, w \rangle & = \langle (-\overline{\beta}, \overline{\alpha}), (\gamma, \delta) \rangle \\
+		                       & = (-\overline{\beta})^* \gamma + (\overline{\alpha})^* \delta              \\
+		                       & = -\beta^T \gamma + \alpha^T \delta                                        \\
+		                       & = \sum_{i=1}^n (\alpha_i \delta_i - \beta_i \gamma_i)                      \\
+		                       & = \omega(z,w).
+	\end{align*}
+\end{proof}
+we have
+\begin{equation*}
+	\langle J z, w \rangle = - \overline{\langle z, J w \rangle} = - \langle J w, z \rangle, \qquad J^2 = -I.
+\end{equation*}
+
+\begin{proposition}{Criterion for $Sp(n)$}{Criterion for Spn}
+	If $U\in U(2n)$, then $U \in Sp(n)$ if and only if $U J = J U$.
+\end{proposition}
+\begin{proof}
+	For any $z,w \in \mathbb{C}^{2n}$, we have
+	\begin{equation*}
+		\omega(z,w) = \omega(U z, U w) \Leftrightarrow \langle J z, w \rangle = \langle J U z, U w \rangle \Leftrightarrow \langle J z, w \rangle = \langle U^* J U z, w \rangle.
+	\end{equation*}
+	which is equivalent to $J = U^* J U$, or $U J = J U$.
+\end{proof}
+
+To this end, we can construct another representation of $Sp(n)$ from the quaternions $\mathbb{H}$. Recall that a quaternion algebra can be represented in $M_2(\mathbb{C})$ as follows:
+\begin{equation*}
+	1 \mapsto \begin{pmatrix}
+		1 & 0 \\
+		0 & 1
+	\end{pmatrix}, \quad \boldsymbol{i} \mapsto \begin{pmatrix}
+		i & 0  \\
+		0 & -i
+	\end{pmatrix}, \quad \boldsymbol{j} \mapsto \begin{pmatrix}
+		0  & 1 \\
+		-1 & 0
+	\end{pmatrix}, \quad \boldsymbol{k} \mapsto \begin{pmatrix}
+		0 & i \\
+		i & 0
+	\end{pmatrix}.
+\end{equation*}
+
+Since $J$ is conjugate linear, we have $J(i z) = -i J(z)$ for all $z \in \mathbb{C}^{2n}$, or $iJ = -Ji$, and if we define $K = iJ$, then we have $K^2 = -I$ and $iI,J,K$ satisfy the quaternion relations. Thus, we can view $\mathbb{C}^{2n}$ as a vector space over $\mathbb{H}$ with
+\begin{equation}
+	\boldsymbol{i} \cdot z = i z, \quad \boldsymbol{j} \cdot z = J z, \quad \boldsymbol{k} \cdot z = K z.
+\end{equation}
+
+\begin{remark}
+	This is quite natural, since $\mathbb{H}$ is isomorphic to $\mathbb{C}^2$ as a real vector space. For every $z\in \mathbb{C}^{2n}$, take the $i$ and $n+i$-th components to form a quaternion. We can write
+	\begin{equation*}
+		z = (\alpha_1 + \beta_1 \boldsymbol{j}, \alpha_2 + \beta_2 \boldsymbol{j}, \ldots , \alpha_n + \beta_n \boldsymbol{j}) =
+		\begin{pmatrix}
+			\alpha_1 & \alpha_2 & \cdots & \alpha_n \\
+			\beta_1  & \beta_2  & \cdots & \beta_n
+
+		\end{pmatrix}
+	\end{equation*}
+	We have
+	\begin{equation*}
+		\boldsymbol{i} \alpha_1 + \boldsymbol{i} \beta_1 \boldsymbol{j} = i \alpha_1 + i \beta_1 \boldsymbol{j}, \quad
+		\boldsymbol{j} \alpha_1 + \boldsymbol{j} \beta_1 \boldsymbol{j} = -\overline{\beta_1} + \overline{\alpha_1} \boldsymbol{j} \quad
+		\boldsymbol{k} \alpha_1 + \boldsymbol{k} \beta_1 \boldsymbol{j} = -i \overline{\beta_1} + i \overline{\alpha_1} \boldsymbol{j}.
+	\end{equation*}
+
+	For a unitary transformation $U$ on $\mathbb{C}^{2n}$, from proposition \ref{prop:Criterion for Spn} we know that $U \in Sp(n)$ if and only if $U J = J U$. Since $K = i J$, this is equivalent to $U K = K U$. Thus, $U \in Sp(n)$ if and only if $U$ commutes with the action of $\boldsymbol{j}$ and hence with the action of $\boldsymbol{k}$. Therefore, $U$ is $\mathbb{H}$-linear. Conversely, every $\mathbb{H}$-linear unitary transformation on $\mathbb{C}^{2n}$ is in $Sp(n)$.
+
+	The quaternionic inner product on $\mathbb{H}^n$ is defined as
+	\begin{equation*}
+		\langle p, q \rangle = \sum_{i=1}^n \overline{p_i} q_i,
+	\end{equation*}
+	where $p,q \in \mathbb{H}^n$. Also, we have $\overline{\alpha + \beta i} = \overline{\alpha} - \beta i$ for all $\alpha, \beta \in \mathbb{C}$. Therefore, we have
+	\begin{equation*}
+		\begin{aligned}
+			\langle z, w \rangle & = \sum_{i=1}^n \overline{\alpha_i + \beta_i \boldsymbol{j}} (\gamma_i + \delta_i \boldsymbol{j})                                                          \\
+			                     & = \sum_{i=1}^n (\overline{\alpha_i} - \beta_i \boldsymbol{j}) (\gamma_i + \delta_i \boldsymbol{j})                                                        \\
+			                     & = \sum_{i=1}^n (\overline{\alpha_i} \gamma_i + \beta_i \overline{\delta_i} + (\overline{\alpha_i} \delta_i - \beta_i \overline{\gamma_i}) \boldsymbol{j}) \\
+		\end{aligned}
+	\end{equation*}
+	We shall see that $U\in Sp(n)$ preserves this quaternionic inner product. First we write $U$ in block form as
+	\begin{equation*}
+		U = \begin{pmatrix}
+			A             & B            \\
+			-\overline{B} & \overline{A}
+		\end{pmatrix},
+	\end{equation*}
+\end{remark}
+
+\begin{theorem}{The Compact Symplectic Group}{The Compact Symplectic Group}
+	$Sp(n)$ is the group of all $\mathbb{H}$-linear unitary transformations on $\mathbb{C}^{2n}$ viewed as a vector space over $\mathbb{H}$.
+\end{theorem}
+
+We already know that all eigenvalues of a unitary matrix have absolute value $1$. Now we shall study additional properties of the eigenvalues of matrices in $Sp(n)$.
+
+\begin{theorem}{Eigenvalue and Eigenvectors of $Sp(n)$}{Eigenvalue and Eigenvectors of Spn}
+	If $U\in Sp(n)$, then there exists an orthonormal basis $u_1, \ldots ,u_n, v_1, \ldots ,v_n\in \mathbb{C}^{2n}$ such that for each $j=1, \ldots , n$,
+	\begin{itemize}
+		\item $J u_j = v_j$.
+		\item There exist $\theta_j \in \mathbb{R}$ such that
+		      \begin{equation*}
+			      U u_j = e^{i \theta_j} u_j, \quad U v_j = e^{i \theta_j} v_j.
+		      \end{equation*}
+	\end{itemize}
+\end{theorem}
+
+% --------------- TO BE CONTINUED ---------------
+
+\section{Topological Properties of Matrix Lie Groups}
+
+\subsection{Compactness}
+
+A matrix Lie group is said to be \textbf{compact} if it is compact as a topological space with the subspace topology inherited from $M_n(\mathbb{C})$. From Heine-Borel theorem, a subset of $M_n(\mathbb{C}) \cong \mathbb{C}^{n^2} \cong \mathbb{R}^{2n^2}$ is compact if and only if it is closed and bounded.
+
+The following groups are compact matrix Lie groups:
+\begin{itemize}
+	\item $O(n), SO(n)$.
+	\item $U(n), SU(n)$.
+	\item $Sp(n)$.
+\end{itemize}
+The closedness is obvious. The boundedness follows from the fact that all these groups consist of matrices whose columns form an orthonormal basis of $\mathbb{C}^n$ or $\mathbb{R}^n$. Thus, the entries of these matrices are all bounded by $1$ in absolute value.
+
+Many other matrix Lie groups are not compact. For example, $GL(n;\mathbb{C})$ is not bounded since the matrices
+\begin{equation*}
+	A_k = \begin{pmatrix}
+		k      & 0      & \cdots & 0      \\
+		0      & 1      & \cdots & 0      \\
+		\vdots & \vdots & \ddots & \vdots \\
+		0      & 0      & \cdots & 1
+	\end{pmatrix}
+\end{equation*}
+have unbounded norm as $k \to \infty$. Similarly, $SL(n;\mathbb{C})$, $Sp(n;\mathbb{C})$, and $O(n,k)$ are not compact.
+
+\subsection{Connectedness}
+In a metric space, path connectedness is equivalent to connectedness.
+
+\begin{proposition}{Identity Component}{Identity Component}
+	If $G$ is a matrix Lie group, then identity component $G_0$ of $G$ is a normal subgroup of $G$.
+\end{proposition}
+\begin{proof}
+	\begin{itemize}
+		\item First we prove $G_0$ is a subgroup of $G$. Since $G_0$ is the connected component containing the identity element $I$, it is nonempty. For any $A,B \in G_0$, there exist continuous paths $\gamma_1, \gamma_2: [0,1] \to G_0$ such that $\gamma_1(0) = I$, $\gamma_1(1) = A$, $\gamma_2(0) = I$, and $\gamma_2(1) = B$. Then $\gamma_1(t) \gamma_2(t)$ is a continuous path in $G$ from $I$ to $AB$, so $AB \in G_0$. Also, the path $\gamma_1(t)^{-1}$ is a continuous path in $G$ from $I$ to $A^{-1}$, so $A^{-1} \in G_0$. Therefore, $G_0$ is a subgroup of $G$.
+		\item Next we prove $G_0$ is normal in $G$. For any $A \in G_0$ and $B \in G$, there exists a continuous path $\gamma: [0,1] \to G_0$ connecting $I$ to $A$. Then the path $B \gamma(t) B^{-1}$ is a continuous path in $G$ from $I$ to $BAB^{-1}$, so $BAB^{-1} \in G_0$. Therefore, $G_0$ is normal in $G$.
+	\end{itemize}
+\end{proof}
+
+\begin{proposition}{Connectedness of $GL(n,\mathbb{C})$ and $SL(n,\mathbb{C})$}{Connectedness of GLnmathbbC and SLnmathbbC}
+	$GL(n;\mathbb{C})$ is connected for all $n \in \mathbb{Z}_+$. So is $SL(n;\mathbb{C})$.
+\end{proposition}
+\begin{proof}
+	Express $A = CBC^{-1}$, where $B$ is an upper triangular matrix (via Schur decomposition). Say
+	\begin{equation*}
+		B = \begin{pmatrix}
+			\lambda_1 & *         & \cdots & *         \\
+			0         & \lambda_2 & \cdots & *         \\
+			\vdots    & \vdots    & \ddots & \vdots    \\
+			0         & 0         & \cdots & \lambda_n
+		\end{pmatrix} = \begin{pmatrix}
+			\lambda_1 & 0         & \cdots & 0         \\
+			0         & \lambda_2 & \cdots & 0         \\
+			\vdots    & \vdots    & \ddots & \vdots    \\
+			0         & 0         & \cdots & \lambda_n
+		\end{pmatrix} + \begin{pmatrix}
+			0      & *      & \cdots & *      \\
+			0      & 0      & \cdots & *      \\
+			\vdots & \vdots & \ddots & \vdots \\
+			0      & 0      & \cdots & 0
+		\end{pmatrix} = \Lambda + N,
+	\end{equation*}
+	where $\lambda_i\neq 0$. Define $B(t)$ as $B(t) = \Lambda + (1-t) N$ for $t \in [0,1]$, and $A(t) = C B(t) C^{-1}$. Then $A(t)$ is a continuous path in $GL(n;\mathbb{C})$ from $A(0) = A$ to $A(1) = C \Lambda C^{-1}$. Thus, every matrix in $GL(n;\mathbb{C})$ is connected to a diagonal matrix via a continuous path. Now define $\lambda_i(t)$ be a continuous path in $\mathbb{C}^*$ from $\lambda_i(0) = \lambda_i$ to $\lambda_i(1) = 1$. Then the diagonal matrix with diagonal entries $\lambda_i(t)$ is a continuous path in $GL(n;\mathbb{C})$ from the diagonal matrix with diagonal entries $\lambda_i$ to the identity matrix. Therefore, every matrix in $GL(n;\mathbb{C})$ is connected to the identity matrix via a continuous path, so $GL(n;\mathbb{C})$ is connected.
+
+	Similarly, we can prove that $SL(n;\mathbb{C})$ is connected for all $n \in \mathbb{Z}_+$. Just choose the paths $\lambda_i(t)$ such that $\prod_{i=1}^n \lambda_i(t) = 1$ for all $t \in [0,1]$.
+\end{proof}
+
+\begin{proposition}{Connectedness of $U(n)$ and $SU(n)$}{Connectedness of Un and SUn}
+	$U(n)$ is connected for all $n \in \mathbb{Z}_+$. So is $SU(n)$.	
+\end{proposition}
+\begin{proof}
+	As unitary matrices are normal, they can be diagonalized by unitary matrices. For any $U \in U(n)$, there exists a unitary matrix $V$ such that
+	\begin{equation*}
+		U = V D V^*,
+	\end{equation*}
+	where $D$ is a diagonal matrix with diagonal entries $e^{i \theta_1}, e^{i \theta_2}, \ldots , e^{i \theta_n}$ for some $\theta_1, \theta_2, \ldots , \theta_n \in \mathbb{R}$. Define
+	\begin{equation*}
+		D(t) = \begin{pmatrix}
+			e^{i (1-t) \theta_1} & 0                   & \cdots & 0                   \\
+			0                   & e^{i (1-t) \theta_2} & \cdots & 0                   \\
+			\vdots
+					    & \vdots              & \ddots & \vdots              \\
+			0                   & 0                   & \cdots & e^{i (1-t) \theta_n}
+		\end{pmatrix}
+	\end{equation*}
+	for $t \in [0,1]$, and $U(t) = V D(t) V^*$. Then $U(t)$ is a continuous path in $U(n)$ from $U(0) = U$ to $U(1) = I$. Thus, every matrix in $U(n)$ is connected to the identity matrix via a continuous path, so $U(n)$ is connected.
+\end{proof}
+
+\begin{proposition}{Connectedness of $SO(n)$}{Connectedness of SOn}
+	$SO(n)$ is connected for all $n \in \mathbb{Z}_+$.
+\end{proposition}
+\begin{proof}
+	For any $R \in SO(n)$, there exists an orthogonal matrix $P$ such that
+	\begin{equation*}
+		R = P D P^T,
+	\end{equation*}
+	where $D$ is a block diagonal matrix with blocks of the form
+	\begin{equation*}
+		\begin{pmatrix}
+			\cos \theta & -\sin \theta \\
+			\sin \theta & \cos \theta
+		\end{pmatrix}
+		\quad \text{or} \quad
+		(1)
+	\end{equation*}
+	for some $\theta \in \mathbb{R}$. Define $D(t)$ by replacing each $\theta$ in $D$ with $(1-t) \theta$ for $t \in [0,1]$, and let $R(t) = P D(t) P^T$. Then $R(t)$ is a continuous path in $SO(n)$ from $R(0) = R$ to $R(1) = I$. Thus, every matrix in $SO(n)$ is connected to the identity matrix via a continuous path, so $SO(n)$ is connected.
+\end{proof}
+
+\subsection{Simply Connectedness}
+A topological space is said to be \textbf{simply connected} if it is path connected and every loop in the space can be continuously contracted to a point.
+
+\begin{proposition}{Simply Connectedness of $SU(n)$}{Simply Connectedness of SUn}
+	$SU(n)$ is simply connected for all $n \in \mathbb{Z}_+$.
+\end{proposition}
+\begin{proof}
+	LATER
+\end{proof}
+
+\subsection{The Topology of $SO(3)$}
+
+\begin{definition}{Real Projective Spaces}{Real Projective Spaces}
+	The \textbf{real projective space} $\mathbb{R}P^n$ is defined as the set of all lines through the origin in $\mathbb{R}^{n+1}$. Equivalently, it can be defined as the quotient space
+	\begin{equation*}
+		\mathbb{R}P^n = S^n / \sim,
+	\end{equation*}
+	where $S^n$ is the $n$-sphere in $\mathbb{R}^{n+1}$ and $\sim$ is the equivalence relation defined by $x \sim y$ if and only if $x = \pm y$ for all $x,y \in S^n$.
+\end{definition}
+We can also view $\mathbb{R}P^n$ as an upper hemisphere of $S^n$ with antipodal points on the equator identified. Or a closed $n$-dimensional ball with antipodal points on the boundary identified.
+
+We shall see that $\mathbb{R}P^n$ is metrizable, by defining
+\begin{equation*}
+	d([x],[y]) = \min \{ d_{S^n}(x,y), d_{S^n}(x,-y) \}, \qquad x,y \in S^n,
+\end{equation*}
+
+$\mathbb{R}P^n$ is not simply connected for $n \geq 2$. In fact, take the continuous path on $S^n$ from $u$ to $-u$ along a great circle, then project it down to $\mathbb{R}P^n$. The resulting loop cannot be contracted to a point.
+
+
+\end{document}
