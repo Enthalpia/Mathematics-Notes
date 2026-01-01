@@ -23,7 +23,7 @@ A typical case is that $\Omega_n \subsetneq \Omega_{n+1}$ for all $n\in \mathbb{
 	Moreover, $f_n'(z)$ converges uniformly to $f'(z)$ on every compact $K \subseteq \Omega$.
 \end{theorem}
 \begin{proof}
-	Let $\Delta: \left|z-a\right|\leq r$ be a closed disk in $\Omega$, then for enough large $n$, we have $\Delta \subseteq \Omega_n$, for any closed curve $\gamma$ in $\Delta$, we have
+	Let $\Delta: \left|z-a\right|\leq r$ be a closed disk in $\Omega$, then for enough large $n$, we have $\Delta \subseteq \Omega_n$ (All $ \Omega_n $ forms an open cover of $ \Delta $, thus has a finite subcover). For any closed curve $\gamma$ in $\Delta$, we have
 	\begin{equation*}
 		\int_{\gamma} f(z) \mathrm{d} z = \lim_{n \to \infty} \int_{\gamma} f_n(z) \mathrm{d} z = 0.
 	\end{equation*}
@@ -340,7 +340,7 @@ Then we can subtract all these principal parts from $f$:
 For there are at most countable poles in $\Omega$, the sum is well-defined. However, there are generally infinite poles and the sum may not converge. So we need to introduce some convergence factors to make the sum convergent. There is no harm done if we substract some analytic functions from $P_{\nu}$, as long as we add them to $g(z)$.
 
 \begin{theorem}{Mittag-Leffler Theorem}{Mittag-Leffler Theorem}
-	Let $\left\{ b _{\nu} \right\}$ be a sequence of complex numbers with $\lim_{\nu \to \infty } b _{\nu} = \infty $, and $P_{\nu}$ be polynomials without constant term. Then there exists meromorphic function $f$ in $\mathbb{C}$ whose poles are exactly at $b_{\nu}$ and the principal part of the Laurent series of $f$ at $b_{\nu}$ is $P_{\nu}(1/(z-b_{\nu}))$. And it can be expressed as
+	Let $\left\{ b _{\nu} \right\}$ be a sequence of complex numbers with $\lim_{\nu \to \infty } b _{\nu} = \infty $, and $P_{\nu}$ be polynomials without constant term. Then there exists meromorphic function $f$ in $\mathbb{C}$ whose poles are exactly at $b_{\nu}$ and the principal part of the Laurent series of $f$ at $b_{\nu}$ is $P_{\nu}(1/(z-b_{\nu}))$. And all such functions can be expressed in the following way:
 	\begin{equation}
 		f(z) = \sum_{\nu=1}^{\infty} \left[ P_{\nu}(\frac{1}{z-b_{\nu}}) - p_{\nu}(z) \right] + g(z),
 	\end{equation}
@@ -349,7 +349,7 @@ For there are at most countable poles in $\Omega$, the sum is well-defined. Howe
 \begin{proof}
 	Suppose $b_{\nu} \neq 0$ for all $\nu$, otherwise we can just perform a slight translation. The function $P_{\nu}(1/(z-b_{\nu}))$ is analytic in $\left|z\right|<\left|b_{\nu}\right|$. So we can expand it as a Taylor series at $z=0$. Choose $p_{\nu}(z)$ to be a partial sum of the Taylor series at $z=0$, ending at the degree $n_{\nu}$.
 
-	From the proof of theorem \ref{thm:All Derivatives Zero}, we know that if the maximum of $\left|P_{\nu}\right|$ for $\left|z\right|=\left|b _{\nu}\right| / 2$ is $M_{\nu}$, then
+	From the proof of theorem \ref{thm:All Derivatives Zero}, we know that if the maximum of $\left|P_{\nu}\right|$ for $\left|z\right|\leq \left|b _{\nu}\right| / 2$ is $M_{\nu}$, then
 	\begin{equation*}
 		\left|P_{\nu}(\frac{1}{z-b_{\nu}}) - p_{\nu}(z)\right| \leq 2 M_{\nu} \left( \frac{2 \left|z\right|}{\left|b_{\nu}\right|} \right)^{n_{\nu}+1}, \qquad \left|z\right|\leq \frac{\left|b_{\nu}\right|}{4}.
 	\end{equation*}
@@ -390,7 +390,7 @@ For there are at most countable poles in $\Omega$, the sum is well-defined. Howe
 			\begin{equation*}
 				\sum_{n \neq 0} \left( \frac{1}{z-n} + \frac{1}{n} \right) + \frac{1}{z} = \sum_{n \neq 0} \frac{z}{n(z-n)} + \frac{1}{z}.
 			\end{equation*}
-			So we have
+			Indeed, this is just given by termwise integration from 0. So we have
 			\begin{equation*}
 				\pi \cot \pi z = \frac{1}{z} + \sum_{n \neq 0} \frac{z}{n(z-n)} + C = \frac{1}{z} + \sum_{n=1}^{\infty} \frac{2z}{z^2-n^2} + C.
 			\end{equation*}
@@ -412,7 +412,7 @@ For there are at most countable poles in $\Omega$, the sum is well-defined. Howe
 			\end{equation*}
 			So we have
 			\begin{equation}
-				\frac{\pi}{\sin \pi z} = \frac{1}{z} + \sum_{n=1}^{\infty} (-1)^n \frac{2z}{z^2-n^2} = \limit_{m \to \infty } \sum_{n=-m}^{m} \frac{(-1)^n}{z-n}.
+				\frac{\pi}{\sin \pi z} = \frac{1}{z} + \sum_{n=1}^{\infty} (-1)^n \frac{2z}{z^2-n^2} = \lim_{m \to \infty } \sum_{n=-m}^{m} \frac{(-1)^n}{z-n}.
 			\end{equation}
 	\end{itemize}
 \end{example}
@@ -422,6 +422,11 @@ An infinite product is an expression of the form
 \begin{equation}
 	\prod_{n=1}^{\infty} (1 + a_n), \qquad a_n \in \mathbb{C}, a_n \neq -1.
 \end{equation}
+whose limit definition is given by
+\begin{equation*}
+	\lim_{N \to \infty } \prod_{n=1}^N (1 + a_n).
+\end{equation*}
+
 Taking the logarithm, we have
 \begin{equation*}
 	\sum_{n=1}^{\infty} \log (1 + a_n).
@@ -436,7 +441,7 @@ Then we have $P_n = e^{S_n}$. If $S_n \rightarrow S$, then $P_n \rightarrow e^S$
 \end{proof}
 
 \begin{theorem}{Infinite Products}{Infinite Products}
-	The infinite product $\prod_{n=1}^{\infty} (1 + a_n)$ converges to a nonzero limit iff the series $\sum_{n=1}^{\infty} \log (1 + a_n)$ converges to a limit in the principal branch.
+	The infinite product $\prod_{n=1}^{\infty} (1 + a_n)$ converges to a nonzero limit iff the series $\sum_{n=1}^{\infty} \log (1 + a_n)$ converges to a limit (the logarithm is taken in the principal branch).
 \end{theorem}
 
 Furthermore, as
@@ -450,11 +455,64 @@ We say that the infinite product converges absolutely if $\sum_{n=1}^{\infty} \l
 	The infinite product $\prod_{n=1}^{\infty} (1 + a_n)$ converges absolutely iff the series $\sum_{n=1}^{\infty} |a_n|$ converges.
 \end{theorem}
 
+It is quite clear to understand the uniform convergence of infinite products of functions.
+\begin{definition}{Uniform Convergence of Infinite Products}{Uniform Convergence of Infinite Products}
+	An infinite product of functions
+	\begin{equation*}
+		\prod_{n=1}^{\infty} \left( 1 + f_n(z) \right)
+	\end{equation*}
+	converges uniformly in a set $E$ if the sequence of partial products
+	\begin{equation*}
+		P_N(z) = \prod_{n=1}^N \left( 1 + f_n(z) \right)
+	\end{equation*}
+	converges uniformly in $E$ as $N \to \infty $.
+\end{definition}
+
+We can also verify uniform convergence via logarithms.
+
+\begin{proposition}{Uniform Convergence by logarithm}{Uniform Convergence by logarithm}
+	The infinite product of functions
+	\begin{equation*}
+		\prod_{n=1}^{\infty} \left( 1 + f_n(z) \right)
+	\end{equation*}
+	with $1+f_n(z) \neq 0$ for all $n$ and $z\in E$, converges uniformly in $E$ iff the series
+	\begin{equation*}
+		\sum_{n=1}^{\infty} \log \left(1 + f_n(z) \right)
+	\end{equation*}
+	converges uniformly in $E$ (the logarithm is taken in the principal branch).
+\end{proposition}
+\begin{proof}
+	SORRY
+\end{proof}
+
+\begin{theorem}{Uniform Convergence by Series}{Uniform Convergence by Series}
+	A sufficient and necessary condition for the infinite product of functions
+	\begin{equation*}
+		\prod_{n=1}^{\infty} \left( 1 + f_n(z) \right)
+	\end{equation*}
+	with $1+f_n(z) \neq 0$ for all $n$ and $z\in E$, to converge absolutely and  uniformly in $E$ is that the series
+	\begin{equation*}
+		\sum_{n=1}^{\infty} |f_n(z)|
+	\end{equation*}
+	converges uniformly in $E$.
+\end{theorem}
+
 \begin{remark}
-	For uniform convergence we can say the same. We define that an infinite product $\prod_{n=1}^{\infty} (1 + a_n(z))$ converges uniformly in a set $E$ if the series $\sum_{n=1}^{\infty} \log (1 + a_n(z))$ converges uniformly in $E$.
+	Here we see that the presence of zeros in the factors do give some difficulties. But we can restrict our attention to sets that only allow finite number of factors to be zero. If we omit these factors, then the remaining product is what we discussed above. Therefore, we are saying that the above theorems still hold in this case.
 \end{remark}
 
+\begin{proposition}{Compact Convergence Validity}{Compact Convergence Validity}
+	If the infinite sequence of analytic functions
+	\begin{equation*}
+		f_1(z), f_2(z), \ldots
+	\end{equation*}
+	converges uniformly on every compact subset of a region $\Omega$, then it defines an analytic function in $\Omega$.
+\end{proposition}
+
 \subsection{Canonical Products}
+
+We have developed the series representation of meromorphic functions. Now we turn to the product representation. We start with entire functions.
+
 \begin{definition}{Entire Functions}{Entire Functions}
 	A function $f$ is entire if it is analytic in $\mathbb{C}$.
 \end{definition}
@@ -462,6 +520,275 @@ We say that the infinite product converges absolutely if $\sum_{n=1}^{\infty} \l
 If $g$ is an entire function so is $f = e^g$ and $\forall z, f(z)\neq 0$. Conversely, if $f$ is entire and $\forall z, f(z)\neq 0$, then we can say that there exists an entire function $g$ such that $f = e^g$.
 \begin{proof}
 	Consider $f' / f$, which is analytic in $\mathbb{C}$. So there exists an entire function $g$ such that $g' = f' / f$. We have $f(z) e^{-g(z)}$ has zero derivative, so $f(z) = e^{g(z)+C}$.
+\end{proof}
+
+We can generalize this method to construct entire functions with a finite number of zeros. Assume $f$ has $m$-order zero for $0$, and all other zeros being $a_1, \ldots ,a_N$, counting multiplicities. Then we can write
+\begin{equation}
+	f(z) = z^m e^{g(z)} \prod_{n=1}^N \left( 1 - \frac{z}{a_n} \right),
+\end{equation}
+simply because
+\begin{equation*}
+	\frac{f(z)}{z^m \prod_{n=1}^N \left( z - a_n \right)}
+\end{equation*}
+has no zeros and entire.
+
+As there are at most countable zeros for an entire function, we can try to generalize this to infinite zeros. We are tempted to write
+\begin{equation*}
+	f(z) = z^m e^{g(z)} \prod_{n=1}^{\infty} \left( 1 - \frac{z}{a_n} \right),
+\end{equation*}
+
+If the product converges uniformly on every compact subset of $\mathbb{C}$, it defines an analytic function in $\mathbb{C}$. Also, as each factor has zeros exactly at $a_n$, the product has zeros exactly at $a_n$. Them this form is valid. However, the product converges absolutely iff $\sum_{n=1}^{\infty} |1 / a_n|$ converges, and when this happens, it also converges uniformly on every closed disk $|z| \leq R$. But in many cases, the zeros do not satisfy this condition.
+
+This is quite similar to the situation of Mittag-Leffler theorem, where we need to introduce some convergence factors to make the product convergent. We can do this by proving the existence of polynomials $p_n(z)$ such that
+\begin{equation}
+	\prod_{n=1}^{\infty} \left( 1 - \frac{z}{a_n} \right) e^{p_n(z)}
+\end{equation}
+converges to an entire function. 
+
+\begin{theorem}{Weierstrass Factorization Theorem}{Weierstrass Factorization Theorem}
+	Let $\left\{ a_n \right\}$ be a sequence of complex numbers with $\lim_{n \to \infty } |a_n| = \infty $. Then there exists an entire function $f$ whose zeros are exactly at $a_n$, counting multiplicities. And all such functions can be expressed in the following way:
+	\begin{equation}
+		f(z) = z^m e^{g(z)} \prod_{n=1}^{\infty} \left( 1 - \frac{z}{a_n} \right) e^{p_n(z)},
+	\end{equation}
+	where $m$ is the order of zero at $0$, $g(z)$ is an entire function, and $p_n(z)$ are polynomials chosen such that the product converges uniformly on every compact subset of $\mathbb{C}$. Here we can choose
+	\begin{equation}
+		p_n(z) = \sum_{k=1}^{m_n} \frac{1}{k} \left( \frac{z}{a_n} \right)^k,
+	\end{equation}
+	for a suitable sequence of non-negative integers $m_n$. Specifically, we can take $m_n=n$.
+\end{theorem}
+\begin{proof}
+	Consider that the product converges with the series with general term
+	\begin{equation*}
+		r_n = \log \left(1 - \frac{z}{a_n} \right) + p_n(z).
+	\end{equation*}
+	where the branch of the logarithm is chosen so that $\im r_n \in (-\pi, \pi]$. 
+
+	Take $R>0$, we consider the $|a_n| > R$ part. In the disk $|z| \leq R$, the principal branch of $\log (1 - z/a_n)$ can be expanded as
+	\begin{equation*}
+		\log \left(1 - \frac{z}{a_n} \right) = -\sum_{k=1}^{\infty} \frac{1}{k} \left( \frac{z}{a_n} \right)^k.
+	\end{equation*}
+	We choose $p_n(z)$ to be the partial sum of the above series, by
+	\begin{equation}
+		p_n(z) = \sum_{k=1}^{m_n} \frac{1}{k} \left( \frac{z}{a_n} \right)^k.
+	\end{equation}
+	\begin{equation*}
+		r_n = -\sum_{k=m_n+1}^{\infty} \frac{1}{k} \left( \frac{z}{a_n} \right)^k, \qquad |r_n| \leq \frac{1}{m_n+1} \left( \frac{R}{|a_n|} \right)^{m_n+1} \frac{1}{1 - R/|a_n|}.
+	\end{equation*}
+	We shall take $m_n$ that the series
+	\begin{equation}
+		\sum_{n=1}^{\infty} \frac{1}{m_n+1} \left( \frac{R}{|a_n|} \right)^{m_n+1}
+	\end{equation}
+	converges. If this happens, then we have $|r_n| \rightarrow 0$ as $n \to \infty $. So for sufficiently large $n$, $r_n$ has imaginary part in $(-\pi, \pi)$ as required. Also, this estimation implies uniform and absolute convergence of $\sum r_n$ in $|z| \leq R$. So for large $n$, the product is an analytic function in $|z| \leq R$. Add the finite number of terms omitted, the product is still analytic.
+
+	Now, if we take $m_n=n$, then the series converges for any $R>0$ because $\lim_{n \to \infty } |a_n| = \infty $. So the product converges uniformly on every compact subset of $\mathbb{C}$, defining an entire function.
+\end{proof}
+
+\begin{corollary}{Structure if Meromorphic Functions}{Structure if Meromorphic Functions}
+	Every meromorphic function in $\mathbb{C}$ can be expressed as the quotient of two entire functions.
+\end{corollary}
+\begin{proof}
+	Let $F$ be a meromorphic function in $\mathbb{C}$, then take an entire function $g$ whose zeros are exactly at the poles of $F$, counting multiplicities. (poles are countable tending to $\infty$, by the compactness of closed disks). Then $f = Fg$ is entire.
+\end{proof}
+
+The representation of theorem \ref{thm:Weierstrass Factorization Theorem} is interesting when we can take all $m_n=h$ to be the same. From the proof we know that this is possible if
+\begin{equation}
+	\sum_{n=1}^{\infty} \frac{1}{h+1} \left( \frac{R}{|a_n|} \right)^{h+1} < \infty , \forall R \quad \Rightarrow \quad \sum_{n=1}^{\infty} \frac{1}{|a_n|^{h+1}} < \infty .
+\end{equation}
+
+\begin{definition}{Canonical Product}{Canonical Product}
+	Define $h$ to be the smallest non-negative integer such that
+	\begin{equation*}
+		\sum_{n=1}^{\infty} \frac{1}{|a_n|^{h+1}} < \infty .
+	\end{equation*}
+	Then $h$ is called the genus of the sequence $\left\{ a_n \right\}$. The expression
+	\begin{equation}
+		\prod_{n=1}^{\infty} \left( 1 - \frac{z}{a_n} \right) \exp \left[ \left( \frac{z}{a_n} \right) + \frac{1}{2} \left( \frac{z}{a_n} \right)^2 + \cdots + \frac{1}{h} \left( \frac{z}{a_n} \right)^h \right]
+	\end{equation}
+	is called the canonical product of genus $h$ associated with the sequence $\left\{ a_n \right\}$.
+\end{definition}
+
+If we use the canonical product, then the Weierstrass factorization theorem can be uniquely expressed as
+\begin{equation*}
+	f(z) = z^m e^{g(z)} \prod_{n=1}^{\infty} \left( 1 - \frac{z}{a_n} \right) \exp \left[ \left( \frac{z}{a_n} \right) + \frac{1}{2} \left( \frac{z}{a_n} \right)^2 + \cdots + \frac{1}{h} \left( \frac{z}{a_n} \right)^h \right],
+\end{equation*}
+If $g$ reduces to a polynomial, then we say that $f$ is of finite genus. The genus of $f$ is defined to be $\max \{ \deg g, h \}$.
+
+\begin{remark}
+	The genus of an entire function gives a measure of the growth of the function as $|z| \to \infty $. We shall study this in detail later.
+\end{remark}
+
+As an example, consider that
+\begin{equation*}
+	\sin \pi z = z e^{g(z)} \prod_{n\neq 0} \left( 1 - \frac{z}{n} \right) e^{z/n}.
+\end{equation*}
+Here we take $h=1$ as $\sum 1/n^2$ converges and $\sum 1/n$ diverges. To find $g(z)$, we take logarithm and differentiate both sides: (Due to uniform convergence on every compact subset that does not contain any integer).
+\begin{equation*}
+	\pi \cot \pi z = \frac{1}{z} + g'(z) + \sum_{n\neq 0} \left( \frac{1}{z-n} + \frac{1}{n} \right).
+\end{equation*}
+From previous example, we know that $g'(z) = 0$. Also, as $\sin \pi z / z \rightarrow \pi$ as $z \to 0$, we have $e^{g(z)} = \pi$, so
+\begin{equation}
+	\sin \pi z = \pi z \prod_{n\neq 0} \left( 1 - \frac{z}{n} \right) e^{z/n} = \pi z \prod_{n=1}^{\infty} \left( 1 - \frac{z^2}{n^2} \right).
+\end{equation}
+The last equality is due to pairing the $n$ and $-n$ terms. So $\sin $ is of genus 1.
+
+\begin{theorem}{The Interpolation Theorem}{The Interpolation Theorem}
+	Let $\left\{ a_n \right\}$ be a sequence of different complex numbers with $\lim_{n \to \infty } |a_n| = \infty $, and let $\left\{ A_n \right\}$ be a sequence of complex numbers. Then there exists an entire function $f$ such that
+	\begin{equation*}
+		f(a_n) = A_n, \qquad \forall n.
+	\end{equation*}
+\end{theorem}
+\begin{proof}
+	Let $g(z)$ be an entire function whose zeros are exactly at $a_n$, all simple zeros (by Weierstrass factorization theorem). Then consider
+	\begin{equation*}
+		f(z) = \sum_{n=1}^{\infty} A_n \frac{g(z)}{g'(a_n)(z-a_n)} e^{\gamma_n(z-a_n)},
+	\end{equation*}
+
+	SORRY, to be continued
+\end{proof}
+
+\subsection{The Gamma Function}
+The Sine function example shows a way to define functions via their zeros. It has both side zeros. The simplest function for negative side zeros is the canonical product
+\begin{equation}
+	G(z) = \prod_{n=1}^{\infty} \left( 1 + \frac{z}{n} \right) e^{-z/n}.
+\end{equation}
+where easily
+\begin{equation}
+	zG(z)G(-z) = \frac{\sin \pi z}{\pi}.
+\end{equation}
+We also notice that $G(z-1)$ has simple poles at negative integers and $0$. So is $zG(z)$. So we can write
+\begin{equation}
+	G(z-1) = z e^{ \gamma(z)} G(z),
+\end{equation}
+where $ \gamma$ is entire. By taking logarithm and differentiating both sides, we have
+\begin{equation*}
+	\sum_{n=1}^{\infty} \left( \frac{1}{n+z-1} - \frac{1}{n} \right) = \frac{1}{z} + \gamma'(z) + \sum_{n=1}^{\infty} \left( \frac{1}{n+z} - \frac{1}{n} \right).
+\end{equation*}
+Subtracting both sides, we have $\gamma'(z) = 0$. So $\gamma(z) = \gamma$ is a constant. Evaluating at $z=1$, we have
+\begin{equation*}
+	G(0) = e^{\gamma} G(1) \Rightarrow e^{-\gamma} = \prod_{n=1}^{\infty} \left( 1 + \frac{1}{n} \right) e^{-1/n}
+\end{equation*}
+The right side restates as
+\begin{equation*}
+	\prod_{n=1}^{N} \frac{n+1}{n} e^{-1/n} = (N+1) e^{-\sum_{n=1}^N 1/n} 
+\end{equation*}
+Thus we have
+\begin{equation}
+	\gamma = \lim_{n \to \infty } \left( \sum_{k=1}^n \frac{1}{k} - \log n \right),
+\end{equation}
+called the Euler-Mascheroni constant, with approximate value $0.5772 \ldots $.
+
+Take $H(z) = G(z) e^{\gamma z}$, then we have $H(z-1) = z H(z)$, then $ \Gamma(z) = 1 / (zH(z))$ satisfies
+\begin{equation*}
+	\Gamma(z+1) = z \Gamma(z).
+\end{equation*}
+Our definition leads to the explicit formula
+\begin{equation}
+	\Gamma(z) = \frac{e^{-\gamma z}}{z} \prod_{n=1}^{\infty} \left( 1 + \frac{z}{n} \right)^{-1} e^{z/n}.
+\end{equation}
+And
+\begin{equation}
+	\Gamma(z) \Gamma(1-z) = \frac{\pi}{\sin \pi z}.
+\end{equation}
+It has poles at $0, -1, -2, \ldots $ all simple poles, without zeros. Also, we have $ \Gamma(1) = 1$, so by induction, $\Gamma(n) = (n-1)!$ for $n\in \mathbb{Z}_+$. Also from the functional equation, we have $ \Gamma(1/2) = \sqrt{\pi}$.
+
+%--------- TO BE CONTINUED --------------
+
+\section{Entire Functions}
+In this part we study the growth of entire functions related to their zeros and their genus.
+
+\subsection{Jensen's Formula}
+
+If $f$ is analytic, then $\log |f(z)|$ is a harmonic function except at the zeros of $f$. So if $f$ is analytic in a disk $|z|\leq \rho$ and has no zeros in the disk, then by the mean value property of harmonic functions, we have
+\begin{equation*}
+	\log |f(0)| = \frac{1}{2\pi} \int_0^{2\pi} \log |f(\rho e^{i\theta})| \mathrm{d} \theta.
+\end{equation*}
+
+The equation still holds if $f$ has zeros on the boundary $|z|=\rho$. For each zero $ \rho e^{i\theta_i}$ on the boundary (only finite many), we can factor it out as
+\begin{equation*}
+	g(z) = \frac{f(z)}{\prod (z - \rho e^{i\theta_i})},
+\end{equation*}
+So we have
+\begin{equation*}
+	\log \left| \frac{f(0)}{\prod (- \rho e^{i\theta_i})} \right| = \frac{1}{2\pi} \int_0^{2\pi} \log \left| \frac{f(\rho e^{i\theta})}{\prod (\rho e^{i\theta} - \rho e^{i\theta_i})} \right| \mathrm{d} \theta.
+\end{equation*}
+It is sufficient to prove that
+\begin{equation*}
+	\log \rho = \frac{1}{2\pi} \int_0^{2\pi} \log |\rho e^{i\theta} - \rho e^{i\theta_i}| \mathrm{d} \theta \Leftrightarrow \frac{1}{2\pi} \int_0^{2\pi} \log |e^{i\theta} - 1| \mathrm{d} \theta = 0.
+\end{equation*}
+which is obvious by $\displaystyle \int_0^{\pi} \log \sin \theta \mathrm{d} \theta = -\pi \log 2$.
+Adding the equations for all zeros on the boundary, we have the desired result.
+
+\begin{remark}
+	Here the integral can be understood as an improper integral if there are zeros on the boundary.
+\end{remark}
+
+Now we consider the case that $f$ has zeros in the disk. Let the zeros of $f$ in $|z|<\rho$ be $a_1, a_2, \ldots , a_n$, counting multiplicities. Assume that none of them is $0$. We can factor them out as
+\begin{equation}
+	F(z) = f(z) \prod_{i=1}^n \frac{\rho^2 - \overline{a_i} z}{\rho (z - a_i)}.
+\end{equation}
+Notice the right side is a linear fractional transformation that maps the disk onto itself, so $|F(z)| = |f(z)|$ on $|z|=\rho$. Also, $F$ has no zeros in $|z|<\rho$. So by the previous result, we have
+\begin{equation*}
+	\log |F(0)| = \frac{1}{2\pi} \int_0^{2\pi} \log |F(\rho e^{i\theta})| \mathrm{d} \theta = \frac{1}{2\pi} \int_0^{2\pi} \log |f(\rho e^{i\theta})| \mathrm{d} \theta.
+\end{equation*}
+
+Substituting back, we have the Jensen's formula:
+\begin{theorem}{Jensen's Formula}{Jensen's Formula}
+	Let $f$ be analytic in $|z| \leq \rho$ with zeros $a_1, a_2, \ldots , a_n$ in $|z|<\rho$, counting multiplicities. Then if $f(0) \neq 0$, we have
+	\begin{equation}
+		\log |f(0)| = \sum_{i=1}^n \log \frac{|a_i|}{\rho} + \frac{1}{2\pi} \int_0^{2\pi} \log |f(\rho e^{i\theta})| \mathrm{d} \theta.
+	\end{equation}
+\end{theorem}
+If $f(0) = 0$ with order $h$, we can factor out the zero at $0$ by
+\begin{equation*}
+	F_1(z) = F(z) \left(\frac{\rho}{z} \right)^h
+\end{equation*}
+and apply the previous result to $F_1(z)$, we have
+\begin{equation}
+	\log \left| F_1(0) \right| = \frac{1}{2\pi} \int_0^{2\pi} \log |f(\rho e^{i\theta})| \mathrm{d} \theta.
+\end{equation}
+
+We can also generalize Jensen's formula just as Poisson formula, if $f(z)\neq 0$, we obtain
+\begin{equation}
+	\log |f(z)| = -\sum_{i=1}^n \log \left| \frac{\rho^2 - \overline{a_i} z}{\rho (z - a_i)} \right| + \frac{1}{2\pi} \int_0^{2\pi} \re \left\{ \frac{\rho e^{i\theta} + z}{\rho e^{i\theta} - z} \right\} \log |f(\rho e^{i\theta})| \mathrm{d} \theta,
+\end{equation}
+called the Poisson-Jensen formula.
+
+\subsection{Hadamard's Factorization Theorem}
+Let $f$ be an entire function with zeros $a_1, a_2, \ldots $, and $f(0) \neq 0$. From the Weierstrass factorization theorem, we have
+\begin{equation*}
+	f(z) = e^{g(z)} \prod_{n=1}^{\infty} \left( 1 - \frac{z}{a_n} \right) e^{p_n(z)}, \qquad p_n(z) = \sum_{k=1}^{m_n} \frac{1}{k} \left( \frac{z}{a_n} \right)^k.
+\end{equation*}
+
+\begin{definition}{Order of Entire Function}{Order of Entire Function}
+	Denote $M(r) = \max_{|z|=r} |f(z)|$. The order of $f$ is defined as
+	\begin{equation*}
+		\lambda = \limsup_{r \to \infty } \frac{\log \log M(r)}{\log r}.
+	\end{equation*}
+\end{definition}
+Equivalently, $ \lambda$ is the smallest number that for every $\epsilon > 0$, we have
+\begin{equation*}
+	M(r) \leq \exp (r^{\lambda + \epsilon})
+\end{equation*}
+for sufficiently large $r$.
+
+As we can see, both genus and order measure the growth of entire functions. We have the following important theorem relating them.
+\begin{theorem}{Genus and Order}{Genus and Order}
+	Let $f$ be an entire function. Then the genus $h$ and the order $\lambda$ of $f$ satisfy
+	\begin{equation}
+		h \leq \lambda \leq h + 1.
+	\end{equation}
+\end{theorem}
+\begin{proof}
+	Assume $f$ has genus $h$. Then $e^{g}$ has order $\leq h$. The convergence of the canonical product implies $\sum 1/|a_n|^{h+1}$ converges. Denote the canonical product by $P(z)$, and write
+	\begin{equation*}
+		E_h(u) = (1-u) \exp \left( u + \frac{u^2}{2} + \cdots + \frac{u^h}{h} \right). \quad E_0(u) = 1-u.
+	\end{equation*}
+	We shall prove that $\log |E_h(u)| \leq (2h+1) |u|^{h+1}$ for all $u$.
+
+	If $|u|<1$ we have
+	\begin{equation*}
+		\log |E_h(u)| \leq \frac{|u|^{h+1}}{h+1} + \cdots \leq \frac{1}{h+1} \frac{|u|^{h+1}}{1 - |u|}
+	\end{equation*}
 \end{proof}
 
 \end{document}

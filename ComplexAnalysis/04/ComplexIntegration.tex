@@ -403,6 +403,24 @@ And higher order derivatives can be computed similarly:
 As the choice of $a$ is arbitrary in $\Omega$, we've proven that $f$ has arbitrary order derivatives in $\Omega$.
 
 The following are some classical results of Cauchy's integral formula.
+
+\begin{theorem}{The Mean Value Theorem of Analytic Functions}{The Mean Value Theorem of Analytic Functions}
+	Let $f$ be analytic on a disk $\Delta$ with radius $r$ centered at $a$. Then
+	\begin{equation}
+		f(a) = \frac{1}{2 \pi} \int_0^{2\pi} f(a + r e^{i \theta}) \mathrm{d} \theta
+	\end{equation}	
+\end{theorem}
+\begin{proof}
+	Directly from Cauchy's integral formula:
+	\begin{equation*}
+		f(a) = \frac{1}{2 \pi i} \int_C \frac{f(z)}{z-a} \mathrm{d} z
+	\end{equation*}
+	Where $C$ is the circle $\left|z-a\right| = r$. Parametrize $z = a + r e^{i \theta}$, we have
+	\begin{equation*}
+		f(a) = \frac{1}{2 \pi i} \int_0^{2\pi} \frac{f(a + r e^{i \theta})}{r e^{i \theta}} i r e^{i \theta} \mathrm{d} \theta = \frac{1}{2 \pi} \int_0^{2\pi} f(a + r e^{i \theta}) \mathrm{d} \theta
+	\end{equation*}
+\end{proof}
+
 \begin{theorem}{Morera's Theorem}{Moreras Theorem}
 	Let $f$ be continuous on a region $\Omega \subseteq \mathbb{C}$. If for every closed curve $\gamma$ in $\Omega$, we have
 	\begin{equation}
@@ -417,13 +435,13 @@ We know that $f$ is the derivative of some analytic function $F$ on $\Omega$. So
 \begin{theorem}{Cauchy's Estimation}{Cauchys Estimation}
 	Let $f$ be analytic on a disk $\Delta$ with radius $r$ centered at $a$. Then for any $z\in \Delta$, we have
 	\begin{equation}
-		\left|f^{(n)}(z)\right| \leq \frac{M}{r^n} n!, \quad M = \max_{\left|\zeta-a\right|=r} \left|f(\zeta)\right|
+		\left|f^{(n)}(a)\right| \leq \frac{M}{r^n} n!, \quad M = \max_{\left|\zeta-a\right|=r} \left|f(\zeta)\right|
 	\end{equation}
 \end{theorem}
 \begin{proof}
 We use Cauchy's integral formula \ref{eq:Cauchy's Integral Formula for Derivatives}. If we have $\left|f(z)\right|\leq M$ for all $z\in C$, then let the radius of the circle $C$ be $r$, we have
 	\begin{equation}
-		\left|f^{(n)}(z)\right| = \left|\frac{n!}{2 \pi i} \int_C \frac{f(\zeta)}{(\zeta - z)^{n+1}} \mathrm{d} \zeta\right| \leq \frac{M n!}{r^n}
+		\left|f^{(n)}(a)\right| = \left|\frac{n!}{2 \pi i} \int_C \frac{f(\zeta)}{(\zeta - z)^{n+1}} \mathrm{d} \zeta\right| \leq \frac{M n!}{r^n}
 	\end{equation}
 \end{proof}
 
@@ -1303,6 +1321,37 @@ The limit on the left side is called the \textbf{Cauchy Principal Value} of the 
 	\end{equation*}
 \end{example}
 
+We can also deduce this from Jordan's lemma:
+\begin{lemma}{Jordan's Lemma}{Jordan's Lemma}
+	Let $g$ be a complex function such that for sufficiently large $R$, $g$ is continuous on the part-circle $C_R = \left\{ |z|=R, \Im z \geq -a \right\}$, for some $a>0$, and that
+	\begin{equation*}
+		\lim_{z \to \infty } g(z) = 0
+	\end{equation*}
+	Then for any $ \lambda>0$, we have
+	\begin{equation}
+		\lim_{R \to \infty } \int_{C_R} g(z) e^{i \lambda z} \mathrm{d} z = 0
+	\end{equation}
+\end{lemma}
+\begin{proof}
+	Define $M(R) = \max_{z\in C_R} |g(z)|$, then we have $\lim_{R \to \infty } M(R) = 0$. First we have
+	\begin{equation*}
+		|e^{i \lambda z}| = e^{-\lambda \im z} \leq e^{ \lambda a}
+	\end{equation*}
+	Divide the part-circle into three parts: two lower parts with $\im z \leq 0$ and the upper part with $\im z \geq 0$. For the lower part, we have
+	\begin{equation*}
+		\left|\int_{\text{lower part}} g(z) e^{i \lambda z} \mathrm{d} z\right| \leq M(R) e^{\lambda a} \alpha R, \qquad \alpha = \arcsin \frac{a}{R}
+	\end{equation*}
+	tending to $0$ as $R \rightarrow \infty $. For the upper part, we have
+	\begin{equation*}
+		\left|\int_{\text{upper part}} g(z) e^{i \lambda z} \mathrm{d} z\right| \leq M(R) \int_0^{\pi} R e^{-\lambda R \sin \theta} \mathrm{d} \theta
+	\end{equation*}
+	Dealing with the integral, we have $\sin \theta \geq \frac{2 \theta}{\pi}$ for $\theta \in [0,\pi / 2]$, thus
+	\begin{equation*}
+		\int_0^{\pi} R e^{-\lambda R \sin \theta} \mathrm{d} \theta \leq 2 \int_0^{\pi / 2} R e^{-\lambda R \frac{2 \theta}{\pi}} \mathrm{d} \theta = \frac{\pi}{\lambda} (1-e^{-\lambda R}) < \frac{\pi}{\lambda}
+	\end{equation*}
+	So the integral on the upper part also tends to $0$ as $R \rightarrow \infty $.
+\end{proof}
+
 Another type of interest is
 \begin{equation}
 	I = \int_{0}^{\infty } x^{\alpha} R(x) \mathrm{d} x, \qquad 0<\alpha<1.
@@ -1322,7 +1371,7 @@ As $z^{2 \alpha} = e^{2 \alpha \Log z}$. We take the analytic branch, cutting th
 \end{equation*}
 So we have
 \begin{equation}
-	\int_{-\infty }^{\infty} z^{2 \alpha+1} R(z^2) \mathrm{d} z = 2 \pi i \sum_{y>0} \Res_{y>0} z^{2 \alpha+1} R(z^2)
+	\int_{-\infty }^{\infty} z^{2 \alpha+1} R(z^2) \mathrm{d} z = 2 \pi i \sum_{y>0} \Res z^{2 \alpha+1} R(z^2)
 \end{equation}
 Also we have
 \begin{equation}
@@ -1338,6 +1387,10 @@ Also we have
 
 \begin{remark}
 	We can also use the second cycle in figure \ref{fig:infinite-rational-integral-with-power} to the original integral with slight change in adjustment and justification, and the result would be the same.
+
+	\begin{equation}
+		I = \frac{2 \pi i}{1-e^{2 \pi i \alpha}} \sum \Res z^{ \alpha} R(z)
+	\end{equation}
 \end{remark}
 
 \paragraph{The logarithmic integrals}
@@ -1364,6 +1417,38 @@ which means that the integral $\log (1-e^{2iz})$ of quarter circles near $0,\pi$
 We have $\log (-2ie^{ix}) = \log 2 + ix- \pi i / 2$ (lying in the principal branch) so we have
 \begin{equation}
 	\int_0^{\pi} \log (\sin x) \mathrm{d} x = -\int_0^{\pi} \log (-2i e^{ix}) \mathrm{d} x = - \pi \log 2
+\end{equation}
+
+Now consider the type
+\begin{equation}
+	I = \int_0^{\infty} R(x) \log x \mathrm{d} x
+\end{equation}
+where $R(x)$ is a \textbf{even} rational function with degree of denominator at least 2 units greater than that of numerator. It does not have poles on the positive real axis.
+
+We take the branch cut along the negative imaginary axis. Consider the cycle same in figure \ref{fig:infinite-rational-integral-with-power}.
+\begin{itemize}
+	\item In the left side edge $[-R,-r]$, we have $z = x e^{i \pi}$, thus $\log z = \log x + i \pi$.
+		\begin{equation*}
+			\int_{-R}^{-r} R(z) \log z \mathrm{d} z = \int_{r}^{R} R(x) (\log x + i \pi) \mathrm{d} x
+		\end{equation*}
+	\item In the outer semicircle, $z = R e^{i \theta}$, we have
+		\begin{equation*}
+			|\log z| = \sqrt{(\log R)^2 + \theta^2} \leq \log R + \pi
+		\end{equation*}
+		\begin{equation*}
+			\left|\int_{\text{outer semicircle}} R(z) \log z \mathrm{d} z\right| \leq \int_0^{\pi} \frac{C (\log R + \pi)}{R^2} R \mathrm{d} \theta = \frac{\pi C (\log R + \pi)}{R} \rightarrow 0, \qquad R \rightarrow \infty 
+		\end{equation*}
+	\item In the inner semicircle, $z = r e^{i \theta}$, we have
+		\begin{equation*}
+			\left|\int_{\text{inner semicircle}} R(z) \log z \mathrm{d} z\right| \leq R(0) \pi r \left(\log r + \pi\right) \rightarrow 0, \qquad r \rightarrow 0
+		\end{equation*}
+\end{itemize}
+Adding all parts together, we have
+\begin{equation*}
+	2I + i \pi \int_0^{\infty} R(x) \mathrm{d} x = 2 \pi i \sum_{y>0} \Res R(z) \log z
+\end{equation*}
+\begin{equation}
+	I = \pi i \sum_{y>0} \Res R(z) \log z - \frac{i \pi}{2} \int_0^{\infty} R(x) \mathrm{d} x
 \end{equation}
 
 \paragraph{The Bergman Kernel}

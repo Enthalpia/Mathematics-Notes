@@ -1,0 +1,272 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\chapter{The Fundamental Group}
+
+It is rather natural to determine whether two topological spaces are heomeomorphic. Just constructing a homeomorphism between two spaces would do. On the other hand, proving that two spaces are not homeomorphic is often more difficult. Usually, we try to find some invariant of topological spaces, i.e., some property that is preserved under homeomorphisms, like connectedness, compactness and other topological properties we have seen so far. However, these properties are often not strong enough to distinguish between two spaces. For example, take $\mathbb{R}^2$ and $\mathbb{R}^3$. Both spaces are connected, simply connected, locally euclidean, second countable and Hausdorff. Yet, they are not homeomorphic.
+
+We have previously encounter simple connected in analysis, now we will study a more general and powerful tool to study connectedness, the \textit{fundamental group}. Intuitively speaking, the fundamental group is a topological invariant that captures information about the shape of a space, particularly its loops and holes. It is a key concept in algebraic topology and has applications in various areas of mathematics.
+
+\section{Homotopy of Paths}
+First, we need to think what makes two paths "similar". Intuitively, two paths are similar if one can be continuously deformed into the other without breaking or tearing. This idea leads us to the concept of homotopy of paths.
+\begin{definition}{Homotopy}{Homotopy}
+	Let $f,f'$ be continuous maps from $X$ to $Y$, we say that $f$ is \textit{homotopic} to $f'$ if there exists a continuous map $F:X\times I = [0,1]\to Y$ such that
+	\begin{equation}
+		F(x,0) = f(x) \quad \text{and} \quad F(x,1) = f'(x) \quad \forall x\in X.
+	\end{equation}
+	Denote this by $f\simeq f'$. The map $F$ is called a \textit{homotopy} between $f$ and $f'$. If $f\simeq c$ where $c$ is a constant map, then we say that $f$ is \textit{null-homotopic}.
+\end{definition}
+\begin{remark}
+	Note that a continuous function on the product topology is continuous on each component, so for each fixed $t\in I$, the map $F_t:X\to Y$ defined by $F_t(x) = F(x,t)$ is continuous. Thus, a homotopy can be viewed as a continuous deformation of one function into another over the interval $I$.
+\end{remark}
+Now we consider the special case where $f$ is a path in $X$, i.e., a continuous map from $I$ to $X$.
+\begin{definition}{Path Homotopy}{PathHomotopy}
+	Let $f,f'$ be paths in $X$, then they are \textit{path homotopic} if:
+	\begin{itemize}
+		\item  $f(0) = f'(0)$ and $f(1) = f'(1)$.
+		\item There exists a homotopy $F:I\times I\to X$ between $f$ and $f'$. For all $t\in I$, $F(0,t) = f(0) = f'(0)$ and $F(1,t) = f(1) = f'(1)$.
+	\end{itemize}
+\end{definition}
+
+\begin{lemma}{Equivalence Relation of Homotopy}{Equivalence Relation Of Homotopy}
+	The relation $\simeq$ and $\simeq_{p}$ are equivalence relations.
+\end{lemma}
+
+\begin{proposition}{Straight Line Homotopy}{Straight Line Homotopy}
+	Let $f,g:X \rightarrow \mathbb{R}^2$ be continuous maps. Then they are homotopic via the straight line homotopy defined by
+	\begin{equation}
+		F(x,t) = (1-t)f(x) + tg(x).
+	\end{equation}
+\end{proposition}
+
+\begin{definition}{Product Paths}{Product Paths}
+	If $f$ is a path in $X$ from $x_0$ to $x_1$ and $g$ is a path in $X$ from $x_1$ to $x_2$, then the \textit{product path} $f*g$ is defined by
+	\begin{equation}
+		h(s) = \begin{cases}
+			f(2s)   & 0\leq s \leq \frac{1}{2},  \\
+			g(2s-1) & \frac{1}{2} \leq s \leq 1.
+		\end{cases}
+	\end{equation}
+\end{definition}
+By the pasting lemma \ref{thm:The Pasting Lemma}, $f*g$ is continuous.
+
+Now consider the equivalence classes of paths under path homotopy. Denote $[f]$ as the equivalence class of the path $f$ under path homotopy. We can define the product of two equivalence classes as follows:
+\begin{equation}
+	[f]*[g] = [f*g]. \qquad \text{ if } f(1) = g(0).
+\end{equation}
+We can easily verify that this operation is well-defined. Let $F$ be a path homotopy between $f$ and $f'$, and $G$ be a path homotopy between $g$ and $g'$. Then we can define a path homotopy $H$ between $f*g$ and $f'*g'$ as follows:
+\begin{equation*}
+	H(s,t) = \begin{cases}
+		F(2s,t)   & 0\leq s \leq \frac{1}{2},  \\
+		G(2s-1,t) & \frac{1}{2} \leq s \leq 1.
+	\end{cases}
+\end{equation*}
+
+\begin{proposition}{Composition of Path Homotopy}{Composition of Path Homotopy}
+	Let $k:X \rightarrow Y$ be a continuous map and $f,f':I \rightarrow X$ be path homotopic paths in $X$ by $F$. Then the paths $k\circ f$ and $k\circ f'$ are path homotopic in $Y$ via the path homotopy $G = k \circ F$.
+
+	Also, if $f(1) = g(0)$ then we have
+	\begin{equation*}
+		k \circ (f*g) = (k \circ f)*(k \circ g).
+	\end{equation*}
+\end{proposition}
+
+\begin{proposition}{Properties of Path Products}{Properties of Path Products}
+	The operation $*$ on path homotopy classes has the following properties:
+	\begin{itemize}
+		\item \textbf{Associativity}: For paths $f,g,h$ with $f(1) = g(0)$ and $g(1) = h(0)$, we have $([f]*[g])*[h] = [f]*([g]*[h])$.
+		\item \textbf{Identity Element}: For any point $x_0 \in X$, denote the constant path at $x_0$ by $e_{x_0}$. Then for any path $f$ with $f(0) = x_0$ and $f(1) = x_1$, we have $[e_{x_0}]*[f] = [f]$ and $[f]*[e_{x_1}] = [f]$.
+		\item \textbf{Inverse Element}: For any path $f$ from $x_0$ to $x_1$, define the reverse path $\overline{f}$ by $\overline{f}(s) = f(1-s)$. Then $[f]*[\overline{f}] = [e_{x_0}]$ and $[\overline{f}]*[f] = [e_{x_1}]$.
+	\end{itemize}
+\end{proposition}
+\begin{proof}
+	It is rather obvious, but note that in our definition, $(f*g)*h \neq f*(g*h)$ as functions. Because the former compresses $f,g,h$ into intervals $[0,\frac{1}{4}]$, $[\frac{1}{4},\frac{1}{2}]$ and $[\frac{1}{2},1]$ respectively, while the latter compresses them into $[0,\frac{1}{2}]$, $[\frac{1}{2},\frac{3}{4}]$ and $[\frac{3}{4},1]$. However, they are path homotopic via a linear transformation that matches the intervals accordingly.
+\end{proof}
+
+\begin{proposition}{Patch the Functions}{Patch the Functions}
+	Let $f$ be a path in $X$ and $0=a_0 < a_1 < a_2 < \cdots < a_n = 1$ be a partition of $I$. For each $i=1,2,\ldots,n$, let $f_i$ be the restriction of $f$ to $[a_{i-1},a_i]$, reparametrized to $I$ by a linear map. Then
+	\begin{equation*}
+		[f] = [f_1]*[f_2]*\cdots *[f_n].
+	\end{equation*}
+\end{proposition}
+
+\section{The Fundamental Group}
+The path homotopy classes in a space $X$ with the operation $*$ does NOT form a group, because the operation $*$ is only defined for certain pairs of elements. However, if we restrict our attention to loops based at a fixed point, that is, all the paths that start and end at the same point $x_0$, then we can obtain a group structure.
+
+\begin{definition}{Fundamental Group}{Fundamental Group}
+	Let $X$ be a topological space and $x_0 \in X$. A path $f:I \to X$ is called a \textit{loop} based at $x_0$ if $f(0) = f(1) = x_0$. The set of all path homotopy classes of loops based at $x_0$ is denoted by $\pi_1(X,x_0)$ and is called the \textit{fundamental group} of $X$ at $x_0$. The group operation is given by the product of path homotopy classes. It is denoted as $\pi_1(X,x_0)$.
+\end{definition}
+This group is sometimes called the \textit{first homotopy group} of $X$ at $x_0$. (There are indeed all $n\in \mathbb{Z}_+$ homotopy groups, but we will not discuss them here.)
+
+\begin{example}{Fundamental Groups}{Fundamental Groups}
+	For $\mathbb{R}^n$, the fundamental group is just the trivial group, containing only the identity element $[e_{x_0}]$. Any loop in $\mathbb{R}^n$ can be contracted to the constant loop at $x_0$ via the straight line homotopy.
+\end{example}
+
+It is rather annoying that the fundamental group depends on the choice of the base point $x_0$. We shall investigate the relationship between the fundamental groups at different base points.
+
+\begin{definition}{$\hat{ \alpha}$ Map}{hat alpha Map}
+	Let $ \alpha$ be a path in $X$ from $x_0$ to $x_1$. Define the map
+	\begin{equation}
+		\hat{\alpha} : \pi_1(X,x_0) \to \pi_1(X,x_1), \quad \hat{\alpha}([f]) = [\overline{\alpha}*f*\alpha].
+	\end{equation}
+	The map $\hat{\alpha}$ is a group isomorphism, called the \textit{change of base point isomorphism} induced by the path $ \alpha$.
+\end{definition}
+\begin{proof}
+	We just compute
+	\begin{equation*}
+		\hat{\alpha}([f]*[g]) = \hat{\alpha}([f*g]) = [\overline{\alpha}*(f*g)*\alpha] = [(\overline{\alpha}*f)* (g*\alpha)] = [\overline{\alpha}*f*\alpha]*[\overline{\alpha}*g*\alpha] = \hat{\alpha}([f])*\hat{\alpha}([g]).
+	\end{equation*}
+	Next we define $ \beta = \overline{ \alpha}$, then $ \beta$ is a path from $x_1$ to $x_0$. It is easy to see that $\hat{ \beta}$ is the inverse of $\hat{ \alpha}$, thus $\hat{ \alpha}$ is a group isomorphism.
+\end{proof}
+
+\begin{corollary}{Isomorphism of Fundamental Groups}{Isomorphism of Fundamental Groups}
+	If $X$ is path connected, then for any $x_0,x_1 \in X$, $\pi_1(X,x_0) \cong \pi_1(X,x_1)$.	
+\end{corollary}
+
+Also, suppose $C$ is a path-component of $X$, then for any $x_0\in C$, we have $\pi_1(C,x_0) \cong \pi_1(X,x_0)$. So all the structures and elements of the fundamental group are determined by the path-components of $X$. \emph{It is customary to study the fundamental group of path-connected spaces only, and we will do so in the rest of this chapter.}
+
+\begin{remark}
+	It is tempting to identify all the fundamental groups at different base points in a path-connected space via the change of base point isomorphisms. However, this identification depends on the choice of the paths connecting the base points, and different choices may lead to different isomorphisms.
+
+	It turns out that the isomorphism of $ \pi_1(X,x_0)$ and $ \pi_1(X,x_1)$ is independent of the choice of the path $ \alpha$ if and only if the fundamental group is abelian.
+\end{remark}
+
+\begin{definition}{Simple Connectness}{Simple Connectness}
+	A space $X$ is called \textit{simply connected} if it is path connected and its fundamental group is trivial, i.e., $\pi_1(X,x_0) = \{[e_{x_0}]\}$ for some (and hence all) $x_0 \in X$.
+\end{definition}
+
+In a simply connected space, any path with the same endpoints are path homotopic. This can be easily seen by considering
+\begin{equation*}
+	[ \alpha ] = [ \alpha * \overline{ \beta } * \beta ] = [ \alpha * \overline{ \beta } ] * [ \beta ] = [ e_{x_0} ] * [ \beta ] = [ \beta ].
+\end{equation*}
+for $ \alpha, \beta$ being paths from $x_0$ to $x_1$.
+
+It is rather obvious that the fundamental group is a topological invariant. To formalize this, we need the concept of induced homomorphisms.
+
+Suppose $h:X \rightarrow Y$ is a continuous map that sends $x_0$ to $y_0$. Then for any loop $f$ in $X$ based at $x_0$, the composition $h \circ f$ is a loop in $Y$ based at $y_0$. This induces a map from $\pi_1(X,x_0)$ to $\pi_1(Y,y_0)$.
+
+\begin{definition}{Induced Homomorphisms}{Induced Homomorphisms}
+	Let $h:(X,x_0) \rightarrow (Y,y_0)$ be a continuous map. Define
+	\begin{equation}
+		h_* : \pi_1(X,x_0) \to \pi_1(Y,y_0), \quad h_*([f]) = [h \circ f].
+	\end{equation}
+	Then $h_*$ is a group homomorphism, called the \textit{induced homomorphism} by $h$.
+\end{definition}
+The map $h_*$ is well-defined because if $F$ is a path homotopy between $f$ and $f'$, then $h \circ F$ is a path homotopy between $h \circ f$ and $h \circ f'$. The fact that $h_*$ is a group homomorphism is straightforward:
+\begin{equation*}
+	h_*([f]*[g]) = h_*([f*g]) = [h \circ (f*g)] = [ (h \circ f) * (h \circ g) ] = [h \circ f] * [h \circ g] = h_*([f]) * h_*([g]).
+\end{equation*}
+
+\begin{remark}
+	Note that the homomorphism $h_*$ depends also on the choice of the base points $x_0$ and $y_0$. If difficulties arise due to different base points, we shall denote $(h_{x_0})_*$ for clarity.
+\end{remark}
+
+\begin{proposition}{Properties of the Induced Homomorphisms}{Properties of the Induced Homomorphisms}
+	\begin{itemize}
+		\item If $h : (X,x_0) \to (Y,y_0)$ and $k : (Y,y_0) \to (Z,z_0)$ are continuous maps, then
+		  \begin{equation*}
+			  (k \circ h)_* = k_* \circ h_*.
+		  \end{equation*}
+		\item If $i : (X,x_0) \to (X,x_0)$ is the identity map, then $i_* : \pi_1(X,x_0) \to \pi_1(X,x_0)$ is the identity homomorphism.
+		\item If $h : (X,x_0) \to (Y,y_0)$ is a homeomorphism, then $h_* : \pi_1(X,x_0) \to \pi_1(Y,y_0)$ is a group isomorphism.
+	\end{itemize}
+\end{proposition}
+
+\subsection{Covering Spaces}
+
+\begin{definition}{Evenly Covered}{Evenly Covered}
+	Let $p: E \rightarrow B$ be a continuous surjective map. An open set $U \subset B$ is said to be \textit{evenly covered} by $p$ if $p^{-1}(U)$ can be expressed as a union of disjoint open sets in $E$, each of which is mapped homeomorphically onto $U$ by $p$. That is, there exists a collection of disjoint open sets $\{V_\alpha\}_{\alpha \in A}$ in $E$ such that
+	\begin{equation}
+		\forall \alpha \in A, \quad p|_{V_\alpha} : V_\alpha \rightarrow U \text{ is a homeomorphism,}
+	\end{equation}
+	The partition $\{V_\alpha\}_{\alpha \in A}$ is called a \textit{slice} of $p$ over $U$.
+\end{definition}
+
+\begin{remark}
+	If $U$ is an open set that is evenly covered by $p$, then we can picture $p^{-1}(U)$ as a collection of "sheets" or "layers" stacked above $U$, all identical to $U$ itself.
+\end{remark}
+
+Note that if $U$ is evenly covered by $p$, then for any open subset $W \subset U$, $W$ is also evenly covered by $p$, obviously.
+
+\begin{definition}{Covering Spaces}{Covering Spaces}
+	Let $p: E \rightarrow B$ be a continuous surjective map. If $\forall b\in B$ has a neighborhood $U$ that is evenly covered by $p$, then $p$ is called a \textit{covering map}, and $E$ is called a \textit{covering space} of $B$.
+\end{definition}
+Note that if $p: E \rightarrow B$ is a covering map, then for each $b \in B$, the preimage $p^{-1}(b)$ is a discrete set in $E$ and has discrete topology (each $V_{ \alpha}$ is open and contains exactly one point in $p^{-1}(b)$).
+
+\begin{proposition}{Openness of Covering map}{Openness of Covering map}
+	A covering map $p: E \rightarrow B$ is an open map.
+\end{proposition}
+\begin{proof}
+	Let $A \subseteq E$ be an open set. For each $b \in p(A)$, there exists an evenly covered neighborhood $U$ of $b$. Then $ \left\{ p^{-1}(U) \right\} = \left\{ V_{ \alpha} \right\}_{ \alpha \in A}$ is a slice of $p$ over $U$. Let $y\in A, p(y) = x, y\in V_{ \beta}$, then $V_{ \beta} \cap A$ is open in $E$ and also open in $V_{ \beta}$. Since $p|_{V_{ \beta}}$ is a homeomorphism onto $U$, $p(V_{ \beta} \cap A)$ is open in $U$ and hence open in $B$.
+\end{proof}
+
+For a non-path-connected space $B$, such as $X \times \left\{ 1, \ldots , n \right\}$ where there are $n$-copies of $X$, we can easily construct a covering space $E$ by $p(x,i) = x$. In practice, we usually consider path-connected spaces only.
+
+\begin{example}{Covering Spaces}{Covering Spaces}
+	The map $p: \mathbb{R} \rightarrow S^1$ given by the equation
+	\begin{equation}
+		p(t) = (\cos 2 \pi t, \sin 2 \pi t)
+	\end{equation}
+	is a covering map.
+	We can view it as wrapping the real line around the unit circle infinitely many times.
+
+	However, restricting $p$ to the $\mathbb{R}_+$ does not yield a covering map, since no neighborhood of the point $(1,0) \in S^1$ is evenly covered by $p|_{\mathbb{R}_+}$.
+\end{example}
+
+\begin{theorem}{Restriction of Covering Map}{Restriction of Covering Map}
+	Let $p: E \rightarrow B$ be a covering map, and $B_0\in B$, and $E_0 = p^{-1}(B_0)$. Then the restriction $p|_{E_0} : E_0 \rightarrow B_0$ is also a covering map.
+\end{theorem}
+\begin{proof}
+	Given $b_0\in B_0$ and let $U \subseteq B$ be an evenly covered neighborhood of $b_0$ by $p$. Then $U \cap B_0$ is an open neighborhood of $b_0$ in $B_0$.
+\end{proof}
+
+\begin{theorem}{Products of Covering Map}{Products of Covering Map}
+	Let $p: E \rightarrow B$ and $p': E' \rightarrow B'$ be covering maps. Then the product map
+	\begin{equation}
+		p \times p' : E \times E' \rightarrow B \times B', \quad (p \times p')(e,e') = (p(e),p'(e'))
+	\end{equation}
+	is also a covering map.
+\end{theorem}
+\begin{proof}
+	Given $(b,b') \in B \times B'$, let $U \subseteq B$ and $U' \subseteq B'$ be evenly covered neighborhoods of $b$ and $b'$ by $p$ and $p'$ respectively. Then $U \times U'$ is an open neighborhood of $(b,b')$ in $B \times B'$. Also, we have
+	\begin{equation*}
+		(p \times p')^{-1}(U \times U') = p^{-1}(U) \times p'^{-1}(U').
+	\end{equation*}
+	Since $p^{-1}(U)$ and $p'^{-1}(U')$ can be expressed as unions of disjoint open sets in $E$ and $E'$ respectively, their product can also be expressed as a union of disjoint open sets in $E \times E'$, each of which is mapped homeomorphically onto $U \times U'$ by $p \times p'$.
+\end{proof}
+
+\begin{example}{The Torus}{The Torus}
+	The torus $T^2$ can be viewed as the product space $S^1 \times S^1$. By the previous example and theorem, the map
+	\begin{equation}
+		p: \mathbb{R}^2 \rightarrow T^2
+	\end{equation}
+	is a covering map, where $p$ is defined by the previous example on each component.
+
+	Now let $b_0 = p(0) \in S^1$, then let
+	\begin{equation*}
+		B_0 = (S^1 \times b_0) \cup (b_0 \times S^1) \subset T^2,
+	\end{equation*}
+	called the figure-eight subspace of $T^2$. Then the restriction
+	\begin{equation*}
+		E_0 = p^{-1}(B_0) = (\mathbb{R} \times \mathbb{Z}) \cup (\mathbb{Z} \times \mathbb{R}) \subset \mathbb{R}^2,
+	\end{equation*}
+	is the infinite integer lattice.
+\end{example}
+
+\begin{example}{The Reimann Surface}{The Reimann Surface}
+	Consider the covering map
+	\begin{equation*}
+		p \times i : \mathbb{R} \times \mathbb{R}_+ \rightarrow S^1 \times \mathbb{R}_+,
+	\end{equation*}
+	where $i$ is the identity map on $\mathbb{R}_+$. Then consider the hoemorphism
+	\begin{equation*}
+		S^1 \times \mathbb{R}_+ \rightarrow \mathbb{R}^2 - \{0\}, \quad (x,t)_p \mapsto tx
+	\end{equation*}
+	Then the composition gives a covering map corresponding to the logarithm function Reimann surface.
+\end{example}
+
+\section{The Circle $S^1$}
+
+
+
+\end{document}

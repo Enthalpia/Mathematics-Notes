@@ -1,0 +1,551 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\chapter{Tangent Vectors}
+
+The basic idea of calculus is linear approximation.
+
+In analysis, we come across the idea of geometric tangent vectors in $\mathbb{R}^n$, which are used for ``directional derivatives'' of multivariable functions. We shall follow this path initially, and then move to a more abstract definition of tangent vectors as derivations.
+
+\section{Tangent Vectors}
+Take $S^{n-1} \subseteq \mathbb{R}^n$ for example. For a point $x \in S^{n-1}$, usually we think it as a location, expressed by coordinates $(x^1, x^2, \ldots, x^n)$. But when doing calculus, we sometimes need to think of it as a vector. Geometrically, we can think of a vector as an arrow which has arbitrary start point. We imagine tangent vectors as arrows starting from the point $x$. That is to say, they live in a copy of $\mathbb{R}^n$ that is ``attached'' to the point $x$.
+
+\subsection{Geometric Tangent Vectors}
+Given $a\in \mathbb{R}^n$, define the geometric tangent space to $\mathbb{R}^n$ at $a$ as the vector space
+\begin{equation}
+	\mathbb{R}^n_a = \left\{ a \right\} \times \mathbb{R}^n = \left\{ (a, v) : v \in \mathbb{R}^n \right\}, \quad (a,v) + (a,w) = (a, v+w), \quad c(a,v) = (a, cv).
+\end{equation}
+A geometric tangent vector in $\mathbb{R}^n$ is an element of $\mathbb{R}^n_a$ for some $a \in \mathbb{R}^n$. We shall denote $v_a = (a,v)$
+
+From this perspective, we can think of the tangent space of $S^{n-1}$ at $a \in S^{n-1}$ as a subspace of $\mathbb{R}^n_a$: As all vectors in $\mathbb{R}^n_a$ that are perpendicular to the radius vector from the origin to $a$. To do this, we must have an inner product inherited from $\mathbb{R}^n$ via the natural isomorphism between $\mathbb{R}^n_a$ and $\mathbb{R}^n$.
+
+This cannot be generalized to arbitrary manifolds, since there is no ambient Euclidean space to provide such a notion of perpendicularity. We shall use smooth structures to define tangent vectors in a more abstract way.
+
+We turn to directional derivatives to motivate our definition. Every geometric tangent vector $v_a \in \mathbb{R}^n_a$ defines a map
+\begin{equation}
+	D_v|_a : C^\infty(\mathbb{R}^n) \to \mathbb{R}, \quad D_v|_a f = D_v f(a) = \frac{\mathrm{d} }{\mathrm{d} t} \Big|_{t=0} f(a + tv).
+\end{equation}
+This map is linear and satisfies the Leibniz product rule:
+\begin{equation*}
+	D_v|_a (fg) = f(a) D_v|_a g + g(a) D_v|_a f.
+\end{equation*}
+If $v_a = v^i e_{i,a}$ in the standard basis, then we have
+\begin{equation*}
+	D_v|_a (f) = v^i \frac{\partial f}{\partial x^i} (a).
+\end{equation*}
+
+We now reverse the process.
+\begin{definition}{Derivation}{Derivation}
+	A \textbf{derivation} at $a \in \mathbb{R}^n$ is a linear map
+	\begin{equation*}
+		w : C^\infty(\mathbb{R}^n) \to \mathbb{R}
+	\end{equation*}
+	that satisfies the Leibniz product rule:
+	\begin{equation*}
+		w(fg) = f(a) w(g) + g(a) w(f)
+	\end{equation*}
+	for all $f,g \in C^\infty(\mathbb{R}^n)$. The set of all derivations at $a$ is denoted by $T_a \mathbb{R}^n$. Then $T_a \mathbb{R}^n$ is a vector space under the operations
+	\begin{equation*}
+		(w_1 + w_2)(f) = w_1(f) + w_2(f), \quad (cw)(f) = c w(f).
+	\end{equation*}
+\end{definition}
+
+It is fairly surprising that $T_a \mathbb{R}^n$ is isomorphic to the geometric tangent space $\mathbb{R}^n_a$.
+
+\begin{lemma}{Property of Derivations}{PropertyOfDerivations}
+	Suppose $a\in \mathbb{R}^n$ and $w\in T_a \mathbb{R}^n$, $f,g\in C^{\infty }(\mathbb{R}^n)$.
+	\begin{itemize}
+		\item If $f$ is constant, then $w(f) = 0$.
+		\item If $f(a) = g(a) = 0$, then $w(fg) = 0$.
+	\end{itemize}
+\end{lemma}
+\begin{proof}
+	If $f(x)=1$, then $wf = w(ff) = f(a)wf + f(a)wf = 2wf$, so $wf=0$. If $f(x)=c$, then $wf = w(cf_1) = c w(f_1) = 0$.
+\end{proof}
+
+\begin{proposition}{The Structure of $T_a \mathbb{R}^n$}{The Structure of Ta mathbbRn}
+	Let $a \in \mathbb{R}^n$. Then
+	\begin{itemize}
+		\item For each geometric tangent vector $v_a \in \mathbb{R}^n_a$, the map $D_v|_a$ defined above is a derivation at $a$.
+		\item The map $v_a \mapsto D_v|_a$ is a vector space isomorphism from $\mathbb{R}^n_a$ to $T_a \mathbb{R}^n$.
+	\end{itemize}
+\end{proposition}
+\begin{proof}
+	To prove isomorphism:
+	\begin{itemize}
+		\item Linearity: we have
+		      \begin{equation*}
+			      D_{c_1v+c_2w}|_a f = (c_1 v + c_2 w)^i \frac{\partial f}{\partial x^i} (a) = c_1 v^i \frac{\partial f}{\partial x^i} (a) + c_2 w^i \frac{\partial f}{\partial x^i} (a) = c_1 D_v|_a f + c_2 D_w|_a f.
+		      \end{equation*}
+		\item Injectivity: if $D_v|_a = 0$, then for all $f \in C^\infty(\mathbb{R}^n)$, $\displaystyle D_v|_a f = v^i \frac{\partial f}{\partial x^i} (a) = 0$. Taking $f(x) = x^j$, we have $v^j = 0$ for all $j$, so $v=0$.
+		\item Surjectivity: let $w \in T_a \mathbb{R}^n$. Define $v^i = w(x^i)$, and let $v_a = v^ie_i|_a$. For any $f \in C^\infty(\mathbb{R}^n)$, by Taylor's theorem, we have
+		      \begin{equation*}
+			      f(x) = f(a) + \sum_{i=1}^n \frac{\partial f}{\partial x^i} (a) (x^i - a^i) + R(x),
+		      \end{equation*}
+		      \begin{equation*}
+			      R(x) = \sum_{i,j=1}^n (x^i - a^i)(x^j - a^j) \int_0^1 (1-t) \frac{\partial^2 f}{\partial x^i \partial x^j} (a + t(x - a)) \, \mathrm{d} t.
+		      \end{equation*}
+		      As $R(x)$ is the sum of products of functions vanishing at $a$, by the previous lemma we have $w(R) = 0$. Thus,
+		      \begin{equation*}
+			      w(f) = w\left( f(a) + \sum_{i=1}^n \frac{\partial f}{\partial x^i} (a) (x^i - a^i) \right) = \sum_{i=1}^n \frac{\partial f}{\partial x^i} (a) w(x^i) = \sum_{i=1}^n \frac{\partial f}{\partial x^i} (a) v^i = D_v|_a f.
+		      \end{equation*}
+	\end{itemize}
+\end{proof}
+We have thus established the equivalence. And this definition can be generalized to arbitrary smooth manifolds.
+
+\subsection{Tangent Vectors on Manifolds}
+\begin{definition}{Tangent Vectors on Manifolds}{Tangent Vectors on Manifolds}
+	Let $M$ be a smooth manifold, with or without boundary, and let $p \in M$. A linear map $v: C^\infty(M) \to \mathbb{R}$ is called a \textbf{derivation at $p$} if it satisfies the Leibniz product rule:
+	\begin{equation*}
+		v(fg) = f(p) v(g) + g(p) v(f), \quad \forall f,g \in C^\infty(M).
+	\end{equation*}
+	The set of all derivations at $p$ is denoted by $T_p M$ and called the \textbf{tangent space} of $M$ at $p$. Its elements are called \textbf{tangent vectors} to $M$ at $p$.
+\end{definition}
+
+\begin{proposition}{Property of Tangent Vectors on Manifolds}{Property of Tangent Vectors on Manifolds}
+	Let $M$ be a smooth manifold, with or without boundary, and let $p \in M$. If $v \in T_p M$ and $f,g \in C^\infty(M)$, then
+	\begin{itemize}
+		\item If $f$ is constant, then $v(f) = 0$.
+		\item If $f(p) = g(p) = 0$, then $v(fg) = 0$.
+	\end{itemize}
+\end{proposition}
+
+\section{The Differential of a Smooth Map}
+We talk about the differential in analysis as linear approximations of functions at a given point. In the manifold case, there makes no sense to talk about linear transformations between manifolds, so we do it in terms of tangent spaces.
+
+\begin{definition}{Differential on Manifolds}{Differential on Manifolds}
+	If $M,N$ are smooth manifolds, with or without boundary, and $F: M \to N$ is a smooth map, then for each $p \in M$, we define a map
+	\begin{equation}
+		\mathrm{d} F_p : T_p M \to T_{F(p)} N
+	\end{equation}
+	to be the \textbf{differential} of $F$ at $p$, defined by
+	\begin{equation}
+		(\mathrm{d} F_p (v))(f) = v(f \circ F), \quad \forall f \in C^\infty(N), v \in T_p M.
+	\end{equation}
+\end{definition}
+\begin{remark}
+	This is quite natural. To give a geometric intuition, take a curve $\gamma$ in $M$ with $\gamma(0) = p$ and $\gamma'(0) = v$. Then $F \circ \gamma$ is a curve in $N$ with $(F \circ \gamma)(0) = F(p)$, and the tangent vector of $F \circ \gamma$ at $0$ is $\mathrm{d} F_p (v)$.
+
+	Here $v$ is a directional derivative operator acting on functions on $M$. which is given: $v(g) = \frac{\mathrm{d} }{\mathrm{d} t} \big|_{t=0} g(\gamma(t))$ for $g \in C^\infty(M)$. Then $\mathrm{d} F_p (v)$ is also a directional derivative operator acting on functions on $N$: for $f \in C^\infty(N)$,
+	\begin{equation*}
+		(\mathrm{d} F_p (v))(f) = \frac{\mathrm{d} }{\mathrm{d} t} \Big|_{t=0} f((F \circ \gamma)(t)) = \frac{\mathrm{d} }{\mathrm{d} t} \Big|_{t=0} (f \circ F)(\gamma(t)) = v(f \circ F).
+	\end{equation*}
+\end{remark}
+The operator $\mathrm{d} F_p$ is linear, as for $v,w \in T_p M$, $c \in \mathbb{R}$, we have
+\begin{equation*}
+	(\mathrm{d} F_p (c v + w))(f) = (c v + w)(f \circ F) = c v(f \circ F) + w(f \circ F) = c (\mathrm{d} F_p (v))(f) + (\mathrm{d} F_p (w))(f).
+\end{equation*}
+Is also follows the Leibniz product rule:
+\begin{equation*}
+	\begin{aligned}
+		(\mathrm{d} F_p (v))(fg) & = v((fg) \circ F) = v((f \circ F)(g \circ F))                        \\
+		                         & = (f \circ F)(p) v(g \circ F) + (g \circ F)(p) v(f \circ F)          \\
+		                         & = f(F(p)) (\mathrm{d} F_p (v))(g) + g(F(p)) (\mathrm{d} F_p (v))(f).
+	\end{aligned}
+\end{equation*}
+
+\begin{proposition}{Properties of Differential}{Properties of Differential}
+	Let $M,N,P$ be smooth manifolds, with or without boundary, and let $F: M \to N$ and $G: N \to P$ be smooth maps. Then for each $p \in M$,
+	\begin{itemize}
+		\item $\mathrm{d} F_p : T_p M \to T_{F(p)} N$ is a linear map.
+		\item (Chain Rule) $\mathrm{d} (G \circ F)_p = \mathrm{d} G_{F(p)} \circ \mathrm{d} F_p$.
+		\item If $\mathrm{id}_M : M \to M$ is the identity map, then $\mathrm{d} (\mathrm{id}_M)_p$ is the identity map on $T_p M$.
+		\item If $F$ is a diffeomorphism, then $\mathrm{d} F_p$ is an isomorphism, and $(\mathrm{d} F_p)^{-1} = \mathrm{d} (F^{-1})_{F(p)}$.
+	\end{itemize}
+\end{proposition}
+
+Our first application of differentials is to relate tangent spaces of manifoldes to those of Euclidean spaces via charts. But first we shall prove that tangent vectors are local-behaved, for charts only give local information.
+
+\begin{proposition}{Locality of Tangent Vectors}{Locality of Tangent Vectors}
+	Let $M$ be a smooth manifold, with or without boundary, and let $p \in M$. If $v \in T_p M$ and $f,g \in C^\infty(M)$ agree on an open neighborhood of $p$, then $v(f) = v(g)$.
+\end{proposition}
+\begin{proof}
+	Let $f,g\in C^\infty(M)$ agree on an open neighborhood $U$ of $p$. Then $h=f-g$ vanishes on $U$. Let $\psi \in C^\infty(M)$ be a smooth bump function that is $1$ on $\supp h$ and $\supp \psi \subseteq M-\left\{ p \right\}$. Then $h = h \psi$, so by the previous proposition, we have
+	\begin{equation*}
+		v(h) = v(h \psi) = h(p) v(\psi) + \psi(p) v(h) = 0.
+	\end{equation*} Thus, $v(f) = v(g)$.
+\end{proof}
+
+\begin{proposition}{Tangent Space to Open Subsets}{Tangent Space to Open Subsets}
+	Let $M$ be a smooth manifold, with or without boundary, and let $U \subseteq M$ be an open subset. Let $\iota : U \hookrightarrow M$ be the inclusion map. Then for $p\in U$, the differential
+	\begin{equation*}
+		\mathrm{d} \iota_p : T_p U \to T_p M
+	\end{equation*}
+	is an isomorphism.
+\end{proposition}
+\begin{proof}
+	Via the extension lemma, every $f \in C^\infty(U)$ can be extended to a function $\tilde{f} \in C^\infty(M)$ such that $\tilde{f}|_U = f$. Thus, with the locality of tangent vectors, we can easily see the result.
+\end{proof}
+Therefore, it is safe to identify $T_p U$ with $T_p M$ via the inclusion map.
+
+\begin{theorem}{Dimension of Tangent Space}{Dimension of Tangent Space}
+	Let $M$ be a smooth manifold of dimension $n$, and let $p \in M$. Then $T_p M$ is an $n$-dimensional real vector space.
+\end{theorem}
+\begin{proof}
+	Take a chart $(U, \varphi)$ containing $p$. Then as $\varphi$ is a diffeomorphism from $U$ to an open subset $\hat{U} \subseteq \mathbb{R}^n$, by the previous proposition, we have an isomorphism
+	\begin{equation*}
+		T_p M \cong T_p U \cong T_{\varphi(p)} \hat{U} \cong T_{\varphi(p)} \mathbb{R}^n.
+	\end{equation*}
+	Thus, by the earlier result on $\mathbb{R}^n$, we have $\dim T_p M = n$.
+\end{proof}
+
+Now we address points on the boundary of manifolds with boundary. The situation is similar. First, we shall relate the tangent spaces of $T_a \mathbb{H}^n$ to those of $\mathbb{R}^n$ when $a \in \partial \mathbb{H}^n$. As $\mathbb{H}^n$ is not an open subset of $\mathbb{R}^n$, we cannot use the previous proposition \ref{prop:Tangent Space to Open Subsets} directly. However, we have the following result.
+
+\begin{lemma}{Inclusion of $\mathbb{H}^n$}{Inclusion of mathbbHn}
+	Let $\iota : \mathbb{H}^n \hookrightarrow \mathbb{R}^n$ be the inclusion map. Then for each $a \in \partial \mathbb{H}^n$, the differential $\mathrm{d} \iota_a : T_a \mathbb{H}^n \to T_a \mathbb{R}^n$ is a linear isomorphism.
+\end{lemma}
+\begin{proof}
+	Assume $\mathrm{d} \iota_a(v) = 0$, then for all $f \in C^\infty(\mathbb{H}^n)$, we let $\tilde{f} \in C^\infty(\mathbb{R}^n)$ be an extension of $f$. Thus, $\tilde{f} \circ \iota = f$, and we have
+	\begin{equation*}
+		v(f) = v(\tilde{f} \circ \iota) = (\mathrm{d} \iota_a (v))(\tilde{f}) = 0.
+	\end{equation*}
+	So $v=0$ and $\mathrm{d} \iota_a$ is injective.
+
+	For surjectivity, let $w \in T_a \mathbb{R}^n$. Define $v : C^\infty(\mathbb{H}^n) \to \mathbb{R}$ by $v(f) = w(\tilde{f})$, where $\tilde{f} \in C^\infty(\mathbb{R}^n)$ is any extension of $f$. Thus
+	\begin{equation*}
+		v(f) = w^i \frac{\partial \tilde{f}}{\partial x^i} (a).
+	\end{equation*}
+	From continuity, this does not depend on the choice of extension $\tilde{f}$, as we can get the result by limiting process from points in the interior of $\mathbb{H}^n$. So we have $\mathrm{d} \iota_a (v) = w$.
+\end{proof}
+
+Therefore, it is safe to identify $T_a \mathbb{H}^n$ with $T_a \mathbb{R}^n$ via the inclusion map, even for $a \in \partial \mathbb{H}^n$.
+
+\begin{proposition}{Dimension of Tangent Space with Boundary}{Dimension of Tangent Space with Boundary}
+	Let $M$ be a smooth manifold of dimension $n$ with boundary, and let $p \in M$. Then $T_p M$ is an $n$-dimensional real vector space.
+\end{proposition}
+
+Next, as we know that for a finite-dimensional vector space, there exists a natural smooth structure on it. We shall see that the tangent space to a vector space at any point is naturally isomorphic to the vector space itself.
+
+\begin{proposition}{Tangent Space to a Vector Space}{Tangent Space to a Vector Space}
+	Let $V$ be a finite-dimensional real vector space with the standard smooth structure, and let $v \in V$. Then there is a natural isomorphism $V \cong T_v V$, defined by
+	\begin{equation*}
+		v \mapsto D_v|_a, \quad D_v|_a (f) = \frac{\mathrm{d} }{\mathrm{d} t} \Big|_{t=0} f(a + tv), \quad \forall f \in C^\infty(V).
+	\end{equation*}
+	For any liner transformation $T: V \to W$ between finite-dimensional real vector spaces, we have
+	\begin{equation}
+		L \cong \mathrm{d} L_a, \qquad \mathrm{d} L_a(D_v|_a) = D_{L(v)}|_{L(a)}.
+	\end{equation}
+\end{proposition}
+
+Therefore, we can identify $T_v V$ with $V$ itself via the above isomorphism. For example, since $GL(n, \mathbb{R})$ is an open subset of the vector space $M_{n \times n}(\mathbb{R})$, we can identify $T_A GL(n, \mathbb{R})$ with $M_{n \times n}(\mathbb{R})$ for each $A \in GL(n, \mathbb{R})$.
+
+For products, we have the following result.
+\begin{theorem}{Tangent Space to Product Manifolds}{Tangent Space to Product Manifolds}
+	Let $M_1, \ldots ,M_k$ be smooth manifolds, at most one have boundary. Let $ \pi_j : M_1 \times \cdots \times M_k \to M_j$ be the projection map onto the $j$-th factor. Then for each $p = (p_1, \ldots ,p_k) \in M_1 \times \cdots \times M_k$, the map
+	\begin{equation*}
+		\alpha_p : T_p (M_1 \times \cdots \times M_k) \to T_{p_1} M_1 \oplus \cdots \oplus T_{p_k} M_k, \quad \alpha_p (v) = (\mathrm{d} \pi_1)_p (v), \ldots ,(\mathrm{d} \pi_k)_p (v)
+	\end{equation*}
+	Is an isomorphism.
+\end{theorem}
+Therefore, we can identify $T_p (M_1 \times \cdots \times M_k)$ with $T_{p_1} M_1 \oplus \cdots \oplus T_{p_k} M_k$ via the above isomorphism.
+
+\section{Computation in Coordinates}
+We shall use charts to compute tangent vectors and differentials in coordinates.
+
+Suppose $M$ is a smooth manifold of dimension $n$ (without boundary for simplicity), and $(U, \varphi)$ is a chart containing $p \in M$. Then $\varphi : U \to \hat{U} \subseteq \mathbb{R}^n$ is a diffeomorphism, thus $\mathrm{d} \varphi_p : T_p M \to T_{\varphi(p)} \mathbb{R}^n$ is an isomorphism.
+
+In $\mathbb{R}^n$, we have the standard basis
+\begin{equation*}
+	\frac{\partial }{\partial x^i} \Big|_{\varphi(p)} : f \mapsto \frac{\partial f}{\partial x^i} (\varphi(p)), \quad i=1, \ldots ,n.
+\end{equation*}
+Therefore, the preimages of these basis vectors under $\mathrm{d} \varphi_p$ form a basis of $T_p M$, denoted by
+\begin{equation}
+	\frac{\partial }{\partial x^i} \Big|_p = (\mathrm{d} \varphi_p)^{-1} \left( \frac{\partial }{\partial x^i} \Big|_{\varphi(p)} \right) = \mathrm{d} (\varphi^{-1})_{\varphi(p)} \left( \frac{\partial }{\partial x^i} \Big|_{\varphi(p)} \right), \quad i=1, \ldots ,n.
+\end{equation}
+Acting on $f \in C^\infty(M)$, we have
+\begin{equation*}
+	\frac{\partial }{\partial x^i} \Big|_p (f) = \frac{\partial (f \circ \varphi^{-1})}{\partial x^i} (\varphi(p)) = \frac{\partial \hat{f}}{\partial x^i} (\hat{p}), \quad \hat{f} = f \circ \varphi^{-1}, \quad \hat{p} = \varphi(p).
+\end{equation*}
+which is the coordinate expression of $f$ and $p$ in $\mathbb{R}^n$. We call $\displaystyle \left\{ \frac{\partial }{\partial x^i} \Big|_p : i=1, \ldots ,n \right\}$ the \textbf{coordinate basis} of $T_p M$ induced by the chart $(U, \varphi)$.
+
+\begin{remark}
+	In $\mathbb{R}^n$, the coordinate basis vectors are just the partial derivative operators along the coordinate axes.
+\end{remark}
+
+For points on the boundary of manifolds with boundary, the situation is similar, just replacing $\mathbb{R}^n$ with $\mathbb{H}^n$, and using the inclusion isomorphism between $T_a \mathbb{H}^n$ and $T_a \mathbb{R}^n$ for $a \in \partial \mathbb{H}^n$.
+
+\begin{theorem}{The Coordinate Basis}{The Coordinate Basis}
+	Let $M$ be a smooth manifold of dimension $n$, with or without boundary, and let $p\in M$. Then take any chart $(U, \varphi)$ containing $p$. Then the coordinate vectors
+	\begin{equation*}
+		\frac{\partial }{\partial x^i} \Big|_p = \mathrm{d} (\varphi^{-1})_{\varphi(p)} \left( \frac{\partial }{\partial x^i} \Big|_{\varphi(p)} \right), \quad i=1, \ldots ,n
+	\end{equation*}
+	form a basis of $T_p M$.
+\end{theorem}
+
+This a tangent vector $v \in T_p M$ can be expressed in coordinates as
+\begin{equation}
+	v = v^i \frac{\partial }{\partial x^i} \Big|_p, \quad v^i = v(x^i),
+\end{equation}
+where $x^i = \pi_i \circ \varphi$ are the coordinate functions on $U$. The numbers $v^i$ are called the \textbf{components} of $v$ with respect to the coordinate basis induced by the chart $(U, \varphi)$.
+
+\subsection{The Differential in Coordinates}
+Now, we shall do computations of differentials of smooth maps in coordinates form. First, for simplicity consider $U \subseteq \mathbb{R}^n$ and $V \subseteq \mathbb{R}^m$ be open subsets, and let $F: U \to V$ be a smooth map. For $p \in U$, we have $\mathrm{d} F_p : T_p \mathbb{R}^n \to T_{F(p)} \mathbb{R}^m$ being a linear map. In the standard coordinate bases, we have
+\begin{equation*}
+	\mathrm{d} F_p \left( \frac{\partial }{\partial x^i} \Big|_p \right)f = \frac{\partial}{\partial x^i} \Big|_p (f \circ F) = \frac{\partial f}{\partial y^j} (F(p)) \frac{\partial F^j}{\partial x^i} (p) = \left( \frac{\partial F^j}{\partial x^i} (p) \frac{\partial }{\partial y^j} \Big|_{F(p)} \right) f.
+\end{equation*}
+Thus, we have
+\begin{equation}
+	\mathrm{d} F_p \left( \frac{\partial }{\partial x^i} \Big|_p \right) = \frac{\partial F^j}{\partial x^i} (p) \frac{\partial }{\partial y^j} \Big|_{F(p)}.
+\end{equation}
+Writing in matrix form, we have
+	{
+		\everymath{\displaystyle}
+		\renewcommand{\arraystretch}{2.5}
+		\begin{equation}
+			\mathrm{d} F_p =
+			\begin{pNiceMatrix}
+				\frac{\partial F^1}{\partial x^1} (p) & \frac{\partial F^1}{\partial x^2} (p) & \cdots & \frac{\partial F^1}{\partial x^n} (p) \\
+				\frac{\partial F^2}{\partial x^1} (p) & \frac{\partial F^2}{\partial x^2} (p) & \cdots & \frac{\partial F^2}{\partial x^n} (p) \\
+				\vdots                                & \vdots                                & \ddots & \vdots                                \\
+				\frac{\partial F^m}{\partial x^1} (p) & \frac{\partial F^m}{\partial x^2} (p) & \cdots & \frac{\partial F^m}{\partial x^n} (p)
+			\end{pNiceMatrix}
+		\end{equation}
+	}
+which is just the Jacobian matrix of $F$ at $p$. The same can be said if $U$ is an open subset of $\mathbb{H}^n$, so do $V$.
+
+For a more general case, let $M,N$ be smooth manifolds of dimension $n,m$ respectively, with or without boundary, and let $F: M \to N$ be a smooth map. Take charts $(U, \varphi)$ and $(V, \psi)$ containing $p \in M$ and $F(p) \in N$ respectively. Then we have $\mathrm{d} \hat{F}_{\hat{p}} : T_{\hat{p}} \mathbb{R}^n \to T_{\hat{F}(\hat{p})} \mathbb{R}^m$ being the differential of the smooth map $\hat{F} = \psi \circ F \circ \varphi^{-1} : \hat{U} \to \hat{V}$ at $\hat{p} = \varphi(p)$. In the coordinate bases, we have
+\begin{equation}
+	\begin{aligned}
+		\mathrm{d} F_p \left( \frac{\partial }{\partial x^i} \Big|_p \right) & = \mathrm{d} (\psi^{-1})_{\hat{F}(\hat{p})} \circ \mathrm{d} \hat{F}_{\hat{p}} \circ \mathrm{d} \varphi_p \left( \frac{\partial }{\partial x^i} \Big|_p \right)      \\
+		                                                                     & = \mathrm{d} (\psi^{-1})_{\hat{F}(\hat{p})} \left( \mathrm{d} \hat{F}_{\hat{p}} \left( \frac{\partial }{\partial x^i} \Big|_{\hat{p}} \right) \right)                \\
+		                                                                     & = \mathrm{d} (\psi^{-1})_{\hat{F}(\hat{p})} \left( \frac{\partial \hat{F}^j}{\partial x^i} (\hat{p}) \frac{\partial }{\partial y^j} \Big|_{\hat{F}(\hat{p})} \right) \\
+		                                                                     & = \frac{\partial \hat{F}^j}{\partial x^i} (\hat{p}) \frac{\partial }{\partial y^j} \Big|_{F(p)}.
+	\end{aligned}
+\end{equation}
+Which is just the pushforward of the Jacobian matrix of $\hat{F}$ at $\hat{p}$ via the charts.
+
+\subsection{Change of Coordinates}
+Suppose $(U, \varphi)$ and $(V, \psi)$ are two smooth charts on $M$ and $p \in U \cap V$. Denote the coordinate functions of $\varphi$ by $x^i = \pi_i \circ \varphi$ and those of $\psi$ by $\tilde{x}^i = \pi_i \circ \psi$. Therefore, any tangent vector $v \in T_p M$ can be expressed in both coordinate bases, and we want to find the relation between the components.
+
+To do it, consider the transition map $\psi \circ \varphi^{-1} : \varphi(U \cap V) \to \psi(U \cap V)$, and we write its coordinate functions by
+\begin{equation*}
+	\varphi \circ \psi^{-1} (x) = ( \tilde{x}^1 (x), \ldots ,\tilde{x}^n (x) ).
+\end{equation*}
+We have identified $V$ with $\psi(V) \subseteq \mathbb{R}^n$ via the chart $\psi$, so we use the same notation $\tilde{x}^i$ for the coordinate functions on $V$ for simplicity. Then we have the differential
+\begin{equation*}
+	\mathrm{d} (\psi \circ \varphi^{-1})_{\varphi(p)} : T_{\varphi(p)} \mathbb{R}^n \to T_{\psi(p)} \mathbb{R}^n.
+\end{equation*}
+by the previous result, we have
+\begin{equation}
+	\mathrm{d} (\psi \circ \varphi^{-1})_{\varphi(p)} \left( \frac{\partial }{\partial x^i} \Big|_{\varphi(p)} \right) = \frac{\partial \tilde{x}^j}{\partial x^i} (\varphi(p)) \frac{\partial }{\partial \tilde{x}^j} \Big|_{\psi(p)}.
+\end{equation}
+So we have pull back to $T_p M$ via the charts:
+\begin{equation}
+	\begin{aligned}
+		\frac{\partial }{\partial x^i} \Big|_p & = \mathrm{d} (\varphi^{-1})_{\varphi(p)} \left( \frac{\partial }{\partial x^i} \Big|_{\varphi(p)} \right)                                                   \\
+		                                       & = \mathrm{d} (\psi^{-1})_{\psi(p)} \circ \mathrm{d} (\psi \circ \varphi^{-1})_{\varphi(p)} \left( \frac{\partial }{\partial x^i} \Big|_{\varphi(p)} \right) \\
+		                                       & = \frac{\partial \tilde{x}^j}{\partial x^i} (\varphi(p)) \frac{\partial }{\partial \tilde{x}^j} \Big|_p.
+	\end{aligned}
+\end{equation}
+Therefore, the components of $v$ in the two coordinate bases are related by
+\begin{equation}
+	\tilde{v}^j = \frac{\partial \tilde{x}^j}{\partial x^i} (\hat{p}) v^i.
+\end{equation}
+
+\section{The Tangent Bundle}
+\begin{definition}{The Tangent Bundle}{The Tangent Bundle}
+	Let $M$ be a smooth manifold, with or without boundary. The \textbf{tangent bundle} of $M$ is the disjoint union
+	\begin{equation*}
+		TM = \bigsqcup_{p \in M} T_p M = \left\{ (p,v) : p \in M, v \in T_p M \right\}.
+	\end{equation*}
+	The map $\pi : TM \to M$ defined by $\pi(p,v) = p$ is called the \textbf{bundle projection}.
+\end{definition}
+
+For example, the tangent bundle of $\mathbb{R}^n$ is naturally isomorphic to $\mathbb{R}^n \times \mathbb{R}^n$ via the isomorphism
+\begin{equation*}
+  \mathbb{R}^n \times \mathbb{R}^n \to T \mathbb{R}^n, \quad (a,v) \mapsto (a, D_v|_a).
+\end{equation*}
+But for general manifolds, we cannot identify $TM$ with $M \times \mathbb{R}^n$ globally because we cannot have a natural way to identify each tangent space $T_p M$ with each other.
+
+\begin{theorem}{Structure of the Tangent Bundle}{Structure of the Tangent Bundle}
+  Let $M$ be a smooth manifold of dimension $n$. Then $TM$ has a natural topology and smooth structure such that $TM$ is a smooth manifold of dimension $2n$. With this structure, the bundle projection $\pi : TM \to M$ is a smooth map.
+\end{theorem}
+\begin{proof}
+  The ultimate intuition is to do it locally via charts. For each smooth chart $(U, \varphi)$ on $M$, note that $\pi^{-1}(U) = \bigsqcup_{p \in U} T_p M$. Define a map $\tilde{\varphi} : \pi^{-1}(U) \to \mathbb{R}^{2n}$ by
+  \begin{equation}
+    \tilde{\varphi} (p,v) = \tilde{\varphi} \left( v^i \frac{\partial }{\partial x^i} \Big|_p \right) = \left( x^1(p), \ldots ,x^n(p), v^1, \ldots ,v^n \right),
+  \end{equation}
+  So the image set is $\hat{U} \times \mathbb{R}^n$, being an open subset of $\mathbb{R}^{2n}$. It is also a bijection from $\pi^{-1}(U)$ to $\hat{U} \times \mathbb{R}^n$, because
+  \begin{equation*}
+    \tilde{\varphi}^{-1} (x^1, \ldots ,x^n, v^1, \ldots ,v^n) = v_i \frac{\partial }{\partial x^i} \Big|_{\varphi^{-1}(x^1, \ldots ,x^n)}.
+  \end{equation*}
+
+  Now suppose we have two smooth charts $(U, \varphi)$ and $(V, \psi)$ on $M$ and let $( \pi^{-1}(U), \tilde{\varphi} )$ and $( \pi^{-1}(V), \tilde{\psi} )$ be the corresponding charts on $TM$. Then the sets
+  \begin{equation*}
+    \tilde{\varphi} ( \pi^{-1}(U) \cap \pi^{-1}(V) ) = \varphi(U \cap V) \times \mathbb{R}^n, \quad \tilde{\psi} ( \pi^{-1}(U) \cap \pi^{-1}(V) ) = \psi(U \cap V) \times \mathbb{R}^n
+  \end{equation*}
+  are both open subsets of $\mathbb{R}^{2n}$. The transition map is given by
+  \begin{equation*}
+    \tilde{\psi} \circ \tilde{\varphi}^{-1} (x^1, \ldots ,x^n, v^1, \ldots ,v^n) = \left( \tilde{x}^1 (x), \ldots ,\tilde{x}^n (x), \frac{\partial \tilde{x}^j}{\partial x^1} (x) v^i, \ldots ,\frac{\partial \tilde{x}^j}{\partial x^n} (x) v^i \right),
+  \end{equation*}
+  which is smooth.
+
+  Finally, choose a countable cover of charts $\left\{ (U_\alpha, \varphi_\alpha) \right\}$ of $M$, then the corresponding charts $\left\{ ( \pi^{-1}(U_\alpha), \tilde{\varphi}_\alpha ) \right\}$ form an atlas of $TM$. The conditions of \ref{lem:The Smooth Manifold Chart Lemma} are easily verified.
+\end{proof}
+
+\begin{remark}
+  For smooth manifolds with boundary, the construction is similar, just replacing $\mathbb{R}^n$ with $\mathbb{H}^n$ in the above proof. We note that the only ``half-ness'' happens in the base manifold $M$, while each tangent space $T_p M$ is a full $n$-dimensional vector space, so no harm is done to the tangent bundle structure.
+\end{remark}
+
+\begin{proposition}{Single-Chart Tangent Bundle}{Single-Chart Tangent Bundle}
+  If $M$ is a smooth manifold of dimension $n$ (with or without boundary) that can be covered by a single chart $(M, \varphi)$, then the tangent bundle $TM$ is diffeomorphic to $M \times \mathbb{R}^n$.
+\end{proposition}
+\begin{proof}
+  Obvious.
+\end{proof}
+
+\begin{remark}
+  NOTE that although we can locally view $TM$ as $U \times \mathbb{R}^n$ via charts, there is no natural way to identify $TM$ with $M \times \mathbb{R}^n$ globally in general. In fact, this may not be true in many cases.
+\end{remark}
+
+Putting all pointwise differentials together, we have a map
+\begin{equation*}
+  \mathrm{d} F : TM \to TN, \quad \mathrm{d} F (p,v) = (F(p), \mathrm{d} F_p (v)),
+\end{equation*}
+called the global differential of $F$.
+
+\begin{theorem}{Global Differential is Smooth}{Global Differential is Smooth}
+  Let $M,N$ be smooth manifolds, with or without boundary, and let $F: M \to N$ be a smooth map. Then the global differential
+  \begin{equation*}
+    \mathrm{d} F : TM \to TN
+  \end{equation*}
+  is a smooth map.
+\end{theorem}
+\begin{proof}
+	From the coordinate expression, we have
+	\begin{equation*}
+		\mathrm{d} F (p,v) = \left( F(p), \frac{\partial F^j}{\partial x^i} (p) v^i \right),
+	\end{equation*}
+	which is smooth for $F$ is.
+\end{proof}
+\begin{proposition}{Properties of Global Differential}{Properties of Global Differential}
+	Let $M,N,P$ be smooth manifolds, with or without boundary, and let $F: M \to N$ and $G: N \to P$ be smooth maps. Then for each $(p,v) \in TM$,
+	\begin{itemize}
+		\item (Chain Rule) $\mathrm{d} (G \circ F) = \mathrm{d} G \circ \mathrm{d} F$.
+		\item If $\mathrm{id}_M : M \to M$ is the identity map, then $\mathrm{d} (\mathrm{id}_M) = \mathrm{id}_{TM}$.
+		\item If $F$ is a diffeomorphism, then $\mathrm{d} F$ is a diffeomorphism, and $(\mathrm{d} F)^{-1} = \mathrm{d} (F^{-1})$.
+	\end{itemize}
+\end{proposition}
+Just using proposition \ref{prop:Properties of Differential} would do. From now we may denote $\mathrm{d} F^{-1}$ for either $\mathrm{d} (F^{-1})$ or $(\mathrm{d} F)^{-1}$, when $F$ is a diffeomorphism.
+
+\section{Velocity Vectors of Curves}
+
+\begin{definition}{Curves}{Curves}
+	Let $M$ be a manifold, with or without boundary. A \textbf{curve} in $M$ is a continuous map $\gamma : J \to M$, where $J \subseteq \mathbb{R}$ is an open interval. Sometimes we may want $J$ to have one or both endpoints, in which case slight modifications are needed.
+\end{definition}
+
+\begin{definition}{Velocity}{Velocity}
+	Let $M$ be a smooth manifold, with or without boundary, and let $\gamma : J \to M$ be a smooth curve. The \textbf{velocity} of $\gamma$ at $t_0 \in J$ is the tangent vector
+	\begin{equation}
+		\gamma'(t_0) = \mathrm{d} \gamma_{t_0} \left( \frac{\mathrm{d} }{\mathrm{d} t} \Big|_{t_0} \right) \in T_{\gamma(t_0)} M.
+	\end{equation}
+	Other notations include
+	\begin{equation*}
+		\dot{\gamma}(t_0) = \frac{\mathrm{d} \gamma}{\mathrm{d} t} (t_0) = \frac{\mathrm{d} \gamma}{\mathrm{d} t} \Big|_{t = t_0}
+	\end{equation*}
+\end{definition}
+The tangent vector $\gamma'(t_0)$ acts on functions by
+\begin{equation*}
+	\gamma'(t_0) (f) = \frac{\mathrm{d} }{\mathrm{d} t} \Big|_{t=t_0} f(\gamma(t)) = \frac{\mathrm{d} }{\mathrm{d} t} \Big|_{t=t_0} (f \circ \gamma)(t).
+\end{equation*}
+which is the rate of change of $f$ along the curve $\gamma$ at $t_0$. For a smooth chart $(U, \varphi)$ containing $\gamma(t_0)$, we can express the velocity in coordinates as
+\begin{equation*}
+	\gamma'(t_0) = \frac{\mathrm{d} \gamma^i}{\mathrm{d} t} (t_0) \frac{\partial }{\partial x^i} \Big|_{\gamma(t_0)} = \left( \frac{\mathrm{d} \gamma^1}{\mathrm{d} t} (t_0), \ldots ,\frac{\mathrm{d} \gamma^n}{\mathrm{d} t} (t_0) \right),
+\end{equation*}
+which is familiar in Euclidean space.
+
+Next, we shall see that every tangent vector can be expressed as the velocity of some curve, which will lead us to an equivalent definition of tangent vectors.
+
+\begin{proposition}{Tangent Vector as Velocity}{Tangent Vector as Velocity}
+	Let $M$ be a smooth manifold, with or without boundary, and let $p \in M$. Then for any tangent vector $v \in T_p M$, there exists a smooth curve $\gamma : J \to M$ such that $\gamma(0) = p$ and $\gamma'(0) = v$.
+\end{proposition}
+\begin{proof}
+	First suppose $p\in \Int M$, then let $(U, \varphi)$ be a smooth chart centering $p$. Then we write $v = v^i \partial /\partial x^i|_p$. For sufficiently small $ \epsilon$, we have a smooth curve $\gamma : (-\epsilon, \epsilon) \to U$ defined by
+	\begin{equation*}
+		\gamma(t) = \varphi^{-1} \left( t v^1, \ldots ,t v^n \right)
+	\end{equation*}
+	which is smooth because $\varphi^{-1}$ is smooth.
+
+	Now if $p\in \partial M$, then let $(U, \varphi)$ be a smooth boundary chart centering $p$. We can similarly define a smooth curve $\gamma : [0, \epsilon) \to U$ or $(-\epsilon, 0] \to U$ by the same formula for sufficiently small $\epsilon > 0$, depending on the sign of the first component of $v$.
+\end{proof}
+
+For composition, we have the following result.
+\begin{proposition}{Velocity under Composition}{Velocity under Composition}
+	Let $M,N$ be smooth manifolds, with or without boundary, and let $F: M \to N$ be a smooth map. If $\gamma : J \to M$ is a smooth curve, then for each $t_0 \in J$,
+	\begin{equation*}
+		(F \circ \gamma)'(t_0) = \mathrm{d} F_{\gamma(t_0)} \left( \gamma'(t_0) \right).
+	\end{equation*}
+\end{proposition}
+\begin{proof}
+	Just the chain rule:
+	\begin{equation*}
+		(F \circ \gamma)'(t_0) (f) = \mathrm{d} (F \circ \gamma)_{t_0} \left( \frac{\mathrm{d} }{\mathrm{d} t} \Big|_{t_0} \right) (f) = \mathrm{d} F \circ \mathrm{d} \gamma_{t_0} \left( \frac{\mathrm{d} }{\mathrm{d} t} \Big|_{t_0} \right) (f) = \mathrm{d} F_{\gamma(t_0)} \left( \gamma'(t_0) \right) (f).
+	\end{equation*}
+\end{proof}
+
+We can also use curve velocity to compute differentials: Suppose $M,N$ are smooth manifolds, with or without boundary, and let $F: M \to N$ be a smooth map, then to compute $\mathrm{d} F_p (v)$ for $p \in M$ and $v \in T_p M$, we can first find a smooth curve $\gamma : J \to M$ such that $\gamma(0) = p$ and $\gamma'(0) = v$, then we have
+\begin{equation*}
+	\mathrm{d} F_p (v) = \mathrm{d} F_p \left( \gamma'(0) \right) = (F \circ \gamma)'(0).
+\end{equation*}
+
+\section{Alternative Definition of Tangent Vectors}
+\subsection{Derivations of the Space of Germs}
+A smooth function element on $M$ is an ordered pair $(f,U)$, where $U \subseteq M$ is an open set and $f \in C^\infty(U)$. Two smooth function elements $(f,U)$ and $(g,V)$ are said to be equivalent at $p \in U \cap V$ if there exists an open neighborhood $W \subseteq U \cap V$ of $p$ such that $f|_W = g|_W$. The equivalence class of $(f,U)$ at $p$ is called the \textbf{germ} of $f$ at $p$, and the set if all germs of smooth functions at $p$ is denoted by $C^\infty_p(M)$.
+
+\begin{remark}
+	Intuitively, $C^\infty _p(M)$ of a smooth function at $p$ contains all distinguishable smooth functions locally around $p$.
+\end{remark}
+
+We notice that $C^\infty _p(M)$ is a real vector space and an associative algebra under operations defined by
+\begin{itemize}
+	\item Addition: $[(f,U)] + [(g,V)] = [(f+g, U \cap V)]$.
+	\item Scalar Multiplication: $c [(f,U)] = [(cf,U)]$.
+	\item Multiplication: $[(f,U)] \cdot [(g,V)] = [(fg, U \cap V)]$.
+\end{itemize}
+Now we denote the germ of $f$ at $p$ simply by $[f]_p$ when there is no confusion.
+
+A derivation of $C^\infty _p(M)$ is a linear map $v : C^\infty _p(M) \to \mathbb{R}$ such that for all $[f]_p, [g]_p \in C^\infty _p(M)$,
+\begin{equation}
+	v( [f]_p \cdot [g]_p ) = f(p) v( [g]_p ) + g(p) v( [f]_p ).
+\end{equation}
+The set of all derivations of $C^\infty _p(M)$ is denoted by $\mathcal{D}_p(M)$. And it is simple to verify that $\mathcal{D}_p(M)$ is naturally isomorphic to $T_p M$.
+
+\subsection{Equivalent Class of Curves}
+This definition captures the intuitive idea of tangent vectors as ``directions'' at a point. Suppose $p$ is a point of $M$, and consider all smooth curves $\gamma : J \to M$ such that $\gamma(0) = p$. We say two such curves $\gamma_1$ and $\gamma_2$ are equivalent at $p$ if for any smooth function $f: M \to \mathbb{R}$,
+\begin{equation}
+	\frac{\mathrm{d} }{\mathrm{d} t} \Big|_{t=0} (f \circ \gamma_1)(t) = \frac{\mathrm{d} }{\mathrm{d} t} \Big|_{t=0} (f \circ \gamma_2)(t).
+\end{equation}
+The equivalence classes are denoted by $[\gamma]$, and all such equivalence classes form a set denoted by $\mathcal{V}_p(M)$, which is naturally isomorphic to $T_p M$.
+
+\section{Categories and Functors}
+A category $\mathcal{C}$ consists of
+\begin{itemize}
+	\item A class $\mathrm{Ob}(\mathcal{C})$, whose elements are called objects of $\mathcal{C}$.
+	\item A class $\mathrm{Hom}(\mathcal{C})$, whose elements are called morphisms of $\mathcal{C}$.
+	\item For each morphism $f \in \mathrm{Hom}(\mathcal{C})$, there are two objects $X,Y \in \mathrm{Ob}(\mathcal{C})$ called the source and target of $f$, denoted by $f: X \to Y$.
+	\item For each triplet of objects $X,Y,Z \in \mathrm{Ob}(\mathcal{C})$, there is a mapping called composition
+	      \begin{equation*}
+		      \circ : \mathrm{Hom}(Y,Z) \times \mathrm{Hom}(X,Y) \to \mathrm{Hom}(X,Z), \quad (g,f) \mapsto g \circ f.
+	      \end{equation*}
+	      where $\mathrm{Hom}(A,B)$ is the class of all morphisms from $A$ to $B$.
+\end{itemize}
+The morphisms and objects must satisfy the following axioms:
+\begin{itemize}
+	\item (Associativity) For each $f: X \to Y$, $g: Y \to Z$ and $h: Z \to W$,
+	      \begin{equation*}
+		      h \circ (g \circ f) = (h \circ g) \circ f.
+	      \end{equation*}
+	\item (Identity) For each object $X \in \mathrm{Ob}(\mathcal{C})$, there exists an identity morphism $\mathrm{id}_X : X \to X$ such that for each $f: X \to Y$.
+	      \begin{equation*}
+		      \mathrm{id}_Y \circ f = f, \quad f \circ \mathrm{id}_X = f.
+	      \end{equation*}
+\end{itemize}
+
+A morphism $f: X \to Y$ is called an isomorphism if there exists a morphism $g: Y \to X$ such that
+\begin{equation*}
+	g \circ f = \mathrm{id}_X, \quad f \circ g = \mathrm{id}_Y.
+\end{equation*}
+
+
+
+\end{document}

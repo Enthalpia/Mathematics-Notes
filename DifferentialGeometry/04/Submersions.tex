@@ -1,0 +1,185 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\chapter{Submersions, Immersions, and Embeddings}
+We shall study the geometric properties of smooth maps by there differential.
+
+\section{Maps of Constant Rank}
+Suppose $M$ and $N$ are smooth manifolds, with or without boundary, and $F : M \to N$ is a smooth map. For each point $p \in M$, we define the \textbf{rank} of $F$ at $p$ to be the rank of the linear map $\mathrm{d} F_p : T_pM \to T_{F(p)}N$, which is just the rank of the Jacobian matrix of $F$ in any coordinate chart containing $p$ and $F(p)$, or just $\dim \range \mathrm{d} F_p$. If the rank of $F$ is the same at every point of $M$, we say that $F$ is a \textbf{map of constant rank}.
+
+The maximum possible rank of $F$ at any point is $\min \{\dim M, \dim N\}$. If the rank of $F$ at $p$ is equal to this maximum value, we say that $F$ has \textbf{full rank} at $p$. If $F$ has full rank at every point of $M$, we say that $F$ has \textbf{constant full rank}.
+
+\begin{definition}{smooth Submersions and Immersions}{smooth Submersions and Immersions}
+  A smooth map $F : M \to N$ between smooth manifolds is a \textbf{smooth submersion} if $\mathrm{d} F_p : T_pM \to T_{F(p)}N$ is surjective for every point $p \in M$.
+
+  A smooth map $F : M \to N$ between smooth manifolds is a \textbf{smooth immersion} if $\mathrm{d} F_p : T_pM \to T_{F(p)}N$ is injective for every point $p \in M$.
+\end{definition}
+
+From the continuity of $\mathrm{d} F$, we have the following result.
+\begin{proposition}{Local Surjectivity and Local Injectivity}{Local Surjectivity of Submersions and Local Injectivity of Immersions}
+  If $F : M \to N$ is a smooth map and $p \in M$. If $\mathrm{d} F_p$ is surjective, then there exists an open neighborhood $U$ of $p$ such that $F|_U : U \to N$ is a submersion. If $\mathrm{d} F_p$ is injective, then there exists an open neighborhood $U$ of $p$ such that $F|_U : U \to N$ is an immersion.
+\end{proposition}
+\begin{proof}
+  Choose any smooth coordinate chart $(U, \varphi)$ on $M$ containing $p$ and any smooth coordinate chart $(V, \psi)$ on $N$ containing $F(p)$. Then the Jacobian matrix of $F$ has full rank at $p$. As $\mathrm{d} F$ is continuous, there exists an open neighborhood $U' \subset U$ of $p$ such that the Jacobian matrix of $F$ has full rank at every point of $U'$.
+\end{proof}
+
+\begin{example}{Submersion and Immersion}{Submersion and Immersion}
+  \begin{itemize}
+    \item Suppose $M_1, \ldots ,M_k$ are smooth manifolds, then the projection map
+      \begin{equation*}
+        \pi_i : M_1 \times \cdots \times M_k \rightarrow M_i, \quad (p_1, \ldots , p_k) \mapsto p_i
+      \end{equation*}
+      is a smooth submersion for each $1 \leq i \leq k$.
+    \item If $ \gamma :J \to M$ is a smooth curve on a smooth manifold $M$, with or without boundary, then $\gamma$ is a smooth immersion if and only if $\gamma'(t) \neq 0$ for all $t \in J$.
+    \item If $M$ is a smooth manifold then the tangent bundle projection $\pi : TM \to M$ is a smooth submersion.
+  \end{itemize}
+\end{example}
+
+\begin{proposition}{Properties of Submersions and Immersions}{Properties of Submersions and Immersions}
+  \begin{itemize}
+    \item If $F : M \to N$ and $G : N \to P$ are smooth submersions, then $G \circ F : M \to P$ is a smooth submersion.
+    \item If $F : M \to N$ and $G : N \to P$ are smooth immersions, then $G \circ F : M \to P$ is a smooth immersion.
+    \item The composition of maps of constant rank need not have constant rank.
+  \end{itemize}    
+\end{proposition}
+\begin{proof}
+  For the third claim, take
+  \begin{equation*}
+    f: \mathbb{R}\rightarrow \mathbb{R}^2, \quad t \mapsto (t, t^2)
+  \end{equation*}
+  and
+  \begin{equation*}
+    g: \mathbb{R}^2 \rightarrow \mathbb{R}, \quad (x, y) \mapsto y.
+  \end{equation*}
+  Then both $f$ and $g$ have constant rank 1, but the composition
+  \begin{equation*}
+    g \circ f : \mathbb{R} \rightarrow \mathbb{R}, \quad t \mapsto t^2
+  \end{equation*}
+  does not have constant rank.
+\end{proof}
+
+\subsection{Local Diffeomorphisms}
+If $M,N$ are smooth manifolds with or without boundary, a smooth map $F : M \to N$ is a \textbf{local diffeomorphism} if for each point $p \in M$, there exists an open neighborhood $U$ of $p$ such that $F(U)$ is open in $N$ and $F|_U : U \to F(U)$ is a diffeomorphism.
+
+\begin{theorem}{The Inverse Function Theorem}{The Inverse Function Theorem}
+  Suppose $M$ and $N$ are smooth manifolds, and $F : M \to N$ is a smooth map. If $p\in M$ and $\mathrm{d} F_p : T_pM \to T_{F(p)}N$ is invertible, then there exist connected open neighborhoods $U_0$ of $p$ in $M$ and $V_0$ of $F(p)$ in $N$ such that $F|_{U_0} : U_0 \to V_0$ is a diffeomorphism.
+\end{theorem}
+\begin{proof}
+  Firstly, this implies $M,N$ have the same dimension $n$, then choose smooth charts $(U, \varphi)$ centering at $p$ and $(V, \psi)$ centering at $F(p)$ with $F(U) \subseteq V$. Then $\hat{F} = \psi \circ F \circ \varphi^{-1} : \varphi(U) \to \psi(V)$ is a smooth map between open subsets of $\mathbb{R}^n$ with invertible Jacobian matrix at $\varphi(p)$. By the Euclidean version of the Inverse Function Theorem, there exist open neighborhoods $U'$ of $\varphi(p)$ and $V'$ of $\psi(F(p))$ such that $\hat{F}|_{U'} : U' \to V'$ is a diffeomorphism. Let $U_0 = \varphi^{-1}(U')$ and $V_0 = \psi^{-1}(V')$, then $F|_{U_0} : U_0 \to V_0$ is a diffeomorphism.
+\end{proof}
+
+\begin{remark}
+  NOTE that this is true only for manifolds without boundary.
+\end{remark}
+
+\begin{proposition}{Properties of Local Diffeomorphisms}{Properties of Local Diffeomorphisms}
+  \begin{itemize}
+    \item Compositions of local diffeomorphisms are local diffeomorphisms.
+    \item Finite products of local diffeomorphisms are local diffeomorphisms.
+    \item The restriction of a local diffeomorphism to an open submanifold (with or without boundary) is a local diffeomorphism.
+    \item Every diffeomorphism is a local diffeomorphism. Every bijective local diffeomorphism is a diffeomorphism.
+    \item A map between smooth manifolds, with or without boundary, is a local diffeomorphism if and only if it has a local diffeomorphism coordinate representation at each point.
+  \end{itemize}
+\end{proposition}
+
+\begin{proposition}{Local Diffeomorphisms, Submersions, and Immersions}{Local Diffeomorphisms, Submersions, and Immersions}
+  A smooth map between smooth manifolds (without boundary), is a local diffeomorphism if and only if it is both a smooth immersion and a smooth submersion.
+
+  Moreover, if $\dim M = \dim N$, then a smooth map $F : M \to N$ is a smooth submersion if and only if it is a smooth immersion, and in either case it is a local diffeomorphism.
+\end{proposition}
+  
+\begin{example}{Local Diffeomorphisms}{Local Diffeomorphisms}
+  The map $ \mathbb{R} \rightarrow S^1$ defined by $t \mapsto (\cos t, \sin t)$ is a local diffeomorphism, but not a diffeomorphism.
+\end{example}
+
+\subsection{The Rank Theorem}
+
+\begin{theorem}{The Rank Theorem}{The Rank Theorem}
+  Suppose $M$ and $N$ are smooth manifolds of dimensions $m$ and $n$, respectively, and $F : M \to N$ is a smooth map of constant rank $k$. Then for each point $p \in M$, there exist smooth coordinate charts $(U, \varphi)$ on $M$ centered at $p$ and $(V, \psi)$ on $N$ centered at $F(p)$ such that
+  \begin{equation*}
+    \hat{F} = \psi \circ F \circ \varphi^{-1} : \varphi(U) \to \psi(V)
+  \end{equation*}
+  is given by
+  \begin{equation*}
+    \hat{F}(x^1, \ldots , x^m) = (x^1, \ldots , x^k, 0, \ldots , 0).
+  \end{equation*}  
+\end{theorem}
+
+The linear version of the Rank Theorem is that under certain choice of basis, any linear map can be represented by a matrix of the form
+\begin{equation*}
+  \begin{pmatrix}
+    I_k & 0 \\
+    0 & 0
+  \end{pmatrix},
+\end{equation*}
+
+\begin{proof}
+  From locality, just replace $M,N$ by open subsets $U \subseteq \mathbb{R}^m$ and $V \subseteq \mathbb{R}^n$ containing $p$ and $F(p)$, respectively. We also assume $p = 0$ and $F(p) = 0$.
+  %-----------COME BACK LATER----------------
+  
+  SORRY
+\end{proof}
+
+The following corollary is an immediate consequence and also can be viewed as a restatement of the Rank Theorem.
+\begin{corollary}{Local Linearity}{Local Linearity}
+  Let $M$ and $N$ be smooth manifolds of dimensions $m$ and $n$, respectively, and let $F : M \to N$ be a smooth map. If $M$ is connected, then $F$ has constant rank $k$ if and only if for each point $p \in M$, there exist smooth coordinate charts $(U, \varphi)$ on $M$ centered at $p$ and $(V, \psi)$ on $N$ centered at $F(p)$ such that the coordinate representation
+  \begin{equation*}
+    \hat{F} = \psi \circ F \circ \varphi^{-1} : \varphi(U) \to \psi(V)
+  \end{equation*}
+  is linear.
+\end{corollary}
+
+\begin{theorem}{Global Rank Theorem}{Global Rank Theorem}
+  Let $M$ and $N$ be smooth manifolds and let $F : M \to N$ be a smooth map of constant rank $k$. Then
+  \begin{itemize}
+    \item If $F$ is surjective, then it is a smooth submersion.
+    \item If $F$ is injective, then it is a smooth immersion.
+    \item If $F$ is bijective, then it is a diffeomorphism.
+  \end{itemize}
+\end{theorem}
+\begin{proof}
+  SORRY
+\end{proof}
+
+\subsection{The Rank Theorem with Boundary}
+The rank theorem does not generalize to manifolds with boundary in full generality. However, we do have the following partial result.
+
+\begin{theorem}{The Local Immersion Theorem with Boundary}{The Local Immersion Theorem with Boundary}
+  Suppose $M$ is a smooth manifold with boundary of dimension $m$, $N$ is a smooth manifold of dimension $n$, and $F : M \to N$ is a smooth immersion. Then for each point $p \in \partial M$, there exist smooth boundary charts $(U, \varphi)$ on $M$ centered at $p$ and smooth chart $(V, \psi)$ on $N$ centered at $F(p)$ such that $F(U) \subseteq V$ and the coordinate representation
+  \begin{equation*}
+    \hat{F}(x^1, \ldots , x^m) = (x^1, \ldots , x^m, 0, \ldots , 0).
+  \end{equation*}
+\end{theorem}
+\begin{proof}
+  SORRY
+\end{proof}
+
+\section{Embeddings}
+
+\begin{definition}{Smooth Embeddings}{Smooth Embeddings}
+  Let $M$ and $N$ be smooth manifolds, with or without boundary. A \textbf{smooth embedding} is a smooth immersion $F : M \to N$ that is also a topological embedding; that is, $F$ is a homeomorphism onto its image $F(M)$, where $F(M)$ is given the subspace topology inherited from $N$.
+\end{definition}
+
+\begin{proposition}{Compositions of Embeddings}{Compositions of Embeddings}
+  If $F : M \to N$ and $G : N \to P$ are smooth embeddings, then $G \circ F : M \to P$ is a smooth embedding.
+\end{proposition}
+
+\begin{example}{Smooth Embeddings}{Smooth Embeddings}
+  \begin{itemize}
+    \item Let $M$ be a smooth manifold with or without boundary and $U \subseteq M$ be an open submanifold. Then the inclusion map $\iota : U \hookrightarrow M$ is a smooth embedding.
+    \item If $M_1, \ldots ,M_k$ are smooth manifolds and $p_i \in M_i$ for each $1 \leq i \leq k$, then each of
+      \begin{equation*}
+        \iota_i : M_i \hookrightarrow M_1 \times \cdots \times M_k, \quad q \mapsto (p_1, \ldots , p_{i-1}, q, p_{i+1}, \ldots , p_k)
+      \end{equation*}
+      is a smooth embedding. Indeed, $\mathbb{R}^n \iota \mathbb{R}^{n+k}$ defined by $x \mapsto (x,0)$ is a smooth embedding.
+  \end{itemize}
+\end{example}
+
+Here are some counterexamples that illustrate the definition.
+\begin{itemize}
+  \item The map $ \mathbb{R} \to \mathbb{R}^2$ defined by $t \mapsto (t^3,0)$ is a smooth map and a topological embedding, but not a smooth immersion at $t = 0$, so it is not a smooth embedding.
+  \item The figure-eight curve $ \mathbb{R} \to \mathbb{R}^2$ defined by $t \mapsto (\sin t, \sin 2t)$ is a smooth immersion, but not a topological embedding because it is not a homeomorphism onto its image. (Compactness fails)
+\end{itemize}
+
+
+\end{document}

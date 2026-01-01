@@ -1,0 +1,220 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\chapter{Smooth Maps}
+
+We shall do calculus on smooth manifolds via smooth maps between them.
+
+\section{Smooth Functions and Smooth Maps}
+Although formally maps and functions are the same thing, we shall technically denote functions as maps from a manifold to $\mathbb{R}^n$ and maps as maps between manifolds.
+
+\subsection{Smooth Functions on Manifolds}
+\begin{definition}{Smooth Functions on Manifolds}{Smooth Functions on Manifolds}
+  Let $M$ be a smooth $n$-manifold and $k\in \mathbb{N}$. A function $f:M\to \mathbb{R}^k$ is a \textbf{smooth function} if for every $p\in M$, there exists a smooth chart $(U,\varphi)$ containing $p$ the corresponding coordinate representation $f\circ \varphi^{-1}:\varphi(U)\to \mathbb{R}^k$ is a smooth function (in the usual sense) on the open subset $\varphi(U)\subseteq \mathbb{R}^n$.
+
+  The definition for manifolds with boundary is similar.
+
+  We denote all smooth functions from $M$ to $\mathbb{R}^k$ by $C^\infty(M,\mathbb{R}^k)$ or simply $C^\infty(M)$ when $k=1$. It is a vector space over $\mathbb{R}$.
+\end{definition}
+
+\begin{remark}
+  If $M \subseteq \mathbb{R}^n$, the definition coincide with the usual definition of smooth functions on subsets of $\mathbb{R}^n$, obviously.
+\end{remark}
+We shall see that the definition holds for all charts containing $p$ if it holds for one chart containing $p$, thanks to the smoothness of transition maps.
+\begin{proposition}{Smoothness is Chart-Independent}{Smoothness is Chart-Independent}
+  Let $M$ be a smooth manifold, with or without boundary, and let $f:M\to \mathbb{R}^k$ be a function. Then $f$ is a smooth function if and only if for every $p\in M$ and every smooth chart $(U,\varphi)$ containing $p$, the coordinate representation $f\circ \varphi^{-1}:\varphi(U)\to \mathbb{R}^k$ is a smooth function (in the usual sense) on the open subset $\varphi(U)\subseteq \mathbb{R}^n$.
+\end{proposition}
+
+Given a function $f:M\to \mathbb{R}^k$ and a chart $(U,\varphi)$ on $M$, the function
+\begin{equation}
+  \hat{f}: \varphi(U) \to \mathbb{R}^k, \quad \hat{f} = f \circ \varphi^{-1}
+\end{equation}
+is called the \textbf{coordinate representation} of $f$ with respect to the chart $(U,\varphi)$. Then the definition just says that $f$ is smooth if and only if for every $p\in M$, there exists a chart $(U,\varphi)$ containing $p$ such that the coordinate representation $\hat{f}$ is smooth in the usual sense.
+
+\subsection{Smooth Maps Between Manifolds}
+\begin{definition}{Smooth Maps Between Manifolds}{Smooth Maps Between Manifolds}
+  Let $M$ and $N$ be smooth manifolds. A map $F:M\to N$ is a \textbf{smooth map} if for every $p\in M$, there exist smooth charts $(U,\varphi)$ on $M$ containing $p$ and $(V,\psi)$ on $N$ containing $F(p)$ such that $F(U) \subseteq V$ and the coordinate representation
+  \begin{equation}
+    \hat{F}: \varphi(U) \to \psi(V), \quad \hat{F} = \psi \circ F \circ \varphi^{-1}
+  \end{equation}
+  is a smooth map (in the usual sense) between the open subsets $\varphi(U)\subseteq \mathbb{R}^m$ and $\psi(V)\subseteq \mathbb{R}^n$.
+
+  The definition for manifolds with boundary is similar.
+
+  We denote all smooth maps from $M$ to $N$ by $C^\infty(M,N)$.  
+\end{definition}
+Our previous definition of smooth functions is a special case of this definition when $N=\mathbb{R}^k$.
+
+\begin{remark}
+  The requirement that $F(U) \subseteq V$ is crucial, as we need to make $F$ completely in control when we express it in coordinates. So we can identify $F$ with its coordinate representation $\hat{F}$ on $U$.
+\end{remark}
+
+\begin{proposition}{Smooth Maps are Continuous}{Smooth Maps are Continuous}
+  Let $M$ and $N$ be smooth manifolds, with or without boundary, and let $F:M\to N$ be a map. If $F$ is smooth, then it is continuous.
+\end{proposition}
+\begin{proof}
+  As $F$ is smooth, for every $p\in M$, there exist smooth charts $(U,\varphi)$ on $M$ containing $p$ and $(V,\psi)$ on $N$ containing $F(p)$ such that the coordinate representation $\hat{F} = \psi \circ F \circ \varphi^{-1}$ is smooth in the usual sense.
+  \begin{equation*}
+    F_U = \psi^{-1} \circ \hat{F} \circ \varphi: U \to V
+  \end{equation*}
+  is continuous as a composition of continuous maps. Since $F$ agrees with $F_U$ on $U$, $F$ is continuous at $p$. As $p$ is arbitrary, $F$ is continuous.
+\end{proof}
+
+\begin{proposition}{Characterization of Smooth Maps}{Characterization of Smooth Maps}
+  Suppose $M$ and $N$ are smooth manifolds, with or without boundary, and let $F:M\to N$ be a map. Then $F$ is smooth if and only if one of the following equivalent conditions holds:
+  \begin{itemize}
+    \item For every $p\in M$ there exist smooth charts $(U,\varphi)$ on $M$ containing $p$ and $(V,\psi)$ on $N$ containing $F(p)$ such that $U \cap F^{-1}(V)$ is open in $M$ and the composite map $\psi \circ F \circ \varphi^{-1}:\varphi(U \cap F^{-1}(V)) \to \psi(V)$ is smooth in the usual sense.
+    \item $F$ is continuous and there exists smooth atlases $\left\{(U_\alpha,\varphi_\alpha)\right\}$ on $M$ and $\left\{(V_\beta,\psi_\beta)\right\}$ on $N$ such that for every $\alpha$ and $\beta$, the composite map $\psi_\beta \circ F \circ \varphi_\alpha^{-1}:\varphi_\alpha(U_\alpha \cap F^{-1}(V_\beta)) \to \psi_\beta(V_\beta)$ is smooth in the usual sense.
+  \end{itemize}
+\end{proposition}
+
+It is also obvious that smooth maps does not depend on the choice of charts, thanks to the smoothness of transition maps.
+
+\begin{proposition}{Smoothness is Local}{Smoothness is Local}
+  Let $M$ and $N$ be smooth manifolds, with or without boundary, and let $F:M\to N$ be a map. Then $F$ is smooth if and only if for every $p\in M$ and every smooth chart $(U,\varphi)$ on $M$ containing $p$ and every smooth chart $(V,\psi)$ on $N$ containing $F(p)$ such that $F(U) \subseteq V$, the coordinate representation $\hat{F} = \psi \circ F \circ \varphi^{-1}$ is smooth in the usual sense.
+\end{proposition}
+
+\begin{proposition}{Algebra of Smooth Maps}{Algebra of Smooth Maps}
+  Let $M,N,P$ be smooth manifolds, with or without boundary.
+  \begin{itemize}
+    \item The constant map $C:M\to N$ defined by $C(p)=q$ for some fixed $q\in N$ is smooth.
+    \item The identity map $\operatorname{Id}_M:M\to M$ is smooth.
+    \item If $U \subseteq M$ is an open submanifold, then the inclusion map $\iota:U \hookrightarrow M$ is smooth.
+    \item If $F:M\to N$ and $G:N\to P$ are smooth maps, then the composition $G\circ F:M\to P$ is smooth.
+  \end{itemize}
+\end{proposition}
+
+\begin{proposition}{Smooth Maps by Components}{Smooth Maps by Components}
+  Suppose $M_1, \ldots ,M_k$ and $N$ are smooth manifolds, with or without boundary (at most one of $M_1, \ldots ,M_k$ has nonempty boundary), and let $ \pi_i : M_1 \times \cdots \times M_k \to M_i$ be the projection map onto the $i$-th factor. A map $F:N \to M_1 \times \cdots \times M_k$ is smooth if and only if each component map $ F_i = \pi_i \circ F : N \to M_i$ is smooth for $i=1, \ldots ,k$.
+\end{proposition}
+
+\begin{example}{Smooth Maps}{Smooth Maps}
+  \begin{itemize}
+    \item If $M$ is a $0$-manifold, then every map $F:M\to N$ is smooth.
+    \item The wrapping map $ \epsilon: \mathbb{R} \rightarrow S^1$ defined by $ \epsilon(t) = \exp (2 \pi i t)$ is smooth. So is $ \epsilon^n: \mathbb{R}^n \to T^n$ defined by $ \epsilon^n(t_1, \ldots ,t_n) = (\exp (2 \pi i t_1), \ldots ,\exp (2 \pi i t_n))$.
+    \item The inclusion map $ \iota: S^n \hookrightarrow \mathbb{R}^{n+1}$ is smooth.
+    \item The quotient map $ \pi: \mathbb{R}^{n+1} \setminus \{0\} \to \mathbb{R}P^n$ defined by $ \pi(x) = [x]$ is smooth.
+    \item If $M_1, \ldots ,M_k$ are smooth manifolds, then each projection map $ \pi_i : M_1 \times \cdots \times M_k \to M_i$ is smooth.
+  \end{itemize}
+\end{example}
+
+\subsection{Diffeomorphisms}
+\begin{definition}{Diffeomorphisms}{Diffeomorphisms}
+  A \textbf{diffeomorphism} is a smooth map $F:M\to N$ that is a bijection and whose inverse $F^{-1}:N\to M$ is also smooth. If such a map exists, we say that $M$ and $N$ are \textbf{diffeomorphic}, denoted by $M \cong N$.
+\end{definition}
+
+\begin{remark}
+  Diffeomorphisms are isomorphisms in the category of smooth manifolds, so diffeomorphic manifolds are ``the same'' from the smooth manifold point of view.
+\end{remark}
+Diffeomorphisms give an equivalence relation on the class of smooth manifolds. And it is fairly interesting to ask whether a given manifold has multiple smooth structures that are not diffeomorphic to each other. As it turns out, for $n\neq 4$, $\mathbb{R}^n$ has a unique smooth structure up to diffeomorphism, while for $n=4$, there are uncountably many non-diffeomorphic smooth structures on $\mathbb{R}^4$!
+
+\section{Partitions of Unity}
+The Gluing lemma in topology states that
+\begin{quote}
+  Let $X,Y$ be topological spaces, and if one of the following holds:
+  \begin{itemize}
+    \item $X$ is the union of finitely many closed subsets $A_1, \ldots ,A_n$.
+    \item $X$ is the union of open subsets $\left\{U_\alpha \right\}_{\alpha \in A}$.
+  \end{itemize}
+  If we are given continuous maps $f_i:A_i \to Y$ (or $f_\alpha:U_\alpha \to Y$) that agree on the overlaps, then there exists a unique continuous map $f:X\to Y$ such that $f|_{A_i} = f_i$ (or $f|_{U_\alpha} = f_\alpha$).
+\end{quote}
+
+We can glue smooth maps for the open cover case, but not for the closed cover case. This is fairly obvious, Take $f(x) = |x|$ on $\mathbb{R}$, and cover $\mathbb{R}$ by the two closed sets $(-\infty,0]$ and $[0,\infty)$. The restrictions $f|_{(-\infty,0]}$ and $f|_{[0,\infty)}$ are both smooth, but $f$ is not smooth at $0$.
+
+A slight disadvantage of gluing smooth maps over open covers is that we need to make sure the maps agree on the overlaps. To get around this, we introduce partitions of unity, which allow us to glue local smooth properties into global smooth properties without worrying about the overlaps.
+
+Our discussion is based on the existence of smooth bump functions that are positive in a specific part and vanish outside a slightly larger part. Take the function
+\begin{equation*}
+  f(x) = \begin{cases}
+    e^{-1/x}, & x>0, \\
+    0, & x \leq 0.
+  \end{cases}
+\end{equation*}
+on $\mathbb{R}$ for example.
+
+\begin{lemma}{Smooth Bump on $\mathbb{R}^n$}{Smooth Bump on mathbbRn}
+  Given any $0<r_1<r_2$, there exists a smooth function $H:\mathbb{R}^n \to \mathbb{R}$ such that $H(x) = 1$ for $||x|| \leq r_1$, $H(x) = 0$ for $||x|| \geq r_2$, and $0 < H(x) < 1$ for $r_1 < ||x|| < r_2$.
+\end{lemma}
+\begin{proof}
+Using $f$ to patch the two regions together would do.
+\end{proof}
+
+\begin{definition}{Partition of Unity}{Partition of Unity}
+  Suppose $M$ is a topological space and $\mathcal{X} = \{X_\alpha\}_{\alpha \in A}$ is an open cover of $M$. A \textbf{partition of unity subordinate to} $\mathcal{X}$ is a collection of continuous functions $\left\{\varphi_\alpha : M \to \mathbb{R} \right\}_{\alpha \in A}$ such that
+  \begin{itemize}
+    \item For each $\alpha \in A$, $0 \leq \varphi_\alpha (p) \leq 1$ for all $p\in M$.
+    \item $\supp \varphi_\alpha \subseteq X_\alpha$ for each $\alpha \in A$.
+    \item The family of supports $\left\{\supp \varphi_\alpha \right\}_{\alpha \in A}$ is locally finite.
+    \item For every $p\in M$, $\sum_{\alpha \in A} \varphi_\alpha (p) = 1$ (only finitely many terms are nonzero by local finiteness).
+  \end{itemize}
+
+  If each $\varphi_\alpha$ is smooth, we say it is a \textbf{smooth partition of unity}.
+\end{definition}
+
+\begin{theorem}{Existence of Smooth Partitions of Unity}{Existence of Smooth Partitions of Unity}
+  Let $M$ be a smooth manifold, with or without boundary, and let $\mathcal{U} = \{U_\alpha\}_{\alpha \in A}$ be any open cover of $M$. Then there exists a smooth partition of unity $\left\{\varphi_\alpha : M \to \mathbb{R} \right\}_{\alpha \in A}$ subordinate to $\mathcal{U}$.  
+\end{theorem}
+\begin{proof}
+SORRY
+\end{proof}
+
+As you can see, we can use smooth partitions of unity to glue local smooth properties into global smooth properties. This is extremely useful in differential geometry.
+
+\begin{definition}{Bump functions}{Bump functions}
+  Let $M$ be a smooth manifold, with or without boundary, and let $A \subseteq M$ be closed and $A \subseteq U \subseteq M$ for some open set $U$. A \textbf{bump function} for $A$ supported in $U$ is a continuous function $\psi:M\to \mathbb{R}$ such that
+  \begin{itemize}
+    \item $0 \leq \psi(p) \leq 1$ for all $p\in M$.
+    \item $\psi(p) = 1$ for all $p\in A$.
+    \item $\supp \psi \subseteq U$.
+  \end{itemize}
+\end{definition}
+
+\begin{proposition}{Existence of Smooth Bump Functions}{Existence of Smooth Bump Functions}
+  Let $M$ be a smooth manifold, with or without boundary, and let $A \subseteq M$ be closed and $A \subseteq U \subseteq M$ for some open set $U$. Then there exists a smooth bump function for $A$ supported in $U$.
+\end{proposition}
+\begin{proof}
+  Use the existence of smooth partitions of unity. Let $U_0=U,U_1=M-A$.
+\end{proof}
+
+Now we deal with smooth maps on arbitrary subsets of manifolds. Suppose $M,N$ are smooth manifolds, with or without boundary, and $A \subseteq M$ is arbitrary. A map $F:A \to N$ is \textbf{smooth} if for every $p\in A$, there exists an open neighborhood $U$ of $p$ in $M$ and a smooth map $\tilde{F}:U \to N$ such that $\tilde{F}|_{U \cap A} = F|_{U \cap A}$.
+
+\begin{lemma}{Extension Lemma for Smooth Functions}{Extension Lemma for Smooth Functions}
+  Let $M$ be a smooth manifold, with or without boundary, and let $A \subseteq M$ be closed and $f: A \rightarrow \mathbb{R}^k$ be a smooth function. Then for any open set $U$ containing $A$, there exists a smooth function $\tilde{f}: M \rightarrow \mathbb{R}^k$ such that $\tilde{f}|_A = f$ and $\supp \tilde{f} \subseteq U$.
+\end{lemma}
+\begin{proof}
+  For each $p\in A$, take an open neighborhood $W_p \subseteq U$ and a smooth function $\tilde{f}_p: W_p \to \mathbb{R}^k$ such that $\tilde{f}_p|_{W_p \cap A} = f|_{W_p \cap A}$. Then the family $\left\{W_p \right\}_{p\in A} \cup \{M-A\}$ is an open cover of $M$. Let $\left\{\varphi_p:M \to \mathbb{R} \right\}_{p\in A} \cup \{\varphi_0\}$ be a smooth partition of unity subordinate to this cover. Define
+  \begin{equation*}
+    \tilde{f}(x) = \sum_{p\in A} \varphi_p(x) \tilde{f}_p(x).
+  \end{equation*}
+  From local finiteness, the sum is well-defined and smooth. Also, $\supp \tilde{f} \subseteq U$ and for any $x\in A$,
+  \begin{equation*}
+    \tilde{f}(x) = \sum_{p\in A} \varphi_p(x) \tilde{f}_p(x) = \sum_{p\in A} \varphi_p(x) f(x) = f(x).
+  \end{equation*}
+
+  \begin{remark}
+    Note that the codomain is $\mathbb{R}^k$ here, this lemma would fail for arbitrary manifolds.
+  \end{remark}
+\end{proof}
+
+\begin{definition}{Exhaustion Functions}{Exhaustion Functions}
+  If $M$ is a topological space, a continuous function $f:M \to \mathbb{R}$ is an \textbf{exhaustion function} if for every $c\in \mathbb{R}$, the sublevel set $M_c = f^{-1}((-\infty,c])$ is compact.
+\end{definition}
+
+Well, as $n\in \mathbb{Z}_+$, the sets $M_n$ forms an exhaustion of $M$ by compact sets, hence the name.
+
+\begin{proposition}{Existence of Smooth Exhaustion Functions}{Existence of Smooth Exhaustion Functions}
+  Every smooth manifold $M$ without boundary admits a smooth positive exhaustion function.
+\end{proposition}
+\begin{proof}
+  SORRY
+\end{proof}
+
+\begin{theorem}{Level Sets of Smooth Functions}{Level Sets of Smooth Functions}
+  Let $M$ be a smooth manifold. If $K$ is a closed subset of $M$, then there exists a smooth nonnegative function $f:M \to \mathbb{R}$ such that $f^{-1}(0) = K$.
+\end{theorem}
+\begin{proof}
+  SORRY
+\end{proof}
+
+
+\end{document}

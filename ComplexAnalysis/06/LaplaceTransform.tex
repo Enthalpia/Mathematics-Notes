@@ -1,0 +1,159 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\chapter{Laplace Transform}
+
+\section{Definition and Basic Properties}
+
+If a function $f: \mathbb{R}\rightarrow \mathbb{R}$ is piecewise continuous on every finite interval and absolutely integrable on $(-\infty, +\infty)$, then the \textbf{Fourier Transform} of $f$ is defined as
+\begin{equation}
+  F(\omega) = \int_{-\infty}^{+\infty} f(t) e^{-i \omega t} dt, \qquad \omega \in \mathbb{R}.
+\end{equation}
+The inverse Fourier Transform is given by
+\begin{equation}
+  f(t) = \frac{1}{2\pi} \int_{-\infty}^{+\infty} F(\omega) e^{i \omega t} d\omega.
+\end{equation}
+
+To deal with functions that does not have so good convergence properties, we introduce the \textbf{Laplace Transform}. The Laplace Transform only considers the function on the positive real axis and adds an exponential decay factor to ensure convergence. Therefore, we shall always assume that $f(x)=0$ for $x<0$ when dealing with Laplace Transforms.
+
+Denote the Heaviside step function by
+\begin{equation}
+  h(t) = \begin{cases}
+    0, & t < 0, \\
+    1, & t \geq 0.
+  \end{cases}
+\end{equation}
+
+\begin{definition}{Laplace Transform}
+  Let $f: [0, +\infty) \rightarrow \mathbb{C}$ be a piecewise continuous function on every finite interval. And suppose there exists a constant $c \in \mathbb{R}$ such that $ |f(t)| \leq M e^{c t}$ for some $M > 0$ and all $t$. The \textbf{Laplace Transform} of $f$ is defined as
+  \begin{equation}
+    \mathcal{L}\{f(t)\} = F(p) = \int_{0}^{+\infty} f(t) e^{-p t} dt, \qquad p \in \mathbb{C}, \re(p) > c.
+  \end{equation}
+\end{definition}
+The inner compact convergence is quite easy to verify. For $\re(p) = \sigma > c$, we have
+\begin{equation*}
+  |f(t) e^{-p t}| \leq M e^{-(\sigma - c) t},
+\end{equation*}
+By the Weierstrass M-test, the integral converges uniformly on any compact subset of the half-plane $\re(p) > c$.
+
+Also, the derivative integral
+\begin{equation*}
+  \int_{0}^{\infty} \frac{\partial}{\partial p} \left( f(t) e^{-p t} \right) dt = \int_{0}^{\infty} -t f(t) e^{-p t} dt
+\end{equation*}
+Also converges uniformly on any compact subset of the half-plane $\re(p) > c + \epsilon$ for any $\epsilon > 0$. Thus, by the theorem of differentiation under the integral sign, $F(p)$ is holomorphic on the half-plane $\re(p) > c$ and
+\begin{equation}
+  F'(p) = \int_{0}^{\infty} \frac{\partial}{\partial p} \left( f(t) e^{-p t} \right) dt = \int_{0}^{\infty} -t f(t) e^{-p t} dt.
+\end{equation}
+
+So we have
+\begin{equation*}
+  \lim_{ \sigma \to \infty } F(p) = 0.
+\end{equation*}
+
+\begin{example}{Laplace Transform}{Laplace Transform}
+  \begin{itemize}
+    \item $\displaystyle \mathcal{L}\{e^{a t}\} = \frac{1}{p - a}, \quad \re(p) > \re(a)$.
+    \item $\displaystyle \mathcal{L}\{t^{\alpha}\} = \frac{\Gamma(\alpha + 1)}{p^{\alpha + 1}}, \quad \re(p) > 0, \alpha > -1$.
+  \end{itemize}
+\end{example}
+
+\section{Basic Properties}
+\begin{proposition}{Basic Properties of Laplace Transform}{Basic Properties of Laplace Transform}
+  Let $f(t)$ and $g(t)$ be piecewise continuous functions on every finite interval and of exponential order $c_f$ and $c_g$ respectively. Then we have
+  \begin{itemize}
+    \item Linearity: $\mathcal{L}\{a f(t) + b g(t)\} = a \mathcal{L}\{f(t)\} + b \mathcal{L}\{g(t)\}$, for any $a, b \in \mathbb{C}$. This also holds for inverse Laplace Transform.
+    \item The Similarity Theorem: $\displaystyle \mathcal{L}\{f(a t)\} = \frac{1}{a} F\left( \frac{p}{a} \right)$, for any $a > 0, \re(p) > a c_f$.
+    \item The Differentiation Theorem: $\displaystyle \mathcal{L}\{f'(t)\} = p F(p) - f(0)$, for $\re(p) > c_f$. More generally, $\displaystyle \mathcal{L}\{f^{(n)}(t)\} = p^n F(p) - p^{n-1} f(0) - p^{n-2} f'(0) - \cdots - f^{(n-1)}(0)$.
+
+      Conversely, $\displaystyle \mathcal{L}\{(-t)^n f(t)\} = F^{(n)}(p)$, for $\re(p) > c_f$.
+    \item The Integration Theorem: $\displaystyle \mathcal{L}\left\{ \int_{0}^{t} f(\tau) d\tau \right\} = \frac{1}{p} F(p)$, for $\re(p) > c_f$.
+
+      Conversely, $\displaystyle \mathcal{L}\left\{ \frac{f(t)}{t} \right\} = \int_{p}^{\infty} F(q) dq$, for $\re(p) > c_f$. Taking $p \rightarrow 0$, we have
+      \begin{equation*}
+        \int_{0}^{\infty} \frac{f(t)}{t} dt = \int_{0}^{\infty} F(p) dp.
+      \end{equation*}
+    \item The Delay Theorem: $\displaystyle \mathcal{L}\{f(t - a) h(t - a)\} = e^{-a p} F(p)$, for any $a \geq 0, \re(p) > c_f$.
+    \item The Shift Theorem: $\displaystyle \mathcal{L}\{e^{a t} f(t)\} = F(p - a)$, for any $a \in \mathbb{C}, \re(p) > c_f + \re(a)$.
+    \item The Periodicity Theorem: If $f(t)$ is periodic with period $T > 0$, then
+      \begin{equation*}
+        \mathcal{L}\{f(t)\} = \frac{1}{1 - e^{-p T}} \int_{0}^{T} f(t) e^{-p t} dt, \quad \re(p) > c_f.
+      \end{equation*}
+    \item The Convolution Theorem: If we define the convolution of $f$ and $g$ as
+      \begin{equation*}
+        (f * g)(t) = \int_{0}^{t} f(\tau) g(t - \tau) d\tau,
+      \end{equation*}
+      then we have
+      \begin{equation*}
+        \mathcal{L}\{(f * g)(t)\} = F(p) G(p), \quad \re(p) > \max\{c_f, c_g\}.
+      \end{equation*}
+  \end{itemize}
+\end{proposition}
+
+Some useful Laplace Transforms are listed below:
+\begin{itemize}
+  \item $\displaystyle \mathcal{L}\{\cos(\omega t)\} = \frac{p}{p^2 + \omega^2}, \quad \re(p) > 0$.
+  \item $\displaystyle \mathcal{L}\{\sin(\omega t)\} = \frac{\omega}{p^2 + \omega^2}, \quad \re(p) > 0$.
+  \item $\displaystyle \mathcal{L}\{ \sinh(\omega t) \} = \frac{\omega}{p^2 - \omega^2}, \quad \re(p) > |\re(\omega)|$.
+  \item $\displaystyle \mathcal{L}\{ \cosh(\omega t) \} = \frac{p}{p^2 - \omega^2}, \quad \re(p) > |\re(\omega)|$.
+\end{itemize}
+
+\section{The Inverse Transform Methods}
+\paragraph{The Rational Function Method}
+If $F(p)$ is a rational function, i.e., $F(p) = \frac{A(p)}{B(p)}$ where $A(p)$ and $B(p)$ are polynomials, then we can use partial fraction decomposition to write $F(p)$ as a sum of simpler fractions whose inverse Laplace Transforms are known.
+\begin{equation}
+  F(p) = \sum_{k}\sum_{s=1}^{m_k} \frac{A_{k,s}}{(p - a_k)^s}
+\end{equation}
+where $a_k$ are the poles of $F(p)$ and $m_k$ are their respective multiplicities. The inverse Laplace Transform can then be found using known transforms:
+\begin{equation}
+  \mathcal{L}^{-1}\left\{ \frac{1}{(p - a)^s} \right\} = \frac{t^{s-1} e^{a t}}{(s-1)!}.
+\end{equation}
+
+\subsection{The Bromwich Integral Method}
+The inverse Laplace Transform can be computed using the Bromwich integral (also known as the inverse Laplace integral):
+
+If $f$ is continuous at $t \geq 0$ then
+\begin{equation}
+  f(t) = \mathcal{L}^{-1}\{F(p)\} = \frac{1}{2 \pi i} \int_{ \sigma - i \infty}^{ \sigma + i \infty} F(p) e^{p t} dp,
+\end{equation}
+where $\sigma$ is a real number such that $\sigma > c$, with $c$ being the exponential order of $f(t)$.
+\begin{proof}
+  Take $p = \sigma + i s$, then from the Fourier formula, we have
+  \begin{equation*}
+    \mathscr{F}(s) = \int_{-\infty}^{+\infty} f(t) h(t) e^{- \sigma t} e^{-i s t} dt = F(\sigma + i s).
+  \end{equation*}
+  \begin{equation*}
+    f(t) h(t) e^{- \sigma t} = \frac{1}{2 \pi} \int_{-\infty}^{+\infty} F(\sigma + i s) e^{i s t} ds.
+  \end{equation*}
+  which is exactly the Bromwich integral.
+\end{proof}
+
+As it turns out, the Bromwich integral can be evaluated using the residue theorem.
+
+\begin{theorem}{Bromwich Integral and Residue Theorem}{Bromwich Integral and Residue Theorem}
+  Let $F(p)$ be the Laplace Transform of a piecewise continuous function $f(t)$ of exponential order $c$. Suppose that $F(p)$ has finite many poles $p_1, p_2, \ldots, p_n$ all in the half-plane $\re(p) < \sigma$, where $\sigma > c$ is sufficiently large, and the integral
+  \begin{equation*}
+    \int_{\sigma - i \infty}^{\sigma + i \infty} F(p) dp
+  \end{equation*}
+  converges absolutely. Then for $t > 0$, we have
+  \begin{equation}
+    f(t) = \frac{1}{2 \pi i} \int_{\sigma - i \infty}^{\sigma + i \infty} F(p) e^{p t} dp = \sum_{k=1}^{n} \Res\left( F(p) e^{p t}, p_k \right).
+  \end{equation}
+\end{theorem} 
+\begin{proof}
+  Taking the line and large semicircle contour in the left half-plane, by the Jordan's lemma, the integral on the semicircle vanishes as its radius goes to infinity. Thus, by the residue theorem, we have the above result.
+\end{proof}
+
+\subsection{The Series Method}
+\begin{theorem}{The Series Method of Laplace Transform}{The Series Method of Laplace Transform}
+  Suppose the Laplace Transform $F(p)$ is analytic at $\infty $ and have the Laurent series expansion
+  \begin{equation*}
+    F(p) = \sum_{n=1}^{\infty} \frac{c_n}{p^n}, \quad |p| > R.
+  \end{equation*}
+  Then the inverse Laplace Transform of $F(p)$ is given by
+  \begin{equation*}
+    f(t) = \sum_{n=1}^{\infty} \frac{c_n}{(n-1)!} t^{n-1}.
+  \end{equation*}
+  The other way around also holds.
+\end{theorem}
+
+\end{document}
