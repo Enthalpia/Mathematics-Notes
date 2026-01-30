@@ -1,0 +1,435 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\chapter{Submanifolds}
+
+We have already seen that open subsets of manifolds are themselves manifolds. But the range of possible submanifolds is much broader.
+
+\section{Embedded Submanifolds}
+\begin{definition}{Embedded Submanifold}{Embedded Submanifold}
+Suppose $M$ is a smooth manifold, with or without boundary. An embedded submanifold of $M$ is a subset $S \subseteq M$ equipped with the subspace topology and a smooth structure such that the inclusion map $\iota_S: S \hookrightarrow M$ is a smooth embedding.
+\end{definition}
+
+If $S$ is an embedded submanifold of $M$, then the difference $\dim M - \dim S$ is called the \textbf{codimension} of $S$ in $M$. $M$ is called the ambient manifold of $S$. An embedded hypersurface is an embedded submanifold of codimension 1.
+
+\begin{proposition}{Open Submanifolds}{Open Submanifolds}
+  Suppose $M$ is a smooth manifold. The embedded submanifolds of $M$ of codimension 0 are precisely the open subsets of $M$.
+\end{proposition}
+\begin{proof}
+  Suppose $U \subseteq M$ is open. Then it has the same dimension as $M$, and the inclusion map $\iota_U: U \hookrightarrow M$ is a smooth embedding, so $U$ is an embedded submanifold of codimension 0.
+
+  Conversely, suppose $U$ is an embedded submanifold of codimension 0. Then the inclusion map $\iota_U: U \hookrightarrow M$ is a smooth embedding, so it is a local diffeomorphism and an open map. Thus, $U$ is open in $M$.
+\end{proof}
+
+We can produce embedded submanifolds using images of embeddings.
+\begin{proposition}{Images of Embeddings}{Images of Embeddings}
+  Suppose $M$ is a smooth manifold, with or without boundary, and $N$ is a smooth manifold without boundary. If $F: N \to M$ is a smooth embedding, then $S = F(N)$ with the subspace topology has a unique smooth structure making it into an embedded submanifold of $M$ such that $F: N \to S$ is a diffeomorphism.
+\end{proposition}
+
+\begin{remark}
+  As by definition, embedded submanifolds are images of embeddings, this proposition shows that embedded submanifolds are exactly images of embeddings.
+\end{remark}
+
+\begin{proposition}{Slices of Products}{Slices of Products}
+  Suppose $M$ and $N$ are smooth manifolds. For each $p \in N$, the subset $M \times \{p\} \subseteq M \times N$ is an embedded submanifold that is diffeomorphic to $M$.
+\end{proposition}
+
+\begin{proposition}{Graphs as Submanifolds}{Graphs as Submanifolds}
+  Suppose $M$ is a smooth $m$-manifold without boundary, and $N$ is a smooth $n$-manifold with or without boundary. If $U \subseteq M$ be open, and $f: U \to N$ is a smooth map, then let $ \Gamma(f) $ denote the \textbf{graph} of $f$,
+  \begin{equation*}
+    \Gamma(f) = \{(p, f(p)) \in M \times N : p \in U\}.
+  \end{equation*}
+  Then $\Gamma(f)$ is an embedded $m$-submanifold of $M \times N$ that is diffeomorphic to $U$.
+\end{proposition}
+
+Sometimes, merely being an embedded submanifold is not enough. An embedded submanifold $S$ of $M$ is said to be properly embedded if the inclusion map $\iota_S: S \hookrightarrow M$ is a proper map.
+
+\begin{proposition}{Criterion for Properly Embedded Submanifolds}{Criterion for Properly Embedded Submanifolds}
+  Suppose $M$ is a smooth manifold, with or without boundary, and $S$ is an embedded submanifold of $M$. Then $S$ is properly embedded if and only if $S$ is a closed subset of $M$.
+
+  Therefore, we have every compact embedded submanifold is properly embedded.
+\end{proposition}
+\begin{proof}
+  Suppose $S$ is properly embedded. Then the inclusion map $\iota_S: S \hookrightarrow M$ is a proper map, so the preimage of every compact set in $M$ is compact in $S$. In particular, the preimage of every closed set in $M$ is closed in $S$. Since $S$ has the subspace topology, this implies that $S$ is closed in $M$.
+
+  Conversely, suppose $S$ is closed in $M$. Then for any compact set $K \subseteq M$, the intersection $K \cap S$ is closed in $K$, and since $K$ is compact, $K \cap S$ is also compact. Thus, the preimage of every compact set in $M$ under the inclusion map $\iota_S$ is compact in $S$, so $\iota_S$ is a proper map. Therefore, $S$ is properly embedded.
+\end{proof}
+
+\begin{proposition}{Global Graphs are Properly Embedded}{Global Graphs are Properly Embedded}
+  Suppose $M$ is a smooth $m$-manifold without boundary, and $N$ is a smooth $n$-manifold with or without boundary. If $f: M \to N$ is a smooth map, then the graph $\Gamma(f)$ is a properly embedded $m$-submanifold of $M \times N$ that is diffeomorphic to $M$.
+\end{proposition}
+
+\subsection{Slice Charts for Embedded Submanifolds}
+We will show that embedded submanifolds are modeled locally by the standard embedding $R^k$ into $\mathbb{R}^n$ as the first $k$-coordinates:
+\begin{equation*}
+  \mathbb{R}^k \hookrightarrow \mathbb{R}^n, \quad (x^1, \ldots, x^k) \mapsto (x^1, \ldots, x^k, 0, \ldots, 0).
+\end{equation*}
+
+More generally, a $k$-slice of $U \subseteq \mathbb{R}^n$ is any subset of the form
+\begin{equation*}
+  S = \{(x^1, \ldots, x^n) \in U : x^{k+1} = c^{k+1}, \ldots, x^n = c^n\}
+\end{equation*}
+for some constants $c^{k+1}, \ldots, c^n \in \mathbb{R}$. Note that every $k$-slice is diffeomorphic to an open subset of $\mathbb{R}^k$ via the projection map onto the first $k$-coordinates.
+
+Now, let $M$ be a smooth manifold and $(U, \varphi)$ be a smooth chart on $M$. If $S \subseteq U$ that $\varphi(S)$ is a $k$-slice of $\varphi(U)$, then we say that $S$ is a $k$-\textbf{slice of} $U$. In general, we allow slices have any constant values in their last $n-k$ coordinates.
+
+Given a subset $S \subseteq M$, and $k \geq 0$, we say $S$ satisfies the local $k$-slice condition if each point $p \in S$ has a smooth chart $(U, \varphi)$ for $M$ such that $p \in U$ and $S \cap U$ is a $k$-slice of $U$. Any such chart is called a \textbf{slice chart} for $S$ in $M$ and the corresponding coordinates $(x^1, \ldots, x^n)$ are called \textbf{slice coordinates} for $S$ in $M$.
+
+\begin{theorem}{Local Slice Criterion for Embedded Submanifolds}{Local Slice Criterion for Embedded Submanifolds}
+  Let $M$ be a smooth $n$-manifold, and if $S \subseteq M$ is an embedded $k$-submanifold, then $S$ satisfies the local $k$-slice condition.
+
+  Conversely, if $S \subseteq M$ is a subset that satisfies the local $k$-slice condition, then with the subspace topology $S$ is a topological manifold of dimension $k$, and there is a smooth structure making $S$ into an embedded $k$-submanifold of $M$.
+\end{theorem}
+\begin{proof}
+SORRY
+\end{proof}
+
+Later we shall see that the smooth structure constructed in the theorem is the unique one in which $S$ is an embedded submanifold of $M$.
+
+Also, if $M$ is a smooth manifold with boundary, and $S \subseteq M$ is an embedded submanifold, then $S$ might interment $\partial M$ in complicated ways. However, if $S = \partial M$ itself, then the boundary charts for $M$ is just slice charts for $S$ in $M$, and we do have the following proposition.
+\begin{theorem}{Boundary as Embedded Submanifold}{Boundary as Embedded Submanifold}
+  If $M$ is a smooth $n$-manifold with boundary, then $\partial M$ with the subspace topology is a topological $(n-1)$-manifold without boundary, and there is a smooth structure making $\partial M$ a properly embedded $(n-1)$-submanifold of $M$.
+\end{theorem}
+
+Later, we shall see that this smooth structure is the unique one in which $\partial M$ is an embedded submanifold of $M$.
+
+\begin{remark}
+  In order to study submanifolds of manifolds with boundary in greater generality, a typical approach is to find an embedding of $M$ into a larger smooth manifold $\tilde{M}$ without boundary.
+\end{remark}
+
+\subsection{Level Sets}
+In practice, many embedded submanifolds arise as solution sets of systems of equations. If $\Phi :M \rightarrow N$ be any map and $c\in N$, we call the set
+\begin{equation*}
+  \Phi^{-1}(c) = \{p \in M : \Phi(p) = c\}
+\end{equation*}
+the \textbf{level set} of $\Phi$ at $c$. In the special case where $N = \mathbb{R}^k$ and $c = 0$, we call $\Phi^{-1}(0)$ the \textbf{zero set} of $\Phi$.
+
+It is easy to find examples where level sets of smooth functions that are not smooth submanifold. As we previously saw, all closed subset of $M$ can be expressed as the zero set of some smooth function $M \to \mathbb{R}$. However, we have
+
+\begin{theorem}{Constant Rank Level Set Theorem}{Constant Rank Level Set Theorem}
+  Suppose $M, N$ are smooth manifolds, and $\Phi: M \to N$ is a smooth map with constant rank $r$. Then each level set of $\Phi$ is a properly embedded submanifold of $M$ with codimension $r$.
+
+  Specifically, if $\Phi$ is a submersion, then each level set is a properly embedded submanifold of codimension $\dim N$.
+\end{theorem}
+\begin{proof}
+  Let $\dim M = m$ and $\dim N = n$, and $k = m - r$ be the codimension. $\forall c$, let $S = \Phi^{-1}(c)$. From the rank theorem, $\forall p \in S$, there exist smooth charts $(U, \varphi)$ around $p$ in $M$ and $(V, \psi)$ around $c$ in $N$ such that $\Phi$ has the local representation
+  \begin{equation*}
+    \Phi: (x^1, \ldots, x^m) \mapsto (x^1, \ldots, x^r, 0, \ldots, 0).
+  \end{equation*}
+  So we have
+  \begin{equation*}
+    S \cap U = \{(x^1, \ldots, x^m) \in U : x^1 = 0, \ldots, x^r = 0\},
+  \end{equation*}
+  Hence, $S$ satisfies the local $k$-slice condition. By the Local Slice Criterion for Embedded Submanifolds, $S$ is an embedded $k$-submanifold of $M$.
+
+  Finally, to see that $S$ is properly embedded, note that $\Phi$ is continuous, so $S = \Phi^{-1}(c)$ is closed in $M$. By the Criterion for Properly Embedded Submanifolds, $S$ is properly embedded.
+\end{proof}
+
+\begin{remark}
+  This corresponds to the familiar rank-nullity theorem from linear algebra.
+\end{remark}
+
+\begin{definition}{Regular and Critical Point}{Regular and Critical Point}
+  Suppose $M, N$ are smooth manifolds, and $\Phi: M \to N$ is a smooth map. A point $p \in M$ is called a \textbf{regular point} of $\Phi$ if the differential $d\Phi_p: T_pM \to T_{\Phi(p)}N$ is surjective. If $p$ is not a regular point, then it is called a \textbf{critical point} of $\Phi$. The point $c \in N$ is called a \textbf{regular value} of $\Phi$ if every point in the preimage $\Phi^{-1}(c)$ is a regular point (we include $ \Phi^{-1}(c) = \emptyset $). If $c$ is not a regular value, then it is called a \textbf{critical value} of $\Phi$.
+\end{definition}
+
+Now, we weakens the hypothesis of the Constant Rank Level Set Theorem to only require that $c$ is a regular value.
+
+\begin{corollary}{Regular Level Set Theorem}{Regular Level Set Theorem}
+  Suppose $M, N$ are smooth manifolds, and $\Phi: M \to N$ is a smooth map. If $c \in N$ is a regular value of $\Phi$, then the level set $\Phi^{-1}(c)$ is a properly embedded submanifold of $M$ with codimension $\dim N$.
+\end{corollary}
+\begin{proof}
+  From proposition \ref{prop:Local Surjectivity of Submersions and Local Injectivity of Immersions}, The set
+  \begin{equation*}
+    U = \{p \in M : d\Phi_p \text{ is surjective}\}
+  \end{equation*}
+  is open in $M$ and contains $\Phi^{-1}(c)$. The restriction $\Phi|_U: U \to N$ is a submersion, so by the Constant Rank Level Set Theorem, $\Phi^{-1}(c)$ is a properly embedded submanifold of $U$ with codimension $\dim N$. Then take the composition $ \Phi^{-1}(c) \hookrightarrow U \hookrightarrow M $ would would do.
+\end{proof}
+
+Not all embedded submanifolds arise as level sets of smooth maps. However, we do know that they at least locally do.
+\begin{proposition}{Local Level Set Representation of Embedded Submanifolds}{Local Level Set Representation of Embedded Submanifolds}
+  Suppose $M$ is a smooth $m$-manifold, and $S \subseteq M$, then $S$ is a embedded $k$-submanifold of $M$ if and only if $\forall p \in S$, there exist an open neighborhood $U$ of $p$ in $M$ and a smooth submersion $\Phi: U \to \mathbb{R}^{m-k}$ such that $S \cap U = \Phi^{-1}(c)$ for some $c \in \mathbb{R}^{m-k}$.
+\end{proposition}
+
+\begin{definition}{Defining Map}{Defining Map}
+  If $S \subseteq M$ is an embedded submanifold, then a smooth map $\Phi: M \to N$ that has $S$ as a regular level set is called a \textbf{defining map} for $S$ in $M$. If $N = \mathbb{R}^{m-k}$, we say $\Phi$ is a \textbf{defining function} for $S$ in $M$. For example, $f(x) = |x|^2$ is a defining function for the sphere in $\mathbb{R}^n$. Generally, if $U \subseteq M$ is open and $\Phi: U \to N$ is a smooth map that has $S \cap U$ as a regular level set, then we say $\Phi$ is a \textbf{local defining map} for $S$ in $M$.
+\end{definition}
+
+The last proposition shows that every embedded submanifold has local defining function.
+
+\begin{example}{Surface of Revolution}{Surface of Revolution}
+  Let $H$ be the half plane $\{(r, z) \in \mathbb{R}^2 : r > 0\}$, and $C \subseteq H$ be a one-dimensional embedded submanifold. Then the \textbf{surface of revolution} generated by $C$ is the subset
+  \begin{equation}
+    S_C = \{(x, y, z) \in \mathbb{R}^3 : (\sqrt{x^2 + y^2}, z) \in C\}.
+  \end{equation}
+  If $ \varphi: U \rightarrow \mathbb{R}$ is any locally defining function for $C$ in $H$, then the map
+  \begin{equation}
+    \Phi: \tilde{U} \rightarrow \mathbb{R}, \quad \Phi(x, y, z) = \varphi(\sqrt{x^2 + y^2}, z)
+  \end{equation}
+  where $\tilde{U} = \{(x, y, z) \in \mathbb{R}^3 : (\sqrt{x^2 + y^2}, z) \in U\}$ is a local defining function for $S_C$ in $\mathbb{R}^3$. Thus, by the Local Level Set Representation of Embedded Submanifolds, $S_C$ is an embedded submanifold of $\mathbb{R}^3$.
+\end{example}
+
+\section{Immersed Submanifolds}
+\begin{definition}{Immersed Submanifold}{Immersed Submanifold}
+  Suppose $M$ is a smooth manifold, with or without boundary. An immersed submanifold of $M$ is a subset $S \subseteq M$ equipped with a topology (not necessarily the subspace topology) making it a topological manifold without boundary, and a smooth structure such that the inclusion map $\iota_S: S \hookrightarrow M$ is a smooth immersion.
+\end{definition}
+
+\begin{remark}
+  This is a rather larger class of submanifolds, as every embedded submanifold is an immersed submanifold, but not conversely. We shall simply denote ``smooth submanifold'' to mean ``immersed submanifold'' unless otherwise specified. A smooth hypersurface is an immersed submanifold of codimension 1.
+
+  We can also define a immersed topological submanifold similarly, as a subset $S \subseteq M$ equipped with a topology making it a topological manifold (not necessarily the subspace topology) such that the inclusion map $\iota_S: S \hookrightarrow M$ is a topological immersion.
+\end{remark}
+
+Usually, immersed submanifolds arise as images of immersions.
+
+\begin{proposition}{Images of Immersions as Submanifolds}{Images of Immersions as Submanifolds}
+  Suppose $M$ is a smooth manifold, with or without boundary, and $N$ is a smooth manifold without boundary. If $F: N \to M$ is an injective smooth immersion, then $S = F(N)$ has a unique topology and smooth structure making it into an immersed submanifold of $M$ such that $F: N \to S$ is a diffeomorphism.
+\end{proposition}
+\begin{proof}
+  We shall define the topology on $S$ to be $\{U \cap S : F^{-1}(U) \text{ is open in } N\}$. And the smooth structure is defined by the charts $\{F(U), \varphi \circ F^{-1}\}$ where $(U, \varphi)$ are charts of $N$.
+\end{proof}
+
+\begin{example}{Immersed Submanifolds}{Immersed Submanifolds}
+  The figure eight curve and the dense curve on the torus are examples of immersed submanifolds that are not embedded submanifolds.
+\end{example}
+
+\begin{remark}
+  In fact, suppose $M$ is a smooth manifold and $S \subseteq M$ is an immersed submanifold. Then every subset of $S$ that is open in the subspace topology is open in the topology of $S$, but the converse is not necessarily true. The converse holds if and only if $S$ is an embedded submanifold of $M$.
+\end{remark}
+
+\begin{proposition}{From Immersed to Embedded Submanifolds}{From Immersed to Embedded Submanifolds}
+  Suppose $M$ is a smooth manifold, with or without boundary, and $S$ is an immersed submanifold of $M$. If one of the following conditions holds, then $S$ is an embedded submanifold of $M$:
+  \begin{itemize}
+    \item $S$ has codimension 0 in $M$.
+    \item The inclusion map $\iota_S: S \hookrightarrow M$ is a proper map.
+    \item $S$ is compact.
+  \end{itemize}
+\end{proposition}
+
+\begin{proposition}{Locally Embeddedness of Immersed Submanifolds}{Locally Embeddedness of Immersed Submanifolds}
+  Suppose $M$ is a smooth manifold, with or without boundary, and $S$ is an immersed submanifold of $M$. Then $\forall p \in S$, there exists an open neighborhood $U$ of $p$ in $S$ that $U$ is an embedded submanifold of $U$.
+\end{proposition}
+
+\begin{remark}
+  This does NOT mean that we can find an open neighborhood $W$ of $p$ in $M$ such that $S \cap W$ is an embedded submanifold of $W$.
+\end{remark}
+
+\begin{definition}{Local Parametrization}{Local Parametrization}
+  Suppose $M$ is a smooth manifold, with or without boundary, and $S$ is an immersed $k$-submanifold of $M$. A \textbf{local parametrization} for $S$ in $M$ is a continuous map $X: U \to M$ such that
+  \begin{itemize}
+    \item $U$ is an open subset of $\mathbb{R}^k$,
+    \item $X(U)$ is an open subset of $S$ (in the topology of $S$),
+    \item $X: U \to X(U)$ is a homeomorphism (in the topology of $S$),
+  \end{itemize}
+  It is called a \textbf{smooth local parametrization} if $X: U \to X(U)$ is a diffeomorphism onto its image (with the smooth structure of $S$). If $X(U) = S$, then $X$ is called a \textbf{global parametrization} of $S$ in $M$.
+\end{definition}
+
+\begin{proposition}{Criterion for Local Parametrization}{Criterion for Local Parametrization}
+  Suppose $M$ is a smooth manifold, with or without boundary, and $S$ is an immersed $k$-submanifold of $M$. Let $ \iota: S \hookrightarrow M $ be the inclusion map. A map $X: U \to M$ is a local parametrization for $S$ in $M$ if and only if there is a smooth coordinate chart $(V, \varphi)$ for $S$ that $X = \iota \circ \varphi^{-1}$.
+
+  Therefore, every point in $S$ is in the image of a local parametrization.
+\end{proposition}
+
+\begin{example}{Parametrizations}{Parametrizations}
+  \begin{itemize}
+    \item Graph parametrizations: Suppose $U \subseteq \mathbb{R}^n$ is an open subset and $f: U \to \mathbb{R}^k$ is a smooth function. Then the map
+      \begin{equation*}
+        \gamma_f: U \to \mathbb{R}^{n+k}, \quad \gamma_f(x) = (x, f(x))
+      \end{equation*}
+      is a global parametrization for the graph $\Gamma(f)$ of $f$ in $\mathbb{R}^{n+k}$.
+    \item Figure-eight curve: Let $S \subseteq \mathbb{R}^2$ be the figure-eight curve, Then the map
+      \begin{equation*}
+        \beta: (- \pi, \pi) \to \mathbb{R}^2, \quad \beta(t) = (\sin t, \sin(2t))
+      \end{equation*}
+      is a global parametrization for $S$ in $\mathbb{R}^2$.
+  \end{itemize}
+\end{example}
+
+\section{Restricting Maps to Submanifolds}
+\begin{theorem}{Restricting the Domain of a Smooth Map}{Restricting the Domain of a Smooth Map}
+  Suppose $M, N$ are smooth manifolds, with or without boundary, and $S$ is an immersed submanifold of $M$. If $F: M \to N$ is a smooth map, then the restriction $F|_S: S \to N$ is a smooth map.
+\end{theorem}
+\begin{proof}
+  The inclusion map $\iota_S: S \hookrightarrow M$ is smooth. And $F_S = F \circ \iota_S$, so $F_S$ is smooth.
+\end{proof}
+
+But we cannot generally restrict the codomain of a smooth map to an immersed submanifold. For example, take
+\begin{equation*}
+  G: \mathbb{R} \to \mathbb{R}^2, \quad G(t) = (\sin t, \sin 2t),
+\end{equation*}
+it is a smooth map whose image is the figure-eight curve $S$. However, if we consider $G$ as a map from $\mathbb{R}$ to $S$, then it is not even continuous at $\pi$.
+
+\begin{theorem}{Restricting the Codomain of a Smooth Map}{Restricting the Codomain of a Smooth Map}
+  Suppose $M, N$ are smooth manifolds without boundary, and $S$ is an immersed submanifold of $M$, and $F: N \to M$ is a smooth map such that $F(N) \subseteq S$. If $F: N \rightarrow S$ is continuous in the topology of $S$, then it is smooth.
+
+  The result also holds when $M$ has nonempty boundary. If $S$ is an embedded submanifold of $M$, then the continuity hypothesis is automatically satisfied.
+\end{theorem}
+However, there are certain immersed but not embedded submanifolds that the result automatically holds without the continuity hypothesis. To distinguish them, we introduce the following definition.
+
+\begin{definition}{Weakly Embedded}{Weakly Embedded}
+  Suppose $M$ is a smooth manifold, and $S$ is an immersed submanifold of $M$. Then $S$ is said to be \textbf{weakly embedded} if for every smooth manifold $N$ and every smooth map $F: N \to M$ such that $F(N) \subseteq S$, the induced map $F: N \to S$ is smooth (without any additional continuity hypothesis).
+\end{definition}
+
+\subsection{Uniqueness of Smooth Structures on Submanifolds}
+SORRY
+\subsection{Extending Functions from Submanifolds}
+
+\begin{lemma}{Extension Lemma For Submanifolds}{Extension Lemma For Submanifolds}
+  Suppose $M$ is a smooth manifold, and $S \subseteq M$ is an immersed submanifold. If $f: S \to \mathbb{R}$ is a smooth function on the submanifold structure, denote $f \in C^\infty(S)$. Then
+  \begin{itemize}
+    \item If $S$ is embedded, then there exist a neighborhood $U$ of $S$ in $M$ and a smooth function $\tilde{f}\in C^\infty(U)$ such that $\tilde{f}|_S = f$.
+    \item If $S$ is properly embedded, then $U$ can be taken to be all of $M$.
+  \end{itemize}
+\end{lemma}
+
+\section{The Tangent Space to a Submanifold}
+Suppose $M$ is a smooth manifold, with or without boundary, and $S$ is an immersed submanifold of $M$. Since the inclusion map $\iota: S \hookrightarrow M$ is a smooth immersion, for each $p\in S$, we can identify the tangent space $T_pS$ as a subspace of $T_pM$ $\mathrm{d} \iota_p$:
+\begin{equation*}
+  \mathrm{d} \iota_p (v) f = v(f \circ \iota) = v(f|_S), \quad \forall v \in T_pS, \forall f \in C^\infty(M).
+\end{equation*}
+
+\begin{proposition}{Identify Submanifold Tangent Space}{Identify Submanifold Tangent Space}
+  Suppose $M$ is a smooth manifold, with or without boundary, and $S$ is an immersed submanifold of $M$, and $p\in S$. Then a vector $v\in T_pM$ is in the subspace $T_pS \subseteq T_pM$ if and only if there exists a smooth curve $\gamma: J \rightarrow M$ such that
+  \begin{itemize}
+    \item $ \gamma(J) \subseteq S$,
+    \item $ \gamma$ is smooth as a map into $S$,
+    \item $ 0\in J$ and $\gamma(0) = p$,
+    \item $ \gamma'(0) = v$.
+  \end{itemize}
+
+  If $S$ is an embedded submanifold, then we have
+  \begin{equation}
+    T_pS = \{v \in T_pM : \forall f \in C^\infty(M), f|_S = 0, v f = 0\}.
+  \end{equation}
+\end{proposition}
+\begin{proof}
+  Quite clear from the local embeddedness of immersed submanifolds.
+\end{proof}
+
+We can also characterize tangent spaces via defining maps.
+\begin{proposition}{Tangent Space via Defining Maps}{Tangent Space via Defining Maps}
+  Suppose $M$ is a smooth manifold, and $S$ is an embedded submanifold of $M$. If $\Phi: U \rightarrow N$ is any local defining map for $S$ in $M$ then
+  \begin{equation}
+    T_pS = \ker \mathrm{d} \Phi_p: T_pM \rightarrow T_{\Phi(p)}N,
+  \end{equation}
+  for each $p \in S \cap U$.
+
+  Specifically, if $S$ is a level set of a smooth submersion $\Phi: M \to \mathbb{R}^k$, then
+  \begin{equation}
+    T_pS = \{ v \in T_pM : v \Phi^i = 0, i = 1, \ldots, k\},
+  \end{equation}
+\end{proposition}
+
+If $M$ is a smooth manifold with boundary, and $p\in \partial M$, intuitively, we expect that we can classify the tangent vectors to three categories: those that point inward to $M$, those that point outward to $M$, and those that are tangent to the boundary $\partial M$ itself. This is indeed the case. We interpret the boundary as an embedded submanifold of $M$ from theorem \ref{thm:Boundary as Embedded Submanifold}.
+\begin{definition}{Tangent Vectors On the Boundary}{Tangent Vectors On the Boundary}
+  If $p\in \partial M$, then a vector $v \in T_pM - T_p(\partial M)$ is said to be \textbf{inward-pointing} if $\exists \epsilon>0$, there is a smooth curve $\gamma: [0, \epsilon) \to M$ such that $\gamma(0) = p$ and $\gamma'(0) = v$. It is said to be \textbf{outward-pointing} if the same holds for a smooth curve $\gamma: (-\epsilon, 0] \to M$.
+\end{definition}
+
+\begin{proposition}{Boundary Tangent Vectors from Coordinates}{Boundary Tangent Vectors from Coordinates}
+  Let $M$ be a smooth $n$-manifold with boundary, and $p \in \partial M$. If $(U, \varphi)$ is a boundary chart for $M$ around $p$, with coordinates $(x^1, \ldots, x^n)$, then a vector $v \in T_pM$ is inward-pointing if and only if it has positive $x^n$-component, outward-pointing if and only if it has negative $x^n$-component, and tangent to the boundary if and only if its $x^n$-component is zero.
+
+  This gives a partition of $T_pM$ by
+  \begin{equation}
+    T_pM = \{\text{inward-pointing}\} \sqcup T_p(\partial M) \sqcup \{\text{outward-pointing}\}.
+  \end{equation}
+\end{proposition}
+
+\begin{definition}{Boundary Defining Function}{Boundary Defining Function}
+  Suppose $M$ is a smooth manifold with boundary. A \textbf{boundary defining function} for $M$ is a smooth function $f: M \to [0, \infty)$ such that $\partial M = f^{-1}(0)$ and $\mathrm{d} f_p \neq 0$ for all $p \in \partial M$.
+\end{definition}
+For example, the defining function for a closed unit ball in $\mathbb{R}^n$ is $f(x) = 1 - |x|^2$.
+
+\begin{proposition}{Existence of Boundary Defining Functions}{Existence of Boundary Defining Functions}
+  Suppose $M$ is a smooth manifold with boundary. Then there exists a boundary defining function for $M$.
+\end{proposition}
+\begin{proof}
+  Let $\{U_{ \alpha}, \varphi_{ \alpha}\}$ be a collection of smooth charts covering $M$, define $f_{ \alpha}: U_{ \alpha} \rightarrow [0, \infty)$ by
+  \begin{itemize}
+    \item If $U_{ \alpha}$ is an interior chart then $f_{ \alpha} = 1$.
+    \item If $U_{ \alpha}$ is a boundary chart with coordinates $(x^1, \ldots, x^n)$, then $f_{ \alpha} = x^n$.
+  \end{itemize}
+  Thus $f_{ \alpha}>0$ in the interior and $f_{ \alpha} = 0$ on the boundary. Take any partition of unity $\{\psi_{ \alpha}\}$ subordinate to the cover and taking $f = \sum_{ \alpha} \psi_{ \alpha} f_{ \alpha}$ would do. To see $\mathrm{d} f_p \neq 0$ for all $p \in \partial M$, we have
+  \begin{equation*}
+    \mathrm{d} f_p (v) = \sum_{ \alpha} (f_{ \alpha} \mathrm{d} \psi_{ \alpha}|_p (v) + \psi_{ \alpha}(p) \mathrm{d} f_{ \alpha}|_p (v)) = \sum_{ \alpha} \psi_{ \alpha}(p) \mathrm{d} f_{ \alpha}|_p (v),
+  \end{equation*}
+\end{proof}
+
+\begin{remark}
+  Usually, it is fairly easy to say that if a subset of $M$ is an embedded submanifold for they are exactly those satisfying the local slice condition. However, it is often much more difficult to determine whether a subset is an immersed submanifold. A common technique is to first assume it is, then derive a contradiction from some phenomenon:
+  \begin{itemize}
+    \item $\forall p\in S$, the tangent space $T_pS$ is a linear subspace of $T_pM$ with constant dimension.
+    \item $\forall p\in S$, it is in the image of a local parametrization.
+    \item Each vector tangent to $S$ at $p$ is the velocity vector of a smooth curve in $S$ through $p$.
+    \item Each vector tangent to $S$ at $p$ annihilates all smooth functions on $M$ that vanish on $S$.
+  \end{itemize}
+\end{remark}
+
+\begin{example}{Proving Smooth Submanifolds}{Proving Smooth Submanifolds}
+  Consider
+  \begin{equation*}
+    S = \{(x,y):y = |x|, x \in \mathbb{R}\} \subseteq \mathbb{R}^2.
+  \end{equation*}
+  It is easy that $S - \{(0,0)\}$ is an embedded submanifold of $\mathbb{R}^2$. If $S$ is a smooth submanifold of $\mathbb{R}^2$, then it must be one-dimensional from local embeddedness. Then $T_{(0,0)}S$ must be a one-dimensional linear subspace of $T_{(0,0)}\mathbb{R}^2 \cong \mathbb{R}^2$. This means that there is a smooth curve $\gamma: (-\epsilon, \epsilon) \to S$ such that $\gamma(0) = (0,0)$ and $\gamma'(0) \neq 0$. However, the only such curve is $\gamma(t) = (0,0)$ for all $t$, which contradicts $\gamma'(0) \neq 0$. Hence, $S$ is not a smooth submanifold of $\mathbb{R}^2$.
+\end{example}
+
+\section{Submanifolds with Boundary}
+The definition is very similar to the case without boundary.
+\begin{definition}{Submanifold with Boundary}{Submanifold with Boundary}
+  Suppose $M$ is a smooth manifold with or without boundary. A submanifold with boundary of $M$ is a subset $S \subseteq M$ equipped with a topology making it a topological manifold with boundary, and a smooth structure such that the inclusion map $\iota_S: S \hookrightarrow M$ is a smooth immersion.
+
+  If the inclusion map is a smooth embedding, then $S$ is called an \textbf{embedded submanifold with boundary} of $M$, and in the general case, it is called an \textbf{immersed submanifold with boundary} of $M$.
+
+  A regular domain of $M$ is a properly embedded submanifold with boundary of codimension 0.
+\end{definition}
+
+\begin{proposition}{Topological Boundary and Manifold Boundary}{Topological Boundary and Manifold Boundary}
+  Suppose $M$ is a smooth manifold without boundary, and $D \subseteq M$ is a regular domain. Then the topological boundary and interior of $D$ in $M$ coincide with the manifold boundary and interior of $D$ as a manifold with boundary, respectively.
+\end{proposition}
+\begin{proof}
+  Simply due to $D$ having the subspace topology from $M$.
+\end{proof}
+
+\begin{proposition}{Generating Regular Domains}{Generating Regular Domains}
+  Suppose $M$ is a smooth manifold without boundary, and $f\in C^{\infty }(M)$, then
+  \begin{itemize}
+    \item For each regular value $b \in \mathbb{R}$ of $f$, the set $f^{-1}((-\infty, b])$ is a regular domain in $M$. It is called a \textbf{sublevel set} of $f$. And if $D$ is a regular domain that $D = f^{-1}((-\infty, b])$ for some $f$ and $b$, then $f$ is called a \textbf{defining function} for $D$ in $M$.
+    \item For each regular value $a<b$ in $f$, then the set $f^{-1}([a, b])$ is a regular domain in $M$.
+  \end{itemize}
+\end{proposition}
+
+\begin{theorem}{Existence of Sublevel Defining Functions}{Existence of Sublevel Defining Functions}
+  If $M$ is a smooth manifold without boundary, and $D \subseteq M$ is a regular domain, then there exists a smooth function $f \in C^{\infty}(M)$ being a defining function for $D$ in $M$. If $D$ is compact, then $f$ can be chosen to be a smooth exhaustion function on $M$.
+\end{theorem}
+
+\begin{proposition}{Properties of Submanifolds with Boundary}{Properties of Submanifolds with Boundary}
+  Suppose $M$ is a smooth manifold with or without boundary, then
+  \begin{itemize}
+    \item Every open subset of $M$ is an embedded submanifold with or without boundary of codimension 0.
+    \item If $N$ is a smooth manifold with boundary, and $F: N \to M$ is a smooth embedding, then $F(N)$ is an embedded submanifold with boundary of $M$, with the subspace topology and smooth structure.
+    \item If $S \subseteq M$ is an immersed submanifold with boundary of $M$, then for each $p\in S$ there exists a neighborhood $U$ of $p$ in $S$ such that $U$ is an embedded submanifold with boundary of $M$.
+  \end{itemize}
+\end{proposition}
+
+A $k$-dimensional half-slice of $U$ is a subset
+\begin{equation*}
+  \{(x^1, \ldots, x^n) \in U : x^{k+1} = c^{k+1}, \ldots, x^{n} = c^{n}, x^n \geq 0\},
+\end{equation*}
+We say that $S \subseteq M$ satisfies the \textbf{local half-slice condition} if $\forall p \in S$, there exist a chart $(U, \varphi)$ for $M$ around $p$ such that $S \cap U$ is a $k$-dimensional usual slice or half-slice of $U$. In the former case it is called the interior slice chart of $S$ in $M$, and in the latter case it is called the boundary slice chart of $S$ in $M$.
+
+\begin{theorem}{Local Half-Slice Criterion for Embedded Submanifolds with Boundary}{Local Half-Slice Criterion for Embedded Submanifolds with Boundary}
+  Suppose $M$ is a smooth manifold with or without boundary, and $S \subseteq M$. Then $S$ is an embedded submanifold with boundary of $M$ if and only if it satisfies the local half-slice condition.
+\end{theorem}
+
+\begin{theorem}{Restricting the Domain of a Smooth Map to a Submanifold with Boundary}{Restricting the Domain of a Smooth Map to a Submanifold with Boundary}
+  Suppose $M, N$ are smooth manifolds with boundary and $S \subseteq M$ is an embedded submanifold with boundary.
+  \begin{itemize}
+    \item Restricting the domain: If $F: M \to N$ is a smooth map, then the restriction $F|_S: S \to N$ is a smooth map.
+    \item Restricting the codomain: If $\partial M\neq \emptyset $, and $F: N \to M$ is a smooth map such that $F(N) \subseteq S$, then the induced map $F: N \to S$ is smooth.
+  \end{itemize}
+\end{theorem}
+
+\begin{remark}
+  Actually, the requirement $\partial M \neq \emptyset$ is not necessary.
+\end{remark}
+
+\end{document}

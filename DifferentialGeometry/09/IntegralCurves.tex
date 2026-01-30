@@ -1,0 +1,617 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\chapter{Integral Curves and Flows}
+
+\section{Integral Curves}
+
+Suppose $M$ is a smooth manifold, with or without boundary, and $ \gamma: J \rightarrow M $ is a smooth curve, then $\forall t\in J$, the velocity vector $\gamma'(t) \in T_{\gamma(t)}M$. Now we want to work in the reverse direction.
+
+\begin{definition}{Integral Curve}{Integral Curve}
+  If $V$ is a vector field on $M$, then a differentiable curve $\gamma: J \rightarrow M$ is called an \textbf{integral curve} of $V$ if $\forall t \in J$,
+  \begin{equation*}
+    \gamma'(t) = V_{\gamma(t)}.
+  \end{equation*}
+  Usually if $0\in J$, we say $\gamma$ is an integral curve of $V$ \textbf{starting at} $\gamma(0)$.
+\end{definition}
+
+Suppose $V$ is a smooth vector field on $M$. For a smooth chart $U \subseteq M$, in local coordinates, we can write $\gamma(t) = ( \gamma^i(t) )$, and $V = (V^i)$, then the integral curve equation becomes
+\begin{equation}
+  \frac{d\gamma^i}{dt} (t) = V^i( \gamma(t) ), \quad i = 1, \ldots, n.
+\end{equation}
+
+From ODE theory, we have
+\begin{proposition}{Existence of Integral Curve}{Existence of Integral Curve}
+  Let $V$ be a smooth vector field on a smooth manifold $M$. For each point $p \in M$, there exists $ \epsilon > 0 $ and an integral curve $\gamma: (-\epsilon, \epsilon) \rightarrow M$ of $V$ such that $\gamma(0) = p$.
+\end{proposition}
+
+Next, we investigate some reparametrization properties of integral curves.
+\begin{proposition}{Reparametrization of Integral Curves}{Reparametrization of Integral Curves}
+  Let $V$ be a smooth vector field on a smooth manifold $M$, and let $\gamma: J \rightarrow M$ be an integral curve of $V$.
+  \begin{itemize}
+    \item Rescaling: For any $a\in \mathbb{R}$, the curve $\tilde{\gamma}: \tilde{J} \rightarrow M$ defined by $\tilde{\gamma}(s) = \gamma(as)$, where $\tilde{J} = \{ s \in \mathbb{R} : as \in J \}$, is an integral curve of the vector field $aV$.
+    \item Translation: For any $b \in \mathbb{R}$, the curve $\hat{\gamma}: \hat{J} \rightarrow M$ defined by $\hat{\gamma}(u) = \gamma(u + b)$, where $\hat{J} = \{ u \in \mathbb{R} : u + b \in J \}$, is an integral curve of the vector field $V$.
+  \end{itemize}
+\end{proposition}
+
+\begin{proposition}{Naturality of Integral Curves}{Naturality of Integral Curves}
+  Let $M$ and $N$ be smooth manifolds, and let $F: M \rightarrow N$ be a smooth map. Then $X\in \mathfrak{X}(M)$ and $Y \in \mathfrak{X}(N)$ are $F$-related if and only if for every integral curve $\gamma$ of $X$, the curve $F \circ \gamma$ is an integral curve of $Y$.
+\end{proposition}
+\begin{proof}
+  First suppose $X$ and $Y$ are $F$-related, and let $\gamma: J \rightarrow M$ be an integral curve of $X$. Then define $\sigma = F \circ \gamma: J \rightarrow N$. For any $t \in J$,
+  \begin{equation*}
+    \sigma'(t) = \mathrm{d} F_{\gamma(t)} ( \gamma'(t) ) = \mathrm{d} F_{\gamma(t)} ( X_{\gamma(t)} ) = Y_{F(\gamma(t))} = Y_{\sigma(t)},
+  \end{equation*}
+  so $\sigma$ is an integral curve of $Y$.
+
+  Conversely, suppose that for every integral curve $\gamma$ of $X$, the curve $F \circ \gamma$ is an integral curve of $Y$. Let $p \in M$, and let $\gamma: (-\epsilon, \epsilon) \rightarrow M$ be an integral curve of $X$ with $\gamma(0) = p$. Then $\sigma = F \circ \gamma: (-\epsilon, \epsilon) \rightarrow N$ is an integral curve of $Y$. Evaluating at $t = 0$, we have
+  \begin{equation*}
+    Y_{F(p)} = (F \circ \gamma)'(0) = \mathrm{d} F_{\gamma(0)} ( \gamma'(0) ) = \mathrm{d} F_p ( X_p ),
+  \end{equation*}
+  so $X$ and $Y$ are $F$-related.
+\end{proof}
+
+\section{Flows}
+We come by another way to look at integral curves. Suppose for each point $p \in M$, we have a unique integral curve $\theta^{(p)}: \mathbb{R} \rightarrow M$ (Actually, it may always be defined on the whole $\mathbb{R}$, but for simplicity we assume this here) starting at $p$. Then we can define a map
+\begin{equation*}
+  \theta_t: M \rightarrow M, \quad \theta_t(p) = \theta^{(p)}(t).
+\end{equation*}
+which sends each point $p$ to the point that slides along the integral curve starting at $p$ for time $t$. It is easy to see that
+\begin{equation*}
+  \theta_t \circ \theta_s = \theta_{t+s}, \quad \theta_0 = \mathrm{id}_M.
+\end{equation*}
+well, this is just the property of group action. So the map $\theta: \mathbb{R} \times M \rightarrow M$ defined by $\theta(t, p) = \theta_t(p)$ is an action of the group $\mathbb{R}$ on $M$.
+
+\begin{definition}{Global Flow}{Global Flow}
+  Let $M$ be a smooth manifold. A \textbf{global flow} on $M$ is a continuous left action $\theta: \mathbb{R} \times M \rightarrow M$ of the group $\mathbb{R}$ on $M$.
+\end{definition}
+The geometric meaning of a global flow is find where each point goes as time passes.
+\begin{itemize}
+  \item For each fixed $t \in \mathbb{R}$, the map $\theta_t: M \rightarrow M$ defined by $\theta_t(p) = \theta(t, p)$ is a homeomorphism, and if the flow is smooth, then $\theta_t$ is a diffeomorphism.
+  \item For each fixed $p \in M$, the map $\theta^{(p)}: \mathbb{R} \rightarrow M$ defined by $\theta^{(p)}(t) = \theta(t, p)$ is the orbit of $p$ under the action.
+\end{itemize}
+
+Every smooth global flow can be associated with integral curves of a smooth vector field. For any $\theta: \mathbb{R} \times M \rightarrow M$ smooth global flow, we can define a vector field $V$ on $M$ by
+\begin{equation*}
+  V_p = \left. \frac{\mathrm{d}}{\mathrm{d} t} \right|_{t=0} \theta_t(p).
+\end{equation*}
+called the \textbf{infinitesimal generator} of the flow.
+
+\begin{proposition}{Infinitesimal Generator}{Infinitesimal Generator}
+  Let $\theta: \mathbb{R} \times M \rightarrow M$ be a smooth global flow on a smooth manifold $M$, and let $V$ be its infinitesimal generator. Then $V$ is a smooth vector field on $M$, and for each $p \in M$, the orbit $\theta^{(p)}: \mathbb{R} \rightarrow M$ is the unique integral curve of $V$ starting at $p$.
+\end{proposition}
+\begin{proof}
+  Take any $f\in C^{\infty}(M)$ on some open neighborhood of $p$. Then
+  \begin{equation*}
+    Vf(p) = V_p f = \left. \frac{\mathrm{d}}{\mathrm{d} t} \right|_{t=0} (f \circ \theta_t)(p) = \frac{\partial }{\partial t} \bigg|_{(0, p)} (f \circ \theta)(t, p),
+  \end{equation*}
+  So it is smooth. The second part follows according to the definition of integral curves.
+\end{proof}
+
+\subsection{The Fundamental Theorem of Flows}
+We cannot say that every smooth vector field on a smooth manifold generates a global flow because integral curves may not be defined for all $\mathbb{R}$. So we introduce a small patch here.
+
+\begin{definition}{Flow}{Flow}
+  Let $M$ be a manifold. A \textbf{flow domain} in $M$ is an open subset $\mathcal{D} \subseteq \mathbb{R} \times M$ such that for each $p \in M$, the set $\mathcal{D}^{(p)} = \{ t \in \mathbb{R} : (t, p) \in \mathcal{D} \}$ is an open interval containing $0$. A \textbf{flow} or \textbf{local flow} on $M$ is a continuous map $\theta: \mathcal{D} \rightarrow M$ such that
+  \begin{itemize}
+    \item $\forall p\in M$, we have $ \theta(0, p) = p $;
+    \item For any $s\in \mathcal{D}^{(p)}$ and $t \in \mathcal{D}^{( \theta(s, p) )}$, such that $s + t \in \mathcal{D}^{(p)}$, we have
+      \begin{equation}
+        \theta(t, \theta(s, p)) = \theta(s + t, p).
+      \end{equation}
+  \end{itemize}
+\end{definition}
+If $ \theta$ is a flow, we define $\theta_t: M_t \rightarrow M$ by $\theta_t(p) = \theta(t, p)$, where $M_t = \{ p \in M : (t, p) \in \mathcal{D} \}$. Then if $ \theta is$ smooth, the infinitesimal generator of $\theta$ is defined as before.
+
+\begin{proposition}{Infinitesimal Generator of a Flow}{Infinitesimal Generator of a Flow}
+  Let $\theta: \mathcal{D} \rightarrow M$ be a smooth flow on a smooth manifold $M$, and let $V$ be its infinitesimal generator. Then $V$ is a smooth vector field on $M$, and for each $p \in M$, the orbit $\theta^{(p)}: \mathcal{D}^{(p)} \rightarrow M$ is an integral curve of $V$ starting at $p$.
+\end{proposition}
+
+\begin{definition}{Maximal Integral Curve}{Maximal Integral Curve}
+  Let $V$ be a smooth vector field on a smooth manifold $M$. An integral curve $\gamma: J \rightarrow M$ of $V$ is called a \textbf{maximal integral curve} of $V$ if there is no integral curve $\tilde{\gamma}: \tilde{J} \rightarrow M$ of $V$ such that $J \subsetneq \tilde{J}$ and $\tilde{\gamma}|_J = \gamma$.
+
+  A maximal flow of $V$ is a flow $\theta: \mathcal{D} \rightarrow M$ that cannot be extended to a larger flow domain.
+\end{definition}
+
+\begin{theorem}{The Fundamental Theorem of Flows}{The Fundamental Theorem of Flows}
+  Let $V$ be a smooth vector field on a smooth manifold $M$. Then there exists a unique maximal flow $\theta: \mathcal{D} \rightarrow M$ on $M$ whose infinitesimal generator is $V$. And $ \theta$ has the following properties:
+  \begin{itemize}
+    \item For each $p \in M$, the map $\theta^{(p)}: \mathcal{D}^{(p)} \rightarrow M$ defined by $\theta^{(p)}(t) = \theta(t, p)$ is the unique maximal integral curve of $V$ starting at $p$.
+    \item If $s\in \mathcal{D}^{(p)}$, then $\mathcal{D}^{( \theta(s, p) )} = \mathcal{D}^{(p)} - s = \{ t - s : t \in \mathcal{D}^{(p)} \}$.
+    \item For each $t \in \mathbb{R}$, the set $M_t = \{ p \in M : (t, p) \in \mathcal{D} \}$ is open in $M$, and the map $\theta_t: M_t \rightarrow M_{-t}$ is a diffeomorphism with inverse $\theta_{-t}$.
+  \end{itemize}
+\end{theorem}
+
+\begin{proposition}{Naturality of Flows}{Naturality of Flows}
+  Let $M$ and $N$ be smooth manifolds, and let $F: M \rightarrow N$ be a smooth map. Let $X \in \mathfrak{X}(M)$ and $Y \in \mathfrak{X}(N)$ be $F$-related smooth vector fields, and let $\theta$ and $\eta$ be their respective maximal flows. Then for all $t\in \mathbb{R}$, $F(M_t) \subseteq N_t$, and the following diagram commutes:
+  \begin{equation*}
+    \begin{tikzcd}
+      M_t \arrow{r}{\theta_t} \arrow{d}{F} & M_{-t} \arrow{d}{F} \\
+      N_t \arrow{r}{\eta_t} & N_{-t}
+    \end{tikzcd}
+  \end{equation*}
+\end{proposition}
+\begin{proof}
+  For any $p\in M$, the curve $F \circ \theta^{(p)}$ is an integral curve of $Y$ starting at $F(p)$. So by the uniqueness of maximal integral curves, $ \eta^{(F(p))}$ extends $F \circ \theta^{(p)}$ and must be defined at least on $\mathcal{D}^{(p)}$. Thus, $F(M_t) \subseteq N_t$ for all $t\in \mathbb{R}$. Moreover,
+  \begin{equation*}
+    F( \theta^{(p)}(t) ) = F \circ \theta^{(p)}(t) = \eta^{(F(p))}(t) = \eta_t( F(p) ),
+  \end{equation*}
+  thus $\eta_t \circ F = F \circ \theta_t$ on $M_t$.
+\end{proof}
+
+\subsection{Complete Vector Fields}
+As we have seen, not every smooth vector field generates a global flow.
+
+\begin{definition}{Complete Vector Field}{Complete Vector Field}
+  A smooth vector field $V$ on a smooth manifold $M$ is called \textbf{complete} if its maximal flow $\theta: \mathcal{D} \rightarrow M$ has flow domain $\mathcal{D} = \mathbb{R} \times M$; that is, it generates a global flow on $M$.
+\end{definition}
+
+We will show that compactly supported vector fields are complete.
+\begin{lemma}{Uniform Time Lemma}{Uniform Time Lemma}
+  Let $V$ be a smooth vector field on a smooth manifold $M$, and let $\theta: \mathcal{D} \rightarrow M$ be its maximal flow. If there exists $ \epsilon >0$ such that for each $p \in M$, the interval $(-\epsilon, \epsilon) \subseteq \mathcal{D}^{(p)}$, then $V$ is complete.
+\end{lemma}
+\begin{proof}
+  Suppose for some $p \in M$, the domain $\mathcal{D}^{(p)}$ is bounded above, let $b = \sup \mathcal{D}^{(p)}$ and let $b - \epsilon < t_0 < b$, and $q = \theta(t_0, p)$. Then by the hypothesis, $ \theta^{(q)}$ is defined on $(-\epsilon, \epsilon)$, so $ \gamma: (- \epsilon, t_0 + \epsilon) \rightarrow M$ defined by
+  \begin{equation*}
+    \gamma(t) = \begin{cases}
+      \theta^{(p)}(t), & t \in (-\epsilon, b) \\
+      \theta^{(q)}(t - t_0), & t \in (t_0 - \epsilon, t_0 + \epsilon)
+    \end{cases}
+  \end{equation*}
+  is an integral curve of $V$ extending $\theta^{(p)}$, contradicting the maximality of $\theta^{(p)}$. Thus, $\mathcal{D}^{(p)}$ is unbounded above. A similar argument shows that $\mathcal{D}^{(p)}$ is unbounded below, so $\mathcal{D}^{(p)} = \mathbb{R}$ for all $p \in M$, and hence $V$ is complete.
+\end{proof}
+
+\begin{theorem}{Completeness of Compactly Supported Vector Fields}{Completeness of Compactly Supported Vector Fields}
+  Let $M$ be a smooth manifold, and let $V$ be a smooth vector field on $M$ with compact support. Then $V$ is complete.
+
+  Therefore, on a compact smooth manifold, every smooth vector field is complete.
+\end{theorem}
+\begin{proof}
+  Obvious.
+\end{proof}
+
+\begin{theorem}{Completeness of Left-Invariant Vector Fields}{Completeness of Left-Invariant Vector Fields}
+  Let $G$ be a Lie group, and let $V$ be a left-invariant vector field on $G$. Then $V$ is complete.
+\end{theorem}
+\begin{proof}
+  There is some $ \epsilon$ that $ \theta^{(e)}$ is defined on $(-\epsilon, \epsilon)$, where $e$ is the identity element of $G$. For any $g \in G$, the integral curve $\theta^{(g)}$ starting at $g$ is given by $L_g \circ \theta^{(e)}$, which is defined on $(-\epsilon, \epsilon)$ as well. Thus, by the Uniform Time Lemma, $V$ is complete.
+\end{proof}
+
+\begin{lemma}{Escape Lemma}{Escape Lemma}
+  Suppose $M$ is a smooth manifold, and $V\in \mathfrak{X}(M)$. If $\gamma: J \rightarrow M$ is a maximal integral curve of $V$ and $J$ is bounded above, let $b = \sup J$. Then for any $t_0\in J$, $ \gamma([t_0, b) )$ is not contained in any compact subset of $M$.
+\end{lemma}
+
+\section{Flowouts}
+Flows provide some technique for geometric constructions on manifolds.
+
+\begin{theorem}{Flowout Theorem}{Flowout Theorem}
+  Let $M$ be a smooth manifold, let $S \subseteq M$ be an embedded $k$-dimensional submanifold, and let $V$ be a smooth vector field on $M$ that is nowhere tangent to $S$. Let $\theta: \mathcal{D} \rightarrow M$ be the maximal flow of $V$. Then let $\mathcal{O} = (\mathbb{R}\times S) \cap \mathcal{D}$ be the submanifold part of the flow domain. Let $\Phi = \theta|_{\mathcal{O}}: \mathcal{O} \rightarrow M$ be the restriction of the flow to $\mathcal{O}$.
+  \begin{itemize}
+    \item $ \Phi: \mathcal{O} \rightarrow M$ is an immersion;
+    \item $\partial / \partial t \in \mathfrak{X}(\mathcal{O})$ is $\Phi$-related to $V \in \mathfrak{X}(M)$;
+    \item There exists a smooth positive function $ \delta: S \rightarrow \mathbb{R}$ such that the restriction $ \Phi |_{\mathcal{O}_\delta}: \mathcal{O}_\delta \rightarrow M$ is injective, where
+      \begin{equation*}
+        \mathcal{O}_\delta = \{ (t, p) \in \mathbb{R} \times S : |t| < \delta(p) \}.
+      \end{equation*}
+      Thus $\Phi( \mathcal{O}_\delta )$ is an immersed submanifold of $M$ containing $S$, and $V$ is tangent to $\Phi( \mathcal{O}_\delta )$.
+    \item If $S$ has codimension $1$, then $\Phi|_{\mathcal{O}_\delta}: \mathcal{O}_\delta \rightarrow \Phi( \mathcal{O}_\delta )$ is a diffeomorphism onto an open submanifold of $M$.
+  \end{itemize}
+  The submanifold $\Phi( \mathcal{O}_\delta )$ is called the \textbf{flowout} of $S$ along $V$.
+\end{theorem}
+
+\begin{figure}[ht]
+    \centering
+    \incfig{flowout}
+    \caption{Flowout}
+    \label{fig:flowout}
+\end{figure}
+
+\begin{proof}
+SORRY
+\end{proof}
+
+\subsection{Regular Points and Singular Points}
+
+\begin{definition}{Regular Point and Singular Point}{Regular Point and Singular Point}
+  Let $M$ be a smooth manifold, and let $V$ be a vector field on $M$. A point $p \in M$ is called a \textbf{regular point} of $V$ if $V_p \neq 0$. Otherwise, it is called a \textbf{singular point} of $V$.
+\end{definition}
+
+\begin{proposition}{Regular and Singular Points}{Regular and Singular Points}
+  Let $V$ be a smooth vector field on a smooth manifold $M$. Let $ \theta: \mathcal{D} \rightarrow M$ be the maximal flow of $V$. Then if $p\in M$ is a singular point of $V$, then $\mathcal{D}^{(p)} = \mathbb{R}$, and $\theta^{(p)}(t) = p$ for all $t \in \mathbb{R}$ is a constant curve. If $p$ is a regular point of $V$, then $ \theta^{(p)} : \mathcal{D}^{(p)} \rightarrow M$ is a smooth immersion.
+\end{proposition}
+
+This shows that equilibrium points (The points where $ \theta^{(p)}$ is constant) of a flow are exactly the singular points of its infinitesimal generator.
+
+Now we give a complete local structure of a vector field around a regular point.
+\begin{theorem}{Canonical Form near a Regular Point}{Canonical Form near a Regular Point}
+  Let $M$ be a smooth manifold, and let $V$ be a smooth vector field on $M$. If $p \in M$ is a regular point of $V$, then there exists a smooth chart $(U, \varphi)$ near $p$, with coordinates $(s^1, \ldots, s^n)$, such that on $U$,
+  \begin{equation*}
+    V = \frac{\partial }{\partial s^1}.
+  \end{equation*}
+  If $S \subseteq M$ is any embedded hypersurface (codimension $1$ submanifold) with $p \in S$ and $V_p\notin T_p S$, then the chart $(U, \varphi)$ can be chosen so that $s^1$ is the local defining function of $S$.
+\end{theorem}
+
+\section{Flows and Flowouts on Manifolds with Boundary}
+Well from definition point we see that vector fields on manifolds with boundary need not generate flows when the point is on the boundary, which only permits half-open intervals as domains of integral curves. However, there are some flowout results that are important.
+
+\begin{theorem}{Boundary Flowout Theorem}{Boundary Flowout Theorem}
+  Let $M$ be a smooth manifold with nonempty boundary, let $N$ be a smooth vector field on $M$ that is inward points on every $p \in \partial M$. There exists a smooth function $ \delta: \partial M \rightarrow \mathbb{R}^+$ and a smooth embedding $ \Phi: \mathcal{P}_\delta \rightarrow M$, where $\mathcal{P}_\delta = \{ (t, p): p \in \partial M, 0 \leq t < \delta(p) \} \subseteq \mathbb{R} \times \partial M$, such that $\Phi(\mathcal{P}_\delta)$ is an open neighborhood of $\partial M$ in $M$, and for each $p \in \partial M$, the curve $ \Phi^{(p)}: [0, \delta(p)) \rightarrow M$ defined by $\Phi^{(p)}(t) = \Phi(t, p)$ is the integral curve of $N$ starting at $p$.
+\end{theorem}
+
+\begin{lemma}{Existence of Inward Vector Fields}{Existence of Inward Vector Fields}
+  Let $M$ be a smooth manifold with nonempty boundary. There exists a smooth global vector field on $M$ that inward points at every point of $\partial M$.
+\end{lemma}
+\begin{theorem}{Collar Neighborhood Theorem}{Collar Neighborhood Theorem}
+  Let $M$ be a smooth manifold with nonempty boundary. A neighborhood of $\partial M$ is called a \textbf{collar neighborhood} if it is the image of a smooth embedding $[0, 1) \times \partial M \rightarrow M$ that restricts to the identity on $\{ 0 \} \times \partial M$.
+
+  Then every smooth manifold with nonempty boundary has a collar neighborhood.
+\end{theorem}
+
+\begin{theorem}{Homotopy to Interior}{Homotopy to Interior}
+  Let $M$ be a smooth manifold with nonempty boundary. And let $ \iota : \Int M \rightarrow M$ be the inclusion map. Then there exists a proper smooth embedding $R: M \rightarrow \Int M$ such that both $\iota \circ R: M \rightarrow M$ and $ R \circ \iota: \Int M \rightarrow \Int M$ are smoothly homotopic to the respective identity maps. Therefore, $\iota$ is a homotopy equivalence between $ \Int M$ and $M$.
+\end{theorem}
+\begin{proof}
+  Quite natural, just shrinking the boundary along the collar neighborhood a little bit to get $R$ would do.
+\end{proof}
+
+\begin{theorem}{Whitney Approximation Theorem for Manifolds with Boundary}{Whitney Approximation Theorem for Manifolds with Boundary}
+  Let $M,N$ be smooth manifolds with boundary, then every continuous map $F: M \rightarrow N$ is homotopic to a smooth map.
+\end{theorem}
+
+We next generalize theorem \ref{thm:Homotopy and Smooth Homotopy}, we have
+\begin{theorem}{Homotopy and Smooth Homotopy for Manifolds with Boundary}{Homotopy and Smooth Homotopy for Manifolds with Boundary}
+  Let $M,N$ be smooth manifolds with boundary, and let $F, G: M \rightarrow N$ be smooth maps that are homotopic. Then $F$ and $G$ are smoothly homotopic.
+\end{theorem}
+
+The following theorem shows how to attach manifolds along their boundaries.
+\begin{theorem}{Attaching Manifolds along their Boundaries}{Attaching Manifolds along their Boundaries}
+  Let $M,N$ be smooth $n$-manifolds with nonempty boundaries, and suppose $h: \partial N \rightarrow \partial M$ is a diffeomorphism. Let
+  \begin{equation*}
+    M \cup_h N = (M \sqcup N) / \sim, \qquad \text{where } x \sim h(x) \text{ for all } x \in \partial N.
+  \end{equation*}
+  Then $M \cup_h N$ is a topological manifold without boundary, and it admits a smooth structure such that there are regular domains $M', N' \subseteq M \cup_h N$ that are diffeomorphic to $M$ and $N$, respectively, and satisfies
+  \begin{equation}
+    M' \cup N' = M \cup_h N, \quad M' \cap N' = \partial M' = \partial N'.
+  \end{equation}
+  If $M,N$ are both compact, then $M \cup_h N$ is also compact. If they are both connected then $M \cup_h N$ is also connected.
+\end{theorem}
+\begin{proof}
+  SORRY
+\end{proof}
+
+\begin{example}{Connected Sums}{Connected Sums}
+  Let $M_1,M_2$ be connected smooth $n$-manifolds, for $i=1,2$ let $U_i$ denote a regular coordinate ball centered at some point $p_i \in M_i$, and let $M_i' = M_i \setminus U_i$. Then $M_i'$ is a smooth manifold with boundary diffeomorphic to $ \mathbb{S}^{n-1}$. A smooth \textbf{connected sum} of $M_1$ and $M_2$, denoted $M_1 \# M_2$, is the smooth manifold obtained by attaching $M_1'$ and $M_2'$ along their boundaries via some diffeomorphism $h: \partial M_2' \rightarrow \partial M_1'$. The resulting manifold is independent of the choice of coordinate balls and diffeomorphism, up to diffeomorphism.
+\end{example}
+
+Theorem \ref{thm:Homotopy and Smooth Homotopy for Manifolds with Boundary} shows a way of embedding a smooth manifold with boundary into another one without boundary, namely just $\Int M$. We can also have another way.
+\begin{example}{The Double of a Manifold with Boundary}{The Double of a Manifold with Boundary}
+  Let $M$ be a smooth manifold with nonempty boundary. The \textbf{double} of $M$, denoted $D(M)$, is the smooth manifold without boundary obtained by attaching two copies of $M$ along their boundaries via the identity map of $\partial M$, namely, $M \cup_{\mathrm{id}} M$.
+
+  Then $D(M)$ is compact if and only if $M$ is compact, connected if and only if $M$ is connected.
+\end{example}
+
+Although vector fields on manifolds with boundary may not generate flows, there are circumstances that they do.
+
+\begin{lemma}{Tangent Fields Generate Flows}{Tangent Fields Generate Flows}
+  Let $M$ be a smooth manifold, and $D \subseteq M$ is a regular domain. Let $V$ be a smooth vector field on $M$ that is tangent to $\partial D$ at every point of $\partial D$. Then every integral curve of $V$ that starts in $D$ remains in $D$ for all time.
+\end{lemma}
+
+\begin{theorem}{Flows on Manifolds with Boundary}{Flows on Manifolds with Boundary}
+  Let $M$ be a smooth manifold with nonempty boundary, and let $V$ be a smooth vector field on $M$ that is tangent to $\partial M$ at every point of $\partial M$. Then the fundamental theorem of flows \ref{thm:The Fundamental Theorem of Flows} holds for $V$ on $M$.
+\end{theorem}
+\begin{proof}
+  Consider $M$ to be the regular domain in its double $D(M)$ would do.
+\end{proof}
+
+\begin{theorem}{Canonical Form near a Regular Point on Manifolds with Boundary}{Canonical Form near a Regular Point on Manifolds with Boundary}
+  Let $M$ be a smooth manifold with boundary, and let $V$ be a smooth vector field on $M$ that is tangent to $\partial M$. If $p \in \partial M$ is a regular point of $V$, then there exists a smooth chart $(U, \varphi)$ near $p$, with coordinates $(s^1, \ldots, s^n)$, such that on $U$, $ V = \partial / \partial s^1$.
+\end{theorem}
+
+\section{Lie Derivatives}
+We know how to interpret a directional derivative of a real-valued function on a manifold. Indeed a tangent vector $v \in T_p M$ can be viewed as this. So what about the directional derivative of a vector field? In Euclidean space $\mathbb{R}^n$, the directional derivative of a smooth vector field $W$ in the direction of a vector $v\in T_p \mathbb{R}^n$ is defined as
+\begin{equation*}
+  D_v W(p) = \frac{\mathrm{d} }{\mathrm{d} t} \bigg|_{t=0} W( p + tv ) = \lim_{t \to 0} \frac{ W(p + tv) - W(p) }{t}.
+\end{equation*}
+however, this definition depends on the vector space structure of $\mathbb{R}^n$ because we need to do substraction of vectors at different points.
+
+There is no natural way to define the directional derivative of a vector field on a general manifold. However, if we have a vector field $V$ instead of a single tangent vector $v$, then we can use the flow to push forward and pull back vectors.
+
+\begin{definition}{Lie Derivative}{Lie Derivative}
+  Suppose $M$ is a smooth manifold, $V$ is a smooth vector field on $M$ with maximal flow $\theta$. Let $W$ be another smooth vector field on $M$. The \textbf{Lie derivative} of $W$ with respect to $V$ is the rough vector field defined by
+  \begin{equation}
+    (\mathcal{L}_V W)_p = \lim_{t \to 0} \frac{ (\mathrm{d} \theta_{-t})_{ \theta_t(p) } ( W_{ \theta_t(p) } ) - W_p }{t} = \frac{\mathrm{d} }{\mathrm{d} t} \bigg|_{t=0} ( \mathrm{d} \theta_{-t} )_{ \theta_t(p) } ( W_{ \theta_t(p) } ).
+  \end{equation}
+  If $M$ is a smooth manifold with boundary, and $V$ is tangent to $\partial M$, then the above definition still makes sense using the flow theorem for manifolds with boundary \ref{thm:Flows on Manifolds with Boundary}.
+\end{definition}
+
+\begin{lemma}{Smoothness of Lie Derivative}{Smoothness of Lie Derivative}
+  Let $M$ be a smooth manifold, with or without boundary. Let $V,W\in \mathfrak{X}(M)$. If $\partial M \neq \emptyset$, assume that $V$ is tangent to $\partial M$. Then $\mathcal{L}_V W$ exists and is a smooth vector field on $M$.
+\end{lemma}
+\begin{proof}
+  Let $ \theta$ be the flow of $V$. For any $p\in M$, let $(U,(x^i))$ be a smooth chart about $p$. Choose a small open interval $J_0$ containing $0$ and an open subset $U_0 \subseteq U$ containing $p$ such that $ \theta$ maps $J_0 \times U_0$ into $U$. Write $ \theta(t,x) = ( \theta^1(t,x), \ldots, \theta^n(t,x) )$ when $(t,x) \in J_0 \times U_0$. Then for any $(t,x) \in J_0 \times U_0$, the matrix of $(\mathrm{d} \theta_{-t})_{ \theta_t(x) }$ with respect to the basis $ \{ \partial / \partial x^i |_{ \theta_t(x) } \}$ is given by
+  \begin{equation*}
+    \left( \frac{\partial \theta^i}{\partial x^j} (-t, \theta_t(x) ) \right)_{i,j=1}^n.
+  \end{equation*}
+  So we have
+  \begin{equation*}
+    \mathrm{d} ( \theta_{-t} )_{ \theta_t(x) } ( W_{ \theta_t(x) } ) = \frac{\partial \theta^i}{\partial x^j} (-t, \theta(t,x) ) W^j( \theta_t(x) ) \frac{\partial }{\partial x^i} \bigg|_x,
+  \end{equation*}
+  is smooth in both $t$ and $x$. Thus, taking the derivative with respect to $t$ at $t=0$ gives a smooth vector field on $U_0$ that agrees with $\mathcal{L}_V W$ on $U_0$. Since $p$ was arbitrary, $\mathcal{L}_V W$ is smooth on $M$.
+\end{proof}
+
+The definition is not quite computation friendly. We have the following more useful property that links Lie derivatives with Lie brackets.
+
+\begin{theorem}{Structure of Lie Derivative}{Structure of Lie Derivative}
+  Let $M$ be a smooth manifold and $V,W \in \mathfrak{X}(M)$. then
+  \begin{equation}
+    \mathcal{L}_V W = [V, W].
+  \end{equation}
+\end{theorem}
+\begin{proof}
+  Let $\mathcal{R}(V) \subseteq M$ be the set of regular points of $V$ (points where $V_p \neq 0$). Since $\mathcal{R}(V)$ is open by continuity, its closure is the support of $V$. Take $p\in M$.
+  \begin{itemize}
+    \item Case 1, $p\in \mathcal{R}(V)$: By the Canonical Form near a Regular Point \ref{thm:Canonical Form near a Regular Point}, there exists a smooth chart $(U, (u^1, \ldots, u^n))$ about $p$ such that on $U$, $ V = \partial / \partial u^1$. Then the flow of $V$ is $ \theta_t(u) = (u^1 + t, u^2, \ldots, u^n)$. For each $t$, then $\mathrm{d} ( \theta_{-t})_{ \theta_t(x) }$ is the identity map on $T_{\theta_t(x)} M$. Thus for any $u\in U$, we have
+      \begin{equation*}
+        \mathrm{d} ( \theta_{-t} )_{ \theta_t(u) } ( W_{ \theta_t(u) } ) = W^j(u^1 + t, u^2, \ldots, u^n) \frac{\partial }{\partial u^j} \bigg|_u,
+      \end{equation*}
+      So we have
+      \begin{equation*}
+        (\mathcal{L}_V W)_u = \frac{\mathrm{d} }{\mathrm{d} t} \bigg|_{t=0} W^j(u^1 + t, u^2, \ldots, u^n) \frac{\partial }{\partial u^j} \bigg|_u = \frac{\partial W^j}{\partial u^1}(u) \frac{\partial }{\partial u^j} \bigg|_u.
+      \end{equation*}
+      On the other hand,
+      \begin{equation*}
+        [V, W]_u = \left[ \frac{\partial }{\partial u^1}, W^j \frac{\partial }{\partial u^j} \right]_u = \frac{\partial W^j}{\partial u^1}(u) \frac{\partial }{\partial u^j} \bigg|_u.
+      \end{equation*}
+    \item Case 2, $p\in \supp V$. By continuity.
+    \item Case 3, $p\notin \supp V$. Then $V = 0$ on some open neighborhood $U$ of $p$. Then $\theta_t$ is the identity map on $U$ for all $t$ sufficiently small. Thus, for any $u\in U$,
+      \begin{equation*}
+        \mathrm{d} ( \theta_{-t} )_{ \theta_t(u) } ( W_{ \theta_t(u) } ) = W_u,
+      \end{equation*}
+      so $(\mathcal{L}_V W)_u = 0$. On the other hand, since $V=0$ on $U$, we have $[V, W]_u = 0$ as well.
+  \end{itemize}
+\end{proof}
+
+\begin{remark}
+  This is the geometric interpretation of Lie brackets we mentioned in the chapter on Lie groups. Lie brackets measure the change of one vector field along the flow generated by another vector field.
+\end{remark}
+
+\begin{proposition}{Properties of Lie Derivatives}{Properties of Lie Derivatives}
+  Suppose $M$ is a smooth manifold, with or without boundary. Let $V,W,X \in \mathfrak{X}(M)$, 
+  \begin{itemize}
+    \item $\mathcal{L}_V W = - \mathcal{L}_W V$.
+    \item $\mathcal{L}_V [W, X] = [ \mathcal{L}_V W, X ] + [ W, \mathcal{L}_V X ]$. (The Jacobi Identity)
+    \item $\mathcal{L}_{ [V, W] } X = \mathcal{L}_V \mathcal{L}_W X - \mathcal{L}_W \mathcal{L}_V X$. (Again the Jacobi Identity)
+    \item $\mathcal{L}_V (gW) = ( V g ) W + g \mathcal{L}_V W$, for any $g \in C^\infty(M)$. (Note this gives a geometric interpretation of the product rule for Lie brackets.)
+    \item If $F: M \rightarrow N$ is a diffeomorphism, then $F_* ( \mathcal{L}_V W ) = \mathcal{L}_{ F_* V } ( F_* W )$.
+  \end{itemize}
+\end{proposition}
+
+To compute derivative at other time than $0$, we have
+\begin{proposition}{Derivatives at Other Times}{Derivatives at Other Times}
+  Let $M$ be a smooth manifold, with or without boundary. Let $V,W \in \mathfrak{X}(M)$, and if $\partial M \neq \emptyset$, assume that $V$ is tangent to $\partial M$. Let $\theta$ be the flow of $V$. Then for any $(t_0, p) \in \mathcal{D}$,
+  \begin{equation}
+    \frac{\mathrm{d} }{\mathrm{d} t} \bigg|_{t=t_0} \mathrm{d} ( \theta_{-t} )_{ \theta_t(p) } ( W_{ \theta_t(p) } ) = \mathrm{d} ( \theta_{-t_0} )_{ \theta_{t_0}(p) } ( ( \mathcal{L}_V W )_{ \theta_{t_0}(p) } ).
+  \end{equation}
+
+  This can be seen as conputing the Lie derivative at time $t_0$ AT the position $t=0$, it pulls back the Lie derivative at time $t_0$ and all $t$ back to time $0$ for comparison. So the answer is just the pullback of the Lie derivative at time $t_0$.
+\end{proposition}
+
+\section{Commuting Vector Fields}
+
+Let $M$ be a smooth manifold, and let $V,W \in \mathfrak{X}(M)$. We say that $V,W$ commute if their Lie bracket vanishes, i.e. $[V, W] = 0$. A vector field $W$ is said to be invariant under some flow $ \theta$ if $W$ is $\theta_t$-related to itself for all $t$ in the flow domain. (More precisely, $W|_{M_t}$ is $\theta_t$-related to $W|_{M_{-t}}$ for all $t \in \mathbb{R}$.) This means that $\mathrm{d} ( \theta_t )_p ( W_p ) = W_{ \theta_t(p) }$ for all $(t,p) \in \mathcal{D}$.
+
+\begin{theorem}{Structure of Invariant Fields under Flows}{Structure of Invariant Fields under Flows}
+  Let $M$ be a smooth manifold, and let $V,W \in \mathfrak{X}(M)$. Then the following are equivalent:
+  \begin{itemize}
+    \item $V$ and $W$ commute, i.e. $[V, W] = 0$;
+    \item $W$ is invariant under the flow of $V$;
+    \item $V$ is invariant under the flow of $W$.
+  \end{itemize}
+  Specially, every smooth vector field is invariant under its own flow.
+\end{theorem}
+\begin{proof}
+  If $W$ is invariant under the flow of $V$, then for any $(t,p) \in \mathcal{D}$, $W_{ \theta_t(p) } = \mathrm{d} ( \theta_t )_p ( W_p )$. Thus,
+  \begin{equation*}
+    \mathrm{d} ( \theta_{-t} )_{ \theta_t(p) } ( W_{ \theta_t(p) } ) = \mathrm{d} ( \theta_{-t} )_{ \theta_t(p) } \circ \mathrm{d} ( \theta_t )_p ( W_p ) = W_p.
+  \end{equation*}
+  So $\mathcal{L}_V W = 0$, i.e. $[V, W] = 0$.
+
+  Conversely, if $[V, W] = 0$, then reverse the argument above would do.
+\end{proof}
+
+\begin{remark}
+  We can use $[V,V] = 0$ to see that every smooth vector field is invariant under its own flow. But this is quite obvious from the naturality of flows proposition \ref{prop:Naturality of Flows}, since $V$ is always $\theta_t$-related to itself, because $ \theta_t$ action gives the same flow.
+\end{remark}
+
+As infinitesimal generators of flows, we can visualize commuting vector fields as infinitesimal symmetries of each other. Moving along $V$ a little bit and then moving along $W$ a little bit is the same as moving along $W$ first and then moving along $V$, which is exactly why we need $W$ not to change too much along the flow of $V$ (and vice versa). We may naturally think that this is also equivalent to the commutivity of the flows generated by $V$ and $W$.
+
+To be more precise,
+\begin{definition}{Commuting Flows}{Commuting Flows}
+  Suppose $M$ is a smooth manifold, and let $ \theta, \psi $ be two flows on $M$, then we say that $ \theta$ and $ \psi$ \textbf{commute} if
+  \begin{equation}
+    \begin{aligned}
+      &\forall p\in M, \forall J,K \subseteq \mathbb{R} \text{ open intervals containing } 0 \\
+      &[( \forall (s,t) \in J \times K, \theta_s \circ \psi_t \text{ is defined }) \lor ( \forall (s,t) \in J \times K, \psi_t \circ \theta_s \text{ is defined }) \\
+      & \rightarrow ( \forall (s,t) \in J \times K, \theta_s \circ \psi_t (p) = \psi_t \circ \theta_s (p) ) \text{ are both defined }].
+    \end{aligned}
+  \end{equation}
+  For global flows, this means that $ \theta_s \circ \psi_t = \psi_t \circ \theta_s$ for all $s,t \in \mathbb{R}$.
+\end{definition}
+
+\begin{theorem}{Equivalence of Field Commuting and Flow Commuting}{Equivalence of Field Commuting and Flow Commuting}
+  Smooth vector fields commute if and only if their flows commute.
+\end{theorem}
+\begin{proof}
+SORRY
+\end{proof}
+
+\begin{remark}
+  Note the condition of commutativity of flows is a bit complicated due to the possible non-completeness of the vector fields. It is easily mistaken to be
+\begin{equation*}
+  \begin{aligned}
+    &\forall p\in M, \forall J,K \subseteq \mathbb{R} \text{ open intervals containing } 0 \\
+    & \forall (s,t) \in J \times K, [\theta_s \circ \psi_t \text{ is defined } \land \psi_t \circ \theta_s \text{ is defined } \rightarrow \theta_s \circ \psi_t (p) = \psi_t \circ \theta_s (p) ] . 
+  \end{aligned}
+\end{equation*}
+But this is not correct. There exists certain commuting vector fields and for some certain $s,t$ that both $\theta_s \circ \psi_t$ and $\psi_t \circ \theta_s$ are defined, but they are not equal.
+\end{remark}
+
+\begin{proof}
+SORRY
+\end{proof}
+
+\subsection{Commuting Frames}
+
+\begin{definition}{Commuting Frame}{Commuting Frame}
+  Let $M$ be a smooth $n$-manifold. A smooth local frame $(U, (E_1, \ldots, E_n))$ on $M$ is called a \textbf{commuting frame} if $[E_i, E_j] = 0$ for all $1 \leq i,j \leq n$.
+\end{definition}
+
+\begin{example}{Commuting Frames}{Commuting Frames}
+  \begin{itemize}
+    \item The coordinate frame $(U, ( \partial / \partial x^1, \ldots, \partial / \partial x^n ))$ associated to any smooth chart $(U, (x^1, \ldots, x^n))$ is a commuting frame.
+    \item On $\mathbb{R} \setminus \{0\}$, define
+      \begin{equation*}
+        E_1 = \frac{x}{r} \frac{\partial }{\partial x} + \frac{y}{r} \frac{\partial }{\partial y}, \quad E_2 = -\frac{y}{r} \frac{\partial }{\partial x} + \frac{x}{r} \frac{\partial }{\partial y}, \quad r = \sqrt{x^2 + y^2}.
+      \end{equation*}
+      Then we have
+      \begin{equation*}
+        [E_1, E_2] = \frac{y}{r^2} \frac{\partial }{\partial x} - \frac{x}{r^2} \frac{\partial }{\partial y} \meq 0.
+      \end{equation*}
+      So it it not a commuting frame. To see why, in angular coordinates $(r, \theta)$, we have
+      \begin{equation*}
+        E_1 = \frac{\partial }{\partial r}, \quad E_2 = \frac{1}{r} \frac{\partial }{\partial \theta},
+      \end{equation*}
+      which has a normalizing factor $1/r$ that varies along the flow of $E_1$.
+
+      Therefore, this frame cannot be expressed as a coordinate frame of any smooth chart on $\mathbb{R}^2 \setminus \{0\}$.
+  \end{itemize}
+\end{example}
+
+Next, we shall show that commuting is also a sufficient condition for a local frame to be a coordinate frame.
+
+\begin{theorem}{Canonical Form of Commuting Vector Fields}{Canonical Form of Commuting Vector Fields}
+  Let $M$ be a smooth $n$-manifold, and let $(V_1, \ldots ,V_k)$ be a collection of linearly independent commuting smooth vector fields on an open set $W \subseteq M$, then for each point $p \in W$, there exists a smooth chart $(U, (s^i))$ about $p$ such that $V_i = \partial / \partial s^i$ on $U$ for $i=1, \ldots, k$.
+
+  If $p\in S \subseteq W$ is an embedded submanifold of $M$ with codimension $k$ such that $T_pS$ is complementary to the span of $ \{ V_1|_p, \ldots, V_k|_p \}$ in $T_p M$, then the coordinates $(s^1, \ldots, s^n)$ can be chosen so that $S \cap U$ is the slice by $s^1 = \cdots = s^k = 0$.
+\end{theorem}
+
+This gives a way to define the local coordinates by commuting vector fields.
+\begin{itemize}
+  \item First start with an $n-k$ dimensional submanifold $S$ that is complementary to the span of the $k$ commuting vector fields at a point $p$;
+  \item For any point $p$, take it as origin, and trace along the flows of the $k$ vector fields to get $k$ coordinates; As the vector fields commute, the order of tracing does not matter;
+\end{itemize}
+
+\begin{example}{Constructing Local Frames from Commuting Fields}{Constructing Local Frames from Commuting Fields}
+  Take $\mathbb{R}^2$, define
+  \begin{equation*}
+    V = x \frac{\partial }{\partial y} - y \frac{\partial }{\partial x}, \quad W = x \frac{\partial }{\partial x} + y \frac{\partial }{\partial y}.
+  \end{equation*}
+  We have $[V, W] = 0$. So they commute. The flow for $V$ and $W$ are
+  \begin{equation*}
+    \theta_t(x,y) = ( x \cos t - y \sin t, x \sin t + y \cos t ), \quad \eta_t(x,y) = ( e^t x, e^t y ).
+  \end{equation*}
+  For the new coordinate $(s,t)$, start at point $(1,0)$, trace along the flow of $V$ for time $s$ then along the flow of $W$ for time $t$, we get
+  \begin{equation*}
+    \Phi(s,t) = \eta_t( \theta_s(1,0) ) = ( e^t \cos s, e^t \sin s ).
+  \end{equation*}
+  So we have
+  \begin{equation*}
+    (s,t) = ( \tan^{-1}( y/x ), \log \sqrt{x^2 + y^2} ).
+  \end{equation*}
+  for a local chart around $(1,0)$.
+\end{example}
+
+\section{Time-Dependent Vector Fields}
+
+In many physical applications, the vector fields involved depend on time explicitly. We shall generalize our discussion to cover these cases.
+
+\begin{definition}{Time-Dependent Vector Field}{Time-Dependent Vector Field}
+  Let $M$ be a smooth manifold. A \textbf{time-dependent vector field} on $M$ is a continuous map $V:J \times M \rightarrow TM$, where $J \subseteq \mathbb{R}$ is an interval. For each $t \in J$, the map $V_t: M \rightarrow TM$ defined by $V_t(p) = V(t,p)$ is a vector field on $M$.
+
+  An integral curve of $V$ is a differentiable curve $ \gamma: J_0 \rightarrow M$, where $J_0 \subseteq J$ is an interval, such that
+  \begin{equation}
+    \gamma'(t) = V(t, \gamma(t)) \quad \forall t \in J_0.
+  \end{equation}
+\end{definition}
+
+Note that time-dependent vector fields may not generate flows in the usual sense, since the integral curves starting at the same point at different times may not agree.
+
+\begin{theorem}{Fundamental Theorem on Time-Dependent Flows}{Fundamental Theorem on Time-Dependent Flows}
+  Let $M$ be a smooth manifold, and let $J \subseteq \mathbb{R}$ be an open interval. Let $V: J \times M \rightarrow TM$ be a time-dependent smooth vector field on $M$. There exists an open subset $\mathcal{E} \subseteq J \times J \times M$ and a smooth map $ \psi: \mathcal{E} \rightarrow M$ called the \textbf{time-dependent flow} of $V$, such that
+  \begin{itemize}
+    \item For each $(t_0, p) \in J \times M$, the set $\mathcal{E}^{(t_0, p)} = \{ t \in J : (t_0, t, p) \in \mathcal{E} \}$ is an open interval containing $t_0$, and the smooth curve $ \psi^{(t_0, p)}: \mathcal{E}^{(t_0, p)} \rightarrow M$ defined by $\psi^{(t_0, p)}(t) = \psi(t, t_0, p)$ is the unique maximal integral curve of $V$ satisfying $\psi^{(t_0, p)}(t_0) = p$.
+    \item If $t_1\in \mathcal{E}^{(t_0, p)}, q = \psi^{(t_0, p)}(t_1)$, then $\mathcal{E}^{(t_1, q)} = \mathcal{E}^{(t_0, p)}$ and $\psi^{(t_1, q)} = \psi^{(t_0, p)}$.
+    \item For any $(t_1, t_0)\in J \times J$, the set $M_{(t_1, t_0)} = \{ p \in M : (t_0, t_1, p) \in \mathcal{E} \}$ is an open subset of $M$, and the map $\psi_{(t_1, t_0)}: M_{(t_1, t_0)} \rightarrow M$ defined by $\psi_{(t_1, t_0)}(p) = \psi(t_1, t_0, p)$ is a diffeomorphism from $M_{(t_1, t_0)}$ onto $M_{(t_0, t_1)}$, with inverse $\psi_{(t_0, t_1)}$.
+    \item If $p\in M_{t_1,t_0}$ and $ \psi_{(t_1, t_0)}(p) \in M_{t_2, t_1}$, then $p \in M_{t_2, t_0}$ and
+      \begin{equation*}
+        \psi_{(t_2, t_0)}(p) = \psi_{(t_2, t_1)}( \psi_{(t_1, t_0)}(p) ).
+      \end{equation*}
+  \end{itemize}
+\end{theorem}
+
+We can reduce time-dependent vector fields to time-independent ones by considering an augmented manifold $J \times M$. Consider the vector field $\tilde{V}$ on $J \times M$ defined by
+\begin{equation}
+  \widetilde{V}_{(s,p)} = \left( \frac{\partial }{\partial t} \bigg|_s, V(s,p) \right) \in T_s J \oplus T_p M \cong T_{(s,p)} (J \times M).
+\end{equation}
+where $s$ is the standard coordinate on $J$. Let $\tilde{\theta}: \tilde{\mathcal{D}} \rightarrow J \times M$ be the flow of $\tilde{V}$. Then we can write
+\begin{equation*}
+  \tilde{\theta}(t, (s,p)) = ( \alpha(t, (s,p)), \beta(t, (s,p)) ),
+\end{equation*}
+Then $\alpha: \tilde{\mathcal{D}} \rightarrow J$ and $\beta: \tilde{\mathcal{D}} \rightarrow M$ have
+\begin{equation*}
+  \begin{aligned}
+    &\frac{\partial \alpha}{\partial t} (t, (s,p)) = 1, & \alpha(0, (s,p)) = s; \\
+    &\frac{\partial \beta}{\partial t} (t, (s,p)) = V( \alpha(t, (s,p)), \beta(t, (s,p)) ), & \beta(0, (s,p)) = p.
+  \end{aligned}
+\end{equation*}
+So we have $\alpha(t, (s,p)) = t + s$, so
+\begin{equation*}
+  \frac{\partial \beta}{\partial t} (t, (s,p)) = V( t + s, \beta(t, (s,p)) ).
+\end{equation*}
+Let $\mathcal{E} \subseteq \mathbb{R}\times J \times M$ defined by
+\begin{equation*}
+  \mathcal{E} = \{ (t, t_0, p) : (t - t_0, (t_0, p)) \in \tilde{\mathcal{D}} \}.
+\end{equation*}
+If $(t,t_0,p) \in \mathcal{E}$, then $t = t-t_0 + t_0 = \alpha( t - t_0, (t_0, p) )\in J$, so $\mathcal{E} \subseteq J \times J \times M$.
+
+Now $\psi: \mathcal{E} \rightarrow M$ defined by
+\begin{equation*}
+  \psi(t, t_0, p) = \beta( t - t_0, (t_0, p) )
+\end{equation*}
+also corresponds to the time-dependent flow of $V$. All the above results can be obtained from the properties of $\tilde{\theta}$.
+
+\section{First-Order PDEs}
+In coordinated, any first order PDE for a single unknown function $u: \mathbb{R}^n \rightarrow \mathbb{R}$ can be written as
+\begin{equation}
+  F( x^1, \ldots, x^n, u(x), \frac{\partial u}{\partial x^1}(x), \ldots, \frac{\partial u}{\partial x^n}(x) ) = 0,
+\end{equation}
+where $F$ is a smooth function of $2n + 1$ variables. We also add a initial / boundary condition: given a smooth hypersurface $S \subseteq \mathbb{R}^n$ and a smooth function $\varphi: S \rightarrow \mathbb{R}$, we require that
+\begin{equation}
+  u|_S = \varphi.
+\end{equation}
+The problem of finding a solution to the PDE in a neighborhood of $S$ that satisfies the initial condition is called the \textbf{Cauchy problem}.
+
+We point out that not all Cauchy problems have solutions, we need to impose some conditions between $F$ and $S$ to ensure the existence of solutions, called some \textbf{non-characteristic} conditions.
+
+\subsection{Linear Equations}
+\begin{equation}
+  a^1(x) \frac{\partial u}{\partial x^1} + \cdots + a^n(x) \frac{\partial u}{\partial x^n} + b(x) u(x) = f(x),
+\end{equation}
+where $a^i, b, f$ are smooth functions on some $ \Omega \subseteq \mathbb{R}^n$. Take a smooth vector field $A \in \mathfrak{X}(\Omega)$ defined by
+\begin{equation*}
+  A_x = a^i(x) \frac{\partial }{\partial x^i} \bigg|_x.
+\end{equation*}
+then the PDE can be written as
+\begin{equation}
+  A u + b u = f,
+\end{equation}
+with initial hypersurface $S$ being non-characteristic if $A$ is nowhere tangent to $S$ at every point of $S$.
+
+\begin{proposition}{The Linear First-Order Cauchy Problem}{The Linear First-Order Cauchy Problem}
+  Let $M$ be a smooth $n$-manifold, let $S \subseteq M$ be an embedded hypersurface, let $A \in \mathfrak{X}(M)$ be a smooth vector field that is nowhere tangent to $S$, and let $b,f \in C^\infty(M)$, and $\varphi \in C^\infty(S)$. Then for some neighborhood $U$ of $S$ in $M$, there exists a unique smooth function $u\in C^\infty(U)$ such that
+  \begin{equation}
+    A u + b u = f \qquad u|_S = \varphi.
+  \end{equation}
+\end{proposition}
+
+\end{document}

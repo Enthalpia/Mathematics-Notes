@@ -1,0 +1,1693 @@
+\documentclass{mathnote}
+
+\title{Probability and Statistics Review}
+\author{Your Name}
+\date{\today}
+\begin{document}
+
+\maketitle
+
+\section{Basic Probability Concepts}
+
+\begin{definition}{Sample Space}{Sample Space}
+  The \textbf{sample space} of an experiment is the set of all possible outcomes. Formally, a sample space is a set $S$ whose elements are called \textbf{outcomes}. It is equipped with a $\sigma$-algebra $\mathcal{F}$ of subsets of $S$, called \textbf{events}. The axioms of a $\sigma$-algebra are:
+  \begin{enumerate}
+    \item $S \in \mathcal{F}$.
+    \item If $A \in \mathcal{F}$, then $A^c = S \setminus A \in \mathcal{F}$.
+    \item If $\{A_i\}_{i=1}^{\infty} \subseteq \mathcal{F}$, then $\bigcup_{i=1}^{\infty} A_i \in \mathcal{F}$.
+  \end{enumerate}
+\end{definition}
+
+\begin{definition}{Probability}{Probability}
+  A \textbf{probability measure} is a function $P: \mathcal{F} \to [0, 1]$ that satisfies the following axioms:
+  \begin{enumerate}
+    \item Non-negativity: For any event $A \in \mathcal{F}$, $P(A) \geq 0$.
+    \item Normalization: $P(S) = 1$.
+    \item Countable Additivity: For any countable collection of mutually exclusive events $\{A_i\}_{i=1}^{\infty} \subseteq \mathcal{F}$, 
+    \begin{equation}
+      P\left(\bigsqcup_{i=1}^{\infty} A_i\right) = \sum_{i=1}^{\infty} P(A_i).
+    \end{equation}
+  \end{enumerate}
+\end{definition}
+
+Some typical terminologies about probability:
+\begin{itemize}
+  \item Certain Event: $ \Omega$ itself. Impossible Event: $\emptyset$.
+  \item Sum of events: $A + B = A \cup B$.
+  \item Difference of events: $A - B = A \cap B^c$.
+  \item Product of events: $AB = A \cap B$.
+  \item Incompatible events / Mutually exclusive events: $AB = \emptyset$.
+  \item Opposite event / Complementary event: $A^c = \Omega - A$.
+\end{itemize}
+
+\subsection{Classical Probability}
+
+\begin{definition}{Classical Probability}{Classical Probability}
+  If $ \Omega$ is a finite set with $N$ elements, and all outcomes are equally likely, then $\mathcal{F} = 2^{\Omega}$ and for any event $A \in \mathcal{F}$, define the probability function as
+  \begin{equation}
+    P(A) = \frac{|A|}{N}.
+  \end{equation}
+\end{definition}
+
+\paragraph{Counting Methods}
+
+Taking $r$ objects from $n$ objects:
+\begin{itemize}
+  \item Different objects, putting back, order matters: $n^r$.
+  \item Different objects, putting back, order not matters: $\binom{n+r-1}{r}$.
+    \begin{proof}
+      This is equivalent to the ``stars and bars'' problem. What we find is the number of non-negative integer solutions to the equation
+      \begin{equation}
+        x_1 + x_2 + \cdots + x_n = r,
+      \end{equation}
+      where $x_i$ represents the number of times the $i$-th object is chosen.
+    \end{proof}
+  \item Different objects, not putting back, order matters: $\frac{n!}{(n-r)!}$.
+  \item Different objects, not putting back, order not matters: $\binom{n}{r}$.
+  \item Same objects, $1$
+\end{itemize}
+
+Putting $r$ objects into $n$ boxes:
+\begin{itemize}
+  \item Different objects, different boxes, can be empty: $n^r$.
+  \item Different objects, different boxes, max one object per box: $\frac{n!}{(n-r)!}$.
+  \item Different objects, different boxes, no empty box: $n! S(r, n)$, where $S(r, n)$ is the Stirling number of the second kind.
+    \begin{proof}
+      First, we partition the $r$ objects into $n$ non-empty subsets. The number of ways to do this is given by the Stirling number of the second kind, $S(r, n)$. Next, we assign each subset to a distinct box.
+    \end{proof}
+  \item Different objects, same boxes, can be empty: $\displaystyle \sum_{i=0}^{n} S(r, i)$. 
+    \begin{proof}
+      Dividing $r$ different objects into $1, 2, \ldots, n$ non-empty boxes respectively, and then summing them up.
+    \end{proof}
+  \item Different objects, same boxes, no empty box: $S(r, n)$.
+  \item Different objects, same boxes, max one object per box: $1$ if $r \leq n$, $0$ otherwise.
+  \item Same objects, different boxes, can be empty: $\binom{r+n-1}{r}$.
+  \item Same objects, different boxes, no empty box: $\binom{r-1}{n-1}$.
+  \item Same objects, different boxes, max one object per box: $\binom{n}{r}$.
+  \item Same objects, same boxes, can be empty: $p_n(r)$, the number of partitions of $r$ into at most $n$ parts.
+  \item Same objects, same boxes, no empty box: $p_n(r) - p_{n-1}(r)$.
+  \item Same objects, same boxes, max one object per box: $1$ if $r \leq n$, $0$ otherwise.
+\end{itemize}
+
+Multiple conbinations: Divide $n$ different objects into $k$ groups with sizes $r_1, r_2, \ldots, r_k$ respectively, where $\sum_{i=1}^{k} r_i = n$. The number of ways to do this is
+\begin{equation}
+  \frac{n!}{r_1! r_2! \cdots r_k!}.
+\end{equation}
+which is the coefficient of the multinomial expansion
+\begin{equation}
+  (x_1 + x_2 + \cdots + x_k)^n = \sum_{r_1 + r_2 + \cdots + r_k = n} \frac{n!}{r_1! r_2! \cdots r_k!} x_1^{r_1} x_2^{r_2} \cdots x_k^{r_k}.
+\end{equation}
+which is also: $n$ different objects has $k$ different types, each has $n_1, \ldots , n_k$, putting them into a row, the number of ways is this.
+
+\paragraph{Loose and Tight Criteria}
+
+When evaluating probabilities, we often use the following two criteria:
+\begin{itemize}
+  \item Loose Criterion: the probability is less than 0.05.
+  \item Tight Criterion: the probability is less than 0.01.
+\end{itemize}
+
+\subsection{Properties of Probability}
+\begin{itemize}
+  \item $P(\emptyset) = 0$.
+  \item $P(A^c) = 1 - P(A)$.
+  \item If $A \subseteq B$, then $P(A) \leq P(B)$.
+  \item $P(A \cup B) = P(A) + P(B) - P(AB)$.
+  \item General Addition Rule: For any events $A_1, A_2, \ldots, A_n$,
+  \begin{equation}
+    P\left(\bigcup_{i=1}^{n} A_i\right) = \sum_{i=1}^{n} P(A_i) - \sum_{1 \leq i < j \leq n} P(A_i A_j) + \sum_{1 \leq i < j < k \leq n} P(A_i A_j A_k) - \cdots + (-1)^{n+1} P(A_1 A_2 \cdots A_n).
+  \end{equation}
+  \item Subadditivity: For any countable collection of events $\{A_i\}_{i=1}^{\infty}$,
+    \begin{equation}
+      P\left(\bigcup_{i=1}^{\infty} A_i\right) \leq \sum_{i=1}^{\infty} P(A_i).
+    \end{equation}
+  \item Bonferroni's Inequality: For any events $A_1, A_2, \ldots, A_n$,
+    \begin{equation}
+      P\left(\bigcap_{i=1}^{n} A_i\right) \geq \sum_{i=1}^{n} P(A_i) - (n-1).
+    \end{equation}
+    \begin{proof}
+      Using De Morgan's law,
+      \begin{equation*}
+        P\left(\bigcap_{i=1}^{n} A_i\right) = 1 - P\left(\bigcup_{i=1}^{n} A_i^c\right) \geq 1 - \sum_{i=1}^{n} P(A_i^c) = 1 - \sum_{i=1}^{n} (1 - P(A_i)) = \sum_{i=1}^{n} P(A_i) - (n-1).
+      \end{equation*}
+    \end{proof}
+  \item Lower continuity of probability: If $A_1 \subseteq A_2 \subseteq A_3 \subseteq \cdots$, then
+    \begin{equation}
+      P\left(\bigcup_{i=1}^{\infty} A_i\right) = \lim_{n \to \infty} P(A_n).
+    \end{equation}
+  \item Upper continuity of probability: If $A_1 \supseteq A_2 \supseteq A_3 \supseteq \cdots$, then
+    \begin{equation}
+      P\left(\bigcap_{i=1}^{\infty} A_i\right) = \lim_{n \to \infty} P(A_n).
+    \end{equation}
+\end{itemize}
+
+\subsection{Conditional Probability and Independence}
+\begin{definition}{Conditional Probability}{Conditional Probability}
+  For any two events $A$ and $B$ with $P(B) > 0$, the \textbf{conditional probability} of $A$ given $B$ is defined as
+  \begin{equation}
+    P(A|B) = \frac{P(AB)}{P(B)}.
+  \end{equation}
+\end{definition}
+
+The function $P(\cdot|B)$ is a probability measure on the sample space $B$ with the $\sigma$-algebra $\mathcal{F}_B = \{A \cap B : A \in \mathcal{F}\}$.
+
+Some properties of conditional probability:
+\begin{itemize}
+  \item The Multiplication Rule: For any two events $A$ and $B$ with $P(B) > 0$,
+    \begin{equation}
+      P(AB) = P(A|B) P(B).
+    \end{equation}
+  \item Extended Multiplication Rule: For any events $A_1, A_2, \ldots, A_n$ with $P(A_1 A_2 \cdots A_{n-1}) > 0$,
+    \begin{equation}
+      P(A_1 A_2 \cdots A_n) = P(A_1) P(A_2|A_1) P(A_3|A_1 A_2) \cdots P(A_n|A_1 A_2 \cdots A_{n-1}).
+    \end{equation}
+  \item Law of Total Probability: If $\{B_i\}_{i=1}^{n}$ is a partition of the sample space $S$ with $P(B_i) > 0$ for all $i$, then for any event $A$,
+    \begin{equation}
+      P(A) = \sum_{i=1}^{n} P(A|B_i) P(B_i).
+    \end{equation}
+  \item The Bayes' Theorem: If $\{B_i\}_{i=1}^{n}$ is a partition of the sample space $S$ with $P(B_i) > 0$ for all $i$, then for any event $A$ with $P(A) > 0$,
+    \begin{equation}
+      P(B_j|A) = \frac{P(A|B_j) P(B_j)}{\sum_{i=1}^{n} P(A|B_i) P(B_i)}.
+    \end{equation}
+\end{itemize}
+
+\begin{definition}{Independence}{Independence}
+  Two events $A$ and $B$ are said to be \textbf{independent} if
+  \begin{equation}
+    P(AB) = P(A) P(B).
+  \end{equation}
+  $n$ events $A_1, A_2, \ldots, A_n$ are said to be \textbf{mutually independent} if for every subset $\{i_1, i_2, \ldots, i_k\} \subseteq \{1, 2, \ldots, n\}$ with $2 \leq k \leq n$,
+  \begin{equation}
+    P(A_{i_1} A_{i_2} \cdots A_{i_k}) = P(A_{i_1}) P(A_{i_2}) \cdots P(A_{i_k}).
+  \end{equation}
+  $n$ events $A_1, A_2, \ldots, A_n$ are said to be \textbf{pairwise independent} if for every pair $(A_i, A_j)$ with $1 \leq i < j \leq n$,
+  \begin{equation}
+    P(A_i A_j) = P(A_i) P(A_j).
+  \end{equation}
+  If an infinite sequence of events $\{A_i\}_{i=1}^{\infty}$ satisfies that for every finite subset $\{i_1, i_2, \ldots, i_k\} \subseteq \mathbb{N}$ with $2 \leq k < \infty$,
+  \begin{equation}
+    P(A_{i_1} A_{i_2} \cdots A_{i_k}) = P(A_{i_1}) P(A_{i_2}) \cdots P(A_{i_k}),
+  \end{equation}
+  then the sequence $\{A_i\}_{i=1}^{\infty}$ is said to be \textbf{mutually independent}. If for every pair $(A_i, A_j)$ with $i \neq j$,
+  \begin{equation}
+    P(A_i A_j) = P(A_i) P(A_j),
+  \end{equation}
+  then the sequence $\{A_i\}_{i=1}^{\infty}$ is said to be \textbf{pairwise independent}.
+\end{definition}
+some properties of independence:
+\begin{itemize}
+  \item If $A$ and $B$ are independent, then equivalent to $A$ and $B^c$ are independent, $A^c$ and $B$ are independent, $A^c$ and $B^c$ are independent. 
+  \item If $A$ and $B$ are independent with $P(B) > 0$, then $P(A|B) = P(A)$. and vice versa.
+    \item If $A_1, A_2, \ldots, A_n$ are mutually independent, then let $\tilde{A_i}$ be either $A_i$ or $A_i^c$, then we have
+      \begin{equation}
+        P(\tilde{A_1} \tilde{A_2} \cdots \tilde{A_n}) = P(\tilde{A_1}) P(\tilde{A_2}) \cdots P(\tilde{A_n}).
+      \end{equation}
+      Conversely, if the above holds for all choices of $\tilde{A_i}$, then $A_1, A_2, \ldots, A_n$ are mutually independent.
+      \begin{proof}
+        The converse can be proved by $A + \overline{A} = \Omega$
+      \end{proof}
+\end{itemize}
+
+\begin{proposition}{Pairwise and Mutual Independence}{Pairwise and Mutual Independence}
+  If $A_1, A_2, \ldots, A_n$ are mutually independent, then they are pairwise independent. However, the converse is not true in general.
+\end{proposition}
+
+
+\section{Random Variables}
+
+\subsection{Basic Definitions}
+
+\begin{definition}{Random Variable}{Random Variable}
+  A \textbf{random variable} is a measurable function $X: S \to \mathbb{R}$, where $(S, \mathcal{F}, P)$ is a probability space. This means that for every Borel set $B \subseteq \mathbb{R}$, the preimage $X^{-1}(B) = \{\omega \in S : X(\omega) \in B\}$ is an event in $\mathcal{F}$.  
+\end{definition}
+
+\begin{definition}{Distribution}{Distribution}
+  The \textbf{distribution} of a random variable $X$ is the probability measure $P_X$ on the Borel $\sigma$-algebra $\mathcal{B}(\mathbb{R})$ defined by
+  \begin{equation}
+    P_X(B) = P(X^{-1}(B)) = P(\{\omega \in S : X(\omega) \in B\}),
+  \end{equation}
+  for every Borel set $B \subseteq \mathbb{R}$.
+\end{definition}
+
+\subsubsection{Discrete Random Variables}
+A random variable $X$ is said to be \textbf{discrete} if its range is a countable set. Take $X( \Omega) = \left\{ x_1, \ldots ,x_n, \ldots  \right\}$. Define
+\begin{equation}
+  p_k = P(X = x_k) = P_X(\{x_k\}), \quad k = 1, 2, \ldots
+\end{equation}
+called the \textbf{probability mass function} (pmf) of $X$.
+
+\subsubsection{Continuous Random Variables}
+\begin{definition}{Distribution Function}{Distribution Function}
+  The \textbf{distribution function} (or cumulative distribution function, CDF) of a random variable $X$ is defined as
+  \begin{equation}
+    F_X(x) = P(X \leq x), \quad x \in \mathbb{R}.
+  \end{equation}
+\end{definition}
+properties of distribution function:
+\begin{itemize}
+  \item $F_X(x)$ is non-decreasing.
+  \item $F_X$ has only first-kind discontinuities.
+  \item $\forall x \in \mathbb{R}, 0 \leq F_X(x) \leq 1$. And $\lim_{x \to -\infty} F_X(x) = 0$, $\lim_{x \to \infty} F_X(x) = 1$.
+  \item $F$ is right-continuous, i.e., $\lim_{h \to 0^+} F_X(x+h) = F_X(x)$.
+    \begin{proof}
+      Let $A_n = \{X \leq x + \frac{1}{n}\}$. Then $A_1 \supseteq A_2 \supseteq A_3 \supseteq \cdots$ and $\bigcap_{n=1}^{\infty} A_n = \{X \leq x\}$. By the upper continuity of probability,
+      \begin{equation*}
+        \lim_{n \to \infty} P(A_n) = P\left(\bigcap_{n=1}^{\infty} A_n\right) = P(X \leq x) = F_X(x).
+      \end{equation*}
+      Thus, $\lim_{h \to 0^+} F_X(x+h) = F_X(x)$.
+    \end{proof}
+\end{itemize}
+
+\begin{definition}{Probability Density Function}{Probability Density Function}
+  A random variable $X$ is said to be \textbf{continuous} if there exists a non-negative function $f_X(x)$ such that for all $x \in \mathbb{R}$,
+  \begin{equation}
+    F_X(x) = \int_{-\infty}^{x} f_X(t) dt.
+  \end{equation}
+  The function $f_X(x)$ is called the \textbf{probability density function} (pdf) of $X$.
+\end{definition}
+properties of probability density function:
+\begin{itemize}
+  \item For a continuous random variable, $F_X(x)$ is absolutely continuous everywhere.
+  \item $f_X(x) \geq 0$ for all $x \in \mathbb{R}$.
+  \item $\int_{-\infty}^{\infty} f_X(x) dx = 1$.
+  \item For any $a < b$,
+    \begin{equation}
+      P(a < X \leq b) = \int_{a}^{b} f_X(x) dx.
+    \end{equation} 
+  \item If $f_X(x)$ is continuous at $x$, then
+    \begin{equation}
+      f_X(x) = F_X'(x).
+    \end{equation}
+    \begin{proof}
+      If $f_X(x)$ is continuous at $x$, then by the Fundamental Theorem of Calculus,
+      \begin{equation*}
+        F_X'(x) = \lim_{ \epsilon \to 0} \frac{F_X(x + \epsilon) - F_X(x)}{\epsilon} = \lim_{ \epsilon \to 0} \frac{\int_{x}^{x + \epsilon} f_X(t) dt}{\epsilon} = f_X(x).
+      \end{equation*}
+    \end{proof}
+  \item $\forall x \in \mathbb{R}, P(X = x) = 0$.
+    \begin{proof}
+      For any $x \in \mathbb{R}$,
+      \begin{equation*}
+        P(X = x) = P(x \leq X \leq x) = \int_{x}^{x} f_X(t) dt = 0.
+      \end{equation*}
+    \end{proof}
+\end{itemize}
+
+\begin{remark}
+  Note that the probability density function $f_X(x)$ is not unique, especially at points where $F_X(x)$ is not differentiable.
+\end{remark}
+
+
+\subsubsection{Multi-dimensional Random Variables}
+A multi-dimensional random variable (or random vector) is a measurable function $\mathbf{X} = (X_1, X_2, \ldots, X_n): S \to \mathbb{R}^n$, where $(S, \mathcal{F}, P)$ is a probability space. This means that for every Borel set $B \subseteq \mathbb{R}^n$, the preimage $\mathbf{X}^{-1}(B) = \{\omega \in S : \mathbf{X}(\omega) \in B\}$ is an event in $\mathcal{F}$.
+
+\begin{definition}{Joint Distribution Function}{Joint Distribution Function}
+  The \textbf{joint distribution function} of a random vector $\mathbf{X} = (X_1, X_2, \ldots, X_n)$ is defined as
+  \begin{equation}
+    F_{\mathbf{X}}(x_1, x_2, \ldots, x_n) = P(X_1 \leq x_1, X_2 \leq x_2, \ldots, X_n \leq x_n), \quad (x_1, x_2, \ldots, x_n) \in \mathbb{R}^n.
+  \end{equation}
+\end{definition}
+\begin{itemize}
+  \item $F_X(x_1, x_2, \ldots, x_n)$ is non-decreasing in each variable.
+  \item $\lim_{x_i \to -\infty} F_{\mathbf{X}}(x_1, x_2, \ldots, x_n) = 0$ for any $i$.
+  \item $F_X$ is right-continuous in each variable.
+\end{itemize}
+\begin{remark}
+  Note that These three properties are necessary but not sufficient for a function to be a joint distribution function. We need one more condition: For any $a_i < b_i$ ($i=1,2,\ldots,n$),
+  \begin{equation}
+    P(a_1 < X_1 \leq b_1, a_2 < X_2 \leq b_2, \ldots, a_n < X_n \leq b_n) \geq 0,
+  \end{equation}
+  For differentiable point, this is just
+  \begin{equation}
+    \frac{\partial^n F_{\mathbf{X}}(x_1, x_2, \ldots, x_n)}{\partial x_1 \partial x_2 \cdots \partial x_n} \geq 0.
+  \end{equation}
+\end{remark}
+
+Similarly, we have joint probability mass function and joint probability density function.
+
+\begin{example}{Multinomial Distribution}{Multinomial Distribution}
+  Perform $n$ independent trials, each with $k$ possible outcomes with probabilities $p_1, p_2, \ldots, p_k$, respectively. Let $X_i$ be the number of times the $i$-th outcome occurs in these $n$ trials. Then the random vector $\mathbf{X} = (X_1, X_2, \ldots, X_k)$ follows a multinomial distribution with parameters $n$ and $(p_1, p_2, \ldots, p_k)$, denoted by $\mathbf{X} \sim M(n; p_1, p_2, \ldots, p_k)$, and its joint probability mass function is given by
+  \begin{equation}
+    P(X_1 = x_1, X_2 = x_2, \ldots, X_k = x_k) = \frac{n!}{x_1! x_2! \cdots x_k!} p_1^{x_1} p_2^{x_2} \cdots p_k^{x_k},
+  \end{equation}
+  where $x_i \geq 0$ for all $i$ and $\sum_{i=1}^{k} x_i = n$.
+\end{example}
+
+For joint PDF, we have:
+\begin{definition}{Joint Probability Density Function}{Joint Probability Density Function}
+  A random vector $\mathbf{X} = (X_1, X_2, \ldots, X_n)$ is said to be \textbf{continuous} if there exists a non-negative function $f_{\mathbf{X}}(x_1, x_2, \ldots, x_n)$ such that for all $(x_1, x_2, \ldots, x_n) \in \mathbb{R}^n$,
+  \begin{equation}
+    F_{\mathbf{X}}(x_1, x_2, \ldots, x_n) = \int_{-\infty}^{x_1} \int_{-\infty}^{x_2} \cdots \int_{-\infty}^{x_n} f_{\mathbf{X}}(t_1, t_2, \ldots, t_n) dt_n \cdots dt_2 dt_1.
+  \end{equation}
+  The function $f_{\mathbf{X}}(x_1, x_2, \ldots, x_n)$ is called the \textbf{joint probability density function} of $\mathbf{X}$.
+\end{definition}
+with properties:
+\begin{itemize}
+  \item For a continuous random vector, $F_{\mathbf{X}}(x_1, x_2, \ldots, x_n)$ is absolutely continuous everywhere.
+  \item $f_{\mathbf{X}}(x_1, x_2, \ldots, x_n) \geq 0$ for all $(x_1, x_2, \ldots, x_n) \in \mathbb{R}^n$.
+  \item $\int_{-\infty}^{\infty} \cdots \int_{-\infty}^{\infty} f_{\mathbf{X}}(x_1, x_2, \ldots, x_n) dx_1 dx_2 \cdots dx_n = 1$.
+  \item For any $a_i < b_i$ ($i=1,2,\ldots,n$),
+    \begin{equation}
+      P(a_1 < X_1 \leq b_1, a_2 < X_2 \leq b_2, \ldots, a_n < X_n \leq b_n) = \int_{a_1}^{b_1} \int_{a_2}^{b_2} \cdots \int_{a_n}^{b_n} f_{\mathbf{X}}(x_1, x_2, \ldots, x_n) dx_n \cdots dx_2 dx_1.
+    \end{equation} 
+  \item If $f_{\mathbf{X}}(x_1, x_2, \ldots, x_n)$ is continuous at $(x_1, x_2, \ldots, x_n)$, then
+    \begin{equation}
+      f_{\mathbf{X}}(x_1, x_2, \ldots, x_n) = \frac{\partial^n F_{\mathbf{X}}(x_1, x_2, \ldots, x_n)}{\partial x_1 \partial x_2 \cdots \partial x_n}.
+    \end{equation}
+\end{itemize}
+
+
+
+\begin{definition}{Independent Random Variables}{Independent Random Variables}
+  Random variables $X_1, X_2, \ldots, X_n$ are said to be \textbf{independent} if for any Borel sets $B_1, B_2, \ldots, B_n \subseteq \mathbb{R}$,
+  \begin{equation}
+    P(X_1 \in B_1, X_2 \in B_2, \ldots, X_n \in B_n) = P(X_1 \in B_1) P(X_2 \in B_2) \cdots P(X_n \in B_n).
+  \end{equation}
+  Or from the joint distribution function,
+  \begin{equation}
+    F_{X_1, X_2, \ldots, X_n}(x_1, x_2, \ldots, x_n) = F_{X_1}(x_1) F_{X_2}(x_2) \cdots F_{X_n}(x_n).
+  \end{equation}
+\end{definition}
+
+\subsection{The Function of Random Variable}
+Take $g: \mathbb{R} \to \mathbb{R}$, then $Y = g(X)$ is also a random variable.
+
+If $X \sim f_X(x)$, and $Y = g(X)$, where $g$ is a measurable function, then the distribution of $Y$ is given by
+\begin{equation}
+  F_Y(y) = P(Y \leq y) = P(g(X) \leq y) = P(X \in g^{-1}((-\infty, y])) = \int_{g^{-1}((-\infty, y])} f_X(x) dx.
+\end{equation}
+If $g$ is strictly monotonic and its inverse is differentiable, then the probability density function of $Y$ is given by
+\begin{equation}
+  f_Y(y) = f_X(g^{-1}(y)) \left| \frac{d}{dy} g^{-1}(y) \right|.
+\end{equation}
+Specially, for a linear transformation $Y = aX + b$ with $a \neq 0$, we have
+\begin{equation}
+  f_Y(y) = \frac{1}{|a|} f_X\left(\frac{y - b}{a}\right).
+\end{equation}
+
+For functions of multi-dimensional random variables. Let $\boldsymbol{X} = (X_1, X_2, \ldots, X_n)$ be a random vector with joint probability density function $f_{\boldsymbol{X}}(x_1, x_2, \ldots, x_n)$, and let $Y = g(\boldsymbol{X})$ be a function of $\boldsymbol{X}$, where $g: \mathbb{R}^n \to \mathbb{R}^m$ is a measurable function.
+\begin{itemize}
+  \item If $g$ is invertible, then the joint probability density function of $Y$ is given by
+    \begin{equation}
+      f_Y(y_1, y_2, \ldots, y_m) = f_{\boldsymbol{X}}(g^{-1}(y_1, y_2, \ldots, y_m)) \left| \det\left(\frac{\partial g^{-1}}{\partial (y_1, y_2, \ldots, y_m)}\right) \right|.
+    \end{equation}
+  \item $g(X,Y) = X + Y$, then the probability density function of $Z = X + Y$ is given by
+    \begin{equation}
+      f_Z(z) = \int_{-\infty}^{\infty} f_{\boldsymbol{X}}(x, z - x) dx.
+    \end{equation}
+  \item If $X$ and $Y$ are independent, and $g(X,Y) = X / Y$, then the probability density function of $Z = X / Y$ is given by
+    \begin{equation}
+      f_Z(z) = \int_{-\infty}^{\infty} |y| f_X(zy) f_Y(y) dy.
+    \end{equation}
+    This is done by letting $Z = X / Y$ and $W = Y$, then the Jacobian determinant is $|y|$.
+  \item Maximum and Minimum:
+    If $X, Y$ are independent, and $X\sim F_X(x)$, $Y \sim F_Y(y)$, then
+    \begin{equation}
+      F_{max(X,Y)}(z) = P(X \leq z, Y \leq z) = F_X(z) F_Y(z),
+    \end{equation}
+    \begin{equation}
+      F_{min(X,Y)}(z) = 1 - P(X > z, Y > z) = 1 - (1 - F_X(z))(1 - F_Y(z)).
+    \end{equation}
+    This can be generalized to multiple variables. For $n$ independent variables $X_1, X_2, \ldots, X_n$, the $k$-th largest order statistic $X_{(k)}$ has distribution function
+    \begin{equation}
+      F_{X_{(k)}}(x) = P(X_{(k)} \leq x) = \sum_{j=k}^{n} \binom{n}{j} [F_X(x)]^j [1 - F_X(x)]^{n-j},
+    \end{equation}
+    using the addition rule.
+\end{itemize}
+
+\begin{remark}
+  For products, if it is nonnegative, we can try taking logarithm first.
+\end{remark}
+
+\subsection{Marginal and Conditional Distributions}
+\begin{definition}{Marginal Distribution}{Marginal Distribution}
+  The \textbf{marginal distribution} of a subset of random variables from a random vector $\mathbf{X} = (X_1, X_2, \ldots, X_n)$ is the distribution of that subset obtained by defining
+  \begin{equation}
+    P_M = P(\boldsymbol{X}^{-1}( \cdot \times \mathbb{R}^{n-k})),
+  \end{equation}
+\end{definition}
+We can obtain the marginal distribution from the joint distribution by integrating out the unwanted variables, or directly from the joint probability function
+\begin{equation}
+  F_{X_1, X_2, \ldots, X_k}(x_1, x_2, \ldots, x_k) = \lim_{x_{k+1} \to \infty} \cdots \lim_{x_n \to \infty} F_{\mathbf{X}}(x_1, x_2, \ldots, x_n).
+\end{equation}
+
+or from PDF:
+\begin{equation}
+  f_{X_1, X_2, \ldots, X_k}(x_1, x_2, \ldots, x_k) = \int_{-\infty}^{\infty} \cdots \int_{-\infty}^{\infty} f_{\mathbf{X}}(x_1, x_2, \ldots, x_n) dx_{k+1} \cdots dx_n.
+\end{equation}
+
+\begin{remark}
+  Note that knowing all the marginal distributions does not necessarily determine the joint distribution. For example, consider two random variables $X$ and $Y$ both following a standard normal distribution $N(0, 1)$. The joint distribution of $(X, Y)$ is not uniquely determined by their marginal distributions alone; it also depends on the correlation between $X$ and $Y$.
+
+  There are $2^n - 2$ marginal distributions for an $n$-dimensional random vector, but they do not uniquely determine the joint distribution.
+\end{remark}
+
+For conditional distribution, we have:
+\begin{definition}{Conditional Distribution}{Conditional Distribution}
+  The \textbf{conditional distribution} of a subset of random variables from a random vector $\mathbf{X} = (X_1, X_2, \ldots, X_n)$ given another subset is defined as
+  \begin{equation}
+    P_C(A | B) = \frac{P(A B)}{P(B)},
+  \end{equation}
+  where $A$ and $B$ are events defined in terms of the random variables.
+\end{definition}
+for discrete random variables, this is easy, but for continuous random variables, we must do a limiting process
+
+\begin{definition}{Conditional Probability Density Function}{Conditional Probability Density Function}
+  For continuous random variables, the \textbf{conditional probability density function} of $X$ given $Y = y$ is defined as
+  \begin{equation}
+    f_{X|Y}(x|y) = \frac{f_{X,Y}(x,y)}{f_Y(y)},
+  \end{equation}
+  provided that $f_Y(y) > 0$.
+\end{definition}
+
+\begin{itemize}
+  \item For any $y$ with $f_Y(y) > 0$,
+    \begin{equation}
+      \int_{-\infty}^{\infty} f_{X|Y}(x|y) dx = 1.
+    \end{equation}
+  \item For any $a < b$,
+    \begin{equation}
+      P(a < X \leq b | Y = y) = \int_{a}^{b} f_{X|Y}(x|y) dx.
+    \end{equation}
+  \item The Multiple Rule:
+    \begin{equation}
+      f_{X,Y}(x,y) = f_Y(y) f_{X|Y}(x|y) = f_X(x) f_{Y|X}(y|x).
+    \end{equation}
+  \item The Bayes' Theorem:
+    \begin{equation}
+      f_{Y|X}(y|x) = \frac{f_Y(y) f_{X|Y}(x|y)}{f_X(x)}.
+    \end{equation}
+\end{itemize}
+
+\subsection{Numerical Characteristics of Random Variables}
+\subsubsection{Basic Concepts}
+\begin{definition}{Expectation}{Expectation}
+  The \textbf{expectation} (or expected value, mean) of a random variable $X$ is defined as
+  \begin{equation}
+    E(X) = \int_{\Omega} X(\omega) \mathrm{d} P(\omega).
+  \end{equation}
+  provided that the integral converges absolutely.
+\end{definition}
+\begin{itemize}
+  \item If $X$ is discrete with probability mass function $p_k = P(X = x_k)$, then
+    \begin{equation}
+      E(X) = \sum_{k} x_k p_k,
+    \end{equation}
+    provided that the series converges absolutely.
+  \item If $X$ is continuous with probability density function $f_X(x)$, then
+    \begin{equation}
+      E(X) = \int_{-\infty}^{\infty} x f_X(x) dx,
+    \end{equation}
+  \item Linearity of Expectation: For any random variables $X$ and $Y$, and constants $a$ and $b$,
+    \begin{equation}
+      E(aX + bY) = aE(X) + bE(Y).
+    \end{equation}
+  \item If $X$ and $Y$ are independent, then
+    \begin{equation}
+      E(XY) = E(X) E(Y).
+    \end{equation}
+  \item Functions of Random Variables: For any function $g: \mathbb{R} \to \mathbb{R}$,
+    \begin{equation}
+      E(g(X)) = \int_{\Omega} g(X(\omega)) \mathrm{d} P(\omega).
+    \end{equation}
+    If $X$ is discrete with probability mass function $p_k = P(X = x_k)$, then
+    \begin{equation}
+      E(g(X)) = \sum_{k} g(x_k) p_k,
+    \end{equation}
+    provided that the series converges absolutely. If $X$ is continuous with probability density function $f_X(x)$, then
+    \begin{equation}
+      E(g(X)) = \int_{-\infty}^{\infty} g(x) f_X(x) dx,
+    \end{equation}
+    provided that the integral converges absolutely.
+  \item If $X \geq Y$ almost surely, then $E(X) \geq E(Y)$.
+\end{itemize}
+
+For conditional expectation, we have:
+\begin{definition}{Conditional Expectation}{Conditional Expectation}
+  The \textbf{conditional expectation} of a random variable $Y$ given another random variable $X = x$ is defined as
+  \begin{equation}
+    E(Y | X = x) = \int_{\Omega} Y(\omega) \mathrm{d} P_{Y|X}(\omega | X = x),
+  \end{equation}
+  provided that the integral converges absolutely.
+\end{definition}
+
+\begin{itemize}
+  \item If $X$ is continuous, then
+    \begin{equation}
+      E(Y | X = x) = \int_{-\infty}^{\infty} y f_{Y|X}(y|x) dy.
+    \end{equation}
+  \item The Law of Total Expectation:
+    \begin{equation}
+      E(E(Y | X)) = E(Y).
+    \end{equation}
+    \begin{proof}
+      If $X$ is continuous, then
+      \begin{equation*}
+        E(E(Y | X)) = \int_{-\infty}^{\infty} E(Y | X = x) f_X(x) dx = \int_{-\infty}^{\infty} \left( \int_{-\infty}^{\infty} y f_{Y|X}(y|x) dy \right) f_X(x) dx.
+      \end{equation*}
+      By Fubini's theorem, we can change the order of integration:
+      \begin{equation*}
+        E(E(Y | X)) = \int_{-\infty}^{\infty} y \left( \int_{-\infty}^{\infty} f_{Y|X}(y|x) f_X(x) dx \right) dy = \int_{-\infty}^{\infty} y f_Y(y) dy = E(Y).
+      \end{equation*}
+    \end{proof}
+\end{itemize}
+
+\paragraph{Medium and Mode}
+\begin{definition}{Median}{Median}
+  The \textbf{median} of a random variable $X$ is a value $m$ such that
+  \begin{equation}
+    P(X \leq m) \geq \frac{1}{2}, \quad P(X \geq m) \geq \frac{1}{2}.
+  \end{equation}
+  There is a direct generalization to $p$-th quantile, where $0 < p < 1$, defined as the value $q_p$ such that
+  \begin{equation}
+    P(X \leq q_p) \geq p, \quad P(X \geq q_p) \geq 1 - p.
+  \end{equation}
+\end{definition}
+
+\begin{definition}{Mode}{Mode}
+  The \textbf{mode} of a random variable $X$ is the value $x_0$ that maximizes the probability density function $f_X(x)$, i.e.,
+  \begin{equation}
+    f_X(x_0) = \max_{x \in \mathbb{R}} f_X(x).
+  \end{equation}
+\end{definition}
+
+Both median and mode may not be unique.
+
+
+\paragraph{Variance and Standard Deviation}
+The variance and standard deviation measure the spread or dispersion of a random variable around its mean.
+\begin{definition}{Variance}{Variance}
+  If a random variable $X$ has a finite expectation $E(X^2)$, then the \textbf{variance} of $X$ is defined as
+  \begin{equation}
+    Var(X) = E[(X - E(X))^2].
+  \end{equation}
+  The \textbf{standard deviation} of $X$ is defined as
+  \begin{equation}
+    \sigma_X = \sqrt{Var(X)}.
+  \end{equation}
+\end{definition}
+
+Properties of variance:
+\begin{itemize}
+  \item $Var(X) = E(X^2) - [E(X)]^2$, which implies $E(X^2) \geq [E(X)]^2$ (Jensen's inequality).
+  \item For any constant $c$, $Var(c) = 0$. $Var(cX) = c^2 Var(X)$. $Var(X + c) = Var(X)$.
+  \item If $X$ and $Y$ are independent, then $Var(X + Y) = Var(X) + Var(Y)$.
+  \item If $X_1, \ldots , X_n$ are i.i.d., then
+    \begin{equation}
+      Var\left(\frac{1}{n} \sum_{i=1}^{n} X_i\right) = \frac{Var(X_1)}{n}.
+    \end{equation}
+    In fact, we can loosen the condition to pairwise independence.
+\end{itemize}
+
+\paragraph{Moments}
+\begin{definition}{Moments}{Moments}
+  Let $X$ be a random variable with $E(|X|^n) < \infty$ for some positive integer $n$. The \textbf{$n$-th moment} of $X$ about $c$ is defined as
+  \begin{equation}
+    \mu_n(c) = E[(X - c)^n].
+  \end{equation}
+  The \textbf{$n$-th original moment} of $X$ is defined as $c=0$, denoted by $ \alpha_n = E(X^n)$, and the \textbf{$n$-th central moment} of $X$ is defined as $c = E(X)$, denoted by $\mu_n = E[(X - E(X))^n]$.
+\end{definition}
+
+The coefficient of skewness and kurtosis are defined as
+\begin{equation}
+  \beta_1 = \frac{\mu_3}{\mu_2^{3 / 2}}, \quad \beta_2 = \frac{\mu_4}{\mu_2^2}.
+\end{equation}
+
+The IQR (interquartile range) is defined as the difference between the third quartile $Q_3$ and the first quartile $Q_1$:
+\begin{equation}
+  IQR = Q_3 - Q_1.
+\end{equation}
+
+\begin{definition}{The Moment Generating Function}{The Moment Generating Function}
+  The \textbf{moment generating function} (MGF) of a random variable $X$ is defined as
+  \begin{equation}
+    M_X(t) = E(e^{tX}) = \sum_{k=0}^{\infty} \frac{t^k}{k!} E(X^k),
+  \end{equation}
+  provided that the expectation exists for $t$ in some neighborhood of $0$.
+\end{definition}
+we have
+\begin{equation}
+  E(X^n) = \frac{\mathrm{d}^n M_X(t)}{\mathrm{d} t^n} \Big|_{t=0}.
+\end{equation}
+
+For the moment generating function of a sum of independent random variables, we have
+\begin{proposition}{Moment Generating Function of Sum}{Moment Generating Function of Sum}
+  If $X_1, X_2, \ldots, X_n$ are independent random variables with moment generating functions $M_{X_i}(t)$, then the moment generating function of the sum $Y = X_1 + X_2 + \cdots + X_n$ is given by
+  \begin{equation}
+    M_Y(t) = M_{X_1}(t) M_{X_2}(t) \cdots M_{X_n}(t).
+  \end{equation}
+\end{proposition}
+For a scalar multiple, we have
+\begin{proposition}{Moment Generating Function of Scalar Multiple}{Moment Generating Function of Scalar Multiple}
+  If $X$ is a random variable with moment generating function $M_X(t)$, then the moment generating function of $Y = aX$ is given by
+  \begin{equation}
+    M_Y(t) = M_X(at).
+  \end{equation}
+\end{proposition}
+
+\paragraph{Covariance and Correlation}
+For any two random variables $X$ and $Y$ with finite expectations, we have
+\begin{equation}
+  Var(X + Y) = Var(X) + Var(Y) + 2E[(X - E(X))(Y - E(Y))].
+\end{equation}
+
+\begin{definition}{Covariance and Correlation}{Covariance and Correlation}
+  The \textbf{covariance} of two random variables $X$ and $Y$ is defined as
+  \begin{equation}
+    Cov(X, Y) = E[(X - E(X))(Y - E(Y))].
+  \end{equation}
+  The \textbf{correlation coefficient} of $X$ and $Y$ is defined as
+  \begin{equation}
+    \rho_{X,Y} = \frac{Cov(X, Y)}{\sigma_X \sigma_Y},
+  \end{equation}
+  where $\sigma_X$ and $\sigma_Y$ are the standard deviations of $X$ and $Y$, respectively.
+
+  We say that $X,Y$ are not correlated if $Cov(X, Y) = 0$.
+\end{definition}
+Some properties:
+\begin{itemize}
+  \item Symmetry: $Cov(X, Y) = Cov(Y, X)$.
+  \item $Cov(X, X) = Var(X)$.
+  \item Linearity: For any constants $a, b, c, d$,
+    \begin{equation}
+      Cov(aX + b, cY + d) = ac Cov(X, Y).
+    \end{equation}
+  \item Additivity: For any random variables $X_1, X_2, Y$,
+    \begin{equation}
+      Cov(X_1 + X_2, Y) = Cov(X_1, Y) + Cov(X_2, Y).
+    \end{equation}
+  \item Expression in terms of expectations:
+    \begin{equation}
+      Cov(X, Y) = E(XY) - E(X) E(Y).
+    \end{equation}
+  \item Matrix form: For random variables $X_1, X_2, \ldots, X_n$, the covariance matrix $\Sigma$ is defined as
+    \begin{equation}
+      \Sigma_{ij} = Cov(X_i, X_j).
+    \end{equation}
+    The covariance matrix is symmetric and positive semi-definite. It defines an inner product on the space of random variables.
+  \item If $X,Y$ are independent, then $Cov(X, Y) = 0$. The converse is not necessarily true.
+\end{itemize}
+
+\paragraph{Entropy}
+Entropy measures the uncertainty or randomness of a random variable.
+\begin{definition}{Entropy}{Entropy}
+  The \textbf{entropy} of a discrete random variable $X$ with probability mass function $p(x)$ is defined as
+  \begin{equation}
+    H(X) = - \sum_{x} p(x) \log_2 p(x),
+  \end{equation}
+  where the sum is over all possible values of $X$.
+
+  The \textbf{differential entropy} of a continuous random variable $X$ with probability density function $f(x)$ is defined as
+  \begin{equation}
+    H(X) = - \int_{-\infty}^{\infty} f(x) \ln f(x) dx.
+  \end{equation}
+\end{definition}
+
+\subsection{Some Theorems about Random Variables}
+Here are some important inequalities related to random variables:
+
+\begin{theorem}{Markov's Inequality}{Markov's Inequality}
+  For a non-negative random variable $X$ and any $a > 0$,
+  \begin{equation}
+    P(X \geq a) \leq \frac{E(X)}{a}.
+  \end{equation}
+\end{theorem}
+\begin{proof}
+  Since $X$ is non-negative, we have
+  \begin{equation*}
+    E(X) = \int_{\Omega} X(\omega) \mathrm{d} P(\omega) \geq \int_{\{\omega : X(\omega) \geq a\}} X(\omega) \mathrm{d} P(\omega) \geq \int_{\{\omega : X(\omega) \geq a\}} a \mathrm{d} P(\omega) = a P(X \geq a).
+  \end{equation*}
+  Dividing both sides by $a$ gives the desired inequality.
+\end{proof}
+
+\begin{theorem}{Cheyshev's Inequality}{Chebyshev's Inequality}
+  For any random variable $X$ with finite mean $\mu = E(X)$ and finite variance $\sigma^2 = Var(X)$, and for any $k > 0$,
+  \begin{equation}
+    P(|X - \mu| \geq k) \leq \frac{\sigma^2}{k^2}.
+  \end{equation}
+\end{theorem}
+\begin{proof}
+  Let $Y = (X - \mu)^2$, which is a non-negative random variable. Applying Markov's inequality to $Y$, we have
+  \begin{equation*}
+    P(Y \geq k^2) \leq \frac{E(Y)}{k^2} = \frac{Var(X)}{k^2} = \frac{\sigma^2}{k^2}.
+  \end{equation*}
+  Note that $P(Y \geq k^2) = P(|X - \mu| \geq k)$. Thus, we obtain the desired inequality.
+\end{proof}
+
+\begin{theorem}{Moment Generating Function Uniqueness Theorem}{Moment Generating Function Uniqueness Theorem}
+  If two random variables have the same moment generating function in a neighborhood of $0$, then they have the same distribution.  
+\end{theorem}
+Some properties:
+\begin{itemize}
+  \item If $X$ and $Y$ are independent, then
+    \begin{equation}
+      M_{X+Y}(t) = M_X(t) M_Y(t).
+    \end{equation}
+    \begin{proof}
+      By definition,
+      \begin{equation*}
+        M_{X+Y}(t) = E(e^{t(X+Y)}) = E(e^{tX} e^{tY}).
+      \end{equation*}
+      Since $X$ and $Y$ are independent, we have
+      \begin{equation*}
+        E(e^{tX} e^{tY}) = E(e^{tX}) E(e^{tY}) = M_X(t) M_Y(t).
+      \end{equation*}
+      Thus, we obtain the desired result.
+    \end{proof}
+\end{itemize}
+
+\begin{theorem}{Cauchy-Schwarz Inequality}{Cauchy-Schwarz Inequality}
+  For any random variables $X$ and $Y$ with finite second moments,
+  \begin{equation}
+    Cov(X, Y)^2 \leq Var(X) Var(Y).
+  \end{equation}
+  The equality holds if and only if there exist constants $c_1,c_2,c_3$, not all zero, such that $c_1 X + c_2 Y + c_3 = 0$ almost surely.
+\end{theorem}
+
+\begin{definition}{Weak and Strong Convergence}{Weak and Strong Convergence}
+  A sequence of random variables $\{X_n\}$ is said to converge \textbf{in distribution} (or \textbf{weakly}) to a random variable $X$, denoted by $X_n \xrightarrow{L} X$, if for all points $x$ at which the cumulative distribution function $F_X(x)$ is continuous,
+  \begin{equation}
+    \lim_{n \to \infty} F_{X_n}(x) = F_X(x).
+  \end{equation}
+
+  A sequence of random variables $\{X_n\}$ is said to converge \textbf{almost surely} (or \textbf{strongly}) to a random variable $X$, denoted by $X_n \xrightarrow{P} X$, if
+  \begin{equation}
+    \forall \epsilon > 0, \quad \lim_{n \to \infty} P(|X_n - X| \geq \epsilon) = 0.
+  \end{equation}
+\end{definition}
+
+Some properties:
+\begin{itemize}
+  \item If $X_n \xrightarrow{P} X$, then $X_n \xrightarrow{L} X$.
+  \item If $X_n \xrightarrow{L} c$ where $c$ is a constant, then $X_n \xrightarrow{P} c$.
+\end{itemize}
+
+\begin{theorem}{Slutsky's Theorem}{Slutsky's Theorem}
+  If $X_n \xrightarrow{L} X$ and $Y_n \xrightarrow{P} c$, where $c$ is a constant, then
+  \begin{equation}
+    X_n + Y_n \xrightarrow{L} X + c,
+  \end{equation}
+  \begin{equation}
+    X_n Y_n \xrightarrow{L} cX,
+  \end{equation}
+  and if $c \neq 0$,
+  \begin{equation}
+    \frac{X_n}{Y_n} \xrightarrow{L} \frac{X}{c}.
+  \end{equation}
+\end{theorem}
+
+\begin{theorem}{Large Number Law}{Large Number Law}
+  Let $\{X_n\}$ be a sequence of i.i.d. random variables with finite mean $\mu = E(X_1)$. Then the sample average $\overline{X}_n = \frac{1}{n} \sum_{i=1}^{n} X_i$ converges almost surely to $\mu$, i.e.,
+  \begin{equation}
+    \overline{X}_n \xrightarrow{P} \mu.
+  \end{equation}
+\end{theorem}
+\begin{proof}
+  If $ \sigma$ is finite, then use Chebyshev inequality.
+\end{proof}
+
+\begin{theorem}{Central Limit Theorem}{Central Limit Theorem}
+  Let $\{X_n\}$ be a sequence of i.i.d. random variables with finite mean $\mu = E(X_1)$ and finite variance $\sigma^2 = Var(X_1)$. Then the standardized sample average
+  \begin{equation}
+    Z_n = \frac{\sqrt{n} (\overline{X}_n - \mu)}{\sigma}
+  \end{equation}
+  converges in distribution to a standard normal random variable $N(0, 1)$, i.e.,
+  \begin{equation}
+    Z_n \xrightarrow{L} N(0, 1).
+  \end{equation}
+\end{theorem}
+
+\subsection{Some Typical Distributions}
+
+\subsubsection{Discrete Distributions}
+
+\paragraph{The 0-1 Distribution}
+  \begin{equation}
+    X = 0,1, \quad P(X=1) = p, \quad P(X=0) = 1-p.
+  \end{equation}
+
+  \begin{itemize}
+    \item $E(X) = p$,
+    \item $Var(X) = p(1-p)$.
+  \end{itemize}
+
+\paragraph{The Uniform Distribution}
+  \begin{equation}
+    X = x_1, x_2, \ldots, x_n, \quad P(X=x_i) = \frac{1}{n}, \quad i=1,2,\ldots,n.
+  \end{equation}
+\begin{itemize}
+  \item $E(X) = \frac{1}{n} \sum_{i=1}^{n} x_i$,
+  \item $Var(X) = \frac{1}{n} \sum_{i=1}^{n} x_i^2 - \left(\frac{1}{n} \sum_{i=1}^{n} x_i\right)^2$.
+\end{itemize}
+  
+\paragraph{The Binomial Distribution: $B(n, p)$} 
+Perform $n$ independent Bernoulli trials, each with success probability $p$. Let $X$ be the number of successes in these $n$ trials. Then $X$ follows a binomial distribution with parameters $n$ and $p$, denoted by $X \sim B(n, p)$, and its probability mass function is given by
+  \begin{equation}
+    P(X=k) = \binom{n}{k} p^k (1-p)^{n-k}, \quad k=0,1,\ldots,n.
+  \end{equation}
+\begin{itemize}
+  \item $E(X) = np$,
+  \item $Var(X) = np(1-p)$.
+\end{itemize}
+\begin{proof}
+  Let $X_i$ be the indicator random variable for the $i$-th trial, i.e., $X_i = 1$ if the $i$-th trial is a success, and $X_i = 0$ otherwise. Then we have
+  \begin{equation*}
+    X = \sum_{i=1}^{n} X_i.
+  \end{equation*}
+  Since $X_i$ are i.i.d. with $E(X_i) = p$ and $Var(X_i) = p(1-p)$, by the linearity of expectation and the additivity of variance for independent random variables, we have
+  \begin{equation*}
+    E(X) = E\left(\sum_{i=1}^{n} X_i\right) = \sum_{i=1}^{n} E(X_i) = np,
+  \end{equation*}
+  and
+  \begin{equation*}
+    Var(X) = Var\left(\sum_{i=1}^{n} X_i\right) = \sum_{i=1}^{n} Var(X_i) = np(1-p).
+  \end{equation*}
+\end{proof}
+
+\paragraph{Negative Binomial Distribution: $NB(r, p)$} Perform independent Bernoulli trials, each with success probability $p$, until the $r$-th success occurs. Let $X$ be the number of experiments done at the $r$-th success. Then $X$ follows a negative binomial distribution with parameters $r$ and $p$, denoted by $X \sim NB(r, p)$, and its probability mass function is given by
+  \begin{equation}
+    P(X=k) = \binom{k-1}{r-1} p^r (1-p)^{k-r}, \quad k=r, r+1, \ldots
+  \end{equation}
+\begin{itemize}
+  \item $E(X) = \frac{r}{p}$,
+  \item $Var(X) = \frac{r(1-p)}{p^2}$.
+\end{itemize}
+\begin{proof}
+  Let $X_i$ be the number of trials needed to get the $i$-th success after the $(i-1)$-th success. Then we have
+  \begin{equation*}
+    X = \sum_{i=1}^{r} X_i.
+  \end{equation*}
+  Each $X_i$ follows a geometric distribution with parameter $p$, i.e., $X_i \sim Ge(p)$. Thus, we have $E(X_i) = \frac{1}{p}$ and $Var(X_i) = \frac{1-p}{p^2}$. By the linearity of expectation and the additivity of variance for independent random variables, we have
+  \begin{equation*}
+    E(X) = E\left(\sum_{i=1}^{r} X_i\right) = \sum_{i=1}^{r} E(X_i) = \frac{r}{p},
+  \end{equation*}
+  and
+  \begin{equation*}
+    Var(X) = Var\left(\sum_{i=1}^{r} X_i\right) = \sum_{i=1}^{r} Var(X_i) = \frac{r(1-p)}{p^2}.
+  \end{equation*}
+  We can also directly derive the expectation using the combinatorial equality:
+  \begin{equation}
+    \frac{1}{(1-x)^r} = \sum_{k=0}^{\infty} \binom{k + r - 1}{r - 1} x^k.
+  \end{equation}
+  From Taylor expansion.
+\end{proof}
+
+\paragraph{Geometric Distribution: $Ge(p)$} This is a special case of the negative binomial distribution with $r=1$. The probability mass function is given by
+  \begin{equation}
+    P(X=k) = p (1-p)^{k-1}, \quad k=1, 2, \ldots
+  \end{equation}
+\begin{itemize}
+  \item $E(X) = \frac{1}{p}$,
+  \item $Var(X) = \frac{1-p}{p^2}$.
+\end{itemize}
+  If $X \sim Ge(p)$, then we have
+  \begin{equation}
+    P(X > m + n | X > m) = P(X > n).
+  \end{equation}
+  called the \textbf{memoryless property} of the geometric distribution.
+
+\paragraph{Poisson Distribution: $P(\lambda)$} If the probability of an event occurring in a small interval of time is proportional to the length of the interval, and the occurrences in disjoint intervals are independent, then the number of occurrences in a fixed interval of time follows a Poisson distribution with parameter $\lambda$, where $\lambda$ is the average number of occurrences in that interval. The probability mass function is given by
+  \begin{equation}
+    P(X=k) = \frac{\lambda^k}{k!} e^{-\lambda}, \quad k=0,1,2,\ldots
+  \end{equation}
+
+  \begin{itemize}
+    \item $E(X) = \lambda$,
+    \item $Var(X) = \lambda$.
+  \end{itemize}
+
+  If $X_n \sim B(n, p_n)$ and $np_n = \lambda$, then for any fixed $k$,
+  \begin{equation}
+    \lim_{n \to \infty} P(X_n = k) = \frac{\lambda^k}{k!} e^{-\lambda}.
+  \end{equation}
+  This is called the \textbf{Poisson approximation to the binomial distribution}. We can use this when $n \geq 30, np_n \leq 5$.
+
+  Similarly, if $X_n \sim NB(r, p_n)$ and $r(1-p_n) = \lambda$, then for any fixed $k$,
+  \begin{equation}
+    \lim_{r \to \infty} P(X_n = r + k) = \frac{\lambda^k}{k!} e^{-\lambda}.
+  \end{equation}
+  This is also called the \textbf{Poisson approximation to the negative binomial distribution}.
+
+\paragraph{The Hypergeometric Distribution: $H(N, M, n)$} From a population of size $N$ containing $M$ successes and $N-M$ failures, we draw a sample of size $n$ without replacement. Let $X$ be the number of successes in the sample. Then $X$ follows a hypergeometric distribution with parameters $N$, $M$, and $n$, denoted by $X \sim H(N, M, n)$, and its probability mass function is given by
+  \begin{equation}
+    P(X=k) = \frac{\binom{M}{k} \binom{N-M}{n-k}}{\binom{N}{n}}, \quad \max(0, n-(N-M)) \leq k \leq \min(n, M).
+  \end{equation}
+\begin{itemize}
+  \item $E(X) = n \frac{M}{N}$,
+  \item $Var(X) = n \frac{M}{N} \frac{N-M}{N} \frac{N-n}{N-1}$.
+\end{itemize}
+
+\subsubsection{Continuous Distributions}
+
+\paragraph{Uniform Distribution: $U(a, b)$}
+The probability density function is given by
+\begin{equation}
+  f_X(x) = \begin{cases}
+  \frac{1}{b-a}, & a < x < b, \\
+  0, & \text{otherwise}.
+  \end{cases} = \frac{1}{b-a} I_{(a,b]}(x).
+\end{equation}
+\begin{itemize}
+  \item $E(X) = \frac{a+b}{2}$,
+  \item $Var(X) = \frac{(b-a)^2}{12}$.
+\end{itemize}
+
+\paragraph{Exponential Distribution: $Exp(\lambda)$}
+
+The probability density function is given by
+\begin{equation}
+  f_X(x) = \begin{cases}
+    \lambda e^{-\lambda x}, & x > 0, \\
+    0, & \text{otherwise}.
+  \end{cases} = \lambda e^{-\lambda x} I_{(0, \infty)}(x).
+\end{equation}
+\begin{equation}
+  F_X(x) = \begin{cases}
+    1 - e^{-\lambda x}, & x \geq 0, \\
+    0, & x < 0.
+  \end{cases}
+\end{equation}
+
+\begin{itemize}
+  \item $E(X) = \frac{1}{\lambda}$,
+  \item $Var(X) = \frac{1}{\lambda^2}$.
+  \item The Moment Generating Function is given by
+    \begin{equation}
+      M_X(t) = \frac{\lambda}{\lambda - t}, \quad t < \lambda.
+    \end{equation}
+\end{itemize}
+
+If $X \sim Exp(\lambda)$, then we have
+\begin{equation}
+  P(X > s + t | X > s) = P(X > t).
+\end{equation}
+called the \textbf{memoryless property} of the exponential distribution. Conversely, if a continuous non-negative random variable $X$ satisfies the above property, then $X$ follows an exponential distribution.
+\begin{proof}
+  Let $G(x) = P(X > x)$. Then the memoryless property can be written as
+  \begin{equation*}
+    G(s + t) = G(s) G(t).
+  \end{equation*}
+  Setting $s = 0$, we have $G(0) = 1$. Thus, for any positive integer $n$,
+  \begin{equation*}
+    G(nt) = G(t)^n.
+  \end{equation*}
+  For any rational number $r = \frac{m}{n} > 0$,
+  \begin{equation*}
+    G(r t) = G\left(\frac{m}{n} t\right) = G\left(\frac{t}{n}\right)^m = G(t)^{\frac{m}{n}} = G(t)^r.
+  \end{equation*}
+  By the continuity of $G(x)$, for any real number $x > 0$, we have
+  \begin{equation*}
+    G(x) = e^{-\lambda x},
+  \end{equation*}
+  where $\lambda = -\ln(G(1)) > 0$. Therefore,
+  \begin{equation*}
+    P(X > x) = G(x) = e^{-\lambda x}, \quad x > 0,
+  \end{equation*}
+  which implies that $X$ follows an exponential distribution with parameter $\lambda$.
+\end{proof}
+
+If $X_n \sim Ge(p_n)$ and $\lim_{n \to \infty} n p_n = \lambda$, then for any fixed $x > 0$,
+\begin{equation}
+  \lim_{n \to \infty} P\left(\frac{X_n}{n} \leq x\right) = 1 - e^{-\lambda x}.
+\end{equation}
+This shows that the exponential distribution can be used as an approximation to the geometric distribution when $n$ is large and $p_n$ is small.
+
+\begin{proposition}{Addition of Exponential Distribution}{Addition of Exponential Distribution}
+  If $X_1, X_2, \ldots, X_n$ are independent random variables, each following an exponential distribution with parameter $\lambda$, then the sum $Y = X_1 + X_2 + \cdots + X_n$ follows a gamma distribution with parameters $n$ and $\lambda$, denoted by $Y \sim \Gamma(n, \lambda)$, and its probability density function is given by
+  \begin{equation}
+    f_Y(y) = \frac{\lambda^n y^{n-1} e^{-\lambda y}}{(n-1)!}, \quad y > 0.
+  \end{equation}
+\end{proposition}
+\begin{proposition}{Subtraction of Exponential Distribution}{Subtraction of Exponential Distribution}
+  If $X_1$ and $X_2$ are independent random variables, each following an exponential distribution with parameter $\lambda$, then the difference $Y = X_1 - X_2$ has the probability density function
+  \begin{equation}
+    f_Y(y) = \frac{\lambda}{2} e^{-\lambda |y|}, \quad y \in \mathbb{R}.
+  \end{equation}  
+  called the \textbf{Laplace distribution} with parameters $0$ and $\frac{1}{\lambda}$.
+\end{proposition}
+
+\paragraph{Normal Distribution: $N(\mu, \sigma^2)$} The probability density function is given by
+\begin{equation}
+  f_X(x) = \frac{1}{\sqrt{2 \pi} \sigma} e^{-\frac{(x - \mu)^2}{2 \sigma^2}}, \quad x \in \mathbb{R}.
+\end{equation}
+\begin{itemize}
+  \item $E(X) = \mu$,
+  \item $Var(X) = \sigma^2$.
+  \item $ \beta_1 = 0$, $\beta_2 = 3$.
+  \item The moment generating function is given by
+    \begin{equation}
+      M_X(t) = e^{\mu t + \frac{1}{2} \sigma^2 t^2}.
+    \end{equation}
+\end{itemize}
+The standard normal distribution is a special case of the normal distribution with $\mu = 0$ and $\sigma^2 = 1$, denoted by $N(0, 1)$.
+
+The probability function of the standard normal distribution is denoted by $\Phi(x)$, i.e.,
+\begin{equation}
+  \Phi(x) = P(Z \leq x) = \int_{-\infty}^{x} \frac{1}{\sqrt{2 \pi}} e^{-\frac {t^2}{2}} dt,
+\end{equation}
+Then for any normal random variable $X \sim N(\mu, \sigma^2)$, the distribution function can be expressed as
+\begin{equation}
+  F_X(x) = \Phi\left(\frac{x - \mu}{\sigma}\right).
+\end{equation}
+
+Also, if $X_1, \ldots , X_n \sim N(\mu, \sigma^2)$ are independent, then
+\begin{equation}
+  \overline{X} = \frac{1}{n} \sum_{i=1}^{n} X_i \sim N\left(\mu, \frac{\sigma^2}{n}\right).
+\end{equation}
+
+\begin{proposition}{Quotient of Normal Distributions}{Quotient of Normal Distributions}
+  If $X_1$ and $X_2$ are independent random variables, following the same normal distribution $N(0, \sigma^2)$, then the quotient $Y = X_1 / X_2$ has the probability density function
+  \begin{equation}
+    f_Y(y) = \frac{1}{\pi (1 + y^2)}, \quad y \in \mathbb{R}.
+  \end{equation}  
+  This is called the \textbf{Cauchy distribution} with parameters $0$ and $1$.
+\end{proposition}
+
+We can extend it to multivariable case: Given by
+\begin{equation}
+  f_{\mathbf{X}}(\mathbf{x}) = \frac{1}{(2 \pi)^{n/2} |\Sigma|^{1/2}} e^{-\frac{1}{2} (\mathbf{x} - \mu)^T \Sigma^{-1} (\mathbf{x} - \mu)}, \quad \mathbf{x} \in \mathbb{R}^n,
+\end{equation}
+where $\mu$ is the mean vector and $\Sigma$ is the covariance matrix.
+\begin{itemize}
+  \item $E(\mathbf{X}) = \mu$,
+  \item $Cov(\mathbf{X}) = \Sigma$.
+\end{itemize}
+For two variables case, we have
+\begin{equation}
+  \Sigma = \begin{pmatrix}
+    \sigma_1^2 & \rho \sigma_1 \sigma_2 \\
+    \rho \sigma_1 \sigma_2 & \sigma_2^2
+  \end{pmatrix},
+\end{equation}
+where $\rho$ is the correlation coefficient between $X_1$ and $X_2$. So
+\begin{equation}
+  f_{X_1, X_2}(x_1, x_2) = \frac{1}{2 \pi \sigma_1 \sigma_2 \sqrt{1 - \rho^2}} e^{-\frac{1}{2(1 - \rho^2)} \left[\frac{(x_1 - \mu_1)^2}{\sigma_1^2} - \frac{2 \rho (x_1 - \mu_1)(x_2 - \mu_2)}{\sigma_1 \sigma_2} + \frac{(x_2 - \mu_2)^2}{\sigma_2^2}\right]}, \quad x_1, x_2 \in \mathbb{R}.
+\end{equation}
+
+\begin{proposition}{Independence of Normal Distribution}{Independence of Normal Distribution}
+  If $\boldsymbol{X} = (X_1, X_2, \ldots, X_n)^T$ follows a multivariate normal distribution with mean vector $\mu$ and covariance matrix $\Sigma$, i.e., $\boldsymbol{X} \sim N(\mu, \Sigma)$, then the components $X_1, X_2, \ldots, X_n$ are independent if and only if the covariance matrix $\Sigma$ is a diagonal matrix.
+\end{proposition}
+
+\begin{remark}
+  This is not true for general random variables. That is, if the covariance between two random variables is zero, they are not necessarily independent. However, for normal distributions, uncorrelatedness implies independence.
+\end{remark}
+
+\paragraph{Log-Normal Distribution: $LN(\mu, \sigma^2)$} If $Y$ follows a normal distribution with parameters $\mu$ and $\sigma^2$, i.e., $Y \sim N(\mu, \sigma^2)$, and $X = e^Y$, then $X$ is said to follow a log-normal distribution with parameters $\mu$ and $\sigma^2$, denoted by $X \sim LN(\mu, \sigma^2)$. The probability density function is given by
+\begin{equation}
+  f_X(x) = \begin{cases}
+    \displaystyle \frac{1}{x \sigma \sqrt{2 \pi}} e^{-\frac{(\ln x - \mu)^2}{2 \sigma^2}}, & x > 0, \\
+    0, & \text{otherwise}.
+  \end{cases}
+\end{equation}
+\begin{itemize}
+  \item $E(X) = e^{\mu + \frac{\sigma^2}{2}}$,
+  \item $Var(X) = (e^{\sigma^2} - 1) e^{2\mu + \sigma^2}$.
+\end{itemize}
+
+\paragraph{Gamma Distribution: $\Gamma(\alpha, \lambda)$} The probability density function is given by
+\begin{equation}
+  f_X(x) = \begin{cases}
+    \displaystyle \frac{\lambda^{\alpha} x^{\alpha - 1} e^{-\lambda x}}{\Gamma(\alpha)}, & x > 0, \\
+    0, & \text{otherwise},
+  \end{cases}
+\end{equation}
+\begin{itemize}
+  \item $E(X) = \frac{\alpha}{\lambda}$,
+  \item $Var(X) = \frac{\alpha}{\lambda^2}$.
+\end{itemize}
+where $\Gamma(\alpha)$ is the gamma function defined by
+\begin{equation}
+  \Gamma(\alpha) = \int_{0}^{\infty} t^{\alpha - 1} e^{-t} dt.
+\end{equation}
+
+\paragraph{Beta Distribution: $B(\alpha, \beta)$} The probability density function is given by
+\begin{equation}
+  f_X(x) = \begin{cases}
+    \displaystyle \frac{x^{\alpha - 1} (1 - x)^{\beta - 1}}{B(\alpha, \beta)}, & 0 < x < 1, \\
+    0, & \text{otherwise},
+  \end{cases}
+\end{equation}
+\begin{itemize}
+  \item $E(X) = \frac{\alpha}{\alpha + \beta}$,
+  \item $Var(X) = \frac{\alpha \beta}{(\alpha + \beta)^2 (\alpha + \beta + 1)}$.
+\end{itemize}
+where $B(\alpha, \beta)$ is the beta function defined by
+\begin{equation}
+  B(\alpha, \beta) = \int_{0}^{1} t^{\alpha - 1} (1 - t)^{\beta - 1} dt.
+\end{equation}
+
+\paragraph{Cauchy Distribution: $C(a, b)$} The probability density function is given by
+\begin{equation}
+  f_X(x) = \frac{1}{\pi b \left[1 + \left(\frac{x - a}{b}\right)^2\right]}, \quad x \in \mathbb{R}.
+\end{equation}
+\begin{itemize}
+  \item The Cauchy distribution does not have a defined mean or variance.
+\end{itemize}
+
+\paragraph{Laplace Distribution: $La(a, b)$} The probability density function is given by
+\begin{equation}
+  f_X(x) = \frac{1}{2b} e^{-\frac{|x - a|}{b}}, \quad x \in \mathbb{R}.
+\end{equation}
+\begin{itemize}
+  \item $E(X) = a$,
+  \item $Var(X) = 2b^2$.
+\end{itemize}
+
+\subsubsection{The Chi-Square, t, and F Distributions}
+\paragraph{Chi-Square Distribution: $\chi^2(n)$} If $X_1, X_2, \ldots, X_n$ are independent standard normal random variables, i.e., $X_i \sim N(0, 1)$ for $i=1,2,\ldots,n$, then the sum of their squares
+\begin{equation}
+  Y = \sum_{i=1}^{n} X_i^2
+\end{equation}
+follows a chi-square distribution with $n$ degrees of freedom, denoted by $Y \sim \chi^2(n)$. The probability density function is given by
+\begin{equation}
+  f_Y(y) = \frac{1}{2^{n/2} \Gamma(n/2)} y^{\frac{n}{2} - 1} e^{-\frac{y}{2}}, \quad y > 0.
+\end{equation}
+
+\begin{itemize}
+  \item $E(Y) = n$,
+  \item $Var(Y) = 2n$.
+  \item If $Y_1 \sim \chi^2(n_1)$ and $Y_2 \sim \chi^2(n_2)$ are independent, then $Y_1 + Y_2 \sim \chi^2(n_1 + n_2)$.
+  \item Relation with Gamma distribution: If $Y \sim \chi^2(n)$, then $Y \sim \Gamma\left(\frac{n}{2}, \frac{1}{2}\right)$.
+  \item If $Y \sim \Gamma\left( \alpha, \lambda \right)$, then $2 \lambda Y \sim \chi^2(2\alpha)$.
+\end{itemize}
+
+\paragraph{t Distribution: $t(n)$} If $X \sim N(0, 1)$ and $Y \sim \chi^2(n)$ are independent, then the ratio
+\begin{equation}
+  T = \frac{X}{\sqrt{Y/n}}
+\end{equation}
+follows a t distribution with $n$ degrees of freedom, denoted by $T \sim t(n)$. The probability density function is given by
+\begin{equation}
+  f_T(t) = \frac{\Gamma\left(\frac{n+1}{2}\right)}{\sqrt{n \pi} \Gamma\left(\frac{n}{2}\right)} \left(1 + \frac{t^2}{n}\right)^{-\frac{n+1}{2}}, \quad t \in \mathbb{R}.
+\end{equation}
+
+\begin{itemize}
+  \item When $n=1$, $t$ distribution reduces to the Cauchy distribution.
+  \item When $n \geq 2$, $E(T) = 0$.
+  \item When $n \geq 3$, $Var(T) = \frac{n}{n-2}$.
+  \item As $n \to \infty$, the t distribution converges to the standard normal distribution.
+\end{itemize}
+
+\paragraph{F Distribution: $F(m, n)$} If $X \sim \chi^2(m)$ and $Y \sim \chi^2(n)$ are independent, then the ratio
+\begin{equation}
+  F = \frac{X/m}{Y/n}
+\end{equation}
+follows an F distribution with $m$ and $n$ degrees of freedom, denoted by $F \sim F(m, n)$. The probability density function is given by
+\begin{equation}
+  f_{m,n}(x) = \frac{\Gamma\left(\frac{m+n}{2}\right)}{\Gamma\left(\frac{m}{2}\right) \Gamma\left(\frac{n}{2}\right)} m^{\frac{m}{2}} n^{\frac{n}{2}} \frac{x^{\frac{m}{2} - 1}}{(n + m x)^{\frac{m+n}{2}}}, \quad x > 0.
+\end{equation}
+
+\begin{itemize}
+  \item If $Z \sim F(m, n)$, then $\frac{1}{Z} \sim F(n, m)$.
+  \item If $T \sim t(n)$, then $T^2 \sim F(1, n)$.
+  \item $F(m,n)( \alpha)$ is the $\alpha$ quantile of the $F(m,n)$ distribution, then
+    \begin{equation}
+      F(m,n)(1 - \alpha) = \frac{1}{F(n,m)(\alpha)}.
+    \end{equation}
+\end{itemize}
+
+
+\section{Basic Statistics}
+
+\subsection{Concepts of Statistics}
+
+\begin{definition}{Statistic}{Statistic}
+  A \textbf{statistic} is a function of the sample data that does not depend on any unknown parameters. Formally, if $X_1, X_2, \ldots, X_n$ are random variables representing the sample data, then a statistic $T$ is defined as
+  \begin{equation}
+    T = g(X_1, X_2, \ldots, X_n),
+  \end{equation}
+  where $g$ is a measurable function.
+
+  The distribution of a statistic is called the \textbf{sampling distribution}.
+\end{definition}
+\begin{itemize}
+  \item Sample mean: $\displaystyle \overline{X} = \frac{1}{n} \sum_{i=1}^{n} X_i$,
+  \item Sample variance: $\displaystyle S^2 = \frac{1}{n-1} \sum_{i=1}^{n} (X_i - \overline{X})^2$,
+  \item Sample standard deviation: $\displaystyle S = \sqrt{S^2}$,
+  \item Sample k-th moment about the origin: $\displaystyle a_k = \frac{1}{n} \sum_{i=1}^{n} X_i^k$,
+  \item Sample k-th central moment: $\displaystyle m_k = \frac{1}{n} \sum_{i=1}^{n} (X_i - \overline{X})^k$,
+  \item Sample skewness: $\displaystyle b_1 = \frac{m_3}{m_2^{3 / 2}}$,
+  \item Sample kurtosis: $\displaystyle b_2 = \frac{m_4}{m_2^2}$.
+  \item Sample covariance: $\displaystyle S_{XY} = \frac{1}{n-1} \sum_{i=1}^{n} (X_i - \overline{X})(Y_i - \overline{Y})$,
+  \item Sample correlation coefficient: $\displaystyle r_{XY} = \frac{S_{XY}}{S_X S_Y}$.
+  \item Order statistics: $X_{(1)} \leq X_{(2)} \leq \ldots \leq X_{(n)}$ are the ordered values of the sample data.
+\end{itemize}
+
+\begin{definition}{Empirical Distribution Function}{Empirical Distribution Function}
+  The \textbf{empirical distribution function} (EDF) of a sample $X_1, X_2, \ldots, X_n$ is defined as
+  \begin{equation}
+    F_n(x) = \frac{1}{n} \sum_{i=1}^{n} I_{(-\infty, x]}(X_i) = \frac{1}{n}(\text{ number of sample points } \leq x).
+  \end{equation}
+  where $I_{(-\infty, x]}(X_i)$ is the indicator function that equals $1$ if $X_i \leq x$ and $0$ otherwise.
+\end{definition}
+
+\begin{theorem}{Glivenko-Cantelli Theorem}{Glivenko-Cantelli Theorem}
+  Let $X_1, X_2, \ldots, X_n$ be a sequence of i.i.d. random variables with common distribution function $F(x)$. Then the empirical distribution function $F_n(x)$ converges uniformly to $F(x)$ almost surely, i.e.,
+  \begin{equation}
+    P\left(\lim_{n \to \infty} \sup_{x \in \mathbb{R}} |F_n(x) - F(x)| = 0\right) = 1.
+  \end{equation}
+\end{theorem}
+
+\begin{proposition}{Normal IID Property}{Normal IID Property}
+  Let $X_1, X_2, \ldots, X_n$ be a sample from a normal distribution $N(\mu, \sigma^2)$. Then let $c_1, \ldots ,c_n$ be constants not all zero, then
+  \begin{itemize}
+    \item The linear combination 
+      \begin{equation}
+        T = \sum_{i=1}^{n} c_i X_i \sim N\left(\mu \sum_{i=1}^{n} c_i, \sigma^2 \sum_{i=1}^{n} c_i^2\right).
+      \end{equation}
+    \item Specially, the sample mean 
+      \begin{equation}
+        \overline{X} = \frac{1}{n} \sum_{i=1}^{n} X_i \sim N\left(\mu, \frac{\sigma^2}{n}\right).
+      \end{equation}
+    \item The normalized mean
+      \begin{equation}
+        Z = \frac{\sqrt{n} (\overline{X} - \mu)}{\sigma} \sim N(0, 1).
+      \end{equation}
+    \item The normalized mean by sample standard deviation
+      \begin{equation}
+        T = \frac{\sqrt{n} (\overline{X} - \mu)}{S} \sim t(n-1).
+      \end{equation}
+    \item The sample second central moment
+      \begin{equation}
+        \frac{n \overline{(X - \mu)^2}}{\sigma^2} \sim \chi^2(n).
+      \end{equation}
+    \item The sample variance
+      \begin{equation}
+        \frac{(n-1) S^2}{\sigma^2} \sim \chi^2(n-1).
+      \end{equation}
+    \item The sample mean $\overline{X}$ and sample variance $S^2$ are independent.
+  \end{itemize}
+
+  If $X_1, \ldots , X_m \text{i.i.d} \sim N(\mu_1, \sigma_1^2)$ and $Y_1, \ldots , Y_n \text{i.i.d} \sim N(\mu_2, \sigma_2^2)$ are independent samples, then
+  \begin{equation}
+    T = \frac{(\overline{X} - \overline{Y}) - (\mu_1 - \mu_2)}{S_T} \sqrt{\frac{mn}{m+n}} \sim t(m+n-2),
+  \end{equation}
+  where
+  \begin{equation}
+    S_T^2 = \frac{(m-1) S_X^2 + (n-1) S_Y^2}{m+n-2} = \frac{1}{m+n-2} \left[\sum_{i=1}^{m} (X_i - \overline{X})^2 + \sum_{j=1}^{n} (Y_j - \overline{Y})^2\right].
+  \end{equation}
+  Also, we have
+  \begin{equation}
+    F = \frac{S_X^2 / \sigma_1^2}{S_Y^2 / \sigma_2^2} \sim F(m-1, n-1).
+  \end{equation}
+\end{proposition}
+\begin{proof}
+ Take a unitary rotation matrix $A$ such that
+ \begin{equation*}
+   A \begin{pmatrix} X_1 \\ X_2 \\ \vdots \\ X_n \end{pmatrix} = \begin{pmatrix} \sqrt{n} \overline{X} \\ Y_2 \\ \vdots \\ Y_n \end{pmatrix},
+ \end{equation*}
+ where $Y_2, \ldots, Y_n$ are linear combinations of $X_1, \ldots, X_n$ orthogonal to $\overline{X}$. Then
+ \begin{equation}
+   (n-1) S^2 = \sum_{i=1}^{n} (X_i - \overline{X})^2 = \sum_{i=1}^{n} X_i^2 - n \overline{X}^2 = \sum_{i=2}^{n} Y_i^2.
+ \end{equation}
+
+ The second part by
+ \begin{equation}
+   \overline{X}-\overline{Y} \sim N\left(\mu_1 - \mu_2, \left(\frac{1}{m} + \frac{1}{n}\right) \sigma^2\right).
+ \end{equation}
+\end{proof}
+
+\begin{proposition}{Exponential Mean}{Exponential Mean}
+  If $X_1, X_2, \ldots, X_n$ are i.i.d. random variables following an exponential distribution with parameter $\lambda$, i.e., $X_i \sim Exp(\lambda)$ for $i=1,2,\ldots,n$, then the sample mean
+  \begin{equation}
+    Y = \overline{X} = \frac{1}{n} \sum_{i=1}^{n} X_i
+  \end{equation}
+  follows a gamma distribution with parameters $n$ and $\lambda$, i.e., $Y \sim \Gamma(n, \lambda)$. Or 
+  \begin{equation}
+    2 \lambda n \overline{X} \sim \chi^2(2n).
+  \end{equation}
+\end{proposition}
+
+\section{Estimation}
+To give an estimation of the unknown parameter $\theta$ based on the observed sample data $X_1 = x_1, X_2 = x_2, \ldots, X_n = x_n$.
+
+If we know the form of a distribution $f$ depending on some unknown parameters $\theta = (\theta_1, \theta_2, \ldots, \theta_k)$, i.e.,
+\begin{equation}
+  f(x | \theta) = f(x | \theta_1, \theta_2, \ldots, \theta_k),
+\end{equation}
+then we can use the sample data to estimate the parameters $\theta$, this mean giving a statistic $\hat{\theta} = g(X_1, X_2, \ldots, X_n)$ as an estimate of $\theta$.
+
+\subsection{Point Estimation}
+\subsubsection{Methods}
+
+\begin{definition}{Method of Moments}{Method of Moments}
+  The \textbf{method of moments} is a technique for estimating the parameters of a probability distribution by equating the sample moments to the theoretical moments of the distribution. 
+
+  Let $X_1, X_2, \ldots, X_n$ be a sample from a distribution with unknown parameters $\theta = (\theta_1, \theta_2, \ldots, \theta_k)$. The $j$-th theoretical moment about the origin is given by
+  \begin{equation}
+    \mu_j = E(X^j) = g_j(\theta_1, \theta_2, \ldots, \theta_k), \quad j = 1, 2, \ldots, k.
+  \end{equation}
+  The $j$-th sample moment about the origin is given by
+  \begin{equation}
+    a_j = \frac{1}{n} \sum_{i=1}^{n} X_i^j, \quad j = 1, 2, \ldots, k.
+  \end{equation}
+  To estimate the parameters $\theta$, we set up the following system of equations:
+  \begin{equation}
+    a_j = g_j(\theta_1, \theta_2, \ldots, \theta_k), \quad j = 1, 2, \ldots, k.
+  \end{equation}
+  Solving this system yields the method of moments estimators $\hat{\theta} = (\hat{\theta}_1, \hat{\theta}_2, \ldots, \hat{\theta}_k)$.
+
+  Sometimes we use central moments instead of original moments for estimation. But following the rule: Lower moments first, original moments first.
+\end{definition}
+
+\begin{definition}{Maximum Likelihood Estimation}{Maximum Likelihood Estimation}
+  The \textbf{maximum likelihood estimation} (MLE) is a method for estimating the parameters of a probability distribution by maximizing the likelihood function, which measures how likely it is to observe the given sample data under different parameter values.
+
+  Let $X_1, X_2, \ldots, X_n$ be a sample from a distribution with unknown parameters $\theta = (\theta_1, \theta_2, \ldots, \theta_k)$. The likelihood function $L(\theta)$ is defined as
+  \begin{equation}
+    L(\theta) = f(X_1, X_2, \ldots, X_n | \theta) = \prod_{i=1}^{n} f(X_i | \theta),
+  \end{equation}
+  where $f(X_i | \theta)$ is the probability density function (or probability mass function for discrete distributions) of the random variable $X_i$ given the parameters $\theta$.
+
+  To find the MLE $\hat{\theta}$, we maximize the likelihood function $L(\theta)$ with respect to $\theta$. It is often more convenient to maximize the log-likelihood function $\ell(\theta)$, defined as
+  \begin{equation}
+    \ell(\theta) = \ln L(\theta) = \sum_{i=1}^{n} \ln f(X_i | \theta).
+  \end{equation}
+  The MLE $\hat{\theta}$ is obtained by solving the equations
+  \begin{equation}
+    \frac{\partial \ell(\theta)}{\partial \theta_j} = 0, \quad j = 1, 2, \ldots, k,
+  \end{equation}
+  and verifying that the solution corresponds to a maximum.
+\end{definition}
+
+\subsubsection{Goodness of Estimators}
+\begin{definition}{Bias}{Bias}
+  The \textbf{bias} of an estimator $\hat{\theta}$ for a parameter $\theta$ is defined as the difference between the expected value of the estimator and the true value of the parameter:
+  \begin{equation}
+    \text{Bias}(\hat{\theta}) = E_{ \theta}(\hat{\theta}) - \theta.
+  \end{equation}
+  An estimator is said to be \textbf{unbiased} if its bias is zero for all values of the parameter, i.e., $E(\hat{\theta}) = \theta$ for all $\theta$ in the parameter space.
+\end{definition}
+
+Unbiased estimation is not unique. The variance of the estimator is given by the Mean Squared Error (MSE):
+\begin{equation}
+  MSE(\hat{\theta}) = E_{\theta}[(\hat{\theta} - \theta)^2] = Var_{\theta}(\hat{\theta}) + [\text{Bias}(\hat{\theta})]^2.
+\end{equation}
+
+\begin{definition}{Efficiency}{Efficiency}
+  An estimator $\hat{\theta}_1$ is said to be \textbf{more efficient} than another estimator $\hat{\theta}_2$ for the same parameter $\theta$ if
+  \begin{equation}
+    Var_{\theta}(\hat{\theta}_1) < Var_{\theta}(\hat{\theta}_2)
+  \end{equation}
+  for all values of $\theta$ in the parameter space. If an estimator has the smallest variance among all unbiased estimators for a parameter, it is called the \textbf{minimum variance unbiased estimator} (MVUE).
+\end{definition}
+
+\begin{remark}
+  Sometimes, we can correct a biased estimator to make it unbiased. For example, the sample variance $S^2$ is an unbiased estimator of the population variance $\sigma^2$, while the sample second moment about the mean $\overline{(X - \mu)^2}$ is a biased estimator. However, we can adjust it as follows:
+  \begin{equation}
+    S^2 = \frac{n}{n-1} \overline{(X - \mu)^2},
+  \end{equation}
+  which makes $S^2$ an unbiased estimator of $\sigma^2$.
+\end{remark}
+
+Cramer-Rao Lower Bound gives a lower bound on the variance of unbiased estimators. To show it geometrically, consider the vector space of all estimators with finite variance. For a given $ \theta$, define
+\begin{equation}
+  \mathcal{L}_{2,\theta} = \{h: E_{\theta}(h^2(\boldsymbol{X})) < \infty\}.
+\end{equation}
+with inner product defined as
+\begin{equation}
+  \langle h_1, h_2 \rangle = Cov_{\theta}(h_1(\boldsymbol{X}), h_2(\boldsymbol{X})) = E_{\theta}[(h_1(\boldsymbol{X}) - E_{\theta}(h_1(\boldsymbol{X})))(h_2(\boldsymbol{X}) - E_{\theta}(h_2(\boldsymbol{X})))],
+\end{equation}
+
+Let $\hat{g}(\boldsymbol{X})$ be an unbiased estimator of $g(\theta)$, let
+\begin{equation}
+  S(\boldsymbol{X}, \theta) = \frac{\partial}{\partial \theta} \ln f(\boldsymbol{X} | \theta) = \sum_{i=1}^{n} \frac{\partial}{\partial \theta} \ln f(X_i | \theta)
+\end{equation}
+where $S(\boldsymbol{X}, \theta)$ is called the \textbf{score function}. Then under some regularity conditions, we have
+\begin{equation}
+  E_{\theta}(S(\boldsymbol{X}, \theta)) = 0,
+\end{equation}
+and
+\begin{equation}
+  Var_{\theta}(S(\boldsymbol{X}, \theta)) = n\int \left(\frac{\partial}{\partial \theta} \ln f(x | \theta)\right)^2 f(x | \theta) dx = n I(\theta),
+\end{equation}
+The regularity conditions are:
+\begin{itemize}
+  \item The support of $f(x | \theta)$ does not depend on $\theta$.
+  \item The function $f(x | \theta)$ is differentiable with respect to $\theta$.
+  \item The integral and derivative can be interchanged, i.e.,
+    \begin{equation}
+      \frac{\partial}{\partial \theta} \int f(x | \theta) dx = \int \frac{\partial}{\partial \theta} f(x | \theta) dx.
+    \end{equation}
+\end{itemize}
+So
+\begin{equation}
+  \langle \hat{g}(\boldsymbol{X}), S(\boldsymbol{X}, \theta) \rangle = \int \hat{g}(\boldsymbol{X}) S(\boldsymbol{X}, \theta) f(\boldsymbol{X} | \theta) d\boldsymbol{X} = \frac{\partial}{\partial \theta} E_{\theta}(\hat{g}(\boldsymbol{X})) = g'(\theta).
+\end{equation}
+We project $\hat{g}(\boldsymbol{X})$ onto the subspace spanned by $S(\boldsymbol{X}, \theta)$, we have
+\begin{equation}
+  \|\hat{g}(\boldsymbol{X}) - g(\theta)\|^2 \geq \|g'(\theta) \frac{S(\boldsymbol{X}, \theta)}{\|S(\boldsymbol{X}, \theta)\|^2}\|^2,
+\end{equation}
+
+\begin{theorem}{Cramer-Rao Inequality}{Cramer-Rao Inequality}
+  Let $\hat{g}(\boldsymbol{X})$ be an unbiased estimator of $g(\theta)$ based on a sample $\boldsymbol{X} = (X_1, X_2, \ldots, X_n)$ from a distribution with probability density function $f(x | \theta)$. Under the regularity conditions stated above, the variance of the estimator $\hat{g}(\boldsymbol{X})$ satisfies the Cramer-Rao lower bound:
+  \begin{equation}
+    Var_{\theta}(\hat{g}(\boldsymbol{X})) \geq \frac{[g'(\theta)]^2}{n I(\theta)},
+  \end{equation}
+  where $I(\theta)$ is the Fisher information defined as
+  \begin{equation}
+    I(\theta) = \int \left(\frac{\partial}{\partial \theta} \ln f(x | \theta)\right)^2 f(x | \theta) dx = E_{\theta}\left[\left(\frac{\partial}{\partial \theta} \ln f(X | \theta)\right)^2\right].
+  \end{equation}
+\end{theorem}
+
+\subsubsection{Large Sample Theory}
+
+\begin{definition}{Consistency}{Consistency}
+  An estimator $\hat{\theta}_n$ is said to be \textbf{consistent} for a parameter $\theta$ if, for every $\epsilon > 0$,
+  \begin{equation}
+    \lim_{n \to \infty} P(|\hat{\theta}_n - \theta| \geq \epsilon) = 0,
+  \end{equation}
+  or $\hat{\theta}_n \xrightarrow{P} \theta$ as $n \to \infty$. This means that as the sample size $n$ increases, the probability that the estimator $\hat{\theta}_n$ deviates from the true parameter value $\theta$ by at least $\epsilon$ approaches zero.
+\end{definition}
+
+\begin{definition}{Asymptotic Normality}{Asymptotic Normality}
+  An estimator $\hat{\theta}_n$ is said to be \textbf{asymptotically normal} if there its variance exists and
+  \begin{equation}
+    \lim_{n \to \infty } P\left(\frac{\hat{\theta}_n - \theta}{\sqrt{Var_{\theta}(\hat{\theta}_n)}} \leq t\right) = \Phi(t),
+  \end{equation}
+\end{definition}
+
+\subsection{Interval Estimation}
+
+\begin{definition}{Confidence Interval}{Confidence Interval}
+  A \textbf{confidence interval} for a parameter $\theta$ is an interval estimate that provides a range of values within which the true parameter value is expected to lie with a specified level of confidence. 
+
+  Let $X_1, X_2, \ldots, X_n$ be a sample from a distribution with unknown parameter $\theta$. A $(1 - \alpha)100\%$ confidence interval for $\theta$ is an interval $(L(X_1, X_2, \ldots, X_n), U(X_1, X_2, \ldots, X_n))$ such that
+  \begin{equation}
+    P_{\theta}(L(X_1, X_2, \ldots, X_n) \leq \theta \leq U(X_1, X_2, \ldots, X_n)) = 1 - \alpha, \qquad \forall \theta,
+  \end{equation}
+  where $L$ and $U$ are functions of the sample data that define the lower and upper bounds of the confidence interval, respectively.
+\end{definition}
+
+To construct a confidence interval, we often use pivotal quantities, which are functions of the sample data and the parameter $\theta$ whose distribution does not depend on $\theta$.
+
+\subsubsection{Pivotal Quantity Method}
+\begin{itemize}
+  \item Normal Distribution with Known Variance, estimate $\mu$:
+    \begin{equation}
+      T = \frac{\sqrt{n} (\overline{X} - \mu)}{\sigma} \sim N(0, 1).
+    \end{equation}
+    The $(1 - \alpha)100\%$ confidence interval for $\mu$ is given by
+    \begin{equation}
+      \left(\overline{X} - u_{\alpha/2} \frac{\sigma}{\sqrt{n}}, \overline{X} + u_{\alpha/2} \frac{\sigma}{\sqrt{n}}\right),
+    \end{equation}
+    where $u_{\alpha/2}$ is the $(1 - \alpha/2)$ quantile of the standard normal distribution.
+  \item Normal Distribution with Unknown Variance, estimate $\mu$:
+    \begin{equation}
+      T = \frac{\sqrt{n} (\overline{X} - \mu)}{S} \sim t(n-1).
+    \end{equation}
+    The $(1 - \alpha)100\%$ confidence interval for $\mu$ is given by
+    \begin{equation}
+      \left(\overline{X} - t_{n-1}(\alpha/2) \frac{S}{\sqrt{n}}, \overline{X} + t_{n-1}(\alpha/2) \frac{S}{\sqrt{n}}\right),
+    \end{equation}
+  \item Normal Distribution with known Mean, estimate $\sigma^2$:
+    \begin{equation}
+      Q = \frac{n \overline{(X - \mu)^2}}{\sigma^2} \sim \chi^2(n).
+    \end{equation}
+    The $(1 - \alpha)100\%$ confidence interval for $\sigma^2$ is given by
+    \begin{equation}
+      \left(\frac{n \overline{(X - \mu)^2}}{\chi^2_{n} (\alpha/2)}, \frac{n \overline{(X - \mu)^2}}{\chi^2_{n} (1-\alpha/2)}\right),
+    \end{equation}
+  \item Normal Distribution with unknown Mean, estimate $\sigma^2$:
+    \begin{equation}
+      Q = \frac{(n-1) S^2}{\sigma^2} \sim \chi^2(n-1).
+    \end{equation}
+    The $(1 - \alpha)100\%$ confidence interval for $\sigma^2$ is given by
+    \begin{equation}
+      \left(\frac{(n-1) S^2}{\chi^2_{n-1} (\alpha/2)}, \frac{(n-1) S^2}{\chi^2_{n-1} (1-\alpha/2)}\right),
+    \end{equation}
+  \item Two Independent Normal Distributions with unknown Variance, estimate $ \mu_1 - \mu_2$:
+    \begin{equation}
+      T = \frac{(\overline{X} - \overline{Y}) - (\mu_1 - \mu_2)}{S_T} \sqrt{\frac{mn}{m+n}} \sim t(m+n-2).
+    \end{equation}
+    The $(1 - \alpha)100\%$ confidence interval for $\mu_1 - \mu_2$ is given by
+    \begin{equation}
+      \left((\overline{X} - \overline{Y}) - t_{m+n-2}(\alpha/2) S_T \sqrt{\frac{m+n}{mn}}, (\overline{X} - \overline{Y}) + t_{m+n-2}(\alpha/2) S_T \sqrt{\frac{m+n}{mn}}\right),
+    \end{equation}
+  \item Two Independent Normal Distributions with known Variance, estimate $ \mu_1 - \mu_2$:
+    \begin{equation}
+      T = \frac{(\overline{X} - \overline{Y}) - (\mu_1 - \mu_2)}{\sqrt{\frac{\sigma_1^2}{m} + \frac{\sigma_2^2}{n}}} \sim N(0, 1).
+    \end{equation}
+    The $(1 - \alpha)100\%$ confidence interval for $\mu_1 - \mu_2$ is given by
+    \begin{equation}
+      \left((\overline{X} - \overline{Y}) - u_{\alpha/2} \sqrt{\frac{\sigma_1^2}{m} + \frac{\sigma_2^2}{n}}, (\overline{X} - \overline{Y}) + u_{\alpha/2} \sqrt{\frac{\sigma_1^2}{m} + \frac{\sigma_2^2}{n}}\right),
+    \end{equation}
+  \item Two Dependent Normal Distributions, estimate $ \mu_1 - \mu_2$: First subtract samples $Z_i = X_i - Y_i$, then use the according single normal distribution method to estimate the mean of $Z$.
+  \item Two Independent Normal Distributions, estimate $ \sigma_1^2 / \sigma_2^2$:
+    \begin{equation}
+      F = \frac{S_X^2 / \sigma_1^2}{S_Y^2 / \sigma_2^2} \sim F(m-1, n-1).
+    \end{equation}
+    The $(1 - \alpha)100\%$ confidence interval for $\sigma_1^2 / \sigma_2^2$ is given by
+    \begin{equation}
+      \left(\frac{S_X^2}{S_Y^2} F(n-1, m-1)(1-\alpha/2), \frac{S_X^2}{S_Y^2} F(n-1, m-1)(\alpha/2)\right).
+    \end{equation}
+\end{itemize}
+
+\subsubsection{Large Sample Confidence Intervals}
+When the sample size $n$ is large, we can use the asymptotic normality of estimators to construct confidence intervals. Let $\hat{\theta}$ be an estimator of the parameter $\theta$ such that
+\begin{equation}
+  \frac{\hat{\theta} - \theta}{\sqrt{Var_{\theta}(\hat{\theta})}} \xrightarrow{L} N(0, 1) \text{ as } n \to \infty.
+\end{equation}
+
+\begin{itemize}
+  \item For the ratio $p$ estimation in binomial distribution, we have
+\begin{equation}
+  \frac{Y_n - np}{\sqrt{np(1-p)}} \xrightarrow{L} N(0, 1) \text{ as } n \to \infty.
+\end{equation}
+\item For the $E(X)$ estimation, we have
+  \begin{equation}
+    \frac{\sqrt{n} (\overline{X} - \mu)}{S} \xrightarrow{L} N(0, 1) \text{ as } n \to \infty.
+  \end{equation}
+\end{itemize}
+
+
+\section{Hypothesis Testing}
+\subsection{Parametric Hypothesis Testing}
+\begin{definition}{Null and Alternative Hypotheses}{Null and Alternative Hypotheses}
+  In hypothesis testing, we formulate two competing hypotheses about a population parameter based on sample data:
+  \begin{itemize}
+    \item The \textbf{null hypothesis} ($H_0$) is a statement that there is no effect or no difference, and it represents the status quo or a baseline assumption.
+    \item The \textbf{alternative hypothesis} ($H_1$ or $H_a$) is a statement that contradicts the null hypothesis, suggesting that there is an effect or a difference.
+  \end{itemize}
+\end{definition}
+
+For a single parameter $\theta$ test. $H_0$ is usually in the form of $\theta \in \Theta_0$, and $H_1$ is in the form of $\theta \in \Theta_1$, where $\Theta_0$ and $\Theta_1$ are disjoint sets.
+
+We use a statistic $g(\boldsymbol{X})$ to decide whether to accept or reject $H_0$. The acceptance region $A$ is the set of values of $g(\boldsymbol{X})$ for which we accept $H_0$, and the rejection region $R$ is the set of values for which we reject $H_0$. Usually the acceptance region is closed.
+
+\begin{definition}{Power Function}{Power Function}
+  Let the distribution by $F(x, \theta)$, where $ \theta = (\theta_1, \theta_2, \ldots, \theta_k)$ is the parameter vector. The \textbf{power function} of a hypothesis test is defined as
+  \begin{equation}
+    \beta(\theta) = P_{\theta}(\text{Reject } H_0)
+  \end{equation}
+  if $\forall \theta \in \Theta_0$, we have
+  \begin{equation}
+    \beta(\theta) \leq \alpha
+  \end{equation}
+  then the test is said to have a significance level of $\alpha$.
+\end{definition}
+
+\begin{definition}{Type I and Type II Errors}{Type I and Type II Errors}
+  In hypothesis testing, two types of errors can occur:
+  \begin{itemize}
+    \item A \textbf{Type I error} occurs when we reject the null hypothesis $H_0$ when it is actually true. The probability of making a Type I error is denoted by $\alpha$, which is also known as the significance level of the test.
+    \item A \textbf{Type II error} occurs when we fail to reject the null hypothesis $H_0$ when the alternative hypothesis $H_1$ is actually true. The probability of making a Type II error is denoted by $\beta$.
+  \end{itemize}
+\end{definition}
+The Type I error probability is
+\begin{equation}
+  \alpha_1 = \begin{cases}
+    \beta(\theta), & \theta \in \Theta_0, \\
+    0, & \theta \in \Theta_1.
+  \end{cases}
+\end{equation}
+The Type II error probability is
+\begin{equation}
+  \alpha_2 = \begin{cases}
+    0, & \theta \in \Theta_0, \\
+    1 - \beta(\theta), & \theta \in \Theta_1.
+  \end{cases}
+\end{equation}
+
+\subsection{Non-Parametric Hypothesis Testing}
+\subsubsection{Goodness-of-Fit Tests}
+For a discrete population with $k$ possible outcomes $\left\{ a_1, \ldots ,a_k \right\}$, take $n$ samples, $n_i$ times output $a_i$, we want to test the known distribution $P(a_i) = p_i$.
+\begin{equation}
+  H_0: P(a_i) = p_i, \quad i = 1, 2, \ldots, k, \qquad H_1: \text{Not } H_0.
+\end{equation}
+
+The Expected Value under $H_0$ is $E(n_i) = n p_i$. The observed value is $n_i$. The Pearson's Chi-Squared Test statistic is
+\begin{equation}
+  Z = \sum_{i=1}^{k} \frac{(O-E)^2}{E} = \sum_{i=1}^{k} \frac{(n_i - n p_i)^2}{n p_i}.
+\end{equation}
+
+\begin{theorem}{The Pearson $\chi^2$ Test}{The Pearson Chi-Squared Test}
+  Under the null hypothesis $H_0$, if the sample size $n$ is sufficiently large, the test statistic $Z$ follows a chi-squared distribution with $k-1$ degrees of freedom, i.e.,
+  \begin{equation}
+    Z \sim \chi^2(k-1).
+  \end{equation}
+\end{theorem}
+
+Usually, we reject $H_0$ if $Z > \chi^2_{k-1}(\alpha)$.
+
+If there are $r$ unknown parameters in the distribution, then take the maximum likelihood estimates $\hat{\theta}_1, \ldots ,\hat{\theta}_r$ from the sample and $\hat{p}_i = p_i(\hat{\theta}_1, \ldots ,\hat{\theta}_r)$, then the test statistic becomes
+\begin{equation}
+  Z = \sum_{i=1}^{k} \frac{(n_i - n \hat{p}_i)^2}{n \hat{p}_i} \sim \chi^2(k-1-r).
+\end{equation}
+
+This is useful in the contingency table test. A contingency table is a type of table in a matrix format that has two properties: $A,B$. Our test is whether    $A$ and $B$ are independent. Take $n$ samples, and let $n_{ij}$ be the number of samples with property $A_i$ and $B_j$. The unknown parameters are the probabilities $P(A_i)$ and $P(B_j)$. Denote
+\begin{equation}
+  n_{i,\cdot} = \sum_{j} n_{ij}, \quad n_{\cdot,j} = \sum_{i} n_{ij}.
+\end{equation}
+which has $r = (a-1) + (b-1)$ unknown parameters. The distribution under $H_0$ is
+\begin{equation}
+  p_{ij} = p{i,\cdot} p_{\cdot,j}
+\end{equation}
+with maximum likelihood estimates
+\begin{equation}
+  \hat{p}_{i,\cdot} = \frac{n_{i,\cdot}}{n}, \quad \hat{p}_{\cdot,j} = \frac{n_{\cdot,j}}{n}.
+\end{equation}
+\begin{equation}
+  Z = \sum_{i=1}^{a} \sum_{j=1}^{b} \frac{(n_{ij} - n \hat{p}_{i,\cdot} \hat{p}_{\cdot,j})^2}{n \hat{p}_{i,\cdot} \hat{p}_{\cdot,j}} \sim \chi^2((a-1)(b-1)).
+\end{equation}
+
+\subsubsection{The Continuous Case}
+We cannot directly use the Pearson's Chi-Squared Test for continuous distributions, but we can use intervals to partition the continuous distribution into discrete intervals. For example, we can use the histogram method to divide the range of the continuous variable into $k$ intervals, and then count the number of samples in each interval.
+
+\begin{remark}
+  Usually, we require each interval have $n p_i \geq 5$ samples, otherwise the test may not be valid. If some intervals have too few samples, we can merge them with adjacent intervals until all intervals satisfy the requirement.
+\end{remark}
+
+\section{Some Useful Results}
+
+\paragraph{About Normal Distribution}
+\begin{itemize}
+  \item If $ (X,Y) \sim N(\mu_X, \mu_Y, \sigma_X^2, \sigma_Y^2, \rho)$, then the conditional distribution
+    \begin{equation}
+      X | Y = y \sim N\left(\mu_X + \rho \frac{\sigma_X}{\sigma_Y} (y - \mu_Y), (1-\rho^2) \sigma_X^2\right).
+    \end{equation}
+    The marginial distributions are $X \sim N(\mu_X, \sigma_X^2)$ and $Y \sim N(\mu_Y, \sigma_Y^2)$.
+  \item If $X_1, \ldots ,X_n \text{i.i.d} \sim N(\mu, \sigma^2)$, then a unitary transformation of $(X_1, \ldots ,X_n)$ is also independent normal variables.
+\end{itemize}
+
+\paragraph{Some Estimators}
+\begin{itemize}
+  \item Uniform distribution $(0, \theta)$: The moment estimator is
+    \begin{equation}
+      \hat{\theta}_{MM} = 2 \overline{X},
+    \end{equation}
+    and the maximum likelihood estimator is
+    \begin{equation}
+      \hat{\theta}_{MLE} = X_{(n)} = \max(X_1, X_2, \ldots, X_n).
+    \end{equation}
+  \item Normal distribution $N(\mu, \sigma^2)$: The moment estimator and maximum likelihood estimator are the same:
+    \begin{equation}
+      \hat{\mu} = \overline{X}, \quad \hat{\sigma}^2 = \frac{1}{n} \sum_{i=1}^{n} (X_i - \overline{X})^2.
+    \end{equation}
+    The unbiased estimator of $\sigma^2$ is $S^2 = \frac{1}{n-1} \sum_{i=1}^{n} (X_i - \overline{X})^2$.
+  \item Exponential distribution $Exp(\lambda)$: The moment estimator and maximum likelihood estimator are the same:
+    \begin{equation}
+      \hat{\lambda} = \frac{1}{\overline{X}}.
+    \end{equation}
+\end{itemize}
+
+\end{document}

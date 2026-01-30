@@ -179,7 +179,166 @@ Here are some counterexamples that illustrate the definition.
 \begin{itemize}
   \item The map $ \mathbb{R} \to \mathbb{R}^2$ defined by $t \mapsto (t^3,0)$ is a smooth map and a topological embedding, but not a smooth immersion at $t = 0$, so it is not a smooth embedding.
   \item The figure-eight curve $ \mathbb{R} \to \mathbb{R}^2$ defined by $t \mapsto (\sin t, \sin 2t)$ is a smooth immersion, but not a topological embedding because it is not a homeomorphism onto its image. (Compactness fails)
+  \item Now is an interesting example that shows mere injectivity is not enough for a smooth embedding. Consider $ \gamma: \mathbb{R} \rightarrow \mathbb{T}^2$ by
+    \begin{equation*}
+      \gamma(t) = (e^{it}, e^{i \alpha t}),
+    \end{equation*}
+    where $\alpha$ is an irrational number. Then $\gamma$ is a smooth immersion, injective (because $\alpha$ is irrational), but not a smooth embedding because it is not a homeomorphism onto its image. Because $ \gamma(\mathbb{Z}) $ is dense in $\mathbb{T}^2$, but $\mathbb{Z}$ is not dense in $\mathbb{R}$.
 \end{itemize}
 
+\begin{proposition}{Criterion for Smooth Embeddings}{Criterion for Smooth Embeddings}
+  Suppose $M$ and $N$ are smooth manifolds, with or without boundary, and $F : M \to N$ is an injective smooth immersion. Then $F$ is a smooth embedding if one of the following equivalent conditions holds:
+  \begin{itemize}
+    \item $F$ is an open or closed map.
+    \item $F$ is a proper map, that is, for every compact subset $K \subseteq M$, the image $F(K)$ is compact in $N$.
+    \item $M$ is compact.
+    \item $M$ has empty boundary and $\dim M= \dim N$.
+  \end{itemize}
+\end{proposition}
+\begin{proof}
+  The first claim is just the definition of a topological embedding. The second claim follows from the fact that a proper map is a closed map, and the third claim follows from the fact that a compact set is closed. The fourth claim follows from the fact that if $M$ has empty boundary, then it is an open submanifold of itself, and if $\dim M = \dim N$, then $F$ is a local diffeomorphism, hence an open map.
+\end{proof}
+
+\begin{theorem}{Local Embedding Theorem}{Local Embedding Theorem}
+  Suppose $M$ and $N$ are smooth manifolds, with or without boundary, and $F : M \to N$ is a smooth map. Then $F$ is a smooth immersion iff every point $p \in M$ has a neighborhood $U$ such that $F|_U : U \to N$ is a smooth embedding.
+\end{theorem}
+\begin{proof}
+  If $F$ is a local smooth embedding on every point, then it has full rank everywhere, hence it is a smooth immersion. Conversely, if $F$ is a smooth immersion, then for each point $p \in M$:
+
+  If $F(p)\notin \partial N$, then by the Rank Theorem, there exist coordinate charts $(U, \varphi)$ on $M$ centered at $p$ and $(V, \psi)$ on $N$ centered at $F(p)$ such that the coordinate representation
+  \begin{equation*}
+    \hat{F}(x^1, \ldots , x^m) = (x^1, \ldots , x^m, 0, \ldots , 0).
+  \end{equation*}
+  Then restricting $U$ if necessary, we have that $F|_U : U \to N$ is injective. If $F(p) \in \partial N$, then the same argument applies slight adjustment by $\mathbb{H}^n$ coordinate charts.
+
+  Next, let $U_1$ be a precompact neighborhood of $p$ in $U$ such that $F|_{\overline{U_1}} $ is injective and has compact domain. Then $F|_{\overline{U_1}} : \overline{U_1} \to N$ is a topological embedding.
+\end{proof}
+
+\begin{remark}
+  This gives a direct notion for topological immersions: a continuous map between topological spaces that is a local topological embedding at every point.
+\end{remark}
+
+\section{Submersions}
+
+\begin{definition}{Section}{Section}
+  Let $M$ and $N$ be topological spaces, and let $\pi : M \to N$ be a continuous map. A \textbf{section} of $\pi$ is a continuous map $ \sigma: N \to M$ such that $\pi \circ \sigma = \mathrm{id}_N$.
+
+  A local section of $\pi$ over an open set $U \subseteq N$ is a continuous map $ \sigma: U \to M$ such that $\pi \circ \sigma = \mathrm{id}_U$.
+\end{definition}
+
+Really, sections are right inverses of the map $\pi$, so it is injective.
+
+Note that global sections need not exist, for example, consider the $S^1$ projection onto $RP^1$. However, local sections always exist for submersions, as the following result shows.
+
+\begin{theorem}{Local Section Theorem}{Local Section Theorem}
+  Let $M$ and $N$ be smooth manifolds, and $\pi : M \to N$ be a smooth map. Then $\pi$ is a smooth submersion if and only if for each point $p \in M$, it is in an image of a smooth local section of $\pi$.
+\end{theorem}
+\begin{proof}
+  Suppose $ \pi$ is a smooth submersion, and given $p \in M$. By the Rank Theorem, there exist smooth coordinate charts $(U, \varphi)$ on $M$ centered at $p$ and $(V, \psi)$ on $N$ centered at $\pi(p)$ such that the coordinate representation $\pi(x^1, \ldots , x^m) = (x^1, \ldots , x^n)$. For sufficiently small $ \epsilon$, the coordinate cube
+  \begin{equation*}
+    C_{ \epsilon} = \{(x^1, \ldots , x^n) \in \mathbb{R}^n : |x^i| < \epsilon, 1 \leq i \leq m\}
+  \end{equation*}
+  Then $ \pi(C_{ \epsilon}) $ is also a coordinate cube in $\mathbb{R}^n$. The coordinate map by
+  \begin{equation*}
+    \sigma(x^1, \ldots , x^n) = (x^1, \ldots , x^n, 0, \ldots , 0)
+  \end{equation*}
+  is a smooth local section.
+
+  Conversely, from $ \pi \circ \sigma = \mathrm{id}_N$, we have that $\mathrm{d} \pi_{\sigma(q)} \circ \mathrm{d} \sigma_q = \mathrm{id}_{T_qN}$ for each $q \in N$. Hence, $\mathrm{d} \pi_{\sigma(q)}$ is surjective for each $q \in N$, so $\pi$ is a smooth submersion.
+\end{proof}
+
+\begin{remark}
+  This theorem motivates the definition of a topological submersion: a continuous map between topological spaces such that every point in the domain is in the image of a local section.
+\end{remark}
+
+\begin{proposition}{Properties of Smooth Submersions}{Properties of Smooth Submersions}
+  Let $M$ and $N$ be smooth manifolds, and let $\pi : M \to N$ be a smooth submersion. Then 
+  \begin{itemize}
+    \item $\pi$ is an open map.
+    \item If $\pi$ is surjective, then it is a quotient map.
+  \end{itemize}
+\end{proposition}
+\begin{proof}
+  For the first claim, let $W \subseteq M$ be open and $q\in \pi(W)$, take any $p \in W$ such that $\pi(p) = q$. By the Local Section Theorem, there exists a smooth local section $ \sigma: U \to M$ of $\pi$ such that $ \sigma(q) = p$. Then $ \sigma^{-1}(W)$ is an open neighborhood of $q$ contained in $\pi(W)$, so $\pi(W)$ is open in $N$.
+
+  The second claim follows from the first claim and the definition of a quotient map.
+\end{proof}
+
+We can see that smooth submersions plays a similar role to that of quotient maps in topology.
+
+\begin{theorem}{Passing Smoothly to Quotient}{Passing Smoothly to Quotient}
+  Suppose $M$ and $N$ are smooth manifolds, and $\pi : M \to N$ is a surjective smooth submersion. If $P$ is a smooth manifold, with or without boundary, then a map $F : N \to P$ is smooth if and only if $F \circ \pi : M \to P$ is smooth.
+
+  Moreover, if $G : M \to P$ is a smooth map that is constant on each fiber of $\pi$, then there exists a unique smooth map $\tilde{G} : N \to P$ such that $G = \tilde{G} \circ \pi$.
+\end{theorem}
+\begin{proof}
+  If $F : N \to P$ is smooth, then $F \circ \pi : M \to P$ is smooth by composition of smooth maps. Conversely, suppose that $F \circ \pi : M \to P$ is smooth. Given any point $q \in N$, take any $p \in M$ such that $\pi(p) = q$. By the Local Section Theorem, there exists a smooth local section $ \sigma: U \to M$ of $\pi$ such that $ \sigma(q) = p$. Then the restriction $F|_U = (F \circ \pi) \circ \sigma : U \to P$ is smooth. Since $q$ was arbitrary, $F$ is smooth.
+\end{proof}
+
+\begin{theorem}{Uniqueness of Smooth Quotients}{Uniqueness of Smooth Quotients}
+  Suppose $M$ and $N_1, N_2$ are smooth manifolds, and $\pi_1 : M \to N_1$ and $\pi_2 : M \to N_2$ are surjective smooth submersions that are constant on each other's fibers. Then there exists a unique diffeomorphism $F : N_1 \to N_2$ such that $F \circ \pi_1 = \pi_2$.
+\end{theorem}
+
+\section{Smooth Covering Maps}
+In general topology, a \textbf{covering map} is a continuous surjective map $ \pi: X \to Y$ such that for each point $y \in Y$, there exists an open neighborhood $U$ of $y$ such that $\pi^{-1}(U)$ is a disjoint union of open sets in $X$, each of which is homeomorphic to $U$ via $\pi$.
+
+In the context of smooth manifolds, we have the following definition.
+\begin{definition}{Smooth Covering Map}{Smooth Covering Map}
+  Let $E$ and $M$ be connected smooth manifolds, with or without boundary. A \textbf{smooth covering map} is a smooth surjective map $ \pi: E \to M$ such that for each point $p \in M$, there exists an open neighborhood $U$ of $p$ such that $\pi^{-1}(U)$ is a disjoint union of open sets in $E$, each of which is diffeomorphic to $U$ via $\pi$.
+
+  We say that $M$ is the \textbf{base space}, $E$ is the \textbf{covering space}, and if $E$ is simply connected, we say that $E$ is the \textbf{universal covering space} of $M$.
+\end{definition}
+
+\begin{proposition}{Properties of Smooth Covering Maps}{Properties of Smooth Covering Maps}
+  Let $E$ and $M$ be connected smooth manifolds, with or without boundary, and let $ \pi: E \to M$ be a smooth covering map. Then 
+  \begin{itemize}
+    \item $ \pi$ is a local diffeomorphism, a smooth submersion, an open map and a quotient map.
+    \item An injective smooth covering map is a diffeomorphism.
+    \item A topological covering map between smooth manifolds is a smooth covering map if and only if it is a local diffeomorphism.
+    \item Every local section of $ \pi$ is a smooth local section.
+  \end{itemize}  
+\end{proposition}
+
+\begin{example}{Smooth Covering Maps}{Smooth Covering Maps}
+  \begin{itemize}
+    \item The map $ \mathbb{R} \to S^1$ defined by $t \mapsto (\cos t, \sin t)$ is a smooth covering map. Its universal covering space is $\mathbb{R}$ itself.
+    \item For $n \geq 1$, the map $q: S^n \to \mathbb{R}P^n$ defined by $q(x) = [x]$ is a two-to-one smooth covering map.
+  \end{itemize}
+\end{example}
+
+For smooth covering maps, we also have the local section theorem strengthened.
+\begin{theorem}{Local Section Theorem for Smooth Covering Maps}{Local Section Theorem for Smooth Covering Maps}
+  Let $E$ and $M$ be connected smooth manifolds, with or without boundary, and let $ \pi: E \to M$ be a smooth covering map. Then for each evenly covered open set $U \subseteq M$, a point $q \in U$, and $p\in \pi^{-1}(q)$, there exists a unique smooth local section $ \sigma: U \to E$ of $\pi$ such that $\sigma(q) = p$.
+\end{theorem}
+\begin{proof}
+  This is quite obvious from the definition of smooth covering maps.
+\end{proof}
+
+\begin{proposition}{Products of Covering Maps}{Products of Covering Maps}
+  Let $E_1, \ldots , E_k$ and $M_1, \ldots , M_k$ be smooth manifolds without boundary, and let $ \pi_i: E_i \to M_i$ be smooth covering maps for each $1 \leq i \leq k$. Then the product map
+  \begin{equation*}
+    \pi_1 \times \cdots \times \pi_k : E_1 \times \cdots \times E_k \to M_1 \times \cdots \times M_k
+  \end{equation*}
+  is a smooth covering map.
+\end{proposition}
+
+\begin{theorem}{Covering Space of Smooth manifolds}{Covering Space of Smooth manifolds}
+  Suppose $M$ is a connected smooth $n$-manifold, and $ \pi: E \to M$ is a topological covering map, then $E$ is a topological $n$-manifold and has a unique smooth structure such that $ \pi: E \to M$ is a smooth covering map.
+
+  Moreover, if $M$ is smooth manifold with boundary, then $E$ is a topological manifold with boundary such that $\partial E = \pi^{-1}(\partial M)$, and has a unique smooth structure with boundary such that $ \pi: E \to M$ is a smooth covering map.
+\end{theorem}
+\begin{proof}
+  SORRY.
+\end{proof}
+
+\begin{corollary}{Existence of Universal Covering Manifold}{Existence of Universal Covering Manifold}
+  If $M$ is a connected smooth manifold, there exists a simply connected smooth manifold $\tilde{M}$ called the \textbf{universal covering manifold} of $M$, and a smooth covering map $ \pi: \tilde{M} \to M$. The universal covering manifold is unique up to diffeomorphism. That is, if $\tilde{M}'$ is another simply connected smooth manifold with a smooth covering map $ \pi': \tilde{M}' \to M$, then there exists a diffeomorphism $F : \tilde{M} \to \tilde{M}'$ such that $ \pi' \circ F = \pi$.
+\end{corollary}
+
+There are not many simple criterion for a smooth map to be a smooth covering map, but we do have the following sufficient (not necessary) condition.
+
+\begin{proposition}{Local Proper Diffeomorphism is a Smooth Covering Map}{Local Proper Diffeomorphism is a Smooth Covering Map}
+  Let $E$ and $M$ be connected smooth manifolds, with or without boundary, and let $ \pi: E \to M$ be a smooth map. If $ \pi$ is a local diffeomorphism and a proper map, then it is a smooth covering map.  
+\end{proposition}
 
 \end{document}

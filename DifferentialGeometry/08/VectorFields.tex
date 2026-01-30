@@ -1,0 +1,496 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\chapter{Vector Fields}
+
+\section{Vector Fields on Manifolds}
+\begin{definition}{Vector Fields}{Vector Fields}
+  If $M$ is a smooth manifold, with or without boundary, a \textbf{vector field} on $M$ is a smooth section of the map $\pi: TM \to M$. In other words, a vector field is a continuous map $X: M \to TM$ such that $\pi \circ X = \mathrm{id}_M$. This means that for each point $p \in M$, the vector field $X$ assigns a tangent vector $X(p) \in T_pM$.
+
+  Usually, we are interested in smooth vector fields, meaning that the map $X$ is smooth. If $X$ is not even necessarily continuous, we say that $X$ is a \textbf{rough vector field}.
+\end{definition}
+
+We shall denote $X(p)$ by $X_p$ for each $p \in M$, to be more readable. For any vector field $X$ on $M$, we can write its component functions
+\begin{equation*}
+  X_p = X^i(p) \left. \frac{\partial}{\partial x^i} \right|_p
+\end{equation*}
+according to some local smooth chart $(U, \varphi = (x^1, \ldots, x^n))$ around $p$.
+
+\begin{proposition}{Smoothness Criterion for Vector Fields}{Smoothness Criterion for Vector Fields}
+  Let $M$ be a smooth manifold, with or without boundary, and let $X: M \to TM$ be a rough vector field on $M$. If $(U, \varphi = (x^1, \ldots, x^n))$ is a smooth chart on $M$, then the restriction of $X$ to $U$ is smooth if and only if the component functions $X^i: U \to \mathbb{R}$ is smooth for each $i$.
+\end{proposition}
+
+\begin{example}{Vector Fields}{Vector Fields}
+ \begin{itemize}
+   \item Now if $(U, \varphi = (x^i))$ is any smooth chart on $M$, then we can define the \textbf{coordinate vector fields} on $U$ by
+    \begin{equation}
+      p \mapsto \left. \frac{\partial}{\partial x^i} \right|_p.
+    \end{equation}
+    called the $i$-th coordinate vector field on $U$.
+  \item Euler vector field: The vector field $V$ on $\mathbb{R}^n$ by
+    \begin{equation*}
+      V_x = x^i \left. \frac{\partial}{\partial x^i} \right|_x = x^1 \left. \frac{\partial}{\partial x^1} \right|_x + \cdots + x^n \left. \frac{\partial}{\partial x^n} \right|_x
+    \end{equation*}
+    is called the \textbf{Euler vector field} on $\mathbb{R}^n$.
+  \item The angle vector field: Let $ \theta$ be any angle coordinate on a proper open subset $U \subseteq S^1$, then let $\mathrm{d} / \mathrm{d} \theta$ be the corresponding coordinate vector field on $U$. Any other angle coordinate only differs from $\theta$ by an additive constant, so the vector field $\mathrm{d} / \mathrm{d} \theta$ is independent of the choice of angle coordinate. Thus, we can define a vector field on all of $S^1$ by defining it to be $\mathrm{d} / \mathrm{d} \theta$ on $U$ at each proper open subset $U \subseteq S^1$. This vector field is called the \textbf{angle vector field} on $S^1$.
+
+    The same goes for tori $T^n$.
+ \end{itemize} 
+\end{example}
+
+We can see that tangent spaces behave locally. So we can identify $T_pU$ with $T_pM$ without ambiguity.
+
+\begin{definition}{Vector Field Along a Subset}{Vector Field Along a Subset}
+  Let $M$ be a smooth manifold, with or without boundary, and let $A \subseteq M$ be any subset. A \textbf{vector field along $A$} is a continuous map $X: A \to TM$ such that $\pi \circ X = \mathrm{id}_A$. We call it a smooth vector field along $A$ if for each $p \in A$, there is an open neighborhood $V$ of $p$ in $M$ and a smooth vector field $\tilde{X}$ on $V$ such that $\tilde{X}|_{V \cap A} = X|_{V \cap A}$.
+\end{definition}
+
+\begin{lemma}{Extension Lemma for Vector Fields}{Extension Lemma for Vector Fields}
+  Let $M$ be a smooth manifold, with or without boundary, and let $A \subseteq M$ be any closed subset. If $X$ is a smooth vector field along $A$, then for any open neighborhood $U$ of $A$ in $M$, there is a smooth vector field $\tilde{X}$ on $M$ such that $\tilde{X}|_A = X$ and $\supp(\tilde{X}) \subseteq U$.
+\end{lemma}
+
+Specifically, any vector at a point $p \in M$ can be extended to a smooth vector field on $M$ that vanishes outside a small neighborhood of $p$.
+
+\begin{definition}{Vector Field Spaces}{Vector Field Spaces}
+  If $M$ is a smooth manifold, with or without boundary, we denote the space of all smooth vector fields on $M$ by $\mathfrak{X}(M)$. It is a vector space over $\mathbb{R}$ under pointwise addition and scalar multiplication.
+\end{definition}
+In addition, smooth vector fields can be multiplied by smooth functions to produce new smooth vector fields. If $f \in C^\infty(M)$ and $X \in \mathfrak{X}(M)$, then we define a new vector field $fX \in \mathfrak{X}(M)$ by
+\begin{equation}
+  (fX)_p = f(p) X_p
+\end{equation}
+
+\begin{proposition}{Properties of $\mathfrak{X}(M)$}{Properties of mathfrakXM}
+  Let $M$ be a smooth manifold, with or without boundary.
+  \begin{itemize}
+    \item If $X,Y\in \mathfrak{X}(M)$ and $f,g \in C^\infty(M)$, then $fX + gY \in \mathfrak{X}(M)$.
+    \item $\mathfrak{X}(M)$ is a module over the ring $C^\infty(M)$.
+  \end{itemize}
+\end{proposition}
+
+\subsection{Local and Global Frames}
+\begin{definition}{Local and Global Frames}{Local and Global Frames}
+  Let $M$ be a smooth manifold, with or without boundary, and an ordered $k$-tuple $(X_1, \ldots, X_k)$ of vector fields on some subset $A \subseteq M$. We say that they are linearly independent if $\forall p\in A$, the vectors $(X_1)_p, \ldots, (X_k)_p$ are linearly independent in $T_pM$, and it spans the tangent bundle over $A$ if $\forall p \in A$, the vectors $(X_1)_p, \ldots, (X_k)_p$ span $T_pM$.
+
+  A \textbf{local frame} on $M$ is an ordered $n$-tuple of vector fields $(E_1, \ldots, E_n)$ on some open subset $U \subseteq M$ that is linearly independent and spans the tangent bundle over $U$. The vectors $(E_1)_p, \ldots, (E_n)_p$ then form a basis for $T_pM$ for each $p \in U$. It is called a \textbf{global frame} if $U = M$, and a \textbf{smooth frame} if each $E_i$ is a smooth vector field.
+
+  A smooth manifold $M$ is called \textbf{parallelizable} if it admits a smooth global frame.
+\end{definition}
+
+\begin{example}{Local and Global Frames}{Local and Global Frames}
+  \begin{itemize}
+    \item The standard coordinate vector fields $(\partial / \partial x^1, \ldots, \partial / \partial x^n)$ form a smooth global frame on $\mathbb{R}^n$.
+    \item For any smooth chart $(U, \varphi = (x^1, \ldots, x^n))$ on a smooth manifold $M$, the coordinate vector fields $(\partial / \partial x^1, \ldots, \partial / \partial x^n)$ form a smooth local frame on $U$.
+    \item The angle vector field $\mathrm{d} / \mathrm{d} \theta$ on $S^1$ is a smooth global frame. And the $n$ angle vector fields $\partial / \partial \theta^1, \ldots, \partial / \partial \theta^n$ form a smooth global frame on the torus $T^n$.
+  \end{itemize}
+\end{example}
+
+\begin{proposition}{Completion of Local Frames}{Completion of Local Frames}
+  Let $M$ be a $n$-smooth manifold, with or without boundary, 
+  \begin{itemize}
+    \item Let $U \subseteq M$ be any open subset, and let $(X_1, \ldots, X_k)$ be a linearly independent $k$-tuple of smooth vector fields on $U$, where $k < n$. Then there exist smooth vector fields $X_{k+1}, \ldots, X_n$ on $U$ such that $(X_1, \ldots, X_n)$ is a smooth local frame on $U$.  
+    \item If $(v_1, \ldots , v_k)$ is any linearly independent $k$-tuple of vectors in $T_pM$ at some point $p \in M$, where $k \leq n$, then there exist a smooth local frame $(X_i)$ on some open neighborhood $U$ of $p$ such that $X_i|_p = v_i$ for each $1 \leq i \leq k$.
+    \item If $X_1, \ldots ,X_n$ is a linearly independent $n$-tuple of smooth vector fields on some closed subset $A \subseteq M$, then there exist smooth local frame $(\tilde{X}_i)$ on some open neighborhood $U$ of $A$ such that $\tilde{X}_i|_A = X_i$ for each $1 \leq i \leq n$.
+  \end{itemize}
+\end{proposition}
+
+Specially for subsets of $\mathbb{R}^n$, we can use the Euclidean inner product to define orthonormal frames. For example, the standard coordinate vector fields on $\mathbb{R}^n$ or the polar coordinate vector fields on $\mathbb{R}^2 \setminus \{0\}$.
+
+\begin{lemma}{Gram-Schmidt Algorithm for Frames}{Gram-Schmidt Algorithm for Frames}
+  Suppose $(X_j)$ is a smooth local frame for $T \mathbb{R}^n$ over some open subset $U \subseteq \mathbb{R}^n$. Then there exists a smooth orthonormal local frame $(E_j)$ for $T \mathbb{R}^n$ over $U$ such that
+  \begin{equation*}
+    \vspan\{X_1, \ldots, X_k\} = \vspan\{E_1, \ldots, E_k\} \quad \text{for each } 1 \leq k \leq n.
+  \end{equation*}
+\end{lemma}
+
+Generally speaking, parallelizable manifolds are rare. For example, spheres $S^n$ are only parallelizable for $n = 1, 3, 7$. We shall later see that all Lie groups are parallelizable.
+
+\subsection{Vector Fields as Derivations}
+Vector fields define operators on smooth functions. If $X\in \mathfrak{X}(M)$ and $f$ is a smooth function on some open subset $U \subseteq M$, then we can define a new smooth function $Xf$ on $U$ by
+\begin{equation}
+  (Xf)(p) = X_p(f) \quad \forall p \in U.
+\end{equation}
+
+\begin{remark}
+  Note the difference between $Xf$ and $fX$. The former is a smooth function on $U$, while the latter is a smooth vector field on $M$.
+\end{remark}
+It is quite direct that $Xf$ is defined locally, for any open subset $V \subseteq U$, we have
+\begin{equation*}
+  (Xf)|_V = X|_V (f|_V).
+\end{equation*}
+
+\begin{proposition}{Properties of Vector Field Derivations}{Properties of Vector Field Derivations}
+  Let $M$ be a smooth manifold, with or without boundary, and let $X: M \to TM$ be a rough vector field on $M$. Then the following are equivalent:
+  \begin{itemize}
+    \item $X$ is smooth.
+    \item For every $f\in C^\infty(M)$, the function $Xf: M \to \mathbb{R}$ is smooth.
+    \item For every open subset $U \subseteq M$ and every $f \in C^\infty(U)$, the function $Xf: U \to \mathbb{R}$ is smooth.
+  \end{itemize}
+\end{proposition}
+\begin{proof}
+  Quite obvious, just taking a local chart around each point.
+\end{proof}
+
+Recall the definition of a derivation at a point \ref{def:Derivation}. Now we present the global version.
+
+\begin{definition}{Derivations}{Derivations}
+  Let $M$ be a smooth manifold, with or without boundary. A \textbf{derivation} on $M$ is a linear map $D: C^\infty(M) \to C^\infty(M)$ such that for all $f,g \in C^\infty(M)$,
+  \begin{equation*}
+    D(fg) = f D(g) + g D(f).
+  \end{equation*}
+  The derivation at a point $p \in M$ is just the composition of $D$ with the evaluation map at $p$:
+  \begin{equation*}
+    D_p: C^\infty(M) \to \mathbb{R}, \quad D_p(f) = D(f)(p).
+  \end{equation*}
+\end{definition}
+We can see that for a vector field $X \in \mathfrak{X}(M)$, we have
+\begin{equation*}
+  X(fg)(p) = X_p(fg) = f(p) X_p(g) + g(p) X_p(f) = f(p) (Xg)(p) + g(p) (Xf)(p) = (f Xg + g Xf)(p).
+\end{equation*}
+which matches our definition.
+
+\begin{theorem}{Vector Fields and Derivations}{Vector Fields and Derivations}
+  Let $M$ be a smooth manifold, with or without boundary. A map $D: C^\infty(M) \to C^\infty(M)$ is a derivation on $M$ if and only if there exists a smooth vector field $X \in \mathfrak{X}(M)$ such that $D(f) = Xf$ for all $f \in C^\infty(M)$.
+
+  Thus, we can identify the space of derivations on $M$ with the space $\mathfrak{X}(M)$ of smooth vector fields on $M$.
+\end{theorem}
+\begin{proof}
+  We have already shown the "if" part. For the "only if" part, for each $p \in M$, define $X_p: C^\infty(M) \to \mathbb{R}$ by $X_p(f) = D(f)(p)$ would do. Smoothness follows from the fact that $D(f)$ is smooth for each $f \in C^\infty(M)$.
+\end{proof}
+
+\section{Vector Fields and Smooth Maps}
+Given $F:M \rightarrow N$ a smooth map and $X$ a vector field on $M$, we can try to ``push forward'' $X$ to a vector field on $N$ by $\mathrm{d} F_p (X_p) \in T_{F(p)} N$. However, this does not necessarily define a vector field on $N$. If $F$ is not surjective, then there may be points in $N$ that are not in the image of $F$, and if $F$ is not injective, then there may be points in $N$ that have multiple preimages in $M$ with different pushed-forward vectors.
+
+\begin{definition}{$F$-related Vector Fields}{F-related Vector Fields}
+  Let $M$ and $N$ be smooth manifolds, with or without boundary, and let $F: M \to N$ be a smooth map. If $X$ is a vector field on $M$ and $Y$ is a vector field on $N$, we say that $X$ and $Y$ are \textbf{$F$-related} if for every $p \in M$,
+  \begin{equation*}
+    \mathrm{d} F_p (X_p) = Y_{F(p)}.
+  \end{equation*}
+\end{definition}
+
+\begin{proposition}{$F$-related Vector Fields on Smooth Functions}{F-related Vector Fields on Smooth Functions}
+  Let $M$ and $N$ be smooth manifolds, with or without boundary, and let $F: M \to N$ be a smooth map. If $X\in \mathfrak{X}(M)$ and $Y \in \mathfrak{X}(N)$, then they are $F$-related if and only if for every $g \in C^\infty(N)$,
+  \begin{equation}
+    X(g \circ F) = (Yg) \circ F.
+  \end{equation}
+\end{proposition}
+\begin{proof}
+  We have
+  \begin{equation*}
+    X(g \circ F)(p) = X_p(g \circ F) = \mathrm{d} F_p (X_p)(g) = Y_{F(p)}(g) = (Yg)(F(p)) = ((Yg) \circ F)(p).
+  \end{equation*}
+\end{proof}
+
+\begin{example}{$F$-related Vector Fields}{F-related Vector Fields}
+  Let $F: \mathbb{R} \rightarrow \mathbb{R}^2, t \mapsto (\cos t, \sin t)$ be the standard embedding of the unit circle. Then the vector field $X = \mathrm{d} / \mathrm{d} t$ on $\mathbb{R}$ is $F$-related to the angle vector field
+  \begin{equation*}
+    Y_{(x,y)} = -y \left. \frac{\partial}{\partial x} \right|_{(x,y)} + x \left. \frac{\partial}{\partial y} \right|_{(x,y)}
+  \end{equation*}
+\end{example}
+
+For an arbitrary smooth map $F: M \to N$, there may not exist any nontrivial $F$-related vector fields. But for diffeomorphisms, we have the following result.
+
+\begin{proposition}{Existence of Related Vector Fields for Diffeomorphisms}{Existence of Related Vector Fields for Diffeomorphisms}
+  Let $M$ and $N$ be smooth manifolds, with or without boundary, and let $F: M \to N$ be a diffeomorphism. Then for every vector field $X \in \mathfrak{X}(M)$, there exists a unique vector field $Y \in \mathfrak{X}(N)$ that is $F$-related to $X$, and vice versa.
+
+  We often denote $Y$ by $F_* X$, called the \textbf{pushforward} of $X$ by $F$. Explicitly, for each $q \in N$,
+  \begin{equation}
+    (F_* X)_q = \mathrm{d} F_{F^{-1}(q)} (X_{F^{-1}(q)}).
+  \end{equation}
+  and we have
+  \begin{equation}
+    ((F_* X) g) \circ F = X (g \circ F) \quad \forall g \in C^\infty(N).
+  \end{equation}
+\end{proposition}
+
+\subsection{Vector Fields and Submanifolds}
+If $S \subseteq M$ is an immersed or embedded submanifold, with or without boundary, then in general, a vector field on $M$ does not restrict to a vector field on $S$, because the vectors may not lie in the tangent spaces of $S$.
+
+\begin{definition}{Tangent to a Submanifold}{Tangent to a Submanifold}
+  Let $M$ be a smooth manifold, with or without boundary, and let $S \subseteq M$ be an immersed or embedded submanifold, with or without boundary. A vector field $X \in \mathfrak{X}(M)$ is said to be \textbf{tangent to $S$} if for every $p \in S$, $X_p \in T_p S \subseteq T_p M$.
+\end{definition}
+
+\begin{proposition}{Criterion for Tangency to a Submanifold}{Criterion for Tangency to a Submanifold}
+  Let $M$ be a smooth manifold, with or without boundary, and let $S \subseteq M$ be an embedded submanifold, with or without boundary. A vector field $X \in \mathfrak{X}(M)$ is tangent to $S$ if and only if for every smooth function $f \in C^\infty(M)$ that vanishes on $S$, the function $Xf$ also vanishes on $S$.
+\end{proposition}
+
+If $S \subseteq M$ is an immersed submanifold, with or without boundary, and $Y\in \mathfrak{X}(S)$, then if there is a vector field $X \in \mathfrak{X}(S)$ that is $ \iota: S \hookrightarrow M$-related to $Y$, then clearly $Y$ is tangent to $S$. Because for each $p \in S$, $Y_p = \mathrm{d} \iota_p (X_p) = X_p \in T_p S$. We shall see that the converse is also true.
+
+\begin{proposition}{Restricting Vector Fields to Submanifolds}{Restricting Vector Fields to Submanifolds}
+  Let $M$ be a smooth manifold, and $S \subseteq M$ be an immersed submanifold, with or without boundary. Let $\iota: S \hookrightarrow M$ be the inclusion map. A vector field $Y \in \mathfrak{X}(M)$ is tangent to $S$ if and only if there exists a vector field $X \in \mathfrak{X}(S)$ that is $\iota$-related to $Y$. In this case, $X$ is unique, and we often denote it by $Y|_S$, called the \textbf{restriction} of $Y$ to $S$.
+\end{proposition}
+
+\section{Lie Brackets}
+Now, we introduce an important operation on vector fields, joining two vector fields to produce a new vector field, called the Lie bracket.
+
+Let $X,Y\in \mathfrak{X}(M)$ be two smooth vector fields on a smooth manifold $M$. Given a $f\in C^\infty(M)$, we can successively apply $X$ and $Y$ to $f$ to get a new smooth function $Y(Xf)$. However, this operatio $f \mapsto YXf$n does not satisfy the Leibniz rule, so is not a vector field. To fix this, we introduce the Lie bracket.
+
+\begin{definition}{Lie Bracket}{Lie Bracket}
+  Let $M$ be a smooth manifold, with or without boundary, and let $X,Y \in \mathfrak{X}(M)$ be two smooth vector fields on $M$. The \textbf{Lie bracket} of $X$ and $Y$ is the map $[X,Y]: C^\infty(M) \to C^\infty(M)$ defined by
+  \begin{equation}
+    [X,Y] f = X(Yf) - Y(Xf) \quad \forall f \in C^\infty(M).
+  \end{equation}
+  Then $[X,Y]$ is a smooth vector field on $M$.
+\end{definition}
+\begin{proof}
+  We shall show that $[X,Y]$ is a derivation on $M$. For any $f,g \in C^\infty(M)$, we have
+  \begin{equation*}
+    \begin{aligned}
+      [X,Y](fg) &= X(Y(fg)) - Y(X(fg)) \\
+      &= X(f Yg + g Yf) - Y(f Xg + g Xf) \\
+      &= f X(Yg) + (Xf)(Yg) + g X(Yf) + (Xg)(Yf) \\
+      &\quad - f Y(Xg) - (Yf)(Xg) - g Y(Xf) - (Yg)(Xf) \\
+      &= f (X(Yg) - Y(Xg)) + g (X(Yf) - Y(Xf)) \\
+      &= f [X,Y] g + g [X,Y] f.
+    \end{aligned}
+  \end{equation*}
+\end{proof}
+
+\begin{theorem}{Coordinate Formula for Lie Bracket}{Coordinate Formula for Lie Bracket}
+  Let $M$ be a smooth manifold, with or without boundary, and let $(U, \varphi = (x^1, \ldots, x^n))$ be a smooth chart on $M$. If $X,Y \in \mathfrak{X}(M)$ are two smooth vector fields on $M$, then on $U$, we can write
+  \begin{equation*}
+    X = X^i \frac{\partial}{\partial x^i}, \quad Y = Y^j \frac{\partial}{\partial x^j},
+  \end{equation*}
+  where $X^i, Y^j \in C^\infty(U)$ are the component functions of $X$ and $Y$ with respect to the coordinate vector fields. Then the Lie bracket $[X,Y]$ on $U$ is given by
+  \begin{equation*}
+    [X,Y] = \left( X^i \frac{\partial Y^j}{\partial x^i} - Y^i \frac{\partial X^j}{\partial x^i} \right) \frac{\partial}{\partial x^j} = \left( X(Y^j) - Y(X^j) \right) \frac{\partial}{\partial x^j}.
+  \end{equation*}
+\end{theorem}
+\begin{proof}
+  Mere computation: take $f\in C^\infty(U)$,
+  \begin{equation*}
+    \begin{aligned}
+      [X,Y] f &= X(Yf) - Y(Xf) \\
+      &= X^i \frac{\partial}{\partial x^i} \left( Y^j \frac{\partial f}{\partial x^j} \right) - Y^i \frac{\partial}{\partial x^i} \left( X^j \frac{\partial f}{\partial x^j} \right) \\
+      &= X^i \left( \frac{\partial Y^j}{\partial x^i} \frac{\partial f}{\partial x^j} + Y^j \frac{\partial^2 f}{\partial x^i \partial x^j} \right) - Y^i \left( \frac{\partial X^j}{\partial x^i} \frac{\partial f}{\partial x^j} + X^j \frac{\partial^2 f}{\partial x^i \partial x^j} \right) \\
+      &= \left( X^i \frac{\partial Y^j}{\partial x^i} - Y^i \frac{\partial X^j}{\partial x^i} \right) \frac{\partial f}{\partial x^j} + \left( X^i Y^j - Y^i X^j \right) \frac{\partial^2 f}{\partial x^i \partial x^j} \\
+      &= \left( X^i \frac{\partial Y^j}{\partial x^i} - Y^i \frac{\partial X^j}{\partial x^i} \right) \frac{\partial f}{\partial x^j}.
+    \end{aligned}
+  \end{equation*}
+\end{proof}
+
+A trivial example is that
+\begin{equation*}
+  \left[ \frac{\partial}{\partial x^i}, \frac{\partial}{\partial x^j} \right] = 0, \quad \forall 1 \leq i,j \leq n.
+\end{equation*}
+This is only that mixed partial derivatives commute for smooth functions.
+
+\begin{proposition}{Properties of Lie Bracket}{Properties of Lie Bracket}
+  Let $M$ be a smooth manifold, with or without boundary, and let $X,Y,Z \in \mathfrak{X}(M)$ be three smooth vector fields on $M$, and let $f,g \in C^\infty(M)$ be two smooth functions on $M$. Then the Lie bracket satisfies the following properties:
+  \begin{itemize}
+    \item Bilinearity: $[aX + bY, Z] = a[X,Z] + b[Y,Z]$ and $[Z, aX + bY] = a[Z,X] + b[Z,Y]$ for all $a,b \in \mathbb{R}$.
+    \item Antisymmetry: $[X,Y] = -[Y,X]$.
+    \item Jacobi identity: $[X,[Y,Z]] + [Y,[Z,X]] + [Z,[X,Y]] = 0$.
+    \item Leibniz rule: $[fX, gY] = fg [X,Y] + f (Xg) Y - g (Yf) X$.
+  \end{itemize}
+\end{proposition}
+
+\begin{theorem}{Naturality of Lie Bracket}{Naturality of Lie Bracket}
+  Let $M$ and $N$ be smooth manifolds, with or without boundary, and let $F: M \to N$ be a smooth map. If $X_1, X_2 \in \mathfrak{X}(M)$ and $Y_1, Y_2 \in \mathfrak{X}(N)$ are vector fields such that $X_i$ is $F$-related to $Y_i$ for $i = 1,2$, then the Lie bracket $[X_1, X_2]$ is $F$-related to the Lie bracket $[Y_1, Y_2]$.
+\end{theorem}
+\begin{proof}
+  We have
+  \begin{equation*}
+    X_1X_2(f \circ F) = X_1 \left( (Y_2 f) \circ F \right) = (Y_1 (Y_2 f)) \circ F, \qquad X_2X_1(f \circ F) = (Y_2 (Y_1 f)) \circ F.
+  \end{equation*}
+  So putting them together,
+  \begin{equation*}
+    [X_1, X_2](f \circ F) = (Y_1 (Y_2 f) - Y_2 (Y_1 f)) \circ F = ([Y_1, Y_2] f) \circ F.
+  \end{equation*}
+\end{proof}
+
+\begin{corollary}{Pushforward of Lie Bracket}{Pushforward of Lie Bracket}
+  Let $M$ and $N$ be smooth manifolds, with or without boundary, and let $F: M \to N$ be a diffeomorphism. If $X_1, X_2 \in \mathfrak{X}(M)$ then
+  \begin{equation}
+    F_* [X_1, X_2] = [F_* X_1, F_* X_2].
+  \end{equation}
+\end{corollary}
+
+\begin{corollary}{Brackets Tangent to Submanifolds}{Brackets Tangent to Submanifolds}
+  Let $M$ be a smooth manifold and $S$ be an immersed submanifold, with or without boundary. If $X,Y \in \mathfrak{X}(M)$ are vector fields that are tangent to $S$, then the Lie bracket $[X,Y]$ is also tangent to $S$.
+\end{corollary}
+
+\section{The Lie Algebra of Lie Groups}
+
+\begin{definition}{Left-Invariant}{Left-Invariant}
+  Let $G$ be a Lie group, and let $X \in \mathfrak{X}(G)$ be a smooth vector field on $G$. We say that $X$ is \textbf{left-invariant} if for every $g \in G$, $X$ is $L_g$-related to itself. In other words
+  \begin{equation}
+    \forall g,h \in G, \quad \mathrm{d} L_g (X_h) = X_{gh}.
+  \end{equation}
+  Sine $L_g$ is a diffeomorphism for each $g \in G$, this means $(L_g)_* X = X$ for all $g \in G$.
+
+  From linearity, the set of all left-invariant vector fields on $G$ forms a vector subspace of $\mathfrak{X}(G)$, and it is closed under the Lie bracket.
+\end{definition}
+\begin{proof}
+  We have from $(L_g)_* X = X$ and $(L_g)_* Y = Y$ that
+  \begin{equation*}
+    (L_g)_* [X,Y] = [ (L_g)_* X, (L_g)_* Y ] = [X,Y].
+  \end{equation*}
+\end{proof}
+
+\begin{definition}{Lie Algebra}{Lie Algebra}
+  A Lie algebra over $\mathbb{R}$ is a real vector space $\mathfrak{g}$ equipped with a map $[\cdot, \cdot]: \mathfrak{g} \times \mathfrak{g} \to \mathfrak{g}$ called the bracket, such that for all $X,Y,Z \in \mathfrak{g}$ and $a,b \in \mathbb{R}$, the following properties hold:
+  \begin{itemize}
+    \item Bilinearity: $[aX + bY, Z] = a[X,Z] + b[Y,Z]$ and $[Z, aX + bY] = a[Z,X] + b[Z,Y]$.
+    \item Antisymmetry: $[X,Y] = -[Y,X]$.
+    \item Jacobi identity: $[X,[Y,Z]] + [Y,[Z,X]] + [Z,[X,Y]] = 0$.
+  \end{itemize}
+
+  If $\mathfrak{g}$ is a Lie algebra, a linear subspace $\mathfrak{h} \subseteq \mathfrak{g}$ is called a \textbf{Lie subalgebra} if it is closed under the bracket operation.
+
+  If $\mathfrak{g}$ and $\mathfrak{h}$ are Lie algebras, a linear map $\varphi: \mathfrak{g} \to \mathfrak{h}$ is called a \textbf{Lie algebra homomorphism} if for all $X,Y \in \mathfrak{g}$, $\varphi([X,Y]) = [\varphi(X), \varphi(Y)]$. It is called a \textbf{Lie algebra isomorphism} if it is bijective, and we say that $\mathfrak{g}$ and $\mathfrak{h}$ are \textbf{isomorphic} Lie algebras.
+\end{definition}
+
+\begin{example}{Lie Algebras}{Lie Algebras}
+  \begin{itemize}
+    \item The space $\mathfrak{X}(M)$ of all smooth vector fields on a smooth manifold $M$, with or without boundary, is a Lie algebra under the Lie bracket.
+    \item If $G$ is a Lie group, then the set of all left-invariant vector fields on $G$ forms a Lie subalgebra of $\mathfrak{X}(G)$, denoted by $\mathrm{Lie}(G)$.
+    \item The vector space $M(n, \mathbb{R})$ of all $n \times n$ real matrices is a Lie algebra under the bracket operation defined by the commutator:
+      \begin{equation*}
+        [A,B] = AB - BA \quad \forall A,B \in M(n, \mathbb{R}).
+      \end{equation*}
+      denoted by $\mathfrak{gl}(n, \mathbb{R})$. Similarly, $\mathfrak{gl}(n, \mathbb{C})$ is a $2n^2$-dimensional real Lie algebra.
+    \item Generally, if $V$ is a vector space over $\mathbb{R}$, the space $\mathfrak{gl}(V)$ of all linear operators on $V$ is a Lie algebra under the commutator bracket.
+    \item Any vector space $V$ becomes a Lie algebra under the trivial bracket operation $[X,Y] = 0$ for all $X,Y \in V$. Such a Lie algebra is called an \textbf{abelian} Lie algebra. (This name reflects that most cases Lie algebras are just commutators like above.)
+  \end{itemize}
+\end{example}
+
+For $\mathrm{Lie}(G)$, intuitively, if we know the vector at any point on the manifold, then we can determine the whole vector field by left translations, so the dimension of $\mathrm{Lie}(G)$ should be the same as that of $G$.
+
+\begin{theorem}{Structure of $\mathrm{Lie}(G)$}{Structure of Lie(G)}
+  Let $G$ be a Lie group of dimension $n$. Then the evaluation map $ \epsilon: \mathrm{Lie}(G) \to T_e G$ defined by $\epsilon(X) = X_e$ is a vector space isomorphism. In particular, $\dim \mathrm{Lie}(G) = \dim G = n$.
+
+  The inversion map is given by
+  \begin{equation}
+    T_e G \to \mathrm{Lie}(G), \quad v \mapsto v^L |_g = \mathrm{d} (L_g)_e (v).
+  \end{equation}
+\end{theorem}
+\begin{proof}
+  It is clear that $ \epsilon$ is linear. To show it is injective, suppose $X \in \mathrm{Lie}(G)$ such that $X_e = 0$. Then for any $g \in G$, $X_g = \mathrm{d} (L_g)_e (X_e) = \mathrm{d} (L_g)_e (0) = 0$. So $X$ is the zero vector field, and hence $ \epsilon$ is injective. Surjectivity follows from the construction in the second part of the theorem, and smoothness is clear: take any smooth curve $ \gamma: (- \delta, \delta) \to G$ with $\gamma(0) = e$ and $\gamma'(0) = v$, then
+  \begin{equation*}
+    (v^Lf)(g) = v^L|_g (f) = \mathrm{d} (L_g)_e (v) (f) = v(f \circ L_g) = \gamma'(0) (f \circ L_g) = \frac{\mathrm{d}}{\mathrm{d} t} (f \circ L_g \circ \gamma)(0).
+  \end{equation*}
+  If we define $\varphi: (- \delta, \delta) \times G \to \mathbb{R}$ by $\varphi(t,g) = f\circ L_g \circ \gamma(t) = f(g \gamma(t))$, then $\varphi$ is smooth, so $(v^L f)(g) = \partial \varphi / \partial t (0,g)$ is smooth in $g$. Thus $v^L$ is a smooth vector field, and hence $v^L \in \mathrm{Lie}(G)$.
+\end{proof}
+
+Therefore, given any vector $v\in T_eG$, there exists a unique left-invariant vector field $X \in \mathrm{Lie}(G)$ such that $X_e = v$, denoted by $X^L$.
+
+We shall see that the smoothness condition in the definition of left-invariant vector fields is actually superfluous.
+\begin{corollary}{Left-Invariant Rough Field}{Left-Invariant Rough Field}
+  Let $G$ be a Lie group. For any rough vector field $X: G \to TG$ that is left-invariant, $X$ is smooth, and hence $X \in \mathrm{Lie}(G)$.
+\end{corollary}
+
+\begin{corollary}{Parallelizability of Lie Groups}{Parallelizability of Lie Groups}
+  Every Lie group admits a left-invariant smooth global frame, and is therefore parallelizable.
+\end{corollary}
+
+\begin{example}{Lie Algebras of Lie Groups}{Lie Algebras of Lie Groups}
+  \begin{itemize}
+    \item $\mathbb{R}^n$: as a Lie group under addition, so a vector field $X$ is left-invariant if and only if $X^i \partial / \partial x^i$ has constant component functions $X^i$. Thus $\mathrm{Lie}(\mathbb{R}^n) \cong T_0 \mathbb{R}^n \cong \mathbb{R}^n$.
+    \item $S^1$: as a Lie group under multiplication, the basis is just $\mathrm{d} / \mathrm{d} \theta$, so $\mathrm{Lie}(S^1) \cong T_1 S^1 \cong \mathbb{R}$. The same goes for the torus $T^n$, the basis is $\partial / \partial \theta^1, \ldots, \partial / \partial \theta^n$, so $\mathrm{Lie}(T^n) \cong T_e T^n \cong \mathbb{R}^n$.
+  \end{itemize}
+\end{example}
+
+We notice that the group $\mathbb{R}^n, S^1$ are abelian, and their Lie algebras are also abelian. This is not a coincidence. Every abelian Lie group has an abelian Lie algebra.
+\begin{proof}
+  If $G$ is abelian, then for any $X,Y \in \mathrm{Lie}(G)$, we have
+  SORRY
+\end{proof}
+We shall also see that the converse holds when $G$ is connected.
+
+Now we come to inspect the Lie algebra of $GL(n, \mathbb{R})$. Consider $GL(n, \mathbb{R})$ is an open subset of $\mathfrak{gl}(n, \mathbb{R}) \cong \mathbb{R}^{n^2}$, so its tangent space is naturally isomorphic to $\mathfrak{gl}(n, \mathbb{R})$ itself. Also, from the structure theorem of $\mathrm{Lie}(G)$ \ref{thm:Structure of Lie(G)}, we have a vector space isomorphism $\mathrm{Lie}(GL(n, \mathbb{R})) \cong T_I GL(n, \mathbb{R}) \cong \mathfrak{gl}(n, \mathbb{R})$. However, note that $\mathrm{Lie}(GL(n, \mathbb{R}))$ and $\mathfrak{gl}(n, \mathbb{R})$ have independently defined brackets, the former is defined by Lie brackets of left-invariant vector fields, while the latter is defined by commutators of matrices. We shall see that these two brackets actually agree under the above isomorphism.
+
+\begin{theorem}{Lie Algebra of $GL(n, \mathbb{R})$}{Lie Algebra of GL(n, R)}
+  The composition of natural vector space isomorphisms
+  \begin{equation}
+    \mathrm{Lie}(GL(n, \mathbb{R})) \xrightarrow{\epsilon} T_I GL(n, \mathbb{R}) \xrightarrow{\cong} \mathfrak{gl}(n, \mathbb{R})
+  \end{equation}
+  is a Lie algebra isomorphism between the left-invariant Lie algebra $\mathrm{Lie}(GL(n, \mathbb{R}))$ and the matrix Lie algebra $\mathfrak{gl}(n, \mathbb{R})$. This can also be generalized to any finite-dimensional real vector space $V$ to give a Lie algebra isomorphism between $\mathrm{Lie}(GL(V))$ and $\mathfrak{gl}(V)$.
+\end{theorem}
+\begin{proof}
+  Using the matrix entries $X^i_j$ as global coordinates on $GL(n, \mathbb{R}) \subseteq \mathfrak{gl}(n, \mathbb{R})$, the isomorphism
+  \begin{equation*}
+    T_I GL(n, \mathbb{R}) \xrightarrow{\cong} \mathfrak{gl}(n, \mathbb{R}), \quad A^i_j \frac{\partial }{\partial X^i_j} \bigg|_{I} \mapsto A = (A^i_j)
+  \end{equation*}
+  So the isomorphism from $\mathfrak{gl}(n, \mathbb{R})$ to $\mathrm{Lie}(GL(n, \mathbb{R}))$ is given by, take any $A \in \mathfrak{gl}(n, \mathbb{R})$, then the corresponding left-invariant vector field $X^A \in \mathrm{Lie}(GL(n, \mathbb{R}))$ is given by
+  \begin{equation*}
+    A^L|_X = \mathrm{d} (L_X)_I \left( A^i_j \frac{\partial }{\partial X^i_j} \bigg|_{I} \right) = A^i_j \mathrm{d} (L_X)_I \left( \frac{\partial }{\partial X^i_j} \bigg|_{I} \right) = A^i_j X^k_i \frac{\partial }{\partial X^k_j} \bigg|_{X} = X^i_j A^j_k \frac{\partial }{\partial X^i_k} \bigg|_{X}.
+  \end{equation*}
+  Next is pure computation: Take any $A,B \in \mathfrak{gl}(n, \mathbb{R})$, then
+  \begin{equation*}
+    \begin{aligned}
+      [A^L, B^L] &= \left[ X^i_j A^j_k \frac{\partial }{\partial X^i_k}, X^p_q B^q_r \frac{\partial }{\partial X^p_r} \right] \\
+      &= X^i_j A^j_k \frac{\partial }{\partial X^i_k} \left( X^p_q B^q_r \right) \frac{\partial }{\partial X^p_r} - X^p_q B^q_r \frac{\partial }{\partial X^p_r} \left( X^i_j A^j_k \right) \frac{\partial }{\partial X^i_k} \\
+      &= X^i_j A^j_k B^k_r \frac{\partial }{\partial X^i_r} - X^p_q B^q_r A^r_k \frac{\partial }{\partial X^p_k} \\
+      &= X^i_j (A^j_k B^k_r - B^j_k A^k_r) \frac{\partial }{\partial X^i_r} \\
+      &= [A,B]^L.
+    \end{aligned}
+  \end{equation*}
+\end{proof}
+
+\subsection{Induced Lie Algebra Homomorphisms}
+We shall see that Lie group homomorphisms induce Lie algebra homomorphisms.
+
+\begin{theorem}{Induced Lie Algebra Homomorphisms}{Induced Lie Algebra Homomorphisms}
+  Let $G$ and $H$ be Lie groups, and let $\mathfrak{g}, \mathfrak{h}$ be their respective Lie algebras. Suppose $F : G \to H$ is a Lie group homomorphism. For every $X \in \mathfrak{g}$, there exists a unique vector field $Y \in \mathfrak{h}$ that is $F$-related to $X$, denoted by $F_* X$. The map $F_* : \mathfrak{g} \to \mathfrak{h}$ defined by $X \mapsto F_* X$ is a Lie algebra homomorphism.
+\end{theorem}
+\begin{proof}
+  By the spirit of one point generates all, the only choice for $Y$ is given by
+  \begin{equation*}
+    Y = (\mathrm{d} F_e (X_e))^L.
+  \end{equation*}
+  And we have
+  \begin{equation*}
+    \begin{aligned}
+      \mathrm{d} F_g (X_g) &= \mathrm{d} F_g \left( \mathrm{d} (L_g)_e (X_e) \right) = \mathrm{d} (F \circ L_g)_e (X_e) = \mathrm{d} (L_{F(g)} \circ F)_e (X_e) \\
+      &= \mathrm{d} (L_{F(g)})_ {F(e)} \left( \mathrm{d} F_e (X_e) \right) = (\mathrm{d} F_e (X_e))^L |_{F(g)} = Y_{F(g)}.
+    \end{aligned}
+  \end{equation*}
+  where as $F(L_g g') = F(gg') = F(g) F(g') = L_{F(g)} (F(g'))$ for all $g' \in G$, so we have $F \circ L_g = L_{F(g)} \circ F$. So precisely, $Y$ is $F$-related to $X$. Next from naturality of Lie bracket, $F_*$ is a Lie algebra homomorphism.
+\end{proof}
+
+\begin{remark}
+  Note that here we only require $F$ to be a Lie group homomorphism, not necessarily a diffeomorphism. So the induced map $F_*$ may not be an isomorphism.
+\end{remark}
+
+\begin{proposition}{Properties of Induced Lie Algebras}{Properties of Induced Lie Algebras}
+  \begin{itemize}
+    \item The identity homomorphism $\mathrm{id}_G: G \to G$ induces the identity Lie algebra homomorphism $\mathrm{id}_{\mathfrak{g}}: \mathfrak{g} \to \mathfrak{g}$.
+    \item Transitive property: if $F: G \to H$ and $H \to K$ are Lie group homomorphisms, then the composition $K \circ F: G \to K$ induces the composition of Lie algebra homomorphisms $K_* \circ F_*: \mathfrak{g} \to \mathfrak{k}$.
+    \item Isomorphic Lie groups have isomorphic Lie algebras.
+  \end{itemize}
+\end{proposition}
+
+\subsection{Lie Algebra of Lie Subgroups}
+
+Intuitively, if $H$ is a subgroup of a Lie group $G$, then the Lie algebra of $H$ should be a Lie subalgebra of that of $G$. There is a slight confusion however, for elements of $\mathrm{Lie}(H)$ are vector fields on $H$, not on $G$. We propose a small patch here nevertheless.
+
+\begin{theorem}{Lie Algebra of Lie Subgroups}{Lie Algebra of Lie Subgroups}
+  Suppose $H \subseteq G$ is a Lie subgroup of a Lie group $G$, and $ \iota: H \hookrightarrow G$ is the inclusion map. There is a Lie algebra $\mathfrak{h} \subseteq \mathrm{Lie}(G)$ isomorphic to $\mathrm{Lie}(H)$, given by
+  \begin{equation}
+    \mathfrak{h} = \iota_* (\mathrm{Lie}(H)) = \{ X \in \mathrm{Lie}(G) : X \in T_e H \subseteq T_e G \}.
+  \end{equation}
+\end{theorem}
+This is quite natural, as both can be generated by the tangent space at the identity. This gives a nice way to identify the Lie algebra of a Lie subgroup as a Lie subalgebra of that of the bigger Lie group.
+
+\begin{example}{Lie Algebra of $O(n)$}{Lie Algebra of On}
+  The orthogonal group $O(n)$ is a Lie subgroup of $GL(n, \mathbb{R})$. For $\Phi(A) = A^T A$, it is equal to the level set $\Phi^{-1}(I)$. We have
+  \begin{equation*}
+    T_I O(n) = \{ B\in \mathfrak{gl}(n, \mathbb{R}) : B^T + B = 0 \},
+  \end{equation*}
+  consisting of all skew-symmetric matrices. It is a Lie subalgebra of $\mathfrak{gl}(n, \mathbb{R})$ under the commutator bracket, denoted by $\mathfrak{o}(n)$.
+\end{example}
+
+We can do the same for $GL(n, \mathbb{C})$ viewed as a real Lie group.
+
+\begin{definition}{Representation of Lie Algebra}{Representation of Lie Algebra}
+  Let $\mathfrak{g}$ be a finite-dimensional Lie algebra over $\mathbb{R}$. A \textbf{representation} of $\mathfrak{g}$ is a Lie algebra homomorphism
+  \begin{equation}
+    \varphi: \mathfrak{g} \to \mathfrak{gl}(V),
+  \end{equation}
+  for some finite-dimensional real vector space $V$. If such a representation is injective, we say that $\mathfrak{g}$ is \textbf{faithfully represented} on $V$, in this case it is isomorphic to a Lie subalgebra of $\mathfrak{gl}(V)$.
+\end{definition}
+
+\begin{theorem}{Ado's Theorem}{Ados Theorem}
+  Every finite-dimensional Lie algebra over $\mathbb{R}$ admits a faithful finite-dimensional representation, so it is isomorphic to a Lie subalgebra of $\mathfrak{gl}(n, \mathbb{R})$ for some $n$ with the commutator bracket.
+\end{theorem}
+
+\end{document}

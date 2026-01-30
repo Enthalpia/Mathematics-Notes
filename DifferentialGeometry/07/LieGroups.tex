@@ -1,0 +1,305 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\chapter{Lie Groups}
+
+\section{Definition and Examples}
+\begin{definition}{Lie Group}{Lie Group}
+A \textbf{Lie group} is a smooth manifold $G$ without boundary that is also a group, such that the group operations (multiplication and inversion) are smooth maps.
+\end{definition}
+
+\begin{proposition}{Identify Lie Groups}{Identify Lie Groups}
+  If $G$ is a smooth manifold and a group such that the map
+  \begin{equation}
+    f: G \times G \to G, \quad (g,h) \mapsto gh^{-1}
+  \end{equation}
+  is smooth, then $G$ is a Lie group.
+\end{proposition}
+\begin{proof}
+  We have
+  \begin{equation*}
+    g \cdot h = f(g, h^{-1}), \quad h^{-1} = f(e, h).
+  \end{equation*}
+\end{proof}
+If $G$ is a Lie group, $\forall g\in G$, define
+\begin{equation*}
+  L_g: G \to G, \quad h \mapsto gh, \quad R_g: G \to G, \quad h \mapsto hg.
+\end{equation*}
+These are called \textbf{left} and \textbf{right translations} by $g$, respectively. Both are diffeomorphisms with inverses $L_{g^{-1}}$ and $R_{g^{-1}}$, obviously.
+
+\begin{example}{Lie Groups}{Lie Groups}
+  \begin{itemize}
+    \item The general linear group $GL(n, \mathbb{R})$ is a Lie group under matrix multiplication. It is an open submanifold of $M(n, \mathbb{R}) \cong \mathbb{R}^{n^2}$.
+
+      Some subsets of $GL(n, \mathbb{R})$: $GL^+(n, \mathbb{R}) = \{A \in GL(n, \mathbb{R}) : \det(A) > 0\}$, $SL(n, \mathbb{R}) = \{A \in GL(n, \mathbb{R}) : \det(A) = 1\}$, $O(n) = \{A \in GL(n, \mathbb{R}) : A^TA = I\}$, $SO(n) = O(n) \cap SL(n, \mathbb{R})$.
+
+      Similarly, we have complex versions $GL(n, \mathbb{C})$, $SL(n, \mathbb{C})$, $U(n)$, $SU(n)$.
+    \item Generally, for any vector space $V$ over $\mathbb{R}$ or $\mathbb{C}$ with finite dimension, the group of all automorphisms $Aut(V)$ is a Lie group isomorphic to $GL(n, \mathbb{R})$ or $GL(n, \mathbb{C})$.
+    \item If $G$ is a Lie group, and $H \subseteq G$ be an open subgroup, then $H$ is also a Lie group.
+    \item The $\mathbb{R}$ and $\mathbb{C}$ under addition are Lie groups. The $\mathbb{R}^* = \mathbb{R} \setminus \{0\}$ and $\mathbb{C}^* = \mathbb{C} \setminus \{0\}$ under multiplication are also Lie groups.
+    \item The $S^1$ under complex multiplication is a Lie group, called the \textbf{circle group}.
+    \item Given $G_1, \ldots ,G_k$ Lie groups, their product $G_1 \times \cdots \times G_k$ is also a Lie group under component-wise multiplication:
+      \begin{equation}
+        (g_1, \ldots ,g_k) \cdot (h_1, \ldots ,h_k) = (g_1h_1, \ldots ,g_kh_k).
+      \end{equation}
+      So the $n$-torus $T^n = S^1 \times \cdots \times S^1$ is a Lie group.
+    \item Any group with discrete topology is a 0-dimensional Lie group.
+  \end{itemize}
+\end{example}
+
+\section{Lie Group Homomorphisms}
+\begin{definition}{Lie Group Homomorphism}{Lie Group Homomorphism}
+  A \textbf{Lie group homomorphism} is a smooth map $F: G \to H$ between Lie groups that is also a group homomorphism, i.e., $F(gh) = F(g)F(h)$ for all $g,h \in G$. It is called a \textbf{Lie group isomorphism} if it is a diffeomorphism as well.
+\end{definition}
+
+\begin{example}{Lie Group Homomorphisms}{Lie Group Homomorphisms}
+  \begin{itemize}
+    \item The inclusion map $S^1 \hookrightarrow \mathbb{C}^*$ is a Lie group homomorphism.
+    \item The map $\exp :(\mathbb{R}, +) \to (\mathbb{R}^*, \cdot)$ is a Lie group homomorphism. And $\exp : (\mathbb{R}, +) \to (\mathbb{R}^+, \cdot)$ is a Lie group isomorphism. The same goes for $\mathbb{C}$.
+    \item The map $ \epsilon: \mathbb{R} \to S^1$ defined by $\epsilon(t) = e^{2\pi it}$ is a Lie group homomorphism with kernel $\mathbb{Z}$. Same goes for $ \epsilon^n: \mathbb{R}^n \to T^n$ defined by $\epsilon^n(t_1, \ldots ,t_n) = (e^{2\pi it_1}, \ldots ,e^{2\pi it_n})$ with kernel $\mathbb{Z}^n$.
+    \item The determinant map $\det : GL(n, \mathbb{R}) \to \mathbb{R}^*$ is a Lie group homomorphism.
+    \item For any Lie group $G$, the conjugation map $C_g: G \to G$ defined by $C_g(h) = ghg^{-1}$ is a Lie group isomorphism for each fixed $g \in G$.
+  \end{itemize}
+\end{example}
+
+\begin{theorem}{Constant Rank for Lie Group Homomorphisms}{Constant Rank for Lie Group Homomorphisms}
+  Every Lie group homomorphism has constant rank. A Lie group homomorphism is an isomorphism if and only if it is a bijection.
+\end{theorem}
+\begin{proof}
+  Let $F: G \to H$ be a Lie group homomorphism, and $e_g$ and $e_h$ be the identity elements. $\forall g_0\in G$, we have
+  \begin{equation*}
+    F(L_{g_0}(g)) = F(g_0g) = F(g_0)F(g) = L_{F(g_0)}(F(g)), \qquad F \circ L_{g_0} = L_{F(g_0)} \circ F.
+  \end{equation*}
+  Taking the differential at $e_g$, we get
+  \begin{equation*}
+    dF_{g_0} \circ dL_{g_0}|_{e_g} = dL_{F(g_0)}|_{e_h} \circ dF_{e_g}.
+  \end{equation*}
+  As $L_{g_0}$ and $L_{F(g_0)}$ are diffeomorphisms, $dL_{g_0}|_{e_g}$ and $dL_{F(g_0)}|_{e_h}$ are isomorphisms. Thus, $dF_{g_0}$ has the same rank as $dF_{e_g}$ for all $g_0 \in G$.
+
+  The second claim follows from the global rank theorem.
+\end{proof}
+
+\subsection{Universal Covering Groups}
+\begin{theorem}{Existence of Universal Covering Groups}{Existence of Universal Covering Groups}
+  Every connected Lie group $G$ has a simply connected Lie group $\tilde{G}$ called the \textbf{universal covering group} of $G$, that has a smooth covering map $\pi: \tilde{G} \to G$ which is also a Lie group homomorphism.
+
+  Also, the universal covering group is unique up to isomorphism.
+\end{theorem}
+
+\begin{example}{Universal Covering Group}{Universal Covering Group}
+  \begin{itemize}
+    \item $ \epsilon^n : \mathbb{R}^n \to T^n$ by
+      \begin{equation*}
+        \epsilon^n(t_1, \ldots ,t_n) = (e^{2\pi it_1}, \ldots ,e^{2\pi it_n})
+      \end{equation*}
+      is a Lie group homomorphism and a smooth covering map. So $\mathbb{R}^n$ is the universal covering group of $T^n$.
+    \item $\exp : \mathbb{C} \to \mathbb{C}^*$ is a Lie group homomorphism and a smooth covering map. So $\mathbb{C}$ is the universal covering group of $\mathbb{C}^*$.
+  \end{itemize}
+\end{example}
+
+\section{Lie Subgroups}
+\begin{definition}{Lie Subgroup}{Lie Subgroup}
+  A \textbf{Lie subgroup} of a Lie group $G$ is a subgroup $H$ of $G$ with a topology and smooth structure such that $H$ is a Lie group and an immersed submanifold of $G$.
+\end{definition}
+
+The following shows that embedded subgroups are automatically Lie subgroups.
+\begin{proposition}{Embedded Subgroup is Lie Subgroup}{Embedded Subgroup is Lie Subgroup}
+  If $H$ is an embedded submanifold of a Lie group $G$ and a subgroup of $G$, then $H$ is a Lie subgroup.
+\end{proposition}
+\begin{proof}
+  We only need to show the multiplication and inversion maps on $H$ are smooth.
+\end{proof}
+
+The possibility of open subgroups as a candidate is limited:
+\begin{lemma}{Open Subgroups as Lie Subgroups}{Open Subgroups as Lie Subgroups}
+  Suppose $G$ is a Lie group and $H$ is an open subgroup of $G$. Then $H$ is an embedded Lie subgroup of $G$. In addition $H$ is also closed, and thus a union of connected components of $G$.
+\end{lemma}
+\begin{proof}
+  If $H$ is open, then it is embedded from proposition \ref{prop:Open Submanifolds}. Then every left coset $gH$ is also open. As $G-H$ is a union of left cosets, it is also open. Thus, $H$ is closed.
+\end{proof}
+
+If $G$ is a group and $S \subseteq G$, then the subgroup generated by $S$ is the intersection of all subgroups of $G$ containing $S$.
+
+\begin{proposition}{Generating Lie Subgroups}{Generating Lie Subgroups}
+  Suppose $G$ is a Lie group and $W \subseteq G$ is any neighborhood of the identity element $e$.
+  \begin{itemize}
+    \item $W$ generates an open subgroup of $G$.
+    \item If $W$ is connected, then the subgroup generated by $W$ is also connected.
+    \item If $G$ is connected, then $W$ generates $G$.
+  \end{itemize}
+\end{proposition}
+
+\begin{proposition}{The Identity Component}{The Identity Component}
+  Let $G$ be a Lie group, and let $G_0$ be the connected component of the identity element $e \in G$, called the \textbf{identity component} of $G$. Then $G_0$ is a normal subgroup of $G$, and it is the only connected open subgroup of $G$. Every connected component of $G$ is a coset of $G_0$, thus diffeomorphic to $G_0$.
+\end{proposition}
+
+Now lets move on to Lie subgroups that are not open subgroups.
+\begin{proposition}{Kernel as Lie Subgroup}{Kernel as Lie Subgroup}
+  If $F: G \to H$ is a Lie group homomorphism, then $\ker F$ is a properly embedded Lie subgroup of $G$, with codimension equal to the rank of $F$.
+\end{proposition}
+
+\begin{proposition}{Image as Lie Subgroup}{Image as Lie Subgroup}
+  If $F: G \to H$ is an injective Lie group homomorphism, then $F(G)$ has a unique smooth structure making it a Lie subgroup of $H$, such that $F: G \to F(G)$ is a Lie group isomorphism.
+\end{proposition}
+
+\begin{example}{Embedded Lie Subgroups}{Embedded Lie Subgroups}
+  \begin{itemize}
+    \item $GL^+(n, \mathbb{R})$ is an open subgroup of $GL(n, \mathbb{R})$, thus an embedded Lie subgroup.
+    \item $S^1$ is an embedded Lie subgroup of $\mathbb{C}^*$.
+    \item $SL(n, \mathbb{R})$ is the kernel of the determinant map $\det : GL(n, \mathbb{R}) \to \mathbb{R}^*$, thus a properly embedded Lie subgroup of $GL(n, \mathbb{R})$ with codimension 1. As determinant is a smooth submersion, $SL(n, \mathbb{R})$ has dimension $n^2 - 1$.
+  \end{itemize}
+\end{example}
+
+On the torus, let $ \gamma: \mathbb{R} \to T^2$ be defined by $ \gamma(t) = (e^{2\pi it}, e^{2\pi i\alpha t})$ for some irrational number $\alpha$. Then $ \gamma$ is a Lie group homomorphism from $\mathbb{R}$ to $T^2$. Its image is a Lie subgroup of $T^2$ that is not an embedded submanifold. In fact, its image is dense in $T^2$.
+
+More interesting, in general smooth submanifolds can be closed without being embedded submanifolds, like figure-eight curve in $\mathbb{R}^2$, and can be embedded without being closed. However, for Lie subgroups, we have the following result:
+
+\begin{theorem}{Embeddedness and Closeness of Lie Groups}{Embeddedness and Closeness of Lie Groups}
+  Suppose $G$ is a Lie group and $H$ is a Lie subgroup of $G$. Then $H$ is closed in $G$ if and only if $H$ is an embedded submanifold of $G$.
+\end{theorem}
+
+\section{Group Actions and Equivariant Maps}
+
+Lie groups often act on smooth manifolds in a smooth way. Generally, if $G$ is a group and $M$ is a set, a \textbf{left group action} of $G$ on $M$ is a map $G \times M \to M$, $(g,x) \mapsto g \cdot x$ such that $\forall g,h \in G$ and $x \in M$, $e \cdot x = x$ and $g \cdot (h \cdot x) = (gh) \cdot x$. A \textbf{right group action} is defined similarly.
+
+Now, let $G$ be a Lie group and $M$ be a smooth manifold. A \textbf{smooth left group action} of $G$ on $M$ is a left group action such that the map $ \theta: G \times M \to M$, $(g,x) \mapsto g \cdot x$ is smooth.
+
+We denote the left action by $\theta_g: M \to M$, $x \mapsto g \cdot x$. For a smooth left group action, each $\theta_g$ is a diffeomorphism with inverse $\theta_{g^{-1}}$. Some frequently used notions are listed below.
+
+\begin{itemize}
+  \item Orbit: For each $p\in M$, the \textbf{orbit} of $p$ is
+    \begin{equation*}
+      G \cdot p = \{g \cdot p : g \in G\}.
+    \end{equation*}
+  \item Isotropy Group: The \textbf{isotropy group} or \textbf{stabilizer} of $p$ is
+    \begin{equation*}
+      G_p = \{g \in G : g \cdot p = p\}.
+    \end{equation*}
+    The stabilizer is a subgroup of $G$.
+  \item Transitive Action: If for every $p,q \in M$, there exists $g \in G$ such that $g \cdot p = q$, then the action is called \textbf{transitive}. Equivalently, the only orbit is $M$ itself.
+  \item Free Action: If for every $p \in M$, the only $g \in G$ such that $g \cdot p = p$ is $g = e$. Equivalently, the isotropy group $G_p$ is trivial for all $p \in M$.
+\end{itemize}
+
+\begin{example}{Lie Group Action}{Lie Group Action}
+  \begin{itemize}
+    \item Trivial Action: $G$ is any Lie group, and $M$ is any smooth manifold. The trivial action is defined by $g \cdot p = p$ for all $g \in G$ and $p \in M$. This is a smooth left group action. Every orbit is a single point, and the isotropy group is the whole group $G$.
+    \item Natural action of $GL(n, \mathbb{R})$ on $\mathbb{R}^n$: For $A \in GL(n, \mathbb{R})$ and $v \in \mathbb{R}^n$, the action is defined by $A \cdot v = Av$. This is a smooth left group action. The orbit of $v$ is the line spanned by $v$, and the isotropy group is the set of all matrices that scale $v$. There are two orbits: $\left\{ 0 \right\}$ and $\mathbb{R}^n \setminus \left\{ 0 \right\}$.
+    \item Every Lie Group acts smoothly on itself by left multiplication. The action is both free and transitive. Also, every Lie group acts smoothly on itself by conjugation, i.e., $g \cdot h = ghg^{-1}$.
+    \item A discrete group $G$ acts smoothly on a smooth manifold $M$ if and only if for each $g \in G$, the map $\theta_g: M \to M$ is a smooth map from $M$ to itself. For example, $\mathbb{Z}^n$ acts on $\mathbb{R}^n$ by translation, i.e., $(m_1, \ldots ,m_n) \cdot (x_1, \ldots ,x_n) = (x_1 + m_1, \ldots ,x_n + m_n)$.
+  \end{itemize}
+\end{example}
+
+Another important situation is covering maps. Suppose $E,M$ be topological spaces and $ \pi: E \rightarrow M$ is a topological covering map. An automorphism of $ \pi$ (or \textbf{covering transformation} or \textbf{deck transformation}) is a homeomorphism $\varphi: E \to E$ such that $\pi \circ \varphi = \pi$. The set of all automorphisms of $\pi$ forms a group under composition, denoted by $\text{Aut}_\pi(E)$, left acting on $E$.
+
+\begin{proposition}{Automorphisms as Lie Group}{Automorphisms as Lie Group}
+  Suppose $E,M$ are smooth manifolds, with or without boundary, and $ \pi: E \to M$ is a smooth covering map. With the discrete topology, $\text{Aut}_\pi(E)$ is a zero-dimensional Lie group that acts smoothly and freely on $E$.
+\end{proposition}
+
+\subsection{Equivariant Maps}
+\begin{definition}{Equivariant Maps}{Equivariant Maps}
+  Suppose $G$ is a Lie group acting smoothly on smooth manifolds $M$ and $N$. A map $F: M \to N$ is called \textbf{$G$-equivariant} if $\forall g \in G$ and $p \in M$,
+  \begin{equation*}
+    F(g \cdot p) = g \cdot F(p).
+  \end{equation*}
+  We also say that $F$ intertwines the actions of $G$ on $M$ and $N$.
+\end{definition}
+
+\begin{theorem}{Equivariant Rank Theorem}{Equivariant Rank Theorem}
+  Let $M,N$ be smooth manifolds, and $G$ be a Lie group. Suppose $F: M \rightarrow  N$ is a $G$-equivariant smooth map. If $G$ acts transitively on $M$, then $F$ has constant rank.
+\end{theorem}
+\begin{proof}
+  Let $ \theta$ and $ \varphi$ be the actions of $G$ on $M$ and $N$, respectively. $\forall p,q\in M$, choose $g\in G, \theta_g(p) = q$. Then from $\varphi_g \circ F = F \circ \theta_g$, we have
+  \begin{equation*}
+    \mathrm{d} \varphi_g|_{F(p)} \circ \mathrm{d} F_p = \mathrm{d} F_q \circ \mathrm{d} \theta_g|_p.
+  \end{equation*}
+  So $\mathrm{d} F_q$ has the same rank as $\mathrm{d} F_p$.
+\end{proof}
+
+\begin{definition}{Orbit Map}{Orbit Map}
+  Suppose $G$ is a Lie group acting smoothly on a smooth manifold $M$. For each $p \in M$, the \textbf{orbit map} at $p$ is the map $ \theta^p: G \to M$ defined by $ \theta^p(g) = g \cdot p$. The image of $ \theta^p$ is the orbit $G \cdot p$.
+\end{definition}
+
+\begin{proposition}{Properties of Orbit Maps}{Properties of Orbit Maps}
+  Suppose $ \theta$ is a smooth left group action of a Lie group $G$ on a smooth manifold $M$. For each $p \in M$, the orbit map $ \theta^{(p)}: G \to M$ is smooth and has constant rank. So the isotropy group $G_p = (\theta^{(p)})^{-1}(p)$ is a properly embedded Lie subgroup of $G$. If $G_p = e$, then $ \theta^{(p)}$ is an injective smooth immersion, so the orbit $G \cdot p$ is an immersed submanifold of $M$.
+\end{proposition}
+
+\begin{remark}
+  In fact, every orbit is an immersed submanifold of $M$. But we shall postpone the proof until we develop more tools.
+\end{remark}
+
+\begin{proof}
+  The orbit map $ \theta^{(p)}$ is smooth as
+  \begin{equation*}
+    G \cong G \times \left\{ p \right\} \hookrightarrow G \times M \xrightarrow{ \theta} M.
+  \end{equation*}
+  As $G$ acts transitively on itself by left multiplication, by the equivariant rank theorem, $ \theta^{(p)}$ has constant rank. Thus, $G_p$ is a properly embedded Lie subgroup of $G$.
+
+  Also, when $G_p = e$, $\mathrm{d} \theta^{(p)}|_e$ is injective, so $ \theta^{(p)}$ is an injective smooth immersion. Thus the orbit $G \cdot p$ is an immersed submanifold of $M$.
+\end{proof}
+
+\begin{example}{The Orthogonal Group}{The Orthogonal Group}
+  $O(n)$ is naturally a subgroup of $GL(n, \mathbb{R})$. Define a smooth map $\Phi: GL(n, \mathbb{R}) \to M(n, \mathbb{R})$ by $\Phi(A) = A^TA$. Then $O(n) = \Phi^{-1}(I)$.
+
+  Define an action of $GL(n, \mathbb{R})$ on $M(n, \mathbb{R})$ by $A \cdot X = A^TXA$. This is a smooth left group action. And $GL(n, \mathbb{R})$ acts on itself by left multiplication. The map $\Phi$ is $GL(n, \mathbb{R})$-equivariant, since
+  \begin{equation*}
+    \Phi(A \cdot B) = \Phi(AB) = (AB)^T(AB) = B^T(A^TA)B = A \cdot \Phi(B).
+  \end{equation*}
+  So by the equivariant rank theorem, $\Phi$ has constant rank. Thus, $O(n)$ is a properly embedded Lie subgroup of $GL(n, \mathbb{R})$. It is compact for it is closed and bounded in $M(n, \mathbb{R}) \cong \mathbb{R}^{n^2}$.
+
+  To compute the dimension of $O(n)$, take $B\in T_{I}GL(n, \mathbb{R}) \cong M(n, \mathbb{R})$. Then take $ \gamma(t) = I + tB$, we have
+  \begin{equation*}
+    \mathrm{d} \Phi_{I}(B) = \frac{\mathrm{d}}{\mathrm{d}t} \Big|_{t=0} \Phi(I + tB) = \frac{\mathrm{d}}{\mathrm{d}t} \Big|_{t=0} (I + tB)^T(I + tB) = B^T + B.
+  \end{equation*}
+  So $\mathrm{d} \Phi_{I}( T_{I}GL(n, \mathbb{R}))$ is the space of symmetric matrices, which has dimension $\frac{n(n+1)}{2}$. Then, $O(n)$ is a properly embedded Lie subgroup of $GL(n, \mathbb{R})$ with dimension $n^2 - \frac{n(n+1)}{2} = \frac{n(n-1)}{2}$.
+
+  The special orthogonal group $SO(n)$ is the intersection of $O(n)$ and $SL(n, \mathbb{R})$. It is also a properly embedded Lie subgroup of $GL(n, \mathbb{R})$ with dimension $\frac{n(n-1)}{2}$.
+\end{example}
+
+\begin{example}{Unitary Group}{Unitary Group}
+  The unitary group $U(n)$ is defined as
+  \begin{equation*}
+    U(n) = \{A \in GL(n, \mathbb{C}) : A^*A = I\},
+  \end{equation*}
+  where $A^*$ is the conjugate transpose of $A$. Similar to the orthogonal group, the unitary group is a properly embedded Lie subgroup of $GL(n, \mathbb{C})$ with dimension $n^2$. The special unitary group $SU(n) = U(n) \cap SL(n, \mathbb{C})$ is also a properly embedded Lie subgroup of $GL(n, \mathbb{C})$ with dimension $n^2 - 1$.
+\end{example}
+
+\subsection{Semidirect Products}
+\begin{definition}{Semidirect Product}{Semidirect Product}
+  Suppose $H,N$ are Lie groups, and $ \theta: H \times N \to N$ is a smooth left group action of $H$ on $N$. It is said to be by \textbf{automorphisms} if $\forall h \in H$, the map $ \theta_h: N \to N$, $n \mapsto h \cdot n$ is a Lie group automorphism of $N$.
+
+  Now we define a new Lie group $G = N \rtimes_\theta H$, called the \textbf{semidirect product} of $N$ and $H$ with respect to $ \theta$. As a smooth manifold, $G = N \times H$. The group operation is defined by
+  \begin{equation}
+    (n_1, h_1) \cdot (n_2, h_2) = (n_1 (h_1 \cdot n_2), h_1 h_2).
+  \end{equation}
+\end{definition}
+
+\begin{remark}
+  Intuitively, a semidirect product is a generalization of a direct product. If the action $ \theta$ is trivial, i.e., $h \cdot n = n$ for all $h \in H$ and $n \in N$, then the semidirect product reduces to the direct product $N \times H$. Its like first twisting $N$ by the action of $H$, then taking the product.
+\end{remark}
+
+\begin{example}{The Euclidean Group}{The Euclidean Group}
+  Consider $\mathbb{R}^n$ as a Lie group under addition, and $O(n)$ as a Lie group under matrix multiplication. Then the natural action of $O(n)$ on $\mathbb{R}^n$ by matrix multiplication is by automorphisms. The semidirect product $E(n) = \mathbb{R}^n \rtimes O(n)$ is called the \textbf{Euclidean group}, which is the group of all isometries of $\mathbb{R}^n$ that preserve distances. The group acting on $\mathbb{R}^n$ is given by
+  \begin{equation*}
+    (b,A) \cdot x = Ax + b, \quad (b,A)(b',A') = (b + Ab', AA'),
+  \end{equation*}
+\end{example}
+
+\begin{proposition}{Properties of Semidirect Products}{Properties of Semidirect Products}
+  Suppose $H,N$ are Lie groups, and $ \theta: H \times N \to N$ is a smooth left group action of $H$ on $N$ by automorphisms. Let $G = N \rtimes_\theta H$ be the semidirect product of $N$ and $H$ with respect to $ \theta$. Then
+  \begin{itemize}
+    \item The subsets $\tilde{N} = N \times \{e_H\}$ and $\tilde{H} = \{e_N\} \times H$ are closed Lie subgroups of $G$ that are isomorphic to $N$ and $H$, respectively.
+    \item $\tilde{N}$ is a normal subgroup of $G$.
+    \item $\tilde{N}\cap \tilde{H} = \{e_G\}$, where $e_G = (e_N, e_H)$ is the identity element of $G$.
+    \item $\tilde{N}\tilde{H} = G$.
+  \end{itemize}
+\end{proposition}
+
+\begin{theorem}{Characterization of Semidirect Products}{Characterization of Semidirect Products}
+  Suppose $G$ is a Lie group, and $N,H \subseteq G$ are closed Lie subgroups such that $N$ is normal. Also, suppose $N \cap H = \{e_G\}$ and $NH = G$. Then the map $ (n,h) \mapsto nh$ is a Lie group isomorphism from the semidirect product $N \rtimes_\theta H$ to $G$, where $ \theta: H \times N \to N$ is the action by conjugation, i.e., $ \theta(h,n) = hnh^{-1}$.
+\end{theorem}
+
+\subsection{Representations of Lie Groups}
+SORRY
+
+
+\end{document}

@@ -1,0 +1,181 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\chapter{Sard's Theorem}
+
+We study the behavior of critical values of smooth maps between manifolds. Sard's Theorem states that the set of critical values has measure zero in the target manifold.
+
+\section{The Sard's Theorem}
+\begin{theorem}{The Sard's Theorem}{The Sards Theorem}
+  Suppose $M,N$ are smooth manifolds, with or without boundary, and $F: M \to N$ is a smooth map. Then the set of critical values of $F$ has measure zero in $N$.
+\end{theorem}
+
+This shows that if $\dim M < \dim N$, then $F(M)$ has measure zero in $N$. Because each point of $M$ is critical for $F$.
+
+\section{The Whitney Embedding Theorem}
+
+Now we formalize out intuition that smooth manifolds are smoooth ``surfaces'' in Euclidean space.
+
+Firstly, we show that an injective immersion of an $n$-dimensional manifold into $\mathbb{R}^N$ can be turned into a lower dimensional immersion if $N > 2n+1$.
+
+\begin{lemma}{Lower the Immersion Dimension}{Lower the Immersion Dimension}
+  Suppose $M \subseteq \mathbb{R}^N$ is a smooth $n$-dimensional submanifold with or without boundary. Let $\mathbb{R}^{N-1}$ be the subspace of $\mathbb{R}^N$ with last coordinate zero. For any $v\in \mathbb{R}^N - \mathbb{R}^{N-1}$, let $\pi_v: \mathbb{R}^N \rightarrow \mathbb{R}^{N-1}$ be the projection with kernel $\mathbb{R}v$. If $N > 2n + 1$, then there exists a dense set of $v \in \mathbb{R}^N - \mathbb{R}^{N-1}$ such that $\pi_v|_M: M \to \mathbb{R}^{N-1}$ is an injective immersion.
+\end{lemma}
+
+\begin{lemma}{Lowering to $2n+1$}{Lowering to 2n+1}
+  Let $M$ be a smooth $n$-dimensional manifold with or without boundary. If $M$ has a smooth embedding into $\mathbb{R}^N$ for some $N > 2n + 1$, then it has a smooth embedding into $\mathbb{R}^{2n + 1}$.
+\end{lemma}
+
+\begin{theorem}{Whitney Embedding Theorem}{Whitney Embedding Theorem}
+  Every smooth $n$-dimensional manifold with or without boundary admits a proper smooth embedding into $\mathbb{R}^{2n + 1}$.
+\end{theorem}
+
+\begin{theorem}{Whitney Immersion Theorem}{Whitney Immersion Theorem}
+  Every smooth $n$-dimensional manifold with or without boundary admits a smooth immersion into $\mathbb{R}^{2n}$.
+\end{theorem}
+
+\begin{theorem}{Strong Whitney Embedding Theorem}{Strong Whitney Embedding Theorem}
+  Every smooth $n$-dimensional manifold with or without boundary admits a smooth embedding into $\mathbb{R}^{2n}$.
+\end{theorem}
+
+\begin{theorem}{Strong Whitney Immersion Theorem}{Strong Whitney Immersion Theorem}
+  Every smooth $n$-dimensional manifold with or without boundary admits a smooth immersion into $\mathbb{R}^{2n-1}$.
+\end{theorem}
+
+\section{The Whitney Approximation Theorem}
+If $ \delta: M \rightarrow \mathbb{R}$ is a positive continuous function, then we say two functiona $F_1, F_2: M \rightarrow \mathbb{R}^k$ are \textbf{$\delta$-close} if for all $p \in M$, we have
+\begin{equation*}
+  \|F_1(p) - F_2(p)\| < \delta(p).
+\end{equation*}
+
+\begin{theorem}{Whitney Approximation Theorem for Functions}{Whitney Approximation Theorem for Functions}
+  Let $M$ be a smooth manifold with or without boundary, and let $F: M \rightarrow \mathbb{R}^k$ be a continuous map. Given a positive continuous function $\delta: M \rightarrow \mathbb{R}$, there exists a smooth map $G: M \rightarrow \mathbb{R}^k$ that is $\delta$-close to $F$. If $F$ is smooth on a closed subset $A \subseteq M$, then we can choose $G$ so that $G|_A = F|_A$.  
+\end{theorem}
+
+\subsection{Tabular Neighborhoods}
+We need to generalized the Whitney Approximation Theorem to maps between manifolds. If $F: N \rightarrow M$ is smooth, then by the Whitney Embedding Theorem, we can embed $M$ into some $\mathbb{R}^n$, and approximate $F$ by a smooth map into $\mathbb{R}^n$. However, the image may not lie in $M$. To fix this, we use \textbf{tabular neighborhoods}.
+
+\begin{definition}{Normal Space}{Normal Space}
+  Suppose $M \subseteq \mathbb{R}^n$ is an embedded $m$-dimensional submanifold. For each $p \in M$, the \textbf{normal space} to $M$ at $p$ is the subspace $N_p M \subseteq T_x \mathbb{R}^n$ that are orthogonal to $T_p M$ via the inherited Euclidean inner product on $\mathbb{R}^n$ itself.
+
+  The \textbf{normal bundle} of $M$ is the set
+  \begin{equation}
+    NM = \left\{ (p,v) \in \mathbb{R}^n \times \mathbb{R}^n : p \in M, v \in N_p M \right\}.
+  \end{equation}
+  with a natural projection map $\pi_{NM}: NM \rightarrow M$ defined as the restriction of the projection map $\pi: \mathbb{R}^n \times \mathbb{R}^n \rightarrow \mathbb{R}^n$ to $NM$.
+\end{definition}
+
+\begin{theorem}{Structure of Normal Bundle}{Structure of Normal Bundle}
+  If $M \subseteq \mathbb{R}^n$ is an embedded $m$-dimensional submanifold, then the normal bundle $NM$ is an embedded $n$-dimensional submanifold of $T \mathbb{R}^n \cong \mathbb{R}^n \times \mathbb{R}^n$.
+\end{theorem}
+
+\begin{definition}{Tabular Neighborhoods}{Tabular Neighborhoods}
+  Think $NM$ as a submanifold in $\mathbb{R}^n \times \mathbb{R}^n$. Define
+  \begin{equation}
+    E: NM \rightarrow \mathbb{R}^n, \quad E(p,v) = p + v.
+  \end{equation}
+  Then $E$ is smooth. A \textbf{tabular neighborhood} of $M$ is a neighborhood $U \subseteq \mathbb{R}^n$ of $M$ such that it is diffeomorphic image under $E$ of an open subset $V \subseteq NM$ that
+  \begin{equation}
+    V = \left\{ (p,v) \in NM : \|v\| < \delta(p) \right\}
+  \end{equation}
+  for some positive continuous function $\delta: M \rightarrow \mathbb{R}$.
+\end{definition}
+
+\begin{theorem}{Tabular Neighborhood Theorem}{Tabular Neighborhood Theorem}
+  Every embedded submanifold $M \subseteq \mathbb{R}^n$ has a tabular neighborhood.
+\end{theorem}
+
+\begin{definition}{Retraction}{Retraction}
+  A \textbf{retraction} of a topological space $X$ onto a subspace $A \subseteq X$ is a continuous map $r: X \rightarrow A$ such that $r(a) = a$ for all $a \in A$.
+\end{definition}
+
+\begin{proposition}{Tabular Neighborhood to Retraction}{Tabular Neighborhood to Retraction}
+  If $M \subseteq \mathbb{R}^n$ is an embedded submanifold with a tabular neighborhood $U$, then there exists a smooth retraction $r: U \rightarrow M$ that is also a smooth submersion.
+\end{proposition}
+
+\subsection{Smooth Approximation between Manifolds}
+\begin{theorem}{Whitney Approximation Theorem}{Whitney Approximation Theorem}
+  Let $N$ be smooth manifolds with or without boundary, $M$ be a smooth manifold without boundary, and let $F: N \rightarrow M$ be a continuous map, then $F$ is homotopic to a smooth map $G: N \rightarrow M$. Furthermore, if $F$ is a smooth map on a closed subset $A \subseteq N$, then the homotopy can be taken to be relative to $A$.
+\end{theorem}
+
+\begin{corollary}{Extension Lemma for Smooth Maps}{Extension Lemma for Smooth Maps}
+  Suppose $N$ is a smooth manifold with or without boundary, and $M$ is a smooth manifold without boundary. If $A \subseteq N$ is closed and $F: A \rightarrow M$ is a smooth map, then $f$ has a smooth extension to $N$ if and only if it has a continuous extension to $N$.
+\end{corollary}
+
+\begin{definition}{Smooth Homotopy}{Smooth Homotopy}
+  A \textbf{smooth homotopy} between smooth maps $F_0, F_1: M \rightarrow N$ is a smooth map $H: M \times [0,1] \rightarrow N$ such that $H(p,0) = F_0(p)$ and $H(p,1) = F_1(p)$ for all $p \in M$.
+
+  If $N,M$ are smooth manifolds with or without boundary, it is easy to see that smooth homotopy is an equivalence relation on the set of smooth maps from $N$ to $M$.
+\end{definition}
+
+\begin{theorem}{Homotopy and Smooth Homotopy}{Homotopy and Smooth Homotopy}
+  Suppose $N$ is a smooth manifold with or without boundary, and $M$ is a smooth manifold without boundary. $F,G: N \rightarrow M$ are smooth maps. Then if $F$ is homotopic to $G$, then they are smoothly homotopic. If $F,G$ are homotopic relative to a closed subset $A \subseteq N$, then they are smoothly homotopic relative to $A$.
+\end{theorem}
+
+\section{Transversality}
+Vector space intersects nicely: If $V_1, V_2 \subseteq W$ are subspaces of a vector space $W$, then $V_1\cap V_2$ is also a subspace of $W$. For manifolds, it is not always true: There are smooth submanifolds whose intersection is not a submanifold.
+
+\begin{theorem}{Transversality}{Transversality}
+  Suppose $M$ is a smooth manifold. Two embedded submanifolds $S_1,S_2 \subseteq M$ intersect \textbf{transversely} if for every $p \in S_1 \cap S_2$, we have
+  \begin{equation*}
+    T_p S_1 + T_p S_2 = T_p M.
+  \end{equation*}
+  in linear algebraic sense, where we consider $T_p S_1, T_p S_2$ as subspaces of $T_p M$.
+
+  If $F: N \rightarrow M$ is a smooth map and $S \subseteq M$ is an embedded submanifold, then we say $F$ is \textbf{transverse} to $S$ if for every $p \in F^{-1}(S)$, we have
+  \begin{equation}
+    T_{F(p)}S + \mathrm{d} F_p (T_p N) = T_{F(p)} M.
+  \end{equation}
+\end{theorem}
+
+\begin{remark}
+  The first definition is easy to understand: At each intersection point, the two submanifolds' tangent spaces cross nicely to span the whole tangent space of the ambient manifold. The second definition generalizes the first: It means that the image of $N$ and the submanifold $S$ intersect nicely in $M$.
+
+  Specially, if $F$ is a submersion, then it is transverse to every embedded submanifold of $M$. And two embedded submanifolds $S_1, S_2 \subseteq M$ intersect transversely if and only if the inclusion map $i: S_1 \hookrightarrow M$ is transverse to $S_2$.
+\end{remark}
+
+\begin{theorem}{Generalized Level Set Theorem}{Generalized Level Set Theorem}
+  Suppose $M,N$ are smooth manifolds and $S \subseteq M$ is an embedded submanifold.
+  \begin{itemize}
+    \item If $F: N \rightarrow M$ is a smooth map that is transverse to $S$, then $F^{-1}(S)$ is an embedded submanifold of $N$ with codimension equal to that of $S$ in $M$.
+    \item If $S' \subseteq M$ is another embedded submanifold that intersects $S$ transversely, then $S \cap S'$ is an embedded submanifold of $M$ with codimension equal to the sum of the codimensions of $S$ and $S'$ in $M$.
+    \item If $F: N \rightarrow M$ is a smooth submersion, then for any embedded submanifold $S$ with codimension $k$ in $M$, $F^{-1}(S)$ is an embedded submanifold of $N$ with codimension $k$.
+  \end{itemize}
+\end{theorem}
+
+This shows in $\mathbb{R}^3$, a smooth surface and a smooth curve intersecting transversely will yield a discrete set of points, and two smooth surfaces intersecting transversely will yield a smooth curve.
+
+\begin{theorem}{Global Characterization of Graphs}{Global Characterization of Graphs}
+  Suppose $M,N$ are smooth manifolds and $S \subseteq M \times N$ is an immersed submanifold. Let $\pi_M$ and $\pi_N$ be the projection maps from $M \times N$ to $M$ and $N$ respectively. Then the following are equivalent:
+  \begin{itemize}
+    \item $S$ is the graph of a smooth map $f: M \rightarrow N$.
+    \item $\pi_M|_S$ is a diffeomorphism from $S$ to $M$.
+    \item For each $p\in M$, the submanifolds $S$ and $\pi_M^{-1}(p)$ intersect transversely in $M \times N$ at exactly one point.
+    \item $S$ is the graph of $f = \pi_N \circ (\pi_M|_S)^{-1}$.
+  \end{itemize}
+\end{theorem}
+
+\begin{corollary}{Local Characterization of Graphs}{Local Characterization of Graphs}
+  Suppose $M,N$ are smooth manifolds and $S \subseteq M \times N$ is an immersed submanifold. If $(p,q)\in S$, $S$ intersects $\pi_M^{-1}(p)$ transversely at $(p,q)$, then there exists an open neighborhood $U$ of $p$ in $M$ and $V$ of $(p,q)$ in $S$ such that $V$ is the graph of a smooth map $f: U \rightarrow N$.
+\end{corollary}
+
+Now, we generalize the concept of smooth homotopy:
+
+Suppose $N,M,S$ are smooth manifolds and $\forall s\in S$, we have a smooth map $F_s: N \rightarrow M$. If the map $F: N \times S \rightarrow M$ defined as $F(p,s) = F_s(p)$ is smooth, then we say $\{F_s\}_{s\in S}$ is a \textbf{smooth family} of smooth maps from $N$ to $M$. This is just a higher dimensional generalization of smooth homotopy.
+
+\begin{proposition}{Smooth Family and Homotopy}{Smooth Family and Homotopy}
+  If $\{F_s\}_{s\in S}$ is a smooth family of smooth maps from $N$ to $M$, if $S$ is connected, then for any $s_1,s_2 \in S$, $F_{s_1}$ is smoothly homotopic to $F_{s_2}$.
+\end{proposition}
+\begin{proof}
+  $S$ is connected so it is path connected. Let $\gamma: [0,1] \rightarrow S$ be a smooth path with $\gamma(0) = s_1$ and $\gamma(1) = s_2$. Define $H(p,s) = F(p, \gamma(s))$ is a smooth homotopy between $F_{s_1}$ and $F_{s_2}$.
+\end{proof}
+
+\begin{theorem}{Parametric Transversality Theorem}{Parametric Transversality Theorem}
+  Suppose $N,M$ are smooth manifolds, $X \subseteq M$ is an embedded submanifold, and $\{F_s\}_{s\in S}$ is a smooth family of smooth maps from $N$ to $M$. If the map $F: N \times S \rightarrow M$ defined as $F(p,s) = F_s(p)$ is transverse to $X$, then for almost every $s \in S$, the map $F_s: N \rightarrow M$ is transverse to $X$.
+\end{theorem}
+
+\begin{theorem}{Transversality Homotopy Theorem}{Transversality Homotopy Theorem}
+  Suppose $N,M$ are smooth manifolds and $X \subseteq M$ is an embedded submanifold. Every smooth map $F: N \rightarrow M$ is homotopic to a smooth map $g: N \rightarrow M$ that is transverse to $X$.
+\end{theorem}
+
+\end{document}
