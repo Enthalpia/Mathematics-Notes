@@ -1,0 +1,422 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\chapter{The Cotangent Bundle}
+
+\section{Covectors}
+
+As we know from linear algebra, given a finite-dimensional vector space $V$, we can form its dual space $V^*$, the space of all linear functionals from $V$ to $\mathbb{R}$. Elements of $V^*$ are called \textbf{covectors}. Now let $M$ be a smooth manifold, with or without boundary. At each point $p \in M$, we have the tangent space $T_pM$, which is a finite-dimensional vector space. We can then consider the dual space of the tangent space at each point, denoted by $T_p^*M = (T_pM)^*$. Elements of $T_p^*M$ are called \textbf{cotangent vectors} or \textbf{covectors} at the point $p$.
+
+Given smooth local coordinates $(x^1, x^2, \ldots, x^n)$ in $U \subseteq M$, the coordinate basis $\partial / \partial x^i |_p$ of $T_pM$ induces a dual basis of $T_p^*M$, for now denoted by $ \lambda^i |_p$. Any $ \omega \in T_p^*M$ can be expressed uniquely as $ \omega = \omega_i \lambda^i |_p$, where 
+\begin{equation*}
+  \omega_i = \omega \left( \frac{\partial}{\partial x^i} \Big|_p \right).
+\end{equation*}
+Now if $(\tilde{x}^1, \tilde{x}^2, \ldots, \tilde{x}^n)$ is another smooth coordinate whose domain $\tilde{U}$ contains $p$, then we have
+\begin{equation*}
+  \frac{\partial }{\partial x^i} \Big|_p = \frac{\partial \tilde{x}^j}{\partial x^i}(p) \frac{\partial }{\partial \tilde{x}^j} \Big|_p,
+\end{equation*}
+and thus we can write $\omega = \omega_i \lambda^i |_p = \tilde{\omega}_j \tilde{\lambda}^j |_p$, where
+\begin{equation*}
+  \omega_i = \omega \left( \frac{\partial}{\partial x^i} \Big|_p \right) = \tilde{\omega}_j \frac{\partial \tilde{x}^j}{\partial x^i}(p).
+\end{equation*}
+
+\begin{remark}
+  In the early days of differential geometry, tangent vectors were often thought of a $n$-tuple of reals assigned to a point $p$ in a coordinate chart. Note this definition DEPENDS on the choice of the coordinate chart. A real coordinate-free tangent vector can be thought of as an equivalence class of such $n$-tuples under the transformation law:
+  \begin{equation*}
+    \tilde{v}^j = \frac{\partial \tilde{x}^j}{\partial x^i}(p) v^i.
+  \end{equation*}
+  for any coordinate change. Similarly, a covector can be thought of as an equivalence class of $n$-tuples of reals assigned to $p$ under the transformation law:
+  \begin{equation*}
+    \omega_i = \tilde{\omega}_j \frac{\partial \tilde{x}^j}{\partial x^i}(p).
+  \end{equation*}
+
+  It has been a custom calling tangent covectors \textbf{covariant vectors} and tangent vectors \textbf{contravariant vectors} because of the way their components transform under coordinate changes. However, this terminology is somewhat outdated and can be confusing, so it is generally avoided in modern texts.
+\end{remark}
+
+\subsection{Covector Fields}
+
+\begin{definition}{Cotangent Bundle}{Cotangent Bundle}
+  Let $M$ be a smooth manifold, with or without boundary. The \textbf{cotangent bundle} of $M$ is the disjoint union of the cotangent spaces at each point in $M$:
+  \begin{equation*}
+    T^*M = \bigsqcup_{p \in M} T_p^*M = \{ (p, \omega) : p \in M, \omega \in T_p^*M \}.
+  \end{equation*}
+  There is a natural projection map $\pi : T^*M \to M$ defined by $\pi(p, \omega) = p$. For any $U \subseteq M$ with local coordinates $(x^1, x^2, \ldots, x^n)$, the coordinate covectors $\lambda^i |_p$ defines $n$ maps $\lambda^i : U \rightarrow T^*M$ called coordinate covector fields.
+\end{definition}
+
+\begin{proposition}{Cotangent Bundle as Vector Bundle}{Cotangent Bundle as Vector Bundle}
+  Let $M$ be a smooth $n$-dimensional manifold, with or without boundary. Then with the projection and the natural vector space structure on each fiber, the cotangent bundle $T^*M$ can be uniquely made into a smooth vector bundle of rank $n$ over $M$, for which all coordinate covector fields $\lambda^i$ are smooth local sections.
+\end{proposition}
+\begin{proof}
+  It is quite easy to find local trivializations, just take any coordinate chart $(U, (x^1, x^2, \ldots, x^n))$ on $M$, and define
+  \begin{equation*}
+    \Phi: \pi^{-1}(U) \to U \times \mathbb{R}^n, \quad \Phi(\xi_i \lambda^i |_p) = (p, (\xi_1, \xi_2, \ldots, \xi_n)).
+  \end{equation*}
+  Next follows straight by vector bundle chart lemma \ref{lem:Vector Bundle Chart Lemma}.
+\end{proof}
+
+This process can be generalized to any vector bundle. Suppose $E \rightarrow M$ is a smooth vector bundle over $M$. Then we can define the dual bundle $E^* \rightarrow M$ by taking the dual space of each fiber.
+
+The projection map produce natural coordinate chart for $T^*M$. For any chart $(U, x^i)$ on $M$, the map
+\begin{equation*}
+  \pi^{-1}(U) \to \mathbb{R}^{2n}, \quad \xi_i \lambda^i |_p \mapsto (x^1(p), x^2(p), \ldots, x^n(p), \xi_1, \xi_2, \ldots, \xi_n)
+\end{equation*}
+is a smooth local coordinate chart for $T^*M$. We call $(x^i, \xi_i)$ the \textbf{natural coordinates} on $T^*M$ associated to the coordinate chart $(U, x^i)$ on $M$.
+
+A (local or global) section of $T^*M$ is called a \textbf{covector field} or a \textbf{differential 1-form}. For any covector field $\omega$, we denote its value at $p$ by $\omega |_p$ or simply $\omega_p$. If $\omega$ is a rough covector field and $X$ is a rough vector field, then we can define a rough real-valued function $\omega(X): M \to \mathbb{R}$ by
+\begin{equation*}
+  \omega(X)(p) = \omega |_p (X |_p).
+\end{equation*}
+In component form, if we write $\omega = \omega_i \lambda^i$ and $X = X^i \partial / \partial x^i$, then
+\begin{equation*}
+  \omega(X) = \omega_i X^i.
+\end{equation*}
+
+The set of smooth covector fields on $M$ is denoted by $\mathfrak{X}^*(M)$.
+
+\begin{proposition}{Smoothness Criterion for Covector Fields}{Smoothness Criterion for Covector Fields}
+  Let $M$ be a smooth manifold, with or without boundary, and let $\omega: M \to T^*M$ be a rough covector field. The following are equivalent:
+  \begin{itemize}
+    \item $\omega$ is smooth.
+    \item For every smooth chart, the component functions of $\omega$ are smooth.
+    \item Each point $p\in M$ has a smooth chart $(U, (x^1, x^2, \ldots, x^n))$ such that the component functions of $\omega$ with respect to this chart are smooth on $U$.
+    \item For every smooth vector field $X$ on $M$, the function $\omega(X): M \to \mathbb{R}$ is smooth.
+    \item For every open subset $U \subseteq M$ and every smooth vector field $X$ on $U$, the function $\omega(X): U \to \mathbb{R}$ is smooth on $U$.
+  \end{itemize}
+\end{proposition}
+
+\subsection{Coframes}
+\begin{definition}{Coframe}{Coframe}
+  Let $M$ be a smooth manifold, with or without boundary. Take open subset $U \subseteq M$, a \textbf{local coframe} is a collection of $n$ covector fields $(\omega^1, \omega^2, \ldots, \omega^n)$ on $U$ such that at each point $p \in U$, the set $(\omega^1 |_p, \omega^2 |_p, \ldots, \omega^n |_p)$ forms a basis for the cotangent space $T_p^*M$. If $U=M$, then we call $(\omega^1, \omega^2, \ldots, \omega^n)$ a \textbf{global coframe} on $M$.
+\end{definition}
+
+\begin{example}{Coframes}{Coframes}
+  \begin{itemize}
+    \item The coordinate covector fields $(\lambda^1, \lambda^2, \ldots, \lambda^n)$ associated to any smooth chart $(U, (x^1, x^2, \ldots, x^n))$ form a local coframe on $U$.
+    \item For any local frame $(E_1, E_2, \ldots, E_n)$ for $TM$ over $U$, there is a unique local coframe $(\epsilon^1, \epsilon^2, \ldots, \epsilon^n)$ for $T^*M$ over $U$ such that $\epsilon^i(E_j) = \delta^i_j$, called the \textbf{dual coframe} to $(E_1, E_2, \ldots, E_n)$. Conversely, given any local coframe, there is a unique dual local frame. And $E_i$ is smooth if and only if $\epsilon^i$ is smooth.
+  \end{itemize}
+\end{example}
+
+Given any local coframe $(\epsilon^i)$ over $U$, any covector field $\omega$ over $U$ can be uniquely expressed as $\omega = \omega_i \epsilon^i$ for some rough functions $\omega_i: U \to \mathbb{R}$. If the coframe and $\omega$ are smooth, then so are the component functions $\omega_i$.
+
+\begin{proposition}{Coframe Criterion for Smoothness}{Coframe Criterion for Smoothness}
+  Let $M$ be a smooth manifold, with or without boundary, and let $\omega$ be a rough covector field on an open subset $U \subseteq M$. Let $(\epsilon^1, \epsilon^2, \ldots, \epsilon^n)$ be a local coframe on $U$, and write $\omega = \omega_i \epsilon^i$ for some rough functions $\omega_i: U \to \mathbb{R}$. Then $\omega$ is smooth if and only if each component function $\omega_i$ is smooth.
+\end{proposition}
+
+\section{The Differential of a Smooth Function}
+In elementary analysis, the gradient of a smooth real-valued function $f: \mathbb{R}^n \to \mathbb{R}$ is defined as the vector field whose components are the partial derivatives of $f$. As:
+\begin{equation}
+  \grad f = \sum_{i=1}^n \frac{\partial f}{\partial x^i} \frac{\partial}{\partial x^i}.
+\end{equation}
+Unfortunately, this definition does not generalize to the coordinate free setting here (the index convention is a hint). However, we find that the partial derivatives $\partial f / \partial x^i$ behave like the components of a covector field rather than a vector field.
+
+\begin{definition}{Differential of a Smooth Function}{Differential of a Smooth Function}
+  Let $M$ be a smooth manifold, with or without boundary, and let $f: M \to \mathbb{R}$ be a smooth function. The \textbf{differential} of $f$ is the covector field $\mathrm{d}f \in \mathfrak{X}^*(M)$ defined by
+  \begin{equation}
+    \mathrm{d} f_p (v) = v(f)
+  \end{equation}
+  for all $p \in M$ and $v \in T_pM$.
+\end{definition}
+
+\begin{proposition}{Differential is Smooth Covector Field}{Differential is Smooth Covector Field}
+  The differential of any smooth function $f: M \to \mathbb{R}$ is a smooth covector field on $M$.
+\end{proposition}
+
+In coordinate representation, if $(U, (x^1, x^2, \ldots, x^n))$ is a smooth chart on $M$, then we can write $\mathrm{d} f_p = A_i(p) \lambda^i |_p$ for some functions $A_i: U \to \mathbb{R}$. By definition, for any $p \in U$,
+\begin{equation*}
+  A_i(p) = \mathrm{d} f_p \left( \frac{\partial}{\partial x^i} \Big|_p \right) = \frac{\partial}{\partial x^i} \Big|_p (f) = \frac{\partial f}{\partial x^i}(p).
+\end{equation*}
+So we have
+\begin{equation}
+  \mathrm{d} f_p = \frac{\partial f}{\partial x^i}(p) \lambda^i |_p,
+\end{equation}
+If $f = x^j$, then $\mathrm{d} x^j |_p = \lambda^j |_p$. So the coordinate covector fields can be written as differentials of the coordinate functions! This gives
+\begin{equation}
+  \mathrm{d} f_p = \frac{\partial f}{\partial x^i}(p) \mathrm{d} x^i |_p, \qquad \mathrm{d} f = \frac{\partial f}{\partial x^i} \mathrm{d} x^i.
+\end{equation}
+which is just the classical expression for the differential of $f$ in multivariable calculus.
+
+\begin{proposition}{Properties of Differential}{Properties of Differential}
+  Let $M$ be a smooth manifold, with or without boundary. For any smooth functions $f, g \in C^\infty(M)$ and any real number $a \in \mathbb{R}$, the following hold:
+  \begin{itemize}
+    \item Linearity: $\mathrm{d}(af + b g) = a \mathrm{d} f + b\mathrm{d} g$.
+    \item Product Rule: $\mathrm{d}(fg) = f \mathrm{d} g + g \mathrm{d} f$.
+    \item Quotient Rule: $\displaystyle \mathrm{d}\left( \frac{f}{g} \right) = \frac{g \mathrm{d} f - f \mathrm{d} g}{g^2}$, provided $g$ is nowhere zero.
+    \item If $J \subseteq \mathbb{R}$ is an open interval containing the image of $f$, and $h: J \to \mathbb{R}$ is a smooth function, then $\mathrm{d}(h \circ f) = (h' \circ f) \mathrm{d} f$.
+    \item If $f$ is constant, then $\mathrm{d} f = 0$.
+  \end{itemize}
+\end{proposition}
+
+\begin{proposition}{Vanishing Differential}{Vanishing Differential}
+  Let $M$ be a smooth manifold, with or without boundary, and let $f: M \to \mathbb{R}$ be a smooth function. Then $\mathrm{d} f = 0$ if and only if $f$ is constant on each connected component of $M$.
+\end{proposition}
+\begin{proof}
+  If $M$ is connected and $\mathrm{d} f = 0$, then let $p\in M$, let $\mathcal{C} = \{q\in M: f(q) = f(p)\}$. For any $q \in \mathcal{C}$, take a smooth coordinate ball (or half-ball if $q \in \partial M$) $U$ centered at $q$. From elementary calculus, $f$ is constant on $U$, so $U \subseteq \mathcal{C}$. This shows that $\mathcal{C}$ is open. On the other hand, it is closed by continuity of $f$. Since $M$ is connected, we must have $\mathcal{C} = M$, so $f$ is constant.
+\end{proof}
+
+\begin{remark}
+  In elementary calculus, the differential $\mathrm{d} f_p$ at a point $p$ is often thought of as the approximation of the change in $f$ for a small change of $x^i$. Here the intuition is also valid, just take a local coordinate chart, identify the tangent space to $T_p \mathbb{R}^n$ and the same goes for Taylor's theorem. For any tangent vector $v \in T_p \mathbb{R}^n \cong \mathbb{R}^n$, we have
+  \begin{equation*}
+    \Delta f = f(p + v) - f(p) \approx \frac{\partial f}{\partial x^i}(p) v^i = \mathrm{d} f_p (v).
+  \end{equation*}
+\end{remark}
+
+\begin{proposition}{Derivative along a Curve}{Derivative along a Curve}
+  Let $M$ be a smooth manifold, with or without boundary, and let $\gamma: J \to M$ be a smooth curve, and let $f: M \to \mathbb{R}$ be a smooth function. Then the derivative of the composition $f \circ \gamma: J \to \mathbb{R}$ is given by
+  \begin{equation*}
+    (f \circ \gamma)'(t) = \mathrm{d} f_{\gamma(t)} (\gamma'(t))
+  \end{equation*}
+\end{proposition}
+
+\begin{remark}
+  Indeed, there are two ways to interpret $(f\circ \gamma)'(t)$. The first is seeing $f \circ \gamma$ as a smooth function from $J$ to $\mathbb{R}$, and taking its derivative at $t$. The second is seeing it as a smooth curve in $\mathbb{R}$, and taking the tangent vector at $t$. One is an element of $\mathbb{R}$, the other is an element of $T_{f(\gamma(t))} \mathbb{R}$. Obviously, they can be identified via the canonical isomorphism.
+\end{remark}
+
+\section{Pullback of Covector Fields}
+A smooth map yields a linear map on tangent spaces called the differential. Dually, it also yields a linear map on cotangent spaces called the pullback.
+
+\begin{definition}{Pullback}{Pullback}
+  Let $M$ and $N$ be smooth manifolds, with or without boundary, and let $F: M \to N$ be a smooth map. The differential $\mathrm{d} F_p: T_pM \to T_{F(p)}N$ induces a dual map
+  \begin{equation}
+    \mathrm{d} F_p^*: T_{F(p)}^*N \to T_p^*M, \qquad \mathrm{d} F_p^*(\omega)(v) = \omega(\mathrm{d} F_p (v))
+  \end{equation}
+  called the pointwise pullback map.
+\end{definition}
+
+When we discuss pushforwards of vector fields, we have to impose some conditions on $F$ to ensure the existence of the pushforward vector field: Only when $F$ is a diffeomorphism or a Lie group homomorphism can we guarantee the existence of the pushforward vector field. However, for pullbacks of covector fields, no such conditions are needed. Given a smooth map $F: M \to N$ and a covector field $\omega$ on $N$, we can define a rough covector field $F^* \omega$ on $M$ by
+\begin{equation}
+  (F^* \omega)_p = \mathrm{d} F_p^* (\omega_{F(p)}), \qquad (F^* \omega)_p (v) = \omega_{F(p)} (\mathrm{d} F_p (v))
+\end{equation}
+It does not have any problem because the pointwise pullback map is defined for all points in $M$. (This can be seen as a consequence of the ``direction'' of the smooth map).
+
+\begin{proposition}{Function Multiplication under Pullback}{Function Multiplication under Pullback}
+  Let $M$ and $N$ be smooth manifolds, with or without boundary, and let $F: M \to N$ be a smooth map. Let $u$ be a continuous real-valued function on $N$, and let $\omega$ be a rough covector field on $N$. Then
+  \begin{equation}
+    F^* (u \omega) = (u \circ F) F^* \omega.
+  \end{equation}
+  If $u$ is smooth, then
+  \begin{equation}
+    F^* \mathrm{d} u = \mathrm{d} (u \circ F).
+  \end{equation}
+\end{proposition}
+\begin{proof}
+  From computation
+  \begin{equation*}
+    (F^* (u \omega))_p (v) = (u \omega)_{F(p)} (\mathrm{d} F_p (v)) = u(F(p)) \omega_{F(p)} (\mathrm{d} F_p (v)) = ((u \circ F) F^* \omega)_p (v).
+  \end{equation*}
+  \begin{equation*}
+    (F^* \mathrm{d} u)_p (v) = \mathrm{d} u_{F(p)} (\mathrm{d} F_p (v)) = \mathrm{d} (u \circ F)_p (v).
+  \end{equation*}
+  would do.
+\end{proof}
+
+\begin{proposition}{Smoothness of Pullback}{Smoothness of Pullback}
+  Let $M$ and $N$ be smooth manifolds, with or without boundary, and let $F: M \to N$ be a smooth map. If $\omega$ is a smooth covector field on $N$, then the pullback $F^* \omega$ is a smooth covector field on $M$.
+\end{proposition}
+\begin{proof}
+  Take any $p\in M$, and choose smooth coordinates $(y^i)$ on an open neighborhood $V$ of $F(p)$ in $N$, and $U = F^{-1}(V)$. Then let $\omega = \omega_j \mathrm{d} y^j$ on $V$. So we have
+  \begin{equation*}
+    F^* \omega = F^* (\omega_j \mathrm{d} y^j) = (\omega_j \circ F) F^* \mathrm{d} y^j = (\omega_j \circ F) \mathrm{d} (y^j \circ F) = (\omega_j \circ F) \mathrm{d} F^j,
+  \end{equation*}
+  This also gives a simple expression to compute the components of $F^* \omega$ in local coordinates. This is exactly how we do it in multivariable calculus.
+\end{proof}
+
+\subsection{Restricting Covector Fields to Submanifolds}
+Suppose $M$ is a smooth manifold, with or without boundary, and $S \subseteq M$ is an immersed submanifold with inclusion map $\iota: S \hookrightarrow M$. Given any smooth covector field $\omega$ on $M$, we can define a smooth covector field on $S$ by restricting $\omega$ to $S$ via the pullback $\iota^* \omega$. To see it,
+\begin{equation*}
+  \iota^* \omega |_p (v) = \omega_{\iota(p)} (\mathrm{d} \iota_p (v)) = \omega_p (v)
+\end{equation*}
+which is just the restriction of $\omega$ to $S$. However, $\omega$ may vanish on $S$ even if it is nonvanishing on $M$, when $\omega$ annihilates all vectors in $T_p S$ for each $p \in S$.
+
+\begin{remark}
+  Here is something to clarify. We say $\omega$ vanishes along $S$ if $\omega_p = 0$ for all $p \in S$ in the context of being a covector field on $M$. We say the pullback $\omega$ to $S$ vanishes if $\iota^* \omega |_p = 0$ for all $p \in S$ in the context of being a covector field on $S$. The former implies the latter, but not vice versa.
+\end{remark}
+
+\section{Line Integrals}
+Using covector fields, we can define line integrals on smooth manifolds coordinnate-freely.
+
+We begin with $\mathbb{R}$. Let $[a, b]$ be a closed interval, and $\omega$ be a smooth covector field on $[a, b]$ (meaning it is smooth on some open neighborhood of $[a, b]$ in $\mathbb{R}$). Let $t$ be the standard coordinate on $\mathbb{R}$, then we can write $\omega = f(t) \mathrm{d} t$ for some smooth function $f: [a, b] \to \mathbb{R}$. We DEFINE the line integral of $\omega$ over $[a, b]$ by
+\begin{equation}
+  \int_{[a,b]} \omega = \int_a^b f(t) \mathrm{d} t.
+\end{equation}
+
+Well, the left hand side does not seem to depend on the choice of coordinate $t$. We shall see that this is indeed the case.
+
+\begin{proposition}{Diffeomorphism Invariance of Line Integrals}{Diffeomorphism Invariance of Line Integrals}
+  Let $\omega$ be a smooth covector field on $[a, b] \subseteq \mathbb{R}$, and $\varphi: [c, d] \to [a, b]$ be an increasing diffeomorphism. Then
+  \begin{equation}
+    \int_{[a,b]} \omega = \int_{[c,d]} \varphi^* \omega.
+  \end{equation}
+  If $\varphi$ is decreasing, then
+  \begin{equation}
+    \int_{[a,b]} \omega = - \int_{[c,d]} \varphi^* \omega.
+  \end{equation}
+\end{proposition}
+\begin{proof}
+  By computation, we have $(\varphi^* \omega)_s = \omega_{\varphi(s)} (\varphi'(s) \partial / \partial t |_{\varphi(s)}) = f(\varphi(s)) \varphi'(s) \mathrm{d} s$. Thus,
+  \begin{equation*}
+    \int_{[c,d]} \varphi^* \omega = \int_c^d f(\varphi(s)) \varphi'(s) \mathrm{d} s = \int_a^b f(t) \mathrm{d} t = \int_{[a,b]} \omega.
+  \end{equation*}
+\end{proof}
+
+Now let $M$ be a smooth manifold, with or without boundary. A curve segment in $M$ is a continuous curve $\gamma: [a, b] \to M$.
+\begin{itemize}
+  \item A smooth curve segment is a smooth map $\gamma: [a, b] \to M$, where $[a, b]$ is regarded as a smooth manifold with boundary.
+  \item A piecewise smooth curve segment if there is a finite partition $a = t_0 < t_1 < \cdots < t_k = b$ such that each restriction $\gamma|_{[t_{i-1}, t_i]}$ is a smooth curve segment.
+\end{itemize}
+
+\begin{proposition}{Connecting Points via Curves}{Connecting Points via Curves}
+  If $M$ is a connected smooth manifold, with or without boundary, then for any two points $p, q \in M$, there exists a piecewise smooth curve segment $\gamma: [a, b] \to M$ such that $\gamma(a) = p$ and $\gamma(b) = q$.
+\end{proposition}
+\begin{proof}
+  Take $p\in M$, let $\mathcal{C} = \{q\in M: \text{there is a piecewise smooth curve segment from } p \text{ to } q\}$. For any $q \in \mathcal{C}$, take a smooth coordinate ball (or half-ball if $q \in \partial M$) $U$ centered at $q$. For any $r \in U$, we can connect $q$ to $r$ via a straight line in the coordinate chart, so there is a piecewise smooth curve segment from $p$ to $r$. This shows that $\mathcal{C}$ is open. On the other hand, if $q\in \partial \mathcal{C}$, then any smooth coordinate ball (or half-ball) $U$ centered at $q$ must contain some point $r \in \mathcal{C}$. Again, we can connect $r$ to $q$ via a straight line in the coordinate chart, so there is a piecewise smooth curve segment from $p$ to $q$. This shows that $\mathcal{C}$ is closed. Since $M$ is connected, we must have $\mathcal{C} = M$, so any two points in $M$ can be connected via a piecewise smooth curve segment.
+\end{proof}
+
+If $\gamma: [a, b] \to M$ is a smooth curve segment and $\omega$ is a smooth covector field on $M$, we define the line integral of $\omega$ along $\gamma$ by
+\begin{equation}
+  \int_\gamma \omega = \int_{[a,b]} \gamma^* \omega.
+\end{equation}
+if $\gamma$ is piecewise smooth with partition $a = t_0 < t_1 < \cdots < t_k = b$, we define
+\begin{equation}
+  \int_\gamma \omega = \sum_{i=1}^k \int_{\gamma|_{[t_{i-1}, t_i]}} \omega.
+\end{equation}
+
+\begin{proposition}{Properties of Line Integrals}{Properties of Line Integrals}
+  Let $M$ be a smooth manifold, with or without boundary, and let $\gamma: [a, b] \to M$ be a piecewise smooth curve segment. For any smooth covector fields $\omega, \omega_1, \omega_2$ on $M$,
+  \begin{itemize}
+    \item $\displaystyle \forall c_1, c_2 \in \mathbb{R}, \quad \int_\gamma (c_1 \omega_1 + c_2 \omega_2) = c_1 \int_\gamma \omega_1 + c_2 \int_\gamma \omega_2$.
+    \item If $\gamma$ is a constant curve, then $\displaystyle \int_\gamma \omega = 0$.
+    \item If $\gamma_1 = \gamma |_{[a, c]}$ and $\gamma_2 = \gamma |_{[c, b]}$ for some $c \in (a, b)$, then $\displaystyle \int_\gamma \omega = \int_{\gamma_1} \omega + \int_{\gamma_2} \omega$.
+    \item If $F: M \to N$ is a smooth map between smooth manifolds, with or without boundary, and $\eta$ is a smooth covector field on $N$, then $\displaystyle \int_\gamma F^* \eta = \int_{F \circ \gamma} \eta$.
+  \end{itemize}
+\end{proposition}
+
+Line integrals are independent of reparameterization up to sign. If $\gamma: [a, b] \to M$ and $\tilde{\gamma}: [c, d] \to M$ are two piecewise smooth curve segments, we say that they are \textbf{reparameterizations} of each other if there is a diffeomorphism $\varphi: [c, d] \to [a, b]$ such that $\tilde{\gamma} = \gamma \circ \varphi$. If $\varphi$ is increasing, then it is said to be an \textbf{forward reparameterization}; if $\varphi$ is decreasing, then it is said to be a \textbf{backward reparameterization}.
+
+\begin{proposition}{Parameter Independence of Line Integrals}{Parameter Independence of Line Integrals}
+  Let $M$ be a smooth manifold, with or without boundary, and let $\gamma: [a, b] \to M$ and $\tilde{\gamma}: [c, d] \to M$ be two piecewise smooth curve segments that are reparameterizations of each other. For any smooth covector field $\omega$ on $M$,
+  \begin{equation*}
+    \int_{\tilde{\gamma}} \omega = \begin{cases}
+      \displaystyle \int_\gamma \omega, & \text{if } \tilde{\gamma} \text{ is a forward reparameterization of } \gamma; \\
+      \displaystyle -\int_\gamma \omega, & \text{if } \tilde{\gamma} \text{ is a backward reparameterization of } \gamma.
+    \end{cases}
+  \end{equation*}
+\end{proposition}
+\begin{proof}
+  Using proposition \ref{prop:Diffeomorphism Invariance of Line Integrals}, we have, for forward reparameterization,
+  \begin{equation*}
+    \int_{\tilde{\gamma}} \omega = \int_{[c,d]} \tilde{\gamma}^* \omega = \int_{[c,d]} (\gamma \circ \varphi)^* \omega = \int_{[c,d]} \varphi^* (\gamma^* \omega) = \int_{[a,b]} \gamma^* \omega = \int_\gamma \omega,
+  \end{equation*}
+  Same goes for backward reparameterization.
+\end{proof}
+  
+Also, from the definition, we have (using local coordinates):
+\begin{equation*}
+  \gamma^* \omega = \omega_{\gamma(t)} (\gamma'(t)) \mathrm{d} t,
+\end{equation*}
+So we can write the line integral in the classical form:
+\begin{equation}
+  \int_\gamma \omega = \int_a^b \omega_{\gamma(t)} (\gamma'(t)) \mathrm{d} t.
+\end{equation}
+
+\begin{theorem}{Fundamental Theorem of Line Integrals}{Fundamental Theorem of Line Integrals}
+  Let $M$ be a smooth manifold, with or without boundary, and let $\gamma: [a, b] \to M$ be a piecewise smooth curve segment. For any smooth function $f: M \to \mathbb{R}$,
+  \begin{equation*}
+    \int_\gamma \mathrm{d} f = f(\gamma(b)) - f(\gamma(a)).
+  \end{equation*}
+\end{theorem}
+\begin{proof}
+  Suppose $\gamma$ is smooth (then the piecewise smooth case follows by additivity). We have
+  \begin{equation*}
+    \int_\gamma \mathrm{d} f = \int_a^b (\mathrm{d} f)_{\gamma(t)} (\gamma'(t)) \mathrm{d} t = \int_a^b (f \circ \gamma)'(t) \mathrm{d} t = f(\gamma(b)) - f(\gamma(a)).
+  \end{equation*}
+\end{proof}
+
+\section{Conservative Covector Fields}
+
+\begin{definition}{Exact, Conservative and Closed Covector Fields}{Exact, Conservative and Closed Covector Fields}
+  Let $M$ be a smooth manifold, with or without boundary. A smooth covector field $\omega$ on $M$ is said to be \textbf{exact} if there exists a smooth function $f: M \to \mathbb{R}$ such that $\omega = \mathrm{d} f$. $f$ is called a \textbf{potential function} for $\omega$.
+
+  We say that a smooth covector field $\omega$ on $M$ is \textbf{conservative} if for every piecewise smooth closed curve segment $\gamma$ in $M$,
+  \begin{equation*}
+    \int_\gamma \omega = 0.
+  \end{equation*}
+
+  We say that a smooth covector field $\omega$ on $M$ is \textbf{closed} if for every smooth chart $(U, (x^1, x^2, \ldots, x^n))$ on $M$, writing $\omega = \omega_i \mathrm{d} x^i$ on $U$, we have
+  \begin{equation*}
+    \frac{\partial \omega_i}{\partial x^j} = \frac{\partial \omega_j}{\partial x^i}
+  \end{equation*}
+\end{definition}
+
+\begin{theorem}{Conservative Field Theorem}{Conservative Field Theorem}
+  Let $M$ be a smooth manifold, with or without boundary. A smooth covector field $\omega$ on $M$ is conservative if and only if it is exact.
+\end{theorem}
+\begin{proof}
+  SORRY
+\end{proof}
+
+As we did in calculus, there is an easy necessary condition for a covector field to be conservative from the exchange of mixed partial derivatives.
+
+\begin{proposition}{Exact Covector Field is Closed}{Exact Covector Field is Closed}
+  Every exact (hence every conservative) covector field on a smooth manifold, with or without boundary, is closed.
+\end{proposition}
+\begin{proof}
+  Just take a local chart and use the equality of mixed partial derivatives.
+\end{proof}
+
+Well, actually, we do not need to check every chart to see if a covector field is closed.
+\begin{proposition}{Criterion for Closed Covector Fields}{Criterion for Closed Covector Fields}
+  Let $M$ be a smooth manifold, with or without boundary, and let $\omega$ be a smooth covector field on $M$. Then the following are equivalent:
+  \begin{itemize}
+    \item $\omega$ is closed.
+    \item For every point $p \in M$, there is a smooth chart $(U, (x^1, x^2, \ldots, x^n))$ containing $p$ such that writing $\omega = \omega_i \mathrm{d} x^i $ on $U$, we have
+    \begin{equation*}
+      \frac{\partial \omega_i}{\partial x^j} = \frac{\partial \omega_j}{\partial x^i}
+    \end{equation*}
+  \item For any open subset $U \subseteq M$ and smooth vector fields $X, Y \in \mathfrak{X}(U)$,
+    \begin{equation}
+      X(\omega(Y)) - Y(\omega(X)) = \omega([X, Y]).
+    \end{equation}
+  \end{itemize}
+\end{proposition}
+
+We also know pullbacks of local diffeomorphisms preserve these properties, because it is just like an isomorphism.
+\begin{corollary}{Pullback by Local Diffeomorphisms}{Pullback by Local Diffeomorphisms}
+  Suppose $F: M \to N$ is a local diffeomorphism between smooth manifolds, with or without boundary. Then the pullback $F^*: \mathfrak{X}^*(N) \to \mathfrak{X}^*(M)$ takes exact (conservative) covector fields on $N$ to exact (conservative) covector fields on $M$. It also takes closed covector fields on $N$ to closed covector fields on $M$.
+\end{corollary}
+\begin{proof}
+  Exactness follows directly from
+  \begin{equation*}
+    F^* \mathrm{d} u = \mathrm{d} (u \circ F).
+  \end{equation*}
+  Closedness follows from local coordinate representation and change of variables.
+\end{proof}
+
+The question of whether a closed covector field is exact is of great importance in differential geometry, leading to the development of de Rham cohomology. For now, we just state the result for a specific type of manifold:
+
+A \textbf{Star-shaped domain} in $\mathbb{R}^n$ is a subset $U \subseteq \mathbb{R}^n$ such that there exists a point $c \in U$ such that for every point $x \in U$, the line segment connecting $c$ to $x$ lies entirely in $U$.
+
+\begin{theorem}{Poincar\'e Lemma for Covector Fields}{Poincare Lemma for Covector Fields}
+  Let $U$ be a star-shaped open subset of $\mathbb{R}^n$ or $\mathbb{H}^n$. Then every closed covector field on $U$ is exact.
+\end{theorem}
+\begin{proof}
+  Assume $c=0$ by some diffeomorphism. For any $x\in U$, define $\gamma_x: [0,1] \to U$ by $\gamma_x(t) = t x$. Define a function $f: U \to \mathbb{R}$ by
+  \begin{equation*}
+    f(x) = \int_{\gamma_x} \omega = \int_0^1 \omega_{\gamma_x(t)} (\gamma_x'(t)) \mathrm{d} t = \int_0^1 \omega_i (t x) x^i \mathrm{d} t.
+  \end{equation*}
+  As the integrand is smooth in $x$, $f$ is smooth. Now we have
+  \begin{equation*}
+    \begin{aligned}
+      \frac{\partial f}{\partial x^j} (x) &= \int_0^1 \left( t \frac{\partial \omega_i}{\partial x^j} (t x) x^i + \omega_j (t x) \right) \mathrm{d} t \\
+      &= \int_0^1 \left( t \frac{\partial \omega_j}{\partial x^i} (t x) x^i + \omega_j (t x) \right) \mathrm{d} t \\
+      &= \int_0^1 \frac{\partial}{\partial t} \left( t \omega_j (t x) \right) \mathrm{d} t = \omega_j (x).
+    \end{aligned}
+  \end{equation*}
+  from the closedness of $\omega$. Thus, $\mathrm{d} f = \omega$.
+\end{proof}
+
+
+\begin{corollary}{Local Exactness of Closed Covector Fields}{Local Exactness of Closed Covector Fields}
+  Let $M$ be a smooth manifold, with or without boundary$, and let \omega$ be a closed covector field on $M$. Then for every point $p \in M$, there exists an open neighborhood $U$ of $p$ such that the restriction $\omega|_U$ is exact.
+\end{corollary}
+
+\end{document}

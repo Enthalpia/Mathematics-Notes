@@ -185,4 +185,125 @@ Then $(\pi^{-1}(V), \tilde{\varphi})$ is a smooth chart of the total space $E$.
   Suppose there is another topology and smooth structure on $TM$ satisfying the same conditions. If $(U, \varphi)$ is a smooth chart of $M$, then the corresponding frame $ \partial / \partial x^i$ of $TM$ over $U$ is a smooth local frame over $U$. So there is a smooth local trivialization $ \Phi: \pi^{-1}(U) \rightarrow U \times \mathbb{R}^n$ associated to this local frame. But this is exactly the same as the local trivialization defined before.
 \end{proof}
 
+\section{Bundle Homomorphisms}
+
+\begin{definition}{Bundle Homomorphisms}{Bundle Homomorphisms}
+  Let $ \pi: E \rightarrow M$ and $ \pi': E' \rightarrow M'$ be vector bundles. A continuous map $F: E \rightarrow E'$ is a \textbf{bundle homomorphism} from $E$ to $E'$ if there exists a map $f: M \rightarrow M'$ such that the following diagram commutes:
+  \begin{equation*}
+    \begin{tikzcd}
+      E \arrow{r}{F} \arrow{d}{\pi} & E' \arrow{d}{\pi'} \\
+      M \arrow{r}{f} & M'
+    \end{tikzcd}
+  \end{equation*}
+  with the property that for each $p \in M$, the restriction $F|_{E_p}: E_p \rightarrow E'_{f(p)}$ is a linear map between vector spaces. We say that $F$ covers $f$.
+
+  We can deduce that $f$ is actually continuous and if the bundles and $F$ are smooth, then $f$ is also smooth.
+
+  A bijection bundle homomorphism whose inverse is also a bundle homomorphism is called a \textbf{bundle isomorphism}. If there exists a bundle isomorphism between two vector bundles, then they are said to be \textbf{isomorphic}.
+
+  If $M'=M$ is the same space, we say that $F$ is a bundle homomorphism over $M$ with base map $\operatorname{id}_M$.
+\end{definition}
+
+\begin{example}{Bundle Homomorphisms}{Bundle Homomorphisms}
+  \begin{itemize}
+    \item If $F: M \rightarrow N$ is a smooth map between smooth manifolds, then its differential $dF: TM \rightarrow TN$ is a smooth bundle homomorphism covering $F$.
+    \item If $ \pi: E \rightarrow M$ is a smooth vector bundle, and $ S \subseteq M$ is an immersed submanifold, with or without boundary, then the inclusion map $i: E|_S \rightarrow E$ is a smooth bundle homomorphism covering the inclusion map of $S$ into $M$.
+  \end{itemize}
+\end{example}
+
+\begin{definition}{Linear over $C^\infty(M)$}{Linear over Cinf(M)}
+  Let $ \pi: E \rightarrow M$ and $ \pi': E' \rightarrow M$ be smooth vector bundles over the same smooth manifold $M$, with or without boundary. A map $\mathcal{F}: \Gamma(E) \rightarrow \Gamma(E')$ is said to be \textbf{linear over} $C^\infty(M)$ if for all $f, g \in C^\infty(M)$ and $ \sigma, \tau \in \Gamma(E)$, we have
+  \begin{equation*}
+    \mathcal{F}(f \sigma + g \tau) = f \mathcal{F}(\sigma) + g \mathcal{F}(\tau).
+  \end{equation*}
+\end{definition}
+
+Now, if $E \rightarrow M$ and $E' \rightarrow M$ are smooth vector bundles over a smooth manifold $M$, with or without boundary, then if $F: E \rightarrow E'$ is a smooth bundle homomorphism over $M$, then $F$ induces a map $\tilde{F}: \Gamma(E) \rightarrow \Gamma(E')$ defined by
+\begin{equation}
+  \tilde{F}(\sigma)(p) = F(\sigma(p)), \quad \forall p \in M.
+\end{equation}
+It is easily verified that $\tilde{F}$ is linear over $C^\infty(M)$.
+
+\begin{lemma}{Bundle Homomorphism Characterization Lemma}{Bundle Homomorphism Characterization Lemma}
+  Let $ \pi: E \rightarrow M$ and $ \pi': E' \rightarrow M$ be smooth vector bundles over the same smooth manifold $M$, with or without boundary. A map $\mathcal{F}: \Gamma(E) \rightarrow \Gamma(E')$ is linear over $C^\infty(M)$ if and only if there exists a unique smooth bundle homomorphism $F: E \rightarrow E'$ over $M$ such that $\mathcal{F}(\sigma) = F \circ \sigma$ for all $ \sigma \in \Gamma(E)$.
+\end{lemma}
+\begin{proof}
+  SORRY
+\end{proof}
+
+\begin{example}{Bundle Homomorphism over Manifolds}{Bundle Homomorphism over Manifolds}
+  \begin{itemize}
+    \item Let $M$ be a smooth manifold, and $f\in C^\infty(M)$. Then $\mathfrak{X}(M) \rightarrow \mathfrak{X}(M)$ defined by $X \mapsto fX$ is linear over $C^\infty(M)$, and thus defines a smooth bundle homomorphism $TM \rightarrow TM$ over $M$.
+    \item If $Z$ is a smooth vector field in $\mathbb{R}^3$, then the cross product with $Z$: $X \mapsto X \times Z$ is linear over $C^\infty(\mathbb{R}^3)$, and thus defines a smooth bundle homomorphism $T\mathbb{R}^3 \rightarrow T\mathbb{R}^3$ over $\mathbb{R}^3$.
+    \item If $Z$ is a smooth vector field on $\mathbb{R}^n$, then the Euclidean inner product with $Z$: $X \mapsto \langle X, Z \rangle$ is linear over $C^\infty(\mathbb{R}^n)$, and thus defines a smooth bundle homomorphism $T\mathbb{R}^n \rightarrow \mathbb{R} \times \mathbb{R}^n$ over $\mathbb{R}^n$.
+  \end{itemize}  
+\end{example}
+
+Note that many maps the involve differentials are NOT bundle homomorphisms because they do not satisfy the right linearity conditions. For example, the Lie bracket $[X,Y]$ of two vector fields is not linear over $C^\infty(M)$ in either argument.
+
+\section{Subbundles}
+
+\begin{definition}{Subbundles}{Subbundles}
+  Given a vector bundle $ \pi_E: E \rightarrow M$, a \textbf{subbundle} of $E$ is a vector bundle $ \pi_D: D \rightarrow M$, where $D$ is a topological subspace of $E$, and $\pi_D$ is the restriction of $ \pi_E$ to $D$, such that for each $p \in M$, the fiber $D_p = D \cap E_p$ is a vector subspace of $E_p$.
+
+  If $E \rightarrow M$ is a smooth vector bundle, then a \textbf{smooth subbundle} of $E$ is a subbundle $D \rightarrow M$ such that $D$ is a smooth vector bundle and an embedded submanifold of $E$, with or without boundary.
+\end{definition}
+
+The following proposition gives a useful criterion for determining when a union of subspace $D = \bigsqcup_{p \in M} D_p, D_p \subseteq E_p$ is a smooth subbundle of $E$.
+
+\begin{lemma}{Local Frame Criterion for Subbundles}{Local Frame Criterion for Subbundles}
+  Let $ \pi: E \rightarrow M$ be a smooth vector bundle, and for each $p\in M$, we are given an $m$-dimensional linear subspace $D_p \subseteq E_p$. Let $D = \bigsqcup_{p \in M} D_p \subseteq E$, then $D$ is a smooth subbundle of $E$ if and only if: 
+
+  Each point $p \in M$ has an open neighborhood $U \subseteq M$ that there exists a smooth local sectrions $\sigma_1, \ldots, \sigma_m: U \rightarrow E$ of $E$ over $U$ such that for each $q \in U$, the set $\{\sigma_1(q), \ldots, \sigma_m(q)\}$ is a basis of the subspace $D_q \subseteq E_q$.
+\end{lemma}
+
+\begin{example}{Subbundles}{Subbundles}
+  \begin{itemize}
+    \item If $M$ is a smooth manifold, and $V$ is a nowhere vanishing smooth vector field on $M$, then $D \subseteq TM$ defined by $D_p = \vspan \{V(p)\}$ is a smooth subbundle of $TM$ of rank 1.
+    \item Suppose $E \rightarrow M$ is any trivial bundle, and let $E_1, \ldots ,E_k$ be a smooth global frame of $E$. For any $0 \leq m \leq k$, the subspace $D_p = \vspan \{E_1(p), \ldots, E_m(p)\} \subseteq E_p$ defines a smooth subbundle $D$ of $E$ of rank $m$.
+    \item Suppose $M$ is a smooth manifold, with or without boundary, and $S \subseteq M$ is an immersed $k$-dimensional submanifold, with or without boundary. Then $TS$ is a smooth subbundle of the ambient tangent bundle $TM|_S$ of rank $k$.
+  \end{itemize}
+\end{example}
+
+\begin{definition}{Constant Rank Bundle Homomorphisms}{Constant Rank Bundle Homomorphisms}
+  Let $ \pi: E \rightarrow M$ and $ \pi': E' \rightarrow M$ be smooth vector bundles over the same smooth manifold $M$, with or without boundary. A smooth bundle homomorphism $F: E \rightarrow E'$ over $M$ is said to have \textbf{constant rank} if for each $p \in M$, the linear map $F_p: E_p \rightarrow E'_p$ defined by the restriction of $F$ to the fiber $E_p$ has the same rank.
+\end{definition}
+
+\begin{theorem}{Smooth Subbundles from Constant Rank}{Smooth Subbundles from Constant Rank}
+  Let $E,E'$ be smooth vector bundles over the same smooth manifold $M$, and let $F: E \rightarrow E'$ be a smooth bundle homomorphism over $M$. Define subsets
+  \begin{equation}
+    \ker F = \bigsqcup_{p \in M} \ker F_p \subseteq E, \quad \image F = \bigsqcup_{p \in M} \image F_p \subseteq E'.
+  \end{equation}
+  Then both $\ker F$ and $\image F$ are smooth subbundles of $E$ and $E'$ respectively if and only if $F$ has constant rank.
+\end{theorem}
+\begin{proof}
+  Quite obvious.
+\end{proof}
+
+\begin{lemma}{Orthogonal Complement Bundles}{Orthogonal Complement Bundles}
+  Let $M$ be an immersed submanifold of $\mathbb{R}^n$, with or without boundary. Let $D$ be a smooth rank-$k$ subbundle of $T \mathbb{R}^n|_M$. For each $p \in M$, define $D_p^\perp \subseteq T_p \mathbb{R}^n$ to be the orthogonal complement of $D_p$ in $T_p \mathbb{R}^n \cong \mathbb{R}^n$ with respect to the standard Euclidean inner product. Then $D^\perp = \bigsqcup_{p \in M} D_p^\perp$ is a smooth subbundle of $T \mathbb{R}^n|_M$ of rank $n - k$.
+
+  If we take $D = TM$ to be the tangent bundle of $M$, then $D^\perp$ is called the \textbf{normal bundle} of $M$ in $\mathbb{R}^n$.
+\end{lemma}
+
+\section{Fiber Bundles}
+A vector bundle is a special case of a more general concept called a fiber bundle, where the fibers are not necessarily vector spaces.
+
+\begin{definition}{Fiber Bundles}{Fiber Bundles}
+  A \textbf{fiber bundle} is a triple $(E, M, \pi)$, where $E$ and $M$ are topological spaces (or smooth manifolds, with or without boundary), and $\pi: E \rightarrow M$ is a continuous surjection (or smooth map) satisfying the following conditions:
+  \begin{itemize}
+    \item For each $p \in M$, the fiber $E_p = \pi^{-1}(p)$ is homeomorphic (or diffeomorphic) to a fixed topological space (or smooth manifold) $F$, called the \textbf{fiber}.
+    \item For each $p \in M$, there exists an open neighborhood $U$ of $p$ in $M$ and a homeomorphism (or diffeomorphism) $\Phi: \pi^{-1}(U) \rightarrow U \times F$ called a \textbf{local trivialization} such that $\pi_U \circ \Phi = \pi$, where $\pi_U: U \times F \rightarrow U$ is the projection onto the first factor.
+  \end{itemize}
+\end{definition}
+
+\begin{example}{Fiber Bundles}{Fiber Bundles}
+  \begin{itemize}
+    \item Every product space $M \times F$ with the projection map $\pi: M \times F \rightarrow M$ defined by $\pi(p, x) = p$ is a trivial fiber bundle over $M$ with fiber $F$.
+    \item Every rank-$k$ vector bundle is a fiber bundle with fiber $\mathbb{R}^k$.
+    \item The M\"obius strip is a fiber bundle over $S^1$ with fiber $[-1,1]$. It is not a trivial fiber bundle.
+    \item Every covering map $\pi: E \rightarrow M$ is a fiber bundle with discrete fiber.
+  \end{itemize}
+\end{example}
+
 \end{document}

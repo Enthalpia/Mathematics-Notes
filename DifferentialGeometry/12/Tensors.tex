@@ -1,0 +1,221 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\chapter{Tensors}
+
+We new generalize the application of linear algebra in differential geometry by introducing tensor fields on smooth manifolds. Tensor fields are multilinear maps that take in multiple vector and covector fields and output smooth functions. They play a crucial role in various areas of differential geometry, including the study of Riemannian metrics, differential forms, and curvature.
+
+\section{Multilinear Algebra}
+We have already encountered the concept of multilinear maps in the context of vector spaces in linear algebra. A multilinear map is $F: V_1 \times V_2 \times \cdots \times V_k \to W$ that is linear in each argument when the others are held fixed.
+
+\begin{example}{Multilinear Map}{Multilinear Map}
+  \begin{itemize}
+    \item The dot product on $\mathbb{R}^n$ is a bilinear map.
+    \item The cross product on $\mathbb{R}^3$ is a bilinear map.
+    \item The determinant function on $n \times n$ matrices is a multilinear map.
+    \item The bracket operation in a Lie algebra is a bilinear map.
+  \end{itemize}
+\end{example}
+
+\begin{example}{Tensor Product of Covectors}{Tensor Product of Covectors}
+  Let $V$ be a vector space and let $\omega, \eta \in V^*$ be covectors. Define a bilinear map $\omega \otimes \eta: V \times V \to \mathbb{R}$ by
+  \begin{equation}
+    \omega \otimes \eta (v_1, v_2) = \omega(v_1) \eta(v_2).
+  \end{equation}
+  This can also be generalized to define the tensor product of multilinear maps: if $F: V_1 \times \cdots \times V_k \to \mathbb{R}$ and $G: W_1 \times \cdots \times W_m \to \mathbb{R}$ are multilinear maps, then their tensor product $F \otimes G: (V_1 \times \cdots \times V_k) \times (W_1 \times \cdots \times W_m) \to \mathbb{R}$ is defined by $(F \otimes G)(v_1, \ldots, v_k, w_1, \ldots, w_m) = F(v_1, \ldots, v_k) G(w_1, \ldots, w_m)$.
+
+  It is easily verified that the tensor product operation acting on multilinear maps is itself multilinear and also associative.
+\end{example}
+
+\subsection{Tensors Products of Vector Spaces}
+The vector space of multilinear functions $L(V_1, \ldots, V_k; \mathbb{R})$ can be viewed as all linear combinations of objects of the form $\omega_1 \otimes \cdots \otimes \omega_k$ where each $\omega_i \in V_i^*$. This motivates the following contruction of tensor products of vector spaces.
+
+The intuition is clear: given finite-dimensional vector spaces $V_1, \ldots, V_k$, we want to construct a new vector space $V_1 \otimes \cdots \otimes V_k$ which formally consists of all linear combinations of objects of the form $v_1 \otimes \cdots \otimes v_k$ where each $v_i \in V_i$, depending multilinearly on each $v_i$.
+
+\begin{definition}{Formal Linear Combinations}{Formal Linear Combinations}
+  Let $S$ be a set. A \textbf{formal linear combination} of elements of $S$ is a function $f: S \to \mathbb{R}$ such that $f(s) \neq 0$ for only finitely many $s \in S$. The set of all formal linear combinations of elements of $S$ is called the \textbf{free vector space} on $S$, denoted by $\mathcal{F}(S)$.
+
+  If we identify $x \subseteq S$ with the formal linear combination $\delta_x$, we can say $S \subseteq \mathcal{F}(S)$ and every element of $\mathcal{F}(S)$ can be written as a finite linear combination of elements of $S$ by $f = \sum_{i = 1}^m a_i x_i$, where $a_i = f(x_i)$. Therefore, $S$ is a basis for $\mathcal{F}(S)$.
+\end{definition}
+We can directly see this as construction from a set as basis to form a vector space. So $\mathcal{F}(S)$ is finite-dimensional if and only if $S$ is finite. However, usually the elements of $S$ can be transformed to each other by some linear relations, which we need to quotient out.
+
+Also, as $S$ is thought of as a basis, for any vector space $W$, any function $A: S \to W$ extends uniquely to a linear map $\tilde{A}: \mathcal{F}(S) \to W$ by defining $\tilde{A}(\sum_{i = 1}^m a_i x_i) = \sum_{i = 1}^m a_i A(x_i)$.
+
+Now, we need to rigorously form the tensor product of vector spaces.
+\begin{itemize}
+  \item We start from the intuitive formal linear combinations of elements of the form $v_1 \otimes \cdots \otimes v_k$ where each $v_i \in V_i$. So we consider the free vector space $\mathcal{F}(V_1 \times \cdots \times V_k)$.
+  \item Next, we need to identify elements that are related by multilinearity. We define an equivalence relation. Let $\mathcal{R}$ be the vector space spanned by all elements of the following forms:
+    \begin{itemize}
+      \item $(v_1, \ldots, v_i + v_i', \ldots, v_k) - (v_1, \ldots, v_i, \ldots, v_k) - (v_1, \ldots, v_i', \ldots, v_k)$ for all $v_i, v_i' \in V_i$,
+      \item $(v_1, \ldots, a v_i, \ldots, v_k) - a (v_1, \ldots, v_i, \ldots, v_k)$ for all $v_i \in V_i$ and $a \in \mathbb{R}$.
+    \end{itemize}
+    for all $1 \leq i \leq k$. By quotienting out $\mathcal{R}$, we identify elements that are related by multilinearity.
+\end{itemize}
+
+\begin{definition}{Tensor Product of Vector Spaces}{Tensor Product of Vector Spaces}
+  Let $V_1, \ldots, V_k$ be vector spaces. The \textbf{tensor product} of $V_1, \ldots, V_k$, denoted by $V_1 \otimes \cdots \otimes V_k$, is defined as the quotient vector space
+  \begin{equation}
+    V_1 \otimes \cdots \otimes V_k = \mathcal{F}(V_1 \times \cdots \times V_k) / \mathcal{R},
+  \end{equation}
+  where $\mathcal{R}$ is the subspace defined above.
+
+  The natural projection map is $\Pi: \mathcal{F}(V_1 \times \cdots \times V_k) \to V_1 \otimes \cdots \otimes V_k$. Then for $v_i \in V_i$, we define
+  \begin{equation}
+    v_1 \otimes \cdots \otimes v_k = \Pi((v_1, \ldots, v_k)).
+  \end{equation}
+  called the tensor product of $v_1, \ldots, v_k$.
+\end{definition}
+
+From the definition we have multilinearity built in:
+\begin{equation*}
+  \begin{aligned}
+    & v_1 \otimes \cdots \otimes (v_i + v_i') \otimes \cdots \otimes v_k = v_1 \otimes \cdots \otimes v_i \otimes \cdots \otimes v_k + v_1 \otimes \cdots \otimes v_i' \otimes \cdots \otimes v_k, \\
+    & v_1 \otimes \cdots \otimes (a v_i) \otimes \cdots \otimes v_k = a (v_1 \otimes \cdots \otimes v_i \otimes \cdots \otimes v_k).
+  \end{aligned}
+\end{equation*}
+
+\begin{proposition}{Characterization Property of Tensor Product Space}{Characterization Property of Tensor Product Space}
+  Let $V_1, \ldots, V_k$ be finite-dimensional vector spaces and let $A: V_1 \times \cdots \times V_k \to X$ be a multilinear map to a vector space $X$. Then there exists a unique linear map $\tilde{A}: V_1 \otimes \cdots \otimes V_k \to X$ such that the following diagram commutes:
+  \begin{equation*}
+    \begin{tikzcd}
+      V_1 \times \cdots \times V_k \arrow[r, "A"] \arrow[d, "\pi"'] & X \\
+      V_1 \otimes \cdots \otimes V_k \arrow[ur, "\tilde{A}"']
+    \end{tikzcd}
+  \end{equation*}
+\end{proposition}
+\begin{proof}
+  Note first that every $A$ extends uniquely to a linear map $\overline{A}: \mathcal{F}(V_1 \times \cdots \times V_k) \to X$ by defining $\overline{A}(\sum_{i = 1}^m a_i (v_{1,i}, \ldots, v_{k,i})) = \sum_{i = 1}^m a_i A(v_{1,i}, \ldots, v_{k,i})$. So the subspace $\mathcal{R}$ is contained in the kernel of $\overline{A}$ by the multilinearity of $A$. Therefore, by the first isomorphism theorem, there exists a unique linear map $\tilde{A}: V_1 \otimes \cdots \otimes V_k \to X$ such that $\tilde{A} \circ \Pi = \overline{A}$. Since $\pi = \Pi \circ i$ where $i: V_1 \times \cdots \times V_k \to \mathcal{F}(V_1 \times \cdots \times V_k)$ is the inclusion map, so we have $\tilde{A} \circ \pi = \tilde{A} \circ \Pi \circ i = \overline{A} \circ i = A$.
+
+  Uniqueness follows from requiring $\tilde{A}(v_1 \otimes \cdots \otimes v_k) = A(v_1, \ldots, v_k)$ for all $v_i \in V_i$ and linearity.
+\end{proof}
+
+We can find a basis for the tensor product space easily.
+\begin{proposition}{Basis of Tensor Product Space}{Basis of Tensor Product Space}
+  Let $V_1, \ldots, V_k$ be finite-dimensional vector spaces with dimensions $n_1, \ldots, n_k$ respectively. Let $\{E_1^{(j)}, \ldots, E_{n_j}^{(j)}\}$ be a basis for $V_j$ for each $1 \leq j \leq k$. Then the set
+  \begin{equation*}
+    \mathcal{C} = \{E_{i_1}^{(1)} \otimes E_{i_2}^{(2)} \otimes \cdots \otimes E_{i_k}^{(k)} \mid 1 \leq i_j \leq n_j, 1 \leq j \leq k\}
+  \end{equation*}
+  is a basis for $V_1 \otimes \cdots \otimes V_k$. So the dimension of $V_1 \otimes \cdots \otimes V_k$ is $n_1 n_2 \cdots n_k$.
+\end{proposition}
+
+\begin{proposition}{Associativity of Tensor Product}{Associativity of Tensor Product}
+  Let $V_1, V_2, V_3$ be finite-dimensional vector spaces. Then there is a natural isomorphism
+  \begin{equation*}
+    (V_1 \otimes V_2) \otimes V_3 \cong V_1 \otimes (V_2 \otimes V_3) \cong V_1 \otimes V_2 \otimes V_3.
+  \end{equation*}
+\end{proposition}
+
+\begin{proposition}{Concrete Tensor Products}{Concrete Tensor Products}
+  If $V_1, \ldots, V_k$ are finite-dimensional vector spaces, there is a canonical isomorphism
+  \begin{equation}
+    V_1^* \otimes \cdots \otimes V_k^* \cong L(V_1, \ldots, V_k; \mathbb{R})
+  \end{equation}
+  under which the tensor product $\omega_1 \otimes \cdots \otimes \omega_k$ defined abstractly corresponds to the multilinear map defined earlier.
+
+  Similarly, there is a canonical isomorphism
+  \begin{equation}
+    V_1 \otimes \cdots \otimes V_k \cong L(V_1^*, \ldots, V_k^*; \mathbb{R})
+  \end{equation}
+  from the identification $V \cong V^{**}$.
+\end{proposition}
+\begin{proof}
+  Define a multilinear map $\Phi: V_1^* \times \cdots \times V_k^* \to L(V_1, \ldots, V_k; \mathbb{R})$ by $\Phi(\omega_1, \ldots, \omega_k)(v_1, \ldots, v_k) = \omega_1(v_1) \cdots \omega_k(v_k)$. By the characterization property of tensor product space, $\Phi$ induces a linear map $\tilde{\Phi}: V_1^* \otimes \cdots \otimes V_k^* \to L(V_1, \ldots, V_k; \mathbb{R})$ such that $\tilde{\Phi}(\omega_1 \otimes \cdots \otimes \omega_k) = \Phi(\omega_1, \ldots, \omega_k)$.
+
+  Now $\tilde{\Phi}$ is an isomorphism. We can use a basis above to prove it, but itself is canonical.
+\end{proof}
+
+\subsection{Covariant and Contravariant Tensors}
+\begin{definition}{Covariant and Contravariant Tensors}{Covariant and Contravariant Tensors}
+  Let $V$ be a finite-dimensional vector space, $k\in \mathbb{N}$.
+  \begin{itemize}
+    \item A \textbf{covariant $k$-tensor} on $V$ is an element of $(V^*)^{\otimes k} = V^* \otimes \cdots \otimes V^*$ ($k$ times).
+    \item A \textbf{contravariant $k$-tensor} on $V$ is an element of $V^{\otimes k} = V \otimes \cdots \otimes V$ ($k$ times).
+  \end{itemize}
+  We also denote the vector space of all covariant $k$-tensors on $V$ by $T^k(V^*)$. Similarly, we denote the vector space of all contravariant $k$-tensors on $V$ by $T^k(V)$.
+\end{definition}
+
+\begin{itemize}
+  \item A 1-covariant tensor is just a covector, $T^1(V^*) = V^*$.
+  \item A covariant 2-tensor is an element of $V^* \otimes V^*$, which can be thought of as a bilinear form on $V$.
+  \item The determinant is a covariant $n$-tensor on $\mathbb{R}^n$.
+\end{itemize}
+
+\begin{remark}
+  Even if we can identify $V^{\otimes k}$ with $L((V^*)^k; \mathbb{R})$, we usually just think of contravariant tensors as formal objects instead of multilinear maps on covectors.
+\end{remark}
+
+More generally, we can mix covariant and contravariant tensors.
+
+\begin{definition}{Mixed Tensors}{Mixed Tensors}
+  Let $V$ be a finite-dimensional vector space, $k, l \in \mathbb{N}$. A \textbf{mixed $(k, l)$-tensor} on $V$ is an element of $V^{\otimes k} \otimes (V^*)^{\otimes l}$. We denote the vector space of all mixed $(k, l)$-tensors on $V$ by $T^{(k,l)}(V)$.
+\end{definition}
+
+\section{Symmetric and Alternating Tensors}
+In this section, we describe two classes of tensors that change in a simple way when their arguments are rearranged.
+
+\subsection{Symmetric Tensors}
+Let $V$ be a finite-dimensional vector space. A covariant $k$-tensor $\alpha$ is said to be symmetric on $V$ if for all $v_i$:
+\begin{equation}
+  \alpha(v_1, \ldots ,v_i, \ldots ,v_j, \ldots ,v_k) = \alpha(v_1, \ldots ,v_j, \ldots ,v_i, \ldots ,v_k), \qquad \forall 1\leq i< j\leq k
+\end{equation}
+Or equivalently, the value of $\alpha$ is unchanged when $v_1, \ldots ,v_k$ is rearranged in any order.
+
+It is easy to verify that the symmetric covariant $k$-tensors form a subspace of $T^k(V^*)$, denoted by $\Sigma^k(V^*)$. There is a natural projection from $T^k(V^*)$ to $\Sigma^k(V^*)$: Let $S_k$ be the symmetric group, and $\sigma\in S_k$, denote
+\begin{equation*}
+  ^\sigma \alpha(v_1, \ldots ,v_k) = \alpha(v_{\sigma(1)}, \ldots ,v_{\sigma(k)})
+\end{equation*}
+Note that $^\tau(^\sigma \alpha) = ^{\tau \sigma} \alpha$ from group multiplication.
+
+Now we define the symmetric projection $\operatorname{Sym}: T^k(V^*) \rightarrow \Sigma^k(V^*)$ by
+\begin{equation}
+  \operatorname{Sym} \alpha = \frac{1}{k!} \sum_{\sigma\in S_k}^{} ^\sigma \alpha.
+\end{equation}
+
+\begin{proposition}{Properties of Symmetrization}{Properties of Symmetrization}
+  Let $\alpha$ be a covariant $k$ tensor on a finite finite-dimensional vector space, then
+  \begin{itemize}
+    \item $\operatorname{Sym} \alpha$ is symmetric.
+    \item $\operatorname{Sym} \alpha = \alpha$ if and only if $\alpha$ is symmetric.
+  \end{itemize}
+\end{proposition}
+\begin{proof}
+  If $\alpha\in T^k(V^*)$, then for any $\tau\in S_k$, we have
+  \begin{equation*}
+    \begin{aligned}
+      (\operatorname{Sym} \alpha) (v_{\tau(1)}, \ldots ,v_{\tau(k)}) &= \frac{1}{k!} \sum_{\sigma\in S_k}^{} ^\sigma \alpha(v_{\tau(1)}, \ldots ,v_{\tau(k)}) = \frac{1}{k!} \sum_{\sigma\in S_k}^{} ^{\tau\sigma} \alpha(v_1, \ldots ,v_k) \\
+      &= (\operatorname{Sym} \alpha) (v_1, \ldots ,v_k)
+    \end{aligned}
+  \end{equation*}
+  This shows $\operatorname{Sym} \alpha$ is symmetric. The next part follows easily.
+\end{proof}
+
+\begin{definition}{Symmetric Product}{Symmetric Product}
+  If $\alpha, \beta$ are symmetric tensors of rank $k,l$ on $V$, then the \textbf{symmetric product} is defined by a $(k+l)$-symmetric tensor:
+  \begin{equation}
+    \alpha \beta = \operatorname{Sym} \alpha \otimes \beta
+  \end{equation}
+\end{definition}
+
+\begin{proposition}{Properties of Symmetric Product}{Properties of Symmetric Product}
+  \begin{itemize}
+    \item The symmetric product is symmetric and bilinear: for all symmetric tensors $\alpha, \beta, \gamma$, and for all $a, b\in \mathbb{R}$, we have
+      \begin{equation*}
+        \alpha \beta = \beta \alpha, \qquad (a \alpha + b \beta) \gamma = a \alpha \gamma + b \beta \gamma.
+      \end{equation*}
+    \item If $\alpha, \beta\in V^*$, we have
+      \begin{equation*}
+        \alpha \beta = \frac{1}{2}( \alpha\otimes \beta + \beta \otimes \alpha)
+      \end{equation*}
+  \end{itemize}
+\end{proposition}
+
+\subsection{Alternating Tensors}
+Similarly, if $V$ is a finite-dimensional vector space, a covariant $k$-tensor $\alpha$ on $V$ is said to be \textbf{alternating} or skew-symmetric if for all vectors $v_1, \ldots ,v_k \in V$ we have
+\begin{equation}
+  \alpha(v_1, \ldots ,v_i, \ldots ,v_j, \ldots ,v_k) = - \alpha(v_1, \ldots ,v_j, \ldots ,v_i, \ldots ,v_k)
+\end{equation}
+They are also called \textbf{exterior forms}. They also construct a subspace denoted by $\Lambda^k(V^*) \subseteq T^k(V^*)$.
+
+
+
+\end{document}
