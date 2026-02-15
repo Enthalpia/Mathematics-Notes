@@ -1,0 +1,634 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\chapter{Differential Forms}
+
+\section{Alternating Tensors}
+
+Alternating covariant tensors are also called \textbf{exterior forms}, \textbf{multicovectors}, or \textbf{$k$-covectors}. They play an important role in differential geometry, especially in the theory of integration on manifolds.
+
+\begin{lemma}{Charaterization of Alternating Tensors}{Charaterization of Alternating Tensors}
+  Let $V$ be a finite-dimensional vector space and $\alpha$ a covariant $k$-tensor on $V$. Then the following are equivalent:
+  \begin{itemize}
+    \item $\alpha$ is alternating.
+    \item $\alpha(v_1, \dots, v_k) = 0$ whenever the vectors $v_1, \dots, v_k$ are linearly dependent.
+    \item $\alpha(v_1, \dots, v_k) = 0$ whenever $v_i = v_j$ for some $i \neq j$.
+  \end{itemize}
+\end{lemma}
+
+As we did for symmetric tensors, we define the \textbf{alternation} of a covariant $k$-tensor $\alpha$ by
+\begin{equation}
+  \Alt(\alpha) = \frac{1}{k!} \sum_{\sigma \in S_k} \sgn(\sigma) (^\sigma \alpha),
+\end{equation}
+
+\begin{proposition}{Properties of Alternation}{Properties of Alternation}
+  Let $V$ be a finite-dimensional vector space, and $\alpha$ a covariant $k$-tensor on $V$. Then
+  \begin{itemize}
+    \item $\Alt(\alpha)$ is an alternating tensor.
+    \item $\Alt(\alpha) = \alpha$ if $\alpha$ is alternating.
+  \end{itemize}
+\end{proposition}
+
+\subsection{Elementary Alternating Tensors}
+\begin{notation}{Multi-index}{Multi-index}
+  For a positive integer $k$, and ordered $k$-tuple $I = (i_1, \dots, i_k)$ of positive integers is called a \textbf{multi-index}. If $\sigma\in S_k$, we denite
+  \begin{equation*}
+    I_\sigma = (i_{\sigma(1)}, \dots, i_{\sigma(k)}).
+  \end{equation*}
+  Note that $(I_\sigma)_\tau = I_{\tau \sigma}$ for any $\sigma, \tau \in S_k$.
+\end{notation}
+
+Now let $V$ be a $n$-dimensional vector space, and $\{\epsilon^1, \dots, \epsilon^n\}$ be a basis for $V^*$. We define a collection of alternating covariant $k$-tensors on $V$ as follows: for each multi-index $I = (i_1, \dots, i_k)$, where $1 \leq i_1, \ldots i_k \leq n$, we define
+\begin{equation}
+  \epsilon^I(v_1, \dots, v_k) = \det\begin{pmatrix}
+    \epsilon^{i_1}(v_1) & \cdots & \epsilon^{i_1}(v_k) \\
+    \vdots & \ddots & \vdots \\
+    \epsilon^{i_k}(v_1) & \cdots & \epsilon^{i_k}(v_k)
+    \end{pmatrix} = \det \begin{pmatrix}
+    v_1^{i_1} & \cdots & v_k^{i_1} \\
+    \vdots & \ddots & \vdots \\
+    v_1^{i_k} & \cdots & v_k^{i_k}
+    \end{pmatrix},
+\end{equation}
+It is obvious that $\epsilon^I$ is an alternating covariant $k$-tensor on $V$. We call $\epsilon^I$ an \textbf{elementary alternating tensor} on $V$.
+
+We extend the Kronecker delta notation to multi-indices as follows. If $I,J$ are multi-indices of length $k$, we define
+\begin{equation}
+  \delta^I_J = \det\begin{pmatrix}
+    \delta^{i_1}_{j_1} & \cdots & \delta^{i_1}_{j_k} \\
+    \vdots & \ddots & \vdots \\
+    \delta^{i_k}_{j_1} & \cdots & \delta^{i_k}_{j_k}
+    \end{pmatrix}.
+\end{equation}
+Then we have
+\begin{equation*}
+  \delta^I_J = \begin{cases}
+    0 & \text{if $I$ and $J$ are not permutations of each other, or has repeated indices,} \\
+    \sgn\sigma & \text{if $I = J_\sigma$ for some $\sigma \in S_k$, (or $J = I_\sigma$, equivalently)}
+  \end{cases}
+\end{equation*}
+
+\begin{lemma}{Properties of Elementary Alternating Tensors}{Properties of Elementary Alternating Tensors}
+  Let $(E_i)_{i=1}^n$ be the basis of $V$, and let $\{\epsilon^i\}_{i=1}^n$ be the dual basis of $V^*$. Then
+  \begin{itemize}
+    \item If $I$ has repeated indices, then $\epsilon^I = 0$.
+    \item If $J = I_\sigma$ for some $\sigma \in S_k$, then $\epsilon^I = \sgn\sigma \epsilon^J$.
+    \item $\epsilon^I(E_{j_1}, \dots, E_{j_k}) = \delta^I_J$ for any multi-index $J = (j_1, \dots, j_k)$.
+  \end{itemize}
+\end{lemma}
+
+The elementary alternating tensors are a good candidate for a basis of the space of alternating covariant $k$-tensors $\Lambda^k(V^*)$. Of course, not all of them are linearly independent, some are zero, and some only differs by a permutation so differs by a sign. But the increasing ones do form a basis.
+
+A multi-index $I = (i_1, \dots, i_k)$ is called \textbf{increasing} if $i_1 < i_2 < \cdots < i_k$. We denote the increasing sum:
+\begin{equation}
+  \sum_{I}^{}' \alpha_I \epsilon^I = \sum_{I : \text{increasing}} \alpha_I \epsilon^I.
+\end{equation}
+
+\begin{proposition}{A Basis for $\Lambda^k(V^*)$}{A Basis for LambdakVstar}
+  Let $V$ be an $n$-dimensional vector space, and $\{\epsilon^1, \dots, \epsilon^n\}$ be a basis for $V^*$. Then for every $k \leq n$, the collection
+  \begin{equation}
+    \mathcal{E} = \{\epsilon^I : I \text{ is an increasing multi-index of length $k$}\}
+  \end{equation}
+  is a basis for $\Lambda^k(V^*)$. Therefore, we have
+  \begin{equation}
+    \dim \Lambda^k(V^*) = \binom{n}{k}.
+  \end{equation}
+  If $k > n$, then $\dim \Lambda^k(V^*) = 0$.
+\end{proposition}
+\begin{proof}
+  To shoe $\mathcal{E}$ spans $\Lambda^k(V^*)$, let $\alpha \in \Lambda^k(V^*)$ be arbitrary. Define
+  \begin{equation*}
+    \alpha_I = \alpha(E_{i_1}, \dots, E_{i_k})
+  \end{equation*}
+  As $\alpha$ is alternating, we have $\alpha_I = 0$ if $I$ has repeated indices, and $\alpha_J = \sgn\sigma \alpha_I$ if $J = I_\sigma$ for some $\sigma \in S_k$. Therefore, we have
+  \begin{equation*}
+    \sum_{I}^{}' \alpha_I \epsilon^I(E_{j_1}, \dots, E_{j_k}) = \sum_{I}^{}' \alpha_I \delta^I_J = \alpha_J.
+  \end{equation*}
+  So we have our result.
+\end{proof}
+
+Specially, for $\mathbb{R}^n$ with the standard basis, $\epsilon^{1 \cdots n}$ is the determinant function. This implies that for any $\omega\in \Lambda^n(\mathbb{R}^n)^*$, we have
+\begin{equation*}
+  \omega(Tv_1, \ldots , Tv_n) = (\det T) \omega(v_1, \ldots , v_n)
+\end{equation*}
+for any linear transformation $T : \mathbb{R}^n \to \mathbb{R}^n$ and any $v_1, \ldots , v_n \in \mathbb{R}^n$. In particular, $\omega$ is a scalar multiple of $\epsilon^{1 \cdots n}$.
+
+\subsection{Wedge Product}
+Similar to the symmetric case, we can define a product on the space of alternating covariant tensors.
+
+\begin{definition}{Wedge Product}{Wedge Product}
+  Let $V$ be a finite-dimensional vector space. For $\omega \in \Lambda^k(V^*)$ and $\eta \in \Lambda^l(V^*)$, we define the \textbf{wedge product} of $\omega$ and $\eta$ by
+  \begin{equation}
+    \omega \wedge \eta = \frac{(k+l)!}{k!l!} \Alt(\omega \otimes \eta).
+  \end{equation}
+\end{definition}
+The mysterious coefficient comes from the following lemma. Intuitively, what we do is just removing the ``normalizing'' factor $\frac{1}{k!}$ in the definition of alternation, and we have $k!$ ways to permute the first $k$ variables, and $l!$ ways to permute the last $l$ variables, so we need to multiply by $\frac{(k+l)!}{k!l!}$ to get the correct normalizing factor $\frac{1}{(k+l)!}$. To write it more illustratively, we have
+\begin{equation*}
+  k! \omega \wedge l! \eta = (k+l)! \Alt(\omega \otimes \eta).
+\end{equation*}
+
+\begin{lemma}{Wedge Product of Elementary Alternating Tensors}{Wedge Product of Elementary Alternating Tensors}
+  Let $V$ be a finite-dimensional vector space, and $\{\epsilon^1, \dots, \epsilon^n\}$ be a basis for $V^*$. Then for any multi-indices $I,J$ of length $k,l$, we have
+  \begin{equation}
+    \epsilon^I \wedge \epsilon^J = \frac{(k+l)!}{k!l!} \Alt(\epsilon^I \otimes \epsilon^J) = \epsilon^{IJ},
+  \end{equation}
+  where $IJ = (i_1, \dots, i_k, j_1, \dots, j_l)$ is the concatenation of $I$ and $J$.
+\end{lemma}
+\begin{proof}
+  By direct verifying
+  \begin{equation*}
+    \epsilon^I \wedge \epsilon^J(E_{p_1}, \dots, E_{p_{k+l}}) = \epsilon^{IJ}(E_{p_1}, \dots, E_{p_{k+l}}).
+  \end{equation*}
+  would do.
+\end{proof}
+
+\begin{remark}
+  Geometrically, the wedge product of two alternating tensors $\omega$ and $\eta$ can be thought of as a way to calculate the volume of the parallelepiped spanned by the vectors $v_1, \dots, v_{k+l}$ in terms of the volumes of the parallelepipeds spanned by the first $k$ vectors and the last $l$ vectors. For example, in $\mathbb{R}^3$, we have $\mathrm{d} x^1 \wedge \mathrm{d} x^2 = \mathrm{d} x^1 \otimes \mathrm{d} x^2 - \mathrm{d} x^2 \otimes \mathrm{d} x^1$, which represents the oriented area element in the $x^1x^2$-plane. When we evaluate this wedge product on two vectors, it gives us the signed area of the parallelogram spanned by those vectors projected onto the $x^1x^2$-plane. For an arbitrary alternating 2-tensor
+  \begin{equation*}
+    \omega = a \mathrm{d} x^1 \wedge \mathrm{d} x^2 + b \mathrm{d} x^2 \wedge \mathrm{d} x^3 + c \mathrm{d} x^3 \wedge \mathrm{d} x^1,
+  \end{equation*}
+  It can be interpreted as measuring the oriented area of projections onto the plane with normal vector $(a,b,c)$.
+\end{remark}
+
+\begin{proposition}{Properties of Wedge Products}{Properties of Wedge Products}
+  Suppose $\omega, \omega', \eta, \eta', \zeta$ are multicovectors on a finite-dimensional vector space $V$, then
+  \begin{itemize}
+    \item Bilinearity: For $a,a'\in \mathbb{R}$, we have
+      \begin{equation*}
+        \begin{aligned}
+          (a\omega + a'\omega') \wedge \eta &= a(\omega \wedge \eta) + a'(\omega' \wedge \eta), \\
+          \omega \wedge (a\eta + a'\eta') &= a(\omega \wedge \eta) + a'(\omega \wedge \eta').
+        \end{aligned}
+      \end{equation*}
+    \item Associativity: We have
+      \begin{equation*}
+        (\omega \wedge \eta) \wedge \zeta = \omega \wedge (\eta \wedge \zeta).
+      \end{equation*}
+    \item Anticommutativity: We have for $\omega \in \Lambda^k(V^*)$ and $\eta \in \Lambda^l(V^*)$,
+      \begin{equation*}
+        \omega \wedge \eta = (-1)^{kl} \eta \wedge \omega.
+      \end{equation*}
+    \item If $(\epsilon^i)$ is any basis for $V^*$, and $I = (i_1, \dots, i_k)$ is any multi-index, then
+      \begin{equation*}
+        \epsilon^I = \epsilon^{i_1} \wedge \cdots \wedge \epsilon^{i_k}.
+      \end{equation*}
+    \item For any covectors $\omega^1, \ldots , \omega^k$ and vectors $v_1, \ldots , v_k$, we have
+      \begin{equation*}
+        (\omega^1 \wedge \cdots \wedge \omega^k)(v_1, \dots, v_k) = \det\begin{pmatrix}
+          \omega^1(v_1) & \cdots & \omega^1(v_k) \\
+          \vdots & \ddots & \vdots \\
+          \omega^k(v_1) & \cdots & \omega^k(v_k)
+        \end{pmatrix}.
+      \end{equation*}
+  \end{itemize}
+\end{proposition}
+
+A $k$-covector $\omega$ is called \textbf{decomposable} if $\omega = \omega^1 \wedge \cdots \wedge \omega^k$ for some covectors $\omega^1, \ldots , \omega^k$. Not all $k$-covectors are decomposable, but all of them are sums of decomposable ones.
+
+The wedge product can be uniquely characterized by the above properties actually.
+\begin{proposition}{Characterization of Wedge Product}{Characterization of Wedge Product}
+  Let $V$ be a finite-dimensional vector space, then the wedge product is the unique bilinear, associative, and anticommutative map $\wedge : \Lambda^k(V^*) \times \Lambda^l(V^*) \to \Lambda^{k+l}(V^*)$ such that $\epsilon^I = \epsilon^{i_1} \wedge \cdots \wedge \epsilon^{i_k}$ for any basis $(\epsilon^i)$ of $V^*$ and any multi-index $I = (i_1, \dots, i_k)$.
+\end{proposition}
+
+For any $n$-dimensional vector space $V$, we define a vector space
+\begin{equation}
+  \Lambda(V^*) = \bigoplus_{k=0}^n \Lambda^k(V^*).
+\end{equation}
+with dimension $2^n$. The wedge product turns $\Lambda(V^*)$ into an associative algebra, called the \textbf{exterior algebra} or \textbf{Grassmann algebra} of $V$. It is not commutative, but it has a closely related property.
+
+An algebra $A$ is called \textbf{graded} if it can be written as a direct sum of vector spaces $A = \bigoplus_{k\in \mathbb{Z}} A^k$ such that $A^k A^l \subseteq A^{k+l}$ for all $k,l\in \mathbb{Z}$. A graded algebra $A$ is called an \textbf{anti-commutative graded algebra} if $ab = (-1)^{kl} ba$ for all $a\in A^k$ and $b\in A^l$. The exterior algebra $\Lambda(V^*)$ is an anti-commutative graded algebra with the grading given by $\Lambda(V^*)^k = \Lambda^k(V^*)$.
+
+Some authors define the wedge product without the mysterious coefficient, by
+\begin{equation*}
+  \omega \overline{\wedge} \eta = \Alt(\omega \otimes \eta).
+\end{equation*}
+So we have
+\begin{equation*}
+  \epsilon^I \overline{\wedge} \epsilon^J = \frac{k!l!}{(k+l)!} \epsilon^{IJ}, \qquad \omega^1 \overline{\wedge} \cdots \overline{\wedge} \omega^k (v_1, \dots, v_k) = \frac{1}{k!} \det(\omega^i(v_j)).
+\end{equation*}
+We call our version of wedge product the \textbf{determinant convention}, and the other version the \textbf{Alt convention}. 
+
+\subsection{Interior Multiplication}
+We can reduce the degree of an alternating tensor by contracting it with a vector. This operation is called \textbf{interior multiplication}. Take $v\in V$ and define $i_v : \Lambda^k(V^*) \to \Lambda^{k-1}(V^*)$ by
+\begin{equation}
+  (i_v \omega)(w_1, \dots, w_{k-1}) = \omega(v, w_1, \dots, w_{k-1}).
+\end{equation}
+for any $\omega \in \Lambda^k(V^*)$ and $w_1, \dots, w_{k-1} \in V$. To be consistent, we interpret $i_v \omega = 0$ if $\omega \in \Lambda^0(V^*) = \mathbb{R}$. Another notation is ``$v$ into $\omega$'', denoted by
+\begin{equation}
+  i_v \omega = v \lrcorner \ \omega
+\end{equation}
+
+\begin{proposition}{Properties of Interior Multiplication}{Properties of Interior Multiplication}
+  Let $V$ be a finite-dimensional vector space, and $v \in V$. Then 
+  \begin{itemize}
+    \item $i_v \circ i_v = 0$.
+    \item For $\omega \in \Lambda^k(V^*)$ and $\eta \in \Lambda^l(V^*)$, we have
+      \begin{equation*}
+        i_v(\omega \wedge \eta) = (i_v \omega) \wedge \eta + (-1)^k \omega \wedge (i_v \eta).
+      \end{equation*}
+  \end{itemize}
+\end{proposition}
+\begin{proof}
+  First part follows from any alternating tensor vanishes when two of its arguments are the same. For the second part, we only need to verify it for decomposable tensors, generally,
+  \begin{equation*}
+    v \lrcorner \ (\omega^1 \wedge \cdots \wedge \omega^{k}) = \sum_{i=1}^k (-1)^{i-1} \omega^i(v) \omega^1 \wedge \cdots \wedge \widehat{\omega^i} \wedge \cdots \wedge \omega^k,
+  \end{equation*}
+  where $\widehat{\omega^i}$ means we omit $\omega^i$ in the wedge product. This can be verified by direct calculating: Take $v_1=v$ and $v_2, \dots, v_k$ arbitrary, then equivalently we need to verify
+  \begin{equation*}
+    (\omega^1 \wedge \cdots \wedge \omega^{k})(v_1, \dots, v_k) = \sum_{i=1}^k (-1)^{i-1} \omega^i(v_1) (\omega^1 \wedge \cdots \wedge \widehat{\omega^i} \wedge \cdots \wedge \omega^k)(v_2, \dots, v_k).
+  \end{equation*}
+  The left hand side is the determinant of the matrix $(\omega^i(v_j))$, and the right hand side is the expansion of this determinant along the first column, so they are equal.
+\end{proof}
+
+If we use Alt convention for wedge product, the interior multiplication would be defined by
+\begin{equation*}
+  \tilde{\iota}_v \omega (w_1, \dots, w_{k-1}) = k \omega(v, w_1, \dots, w_{k-1}),
+\end{equation*}
+The extra factor $k$ is to make proposition \ref{prop:Properties of Interior Multiplication} still holds.
+
+\section{Differential Forms on Manifolds}
+Consider $M$ a smooth manifold, with or without boundary. Recall $T^k T^*M$ is the vector bundle of covariant $k$-tensors on $M$, and denote
+\begin{equation}
+  \Lambda^k T^*M = \bigsqcup_{p\in M} \Lambda^k(T_p^*M) \subseteq T^k T^*M
+\end{equation}
+be the subbundle of alternating covariant $k$-tensors on $M$ of rank $\binom{n}{k}$. A section of $\Lambda^k T^*M$ is called a \textbf{differential $k$-form} on $M$. We denote the vector space of smooth $k$-forms on $M$ by $\Omega^k(M) = \Gamma(\Lambda^k T^*M)$. The wedge product of alternating tensors induces a wedge product on differential forms, defined pointwisely. If we denote 
+\begin{equation*}
+  \Omega^*(M) = \bigoplus_{k=0}^n \Omega^k(M),
+\end{equation*}
+then $\Omega^*(M)$ is an anti-commutative graded algebra with the wedge product as multiplication.
+
+In any smooth coordinate chart, a $k$-form $\omega$ can be written as
+\begin{equation*}
+  \omega = \sum_{I}^{}' \omega_I \mathrm{d} x^I = \sum_{I}^{}' \omega_I \mathrm{d} x^{i_1} \wedge \cdots \wedge \mathrm{d} x^{i_k},
+\end{equation*}
+where $\omega_I$ are continuous functions on the coordinate chart. $\omega$ is smooth if and only if all $\omega_I$ are smooth functions. In this case
+\begin{equation*}
+  \mathrm{d} x^{i_1} \wedge \cdots \wedge \mathrm{d} x^{i_k} (\frac{\partial }{\partial x^{j_1}}, \dots, \frac{\partial }{\partial x^{j_k}}) = \delta^I_J, \qquad \omega_I = \omega(\frac{\partial }{\partial x^{i_1}}, \dots, \frac{\partial }{\partial x^{i_k}}).
+\end{equation*}
+
+If $F: M \to N$ is a smooth map between smooth manifolds, with or without boundary, and $\omega$ is a $k$-form on $N$, the pullback $F^* \omega$ is a $k$-form on $M$, defined by the usual
+\begin{equation*}
+  (F^* \omega)_p(v_1, \dots, v_k) = \omega_{F(p)}(\mathrm{d} F_p(v_1), \dots, \mathrm{d} F_p(v_k))
+\end{equation*}
+
+\begin{lemma}{Properties of Pullback of Forms}{Properties of Pullback of Forms}
+  Suppose $F: M \to N$ is a smooth map between smooth manifolds, with or without boundary, and $\omega, \eta$ are smooth forms on $N$, then
+  \begin{itemize}
+    \item $F^*: \Omega^k(N) \to \Omega^k(M)$ is linear over $\mathbb{R}$.
+    \item $F^*(\omega \wedge \eta) = (F^* \omega) \wedge (F^* \eta)$.
+    \item In any smooth coordinate chart
+      \begin{equation*}
+        F^* \left(\sum_{I}^{}' \omega_I \mathrm{d} y^{i_1} \wedge \cdots \wedge \mathrm{d} y^{i_k}\right) = \sum_{I}^{}' (\omega_I \circ F) \mathrm{d} (y^{i_1} \circ F) \wedge \cdots \wedge \mathrm{d} (y^{i_k} \circ F).
+      \end{equation*}
+  \end{itemize}
+\end{lemma}
+
+\begin{proposition}{Pullback of Top Degree Forms}{Pullback of Top Degree Forms}
+  Let $F: M \to N$ be a smooth map between smooth $n$-dimensional manifolds, with or without boundary, and $(x^i)$, $(y^i)$ be smooth coordinate charts on open subsets $U \subseteq M$ and $V \subseteq N$ respectively, and $u$ be a continuous function on $V$, then on $F^{-1}(V) \cap U$ we have
+  \begin{equation}
+    F^*(u \mathrm{d} y^1 \wedge \cdots \wedge \mathrm{d} y^n) = (u \circ F) (\det D F) \mathrm{d} x^1 \wedge \cdots \wedge \mathrm{d} x^n,
+  \end{equation}
+  where $D F$ is the Jacobian matrix of $F$ in the coordinates $(x^i)$ and $(y^i)$.
+\end{proposition}
+\begin{proof}
+  Well, we have
+  \begin{equation*}
+    F^*(u \mathrm{d} y^1 \wedge \cdots \wedge \mathrm{d} y^n) = (u \circ F) \mathrm{d} (y^1 \circ F) \wedge \cdots \wedge \mathrm{d} (y^n \circ F).
+  \end{equation*}
+  And
+  \begin{equation*}
+    \mathrm{d} F^1 \wedge \cdots \wedge \mathrm{d} F^n (\frac{\partial }{\partial x^1}, \dots, \frac{\partial }{\partial x^n}) = \det \left(\mathrm{d} F^j(\frac{\partial }{\partial x^i})\right) = \det D F,
+  \end{equation*}
+  So we have our result.
+\end{proof}
+
+The pullback looks exactly like the change of variable formula in multivariable calculus, and it is indeed a generalization of it, as we will see later.
+
+This also gives us a simpler formula of changing the basis:
+\begin{proposition}{Change of Basis for Top Degree Forms}{Change of Basis for Top Degree Forms}
+  If $(U, (x^i))$ and $(\tilde{U}, (\tilde{x}^i))$ are two smooth coordinate charts on a smooth $n$-dimensional manifold $M$, with or without boundary, then on $U \cap \tilde{U}$ we have
+  \begin{equation}
+    \mathrm{d} \tilde{x}^1 \wedge \cdots \wedge \mathrm{d} \tilde{x}^n = \det \left(\frac{\partial \tilde{x}^j}{\partial x^i}\right) \mathrm{d} x^1 \wedge \cdots \wedge \mathrm{d} x^n.
+  \end{equation}  
+\end{proposition}
+\begin{proof}
+  Just take $F$ to be the identity map on $M$ in the previous proposition, then we have
+  \begin{equation*}
+    \mathrm{d} \tilde{x}^1 \wedge \cdots \wedge \mathrm{d} \tilde{x}^n = F^*(\mathrm{d} \tilde{x}^1 \wedge \cdots \wedge \mathrm{d} \tilde{x}^n) = \det \left(\frac{\partial \tilde{x}^j}{\partial x^i}\right) \mathrm{d} x^1 \wedge \cdots \wedge \mathrm{d} x^n.
+  \end{equation*}
+\end{proof}
+
+Interior multiplication can also be defined for differential forms, if $X \in \mathfrak{X}(M)$ is a vector field and $\omega \in \Omega^k(M)$ is a $k$-form, we define a $(k-1)$-form $i_X \omega$ by
+\begin{equation*}
+  (i_X \omega)_p(v_1, \dots, v_{k-1}) = \omega_p(X_p, v_1, \dots, v_{k-1}), \qquad (X \lrcorner \ \omega)_p = X_p \lrcorner \ \omega_p.
+\end{equation*}
+
+\begin{proposition}{Properties of Interior Multiplication for Forms}{Properties of Interior Multiplication for Forms}
+  Let $M$ be a smooth manifold, with or without boundary, and $X \in \mathfrak{X}(M)$ be a vector field on $M$.
+  \begin{itemize}
+    \item If $\omega$ is a smooth $k$-form on $M$, then $i_X \omega$ is a smooth $(k-1)$-form on $M$.
+    \item $i_X: \Omega^k(M) \to \Omega^{k-1}(M)$ is linear over $C^\infty(M)$, and corresponds to a smooth bundle homomorphism $\Lambda^k T^*M \to \Lambda^{k-1} T^*M$.
+  \end{itemize}
+\end{proposition}
+
+\section{Exterior Derivatives}
+
+Exterior derivatives are a way to differentiate differential forms, generalizing the usual differentiation of functions.
+
+To give some motivation, recall that given a smooth 1-form $\omega$, a necessary condition for $\omega$ to be the differential of a smooth function (0-form) is that $\omega$ is closed, i.e. for any smooth coordinate chart we have
+\begin{equation*}
+  \frac{\partial \omega_j}{\partial x^i} - \frac{\partial \omega_i}{\partial x^j} = 0.
+\end{equation*}
+Since this is a coordinate-independent condition, we may think that this has some intrinsic meaning. We may found that it is antisymmetric in index, so can be thought of as a 2-form. 
+
+Locally in a coordinate chart, we define a 2-form $\mathrm{d} \omega$ by
+\begin{equation*}
+  \mathrm{d} \omega = \sum_{i<j} \left(\frac{\partial \omega_j}{\partial x^i} - \frac{\partial \omega_i}{\partial x^j}\right) \mathrm{d} x^i \wedge \mathrm{d} x^j.
+\end{equation*}
+Then $\omega$ is closed if and only if $\mathrm{d} \omega = 0$ in each chart.
+
+Actually, it turns out that $\mathrm{d} \omega$ is actually well-defined globally, and has a very significant generalization to arbitrary $k$-forms. We can see that there is a differential operator $\mathrm{d} : \Omega^k(M) \to \Omega^{k+1}(M)$, called the \textbf{exterior derivative}, such that $\mathrm{d} (\mathrm{d} \omega) = 0$ for any $\omega \in \Omega^k(M)$. In Euclidean space, the definition of $\mathrm{d} \omega$ is straightforward: If $\omega = \sum_{J}^{}' \omega_J \mathrm{d} x^J$ is a $k$-form on an open subset of $\mathbb{R}^n$ or $\mathbb{H}^n$, then we define
+\begin{equation*}
+  \mathrm{d} \omega = \mathrm{d} \left(\sum_{J}^{}' \omega_J \mathrm{d} x^J\right) = \sum_{J}^{}' \mathrm{d} \omega_J \wedge \mathrm{d} x^J = \sum_{J}^{}' \sum_{i=1}^n \frac{\partial \omega_J}{\partial x^i} \mathrm{d} x^i \wedge \mathrm{d} x^J,
+\end{equation*}
+where $\mathrm{d} \omega_J$ is the usual differential of the function $\omega_J$. Then when $\omega$ is a 1-form, we have
+\begin{equation*}
+    \mathrm{d} (\omega_j \mathrm{d} x^j) = \sum_{j}^{}' \sum_{i=1}^n \frac{\partial \omega_j}{\partial x^i} \mathrm{d} x^i \wedge \mathrm{d} x^j = \sum_{i,j} \frac{\partial \omega_j}{\partial x^i} \mathrm{d} x^i \wedge \mathrm{d} x^j  = \sum_{i<j} \left(\frac{\partial \omega_j}{\partial x^i} - \frac{\partial \omega_i}{\partial x^j}\right) \mathrm{d} x^i \wedge \mathrm{d} x^j.
+\end{equation*}
+For a 0-form, we have
+\begin{equation*}
+  \mathrm{d} f = \sum_{i=1}^n \frac{\partial f}{\partial x^i} \mathrm{d} x^i,
+\end{equation*}
+So it is consistent with the usual definition of differential of a function.
+
+Now, we need to transfer this to smooth manifolds.
+
+\begin{proposition}{Properties of Exterior Derivative on $\mathbb{R}^n$}{Properties of Exterior Derivative on Rn}
+  \begin{itemize}
+    \item $\mathrm{d} $ is linear over $\mathbb{R}$.
+    \item If $\omega$ is a smooth $k$-form and $\eta$ is a smooth $l$-form, then
+      \begin{equation*}
+        \mathrm{d} (\omega \wedge \eta) = \mathrm{d} \omega \wedge \eta + (-1)^k \omega \wedge \mathrm{d} \eta.
+      \end{equation*}
+    \item $\mathrm{d} \circ \mathrm{d} = 0$.
+    \item $\mathrm{d} $ commutes with pullbacks: If $U$ is an open subset of $\mathbb{R}^n$ or $\mathbb{H}^n$, and $V$ is an open subset of $\mathbb{R}^m$ or $\mathbb{H}^m$, and $F: U \to V$ is a smooth map, and $\omega \in \Omega^k(V)$ is a smooth $k$-form on $V$, then
+      \begin{equation*}
+        F^*(\mathrm{d} \omega) = \mathrm{d} (F^* \omega).
+      \end{equation*}
+  \end{itemize}
+\end{proposition}
+\begin{proof}
+  \begin{itemize}
+    \item Linearity is straightforward.
+    \item From linearity, it suffices to assume $\omega = u \mathrm{d} x^I \in \Omega^k(U)$ and $\eta = v \mathrm{d} x^J \in \Omega^l(U)$ are decomposable, then we have
+      \begin{equation*}
+        \begin{aligned}
+          \mathrm{d} (\omega \wedge \eta) &= \mathrm{d} (uv \mathrm{d} x^I \wedge \mathrm{d} x^J) = (v \mathrm{d} u + u \mathrm{d} v) \wedge \mathrm{d} x^I \wedge \mathrm{d} x^J \\
+          &= \mathrm{d} u \wedge \mathrm{d} x^I \wedge v \mathrm{d} x^J + u \mathrm{d} x^I \wedge \mathrm{d} v \wedge \mathrm{d} x^J = \mathrm{d} \omega \wedge \eta + (-1)^k \omega \wedge \mathrm{d} \eta.
+        \end{aligned}
+      \end{equation*}
+    \item If $\omega$ is a 0-form, then $\omega = u$ for some smooth function $u$,
+      \begin{equation*}
+          \mathrm{d} (\mathrm{d} u) = \mathrm{d} \left(\frac{\partial u}{\partial x^j} \mathrm{d} x^j\right) = \frac{\partial ^2 u}{\partial x^i \partial x^j} \mathrm{d} x^i \wedge \mathrm{d} x^j = \sum_{i<j} \left(\frac{\partial ^2 u}{\partial x^i \partial x^j} - \frac{\partial ^2 u}{\partial x^j \partial x^i}\right) \mathrm{d} x^i \wedge \mathrm{d} x^j = 0.
+      \end{equation*}
+      For a general case, we have
+      \begin{equation*}
+        \begin{aligned}
+          \mathrm{d} (\mathrm{d} \omega) &= \mathrm{d} \left(\sum_{J}^{}' \mathrm{d} \omega_J \wedge \mathrm{d} x^{j_1} \wedge \cdots \wedge \mathrm{d} x^{j_k}\right)\\
+          &= \sum_{J}^{}' \mathrm{d} (\mathrm{d} \omega_J) \wedge \mathrm{d} x^{j_1} \wedge \cdots \wedge \mathrm{d} x^{j_k}\\
+          & \quad + \sum_{J}^{}' \sum_{i=1}^k (-1)^i \mathrm{d} \omega_J \wedge \mathrm{d} x^{j_1} \wedge \cdots \wedge \mathrm{d} (\mathrm{d} x^{j_i}) \wedge \cdots \wedge \mathrm{d} x^{j_k} = 0.
+        \end{aligned}
+      \end{equation*}
+    \item From linearity, it suffices to assume $\omega = u \mathrm{d} y^I$. Then
+      \begin{equation*}
+        F^*(\mathrm{d} \omega) = \mathrm{d} (u \circ F) \wedge \mathrm{d} (y^{i_1} \circ F) \wedge \cdots \wedge \mathrm{d} (y^{i_k} \circ F).
+      \end{equation*}
+      \begin{equation*}
+        \mathrm{d} (F^* \omega) = \mathrm{d} ((u \circ F) \mathrm{d} (y^{i_1} \circ F) \wedge \cdots \wedge \mathrm{d} (y^{i_k} \circ F)) = \mathrm{d} (u \circ F) \wedge \mathrm{d} (y^{i_1} \circ F) \wedge \cdots \wedge \mathrm{d} (y^{i_k} \circ F).
+      \end{equation*}
+      So we have our result.
+  \end{itemize}
+\end{proof}
+
+This proposition leads to the general definition of exterior derivatives on smooth manifolds.
+
+\begin{theorem}{Existence and Uniqueness of Exterior Differentiation}{Existence and Uniqueness of Exterior Differentiation}
+  Let $M$ be a smooth manifold, with or without boundary. Then there exist unique operators $\mathrm{d} : \Omega^k(M) \to \Omega^{k+1}(M)$ for all $k \geq 0$ such that
+  \begin{itemize}
+    \item $\mathrm{d} $ is linear over $\mathbb{R}$.
+    \item If $\omega \in \Omega^k(M)$ and $\eta \in \Omega^l(M)$, then
+      \begin{equation*}
+        \mathrm{d} (\omega \wedge \eta) = \mathrm{d} \omega \wedge \eta + (-1)^k \omega \wedge \mathrm{d} \eta.
+      \end{equation*}
+    \item $\mathrm{d} \circ \mathrm{d} = 0$
+    \item For $f \in C^\infty(M) = \Omega^0(M)$, $\mathrm{d} f$ is the usual differential of $f$.
+  \end{itemize}
+  In any smooth coordinate chart $(U, (x^i))$, if $\omega = \sum_{J}^{}' \omega_J \mathrm{d} x^J$ is a smooth $k$-form on $U$, then
+  \begin{equation}
+    \mathrm{d} \omega = \sum_{J}^{}' \mathrm{d} \omega_J \wedge \mathrm{d} x^J
+  \end{equation}
+\end{theorem}
+\begin{proof}
+  First we prove existence. Suppose $\omega \in \Omega^k(M)$, then we wish to DEFINE $\mathrm{d} \omega$ by the coordinate formula. For each smooth coordinate chart $(U, \varphi)$, we define
+  \begin{equation*}
+    \mathrm{d} \omega_U = \varphi^* \mathrm{d} ((\varphi^{-1})^* \omega)
+  \end{equation*}
+  To see this is well-defined, suppose $(V, \psi)$ is another smooth coordinate chart, then on $U \cap V$ we have $\varphi \circ \psi^{-1} : \psi(U \cap V) \to \varphi(U \cap V)$ is a diffeomorphism between open subsets of $\mathbb{R}^n$ or $\mathbb{H}^n$, and we have
+  \begin{equation*}
+    (\varphi \circ \psi^{-1})^* \mathrm{d} ( (\varphi^{-1})^* \omega) = \mathrm{d} ((\varphi \circ \psi^{-1})^* (\varphi^{-1})^* \omega) = \mathrm{d} (\psi^{-1})^* \omega,
+  \end{equation*}
+  Therefore we have
+  \begin{equation*}
+    \mathrm{d} \omega_U = \varphi^* \mathrm{d} (\varphi^{-1})^* \omega = \psi^* (\varphi \circ \psi^{-1})^* \mathrm{d} ( (\varphi^{-1})^* \omega) = \psi^* \mathrm{d} (\psi^{-1})^* \omega = \mathrm{d} \omega_V,
+  \end{equation*}
+  So $\mathrm{d} \omega$ is well-defined. For uniqueness, suppose $\mathrm{d} $ satisfies the properties in the theorem, we shall show that $\mathrm{d} \omega$ is determined locally: if $\omega_1=\omega_2$ are two smooth $k$-forms on $U \subseteq M$, then $\mathrm{d} \omega_1 = \mathrm{d} \omega_2$ on $U$. First let $p\in U$, and $\eta = \omega_1 - \omega_2$, and $\psi \in C^\infty (M)$ be a bump function that is identically $1$ on some neighborhood of $p$ and supported in $U$, then $\psi \eta = 0$, so
+  \begin{equation*}
+    \mathrm{d} (\psi \eta) = \mathrm{d} \psi \wedge \eta + \psi \mathrm{d} \eta = 0,
+  \end{equation*}
+  Evaluating at $p$, by $\psi(p) = 1$ and $\mathrm{d} \psi_p = 0$, we have $\mathrm{d} \eta_p = 0$. Since $p$ is arbitrary, we have $\mathrm{d} \omega_1 = \mathrm{d} \omega_2$ on $U$.
+
+  Now let $\omega \in \Omega^k(M)$ be any smooth $k$-form, and $(U, \varphi)$ be any smooth coordinate chart, we can write $\omega = \sum_I^{}' \omega_I \mathrm{d} x^I$ on $U$, then for any $p\in U$, using a bump function we can constrict smooth global functions $\tilde{\omega}_I$ and $\tilde{x}^i$ that agree with $\omega_I$ and $x^i$ on some neighborhood of $p$, then we have
+  \begin{equation*}
+    \omega = \tilde{\omega} = \sum_I^{}' \tilde{\omega}_I \mathrm{d} \tilde{x}^I
+  \end{equation*}
+  at some neighborhood of $p$, so from the preceding part we have
+  \begin{equation*}
+    \mathrm{d} \omega = \mathrm{d} \tilde{\omega} = \sum_I^{}' \mathrm{d} \tilde{\omega}_I \wedge \mathrm{d} \tilde{x}^I = \sum_I^{}' \mathrm{d} \omega_I \wedge \mathrm{d} x^I
+  \end{equation*}
+  on some neighborhood of $p$. So we have our result, since $p$ is arbitrary.
+\end{proof}
+
+\begin{remark}
+  Note that we need the construction $\tilde{\omega}$ because we only require the properties holds for smooth forms defined on the whole manifold, the coordinate formula only holds for a subset of $M$ do we cannot directly use the properties on it. This is also why we first need to prove the locality of $\mathrm{d} \omega$ before handling the coordinate formula.
+\end{remark}
+
+If $A = \bigoplus_k A^k$ is a graded algebra, a linear map $T :A \rightarrow A$ is called a \textbf{map of degree $m$} if $T(A^k) \subseteq A^{k+m}$ for all $k$. It is said to be a \textbf{anti-derivation} if $T(x y) = T(x) y + (-1)^{k} x T(y)$ for all $x \in A^k$ and $y \in A^l$. The theorem above says that the differential of functions uniquely extends to an anti-derivation of $\Omega^*(M)$ of degree $1$ that squares to zero.
+
+\begin{proposition}{Structure of Interior Multiplication}{Structure of Interior Multiplication}
+  The interior multiplication $i_X : \Omega^*(M) \to \Omega^*(M)$ is an anti-derivation of degree $-1$ whose square is zero.
+\end{proposition}
+
+\begin{proposition}{Naturality of Exterior Derivative}{Naturality of Exterior Derivative}
+  Let $F: M \to N$ be a smooth map between smooth manifolds, with or without boundary, and $\omega$ be a smooth $k$-form on $N$, then
+  \begin{equation*}
+    F^*(\mathrm{d} \omega) = \mathrm{d} (F^* \omega).
+  \end{equation*}
+\end{proposition}
+\begin{proof}
+  Let $(U, \varphi)$ be a smooth coordinate chart on $M$, and $(V, \psi)$ be a smooth coordinate chart on $N$. On $F^{-1}(V) \cap U$, we apply the coordinate formula for the coordinate expression $ \psi \circ F \circ \varphi^{-1}$ of $F$ to get
+  \begin{equation*}
+    \begin{aligned}
+      F^*(\mathrm{d} \omega) &= F^* \psi^* \mathrm{d} ((\psi^{-1})^* \omega) = \varphi^* \circ (\psi \circ F \circ \varphi^{-1})^* \mathrm{d} ((\psi^{-1})^* \omega)\\
+      &= \varphi^* \mathrm{d} ((\psi \circ F \circ \varphi^{-1})^* (\psi^{-1})^* \omega) = \varphi^* \mathrm{d} ((\varphi^{-1})^* F^* \omega) = \mathrm{d} (F^* \omega).
+    \end{aligned}
+  \end{equation*}
+\end{proof}
+
+\begin{definition}{Closed and Exact Forms}{Closed and Exact Forms}
+  Let $M$ be a smooth manifold, with or without boundary, and $\omega \in \Omega^k(M)$ be a smooth $k$-form on $M$. We say $\omega$ is \textbf{closed} if $\mathrm{d} \omega = 0$, and $\omega$ is \textbf{exact} if there exists a smooth $(k-1)$-form $\eta$ such that $\omega = \mathrm{d} \eta$.
+\end{definition}
+Then as $\mathrm{d} \circ \mathrm{d} = 0$, we have any exact form is closed. The converse is not true in general, and the obstruction to the converse is measured by the de Rham cohomology, which we will discuss later.
+
+\subsection{Vector Calculus on $\mathbb{R}^3$}
+The exterior derivative on $\mathbb{R}^3$ can be used to unify the gradient, curl and divergence operators in vector calculus.
+
+Any smooth 1-form $\omega$ on $\mathbb{R}^3$ can be written as
+\begin{equation*}
+  \omega = P \mathrm{d} x + Q \mathrm{d} y + R \mathrm{d} z,
+\end{equation*}
+where $P, Q, R$ are smooth functions on $\mathbb{R}^3$. Then we have
+\begin{equation*}
+  \mathrm{d} \omega = \left(\frac{\partial R}{\partial y} - \frac{\partial Q}{\partial z}\right) \mathrm{d} y \wedge \mathrm{d} z + \left(\frac{\partial P}{\partial z} - \frac{\partial R}{\partial x}\right) \mathrm{d} z \wedge \mathrm{d} x + \left(\frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y}\right) \mathrm{d} x \wedge \mathrm{d} y,
+\end{equation*}
+Any smooth 2-form $\eta$ on $\mathbb{R}^3$ can be written as
+\begin{equation*}
+  \eta = u \mathrm{d} y \wedge \mathrm{d} z + v \mathrm{d} z \wedge \mathrm{d} x + w \mathrm{d} x \wedge \mathrm{d} y,
+\end{equation*}
+where $u, v, w$ are smooth functions on $\mathbb{R}^3$. Then we have
+\begin{equation*}
+  \mathrm{d} \eta = \left(\frac{\partial u}{\partial x} + \frac{\partial v}{\partial y} + \frac{\partial w}{\partial z}\right) \mathrm{d} x \wedge \mathrm{d} y \wedge \mathrm{d} z,
+\end{equation*}
+
+Recall in vector calculus, the gradient and divergence in $\mathbb{R}^n$ are defined by
+\begin{equation*}
+  \grad f = \sum_{i=1}^n \frac{\partial f}{\partial x^i} \frac{\partial }{\partial x^i}, \qquad \divergence X = \sum_{i=1}^n \frac{\partial X^i}{\partial x^i},
+\end{equation*}
+where $f\in C^\infty(\mathbb{R}^n)$ is a smooth function and $X \in \mathfrak{X}(\mathbb{R}^n)$ is a smooth vector field on $\mathbb{R}^n$. The curl in $\mathbb{R}^3$ is defined by
+\begin{equation*}
+  \curl X = \left(\frac{\partial X^3}{\partial y} - \frac{\partial X^2}{\partial z}\right) \frac{\partial }{\partial x} + \left(\frac{\partial X^1}{\partial z} - \frac{\partial X^3}{\partial x}\right) \frac{\partial }{\partial y} + \left(\frac{\partial X^2}{\partial x} - \frac{\partial X^1}{\partial y}\right) \frac{\partial }{\partial z},
+\end{equation*}
+Note the similarity between the formulas!
+
+The Euclidean metric on $\mathbb{R}^3$ induces an index lowering isomorphism $\flat : \mathfrak{X}(\mathbb{R}^3) \to \Omega^1(\mathbb{R}^3)$, interior multiplication induces another map $\beta: \mathfrak{X}(\mathbb{R}^3) \to \Omega^2(\mathbb{R}^3)$ defined by
+\begin{equation*}
+  \beta(X) = X \lrcorner \ (\mathrm{d} x \wedge \mathrm{d} y \wedge \mathrm{d} z) = X^1 \mathrm{d} y \wedge \mathrm{d} z + X^2 \mathrm{d} z \wedge \mathrm{d} x + X^3 \mathrm{d} x \wedge \mathrm{d} y,
+\end{equation*}
+It is easily verified that $\beta$ is an isomorphism. Similarly, we define a smooth isomorphism $*: C^\infty(\mathbb{R}^3) \to \Omega^3(\mathbb{R}^3)$ by
+\begin{equation*}
+  *(f) = f \mathrm{d} x \wedge \mathrm{d} y \wedge \mathrm{d} z,
+\end{equation*}
+So we have the commutative diagram
+\begin{equation}
+  \begin{tikzcd}
+    C^\infty(\mathbb{R}^3) \arrow[r, "\grad"] \arrow[d, "*"] & \mathfrak{X}(\mathbb{R}^3) \arrow[r, "\curl"] \arrow[d, "\beta"] & \mathfrak{X}(\mathbb{R}^3) \arrow[r, "\divergence"] \arrow[d, "\flat"] & C^\infty(\mathbb{R}^3) \arrow[d, "*"]\\
+    \Omega^3(\mathbb{R}^3) \arrow[r, "\mathrm{d} "] & \Omega^2(\mathbb{R}^3) \arrow[r, "\mathrm{d} "] & \Omega^1(\mathbb{R}^3) \arrow[r, "\mathrm{d} "] & \Omega^0(\mathbb{R}^3)
+  \end{tikzcd}
+\end{equation}
+
+\subsection{An Invariant Formulation of Exterior Derivative}
+There is a more invariant formula for the exterior derivative, which does not involve any coordinate chart.
+
+We begin with 1-forms.
+\begin{proposition}{Invariant Formula for Exterior Derivative of 1-Forms}{Invariant Formula for Exterior Derivative of 1-Forms}
+  Let $M$ be a smooth manifold, with or without boundary, and $\omega \in \Omega^1(M)$ be a smooth 1-form on $M$, then for any $X, Y \in \mathfrak{X}(M)$ we have
+  \begin{equation*}
+    \mathrm{d} \omega(X, Y) = X(\omega(Y)) - Y(\omega(X)) - \omega([X, Y]).
+  \end{equation*}
+\end{proposition}
+\begin{proof}
+  Suppose $\omega = u \mathrm{d} v$ and compute.
+\end{proof}
+
+\begin{proposition}{Exterior Derivative and Lie Bracket}{Exterior Derivative and Lie Bracket}
+  Let $M$ be a smooth $n$-dimensional manifold, with or without boundary, and $(E_i)$ be a smooth local frame for $M$. Let $(\epsilon^i)$ be the dual coframe, then let
+  \begin{equation}
+    \mathrm{d} \epsilon^i = \sum_{j<k} b_{jk}^i \epsilon^j \wedge \epsilon^k, \qquad [E_j, E_k] = c_{jk}^i E_i,
+  \end{equation}
+  then we have $b_{jk}^i = -c_{jk}^i$ for all $i, j, k$.
+\end{proposition}
+
+The generalization to higher degree forms is more complicated.
+\begin{proposition}{Invariant Formula for Exterior Derivative}{Invariant Formula for Exterior Derivative}
+  Let $M$ be a smooth manifold, with or without boundary, and $\omega \in \Omega^k(M)$. For any $X_1, \dots, X_{k+1} \in \mathfrak{X}(M)$, we have
+  \begin{equation}
+    \begin{aligned}
+      & \mathrm{d} \omega(X_1, \dots, X_{k+1}) \\
+      = & \sum_{i=1}^{k+1} (-1)^{i-1} X_i(\omega(X_1, \dots, \hat{X}_i, \dots, X_{k+1})) \\
+      & + \sum_{1 \leq i < j \leq k+1} (-1)^{i+j} \omega([X_i, X_j], X_1, \dots, \hat{X}_i, \dots, \hat{X}_j, \dots, X_{k+1}),
+    \end{aligned}
+  \end{equation}
+  where $\hat{X}_i$ means we omit $X_i$.
+\end{proposition}
+
+\subsection{Lie Derivative of Differential Forms}
+We restrict ourselves to manifolds without boundary in this subsection, as we did in Chapter 12.
+
+\begin{proposition}{Lie Derivative of Wedge Product}{Lie Derivative of Wedge Product}
+  Let $M$ be a smooth manifold without boundary, and $V \in \mathfrak{X}(M)$ and $\omega, \eta \in \Omega^*(M)$, then
+  \begin{equation*}
+    \mathcal{L}_V (\omega \wedge \eta) = \mathcal{L}_V \omega \wedge \eta + \omega \wedge \mathcal{L}_V \eta.
+  \end{equation*}
+\end{proposition}
+\begin{proof}
+  From the tensor product formula for Lie derivatives, obviously.
+\end{proof}
+
+The following is a very important formula, called the Cartan's magic formula.
+\begin{theorem}{Cartan's Magic Formula}{Cartan's Magic Formula}
+  Let $M$ be a smooth manifold without boundary, and $V \in \mathfrak{X}(M)$ and $\omega \in \Omega^*(M)$, then
+  \begin{equation*}
+    \mathcal{L}_V \omega = V \lrcorner \ \mathrm{d} \omega + \mathrm{d} (V \lrcorner \ \omega).
+  \end{equation*}
+\end{theorem}
+\begin{proof}
+  We prove it by induction on $k$. If $\omega$ is a 0-form $f$, then
+  \begin{equation*}
+    V \lrcorner \ \mathrm{d} f + \mathrm{d} (V \lrcorner \ f) = \mathrm{d} f(V) + \mathrm{d} 0 = V(f) = \mathcal{L}_V f.
+  \end{equation*}
+  Now suppose $\omega$ is a $k$-form for some $k \geq 1$, and the formula holds for all forms of degree less than $k$. In some coordinate chart, we can write $\omega = \sum_I^{}' \omega_I \mathrm{d} x^I$, then take $u = x^{i_1}, \beta = \omega_I \mathrm{d} x^{i_2} \wedge \cdots \wedge \mathrm{d} x^{i_k}$, all we need to do is verify the formula for the form $ \mathrm{d} u \wedge \beta$, where $u$ is a smooth function and $\beta$ is a smooth $(k-1)$-form. We have $\mathcal{L}_V (\mathrm{d} u) = \mathrm{d} (V(u))$ by the 0-form case,
+  \begin{equation*}
+    \begin{aligned}
+      \mathcal{L}_V (\mathrm{d} u \wedge \beta) &= \mathcal{L}_V (\mathrm{d} u) \wedge \beta + \mathrm{d} u \wedge \mathcal{L}_V \beta\\
+      &= \mathrm{d} (V(u)) \wedge \beta + \mathrm{d} u \wedge (V \lrcorner \ \mathrm{d} \beta + \mathrm{d} (V \lrcorner \ \beta))
+    \end{aligned}
+  \end{equation*}
+  on the other hand,
+  \begin{equation*}
+    \begin{aligned}
+      & V \lrcorner \ \mathrm{d} (\mathrm{d} u \wedge \beta) + \mathrm{d} (V \lrcorner \ (\mathrm{d} u \wedge \beta))\\
+      &=  V \lrcorner \ (\mathrm{d} (\mathrm{d} u) \wedge \beta - \mathrm{d} u \wedge \mathrm{d} \beta) + \mathrm{d} (V(u) \beta - \mathrm{d} u \wedge (V \lrcorner \ \beta))\\
+      &=  -V(u) \mathrm{d} u \wedge \beta + V(u) \mathrm{d} u \wedge \beta + V(u) \mathrm{d} u \wedge (V \lrcorner \ \beta) - \mathrm{d} u \wedge (V \lrcorner \ \mathrm{d} \beta) + \mathrm{d} u \wedge \mathrm{d} (V \lrcorner \ \beta)\\
+      &=  \mathrm{d} (V(u)) \wedge \beta + \mathrm{d} u \wedge (V \lrcorner \ \mathrm{d} \beta + \mathrm{d} (V \lrcorner \ \beta)),
+    \end{aligned}
+  \end{equation*}
+  So we have our result.
+\end{proof}
+
+\begin{corollary}{Lie Derivative Commutes with Exterior Derivative}{Lie Derivative Commutes with Exterior Derivative}
+  Let $M$ be a smooth manifold without boundary, and $V \in \mathfrak{X}(M)$ and $\omega \in \Omega^*(M)$, then
+  \begin{equation*}
+    \mathcal{L}_V (\mathrm{d} \omega) = \mathrm{d} (\mathcal{L}_V \omega).
+  \end{equation*}
+\end{corollary}
+\begin{proof}
+  From Cartan's magic formula, we have
+  \begin{equation*}
+    \begin{aligned}
+      \mathcal{L}_V (\mathrm{d} \omega) &= V \lrcorner \ \mathrm{d} (\mathrm{d} \omega) + \mathrm{d} (V \lrcorner \ \mathrm{d} \omega) = \mathrm{d} (V \lrcorner \ \mathrm{d} \omega),\\
+      \mathrm{d} (\mathcal{L}_V \omega) &=  \mathrm{d} (V \lrcorner \ \mathrm{d} \omega + \mathrm{d} (V \lrcorner \ \omega)) =  \mathrm{d} (V \lrcorner \ \mathrm{d} \omega),
+    \end{aligned}
+  \end{equation*}
+  So we have our result.
+\end{proof}
+
+\end{document}

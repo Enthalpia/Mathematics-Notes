@@ -1,0 +1,328 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\chapter{Riemannian Metrics}
+
+We introduce geometry to smooth manifold theory now.
+\section{Riemannian Manifolds}
+An inner product on a vector space $V$ allows us to measure lengths and angles. We use this idea to define a Riemannian metric on a smooth manifold.
+\begin{definition}{Riemannian Metric}{Riemannian Metric}
+  Let $M$ be a smooth manifold, with or without boundary. A \textbf{Riemannian metric} on $M$ is a smooth symmetric covariant 2-tensor field on $M$ that is positive definite at each point. A \textbf{Riemannian manifold} is a pair $(M,g)$, where $M$ is a smooth manifold, with or without boundary and $g$ is a Riemannian metric on $M$.
+\end{definition}
+Note that a Riemannian metric is NOT a metric in the sense of metric spaces. We shall call the metric on metric space by distance function here to avoid confusion.
+
+If $g$ is a Riemannian metric on $M$, then for each $p\in M$, $g_p$ is an inner product on $T_pM$. We denote $\langle v,w\rangle_g=g_p(v,w)$ for $v,w\in T_pM$.
+
+In any smooth coordinate chart, a Riemannian metric can be expressed in terms of its components: ($g$ is symmetric)
+\begin{equation*}
+  g = g_{ij}dx^i\otimes dx^j = g_{ij}dx^i dx^j,
+\end{equation*}
+
+\begin{example}{Riemannian Metrics}{Riemannian Metrics}
+  \begin{itemize}
+    \item The Euclidean metric $\overline{g}$ on $\mathbb{R}^n$: $\overline{g} = \delta_{ij}dx^i dx^j$. And we have $\overline{g}_p(v,w) = v\cdot w$ for $v,w\in T_p\mathbb{R}^n\cong \mathbb{R}^n$.
+    \item Product Metric: If $(M, g)$ and $(\tilde{M}, \tilde{g})$ are Riemannian manifolds, then the \textbf{product metric} on $M\times \tilde{M}$ is the Riemannian metric $\hat{g} = g \oplus \tilde{g}$ defined by
+      \begin{equation*}
+        \hat{g}((v,\tilde{v}),(w,\tilde{w})) = g(v,w) + \tilde{g}(\tilde{v},\tilde{w})
+      \end{equation*}
+      In the coordinate $(x_1, \ldots , x_m, y_1, \ldots, y_n)$ on $M\times \tilde{M}$, we have
+      \begin{equation*}
+        (\hat{g}_{ij}) = \begin{pmatrix}
+          (g_{ij}) & 0 \\
+          0 & (\tilde{g}_{ij})
+        \end{pmatrix}
+      \end{equation*}
+      Specially, the Euclidean metric on $\mathbb{R}^{m+n} \cong \mathbb{R}^m \times \mathbb{R}^n$ is the product metric of the Euclidean metrics on $\mathbb{R}^m$ and $\mathbb{R}^n$.
+  \end{itemize}
+\end{example}
+
+\begin{theorem}{Existence of Riemannian Metrics}{Existence of Riemannian Metrics}
+  Every smooth manifold with or without boundary admits a Riemannian metric.
+\end{theorem}
+\begin{proof}
+  Let $M$ be a smooth manifold, with or without boundary. Choose a covering of $M$ by smooth coordinate charts $\{(U_\alpha, \phi_\alpha)\}$, and in each chart, there is a Riemannian metric $g_\alpha = \phi_\alpha^*\overline{g}$, whose coordinate expression is $\delta_{ij}dx^i dx^j$.
+
+  Let $\{\psi_\alpha\}$ be a smooth partition of unity subordinate to $\{U_\alpha\}$. Then define a Riemannian metric $g$ on $M$ by
+  \begin{equation}
+    g = \sum_\alpha \psi_\alpha g_\alpha
+  \end{equation}
+  From local finiteness, this defines a smooth tensor field on $M$. Since each $g_\alpha$ is positive definite, $g$ is also positive definite. Hence $g$ is a Riemannian metric on $M$.
+\end{proof}
+
+There are also many ways to define a Riemannian metric on a smooth manifold. So there is nothing canonical about it.
+
+One useful tool to study Riemannian manifolds is orthonormal frames.
+\begin{definition}{Orthonormal Frame}{Orthonormal Frame}
+  Let $(M,g)$ be a Riemannian manifold. An \textbf{(local) orthonormal frame} on an open subset $U\subseteq M$ is a collection of smooth vector fields $E_1, \ldots, E_n$ on $U$ such that for each $p\in U$, $\{E_1(p), \ldots, E_n(p)\}$ is an orthonormal basis of $T_pM$ with respect to the inner product $g_p$.
+\end{definition}
+
+\begin{proposition}{Existence of Orthonormal Frames}{Existence of Orthonormal Frames}
+  Let $(M,g)$ be a Riemannian manifold, with or without boundary. Let $(X_j)$ be a smooth local frame for $M$ on an open subset $U\subseteq M$. Then there exists a smooth local orthonormal frame $(E_j)$ on $U$ such that for each $p\in U$ and $j=1, \ldots, n$, we have $\vspan\{E_1(p), \ldots, E_j(p)\} = \vspan\{X_1(p), \ldots, X_j(p)\}$.
+
+  As all smooth manifolds admit smooth local frames, every Riemannian manifold admits smooth local orthonormal frames.
+\end{proposition}
+
+\subsection{Pullback Metrics}
+Suppose $M,N$ are smooth manifolds, with or without boundary, and $g$ is a Riemannian metric on $N$. If $F:M\to N$ is a smooth map, the pullback $F^*g$ is a smooth 2-tensor field on $M$. If it is positive definite at each point, then it is a Riemannian metric on $M$, called the \textbf{pullback metric} of $g$ by $F$.
+
+\begin{proposition}{Pullback Metric Criterion}{Pullback Metric Criterion}
+  Suppose $F:M\to N$ is a smooth map, and $g$ is a Riemannian metric on $N$. Then the pullback $F^*g$ is a Riemannian metric on $M$ if and only if $F$ is a smooth immersion.
+\end{proposition}
+\begin{proof}
+  If $F^*g$ is a Riemannian metric on $M$, then for each $p\in M$ and $v\in T_pM\setminus \{0\}$, we have
+  \begin{equation*}
+    (F^*g)_p(v,v) = g_{F(p)}(dF_p(v), dF_p(v)) > 0
+  \end{equation*}
+  Hence $dF_p(v)\neq 0$, which implies that $dF_p$ is injective. So $F$ is a smooth immersion. The converse is the same.
+\end{proof}
+
+\begin{definition}{Riemannian Isometry}{Riemannian Isometry}
+  If $(M,g)$ and $(\tilde{M}, \tilde{g})$ are Riemannian manifolds, a \textbf{Riemannian isometry} from $(M,g)$ to $(\tilde{M}, \tilde{g})$ is a smooth diffeomorphism $F:M\to \tilde{M}$ such that $F^*\tilde{g} = g$.
+
+  Generally, $F$ is called a local Riemannian isometry if for each $p\in M$, there exists an open neighborhood $U$ of $p$ such that $F|_U:U\to F(U)$ is a Riemannian isometry from $(U, g|_U)$ to $(F(U), \tilde{g}|_{F(U)})$.
+
+  The study of properties of Riemannian manifolds that are invariant under Riemannian isometries is the main goal of Riemannian geometry.
+\end{definition}
+
+\begin{definition}{Flatness}{Flatness}
+  A Riemannian manifold $(M,g)$ is \textbf{flat} if it is locally isometric to the Euclidean space $(\mathbb{R}^n, \overline{g})$.
+\end{definition}
+Flatness is a geometric property of a Riemannian manifold, and it is invariant under Riemannian isometries.
+
+\begin{theorem}{Equivalent Characteristics for Flatness}{Equivalent Characteristics for Flatness}
+  For a Riemannian manifold $(M,g)$, the following are equivalent:
+  \begin{itemize}
+    \item $g$ is flat.
+    \item $\forall p\in M$, there exists a smooth coordinate chart $(U, \phi)$ around $p$ such that in the coordinate we have $g = \delta_{ij}dx^i dx^j$.
+    \item $\forall p\in M$, there exists a smooth coordinate chart $(U, \phi)$ around $p$ such that the coordinate frame $(\partial/\partial x^i)$ is an orthonormal frame on $U$.
+    \item $\forall p\in M$, there exists a smooth local orthonormal frame $(E_i)$ around $p$ such that $[E_i, E_j] = 0$ for all $i,j$.
+  \end{itemize}
+\end{theorem}
+\begin{proof}
+  The $4 \rightarrow 1$ is by the canonical form theorem of commuting frames \ref{thm:Canonical Form of Commuting Vector Fields}, where we can see that if $[E_i, E_j] = 0$ for all $i,j$, then there exists a smooth coordinate chart $(U, \phi)$ around $p$ such that $E_i = \partial/\partial x^i$ for all $i$. Hence the coordinate frame is an orthonormal frame on $U$, which implies that $g$ is flat.
+\end{proof}
+
+\subsection{Riemannian Submanifolds}
+Pullback metrics are useful to construct Riemannian metrics on submanifolds. If $(M,g)$ is a Riemannian manifold, with or without boundary, then every immersed or embedded submanifold $S \subseteq M$, with or without boundary, inherits a Riemannian metric $\iota^*g$ from $M$, where $\iota:S\to M$ is the inclusion map. We call $\iota^*g$ the \textbf{induced metric} on $S$. We have for all $v,w \in T_pS$,
+\begin{equation*}
+  (\iota^*g)_p (v,w) = g_p(\mathrm{d} \iota_p(v), \mathrm{d}\iota_p(w)) = g_p(v,w)
+\end{equation*}
+Thus $\iota^*g$ is the restriction of $g$ to $S$. With this metric structure, $S$ is a Riemannian manifold, called a \textbf{Riemannian submanifold} of $M$.
+
+\begin{example}{Round Metric}{Round Metric}
+  The metric $\overset{\circ}{g} = \iota^*\overline{g}$ on the unit sphere $S^n \subseteq \mathbb{R}^{n+1}$ is called the \textbf{round metric} on $S^n$.
+\end{example}
+
+Usually, it is easy to compute the induced metric on a submanifold by local parametrization. That is, an injective immersion $X:U\to M$ from an open subset $U\subseteq \mathbb{R}^n$ to $M$ such that $X(U)$ is an open subset of $S$, and whose inverse $X^{-1}:X(U)\to U$ is a smooth coordinate map for $S$. Since $\iota \circ X = X$, we have the coordinate representation of $\iota^*g$ is $X^*(\iota^*g) = X^*g$.
+
+\begin{example}{Induced Metrics in Graph Coordinates}{Induced Metrics in Graph Coordinates}
+  Let $U \subseteq \mathbb{R}^n$ be an open subset, and $f:U\to \mathbb{R}$ be a smooth function. Then the graph $S \subseteq \mathbb{R}^{n+1}$ of $f$ is a submanifold of $\mathbb{R}^{n+1}$. The map $X:U\to \mathbb{R}^{n+1}$ defined by $X(u^1, \ldots, u^n) = (u^1, \ldots, u^n, f(u))$ is a smooth global parametrization of $S$.
+
+  The induced metric on $S$ is
+  \begin{equation*}
+    X^* \overline{g} = X^*((\mathrm{d} x^1)^2 + \cdots + (\mathrm{d} x^{n+1})^2) = (\mathrm{d} u^1)^2 + \cdots + (\mathrm{d} u^n)^2 + (\mathrm{d} f)^2
+  \end{equation*}
+\end{example}
+
+\begin{example}{Induced Metrics of Surface of Revolution}{Induced Metrics of Surface of Revolution}
+  Let $C$ be an embedded 1-dimensional submanifold of the half plane $\{(r,z)\in \mathbb{R}^2: r> 0\}$, and $S_C$ be the surface of revolution. Choose any local parametrization $\gamma(t) = (a(t), b(t))$ of $C$, we have $X(t, \theta) = (a(t)\cos \theta, a(t)\sin \theta, b(t))$ is a local parametrization of $S_C$. The induced metric on $S_C$ is
+  \begin{equation*}
+    X^*\overline{g} = (a'(t)^2 + b'(t)^2)\mathrm{d} t^2 + a(t)^2 \mathrm{d} \theta^2
+  \end{equation*}
+
+  Here are some examples:
+  \begin{itemize}
+    \item The torus is the surface of revolution of a circle. For $(r-2)^2 + z^2 = 1$, we have $a(t) = 2 + \cos t$ and $b(t) = \sin t$. Hence the induced metric on the torus is
+      \begin{equation*}
+        X^*\overline{g} = \mathrm{d} t^2 + (2 + \cos t)^2 \mathrm{d} \theta^2
+      \end{equation*}
+    \item The punctured unit sphere $S^2\setminus \{(0,0,1), (0,0,-1)\}$ is the surface of revolution of the semicircle $r^2 + z^2 = 1$ with $r>0$. For $a(t) = \sin t$ and $b(t) = \cos t$, we have the induced metric on $S^2\setminus \{(0,0,1), (0,0,-1)\}$ is
+      \begin{equation*}
+        X^*\overline{g} = \mathrm{d} t^2 + \sin^2 t \mathrm{d} \theta^2
+      \end{equation*}
+    \item The unit cylinder $S^1 \times \mathbb{R}$ is the surface of revolution of the vertical line $r=1$. For $a(t) = 1$ and $b(t) = t$, we have the induced metric on $S^1 \times \mathbb{R}$ is
+      \begin{equation*}
+        X^*\overline{g} = \mathrm{d} t^2 + \mathrm{d} \theta^2
+      \end{equation*}
+      This is a flat metric, which implies that the unit cylinder is a flat Riemannian manifold.
+  \end{itemize}
+\end{example}
+
+\begin{proposition}{Flatness Criterion for Surfaces of Revolution}{Flatness Criterion for Surfaces of Revolution}
+  Let $C \subseteq H = \{(r,z)\in \mathbb{R}^2: r>0\}$ be a connected embedded 1-dimensional submanifold, and let $S_C$ be the surface of revolution of $C$. Then $S_C$ is flat if and only if $C$ is a line segment.
+\end{proposition}
+\begin{proof}
+  The difficult part is the ``only if'' part. If $S_C$ is flat, then let $(a(t), b(t))$ be a local parametrization of $C$. Assume $a'^2 + b'^2 = 1$, then the induced metric on $S_C$ is $\mathrm{d} t^2 + a(t)^2 \mathrm{d} \theta^2$. The local frame
+  \begin{equation*}
+    E_1 = \frac{\partial}{\partial t}, \quad E_2 = \frac{1}{a(t)}\frac{\partial}{\partial \theta}
+  \end{equation*}
+  is orthonormal. Any other orthonormal frame $(\tilde{E}_1, \tilde{E}_2)$ can be written as
+  \begin{equation*}
+    \tilde{E}_1 = uE_1 + vE_2, \quad \tilde{E}_2 = vE_1 - uE_2
+  \end{equation*}
+  where $u^2 + v^2 = 1$ and are smooth functions. Because the metric is flat, we can choose $(\tilde{E}_1, \tilde{E}_2)$ such that $[\tilde{E}_1, \tilde{E}_2] = 0$. Hence a simplification yields
+  \begin{equation*}
+    u v_t - v u_t = 0, \qquad v u_\theta - u v_\theta = a'.
+  \end{equation*}
+  For any point $p$, there is a neighborhood $U$ of $p$ such that either $u$ or $v$ is nonzero on $U$. Assume $v\neq 0$ on $U$, then $(u / v)_t = 0$, which implies that $u = f(\theta) v$ for some smooth function $f$. Hence $u^2 + v^2 = (f^2 + 1)v^2 = 1$, which implies that $u,v$ are functions of $\theta$ only. Hence $a' = v u_\theta - u v_\theta$ is a function of $\theta$ only, so it is a constant. Therefore we have our conclusion.
+\end{proof}
+
+This implies that the torus and the punctured unit sphere are not flat.
+
+\subsection{The Normal Bundle}
+Suppose $(M,g)$ is a $n$-dimensional Riemannian manifold, with or without boundary, and $S\subseteq M$ is a $k$-dimensional immersed or embedded submanifold, with or without boundary. For each $p\in S$, we say that $v\in T_pM$ is \textbf{normal} to $S$ at $p$ if $g_p(v,w) = 0$ for all $w\in T_pS$. The set of all normal vectors to $S$ at $p$ is a linear subspace of $T_pM$, called the \textbf{normal space} to $S$ at $p$, denoted by $N_pS$. The \textbf{normal bundle} of $S$ in $M$ is the disjoint union of all normal spaces to $S$:
+\begin{equation*}
+  NS = \bigsqcup_{p\in S} N_pS
+\end{equation*}
+
+\begin{proposition}{The Normal Bundle to a Riemannian Submanifold}{The Normal Bundle to a Riemannian Submanifold}
+  Let $(M,g)$ be a Riemannian manifold, with or without boundary, and $S\subseteq M$ be a $k$-dimensional immersed submanifold, with or without boundary. Then the normal bundle $NS$ is a rank $(n-k)$ subbundle of the tangent bundle $TM|_S$ of $M$ restricted to $S$. Moreover, for each $p\in S$, there is a smooth orthonormal frame for $NS$ defined on an open neighborhood of $p$ in $S$.
+\end{proposition}
+
+\section{The Riemannian Distance Function}
+A Riemannian metric on a smooth manifold allows us to measure lengths of curves, and hence define a distance function on the manifold.
+
+\begin{definition}{Length of a Curve}{Length of a Curve}
+  Let $(M,g)$ be a Riemannian manifold, with or without boundary. If $\gamma:[a,b]\to M$ is a piecewise smooth curve, then the \textbf{length} of $\gamma$ is defined by
+  \begin{equation}
+    L_\gamma = \int_a^b |\gamma'(t)|_g \mathrm{d} t.
+  \end{equation}
+  Because $|\gamma'(t)|_g = \sqrt{g_{\gamma(t)}(\gamma'(t), \gamma'(t))}$ is continuous except at finitely many points, and there left and right limits are defined, the length of $\gamma$ is well-defined.
+\end{definition}
+
+Lengths are isometric invariants, obviously. If $F:(M,g)\to (\tilde{M}, \tilde{g})$ is a Riemannian isometry, then for any piecewise smooth curve $\gamma:[a,b]\to M$, we have
+\begin{equation*}
+  L_{F\circ \gamma} = \int_a^b |(F\circ \gamma)'(t)|_{\tilde{g}} \mathrm{d} t = \int_a^b |\mathrm{d} F_{\gamma(t)}(\gamma'(t))|_{\tilde{g}} \mathrm{d} t = \int_a^b |\gamma'(t)|_g \mathrm{d} t = L_\gamma
+\end{equation*}
+
+\begin{proposition}{Parameter Independence of Length}{Parameter Independence of Length}
+  Let $(M,g)$ be a Riemannian manifold, with or without boundary. If $\gamma:[a,b]\to M$ is a piecewise smooth curve, and $\tilde{\gamma}:[c,d]\to M$ is a piecewise smooth curve such that $\tilde{\gamma} = \gamma \circ \phi$ for some diffeomorphism $\phi:[c,d]\to [a,b]$, then $L_{\tilde{\gamma}} = L_\gamma$. Here $\tilde{\gamma}$ is called a \textbf{reparametrization} of $\gamma$.
+\end{proposition}
+
+Now, suppose $(M,g)$ is a connected Riemannian manifold, with or without boundary. Any two points $p,q\in M$ can be connected by a piecewise smooth curve from proposition \ref{prop:Connecting Points via Curves}. Hence we can define a distance function on $M$ by
+\begin{equation}
+  d_g(p,q) = \inf \{L_\gamma: \gamma \text{ is a piecewise smooth curve from } p \text{ to } q\}
+\end{equation}
+
+Obviously, $d_g$ is symmetric and satisfies the triangle inequality. Moreover, $d_g(p,q) = 0$ if and only if $p=q$. Hence $d_g$ is a metric on $M$ in the sense of metric spaces, called the \textbf{Riemannian distance function} on $M$. Also, the distance function is an isometric invariant.
+
+In $(\mathbb{R}^n, \overline{g})$, the distance function $d_{\overline{g}}$ is the standard Euclidean distance function.
+
+\begin{lemma}{Equivalence of Riemannian Metrics on Compact Sets}{Equivalence of Riemannian Metrics on Compact Sets}
+  Let $g$ be a Riemannian metric on an open subset $U\subseteq \mathbb{R}^n$. Then for each compact subset $K\subseteq U$, there exist positive constants $c$ and $C$ such that for all $x\in K$ and $v\in T_xU\cong \mathbb{R}^n$, we have
+  \begin{equation}
+    c|v|_{\overline{g}} \leq |v|_g \leq C|v|_{\overline{g}}
+  \end{equation}
+\end{lemma}
+\begin{proof}
+  Let $L \subseteq T \mathbb{R}^n$ by
+  \begin{equation*}
+    L = \{(x,v)\in T\mathbb{R}^n: x\in K, |v|_{\overline{g}} = 1\}.
+  \end{equation*}
+  Under the identification $T\mathbb{R}^n \cong \mathbb{R}^n \times \mathbb{R}^n$, $L = K \times S^{n-1}$, which is compact. Because $|v|_g$ is a continuous function on $L$ and is positive, there exists positive constants $c$ and $C$ such that for all $(x,v)\in L$, we have $c \leq |v|_g \leq C$. Hence for all $x\in K$ and $v\in T_xU\cong \mathbb{R}^n$, we have
+  \begin{equation*}
+    |v|_g = |v|_{\overline{g}} \cdot\left|\frac{v}{|v|_{\overline{g}}}\right|_g \geq c|v|_{\overline{g}}, \qquad |v|_g = |v|_{\overline{g}} \cdot\left|\frac{v}{|v|_{\overline{g}}}\right|_g \leq C|v|_{\overline{g}}
+  \end{equation*}
+\end{proof}
+
+\begin{theorem}{Riemannian Manifolds as Metric Spaces}{Riemannian Manifolds as Metric Spaces}
+  Let $(M,g)$ be a connected Riemannian manifold, with or without boundary. Then the topology on $M$ induced by the Riemannian distance function $d_g$ is the same as the original topology on $M$.
+\end{theorem}
+
+Therefore, all the terminology and results about metric spaces can be applied to Riemannian manifolds with the Riemannian distance function.
+
+\begin{corollary}{Metrizability of Smooth Manifolds}{Metrizability of Smooth Manifolds}
+  Every smooth manifold with or without boundary is metrizable.
+\end{corollary}
+\begin{proof}
+  Take any Riemannian metric $g$ on $M$, and let $\{M_i\}$ be the connected components of $M$. Take $p_i\in M_i$ for each $i$, and define a distance function on $M$ by
+  \begin{equation*}
+    d(p,q) = \begin{cases}
+      d_g(p,q), & \text{if } p,q\in M_i \text{ for some } i \\
+      d_g(p,p_i) + d_g(q,p_j) + 1, & \text{if } p\in M_i, q\in M_j \text{ for some } i\neq j
+    \end{cases}
+  \end{equation*}
+  We can see this as building a ``bridge'' of length 1 between any two different connected components.
+
+  If $M$ has nonempty boundary, then just embed $M$ to its double, and note that every subspace of a metrizable space is metrizable.
+\end{proof}
+
+\section{The Tangent-Cotangent Isomorphism}
+A Riemannian metric on a smooth manifold allows us to identify tangent bundles and cotangent bundles. We define a bundle isomorphism $\hat{g}: TM \to T^*M$ by
+\begin{equation}
+  \hat{g}(v)(w) = g_p(v,w), \qquad \forall p\in M, v,w\in T_pM
+\end{equation}
+
+In any smooth coordinate chart $(x^i)$, if $g = g_{ij}dx^i dx^j$, then for smooth vector fields $X = X^i \partial/\partial x^i$ and $Y = Y^i \partial/\partial x^i$, we have
+\begin{equation*}
+  \hat{g}(X)(Y) = g(X,Y) = g_{ij}X^i Y^j, \qquad \hat{g}(X) = g_{ij}X^i dx^j
+\end{equation*}
+That is, the matrix representation of $\hat{g}$ with respect to the coordinate frame $(\partial/\partial x^i)$ and the coordinate coframe $(dx^i)$ is $(g_{ij})$.
+
+It is customary to denote
+\begin{equation}
+  X_j = g_{ij} X^i, \quad \text{so that} \quad X^\flat = \hat{g}(X) = X_j dx^j
+\end{equation}
+So we say $X^\flat$ lowers the index of $X$. Similarly, the inverse $\hat{g}^{-1}: T^*M \to TM$ is given in component matrix form by $(g^{ij}) = (g_{ij})^{-1}$, so we have
+\begin{equation*}
+  g^{ij} g_{jk} = \delta^i_k
+\end{equation*}
+For any covector field $\omega = \omega_i dx^i$, we have
+\begin{equation}
+  \omega^\sharp = \hat{g}^{-1}(\omega) = g^{ij} \omega_i \frac{\partial}{\partial x^j} = \omega^j \frac{\partial}{\partial x^j}, \quad \text{where } \omega^j = g^{ij} \omega_i,
+\end{equation}
+These two isomorphisms are inverses of each other, so we have $X = X^{\flat \sharp}$ and $\omega = \omega^{\sharp \flat}$. They are called the \textbf{musical isomorphisms} for obvious reasons.
+
+Now, we can make gradient a vector field. For a smooth function $f$ on $M$, the \textbf{gradient} of $f$ is defined by
+\begin{equation}
+  \grad f = (\mathrm{d} f)^\sharp = \hat{g}^{-1}(\mathrm{d} f)
+\end{equation}
+For any $X \in \mathfrak{X}(M)$, we have
+\begin{equation*}
+  \langle \grad f, X \rangle_g = \hat{g}(\grad f)(X) = \mathrm{d} f(X) = X f, \qquad \langle \grad f, \cdot \rangle_g = \mathrm{d} f
+\end{equation*}
+In smooth coordinates, we have
+\begin{equation*}
+  \grad f = g^{ij} \frac{\partial f}{\partial x^i} \frac{\partial}{\partial x^j}
+\end{equation*}
+This shows that the gradient of $f$ is smooth, and for the Euclidean metric $\overline{g}$, we have
+\begin{equation*}
+  \grad f = \delta^{ij} \frac{\partial f}{\partial x^i} \frac{\partial}{\partial x^j} = \sum_{i=1}^n \frac{\partial f}{\partial x^i} \frac{\partial}{\partial x^i}
+\end{equation*}
+
+\begin{example}{Polar Coordinate Gradient}{Polar Coordinate Gradient}
+  As an example, in the polar coordinate $(r, \theta)$ on $\mathbb{R}^2\setminus \{(0,0)\}$, the Euclidean metric is $\overline{g} = dr^2 + r^2 d\theta^2$. Hence we have its inverse matrix representation
+  \begin{equation*}
+    \overline{g}^{-1} = \begin{pmatrix}
+      1 & 0 \\
+      0 & r^{-2}
+    \end{pmatrix}
+  \end{equation*}
+  So for a smooth function $f$ on $\mathbb{R}^2\setminus \{(0,0)\}$, we have
+  \begin{equation*}
+    \grad f = \frac{\partial f}{\partial r} \frac{\partial}{\partial r} + \frac{1}{r^2} \frac{\partial f}{\partial \theta} \frac{\partial}{\partial \theta}
+  \end{equation*}
+\end{example}
+
+\section{Pseudo-Riemannian Metrics}
+An important generalization of Riemannian metrics is to relax the positive definiteness condition.
+\begin{definition}{Pseudo-Riemannian Metric}{Pseudo-Riemannian Metric}
+  Let $M$ be a smooth manifold, with or without boundary. A \textbf{pseudo-Riemannian metric} on $M$ is a smooth symmetric covariant 2-tensor field on $M$ that is nondegenerate at each point. A \textbf{pseudo-Riemannian manifold} is a pair $(M,g)$, where $M$ is a smooth manifold, with or without boundary and $g$ is a pseudo-Riemannian metric on $M$.
+\end{definition}
+
+From the Sylvester's law of inertia, every symmetric 2-tensor can be diagonalized at each point to a diagonal matrix with entries $+1$, $-1$ and $0$. And for the nondegenerate condition, there are only $+1$ and $-1$ entries:
+\begin{equation*}
+  (g_{ij}) = \begin{pmatrix}
+    I_r & 0 \\
+    0 & -I_s
+  \end{pmatrix}
+\end{equation*}
+The number $r,s$ are called the \textbf{signature} of $g$, is an isometric invariant of $g$.
+
+We shall note that the existence of Riemannian metrics on smooth manifolds does NOT carry over to pseudo-Riemannian metrics, for a linear combination of nondegenerate symmetric 2-tensors may be degenerate. Actually, not all smooth manifolds admit pseudo-Riemannian metrics of a given signature.
+
+\begin{remark}
+  In physics, the most important pseudo-Riemannian metric is the Lorentzian metric, which has signature $(1,n-1)$ or $(n-1,1)$, which plays a fundamental role in the theory of relativity.
+\end{remark}
+
+\end{document}

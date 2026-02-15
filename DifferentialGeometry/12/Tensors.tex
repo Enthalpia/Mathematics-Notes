@@ -216,6 +216,168 @@ Similarly, if $V$ is a finite-dimensional vector space, a covariant $k$-tensor $
 \end{equation}
 They are also called \textbf{exterior forms}. They also construct a subspace denoted by $\Lambda^k(V^*) \subseteq T^k(V^*)$.
 
+For any permutation $\sigma\in S_k$, we have
+\begin{equation*}
+  ^\sigma \alpha(v_1, \ldots ,v_k) = \operatorname{sgn}(\sigma) \alpha(v_1, \ldots ,v_k)
+\end{equation*}
+
+Specially, any $0$-tensor is both symmetric and alternating. Any $1$-tensor is both symmetric and alternating. Any $2$-tensor $\alpha$ can be decomposed into a sum of a symmetric part and an alternating part by
+\begin{equation*}
+  \beta(v,w) = \frac{1}{2}(\alpha(v,w) + \alpha(w,v)), \qquad \gamma(v,w) = \frac{1}{2}(\alpha(v,w) - \alpha(w,v))
+\end{equation*}
+
+\section{Tensors and Tensor Fields on Manifolds}
+Now we can define tensor fields on smooth manifolds. Let $M$ be a smooth manifold, with or without boundary. Define the \textbf{bundle of covariant $k$-tensors} on $M$ to be
+\begin{equation}
+  T^k T^* M = \bigsqcup_{p\in M} T^k(T_p^* M)
+\end{equation}
+Similar, the bundle of contravariant $k$-tensors on $M$ is
+\begin{equation}
+  T^k TM = \bigsqcup_{p\in M} T^k(T_p M)
+\end{equation}
+And the bundle of mixed $(k,l)$-tensors on $M$ is
+\begin{equation}
+  T^{(k,l)} TM = \bigsqcup_{p\in M} T^{(k,l)}(T_p M)
+\end{equation}
+
+They all have natural smooth vector bundle structures by local trivializations. A section of tensor bundle is called a \textbf{tensor field}. The space of all smooth tensor fields, $\Gamma(T^k T^* M)$, $\Gamma(T^k TM)$, $\Gamma(T^{(k,l)}T M)$, are all modules over $C^\infty(M)$, and infinite-dimensional vector spaces over $\mathbb{R}$. We usually denote
+\begin{equation*}
+  \mathcal{T}^k(M) = \Gamma(T^k T^* M).
+\end{equation*}
+
+\begin{proposition}{Smoothness Criterion for Tensor Fields}{Smoothness Criterion for Tensor Fields}
+  Let $M$ be a smooth manifold, with or without boundary. And let $A: M \rightarrow T^k T^* M$ be a rough section. The following are equivalent:
+  \begin{itemize}
+    \item $A$ is smooth.
+    \item In every smooth coordinate chart $(U, \varphi)$, the component functions of $A$ with respect to the natural basis of $T^k T^* M$ are smooth.
+    \item Each point $p\in M$ has a smooth coordinate chart $(U, \varphi)$ such that the component functions of $A$ with respect to the natural basis of $T^k T^* M$ are smooth on $U$.
+  \end{itemize}
+\end{proposition}
+
+\begin{proposition}{Operations on Tensor Fields}{Operations on Tensor Fields}
+  Let $M$ be a smooth manifold, with or without boundary. Let $A\in \mathcal{T}^k(M)$, $B\in \mathcal{T}^l(M)$, and $f\in C^\infty(M)$. Then $fA, A \otimes B$ are also smooth tensor fields on $M$. In any smooth coordinate chart, the component functions are
+  \begin{equation*}
+    \begin{aligned}
+      (fA)_{i_1 \cdots i_k} &= f A_{i_1 \cdots i_k}, \\
+      (A \otimes B)_{i_1 \cdots i_{k+l}} &= A_{i_1 \cdots i_k} B_{i_{k+1} \cdots i_{k+l}}.
+    \end{aligned}
+  \end{equation*}
+\end{proposition}
+
+If $A$ is a smooth covariant $k$-tensor field and $X_1, \ldots, X_k$ are smooth vector fields on $M$, then we can define a smooth function $A(X_1, \ldots, X_k)$ on $M$. Then $A$ induces a map
+\begin{equation*}
+  \mathfrak{X}(M) \times \cdots \times \mathfrak{X}(M) \to C^\infty(M), \qquad (X_1, \ldots, X_k) \mapsto A(X_1, \ldots, X_k)
+\end{equation*}
+
+We can see it is not only multilinear over $\mathbb{R}$, but also multilinear over $C^\infty(M)$ in the sense that
+\begin{equation*}
+  A(X_1, \ldots, f X_i + g Y_i, \ldots, X_k) = f A(X_1, \ldots, X_i, \ldots, X_k) + g A(X_1, \ldots, Y_i, \ldots, X_k)
+\end{equation*}
+for all $f, g\in C^\infty(M)$.
+
+\begin{lemma}{Tensor Characterization Lemma}{Tensor Characterization Lemma}
+  Let $M$ be a smooth manifold, with or without boundary. Let
+  \begin{equation*}
+    \mathcal{A}: \mathfrak{X}(M) \times \cdots \times \mathfrak{X}(M) \to C^\infty(M)
+  \end{equation*}
+  be a map. Then it is multilinear over $C^\infty(M)$ if and only if there exists a unique smooth covariant $k$-tensor field $A$ such that $\mathcal{A}(X_1, \ldots, X_k) = A(X_1, \ldots, X_k)$ for all $X_i \in \mathfrak{X}(M)$.
+\end{lemma}
+
+\subsection{Pullbacks of Tensor Fields}
+Suppose $F: M \to N$ is a smooth map between smooth manifolds, with or without boundary, $p\in M$, and $\alpha\in \mathcal{T}^k(T^*_{F(p)} N)$ is a covariant $k$-tensor at $F(p)$. We can define the \textbf{pullback} of $\alpha$ by $F$ at $p$ to be the covariant $k$-tensor at $p$ defined by
+\begin{equation}
+  \mathrm{d} F_p^* (\alpha)(v_1, \ldots, v_k) = \alpha(\mathrm{d} F_p(v_1), \ldots, \mathrm{d} F_p(v_k))
+\end{equation}
+Which just follows our intuition of ``doing the same operation on the domain side''. If $A$ is a covariant $k$-tensor field on $N$, we can define the pullback of $A$ by $F$ to be the covariant $k$-tensor field on $M$ defined by
+\begin{equation}
+  (F^* A)_p = \mathrm{d} F_p^* (A_{F(p)}), \qquad \forall p\in M
+\end{equation}
+which is a rough section of $T^k T^* M$.
+
+\begin{proposition}{Properties of Tensor Pullbacks}{Properties of Tensor Pullbacks}
+  Suppose $F: M \to N$ and $G: N \to P$ are smooth maps between smooth manifolds, with or without boundary. Let $A, B$ are covariant $k$-tensor fields on $N$, and let $f\in C^\infty(N)$. Then
+  \begin{itemize}
+    \item $F^* (fB) = (f\circ F) F^* B$.
+    \item $F^* (A \otimes B) = F^* A \otimes F^* B$.
+    \item $F^* (A + B) = F^* A + F^* B$.
+    \item $F^* B$ is a (continuous) tensor field on $M$. It is smooth $B$ is smooth.
+    \item $(G \circ F)^* A = F^* (G^* A)$.
+    \item $\operatorname{Id}_N^* B = B$.
+  \end{itemize}
+\end{proposition}
+Well, if we consistently interpret $fB$ by $f \otimes B$, then it is easy to see.
+
+\begin{corollary}{Coordinate Expression of Pullback}{Coordinate Expression of Pullback}
+  Let $F: M \to N$ be a smooth map between smooth manifolds, with or without boundary. Let $B$ be a covariant $k$-tensor field on $N$. Let $p\in M$ and let $(y^i)$ be a smooth coordinate chart around $F(p)$ on $N$. Then we have
+  \begin{equation}
+    F^*(B_{i_1 \cdots i_k} \mathrm{d} y^{i_1} \otimes \cdots \otimes \mathrm{d} y^{i_k}) = (B_{i_1 \cdots i_k} \circ F) \mathrm{d}(y^{i_1} \circ F) \otimes \cdots \otimes \mathrm{d}(y^{i_k} \circ F).
+  \end{equation}
+\end{corollary}
+
+\subsection{Lie Derivatives of Tensor Fields}
+Let $M$ be a smooth manifold, and let $V$ be a smooth vector field on $M$, with $\theta$ be the flow of $V$. We shall assume $\partial M = \emptyset $ here for simplicity. But the same result generalizes easily to the case where $V$ is tangent to the boundary. Let $p\in M$ and $t$ sufficiently small such that $\theta_t$ is a diffeomorphism in a neighborhood.
+\begin{equation*}
+  \mathrm{d} (\theta_t)_p^* (A_{\theta_t(p)})(v_1, \ldots, v_k) = A_{\theta_t(p)}(\mathrm{d} (\theta_t)_p(v_1), \ldots, \mathrm{d} (\theta_t)_p(v_k))
+\end{equation*}
+
+We define the Lie derivative of $A$ with respect to $V$ at $p$ by
+\begin{equation}
+  (\mathcal{L}_V A)_p = \frac{\mathrm{d} }{\mathrm{d} t}\Big|_{t = 0} (\theta_t^* A)_p = \lim_{t \to 0} \frac{\mathrm{d} (\theta_t)_p^* (A_{\theta_t(p)}) - A_p}{t} \in T^k(T_p^* M)
+\end{equation}
+
+\begin{lemma}{Existence of Lie Derivative}{Existence of Lie Derivative}
+  Let $M$ be a smooth manifold, then the derivative above exists for every $p\in M$ and defines a smooth covariant $k$-tensor field $\mathcal{L}_V A$ on $M$.
+\end{lemma}
+
+\begin{proposition}{Properties of Lie Derivative on Tensors}{Properties of Lie Derivative on Tensors}
+  Let $M$ be a smooth manifold, and let $V\in \mathfrak{X}(M)$. Suppose $f\in C^\infty(M)$, regarded as a covariant $0$-tensor field, and $A, B$ are smooth covariant tensor fields on $M$. Then
+  \begin{itemize}
+    \item $\mathcal{L}_V f = V f$.
+    \item $\mathcal{L}_V (f A) = (V f) A + f \mathcal{L}_V A$.
+    \item $\mathcal{L}_V (A \otimes B) = \mathcal{L}_V A \otimes B + A \otimes \mathcal{L}_V B$.
+    \item If $X_1, \ldots ,X_k$ are smooth vector fields and $A$ is a smooth covariant $k$-tensor field, then
+      \begin{equation*}
+        \mathcal{L}_V (A (X_1, \ldots ,X_k)) = (\mathcal{L}_V A)(X_1, \ldots ,X_k) + \sum_{i = 1}^k A(X_1, \ldots ,\mathcal{L}_V X_i, \ldots ,X_k).
+      \end{equation*}
+  \end{itemize}
+\end{proposition}
+\begin{proof}
+  Easy by coordinate representation.
+\end{proof}
+
+So we have, just replacing $\mathcal{L}_V X_i$ by $[V, X_i]$, 
+\begin{equation*}
+  (\mathcal{L}_V A)(X_1, \ldots ,X_k) = V (A(X_1, \ldots ,X_k)) - \sum_{i = 1}^k A(X_1, \ldots ,[V, X_i], \ldots ,X_k)
+\end{equation*}
+
+Also, if $f\in C^\infty(M)$, then we have
+\begin{equation}
+  \mathcal{L}_V(\mathrm{d} f) = \mathrm{d} (\mathcal{L}V f) = \mathrm{d} (V f)
+\end{equation}
+\begin{proof}
+Direct computation, for any $X\in \mathfrak{X}(M)$, we have
+\begin{equation*}
+  \begin{aligned}
+    (\mathcal{L}_V(\mathrm{d} f))(X) &= V (\mathrm{d} f(X)) - \mathrm{d} f([V, X]) = V (X f) - [V, X] f\\
+    &= V (X f) - V(X f) + X(V f) = X(V f) = \mathrm{d} (V f)(X)
+  \end{aligned}
+\end{equation*}
+\end{proof}
+
+We say that $A$ is \textbf{invariant} under $\theta$ if for each $t$, we have
+\begin{equation}
+  \mathrm{d} (\theta_t)_p^* (A_{\theta_t(p)}) = A_p,
+\end{equation}
+for all $t, p$ in the domain of $\theta$. If $\theta$ is a global flow, then it is equivalent to saying $\theta_t^* A = A$ for all $t\in \mathbb{R}$.
+
+To compute Lie derivative at other points, we have
+\begin{equation}
+  \frac{\mathrm{d} }{\mathrm{d} t}\Big|_{t = t_0} (\theta_t^* A)_p = (\theta_{t_0}^* (\mathcal{L}_V A))_p
+\end{equation}
+
+\begin{theorem}{Invariance of Tensor field under Flow}{Invariance of Tensor field under Flow}
+  Let $M$ be a smooth manifold, and let $V\in \mathfrak{X}(M)$ with flow $\theta$. A smooth covariant $k$-tensor field $A$ on $M$ is invariant under $\theta$ if and only if $\mathcal{L}_V A = 0$.
+\end{theorem}
 
 
 \end{document}

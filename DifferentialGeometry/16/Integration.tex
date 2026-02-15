@@ -1,0 +1,423 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\chapter{Integration on Manifolds}\label{ch:Integration}
+
+We have already introduced line integrals of covector fields, by pulling a covector field back to a segment of the real line. We will now introduce the more general notion of integrating a differential form over a manifold, which will allow us to state and prove the general Stokes' theorem.
+
+\section{The Geometry of Volume Measurement}
+How can we make sense of coordinate independent muultiple integrals. First, there is no way to integrate a real-valued function on a manifold without further structure like Riemannian metric.
+
+When we integrate covector fields along the curve, at each point, the covector puts out a number for each tangent vector, and thus we can see it as a ``length ruler'' along some direction, coordinate independently. Similarly, a $k$-form can be seen as a ``volume ruler'' that measures the volume of $k$-dimensional parallelepipeds in the tangent space.
+
+Actually, we cam deduce that what we expected to be a volume measurement must by an alternating tensor. To be consistent with our intuition of volume, $\omega$ should be a map $V^k\to \mathbb{R}$ that
+\begin{itemize}
+  \item Be multilinear, so that scaling and adding would work.
+  \item If the vectors are linearly dependent, the volume should be zero.
+\end{itemize}
+The above two conditions uniquely determine $\omega$ to be an alternating tensor, which is exactly a $k$-form, by lemma \ref{lem:Charaterization of Alternating Tensors}.
+
+\section{Integration of Differential Forms}
+We begin by defining integrals of $n$-forms over some suitable subsets of $\mathbb{R}^n$. A \textbf{domain of integration} in $\mathbb{R}^n$ is a bounded subset $D\subset \mathbb{R}^n$ such that $\partial D$ has measure zero. Let $\omega$ be a continuous $n$-form on $\overline{D}$, then we can write $\omega=f dx^1\wedge \cdots \wedge dx^n$ for some continuous function $f:\overline{D}\to \mathbb{R}$. We define the integral of $\omega$ over $D$ by
+\begin{equation}
+  \int_D \omega = \int_D f dx^1\cdots dx^n,
+\end{equation}
+More generally, let $U$ be an open subset of $\mathbb{R}^n$ or $\mathbb{H}^n$, and $\omega$ be a compactly supported $n$-form on $U$, then we can define the integral of $\omega$ by
+\begin{equation*}
+  \int_U \omega = \int_D \omega,
+\end{equation*}
+where $D$ is any domain of integration containing $\supp \omega$, and $\omega$ is extended by zero outside $\supp \omega$.
+
+\begin{proposition}{Invariance under Diffeomorphisms}{Invariance under Diffeomorphisms}
+  Let $D,E$ are open domains of integration in $\mathbb{R}^n$ or $\mathbb{H}^n$, and $G: \overline{D}\to \overline{E}$ is a smooth map that restricts to an orientation-preserving or orientation-reversing diffeomorphism from $D$ to $E$. Then for any continuous $n$-form $\omega$ on $\overline{E}$, we have
+  \begin{equation}
+    \int_D G^*\omega = \begin{cases}
+      \displaystyle \int_E \omega & \text{if $G$ is orientation-preserving},\\
+      \displaystyle -\int_E \omega & \text{if $G$ is orientation-reversing}.
+    \end{cases}
+  \end{equation}
+
+  If $U, V$ are open subsets of $\mathbb{R}^n$ or $\mathbb{H}^n$, and $G: U\to V$ is an orientation-preserving or orientation-reversing diffeomorphism, then for any compactly supported $n$-form $\omega$ on $V$, we have
+  \begin{equation}
+    \int_U G^*\omega = \begin{cases}
+      \displaystyle \int_V \omega & \text{if $G$ is orientation-preserving},\\
+      \displaystyle -\int_V \omega & \text{if $G$ is orientation-reversing}.
+    \end{cases}
+  \end{equation}
+\end{proposition}
+\begin{proof}
+  Direct computation, let $(y^i)$ be the standard coordinates on $E$ and $(x^i)$ be the standard coordinates on $D$, then we can write $\omega=f dy^1\wedge \cdots \wedge dy^n$ for some continuous function $f:\overline{E}\to \mathbb{R}$. Then if $G$ is orientation-preserving, we have
+  \begin{equation*}
+    \int_E \omega = \int_E f dy^1\cdots dy^n = \int_D (f\circ G) |\det DG| dx^1\cdots dx^n = \int_D G^*\omega,
+  \end{equation*}
+  and if $G$ is orientation-reversing, we have a negative sign when removing the absolute value.
+\end{proof}
+
+We would like to extend this to compactly supported $n$-forms on any open subsets.
+\begin{lemma}{Integration Domain from Open Subset}{Integration Domain from Open Subset}
+  Let $U$ be an open subset of $\mathbb{R}^n$ or $\mathbb{H}^n$, and $K \subseteq U$ is compact, then there exists an open domain of integration $D$ such that $K \subseteq D \subseteq \overline{D} \subseteq U$.
+\end{lemma}
+\begin{proof}
+  Just take balls around each point in $K$ and finite many covers $K$, then take the union of these balls as $D$.
+\end{proof}
+So for the second part of the proposition, we can just take a domain of integration $D$ that $\supp \omega \subseteq D \subseteq \overline{D} \subseteq V$, then as diffeomorphisms are homeomorphisms, taking interiors to interiors, boundaries to boundaries, and zero measure sets to zero measure sets, so it takes domain of integration to domain of integration, thus $G^{-1}(D)$ is a domain of integration containing $\supp G^*\omega$, and we can apply the first part of the proposition to get the desired result.
+
+\subsection{Integration on Manifolds}
+Let $M$ be an oriented smooth $n$-manifold, with or without boundary, and $\omega$ be an $n$-form on $M$. Suppose first that $\omega$ is compactly supported in the domain of a single coordinate chart $(U,\varphi)$, that is either positively or negatively oriented. Then we can define the integral of $\omega$ by
+\begin{equation}
+  \int_M \omega = \pm \int_{\varphi(U)} (\varphi^{-1})^*\omega,
+\end{equation}
+
+\begin{proposition}{Chart Independence of Integration}{Chart Independence of Integration}
+  The above definition of integration does not depend on the choice of the chart.
+\end{proposition}
+\begin{proof}
+  Suppose $(U,\varphi)$ and $(\tilde{U},\tilde{\varphi})$ are two charts that $\supp \omega \subseteq U\cap \tilde{U}$, if both charts are positively oriented or both charts are negatively oriented, then $\tilde{\varphi}\circ \varphi^{-1}$ is an orientation-preserving diffeomorphism on $\varphi(U\cap \tilde{U})$, thus by proposition \ref{prop:Invariance under Diffeomorphisms}, we have
+  \begin{equation*}
+    \begin{aligned}
+      \int_{\tilde{\varphi}(\tilde{U})} (\tilde{\varphi}^{-1})^*\omega &= \int_{\tilde{\varphi}(U \cap \tilde{U})} (\tilde{\varphi}^{-1})^*\omega = \int_{\varphi(U \cap \tilde{U})} (\tilde{\varphi}\circ \varphi^{-1})^* (\varphi^{-1})^*\omega\\
+      &= \int_{\varphi(U\cap \tilde{U})} (\varphi^{-1})^* \tilde{\varphi}^* (\tilde{\varphi}^{-1})^*\omega = \int_{\varphi(U)} (\varphi^{-1})^*\omega.
+    \end{aligned}
+  \end{equation*}
+  If one chart is positively oriented and the other chart is negatively oriented, then $\tilde{\varphi}\circ \varphi^{-1}$ is an orientation-reversing diffeomorphism on $\varphi(U\cap \tilde{U})$, thus a negative sign appears when applying proposition \ref{prop:Invariance under Diffeomorphisms}, and we still get the same result.
+\end{proof}
+
+To integrate over the entire manifold, we can use a partition of unity to break the integral into integrals over small pieces that are contained in single charts.
+
+\begin{definition}{Integration of $n$-forms on Manifolds}{Integration of n-forms on Manifolds}
+  Let $M$ be an oriented smooth $n$-manifold, with or without boundary, and $\omega$ be a compactly supported $n$-form on $M$. Let $\{U_i\}$ be a \textbf{finite} open cover of $\supp \omega$ by smooth coordinate charts, (each chart is either positively or negatively oriented), and let $\{\psi_i\}$ be a smooth partition of unity subordinate to $\{U_i\}$, then define the integral of $\omega$ by
+  \begin{equation}
+    \int_M \omega = \sum_i \int_M \psi_i \omega,
+  \end{equation}
+  For a 0-manifold, which is just a discrete set of points, we can define a compactly supported 0-form (a function $f$ with only finitely many nonzero points) to be integrable, and define the integral of $f$ by
+  \begin{equation}
+    \int_M f = \sum_{p\in M} \pm f(p),
+  \end{equation}
+  where the sign is positive if $p$ is positively oriented, and negative if $p$ is negatively oriented.
+\end{definition}
+
+\begin{remark}
+  We allow to negatively orient charts because it may not be possible to find a positive oriented chart on a 1-manifold with boundary at the boundary points.
+\end{remark}
+
+\begin{proposition}{Independence of Integration on Manifolds}{Independence of Integration on Manifolds}
+  The above definition of integration does not depend on the choice of the open cover and the partition of unity.
+\end{proposition}
+\begin{proof}
+  Suppose $\{U_i\}$ and $\{\tilde{U}_j\}$ are two finite open covers of $\supp \omega$ by smooth coordinate charts, and $\{\psi_i\}$ and $\{\tilde{\psi}_j\}$ are two smooth partitions of unity subordinate to $\{U_i\}$ and $\{\tilde{U}_j\}$ respectively, then we have
+  \begin{equation*}
+    \int_M \psi_i \omega = \int_M \left(\sum_j \tilde{\psi}_j\right) \psi_i \omega = \sum_j \int_M \tilde{\psi}_j \psi_i \omega,
+  \end{equation*}
+  Summing over $i$ on both sides, we get
+  \begin{equation*}
+    \sum_i \int_M \psi_i \omega = \sum_i \sum_j \int_M \tilde{\psi}_j \psi_i \omega = \sum_j \int_M \tilde{\psi}_j \omega,
+  \end{equation*}
+  Both sums give the same value, thus the definition does not depend on the choice of the open cover and the partition of unity.
+\end{proof}
+
+\begin{definition}{Integration on Submanifolds}{Integration on Submanifolds}
+  Let $M$ be an oriented smooth $n$-manifold, with or without boundary, and $S\subseteq M$ be an immersed oriented smooth $k$-submanifold, with or without boundary, and $\omega$ be a $k$-form on $M$ whose restriction to $S$ has compact support, we intepret
+  \begin{equation}
+    \int_S \omega = \int_S \iota_S^* \omega,
+  \end{equation}
+  where $\iota_S: S\hookrightarrow M$ is the inclusion map, the same goes for boundary, we always take the induced orientation on the boundary unless otherwise specified.
+\end{definition}
+
+\begin{proposition}{Properties of Integrals of Forms}{Properties of Integrals of Forms}
+  Let $M,N$ be oriented smooth $n$-manifolds, with or without boundary, and $\omega, \eta$ be compactly supported $n$-forms on $M$, then we have,
+  \begin{itemize}
+    \item Linearity: $\displaystyle \forall a,b\in \mathbb{R}, \int_M (a\omega + b\eta) = a\int_M \omega + b\int_M \eta$.
+    \item Orientation Reversal: If $-M$ is the manifold $M$ with the opposite orientation, then $\displaystyle \int_{-M} \omega = -\int_M \omega$.
+    \item Positivity: If $\omega$ is a positively oriented orientation form on $M$, then $\displaystyle \int_M \omega > 0$.
+    \item Diffeomorphism Invariance: If $F: N\to M$ is an orientation-preserving or orientation-reversing diffeomorphism, then
+      \begin{equation*}
+        \int_M \omega = \begin{cases}
+          \displaystyle \int_N F^*\omega & \text{if $F$ is orientation-preserving},\\
+          \displaystyle -\int_N F^*\omega & \text{if $F$ is orientation-reversing}.
+        \end{cases}
+      \end{equation*}
+  \end{itemize}
+\end{proposition}
+
+Although this definition by partition of unity is of great convenience in theoretical proofs, it is not very useful for actual computations. In practice, we usually break the integral into integrals over small pieces that are contained in single charts, and then sum them up.
+
+\begin{proposition}{Integration over Parametrizations}{Integration over Parametrizations}
+  Let $M$ be an oriented smooth $n$-manifold, with or without boundary, and $\omega$ be a compactly supported $n$-form on $M$. Suppose $D_1, \ldots ,D_k$ are open domains of integration in $\mathbb{R}^n$ and for each $i$, we are given smooth maps $F_i: \overline{D_i} \to M$ saitisfying
+  \begin{itemize}
+    \item $F_i|_{D_i}$ is an orientation-preserving diffeomorphism from $D_i$ to its image $W_i \subseteq M$.
+    \item $W_i \cap W_j = \emptyset$ for $i\neq j$.
+    \item $\supp \omega \subseteq \bigcup_i \overline{W_i}$.
+  \end{itemize}
+  Then we have
+  \begin{equation}
+    \int_M \omega = \sum_i \int_{D_i} F_i^*\omega.
+  \end{equation}
+\end{proposition}
+\begin{proof}
+  It suffices to assume $\omega$ is supported in a single oriented precompact chart $(U,\varphi)$, then $Y = \varphi(U)$ is a domain of integration in $\mathbb{R}^n$ or $\mathbb{H}^n$, and $\varphi$ extends to a diffeomorphism from $\overline{U}$ to $\overline{Y}$. (Just think $U$ has its closure in a larger chart would do).
+  
+  Then we now have two coordinate route: one with $D_i$ as local parametrization, the other with $Y$ as local structure of $M$. What we actually care about is the correspondence between $D_i$ and partition of $Y$. Define
+  \begin{equation*}
+    A_i = F_i^{-1}(U \cap W_i), \quad B_i = U \cap W_i, \quad C_i = \varphi(B_i),
+  \end{equation*}
+  Since $\overline{D_i}$ is compact, so $\partial W_i \subseteq F_i(\partial D_i)$, so $\partial W_i$ has measure zero in $M$, and $\partial C_i = \varphi(\partial B_i)$ has measure zero in $\mathbb{R}^n$.
+
+  Now, in the coordinate chart $(U,\varphi)$, we have $\supp (\varphi^{-1})^*\omega \subseteq \overline{C_1} \cup \cdots \cup \overline{C_k}$, and any two of $C_i$'s intersect in a measure zero set, so we have
+  \begin{equation*}
+    \int_M \omega = \int_Y (\varphi^{-1})^*\omega = \sum_i \int_{C_i} (\varphi^{-1})^*\omega = \sum_i \int_{A_i} (\varphi \circ F_i)^* (\varphi^{-1})^*\omega = \sum_i \int_{A_i} F_i^*\omega = \sum_i \int_{D_i} F_i^*\omega,
+  \end{equation*}
+  so we get the desired result.
+\end{proof}
+
+\begin{figure}[ht]
+    \centering
+    \incfig{integrating-over-parametrizations}
+    \caption{Integrating over Parametrizations}
+    \label{fig:integrating-over-parametrizations}
+\end{figure}
+
+\begin{remark}
+  Sometimes, the condition can be relaxed somewhat. For example, $F_i$ is required to be smooth on $\overline{D_i}$ to ensure that $\partial W_i$ has measure zero and the pullback $F_i^*\omega$ is continuous on $\overline{D_i}$. If we are given $W_i$ filling up $M$ except a measure zero set, we can allow $F_i$ that do not extend smoothly to the boundary by interpreting the resulting integral as an improper integral or Lebesgue integral.
+
+  For example, the hemispheres can be parametrized by
+  \begin{equation*}
+    F(u,v) = (u,v,\pm\sqrt{1-u^2-v^2}), \quad u^2+v^2 < 1,
+  \end{equation*}
+  which does not extend smoothly to the boundary, but the result still holds.
+\end{remark}
+
+\subsection{Integration on Lie Groups}
+Let $G$ be a Lie group, a covariant tensor field $A$ on $G$ is called \textbf{left-invariant} if for each $g\in G$, we have $L_g^* A = A$.
+
+\begin{theorem}{Haar Volume Form on Lie Groups}{Haar Volume Form on Lie Groups}
+  Let $G$ be a compact Lie group with a left-invariant orientation. Then there exists a unique left-invariant $n$-form $\omega_G$ on $G$ such that
+  \begin{equation*}
+    \int_G \omega_G = 1.
+  \end{equation*}
+\end{theorem}
+\begin{proof}
+  If $\dim G = 0$, then we just let $\omega_G = 1 / k$, where $k$ is the number of points in $G$. If $\dim G > 0$, then let $E_1, \ldots , E_n$ be a left-invariant oriented global frame on $G$. Let $\epsilon^1, \ldots , \epsilon^n$ be the dual coframe, then left-invariance of the frame implies that
+  \begin{equation*}
+    (L_g^* \epsilon^i)(E_j) = \epsilon^i(L_{g*} E_j) = \epsilon^i(E_j) = \delta^i_j,
+  \end{equation*}
+  so $\epsilon^i$ is left-invariant for each $i$.
+
+  Let $\omega_G = \epsilon^1 \wedge \cdots \wedge \epsilon^n$, then $\omega_G$ is a left-invariant $n$-form on $G$. Then all the left-invariant orientation forms on $G$ are of the form $c\omega_G$ for some constant $c >0$.
+
+  If $G$ is compact, then $\int_G \omega_G$ is a positive real number, so we can normalize $\omega_G$ to make the integral equal to 1.
+\end{proof}
+
+\begin{remark}
+  Actually, every Lie group admits a left-invariant orientation from up to a positive scalar multiple, only in the compact case we can normalize it to make the integral equal to 1.
+\end{remark}
+
+\section{Stokes' Theorem}
+This is the ultimate summit of the theory of calculus on manifolds.
+
+\begin{theorem}{Stokes' Theorem}{Stokes' Theorem}
+  Let $M$ be an oriented smooth $n$-manifold with boundary, and $\omega$ be a compactly supported smooth $(n-1)$-form on $M$, then we have
+  \begin{equation}
+    \int_M \mathrm{d} \omega = \int_{\partial M} \iota^*_{\partial M} \omega,
+  \end{equation}
+  where $\iota_{\partial M}: \partial M \hookrightarrow M$ is the inclusion map, and $\partial M$ is given the induced orientation.
+\end{theorem}
+\begin{proof}
+  For $n=1$, assume $\omega$ is supported in a single oriented chart $(U,\varphi)$, then we have $\varphi(U) = (a,b)$ or $[0, a)$ or $(-a,0]$ for some $a,b > 0$, and $\omega = f dx$ for some compactly supported smooth function $f: \varphi(U) \to \mathbb{R}$ that $\supp f \subseteq \varphi(U)$. Then,
+  \begin{itemize}
+    \item If $\varphi(U) = (a,b)$, then $\partial M \cap U = \emptyset$, so $\int_{\partial M} \iota^*_{\partial M} \omega = 0$, and $\int_M \mathrm{d}\omega = \int_a^b f'(x) dx = 0$.
+    \item If $\varphi(U) = [0,a)$, then $\partial M \cap U = \varphi^{-1}(0)$, so $\int_{\partial M} \iota^*_{\partial M} \omega = f(0)$, and $\int_M \mathrm{d}\omega = \int_0^a f'(x) dx = f(a) - f(0) = -f(0)$. Same for $\varphi(U) = (-a,0]$.
+  \end{itemize}
+  So the result holds for $n=1$ by using a partition of unity to break the integral into integrals over small pieces that are contained in single charts.
+
+  For $n>1$, we precede by a special case. Suppose $M = \mathbb{H}^n$, then as $\omega$ is compactly supported, we can assume that $\supp \omega \subseteq A = [-R,R]^{n-1} \times [0,R]$ for some $R > 0$. Then let
+  \begin{equation*}
+    \omega = \sum_{i=1}^n \omega_i \mathrm{d} x^1 \wedge \cdots \wedge \widehat{\mathrm{d} x^i} \wedge \cdots \wedge \mathrm{d} x^n,
+  \end{equation*}
+  where $\widehat{\mathrm{d} x^i}$ means that $\mathrm{d} x^i$ is omitted, and therefore, we have
+  \begin{equation*}
+    \begin{aligned}
+      \mathrm{d} \omega &= \sum_{i=1}^n \mathrm{d} \omega_i \wedge \mathrm{d} x^1 \wedge \cdots \wedge \widehat{\mathrm{d} x^i} \wedge \cdots \wedge \mathrm{d} x^n\\
+      &= \sum_{i=1}^n \sum_{j=1}^n \frac{\partial \omega_i}{\partial x^j} \mathrm{d} x^j \wedge \mathrm{d} x^1 \wedge \cdots \wedge \widehat{\mathrm{d} x^i} \wedge \cdots \wedge \mathrm{d} x^n\\
+      &= \sum_{i=1}^n (-1)^{i-1} \frac{\partial \omega_i}{\partial x^i} \mathrm{d} x^1 \wedge \cdots \wedge \mathrm{d} x^n,
+    \end{aligned}
+  \end{equation*}
+  so we have
+  \begin{equation*}
+    \begin{aligned}
+      \int_{\mathbb{H}^n} \mathrm{d} \omega &= \sum_{i=1}^n (-1)^{i-1} \int_A \frac{\partial \omega_i}{\partial x^i} \mathrm{d}x^1\cdots \mathrm{d}x^n\\
+      &= \sum_{i=1}^{n-1} (-1)^{i-1} \int_{[-R,R]^{n-2} \times [0,R]} \left( \int_{-R}^R \frac{\partial \omega_i}{\partial x^i} \mathrm{d}x^i \right) \mathrm{d}x^1\cdots \widehat{\mathrm{d}x^i} \cdots \mathrm{d}x^n \\
+      &\quad + (-1)^{n-1} \int_{[-R,R]^{n-1}} \left( \int_0^R \frac{\partial \omega_n}{\partial x^n} \mathrm{d}x^n \right) \mathrm{d}x^1\cdots \mathrm{d}x^{n-1}\\
+      &= (-1)^n \int_{[-R,R]^{n-1}} \omega_n(x^1, \ldots , x^{n-1}, 0) \mathrm{d}x^1\cdots \mathrm{d}x^{n-1}
+    \end{aligned}
+  \end{equation*}
+  on the other hand, we have
+  \begin{equation*}
+    \begin{aligned}
+      \int_{\partial \mathbb{H}^n} \iota^*_{\partial \mathbb{H}^n} \omega &= \sum_{i=1}^{n-1} \int_{A \cap \partial \mathbb{H}^n} \omega_i(x^1, \ldots , x^{n-1}, 0) \iota^*_{\partial \mathbb{H}^n} \left( \mathrm{d} x^1 \wedge \cdots \wedge \widehat{\mathrm{d} x^i} \wedge \cdots \wedge \mathrm{d} x^n \right)\\
+      & \quad + \int_{A\cap \partial \mathbb{H}^n} \omega_n(x^1, \ldots , x^{n-1}, 0) \iota^*_{\partial \mathbb{H}^n} (\mathrm{d} x^1 \wedge \cdots \wedge \mathrm{d} x^{n-1}),
+    \end{aligned}
+  \end{equation*}
+  As $\iota^*_{\partial \mathbb{H}^n} (\mathrm{d} x^n) = 0$, so the first sum vanishes, and as $\mathrm{d} x^1 \wedge \cdots \wedge \mathrm{d} x^{n-1}$ is a positively oriented orientation form on $\partial \mathbb{H}^n$ when $n$ is even and negatively oriented when $n$ is odd, we have
+  \begin{equation*}
+    \int_{\partial \mathbb{H}^n} \iota^*_{\partial \mathbb{H}^n} \omega = (-1)^n \int_{[-R,R]^{n-1}} \omega_n(x^1, \ldots , x^{n-1}, 0) \mathrm{d}x^1\cdots \mathrm{d}x^{n-1},
+  \end{equation*}
+
+  If $M = \mathbb{R}^n$, then the same computation as above shows that both sides of the equation are zero, so the result holds.
+
+  For the general case when $M$ is an oriented smooth $n$-manifold, with or without boundary, suppose $\omega$ is compactly supported in a single oriented chart $(U,\varphi)$, then pulling back to the chart, we have the same situation as the above two special cases, so the result holds. For the general case, we can use a partition of unity $\psi_i$ subordinate to a finite open cover $U_i$ of $\supp \omega$ by oriented charts, then we have
+  \begin{equation*}
+    \begin{aligned}
+      \int_{\partial M} \iota^*_{\partial M} \omega &= \sum_i \int_{\partial M} \iota^*_{\partial M} (\psi_i \omega) = \sum_i \int_M \mathrm{d} (\psi_i \omega) = \sum_i \int_M \mathrm{d} \psi_i \wedge \omega + \psi_i \mathrm{d} \omega\\
+      &= \int_M \left( \sum_i \mathrm{d} \psi_i \right) \wedge \omega + \left( \sum_i \psi_i \right) \mathrm{d} \omega = \int_M \mathrm{d} \omega,
+    \end{aligned}
+  \end{equation*}
+  Thus completing the proof.
+\end{proof}
+
+The Stokes' theorem has many important special cases and corollaries.
+
+\begin{proposition}{Integral of Exact Forms}{Integral of Exact Forms}
+  Let $M$ be a compact oriented smooth $n$-manifold without boundary, and $\omega$ be an $(n-1)$-form on $M$, then we have
+  \begin{equation}
+    \int_M \mathrm{d} \omega = 0.
+  \end{equation}
+\end{proposition}
+\begin{proposition}{Integral of Closed Forms}{Integral of Closed Forms}
+  Let $M$ be a compact oriented smooth $n$-manifold with boundary, and $\omega$ be a closed form on $M$, then we have
+  \begin{equation}
+    \int_{\partial M} \iota^*_{\partial M} \omega = 0, \qquad \text{ if } \mathrm{d} \omega = 0 \text{ on } M
+  \end{equation}
+\end{proposition}
+
+Usually, we just simply denote $\displaystyle \int_{\partial M} \omega$ instead of $\displaystyle \int_{\partial M} \iota^*_{\partial M} \omega$ when there is no confusion.
+
+\begin{corollary}{Inverses of Stokes' Theorem}{Inverses of Stokes' Theorem}
+  Suppose $M$ is a smooth manifold, with or without boundary, $S \subseteq M$ is an oriented compact smooth $k$-dimensional submanifold without boundary, and $\omega$ is a closed $k$-form on $M$, then if $\int_S \omega \neq 0$, then
+  \begin{itemize}
+    \item $\omega$ is NOT exact on $M$.
+    \item $S$ is NOT the boundary of some oriented compact smooth submanifold without boundary in $M$.
+  \end{itemize}
+\end{corollary}
+\begin{proof}
+  The first is just definition, and the second is because if $S = \partial W$ for some oriented compact smooth $(k+1)$-dimensional submanifold without boundary $W$, then by Stokes' theorem, we have $\int_S \omega = \int_W \mathrm{d} \omega = 0$, which contradicts the assumption.
+\end{proof}
+
+\begin{example}{Inverse of Stokes' Theorem}{Inverse of Stokes' Theorem}
+  Let $M = \mathbb{R}^2 \setminus \{0\}$, and $\omega = (x \mathrm{d} y - y \mathrm{d} x) / (x^2 + y^2)$, then $\omega$ is a closed 1-form on $M$. Let $S$ be the unit circle in $\mathbb{R}^2$, then we have
+  \begin{equation*}
+    \int_S \omega = \int_0^{2\pi} \frac{\cos^2 t + \sin^2 t}{\cos^2 t + \sin^2 t} dt = 2\pi \neq 0,
+  \end{equation*}
+  So $\omega$ is not exact on $M$, and $S$ is not the boundary of some oriented compact smooth submanifold without boundary in $M$.
+\end{example}
+
+\section{Manifolds with Corners}
+The Stokes' theorem can be further generalized to manifolds with corners, like squares, cubes, simplices, etc. They are topologically manifolds with boundary, but not smoothly manifolds with boundary, as the boundary does not resemble $\mathbb{H}^n$ at the corner points.
+
+Denote the space
+\begin{equation*}
+  \overline{\mathbb{R}}_+^n = \{(x^1, \ldots , x^n) \in \mathbb{R}^n : x^i \geq 0 \text{ for each } i\},
+\end{equation*}
+all coordinates are nonnegative.
+
+\begin{definition}{Smooth Manifolds with Corners}{Smooth Manifolds with Corners}
+  Suppose $M$ is a topological $n$-dimensional manifold with boundary, a \textbf{chart with corners} for $M$ is a pair $(U,\varphi)$, where $U \subseteq M$ is open and $\varphi$ is a hoemomorphism from $U$ to an open subset $\hat{U} \subseteq \overline{\mathbb{R}}_+^n$ (relative to the subspace topology). Two charts with corners $(U,\varphi)$ and $(V,\psi)$ are \textbf{smoothly compatible} if $\psi \circ \varphi^{-1}$ is a smooth map.
+
+  A \textbf{smooth structure with corners} on $M$ is a maximal collection of smoothly compatible interior charts and charts with corners whose domains cover $M$. A \textbf{smooth manifold with corners} is a topological manifold with boundary together with a smooth structure with corners.
+\end{definition}
+
+In topology, there is no difference between manifolds with corners and manifolds with boundary, because $\overline{\mathbb{R}}_+^n$ is homeomorphic to $\mathbb{H}^n$ (while $\mathbb{H}^n$ is not homeomorphic to $\mathbb{R}^n$). The difference lies in the smooth structure, as as cannot transform a neighborhood of a corner point to a neighborhood of a boundary point smoothly. For $n=1$ case, there is no difference as $\overline{\mathbb{R}}_+^1 = \mathbb{H}^1$.
+
+The points of $\overline{\mathbb{R}}_+^n$ that more than one coordinate is zero are called \textbf{corner points}.
+
+\begin{proposition}{Invariance of Corner Points}{Invariance of Corner Points}
+  Let $M$ be a smooth manifold with corners, $n\geq 2$. Let $p\in M$, and if $\varphi(p)$ is a corner point in some smooth chart with corners $(U,\varphi)$, then every chart whose domain contains $p$ is a chart with corners, and $\varphi(p)$ is a corner point in every such chart.
+\end{proposition}
+
+If $M$ is a smooth manifold with corners, a point $p\in M$ is called a \textbf{corner point} if $\varphi(p)$ is a corner point in some (and therefore every) smooth chart with corners whose domain contains $p$. Similarly, $p$ is called a \textbf{boundary point} if $\varphi(p) \in \partial \overline{\mathbb{R}}_+^n$ with respect to some (and therefore every) smooth chart with corners whose domain contains $p$.
+
+However, unlike a smooth manifold with boundary, the boundary of a smooth manifold with corners is generally not a smooth manifold with corners, take the cube $[0,1]^3$ as an example. However, to get Stokes' theorem working, we need to define the integration of a form on the boundary of a smooth manifold with corners:
+
+Let $M$ be an oriented smooth $n$-dimensional manifold with corners, and $\omega$ be an $(n-1)$-form on $\partial M$ that is compactly supported in the domain of a single oriented smooth chart with corners $(U,\varphi)$ in $M$. Locally looking, the boundary like $\partial \overline{\mathbb{R}}_+^n$ is a union of $n$ hyperplanes,
+\begin{equation*}
+  \partial \overline{\mathbb{R}}_+^n = \bigcup_{i=1}^n H_i, \qquad H_i = \{(x^1, \ldots , x^n) \in \overline{\mathbb{R}}_+^n : x^i = 0\},
+\end{equation*}
+Each $H_i$ can be seen as a ``boundary'' of $M$, thus can be given the induced orientation, and we can define the integral of $\omega$ by
+\begin{equation}
+  \int_{\partial M} \omega = \sum_{i=1}^n \int_{H_i} (\varphi^{-1})^* \omega,
+\end{equation}
+
+Then for any compactly supported $(n-1)$-form $\omega$ on $M$, we can use a partition of unity to break the integral into integrals over small pieces that are contained in single charts with corners, and then sum them up.
+
+The patching of parametrizations still work here, from proposition \ref{prop:Integration over Parametrizations},
+\begin{proposition}{Integration over Parametrizations for Manifolds with Corners}{Integration over Parametrizations for Manifolds with Corners}
+  Let $M$ be an oriented smooth $(n+1)$-manifold with corners, and $\omega$ be a compactly supported $n$-form on $\partial M$. Suppose $D_1, \ldots ,D_k$ are open domains of integration in $\mathbb{R}^n$ and for each $i$, we are given smooth maps $F_i: \overline{D_i} \to M$ saitisfying
+  \begin{itemize}
+    \item $F_i|_{D_i}$ is an orientation-preserving diffeomorphism from $D_i$ to its image $W_i \subseteq \partial M$.
+    \item $W_i \cap W_j = \emptyset$ for $i\neq j$.
+    \item $\supp \omega \subseteq \bigcup_i \overline{W_i}$.
+  \end{itemize}
+  Then we have
+  \begin{equation}
+    \int_{\partial M} \omega = \sum_i \int_{D_i} F_i^*\omega.
+  \end{equation}
+\end{proposition}
+
+\begin{theorem}{Stokes' Theorem for Manifolds with Corners}{Stokes' Theorem for Manifolds with Corners}
+  Let $M$ be an oriented smooth $n$-manifold with corners, and $\omega$ be a compactly supported smooth $(n-1)$-form on $M$, then we have
+  \begin{equation}
+    \int_M \mathrm{d} \omega = \int_{\partial M} \omega,
+  \end{equation}
+  where $\iota_{\partial M}: \partial M \hookrightarrow M$ is the inclusion map, and $\partial M$ is given the induced orientation.
+\end{theorem}
+
+\begin{theorem}{Path Homotopic Integration}{Path Homotopic Integration}
+  Let $M$ be a smooth manifold and $\gamma_0, \gamma_1: [0,1] \to M$ be two path homotopic piecewise smooth curve segments. For any closed 1-form $\omega$ on $M$, we have
+  \begin{equation}
+    \int_{\gamma_0} \omega = \int_{\gamma_1} \omega.
+  \end{equation}
+
+  Specially, on a simply connected smooth manifold, every closed 1-form is exact.
+\end{theorem}
+\begin{proof}
+  First suppose $\gamma_0, \gamma_1$ are smooth, then just using a smooth homotopy $H: [0,1]\times [0,1] \to M$ between $\gamma_0$ and $\gamma_1$, then we have
+  \begin{equation*}
+    \int_{\partial (I \times I)} H^* \omega = \int_{I \times I} \mathrm{d} (H^* \omega) = \int_{I \times I} H^* (\mathrm{d} \omega) = 0,
+  \end{equation*}
+  Then expanding the left hand side, we get our result. The general case is easily generated by mere induction on the number of pieces.
+\end{proof}
+
+\section{Integration on Riemannian Manifolds}
+\subsection{Integration of Functions on Riemannian Manifolds}
+
+\begin{definition}{Integration of Functions on Riemannian Manifolds}{Integration of Functions on Riemannian Manifolds}
+  Let $(M,g)$ be an oriented Riemannian $n$-manifold, with or without boundary, denote $\omega_g$ be its Riemannian volume form. If $f$ is a compactly supported continuous function on $M$, then $f \omega_g$ is a compactly supported $n$-form on $M$, so we can define the integral of $f$ denoted by
+  \begin{equation}
+    \int_M f \omega_g = \int_M f \mathrm{d} V_g,
+  \end{equation}
+  If $M$ is compact, then we can define the volume of $M$ by
+  \begin{equation}
+    \mathrm{Vol}(M) = \int_M \omega_g = \int_M \mathrm{d} V_g.
+  \end{equation}
+  WARNING: The notation $\mathrm{d} V_g$ is just a common notation for $\omega_g$, it does not mean that $\mathrm{d} V_g$ is the exterior derivative of some $(n-1)$-form $V_g$.
+\end{definition}
+
+\begin{proposition}{Positivity of Integrals of Functions on Riemannian Manifolds}{Positivity of Integrals of Functions on Riemannian Manifolds}
+  Let $(M,g)$ be a nonempty oriented Riemannian $n$-manifold, with or without boundary, and suppose $f$ is a compactly supported continuous function on $M$ that $f\geq 0$ on $M$, then $\displaystyle \int_M f \mathrm{d} V_g \geq 0$, and equality holds if and only if $f$ is identically zero on $M$.
+\end{proposition}
+\begin{proof}
+  Use partition of unity to break down. If $f$ is compactly supported in a chart $(U,\varphi)$, then we have
+  \begin{equation*}
+    \int_M f \mathrm{d} V_g = \int_{\varphi(U)} f(x) \sqrt{\det (g_{ij}(x))} \mathrm{d} x^1 \cdots \mathrm{d} x^n \geq 0.
+  \end{equation*}
+\end{proof}
+
+\begin{proposition}{The Triangle Inequality for Integrals of Functions}{The Triangle Inequality for Integrals of Functions}
+  Let $(M,g)$ be a nonempty oriented Riemannian $n$-manifold, with or without boundary, and suppose $f$ is a compactly supported continuous function on $M$, then we have
+  \begin{equation}
+    \left| \int_M f \mathrm{d} V_g \right| \leq \int_M |f| \mathrm{d} V_g.
+  \end{equation}
+\end{proposition}
+
+\subsection{The Divergence Theorem}
+
+\end{document}

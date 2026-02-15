@@ -1,0 +1,387 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\chapter{Orientations}\label{ch:orientations}
+
+Simply speaking, the orientation of a line or curve is a choice of direction along it, but we can generalize this idea to higher-dimensional manifolds.
+
+\section{Orientation of Vector Spaces}
+
+\begin{definition}{Orientation of a Vector Space}{Orientation of a Vector Space}
+  Let $V$ be a $n$-dimensional real vector space. We say that two basis $(E_1, \ldots , E_n)$ and $(\tilde{E}_1, \ldots , \tilde{E}_n)$ of $V$ are \textbf{consistently oriented} if the transition matrix $B$ defined by
+  \begin{equation*}
+    E_i = B^j_i \tilde{E}_j
+  \end{equation*}
+  has positive determinant. If $n=0$, we define orientations by a choice of $+1$ or $-1$ specially.
+
+  It is easy to see that this is an equivalence relation, and thus we can define an \textbf{orientation} of $V$ to be one of the two equivalence classes, denoted by $[E_1, \ldots , E_n]$ and its opposite $-[E_1, \ldots , E_n]$. A vector space with a choice of orientation is called an \textbf{oriented vector space}, and the chosen orientation is called \textbf{oriented} or \textbf{positively oriented}, while the opposite orientation is called \textbf{negatively oriented}.
+\end{definition}
+
+\begin{example}{Orientated Vector Spaces}{Orientated Vector Spaces}
+  The orientation $[e_1, \ldots , e_n]$ of $\mathbb{R}^n$ is called the \textbf{standard orientation} of $\mathbb{R}^n$. An oriented basis for $\mathbb{R}^3$ is called a \textbf{right-handed} basis.
+\end{example}
+
+There is a connection between orientations and alternating tensors.
+\begin{proposition}{Orientation and Alternating Tensors}{Orientation and Alternating Tensors}
+  Let $V$ be a $n$-dimensional real vector space. For any nonzero $\omega \in \Lambda^n(V^*)$, we can define an orientation $\mathcal{O}_\omega$ of $V$ by:
+  \begin{itemize}
+    \item If $n\geq 1$, then $[E_1, \ldots , E_n] = \mathcal{O}_\omega$ if and only if $\omega(E_1, \ldots , E_n) > 0$.
+    \item If $n=0$, then $\mathcal{O}_\omega = +1$ if $\omega > 0$ and $\mathcal{O}_\omega = -1$ if $\omega < 0$.
+  \end{itemize}
+\end{proposition}
+\begin{proof}
+  We assume $n \geq 1$, and $(E_i)$ and $(\tilde{E}_i)$ are two bases of $V$ and let $B$ be the linear map sending $E_i$ to $\tilde{E}_i$, or $\tilde{E}_j = B^i_j E_i$. Then we have
+  \begin{equation*}
+    \omega(\tilde{E}_1, \ldots , \tilde{E}_n) = \omega(B^i_1 E_i, \ldots , B^i_n E_i) = \det(B) \omega(E_1, \ldots , E_n).
+  \end{equation*}
+  So we have $\omega(\tilde{E}_1, \ldots , \tilde{E}_n) > 0$ if and only if $\det(B) > 0$ and $\omega(E_1, \ldots , E_n) > 0$, which means that the two bases are consistently oriented.
+\end{proof}
+If $\omega$ here determines the positive orientation, then we say that $\omega$ is a \textbf{positive orientated $n$-covector} of $V$. As $\Lambda^n(V^*)$ is one-dimensional, so choosing orientation for $V$ is equivalent to choosing a component of $\Lambda^n(V^*) \setminus \{0\}$. This formula also shows why we define the 0-dimensional case like this.
+
+\section{Orientation of Manifolds}
+\begin{definition}{Orientation of Manifolds}{Orientation of Manifolds}
+  Let $M$ be a smooth manifold, with or without boundary. We define a \textbf{pointwise orientation} of $M$ to be a choice of orientation for each tangent space $T_pM$ at each point $p \in M$.
+
+  To connect different points, we give the following definitions.
+  \begin{itemize}
+    \item If $(E_i)$ is a local frame for $TM$, we say that $(E_i)$ is \textbf{positively oriented} if $(E_i|_p)$ is positively oriented for each $p \in U \subseteq M$. Same for negatively oriented.
+    \item A pointwise orientation of $M$ is called \textbf{continuous} if for each $p \in M$, there exists a local frame $(E_i)$ defined on a neighborhood of $p$ such that $(E_i)$ is positively oriented.
+  \end{itemize}
+  An \textbf{orientation} of $M$ is a continuous pointwise orientation. We say $M$ is \textbf{orientable} if it admits an orientation, and \textbf{non-orientable} otherwise. An oriented manifold is a pair $(M, \mathcal{O})$ where $M$ is a manifold and $\mathcal{O}$ is an orientation of $M$. An oriented manifold with boundary is defined similarly.
+\end{definition}
+
+Specially, if $M$ is 0-dimensional (discrete), then an orientation of $M$ is a choice of $+1$ or $-1$ for each point in $M$, and the continuity condition is vacuous. Every 0-dimensional manifold is orientable.
+
+If $n \geq 1$, then every connected domain local frame is either positively oriented or negatively oriented.
+
+We can also define orientation by $n$-forms.
+\begin{proposition}{Orientation by $n$-forms}{Orientation by $n$-forms}
+  Let $M$ be a smooth $n$-dimensional manifold, with or without boundary. For any nonvanishing $\omega \in \Omega^n(M)$, we can define an orientation $\mathcal{O}_\omega$ of $M$ by being positively oriented at each point $p$. Conversely, if $M$ is given an orientation $\mathcal{O}$, then there exists a nonvanishing $\omega \in \Omega^n(M)$ such that $\mathcal{O} = \mathcal{O}_\omega$.
+\end{proposition}
+\begin{proof}
+  Assume $\omega$ bes a nonvanishing $n$-form on $M$, then $\omega$ defines a pointwise orientation $\mathcal{O}_\omega$ of $M$ by being positively oriented at each point. We need to show that $\mathcal{O}_\omega$ is continuous. It is trivial when $n=0$, so we assume $n \geq 1$. For each $p \in M$, we can choose a local frame $(E_i)$ defined on a connected neighborhood $U$ of $p$ and let $(\epsilon^i)$ be the dual coframe. Then we can write $\omega = f \epsilon^1 \wedge \cdots \wedge \epsilon^n$ for some smooth function $f$ on $U$. Since $\omega$ is nonvanishing, we have
+  \begin{equation*}
+    \omega(E_1, \ldots , E_n) = f \neq 0
+  \end{equation*}
+  at all points in $U$. So from connectedness of $U$, we have $f > 0$ or $f < 0$ at all points in $U$. So $(E_i)$ is positively oriented or negatively oriented at all points in $U$, which means that $\mathcal{O}_\omega$ is continuous.
+
+  Conversely, assume $\mathcal{O}$ is an orientation of $M$. Define $\Lambda_+^n T^*M \subseteq \Lambda^n T^*M$ to be the open subset consisting of all positive orientated $n$-covectors at each point of $M$. At each $p\in M$, the intersection of $\Lambda_+^n T^*M$ with the fiber $\Lambda^n T_p^*M$ is a half line, and therefore convex. So locally in some trivialization, we can find a smooth section of $\Lambda_+^n T^*M$ over some neighborhood of $p$.
+
+  So we can choose a smooth local section $\omega_\alpha$ of $\Lambda_+^n T^*M$ over each element $U_\alpha$ of an open cover of $M$. Then we can choose a partition of unity $\{\rho_\alpha\}$ subordinate to $\{U_\alpha\}$, and define
+  \begin{equation*}
+    \omega = \sum_\alpha \rho_\alpha \omega_\alpha.
+  \end{equation*}
+  Then $\omega$ is a smooth section of $\Lambda_+^n T^*M$, and thus a nonvanishing $n$-form on $M$. It is easy to check that $\mathcal{O} = \mathcal{O}_\omega$.
+\end{proof}
+
+A smooth coordinate chart $(U, \varphi)$ of $M$ is called \textbf{positively oriented} if the local coordinate frame $(\partial/\partial x^i)$ is positively oriented. A smooth atlas $\{(U_\alpha, \varphi_\alpha)\}$ of $M$ is called \textbf{consistently oriented} if the transition maps $\varphi_\beta \circ \varphi_\alpha^{-1}$ have positive Jacobian determinant at each point of their domains.
+
+\begin{proposition}{Orientation by Coordinate Atlas}{Orientation by Coordinate Atlas}
+  Let $M$ be a smooth manifold with positive dimension, with or without boundary. Given any consistently oriented smooth atlas $\{(U_\alpha, \varphi_\alpha)\}$ of $M$, there is a unique orientation $\mathcal{O}$ of $M$ such that each chart in the atlas is positively oriented.
+
+  Conversely, if $M$ is given an orientation $\mathcal{O}$, and either $\partial M = \emptyset $ or $\dim M \geq 2$, then the collection of all positively oriented charts forms a consistently oriented smooth atlas of $M$.
+\end{proposition}
+\begin{proof}
+  All is very obvious. But we shall note that for smooth 1-dimensional manifolds with boundary, the problem exists because we require the last coordinate of a boundary chart to be nonnegative, which means that if we get a negatively oriented chart at the boundary, then we cannot change it to a positively oriented one by changing the sign. For the rest cases, we can always change the sign of $x^1$ to get a positively oriented chart.
+\end{proof}
+
+\begin{proposition}{Product Orientation}{Product Orientation}
+  Let $M_1, \ldots ,M_k$ be orientable smooth manifolds. There is a unique orientation on the product manifold $M_1 \times \cdots \times M_k$ such that for each $\omega_i$ that are orientation form for $M_i$, the form $\pi_1^* \omega_1 \wedge \cdots \wedge \pi_k^* \omega_k$ is an orientation form for $M_1 \times \cdots \times M_k$, where $\pi_i : M_1 \times \cdots \times M_k \to M_i$ is the projection map.
+\end{proposition}
+\begin{proof}
+  Obvious.
+\end{proof}
+
+\begin{proposition}{Orientations of Orientable Manifolds}{Orientations of Orientable Manifolds}
+  Let $M$ be a connected orientable smooth manifold, with or without boundary. Then $M$ has exactly two orientations. If two orientations $\mathcal{O}$ and $\tilde{\mathcal{O}}$ of $M$ agree at some point $p \in M$, then $\mathcal{O} = \tilde{\mathcal{O}}$.
+\end{proposition}
+
+\begin{proposition}{Orientation of Codimension 0 Submanifolds}{Orientation of Codimension 0 Submanifolds}
+  Let $M$ be a smooth manifold, with or without boundary, and $N \subseteq M$ be a codimension 0 submanifold. If $M$ is orientable, then $N$ is orientable. Moreover, if $\mathcal{O}$ is an orientation of $M$, then the restriction $\mathcal{O}|_N$ is an orientation of $N$. If $\omega$ is an orientation form for $M$, then $\iota_N^* \omega$ is an orientation form for $N$, where $\iota_N : N \to M$ is the inclusion map.
+\end{proposition}
+
+Let $M,N$ be oriented smooth manifolds, with or without boundary. Let $F: M \to N$ be a local diffeomorphism. We say that $F$ is \textbf{orientation-preserving} if for each $p \in M$, the differential $dF_p : T_pM \to T_{F(p)}N$ is an orientation-preserving linear isomorphism, i.e. $dF_p$ sends positively oriented bases of $T_pM$ to positively oriented bases of $T_{F(p)}N$. The same goes for \textbf{orientation-reversing}.
+
+\begin{proposition}{Equivalent Criterion for Orientation-Preserving Local Diffeomorphisms}{Equivalent Criterion for Orientation-Preserving Local Diffeomorphisms}
+  Let $M,N$ be oriented smooth manifolds with positive dimension, with or without boundary. Let $F: M \to N$ be a local diffeomorphism. Then the following are equivalent:
+  \begin{itemize}
+    \item $F$ is orientation-preserving.
+    \item For any oriented smooth charts for $M$ and $N$, the Jacobian of $F$ has positive determinant.
+    \item For any positively oriented form $\omega$ for $N$, the pullback $F^* \omega$ is a positively oriented form for $M$.
+  \end{itemize}
+\end{proposition}
+
+We can also construct orientations by pullbacks.
+\begin{proposition}{The Pullback Orientation}{The Pullback Orientation}
+  Suppose $M,N$ are smooth manifolds, with or without boundary, and $F: M \to N$ is a local diffeomorphism. If $N$ is oriented by $\mathcal{O}$, then $M$ has a unique orientation $F^*\mathcal{O}$ called the \textbf{pullback orientation} of $M$ by $F$ such that $F$ is orientation-preserving.
+\end{proposition}
+\begin{proof}
+  For each $p\in M$, there is a unique orientation of $T_pM$ such that $dF_p : T_pM \to T_{F(p)}N$ is orientation-preserving. This defines a pointwise orientation of $M$. To show that it is continuous, we choose an orientation form $\omega$ for $N$. Then $F^* \omega$ is a nonvanishing $n$-form on $M$, and thus defines a continuous orientation of $M$.
+\end{proof}
+
+For this we have the usual pullback composition formula:
+\begin{equation}
+  (G \circ F)^* \mathcal{O} = F^*(G^* \mathcal{O})
+\end{equation}
+
+Recall that a smooth manifold $M$ is called \textbf{parallelizable} if it admits a smooth global frame for.
+\begin{proposition}{Parallelizable Manifolds are Orientable}{Parallelizable Manifolds are Orientable}
+  Every parallelizable smooth manifold is orientable.
+\end{proposition}
+\begin{proof}
+  Just define the orientation by the global frame.
+\end{proof}
+
+So $\mathbb{R}^n, T^n, S^1, S^3, S^7$ and there products are orientable, and any codimension 0 submanifolds of them are orientable. Also, every Lie group is orientable because it is parallelizable. We say that an orientation of a Lie group $G$ is \textbf{left-invariant} if every left translation $L_g : G \to G$ is orientation-preserving.
+
+\begin{proposition}{Orientations of Lie Groups}{Orientations of Lie Groups}
+  Every Lie group has exactly two left-invariant orientations, corresponding to the two orientations of its Lie algebra.
+\end{proposition}
+\begin{proof}
+  Quite natural, just define the orientation at $\Lie(G) \cong T_eG$ and then extend it to the whole $G$ by left translations.
+\end{proof}
+
+\subsection{Orientation of Hypersurfaces}
+An orientation of some smooth manifold $M$ do not generally restrict to a submanifold easily. A directly restriction of a full rank form to a lower dimensional submanifold is just zero. As it turns out, submanifolds of oriented manifolds may not actually be orientable, take the M\"obius strip as an example.
+
+Instead, here we focus on the case of hypersurfaces, which are codimension 1 submanifolds, with one extra information: A vector field that is nowhere tangent to the hypersurface.
+
+Recall that a vector field along $S \subseteq M$ is a section of the ambient tangent bundle $TM|_S$, which is a continuous map $N : S \to TM$ such that $N_p \in T_pM$ for each $p \in S$. 
+
+\begin{theorem}{Orientation of Hypersurfaces}{Orientation of Hypersurfaces}
+  Let $M$ be an oriented smooth manifold, with or without boundary, and $S \subseteq M$ be an immersed hypersurface with or without boundary, and $N$ is a vector field along $S$ that is nowhere tangent to $S$. Then there is a unique orientation $\mathcal{O}$ of $S$ such that for each $p \in S$, a basis $(E_1, \ldots , E_{n-1})$ of $T_pS$ is positively oriented if and only if the basis $(N_p, E_1, \ldots , E_{n-1})$ of $T_pM$ is positively oriented.
+
+  If $\omega$ is an orientation form for $M$, then $\iota_S^* (N \lrcorner \, \omega)$ is an orientation form for $S$ with respect to $\mathcal{O}$, where $\iota_S : S \hookrightarrow M$ is the inclusion map.
+\end{theorem}
+For $n=1$ case, since $S$ is 0-dimensional, we interpret the condition as follows: $+1$ is the positive orientation of $T_pS$ if and only if $(N_p)$ is a positively oriented basis of $T_pM$.
+
+\begin{proof}
+  We already knows that $\sigma = \iota_S^* (N \lrcorner \, \omega)$ is an $(n-1)$-form on $S$. We need to show that $\sigma$ is nonvanishing: Take any $p \in S$ and a basis $(E_1, \ldots , E_{n-1})$ of $T_pS$. Then $(N_p, E_1, \ldots , E_{n-1})$ is a basis of $T_pM$ because $N_p$ is not tangent to $S$. So we have
+  \begin{equation*}
+    \sigma_p(E_1, \ldots , E_{n-1}) = \omega_p(N_p, E_1, \ldots , E_{n-1}) \neq 0.
+  \end{equation*}
+  So $\sigma$ is nonvanishing, and thus defines an orientation $\mathcal{O}$ of $S$.
+\end{proof}
+
+However, not all hypersurfaces have a nowhere tangent vector field, however for most cases we can. For example, $S^n \subseteq \mathbb{R}^{n+1}$ has a nowhere tangent vector field given by $N = x^i \partial/\partial x^i$, which defines the standard orientation of $S^n$.
+
+\begin{proposition}{Regular Level Sets are Orientable}{Regular Level Sets are Orientable}
+  Let $M$ be an oriented smooth manifold, with or without boundary, and $f : M \to \mathbb{R}$ be a smooth function. If $S \subseteq M$ is a regular level set of $f$, then $S$ is orientable.
+\end{proposition}
+\begin{proof}
+  Choose any Riemannian metric on $M$, and let $N = \grad f|_S$ would do.
+\end{proof}
+
+\subsection{Boundary Orientation}
+If $M$ is a smooth manifold with boundary, then $\partial M$ is an embedded hypersurface of $M$. And we know from lemma \ref{lem:Existence of Inward Vector Fields}
+
+\begin{proposition}{Induced Orientation on the Boundary}{Induced Orientation on the Boundary}
+  Let $M$ be an oriented smooth $n$-dimensional manifold with boundary, $n \geq 1$. Then $\partial M$ is orientable, and all outward-pointing vector fields along $\partial M$ define the same orientation of $\partial M$, called the \textbf{induced orientation} or \textbf{Stokes orientation} of $\partial M$.
+\end{proposition}
+
+\begin{example}{Induced Orientation on the Boundary}{Induced Orientation on the Boundary}
+  First, consider $S^n$ to be the boundary of the unit ball in $\mathbb{R}^{n+1}$, then the induced orientation of $S^n$ is the standard orientation.
+
+  Next, consider the upper half space $\mathbb{H}^n$. Identify $\partial \mathbb{H}^n \subseteq \mathbb{R}^n$ by $\{(x^1, \ldots , x^{n-1}, 0) : x^i \in \mathbb{R}\}$, then the vector field $- \partial / \partial x^n$ is outward-pointing along $\partial \mathbb{H}^n$, and in $\mathbb{R}^n$, we have
+  \begin{equation*}
+    \left[ -\frac{\partial}{\partial x^n}, \frac{\partial}{\partial x^1}, \ldots , \frac{\partial}{\partial x^{n-1}} \right] = (-1)^n [e_1, \ldots , e_n].
+  \end{equation*}
+  Thus, the induced orientation of $\partial \mathbb{H}^n$ is equal to the standard orientation of $\mathbb{R}^{n-1}$ if $n$ is even, and the opposite of the standard orientation if $n$ is odd.
+\end{example}
+
+In many settings, we use parametrization to describe submanifolds.
+\begin{lemma}{Local Parametrization of Boundary and Orientation}{Local Parametrization of Boundary and Orientation}
+  Let $M$ be an oriented smooth $n$-dimensional manifold with boundary. Suppose $U \subseteq \mathbb{R}^{n-1}$ is an open subset, and $a,b\in \mathbb{R}, a<b$, and $F: (a,b] \times U \to M$ is a smooth embedding that restricts to a smooth embedding of $\{b\} \times U$ into $\partial M$. Then the parametrization $f: U \rightarrow \partial M, f(x) = F(b,x)$ is orientation-preserving for $\partial M$ if and only if $F$ is orientation-preserving for $M$.
+\end{lemma}
+\begin{proof}
+  Quite natural, note that a same-dimension embedding is a diffeomorphism onto its image, so we can identify $U$ with $\{b\} \times U$ and then the condition is just the same as the definition of orientation-preserving for $F$.
+\end{proof}
+
+For example, consider the smooth local parametrization of $S^2 = \partial \overline{B}^3$, let $U = (0, \pi) \times (0, 2\pi)$ and $X: U \to S^2 \subseteq \mathbb{R}^3$ be given by
+\begin{equation*}
+  X(\theta, \varphi) = (\sin \theta \cos \varphi, \sin \theta \sin \varphi, \cos \theta).
+\end{equation*}
+Then it is a restriction of a smooth embedding $F: (0, 1] \times U \to \overline{B}^3$ given by
+\begin{equation*}
+  F(\rho, \theta, \varphi) = (\rho \sin \theta \cos \varphi, \rho \sin \theta \sin \varphi, \rho \cos \theta), \qquad F(1, \theta, \varphi) = X(\theta, \varphi).
+\end{equation*}
+So, as $\det J_F = \rho^2 \sin \theta > 0$, we have $X$ is orientation-preserving for $S^2$.
+
+\section{The Riemannian Volume Form}
+Let $(M,g)$ be an oriented Riemannian manifold of positive dimension. Then there is a smooth orthonormal local frame $(E_1, \ldots , E_n)$ in a neighborhood of each point in $M$. Assume it is positively oriented (else we can change the sign of $E_1$ to make it positively oriented), then we can find an oriented orthonormal frame in a neighborhood of each point in $M$.
+
+\begin{proposition}{Riemannian Volume Form}{Riemannian Volume Form}
+  Suppose $(M,g)$ is an oriented Riemannian $n$-dimensional manifold, with or without boundary, and $n \geq 1$. Then there is a unique orientation form $\omega_g \subseteq \Omega^n(M)$ called the \textbf{Riemannian volume form}, such that
+  \begin{equation}
+    \omega_g(E_1, \ldots , E_n) = 1.
+  \end{equation}
+  for every local oriented orthonormal frame $(E_1, \ldots , E_n)$ for $M$.
+
+  In local smooth oriented coordinates $(U, x^i)$, we have
+  \begin{equation}
+    \omega_g = \sqrt{\det(g_{ij})} dx^1 \wedge \cdots \wedge dx^n,
+  \end{equation}
+\end{proposition}
+\begin{proof}
+  Existence and uniqueness is easy. To see the coordinate form, let $(E_i)$ be the local oriented orthonormal frame, then let
+  \begin{equation*}
+    \frac{\partial}{\partial x^i} = A_i^j E_j, \qquad \omega_g = f dx^1 \wedge \cdots \wedge dx^n.
+  \end{equation*}
+  Then we have
+  \begin{equation*}
+    f = \omega_g\left( \frac{\partial}{\partial x^1}, \ldots , \frac{\partial}{\partial x^n} \right) = \omega_g(A_1^j E_j, \ldots , A_n^j E_j) = \det(A).
+  \end{equation*}
+  \begin{equation*}
+    g_{ij} = g\left( \frac{\partial}{\partial x^i}, \frac{\partial}{\partial x^j} \right) = g(A_i^k E_k, A_j^l E_l) = A_i^k A_j^l g(E_k, E_l) = \sum_{k=1}^n A_i^k A_j^k,
+  \end{equation*}
+  So $\det(g_{ij}) = \det(A)^2$, and thus $f = \sqrt{\det(g_{ij})}$, since both frames are positively oriented. (If $(x^i)$ is a negatively oriented coordinate chart, then we have $f = -\sqrt{\det(g_{ij})}$, which is consistent with the definition of $\omega_g$.)
+\end{proof}
+
+This form is also isometric invariant. Suppose $(M, g)$ and $(\tilde{M}, \tilde{g})$ are positive-dimensional oriented Riemannian manifolds, with or without boundary, and $F: M \to \tilde{M}$ is a local isometry, then $F^* \omega_{\tilde{g}} = \omega_g$.
+
+\subsection{Hypersurfaces in Riemannian Manifolds}
+Let $(M,g)$ be an oriented Riemannian manifold, with or without boundary, and $S \subseteq M$ be an immersed hypersurface with or without boundary. Any unit normal vector field $N$ along $S$ is nowhere tangent to $S$, so it defines an orientation of $S$ by previous discussions.
+
+\begin{proposition}{Volume Form on Submanifolds}{Volume Form on Submanifolds}
+  Let $(M,g)$ be an oriented Riemannian manifold, with or without boundary, and $S \subseteq M$ be an immersed hypersurface with or without boundary. Let $\tilde{g}$ be the induced Riemannian metric on $S$, and suppose $N$ is a unit normal vector field along $S$. Then with respect to the orientation of $S$ defined by $N$, the Riemannian volume form of $(S, \tilde{g})$ is given by
+  \begin{equation}
+    \omega_{\tilde{g}} = \iota_S^* (N \lrcorner \, \omega_g),
+  \end{equation}
+\end{proposition}
+
+\begin{proposition}{Outward Pointing Normal Field}{Outward Pointing Normal Field}
+  Let $(M,g)$ be a Riemannian manifold with boundary. There is a unique smooth outward-pointing unit normal vector field $N$ along $\partial M$.
+\end{proposition}
+\begin{proof}
+  Existence: Let $f$ be a boundary defining function for $M$, then
+  \begin{equation*}
+    N = -\frac{\grad f}{|\grad f|_g} \bigg|_{\partial M}
+  \end{equation*}
+  is a smooth outward-pointing unit normal vector field along $\partial M$. Uniqueness is obvious.
+\end{proof}
+
+\begin{corollary}{Structure of the Boundary Volume Form}{Structure of the Boundary Volume Form}
+  Let $(M,g)$ be an oriented Riemannian manifold with boundary, and $\tilde{g}$ be the induced Riemannian metric on $\partial M$. Then the Riemannian volume form of $(\partial M, \tilde{g})$ is
+  \begin{equation*}
+    \omega_{\tilde{g}} = \iota_{\partial M}^* (N \lrcorner \, \omega_g),
+  \end{equation*}
+  where $N$ is the unique smooth outward-pointing unit normal vector field along $\partial M$.
+\end{corollary}
+
+\section{Orientations and Covering Maps}
+Proving that a manifold is non-orientable is usually more difficult than proving that it is orientable. One useful tool for this is the following result about covering maps.
+
+First here is a simply special case of the pullback orientation:
+\begin{proposition}{Orientation of Covering Spaces}{Orientation of Covering Spaces}
+  If $\pi: E \to M$ is a smooth covering map, and $M$ is orientable, then $E$ is orientable.
+\end{proposition}
+\begin{proof}
+  Covering maps are local diffeomorphisms, so it follows from proposition \ref{prop:The Pullback Orientation}.
+\end{proof}
+
+If $G$ is a Lie group acting smoothly on a smooth manifold $E$, we say that the action is \textbf{orientation-preserving} if for each $g \in G$, the diffeomorphism $E \to E, p \mapsto g \cdot p$ is orientation-preserving.
+
+A covering map $\pi: E \rightarrow M$ is called \textbf{normal} (also \textbf{regular} or \textbf{Galois}) if the group $G$ of deck transformations of $\pi$ acts transitively on each fiber of $\pi$. In this case, we have $M \cong E/G$. Here $G$ is denoted by $\Aut_\pi(E)$, and is called the \textbf{automorphism group} of $\pi$.
+
+\begin{theorem}{Orientability and Normal Covering Maps}{Orientability and Normal Covering Maps}
+  Suppose $E$ is a connected, oriented smooth manifold, with or without boundary, and $\pi: E \to M$ is a normal smooth covering map. Then $M$ is orientable if and only if the action of $\Aut_\pi(E)$ on $E$ is orientation-preserving.
+\end{theorem}
+\begin{proof}
+  Let $\mathcal{O}_E$ be the orientation of $E$. First suppose $M$ is orientable, and $q\in E$. Because $M$ is connected, it has exactly two orientations, and one of them has the property $\mathrm{d} \pi_q : T_qE \to T_{\pi(q)}M$ is orientation-preserving (because local diffeomorphisms are orientation-preserving for some orientation). Denote that orientation by $\mathcal{O}_M$. Then $\pi^* \mathcal{O}_M = \mathcal{O}_E$ by the uniqueness of pullback orientation, so for $\varphi \in \Aut_\pi(E)$, we have $\pi \circ \varphi = \pi$, and thus
+  \begin{equation*}
+    \varphi^* \mathcal{O}_E = \varphi^* (\pi^* \mathcal{O}_M) = (\pi \circ \varphi)^* \mathcal{O}_M = \pi^* \mathcal{O}_M = \mathcal{O}_E,
+  \end{equation*}
+  which means that $\varphi$ is orientation-preserving.
+
+  Conversely, suppose the action of $\Aut_\pi(E)$ on $E$ is orientation-preserving, and let $p\in M$. If $U \subseteq M$ is any evenly covered neighborhood of $p$, then there is a smooth section $\sigma: U \to E$ that induces an orientation $\sigma^* \mathcal{O}_E$ of $U$. Suppose $\sigma': U \to E$ is another smooth section, then there is a covering automorphism $\varphi \in \Aut_\pi(E)$ such that $\sigma' = \varphi \circ \sigma$. So we have
+  \begin{equation*}
+    \sigma'^* \mathcal{O}_E = \sigma^* (\varphi^* \mathcal{O}_E) = \sigma^* \mathcal{O}_E,
+  \end{equation*}
+  because $\varphi$ is orientation-preserving. So the orientation induced by any local section is the same, and thus defines a continuous orientation of $M$ via pullback, which means that $M$ is orientable.
+\end{proof}
+
+\begin{remark}
+  This is how we say that the manifold ``twists'' in the M\"obius strip, because the nontrivial deck transformation (like walking along the strip and come back to the same point) is orientation-reversing (getting to the back of the strip).
+\end{remark}
+
+\begin{example}{Orientation by Covering Maps}{Orientation by Covering Maps}
+  \begin{itemize}
+    \item Consider the real projective space $\mathbb{R}P^n = S^n/\{\pm 1\}$, where the only nontrivial covering automorphism is given by $\alpha(x) = -x$. We will see that $\alpha$ is orientation-preserving if and only if $n$ is odd, so $\mathbb{R}P^n$ is orientable if and only if $n$ is odd.
+    \begin{proof}
+      Consider $F: \overline{B}^{n+1} \to \overline{B}^{n+1}$ given by $F(x) = -x$, and take the Riemannian volume form $\omega_g$ of $\overline{B}^{n+1}$, then the induced orientation of $S^n$ is the standard orientation by $\omega_{\tilde{g}} = \iota_{S^n}^* (N \lrcorner \, \omega_g)$, where $N$ is the outward-pointing normal vector field along $S^n$. Consider the pullback $\alpha^* \omega_{\tilde{g}}$, we have $\iota_{S^n} \circ \alpha = F \circ \iota_{S^n}$, so
+      \begin{equation*}
+        \begin{aligned}
+          \alpha^* \omega_{\tilde{g}} & = \alpha^* (\iota_{S^n}^* (N \lrcorner \, \omega_g)) = (\iota_{S^n} \circ \alpha)^* (N \lrcorner \, \omega_g)\\
+          & = (F \circ \iota_{S^n})^* (N \lrcorner \, \omega_g) = \iota_{S^n}^* (F^* (N \lrcorner \, \omega_g)) = \iota_{S^n}^* ((dF^{-1} N) \lrcorner \, F^* \omega_g)\\
+          & = \iota_{S^n}^* (N \lrcorner \, (-1)^{n+1} \omega_g) = (-1)^{n+1} \iota_{S^n}^* (N \lrcorner \, \omega_g) = (-1)^{n+1} \omega_{\tilde{g}}.
+        \end{aligned}
+      \end{equation*}
+      where we used
+      \begin{equation*}
+        (\mathrm{d} F^{-1} N)_x(f) = N_{F^{-1}(x)}(f \circ F^{-1}) = N_{-x}(f \circ F^{-1}) = N_x(f)
+      \end{equation*}
+      so $\alpha^* \omega_{\tilde{g}} = \omega_{\tilde{g}}$ if $n$ is odd, and $\alpha^* \omega_{\tilde{g}} = -\omega_{\tilde{g}}$ if $n$ is even.
+    \end{proof}
+
+  \item Now consider the M\"obius band. Let $E$ be the total space of M\"obius bundle. The quotient map $q: \mathbb{R}^2 \to E$. Then $\Aut_q(\mathbb{R}^2) \cong \mathbb{Z}$ by $n \cdot (x,y) = (x + n, (-1)^n y)$. So for odd $n$, the pullback gives $ \mathrm{d} x \wedge \mathrm{d} y \mapsto - \mathrm{d} x \wedge \mathrm{d} y$, which is orientation-reversing, so $E$ is non-orientable.
+  \end{itemize}
+\end{example}
+
+\subsection{The Orientation Covering}
+Now we shall see that every non-orientable manifold has a two-sheeted covering manifold. This gives intuition that every non-orientable manifold is like a twisted version of an orientable manifold.
+
+Recall that a topological covering map $\pi: E \to M$ between \textbf{connected and locally path connected topological spaces} is defined as a surjective continuous map such that for each $p \in M$, there is an open neighborhood $U$ of $p$ such that $\pi^{-1}(U)$ is a disjoint union of open subsets of $E$, each of which is homeomorphic to $U$ by $\pi$. A smooth covering map is a topological covering map that is also a smooth map.
+
+We define a \textbf{generalized covering map} to be covering map except that we do not require the total space $E$ to be connected. Well, we can easily see that its restriction to each connected component of $E$ is a covering map in the usual sense.
+
+\begin{definition}{Orientation Covering}{Orientation Covering}
+  Let $M$ be a connected smooth positive-dimensional manifold, with or without boundary. Let $\hat{M}$ be the set of all orientations of all tangent spaces of $M$, i.e.
+  \begin{equation*}
+    \hat{M} = \{(p, \mathcal{O}_p) : p \in M, \mathcal{O}_p \text{ is an orientation of } T_pM\}.
+  \end{equation*}
+  Define the projection map $\hat{\pi} : \hat{M} \to M$ by $\hat{\pi}(p, \mathcal{O}_p) = p$. Then $\hat{\pi}$ is called the \textbf{orientation covering} of $M$, each fiber $\hat{\pi}^{-1}(p)$ consists of exactly two points.
+\end{definition}
+
+\begin{proposition}{Properties of the Orientation Covering}{Properties of the Orientation Covering}
+  Let $M$ be a connected smooth positive-dimensional manifold, with or without boundary, and $\hat{\pi} : \hat{M} \to M$ be the orientation covering of $M$. Then $\hat{M}$ can be given s structure of smooth oriented manifold with or without boundary such that
+  \begin{itemize}
+    \item $\hat{\pi}$ is a generalized smooth covering map.
+    \item A connected open subset $U \subseteq M$ is evenly covered by $\hat{\pi}$ if and only if $U$ is orientable. In this case, every orientation of $U$ is the pullback orientation induced by a local section of $\hat{\pi}$ over $U$.
+  \end{itemize}
+\end{proposition}
+
+\begin{remark}
+  We can view $\hat{M}$ as the two sides of $M$, geometrically, imaging a smooth surface, and moving its two sides apart, then the resulting manifold is just $\hat{M}$, and the projection map $\hat{\pi}$ just glues the two sides together. For orientable manifolds like $S^2$, the two sides are completely separated, so $\hat{M}$ is just two disjoint copies of $M$. For non-orientable manifolds like the M\"obius strip, the two sides are twisted together, but $\hat{M}$ is actually orientable because it needs two rounds to get back to the same point.
+\end{remark}
+\begin{proof}
+  \begin{itemize}
+    \item First, we give $\hat{M}$ a topology: For each orientable open subset $U \subseteq M$ and each orientation $\mathcal{O}$ of $U$, we define
+      \begin{equation*}
+        \hat{U}_\mathcal{O} = \{(p, \mathcal{O}_p) : p \in U, \mathcal{O}_p = \mathcal{O}|_p\} \subseteq \hat{M}.
+      \end{equation*}
+      Then all $\hat{U}_\mathcal{O}$ forms a basis of a topology on $\hat{M}$, and $\hat{\pi}|_{\hat{U}_\mathcal{O}} : \hat{U}_\mathcal{O} \to U$ is a homeomorphism, so $\hat{\pi}$ is a local homeomorphism. Now, as every orientable connected open subset $U \subseteq M$ has $\hat{\pi}^{-1}(U) = \hat{U}_\mathcal{O} \sqcup \hat{U}_{-\mathcal{O}}$, so $\hat{\pi}$ is a generalized covering map. By the preceding discussion, $\hat{\pi}$ restricted to each connected component of $\hat{M}$ is a covering map in the usual sense, so there is a unique smooth structure on $\hat{M}$ such that $\hat{\pi}$ is a smooth covering map, from theorem \ref{thm:Covering Space of Smooth manifolds}.
+
+    \item To give $M$ an orientation, for $\hat{p} = (p, \mathcal{O}_p) \in \hat{M}$, we define $\mathcal{O}_{\hat{p}} = \mathcal{O}_p$. Then it gives a continuous orientation $\mathcal{O}$ of $\hat{M}$.
+  \end{itemize}
+\end{proof}
+
+\begin{theorem}{Orientation Covering Theorem}{Orientation Covering Theorem}
+  Suppose $M$ is a connected smooth manifold, with or without boundary, and $\hat{\pi} : \hat{M} \to M$ is the orientation covering of $M$.
+  \begin{itemize}
+    \item If $M$ is orientable, then $\hat{M}$ has exactly two connected components, each of which is diffeomorphic to $M$ by $\hat{\pi}$.
+    \item If $M$ is non-orientable, then $\hat{M}$ is connected, and $\hat{\pi} : \hat{M} \to M$ is a two-sheeted smooth covering map.
+  \end{itemize}
+\end{theorem}
+
+\begin{theorem}{Uniqueness of the Orientation Covering}{Uniqueness of the Orientation Covering}
+  Let $M$ be a non-orientable connected smooth manifold, with or without boundary and $\pi: \hat{M} \to M$ is its orientation covering. If $\tilde{M}$ is an oriented smooth manifold, with or without boundary that exists a two-sheeted smooth covering map $\tilde{\pi} : \tilde{M} \to M$, then there is a unique orientation-preserving diffeomorphism $\varphi : \tilde{M} \to \hat{M}$ such that $\pi \circ \varphi = \tilde{\pi}$.
+\end{theorem}
+
+\begin{theorem}{Orientatability and Fundamental Group}{Orientability and Fundamental Group}
+  Let $M$ be a connected smooth manifold, with or without boundary, and the fundamental group of $M$ has no subgroup of index 2, then $M$ is orientable.
+
+  In particular, if $M$ is simply connected, then $M$ is orientable.  
+\end{theorem}
+
+
+\end{document}
