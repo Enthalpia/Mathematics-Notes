@@ -1,0 +1,897 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\chapter{Norms of Vectors and Matrices}
+
+The Euclidean length is the most familiar way to measure the length of a vector. However, there are many other ways to measure the length of a vector and size of a matrix. These generalizations of the Euclidean length, called \textit{norms}, are important in many analytical and computational applications.
+
+\begin{example}{Convergence}{Convergence}
+  When we consider $x\in \mathbb{C}, |x|<1$, we have the series
+  \begin{equation*}
+    \frac{1}{1-x} = 1 + x + x^2 + \cdots
+  \end{equation*}
+  which suggests that we can write
+  \begin{equation*}
+    (I - A)^{-1} = I + A + A^2 + \cdots
+  \end{equation*}
+  for some matrix $A$. But when is this valid? We will see that this relates to the size of $A$ as measured by a matrix norm.
+\end{example}
+
+\section{Definitions}
+
+\begin{definition}{Norms on Vector Spaces}{Norms on Vector Spaces}
+  Let $V$ be a vector space over field $\mathbb{F} = \mathbb{R}, \mathbb{C}$. A \textit{norm} on $V$ is a function $\|\cdot\|: V \to \mathbb{R}$ that satisfies the following properties for all $x, y \in V$ and $\alpha \in \mathbb{F}$:
+  \begin{itemize}
+    \item Non-negativity: $\|x\| \geq 0$.
+    \item Positivity: $\|x\| = 0$ if and only if $x = 0$.
+    \item Homogeneity: $\|\alpha x\| = |\alpha| \|x\|$.
+    \item Triangle inequality: $\|x + y\| \leq \|x\| + \|y\|$.
+  \end{itemize}
+  A \emph{seminorm} on $V$ is obtained if we relax the positivity condition to allow $\|x\| = 0$ for some nonzero $x$.
+\end{definition}
+
+With this definition, a vector space equipped with a norm is called a \textit{normed vector space}. Any nonzero vector $x$ in a normed vector space has a positive length $\|x\|$, and can be normalized to a unit vector $u = x / \|x\|$.
+
+The triangle inequality have another side as follows:
+\begin{lemma}{Other Side of Triangle Inequality}{Other Side of Triangle Inequality}
+  Let $\|\cdot\|$ be a seminorm on a real or complex vector space $V$. Then for all $x, y \in V$,
+  \begin{equation}
+    \|x - y\| \geq |\|x\| - \|y\||.
+  \end{equation}
+\end{lemma}
+\begin{proof}
+  We have
+  \begin{equation*}
+    \|y\| = \|x - (x - y)\| \leq \|x\| + \|x - y\|, \qquad \|x\| = \|y - (y - x)\| \leq \|y\| + \|y - x\| = \|y\| + \|x - y\|.
+  \end{equation*}
+  So we have our result.
+\end{proof}
+
+Norms can be induced by inner products:
+\begin{definition}{Inner Products}{Inner Products}
+  Let $V$ be a vector space over field $\mathbb{F} = \mathbb{R}, \mathbb{C}$. An \textit{inner product} on $V$ is a function $\langle \cdot, \cdot \rangle: V \times V \to \mathbb{F}$ that satisfies the following properties for all $x, y, z \in V$ and $\alpha \in \mathbb{F}$:
+  \begin{itemize}
+    \item Non-negativity: $\langle x, x \rangle \geq 0$.
+    \item Positivity: $\langle x, x \rangle = 0$ if and only if $x = 0$.
+    \item Conjugate symmetry: $\langle x, y \rangle = \overline{\langle y, x \rangle}$.
+    \item Additivity: $\langle x + y, z \rangle = \langle x, z \rangle + \langle y, z \rangle$.
+    \item Homogeneity: $\langle \alpha x, y \rangle = \alpha \langle x, y \rangle$.
+  \end{itemize}
+  The last three just says that inner products are sesquilinear functions. A vector space equipped with an inner product is called an \textit{inner product space}.
+
+  A \emph{semi-inner product} on $V$ is obtained if we relax the positivity condition to allow $\langle x, x \rangle = 0$ for some nonzero $x$.
+\end{definition}
+
+We are already very familiar with inner products. An important property of inner products is the Cauchy-Schwarz inequality. We shall see that semi-inner products also satisfy this.
+\begin{theorem}{Cauchy-Schwarz Inequality}{Cauchy-Schwarz Inequality}
+  Let $\langle \cdot, \cdot \rangle$ be an inner product on a vector space $V$. Then for all $x, y \in V$,
+  \begin{equation}
+    |\langle x, y \rangle|^2 \leq \langle x, x \rangle \langle y, y \rangle.
+  \end{equation}
+  Equality holds if and only if $x$ and $y$ are linearly dependent.
+
+  If $\langle \cdot, \cdot \rangle$ is a semi-inner product, then the Cauchy-Schwarz inequality still holds, but equality may hold for some linearly independent vectors.
+\end{theorem}
+\begin{proof}
+  Consider the polynomial
+  \begin{equation*}
+    p(t) = \langle tx - e^{i\theta} y, tx - e^{i\theta} y \rangle = t^2 \langle x, x \rangle - 2t \re(e^{-i\theta} \langle x, y \rangle) + \langle y, y \rangle \geq 0.
+  \end{equation*}
+  for all $t, \theta \in \mathbb{R}$. Take $\theta$ such that $\re(e^{-i\theta} \langle x, y \rangle) = |\langle x, y \rangle|$. If $\langle x, x \rangle = 0$, then $\langle x, y \rangle = 0$ otherwise $p$ would be negative for sufficiently large $t$. If $\langle x, x \rangle > 0$, then the discriminant of $p$ must be non-positive, which gives us the desired inequality.
+
+  The equality holds if and only if either $\langle x, x \rangle = 0$ or else $p$ has a root. For inner products, either case implies that $x$ and $y$ are linearly dependent. ($x = 0$ or $tx = e^{i\theta} y$ for some $t, \theta$.)
+\end{proof}
+
+Therefore, it is easy to see that any inner product induces a norm by $\|x\| = \sqrt{\langle x, x \rangle}$.
+\begin{corollary}{Norms from Inner Products}{Norms from Inner Products}
+  Let $\langle \cdot, \cdot \rangle$ be an inner product on a vector space $V$. Then the function $\|\cdot\|: V \to \mathbb{R}$ defined by $\|x\| = \sqrt{\langle x, x \rangle}$ is a norm on $V$.
+
+  If $\langle \cdot, \cdot \rangle$ is a semi-inner product, then $\|\cdot\|$ is a seminorm.
+\end{corollary}
+
+Another useful property of the inner product is the polarization identity,
+\begin{proposition}{The Polarization Identity}{The Polarization Identity}
+  Let $\langle \cdot, \cdot \rangle$ be an inner product on a vector space $V$. Then for all $x, y \in V$,
+  \begin{equation}
+    \re\langle x, y \rangle = \frac{1}{4}(\|x + y\|^2 - \|x - y\|^2) = \frac{1}{2}(\|x + y\|^2 - \|x\|^2 - \|y\|^2).
+  \end{equation}
+  and also
+  \begin{equation*}
+    \im\langle x, y \rangle = \frac{1}{4}(\|x - iy\|^2 - \|x + iy\|^2).
+  \end{equation*}
+\end{proposition}
+
+Using this, we have a useful criterion for determining whether a norm is induced by an inner product.
+\begin{corollary}{Parallelogram Law}{Parallelogram Law}
+  Let $\|\cdot\|$ be a norm on a vector space $V$. Then $\|\cdot\|$ is induced by an inner product if and only if it satisfies the parallelogram law,
+  \begin{equation}
+    \|x + y\|^2 + \|x - y\|^2 = 2(\|x\|^2 + \|y\|^2).
+  \end{equation}
+\end{corollary}
+\begin{proof}
+  We can DEFINE an inner product by the polarization identity if the parallelogram law holds.
+\end{proof}
+
+Just like other properties, subspaces can inherit these structures as well.
+\begin{proposition}{Subspaces Inherit Norms and Inner Products}{Subspaces Inherit Norms and Inner Products}
+  Let $V$ be a vector space with a norm $\|\cdot\|$ and an inner product $\langle \cdot, \cdot \rangle$. Then any subspace $W$ of $V$ is also a normed vector space and an inner product space with the same norm and inner product.
+\end{proposition}
+
+\section{Examples}
+
+\paragraph{Euclidean Norm or $l_2$-norm.} The most familiar norm. For $x = (x_1, x_2, \ldots, x_n) \in \mathbb{C}^n$, we have,
+\begin{equation*}
+  \|x\|_2 = \sqrt{|x_1|^2 + |x_2|^2 + \cdots + |x_n|^2}.
+\end{equation*}
+It is derived from the standard inner product $\langle x, y \rangle = x^*y$ and is the only norm that is unitarily invariant (up to a constant factor). That is, for any unitary matrix $U \in M_n$, we have $\|Ux\|_2 = \|x\|_2$ for all $x \in \mathbb{C}^n$.
+
+\paragraph{Sum (Taxicab) Norm or $l_1$-norm.} For $x = (x_1, x_2, \ldots, x_n) \in \mathbb{C}^n$, we have,
+\begin{equation*}
+  \|x\|_1 = |x_1| + |x_2| + \cdots + |x_n|.
+\end{equation*}
+It models the distance traveled by a taxi on a network of perpendicular streets and avenues. It is not derived from an inner product because it does not satisfy the parallelogram law. For example, if $x = (1, 0)$ and $y = (0, 1)$, then $\|x + y\|_1^2 + \|x - y\|_1^2 = 8$ while $2(\|x\|_1^2 + \|y\|_1^2) = 4$.
+
+\paragraph{Maximum (Chebyshev) Norm or $l_\infty$-norm.} For $x = (x_1, x_2, \ldots, x_n) \in \mathbb{C}^n$, we have,
+\begin{equation*}
+  \|x\|_\infty = \max_{1 \leq i \leq n} |x_i|.
+\end{equation*}
+It is not derived from an inner product either.
+
+\paragraph{General $l_p$-norm.} For $x = (x_1, x_2, \ldots, x_n) \in \mathbb{C}^n$ and $p \geq 1$, we have,
+\begin{equation}
+  \|x\|_p = (|x_1|^p + |x_2|^p + \cdots + |x_n|^p)^{1/p}.
+\end{equation}
+The triangle inequality for $l_p$-norms can be proved using Minkowski's inequality. It is derived from an inner product if and only if $p = 2$, and bridges the gap between $l_1$ and $l_\infty$-norms continuously.
+
+\paragraph{$k$-norm.} An important discrete family of norms that also bridges the gap between $l_1$ and $l_\infty$-norms. For $x = (x_1, x_2, \ldots, x_n) \in \mathbb{C}^n$ and $1 \leq k \leq n$, we define
+\begin{equation}
+  \|x\|_{[k]} = x_{i_1} + x_{i_2} + \cdots + x_{i_k},
+\end{equation}
+where $|x_{i_1}| \geq |x_{i_2}| \geq \cdots \geq |x_{i_n}|$ is the non-increasing rearrangement of $|x_1|, |x_2|, \ldots, |x_n|$. We have $\|x\|_{[1]} = \|x\|_\infty$ and $\|x\|_{[n]} = \|x\|_1$. We have
+\begin{equation*}
+  \|x\|_\infty = \|x\|_{[1]} \leq \|x\|_{[2]} \leq \cdots \leq \|x\|_{[n]} = \|x\|_1.
+\end{equation*}
+
+\paragraph{Basis Norm.} For any norm $\|\cdot\|$ on $\mathbb{C}^n$ and any basis $\mathcal{B} = \{b^{(1)}, b^{(2)}, \ldots, b^{(n)}\}$ of an $n$-dimensional vector space $V$, we can define a norm on $V$. There is an isomorphism for $V$ to $\mathbb{C}^n$ by letting $x = \sum_{i=1}^n x_i b^{(i)} \in V$ correspond to $[x]_{\mathcal{B}} = [x_1, x_2, \ldots, x_n]^T \in \mathbb{C}^n$. Then we can define
+\begin{equation*}
+  \|x\|_\mathcal{B} = \| [x]_{\mathcal{B}} \|
+\end{equation*}
+
+\paragraph{Operator Norm.} For matrix case, if $S \in M_{m,n}$ has full column rank, then we can define a norm on $\mathbb{C}^n$ by
+\begin{equation}
+  \|x\|_S = \|S x\|.
+\end{equation}
+where the columns of $S$ form a basis of $\mathbb{C}^m$. We can see this as a special case of the basis norm by letting $b^{(i)}$ be the $i$-th column of $S$. This forms a basis of the range of $S$, which inherits the norm from $\mathbb{C}^m$.
+
+\paragraph{Frobenius Norm.} Consider the complex vector space $V = M_{m,n}$ of $m \times n$ complex matrices with the Frobenius inner product $\langle A, B \rangle = \tr(A^*B)$. This is equivalent to treating $M_{m,n}$ as $\mathbb{C}^{mn}$ by stacking the columns of a matrix into a vector. The induced norm is called the Frobenius norm, which can be computed by $\|A\|_2 = \sqrt{\tr(A^*A)}$.
+
+\begin{remark}
+  The definitions of norms and inner products do not require the underlying vector space to be finite-dimensional. In infinite-dimensional spaces, there are many more interesting examples of norms and inner products, and they play a fundamental role in functional analysis.
+\end{remark}
+
+Consider all continuous real or complex-valued functions on the interval $[a, b]$, denoted by $C[a, b]$. We can define the following norms on $C[a, b]$:
+\begin{itemize}
+  \item $L_2$-norm: $\displaystyle \|f\|_2 = \left( \int_a^b |f(x)|^2 dx \right)^{1/2}$, which is derived from the inner product $\langle f, g \rangle = \int_a^b f(x) \overline{g(x)} dx$.
+  \item $L_1$-norm: $\displaystyle \|f\|_1 = \int_a^b |f(x)| dx$, which is not derived from an inner product.
+  \item $L_\infty$-norm: $\displaystyle \|f\|_\infty = \sup_{x \in [a, b]} |f(x)|$, which is not derived from an inner product either.
+  \item General $L_p$-norm: $\displaystyle \|f\|_p = \left( \int_a^b |f(x)|^p dx \right)^{1/p}$ for $p \geq 1$, which is derived from an inner product if and only if $p = 2$.
+\end{itemize}
+
+\section{Properties of Vector Norms}
+\subsection{Algebraic Properties}
+New norms may be constructed from given norms in several ways.
+
+\begin{theorem}{Constructing New Norms}{Constructing New Norms}
+  Let $\|\cdot\|_{\alpha_1}, \ldots , \|\cdot\|_{\alpha_m}$ be norms on a vector space $V$ over $\mathbb{F} = \mathbb{R}, \mathbb{C}$, and let $\| \cdot \|$ be a norm on $\mathbb{R}^m$ such that:
+  \begin{equation*}
+    \forall y,z \in \mathbb{R}^m, (\forall i, y_i, z_i \geq 0 \rightarrow \|y\| \leq \|y + z\|).
+  \end{equation*}
+  Then the function $f: V \to \mathbb{R}$ defined by
+  \begin{equation}
+    f(x) = \|(\|x\|_{\alpha_1}, \ldots, \|x\|_{\alpha_m})\|
+  \end{equation}
+  is a norm on $V$.
+\end{theorem}
+The monotonicity assumption is needed to ensure the triangle inequality.
+
+\begin{proof}
+  We only need to verify the triangle inequality. For any $x, y \in V$, we have
+  \begin{equation*}
+    f(x) + f(y) = \|(\|x\|_{\alpha_1}, \ldots, \|x\|_{\alpha_m})\| + \|(\|y\|_{\alpha_1}, \ldots, \|y\|_{\alpha_m})\| \geq \|(\|x\|_{\alpha_1} + \|y\|_{\alpha_1}, \ldots, \|x\|_{\alpha_m} + \|y\|_{\alpha_m})\|
+  \end{equation*}
+  As we have $\|x + y\|_{\alpha_i} \leq \|x\|_{\alpha_i} + \|y\|_{\alpha_i}$ for all $i$, letting $u_i = \|x + y\|_{\alpha_i} \geq 0$, and $v_i = \|x\|_{\alpha_i} + \|y\|_{\alpha_i} - u_i \geq 0$, we have
+  \begin{equation*}
+    f(x) + f(y) \geq \|u + v\| \geq \|u\| = \|(\|x + y\|_{\alpha_1}, \ldots, \|x + y\|_{\alpha_m})\| = f(x + y).
+  \end{equation*}
+  Thus we have our result.
+\end{proof}
+
+Some usual special cases of this construction are:
+\begin{itemize}
+  \item The sum of two norms is a norm.
+  \item The maximum of two norms is a norm.
+  \item The scalar multiple of a norm is a norm.
+\end{itemize}
+
+\subsection{Analytical Properties}
+In practice, what type of norm we use is often dependent on the actual situation. It is important, therefore, to know what relationships there may be between two different norms. Fortunately, in the finite-dimensional case all norms are ``equivalent'' in a certain strong sense.
+
+Firstly, we consider the convergence of sequences in a normed vector space.
+\begin{definition}{Convergence in Normed Vector Spaces}{Convergence in Normed Vector Spaces}
+  Let $V$ be a normed vector space with norm $\|\cdot\|$. A sequence $\{x_k\}$ in $V$ is said to \textit{converge} to $x \in V$ if 
+  \begin{equation}
+    \lim_{k \to \infty} \|x_k - x\| = 0.
+  \end{equation}
+  we denote this by $x_k \to x$ or $\lim_{k \to \infty} x_k = x$ with respect to the norm $\|\cdot\|$.
+\end{definition}
+
+The triangle inequality guarantees the uniqueness of limits in normed vector spaces:
+\begin{proposition}{Uniqueness of Limits}{Uniqueness of Limits}
+  Let $V$ be a normed vector space with norm $\|\cdot\|$. If a sequence $\{x_k\}$ in $V$ converges to both $x$ and $y$, then $x = y$.
+\end{proposition}
+
+
+Can a sequence of vectors converge with respect to one norm but not with respect to another? Well, it can for infinite-dimensional spaces, but not for finite-dimensional spaces.
+
+\begin{example}{Convergence with Different Norms}{Convergence with Different Norms}
+  Consider the sequence of functions $\{f_k\}$ in $C[0, 1]$ defined by
+  \begin{equation*}
+    f_k(x) =
+    \begin{cases}
+      0, & 0 \leq x \leq 1 / k, \\
+      2(k^{3 / 2}x - k^{1 / 2}), & 1 / k < x \leq 3 / (2k), \\
+      2(-k^{3 / 2}x + 2k^{1 / 2}), & 3 / (2k) < x \leq 2 / k, \\
+      0, & 2 / k < x \leq 1.
+    \end{cases}
+  \end{equation*}
+  Then we have
+  \begin{equation*}
+    \begin{aligned}
+      \|f_k\|_1 & = \frac{1}{2} k^{-1 / 2} \to 0, \\
+      \|f_k\|_2 & = \frac{1}{\sqrt{3}} \\
+      \|f_k\|_\infty & = k^{1 / 2} \to \infty.
+    \end{aligned}
+  \end{equation*}
+\end{example}
+
+For finite-dimensional spaces, however, we have the following result.
+
+\begin{lemma}{Uniform Continuity of Linear Combinations}{Uniform Continuity of Linear Combinations}
+  Let $\|\cdot\|$ be a norm on a vector space $V$ over $\mathbb{F} = \mathbb{R}, \mathbb{C}$. Let $x^{(1)}, x^{(2)}, \ldots, x^{(m)} \in V$ be fixed vectors. Then let $x: \mathbb{F}^m \to V, x(z) = z_1 x^{(1)} + z_2 x^{(2)} + \cdots + z_m x^{(m)}$ be the linear combination of these vectors. Then the function $g: \mathbb{F}^m \to \mathbb{R}$ defined by $g(z) = \|x(z)\|$ is uniformly continuous on $\mathbb{F}^m$ with respect to the Euclidean norm on $\mathbb{F}^m$.
+\end{lemma}
+\begin{proof}
+  Let $u,v\in \mathbb{F}^m$ we have
+  \begin{equation*}
+    \begin{aligned}
+      |g(u) - g(v)| & = |\|x(u)\| - \|x(v)\|| \leq \|x(u) - x(v)\| \\
+      & = \|\sum_{i=1}^m (u_i - v_i) x^{(i)}\| \leq \sum_{i=1}^m |u_i - v_i| \|x^{(i)}\| \\
+      & \leq \left( \sum_{i=1}^m |u_i - v_i|^2 \right)^{1/2} \left( \sum_{i=1}^m \|x^{(i)}\|^2 \right)^{1/2} = C \|u - v\|_2,
+    \end{aligned}
+  \end{equation*}
+  where $\displaystyle C = \left( \sum_{i=1}^m \|x^{(i)}\|^2 \right)^{1/2}$ is a constant independent of $u$ and $v$. Thus we have our result.
+\end{proof}
+
+\begin{remark}
+  We do not require $V$ to be finite-dimensional in the above lemma because what we actually analyze is the span of $x^{(1)}, x^{(2)}, \ldots, x^{(m)}$, which is a finite-dimensional subspace of $V$.
+
+  The lemma above turns a norm on $V$ into the Euclidean norm on $\mathbb{F}^m$ by the linear combination of $x^{(1)}, x^{(2)}, \ldots, x^{(m)}$. This is the key to proving the equivalence of norms on finite-dimensional spaces.
+\end{remark}
+
+\begin{theorem}{Function Comparison on Vector Spaces}{Function Comparison on Vector Spaces}
+  Let $f_1,f_2$ be real-valued functions on a \textbf{finite-dimensional} vector space $V$ over $\mathbb{F} = \mathbb{R}, \mathbb{C}$ and let $\mathcal{B} = \{x^{(1)}, x^{(2)}, \ldots, x^{(n)}\}$ be a basis of $V$. Let $x: \mathbb{F}^n \to V, x(z) = z_1 x^{(1)} + z_2 x^{(2)} + \cdots + z_n x^{(n)}$ be the linear combination of these basis vectors. Assume that the functions $f_1,f_2$ are:
+  \begin{itemize}
+    \item Positive: $f_i(x) \geq 0$ for all $x \in V$ and $f_i(x) = 0$ if and only if $x = 0$.
+    \item Homogeneous: $f_i(\alpha x) = |\alpha| f_i(x)$ for all $x \in V$ and $\alpha \in \mathbb{F}$.
+    \item Continuous: $f_i(x(z))$ is continuous on $\mathbb{F}^n$ with respect to the Euclidean norm.
+  \end{itemize}
+  Then there exist positive constants $C_m, C_M$ such that
+  \begin{equation*}
+    \forall x \in V, C_m f_1(x) \leq f_2(x) \leq C_M f_1(x).
+  \end{equation*}
+\end{theorem}
+
+Geometrically speaking, we can take a particular level sets of $f_2$ and match level sets of $f_1$ to it. The continuity of $f_1$ and $f_2$ guarantees that we can find the minimum and maximum values of $f_1$ on this level set and Homogeneity guarantees that these values can be scaled to work for all level sets of $f_2$.
+
+\begin{proof}
+  Define $h(z) = f_2(x(z)) / f_1(x(z))$ for the sphere $z \in S = \{z \in \mathbb{F}^n: \|z\|_2 = 1\}$. The positivity shows that $h(z) > 0$ for all $z \in S$. The continuity of $h$ and compactness of $S$ guarantee that $h$ can achieve its minimum $C_M$ and maximum $C_m$ on $S$, both positive. So we have $C_m f_1(x(z)) \leq f_2(x(z)) \leq C_M f_1(x(z))$ for all $z \in S$. For any nonzero $z\in \mathbb{F}^n$, we have $z / \|z\|_2 \in S$, so we have
+  \begin{equation*}
+    f_i(x(z)) = f_i(\|z\|_2 x(z / \|z\|_2)) = \|z\|_2 f_i(x(z / \|z\|_2)).
+  \end{equation*}
+  with $z / \|z\|_2 \in S$, we have $C_m f_1(x(z / \|z\|_2)) \leq f_2(x(z / \|z\|_2)) \leq C_M f_1(x(z / \|z\|_2))$. Thus we have $C_m f_1(x(z)) \leq f_2(x(z)) \leq C_M f_1(x(z))$ for all nonzero $z$. For $z = 0$, we also have $f_1(x(z)) = f_2(x(z)) = 0$. Lastly, every $x \in V$ can be written as $x(z)$ for some $z \in \mathbb{F}^n$, so we have our result.
+\end{proof}
+
+\begin{definition}{Pre-norm}{Pre-norm}
+  A \textit{pre-norm} on a vector space $V$ is a real-valued function on a finite-dimensional vector space $V$ that is positive, homogeneous, and continuous, but may not satisfy the triangle inequality.
+\end{definition}
+
+Lemma \ref{lem:Uniform Continuity of Linear Combinations} states that every norm satisfies the continuity condition thus is a pre-norm. A pre-norm that satisfies the triangle inequality is a norm. Combining with the theorem above, we have the following result.
+
+\begin{corollary}{Comparison of Norms on Finite-Dimensional Spaces}{Comparison of Norms on Finite-Dimensional Spaces}
+  Let $\|\cdot\|_\alpha, \|\cdot\|_\beta$ be two norms on a finite-dimensional vector space $V$ over $\mathbb{F} = \mathbb{R}, \mathbb{C}$. Then there exist positive constants $C_m, C_M$ such that
+  \begin{equation*}
+    \forall x \in V, C_m \|x\|_\alpha \leq \|x\|_\beta \leq C_M \|x\|_\alpha.
+  \end{equation*}
+\end{corollary}
+
+A direct consequence of this is that a sequence $\{x_k\}$ in a finite-dimensional vector space $V$ converges independently of the choice of norm.
+
+\begin{corollary}{Convergence in Finite-Dimensional Spaces}{Convergence in Finite-Dimensional Spaces}
+  Let $\|\cdot\|_\alpha, \|\cdot\|_\beta$ be two norms on a finite-dimensional vector space $V$ over $\mathbb{F} = \mathbb{R}, \mathbb{C}$. Then a sequence $\{x_k\}$ in $V$ converges to $x \in V$ with respect to $\|\cdot\|_\alpha$ if and only if it converges to $x$ with respect to $\|\cdot\|_\beta$.
+
+  That is to say, all norms on a finite-dimensional vector space induce the same notion of convergence.
+\end{corollary}
+
+\begin{corollary}{Compactness of Norm Spheres}{Compactness of Norm Spheres}
+  Let $V = \mathbb{F}^n = \mathbb{R}^n, \mathbb{C}^n$ and let $f$ be a pre-norm or norm on $V$, then the sets $\{x \in V: f(x) \leq 1\}$ and $\{x \in V: f(x) = 1\}$ are compact (in Euclidean topology).
+\end{corollary}
+\begin{proof}
+  Closed and bounded sets in $\mathbb{F}^n$ are compact.
+\end{proof}
+
+If we want to determine whether the sequence $\{x_k\}$ converges or not, we can give a criterion without explicitly computing the limit.
+
+Consider that
+\begin{equation*}
+  \|x^{(k)} - x^{(j)}\| = \|x^{(k)} - x + x - x^{(j)}\| \leq \|x^{(k)} - x\| + \|x - x^{(j)}\|.
+\end{equation*}
+which motivates the following definition.
+
+\begin{definition}{Cauchy Sequences}{Cauchy Sequences}
+  Let $V$ be a normed vector space with norm $\|\cdot\|$. A sequence $\{x^{(k)}\}$ in $V$ is said to be a \textit{Cauchy sequence} if for every $\epsilon > 0$, there exists a positive integer $N(\epsilon)$ such that for all $k, j > N(\epsilon)$, we have $\|x^{(k)} - x^{(j)}\| < \epsilon$.
+\end{definition}
+It is easy to see that every convergent sequence is a Cauchy sequence. The converse is not always true, but it is true for finite-dimensional normed vector spaces.
+
+\begin{definition}{Completeness}{Completeness}
+  A normed vector space $V$ is said to be \textit{complete} if every Cauchy sequence in $V$ converges to some point in $V$.
+\end{definition}
+
+\begin{theorem}{Completeness of Finite-Dimensional Normed Vector Spaces}{Completeness of Finite-Dimensional Normed Vector Spaces}
+  Let $V$ be a finite-dimensional vector space over $\mathbb{F} = \mathbb{R}, \mathbb{C}$ and let $\|\cdot\|$ be a norm on $V$. Then a sequence $\{x^{(k)}\}$ in $V$ converges to $x \in V$ if and only if it is a Cauchy sequence.
+
+  That is to say, every finite-dimensional normed vector space is complete.
+\end{theorem}
+\begin{proof}
+  By choose a basis of $V$ and using the linear combination of this basis to turn it into $\mathbb{F}^n$, we can use the Cauchy criterion for sequences in $\mathbb{F}^n$ to conclude that $\{x^{(k)}\}$ converges to some $x \in V$.
+\end{proof}
+
+\begin{remark}
+  Unfortunately, the completeness of a normed vector space is not guaranteed if it is infinite-dimensional. The proof fails because we cannot use the linear combination of a finite basis to turn it into $\mathbb{F}^n$.
+\end{remark}
+
+As the unit ball of any norm or pre-norm on $\mathbb{R}^n,\mathbb{C}^n$ is compact, we can introduce another useful method to generate new norms from old ones using the Euclidean inner product.
+
+\begin{definition}{Dual Norm}{Dual Norm}
+  Let $f$ be a pre-norm on $V = \mathbb{F}^n = \mathbb{R}^n, \mathbb{C}^n$. The \textit{dual norm} of $f$ is defined by
+  \begin{equation}
+    f^D(y) = \max_{f(x) = 1} \re\langle x, y \rangle = \max_{f(x) = 1} \re y^* x.
+  \end{equation}
+  where $\langle \cdot, \cdot \rangle$ is the Euclidean inner product on $\mathbb{F}^n$.
+\end{definition}
+It is well defined because $\re y^* x$ is a continuous function of $x$ and the set $\{x \in V: f(x) = 1\}$ is compact. Also, if $c\in \mathbb{C}$ is a constant such that $|c| = 1$ then we have
+\begin{equation*}
+  \begin{aligned}
+    \max_{f(x) = 1} |y^* x| & = \max_{f(x) = 1} \max_{|c| = 1} \re(c y^* x) = \max_{f(x) = 1} \max_{|c| = 1} \re y^* (cx) \\
+    & = \max_{|c| = 1} \max_{f(x / c) = 1} \re y^* x = \max_{f(x) = 1} \re y^*x.
+  \end{aligned}
+\end{equation*}
+from the homogeneity of $f$. Also
+\begin{equation*}
+  \max_{f(x) = 1} |y^* x| = \max_{x \neq 0} | y^* \frac{x}{f(x)} | = \max_{x \neq 0} \frac{|y^*x|}{f(x)}
+\end{equation*}
+so equivalent and sometimes convenient alternative expressions for the dual norm are
+\begin{equation}
+  f^D(y) = \max_{f(x) = 1} |y^*x| = \max_{x\neq 0} \frac{|y^*x|}{f(x)}.
+\end{equation}
+
+We shall see that $f^D$ is actually a norm on $V$.
+\begin{proof}
+  The function $f^D$ is positive because for $y \neq 0$, we have
+  \begin{equation*}
+    f^D(y) = \max_{f(x) = 1} |y^*x| \geq |y^* \frac{y}{f(y)}| = \frac{\|y\|_2^2}{f(y)} > 0
+  \end{equation*}
+  and $f^D(0) = 0$. It is evidently homogeneous. It is noteworthy that even if $f$ does not satisfy the triangle inequality, $f^D$ still satisfies it. We have
+  \begin{equation*}
+    \begin{aligned}
+      f^D(y + z) & = \max_{f(x) = 1} |(y + z)^* x| \leq \max_{f(x) = 1} (|y^* x| + |z^* x|) \\
+      & \leq \max_{f(x) = 1} |y^* x| + \max_{f(x) = 1} |z^* x| = f^D(y) + f^D(z).
+    \end{aligned}
+  \end{equation*}
+  So actually $f^D$ is a norm on $V$.
+\end{proof}
+
+A simple inequality for the dual norm is given by
+\begin{lemma}{Dual Norm Inequality}{Dual Norm Inequality}
+  Let $f$ be a pre-norm on $V = \mathbb{F}^n = \mathbb{R}^n, \mathbb{C}^n$ and for all $x,y \in V$, we have
+  \begin{equation}
+    |y^* x| \leq f(x) f^D(y), \qquad |y^* x| \leq f^D(x) f(y).
+  \end{equation}
+\end{lemma}
+\begin{proof}
+  It holds for $x = 0$ or $y = 0$. For $x, y \neq 0$, we have
+  \begin{equation*}
+    |y^* \frac{x}{f(x)}| \leq \max_{f(z) = 1} |y^* z| = f^D(y)
+  \end{equation*}
+  Thus we have $|y^* x| \leq f(x) f^D(y)$. By symmetry, we also have $|y^* x| \leq f^D(x) f(y)$.
+\end{proof}
+
+Now we compute some dual norms.
+\begin{example}{Dual Norms}{Dual Norms}
+  Let $\| \cdot \|$ be a norm on $\mathbb{C}^n$, and $S \in M_n$ be an invertible matrix. Then we have
+  \begin{equation*}
+    \|y\|_S^D = \max_{x \neq 0} \frac{|y^* x|}{\|x\|_S} = \max_{x \neq 0} \frac{|y^* x|}{\|S x\|} = \max_{z \neq 0} \frac{|y^* S^{-1} z|}{\|z\|} = \|S^{-*} y\|^D.
+  \end{equation*}
+  So we have
+  \begin{equation}
+    \| \cdot \|_S^D = (\| \cdot \|^D)_{S^{-*}}.
+  \end{equation}
+
+  Consider the $l_p$-norms on $\mathbb{C}^n$. For $p > 1$, from H\"older's inequality, for $1/p + 1/q = 1$, we have
+  \begin{equation*}
+    |y^* x| = \left| \sum_{i=1}^n \overline{y}_i x_i \right| \leq \|y\|_q \|x\|_p
+  \end{equation*}
+  for which equality can be achieved. Therefore, we have
+  \begin{equation}
+    \|\cdot\|_p^D = \|\cdot\|_q, \qquad \frac{1}{p} + \frac{1}{q} = 1.
+  \end{equation}
+  In this case, dualling twice gives us back the original norm, but this is not always the case for general norms.
+
+  Specially, for $p=1, \infty $ we have
+  \begin{equation*}
+    |y^* x| = \left| \sum_{i=1}^n \overline{y}_i x_i \right| \leq \sum_{i=1}^n |\overline{y}_i x_i| \leq 
+    \begin{cases}
+      \max |y_i| \sum |x_i| = \|y\|_\infty \|x\|_1, \\
+      \sum |y_i| \max |x_i| = \|y\|_1 \|x\|_\infty.
+    \end{cases}
+  \end{equation*}
+  equality can be achieved in both cases, so we have
+  \begin{equation}
+    \|\cdot\|_1^D = \|\cdot\|_\infty, \qquad \|\cdot\|_\infty^D = \|\cdot\|_1.
+  \end{equation}
+\end{example}
+
+\begin{lemma}{Properties of Dual Norms}{Properties of Dual Norms}
+  Let $f,g$ be pre-norms on $V = \mathbb{F}^n = \mathbb{R}^n, \mathbb{C}^n$. And let $c>0$ be a constant. Then we have
+  \begin{itemize}
+    \item $cf$ is a pre-norm and $(cf)^D = c^{-1} f^D$.
+    \item If $f \leq g$, then $f^D \geq g^D$ for all $x \in V$.
+  \end{itemize}
+\end{lemma}
+
+In the previous example, we have seen that $\|\cdot\|_2^D = \|\cdot\|_2$, we shall see that this is only the case.
+
+\begin{theorem}{Self-Dual Norms}{Self-Dual Norms}
+  Let $\|\cdot\|$ be a norm on $V = \mathbb{F}^n = \mathbb{R}^n, \mathbb{C}^n$ and let $c>0$ be a constant. Then we have $\|\cdot\|^D = c \|\cdot\|$ for all $x \in V$ if and only if $\|\cdot\| = \sqrt{c} \|\cdot\|_2$. Especially, $\|\cdot\|^D = \|\cdot\|$ if and only if $\|\cdot\| = \|\cdot\|_2$.
+\end{theorem}
+\begin{proof}
+  Suppose $N(\cdot)$ is self-dual, then we have
+  \begin{equation*}
+    \|x\|_2^2 = |x^* x| \leq N(x) N^D(x) = N(x)^2
+  \end{equation*}
+  so we have $N(x) \geq \|x\|_2$ for all $x \in V$. Form lemma \ref{lem:Properties of Dual Norms}, we have $N^D(x) \leq \|x\|_2$ for all $x \in V$. Thus we have $N(x) = N^D(x) = \|x\|_2$ for all $x \in V$. For the general case, letting $N(x) = c^{-1/2} \|x\|$, we have $N^D(x) = c^{1/2} \|x\|^D = c^{1/2} c^{-1} \|x\| = N(x)$, so $N$ is self-dual.
+\end{proof}
+
+Every $k$-norm and $l_p$-norm only depends on the absolute values of the entries of a vector and they are nondecreasing functions of these absolute values. We shall see that these properties are not unrelated.
+
+\begin{definition}{Absolute and Monotone Norms}{Absolute and Monotone Norms}
+  Let $x \in V = \mathbb{F}^n = \mathbb{R}^n, \mathbb{C}^n$ and let $|x| = [|x_1|, |x_2|, \ldots, |x_n|]^T$ be the entrywise absolute value of $x$. We say that $|x| \leq |y|$ if $|x_i| \leq |y_i|$ for all $i$. A norm $\|\cdot\|$ on $V$ is said to be
+  \begin{itemize}
+    \item \textit{monotone} if $|x| \leq |y|$ implies $\|x\| \leq \|y\|$ for all $x,y \in V$.
+    \item \textit{absolute} if $\|x\| = \||x|\|$ for all $x \in V$.
+  \end{itemize}
+\end{definition}
+
+\begin{theorem}{Absolute and Monotone Norms}{Absolute and Monotone Norms}
+  Let $\|\cdot\|$ be a norm on $V = \mathbb{F}^n = \mathbb{R}^n, \mathbb{C}^n$. Then
+  \begin{itemize}
+    \item If $\|\cdot\|$ is absolute, then for all $y\in V$ we have
+      \begin{equation}
+        \|y\|^D = \max_{x \neq 0} \frac{|y|^T |x|}{\|x\|}.
+      \end{equation}
+    \item If $\|\cdot\|$ is absolute, then $\|\cdot\|^D$ is absolute and monotone.
+    \item The norm $\|\cdot\|$ is absolute if and only if it is monotone.
+  \end{itemize}
+\end{theorem}
+
+\section{Duality and Geometrical Interpretation of Norms}
+The primary geometric feature of a norm is its unit ball.
+
+\begin{definition}{Ball}{Ball of Norm}
+  Let $\|\cdot\|$ be a norm on a real or complex vector space $V$. Let $x\in V$, and $r > 0$ given, then the \textit{ball} of radius $r$ centered at $x$ is defined by
+  \begin{equation}
+    B_{\|\cdot\|}(r;x) = \{y \in V: \|y - x\| \leq r\}.
+  \end{equation}
+  The unite ball is defined by $B_{\|\cdot\|} = B_{\|\cdot\|}(1;0) = \{x \in V: \|x\| \leq 1\}$.
+\end{definition}
+\begin{remark}
+  A ball centered at $x$ with radius $r$ can be obtained by scaling the unit ball by $r$ and then translating it by $x$. The unit ball completely determines the norm because of the homogeneity of the norm.
+\end{remark}
+
+A natural question to raise is that what subset of $V$ can be the unit ball of some norm?
+
+Consider the unit balls of the $l_p$-norm. For $p = 1$, the unit ball is the cross-polytope, which is the convex hull of the points $\{\pm e_i\}$ where $e_i$ are the standard basis vectors. For $p = 2$, the unit ball is the Euclidean sphere. For $p = \infty$, the unit ball is the hypercube, which is the convex hull of the points $\{\pm 1\}^n$. For general $p$, the unit ball is a smooth convex body that interpolates between these shapes.
+
+If $\|\cdot\|_{\alpha}$ and $\|\cdot\|_{\beta}$ are two norms on a vector space. Then $\|x\|_{\alpha} \leq \|x\|_{\beta}$ for all $x$ if and only if $B_{\|\cdot\|_{\beta}} \subseteq B_{\|\cdot\|_{\alpha}}$. So the natural partial order of norms corresponds to the geometric containment of their unit balls.
+
+If $\|\cdot\|$ is a norm on $V$, if $x\in V$ and if $\alpha\in \mathbb{C}$ such that $\|\alpha x\| = \|x\|$, then either $x=0$ or $|\alpha| = 1$. Therefore, each ray $\{ \alpha x: \alpha > 0\}$ intersects the unit ball exactly once.
+
+\begin{definition}{Polyhedral Norms}{Polyhedral Norms}
+  A norm $\|\cdot\|$ on $V$ is said to be \textit{polyhedral} if its unit ball is a polyhedron, that is, the convex hull of a finite set of points.
+\end{definition}
+Norms on a vector space induces a metric on this vector space by $d(x,y) = \|x - y\|$, and thus induces a topology.
+
+The unit ball of a norm is bounded and closed for the norm is always continuous. In a finite-dimensional vector space, a closed and bounded set is compact (though this is not true in infinite-dimensional spaces). So the unit ball of a norm on a finite-dimensional vector space is compact. Weierstrass theorem states that a continuous function on a compact set can achieve its minimum and maximum values.
+
+The unit ball of a norm is also convex because of if $\|x\| \leq 1, \|y\| \leq 1$, and $\alpha \in [0, 1]$, then
+\begin{equation*}
+  \|\alpha x + (1 - \alpha) y\| \leq \alpha \|x\| + (1 - \alpha) \|y\| \leq \alpha + (1 - \alpha) = 1.
+\end{equation*}
+
+We shall show that these conditions is sufficient being a unit ball of some norm.
+\begin{theorem}{Characterization of Unit Balls of Norms}{Characterization of Unit Balls of Norms}
+  Let $B$ be a subset of a finite positive dimensional vector space $V$ over $\mathbb{F} = \mathbb{R}, \mathbb{C}$. Then $B$ is the unit ball of some norm on $V$ if and only if $B$ is
+  \begin{itemize}
+    \item compact.
+    \item convex.
+    \item equilibrated: for all $x \in B$ and $\alpha \in \mathbb{C}$ such that $|\alpha| = 1$, we have $\alpha x \in B$.
+    \item has $0$ as an interior point.
+  \end{itemize}
+\end{theorem}
+\begin{proof}
+  We construct a norm $\|\cdot\|$ on $V$ as follows. For $x \in V$, consider defining
+  \begin{equation*}
+    \|x\| = 
+    \begin{cases}
+      0, & x = 0, \\
+      \min \{1 / t: t > 0, tx \in B\}, & x \neq 0.
+    \end{cases}
+  \end{equation*}
+  Because $B$ is compact and has $0$ as an interior point, this function is well-defined, positive and finite for any nonzero $x$. To show that $\|\cdot\|$ is homogeneous, we have $\alpha t x \in B$ if and only if $|\alpha| t x \in B$ because $B$ is equilibrated, so
+  \begin{equation*}
+    \begin{aligned}
+      \|\alpha x\| &= \min \{1 / t: t > 0, t \alpha x \in B\} = \min \{1 / t: t > 0, |\alpha| t x \in B\}\\
+      &= \min \{ |\alpha| / u: u > 0, u x \in B\} = |\alpha| \|x\|.
+    \end{aligned}
+  \end{equation*}
+  For the triangle inequality, consider convexity of $B$. For nonzero $x,y \in V$
+  \begin{equation*}
+    z = \frac{\|x\|}{\|x\| + \|y\|} \frac{x}{\|x\|} + \frac{\|y\|}{\|x\| + \|y\|} \frac{y}{\|y\|} \in B
+  \end{equation*}
+  So we have $\|z\| \leq 1$, so
+  \begin{equation*}
+    \|z\| = \frac{\|x + y\|}{\|x\| + \|y\|} \leq 1
+  \end{equation*}
+  which gives us the triangle inequality. Therefore, $\|\cdot\|$ is a norm on $V$ and $B$ is the unit ball of this norm.
+\end{proof}
+
+Convexity of the unit ball of a norm is a fact with many deep and sometimes startling implications. One of these is the following duality theorem, which we state in the context of pre-norms.
+
+Firstly we denote $\Co(S)$ be the convex hull of a set $S$, that is, the intersection of all convex sets containing $S$. Its closure $\overline{\Co(S)}$ is the intersection of all closed half-spaces containing $S$.
+
+
+\begin{theorem}{Duality Theorem}{Duality Theorem}
+  Let $f$ be a pre-norm on $V = \mathbb{F}^n = \mathbb{R}^n, \mathbb{C}^n$. Then let $B = \{x \in V: f(x) \leq 1\}$ be the unit ball of $f$ and let $B'' = \{x \in V: f^{DD}(x) \leq 1\}$ be the unit ball of the double dual $f^{DD}$. Then
+  \begin{itemize}
+    \item $f^{DD} \leq f$ for all $x \in V$ and thus $B \subseteq B''$.
+    \item $B'' = \overline{\Co(B)}$.
+    \item If $f$ is a norm, then $f^{DD} = f$ for all $x \in V$ and thus $B'' = B$.
+    \item If $f$ is a norm and given $x_0\in V$, then there exists $z\in V$ (not necessarily unique) such that $f^D(z) = 1$ and $f(x_0) = z^* x_0$.
+  \end{itemize}
+\end{theorem}
+\begin{proof}
+  For any $x\in V$ we have
+  \begin{equation*}
+    f^{DD}(x) = \max_{f^D(y) = 1} |y^* x| \leq \max_{f^D(y) = 1} f(x) f^D(y) = f(x).
+  \end{equation*}
+  Secondly, a closed half-space that contains the origin can be written as $\{t\in V: \re t^*v \leq 1\}$ for some $v \in V$. Therefore, if $u\in B''$ then we have
+  \begin{equation*}
+    f^{DD}(u) = \max_{f^D(y) = 1} \re y^* u = \max_{f^D(y) \leq 1} \re y^* u \leq 1.
+  \end{equation*}
+  For any closed half-space $\{t\in V: \re t^*v \leq 1\}$ that contains $B$, we have $\forall w\in B, \re w^* v \leq 1$, which implies that $f^D(v) = \max_{f(w) = 1} \re v^* w \leq 1$. Then we have $\re u^* v \leq 1$, so $u \in \{t\in V: \re t^*v \leq 1\}$. Therefore, $u$ is contained in every closed half-space that contains $B$, so $u \in \overline{\Co(B)}$. Conversely, as $B''$ is a convex set that contains $B$, we have $\Co(B) \subseteq B''$. As $B''$ is closed, we have $\overline{\Co(B)} \subseteq \overline{B''} = B''$. So we have $B'' = \overline{\Co(B)}$.
+
+  Now, if $f$ is a norm, then $B$ is convex and closed, so $B = \overline{\Co(B)} = B''$. Thus we have $f^{DD} = f$ for all $x \in V$.
+
+  Lastly, for a given $x_0 \in V$, we have $f(x_0) = f^{DD}(x_0) = \max_{f^D(y) = 1} \re y^* x_0$. And compactness of the unit ball of $f^D$ guarantees that there exists $z \in V$ such that $f^D(z) = 1$ and $\re z^* x_0 = f(x_0)$. If $z^* x_0$ is not positive real, we can replace $z$ by $c z$ for some rotation $c$ to make it bigger, therefore $z^* x_0 = f(x_0)$.
+\end{proof}
+
+
+\section{Matrix Norms}
+Since $M_n$ is itself a vector space of dimension $n^2$, we can define norms on $M_n$ by just treating it as a vector space. However, matrices are equipped with a natural multiplication operation apart from the vector space structure, so it is natural to ask for norms that are compatible with this multiplication operation.
+
+\begin{definition}{Matrix Norms}{Matrix Norms}
+  A function $\vvvert\cdot\vvvert: M_n \to \mathbb{R}$ is said to be a \textit{matrix norm} if for all $A, B \in M_n$ and $\alpha \in \mathbb{C}$, we have
+  \begin{itemize}
+    \item Non-negativity: $\vvvert A \vvvert \geq 0$.
+    \item Positivity: $\vvvert A \vvvert = 0$ if and only if $A = 0$.
+    \item Homogeneity: $\vvvert \alpha A \vvvert = |\alpha| \vvvert A \vvvert$.
+    \item Triangle inequality: $\vvvert A + B \vvvert \leq \vvvert A \vvvert + \vvvert B \vvvert$.
+    \item Submultiplicativity: $\vvvert AB \vvvert \leq \vvvert A \vvvert \vvvert B \vvvert$.
+  \end{itemize}
+  A matrix norm is also called a ring norm. If we omit the submultiplicativity condition, then we have a vector norm on $M_n$. If we omit positivity, then we have a semi-norm on $M_n$.
+\end{definition}
+
+Since $\vvvert A^2 \vvvert \leq \vvvert A \vvvert^2$, it follows that $\vvvert A \vvvert \geq 1$ for any nonzero matrix $A$ such that $A^2 = A$. In particular, $\vvvert I \vvvert \geq 1$ for any matrix norm $\vvvert\cdot\vvvert$. So we have
+\begin{equation}
+  1 \leq \vvvert I \vvvert = \vvvert A A^{-1} \vvvert \leq \vvvert A \vvvert \vvvert A^{-1} \vvvert
+\end{equation}
+
+Now here are some examples:
+\paragraph{$l_1$-norm on $M_n$. } Defined by
+\begin{equation*}
+  \| A \|_1 = \sum_{i,j=1}^n |a_{ij}|.
+\end{equation*}
+it is a matrix norm because
+\begin{equation*}
+  \begin{aligned}
+    \| AB \|_1 & = \sum_{i,j=1}^n \left| \sum_{k=1}^n a_{ik} b_{kj} \right| \leq \sum_{i,j,k=1}^n |a_{ik} b_{kj}| \\
+    & \leq \sum_{i,j,k,m=1}^n |a_{ik} b_{mj}| = \left( \sum_{i,j=1}^n |a_{ij}| \right) \left( \sum_{i,j=1}^n |b_{ij}| \right) = \| A \|_1 \| B \|_1.
+  \end{aligned}
+\end{equation*}
+Other properties are verified because it is also a vector norm on $M_n$.
+
+\paragraph{Frobenius norm, $l_2$-norm on $M_n$. } Defined by
+\begin{equation*}
+  \| A \|_2 = |\tr A^* A|^{1/2} = \left( \sum_{i,j=1}^n |a_{ij}|^2 \right)^{1/2},
+\end{equation*}
+Again it is a vector norm, and it is a matrix norm because
+\begin{equation*}
+  \begin{aligned}
+    \| AB \|_2^2 & = \left( \sum_{i,j=1}^n \left| \sum_{k=1}^n a_{ik} b_{kj} \right|^2 \right)^{1/2} \leq \left( \sum_{i,j=1}^n \left( \sum_{k=1}^n |a_{ik}|^2 \right) \left( \sum_{k=1}^n |b_{kj}|^2 \right) \right)^{1/2} \\
+    & = \left( \sum_{i,k=1}^n |a_{ik}|^2 \right)^{1/2} \left( \sum_{k,j=1}^n |b_{kj}|^2 \right)^{1/2} = \| A \|_2 \| B \|_2.
+  \end{aligned}
+\end{equation*}
+It is also called the Hilbert-Schmidt norm. Another equivalent way to define it is by singular values:
+\begin{equation}
+  \| A \|_2 = \sqrt{\sigma_1^2 + \sigma_2^2 + \cdots + \sigma_n^2}
+\end{equation}
+for obvious reasons.
+
+\paragraph{$l_\infty$-norm on $M_n$. } Defined by
+\begin{equation*}
+  \| A \|_\infty = \max_{i,j} |a_{ij}|,
+\end{equation*}
+It is a vector norm, but it is NOT a matrix norm, letting
+\begin{equation*}
+  J = \begin{pmatrix}
+    1 & 1 \\
+    1 & 1
+  \end{pmatrix}, \qquad J^2 = 2J, \|J\|_\infty = 1, \|J^2\|_\infty = 2 > \|J\|_\infty^2.
+\end{equation*}
+However, if we define
+\begin{equation}
+  N(A) = n \| A \|_\infty = n \max_{i,j} |a_{ij}|,
+\end{equation}
+then we have
+\begin{equation*}
+  \begin{aligned}
+    N(AB) & = n \max_{i,j} \left| \sum_{k=1}^n a_{ik} b_{kj} \right| \leq n \max_{i,j} \sum_{k=1}^n |a_{ik} b_{kj}| \\
+    & \leq n^2 \max_{i,j} |a_{ij}| \max_{i,j} |b_{ij}| = N(A) N(B).
+  \end{aligned}
+\end{equation*}
+So $N$ is a matrix norm.
+
+There is a matrix norm between $\| \cdot \|_\infty$ and $N$, defined by
+\begin{equation*}
+  N_\infty(A) = \sum_{j=1}^n \|a_j\|_\infty.
+\end{equation*}
+where $A = [a_1, a_2, \ldots, a_n]$ is the column decomposition of $A$. It is a matrix norm because
+\begin{equation*}
+  \begin{aligned}
+    N_\infty(AB) & = \sum_{j=1}^n \|A b_j\|_\infty = \sum_{j=1}^n \|\sum_{k=1}^n a_k b_{kj}\|_\infty \leq \sum_{j,k=1}^n \|a_k b_{kj}\|_\infty \\
+    &= \sum_{j,k=1}^n |b_{kj}| \|a_k\|_\infty \leq \sum_{j,k=1}^n \|a_k\|_\infty \|b_j\|_\infty\\
+    &= \left( \sum_{k=1}^n \|a_k\|_\infty \right) \left( \sum_{j=1}^n \|b_j\|_\infty \right) = N_\infty(A) N_\infty(B).
+  \end{aligned}
+\end{equation*}
+
+There are certain types of matrix norms that are related or induced by vector norms:
+\begin{definition}{Induced Matrix Norms}{Induced Matrix Norms}
+  Let $\|\cdot\|$ be a norm on $\mathbb{C}^n$. Define $\vvvert \cdot \vvvert$ on $M_n$ by
+  \begin{equation}
+  \vvvert A \vvvert = \max_{\|x\| = 1} \|A x\|.
+  \end{equation}
+  Then $\vvvert \cdot \vvvert$ is a matrix norm, which is called the \textit{induced matrix norm}, or the \textit{operator norm} or \textit{lub (least upper bound) norm} of $\|\cdot\|$.
+\end{definition}
+There are alternative expressions for the induced matrix norm:
+\begin{equation*}
+  \vvvert A \vvvert = \max_{\|x\| = 1} \|A x\| = \max_{x \neq 0} \frac{\|A x\|}{\|x\|} = \max_{\|x\|_{\alpha} = 1} \frac{\|A x\|}{\|x\|}
+\end{equation*}
+where $\|\cdot\|_{\alpha}$ is any norm on $\mathbb{C}^n$.
+
+\begin{theorem}{Properties of Induced Matrix Norms}{Properties of Induced Matrix Norms}
+  The function defined in definition \ref{def:Induced Matrix Norms} has the following properties:
+  \begin{itemize}
+    \item $\vvvert I \vvvert = 1$.
+
+      (A matrix norm that satisfies this condition is called normalized).
+    \item For any $A \in M_n$ and any $y \in \mathbb{C}^n$, we have $\|A y\| \leq \vvvert A \vvvert \|y\|$.
+
+      (A matrix norm that satisfies this condition is called compatible with $\|\cdot\|$).
+    \item $\vvvert \cdot \vvvert$ is a matrix norm.
+    \item $\vvvert A \vvvert = \max_{\|x\| = \|y\|^D = 1} |y^* A x|$.
+  \end{itemize}
+\end{theorem}
+\begin{proof}
+  The first claim is obvious from definition. For the second claim, consider $x = y / \|y\|$, then we have
+  \begin{equation*}
+    \vvvert A \vvvert = \max_{\|x\| = 1} \|A x\| \geq \|A y / \|y\|\| = \|A y\| / \|y\|
+  \end{equation*}
+
+  To show that $\vvvert \cdot \vvvert$ is a matrix norm:
+  \begin{itemize}
+    \item Non-negativity is obvious, if $A \neq 0$ there is a unit vector $x$ such that $A x \neq 0$, so $\vvvert A \vvvert > 0$.
+    \item Homogeneity:
+      \begin{equation*}
+        \vvvert \alpha A \vvvert = \max_{\|x\| = 1} \|\alpha A x\| = |\alpha| \max_{\|x\| = 1} \|A x\| = |\alpha| \vvvert A \vvvert.
+      \end{equation*}
+    \item Triangle inequality:
+      \begin{equation*}
+        \vvvert (A + B) x\vvvert = \|Ax + Bx\| \leq \|A x\| + \|B x\| \leq \vvvert A \vvvert + \vvvert B \vvvert.
+      \end{equation*}
+      for all $x$ with $\|x\| = 1$, so we have $\vvvert A + B \vvvert \leq \vvvert A \vvvert + \vvvert B \vvvert$.
+    \item Submultiplicativity:
+      \begin{equation*}
+        \|(AB)x\| = \|A(B x)\| \leq \vvvert A \vvvert \|B x\| \leq \vvvert A \vvvert \vvvert B \vvvert.
+      \end{equation*}
+      for all $x$ with $\|x\| = 1$, so we have $\vvvert AB \vvvert \leq \vvvert A \vvvert \vvvert B \vvvert$.
+  \end{itemize}
+
+  For the last claim, from duality theorem, we have
+  \begin{equation*}
+    \max_{\|x\| = \|y\|^D = 1} |y^* A x| = \max_{\|x\| = 1} \left( \max_{\|y\|^D = 1} |y^* A x| \right) = \max_{\|x\| = 1} \|A x\|^{DD} = \max_{\|x\| = 1} \|A x\| = \vvvert A \vvvert.
+  \end{equation*}
+\end{proof}
+
+
+Now for some examples of induced matrix norms: we take $A = [a_{ij}]\in M_n$.
+
+\paragraph{The maximum column sum norm, $l_1$-induced matrix norm. } Defined by
+\begin{equation*}
+  \vvvert A \vvvert_1 = \max_{1 \leq j \leq n} \sum_{i=1}^n |a_{ij}|,
+\end{equation*}
+To see that it is induced from $l_1$-norm, we let $A = [a_1, \ldots , a_n]$ be the column decomposition of $A$, then we have
+\begin{equation*}
+  \begin{aligned}
+    \|A x\|_1 &= \left\| \sum_{j=1}^n x_j a_j \right\|_1 \leq \sum_{j=1}^n |x_j| \|a_j\|_1 \\
+    & \leq \sum_{j=1}^n |x_j| \max_{1 \leq k \leq n} \|a_k\|_1 = \|x\|_1 \max_{1 \leq k \leq n} \|a_k\|_1 = \|x\|_1 \vvvert A \vvvert_1.
+  \end{aligned}    
+\end{equation*}
+so we have $\vvvert A \vvvert_1 \geq \max_{\|x\|_1 = 1} \|A x\|_1$. On the other hand, let $x = e_k$ then
+\begin{equation*}
+  \max_{\|x\|_1 = 1} \|A x\|_1 \geq \|A e_k\|_1 = \|a_k\|_1, \qquad \forall k,
+\end{equation*}
+therefore $\max_{\|x\|_1 = 1} \|A x\|_1 \geq \max_{1 \leq k \leq n} \|a_k\|_1$, so we have $\vvvert A \vvvert_1 = \max_{\|x\|_1 = 1} \|A x\|_1$.
+
+\begin{remark}
+  On a geometric level, the $l_1$-norm unit ball is the cross-polytope, and stretching it by $A$ gives us a convex body whose maximum distance from the origin is exactly taken at one of the vertices, which is just $e_k$ for some $k$.
+\end{remark}
+
+\paragraph{The maximum row sum norm, $l_\infty$-induced matrix norm. } Defined by
+\begin{equation*} 
+  \vvvert A \vvvert_\infty = \max_{1 \leq i \leq n} \sum_{j=1}^n |a_{ij}|,
+\end{equation*}
+
+To see that it is induced from $l_\infty$-norm, we have
+\begin{equation*}
+  \begin{aligned}
+    \|A x\|_\infty & = \max_{1 \leq i \leq n} \left| \sum_{j=1}^n a_{ij} x_j \right| \leq \max_{1 \leq i \leq n} \sum_{j=1}^n |a_{ij} x_j| \\
+    & \leq \max_{1 \leq i \leq n} \sum_{j=1}^n |a_{ij}| \max_{1 \leq k \leq n} |x_k| = \|x\|_\infty \max_{1 \leq i \leq n} \sum_{j=1}^n |a_{ij}| = \|x\|_\infty \vvvert A \vvvert_\infty.
+  \end{aligned}
+\end{equation*}
+For the other side, consider $z$ whose entries are $z_j = \pm 1$ then we have
+\begin{equation*}
+  \max_{\|x\|_\infty = 1} \|A x\|_\infty \geq \|A z\|_\infty = \max_{1 \leq i \leq n} \left| \sum_{j=1}^n a_{ij} z_j \right| = \max_{1 \leq i \leq n} \sum_{j=1}^n \pm_j |a_{ij}|.
+\end{equation*}
+This holds for all such $z$ so we have $\max_{\|x\|_\infty = 1} \|A x\|_\infty \geq \max_{1 \leq i \leq n} \sum_{j=1}^n |a_{ij}|$, so we have $\vvvert A \vvvert_\infty = \max_{\|x\|_\infty = 1} \|A x\|_\infty$.
+
+\begin{remark}
+  Similarly, the $l_\infty$-norm unit ball is the hypercube, and stretching it by $A$ gives us a convex body whose maximum distance from the origin is exactly taken at one of the vertices, which is just $z$ for some choice of signs.
+\end{remark}
+
+
+\paragraph{The spectral norm, $l_2$-induced matrix norm. } Defined by
+\begin{equation*}
+  \vvvert A \vvvert_2 = \sigma_1(A)
+\end{equation*}
+where $\sigma_1(A)$ is the largest singular value of $A$. To see that it is induced from $l_2$-norm, we consider the singular value decomposition $A = U \Sigma V^*$, then we have
+\begin{equation*}
+  \|A x\|_2 = \|U \Sigma V^* x\|_2 = \|\Sigma V^* x\|_2 \leq \sigma_1(A) \|V^* x\|_2 = \sigma_1(A) \|x\|_2.
+\end{equation*}
+and equality holds when $V^* x = e_1$, so we have $\vvvert A \vvvert_2 = \max_{\|x\|_2 = 1} \|A x\|_2$.
+
+\paragraph{Similarity matrix norms. } As similarity transformation is just a change of basis, it is natural to construct a new norm for fixed similarity transformation $S$:
+
+\begin{theorem}{Similarity Matrix Norms}{Similarity Matrix Norms}
+  Let $\vvvert \cdot \vvvert$ be a matrix norm on $M_n$ and let $S \subseteq M_n$ be an invertible matrix. Define $\vvvert \cdot \vvvert_S$ by
+  \begin{equation}
+    \vvvert A \vvvert_S = \vvvert S A S^{-1} \vvvert.
+  \end{equation}
+  is a matrix norm on $M_n$. If $\vvvert \cdot \vvvert$ is an induced matrix norm by some vector norm $\|\cdot\|$, then $\vvvert \cdot \vvvert_S$ is also an induced matrix norm by the vector norm $\|x\|_S = \|S x\|$.
+\end{theorem}
+
+One important application of matrix norms is to provide bounds for the spectral radius of a matrix. Let $\lambda$ be an eigenvalue of $A$ with eigenvector $x$, then let $X = x e^T = [x,x,\ldots,x]$ be the rank-one matrix whose columns are all $x$, then we have $AX = \lambda X$ and if $\vvvert \cdot \vvvert$ is a matrix norm, then we have
+\begin{equation*}
+  |\lambda| \vvvert X \vvvert = \vvvert A X \vvvert \leq \vvvert A \vvvert \vvvert X \vvvert
+\end{equation*}
+So we have $|\lambda| \leq \vvvert A \vvvert$. Therefore, the spectral radius $\rho(A) \leq \vvvert A \vvvert$ for any matrix norm $\vvvert \cdot \vvvert$. As $\lambda^{-1}$ is an eigenvalue of $A^{-1}$, we have $\rho(A^{-1}) \leq \vvvert A^{-1} \vvvert$.
+
+\begin{theorem}{Spectral Radius and Matrix Norms}{Spectral Radius and Matrix Norms}
+  Let $\vvvert \cdot \vvvert$ be a matrix norm on $M_n$ and let $A \in M_n$ and $\lambda$ be an eigenvalue of $A$. Then we have
+  \begin{itemize}
+    \item $|\lambda| \leq \rho(A) \leq \vvvert A \vvvert$.
+    \item If $A$ is invertible, then $\rho(A) \geq |\lambda| \geq 1 / \vvvert A^{-1} \vvvert$.
+  \end{itemize}
+\end{theorem}
+
+\begin{remark}
+  If $A,B$ are normal, then the eigenvalues are just the singular values up to a rotation, so we have $\rho(A) = \vvvert A \vvvert_2$ and $\rho(AB) \leq \vvvert AB \vvvert_2 \leq \vvvert A \vvvert_2 \vvvert B \vvvert_2 = \rho(A) \rho(B)$. But this is not true for general matrices, for example, let
+  \begin{equation*}
+    A = \begin{pmatrix}
+      0 & 1 \\
+      0 & 0
+    \end{pmatrix}, \qquad B = A^T = \begin{pmatrix}
+      0 & 0 \\
+      1 & 0
+    \end{pmatrix}, \qquad AB = \begin{pmatrix}
+      1 & 0 \\
+      0 & 0
+    \end{pmatrix}.
+  \end{equation*}
+  so $\rho(AB) = 1 > 0 = \rho(A) \rho(B)$. This means that the spectral radius is not submultiplicative in general, so it cannot be a matrix norm.
+
+  Let $\vvvert \cdot \vvvert$ be a matrix norm on $M_n$ then $\|\cdot\|$ defined by $\|x\| = \vvvert x e^T \vvvert$ is a vector norm on $\mathbb{C}^n$ and $\|Ax\| = \vvvert A x e^T \vvvert \leq \vvvert A \vvvert \vvvert x e^T \vvvert = \vvvert A \vvvert \|x\|$, so it is compatible with $\vvvert \cdot \vvvert$. 
+\end{remark}
+
+Let $N$ be a norm on $M_n$ (not necessarily a matrix norm), and suppose $\|\cdot\|$ is a vector norm on $\mathbb{C}^n$ that is compatible with $N$, then $N(A) \geq \rho(A)$ for all $A \in M_n$. This shows that the spectral radius is a lower bound for all norms on $M_n$ that are compatible with some vector norm on $\mathbb{C}^n$.
+
+Although it is not itself a matrix norm, the spectral radius is the greatest lower bound for all matrix norms:
+\begin{theorem}{Spectral Radius and Matrix Norms Lower Bound}{Spectral Radius and Matrix Norms Lower Bound}
+  Let $A \in M_n$ and $\epsilon > 0$. Then there exists a matrix norm $\vvvert \cdot \vvvert$ on $M_n$ such that $\rho(A) \leq \vvvert A \vvvert \leq \rho(A) + \epsilon$.
+\end{theorem}
+\begin{proof}
+  From Schur's theorem, there exists a unitary matrix $U$ such that $A = U \Delta U^*$ where $\Delta$ is upper triangular and its diagonal entries are the eigenvalues of $A$. Let $D_t = \diag(t, t^2, \ldots, t^n)$ for $t > 0$, then we have
+  \begin{equation*}
+    D_t \Delta D_t^{-1} = \begin{pmatrix}
+      \lambda_1 & t^{-1} d_{12} & t^{-2} d_{13} & \cdots & t^{-(n-1)} d_{1n} \\
+      0 & \lambda_2 & t^{-1} d_{23} & \cdots & t^{-(n-2)} d_{2n} \\
+      0 & 0 & \lambda_3 & \cdots & t^{-(n-3)} d_{3n} \\
+      \vdots & \vdots & \vdots & \ddots & \vdots \\
+      0 & 0 & 0 & \cdots & \lambda_n
+    \end{pmatrix}
+  \end{equation*}
+  Thus for large enough $t>0$, the sum of all absolute value off-diagonal entries are less than $\epsilon$, so we have $\vvvert D_t \Delta D_t^{-1} \vvvert_1 \leq \rho(A) + \epsilon$. Now we define
+  \begin{equation*}
+    \vvvert A \vvvert = \vvvert D_t U^* A U D_t^{-1} \vvvert_1 = \vvvert (D_t U^*) A (D_t U^*)^{-1} \vvvert_1,
+  \end{equation*}
+  which is a similarity matrix norm of the $l_1$-induced matrix norm, so it is a matrix norm. And we have $\vvvert A \vvvert = \vvvert D_t \Delta D_t^{-1} \vvvert_1 \leq \rho(A) + \epsilon$.
+\end{proof}
+
+We are interested in characterizing matrices $A$ such that $\lim_{k \to \infty } A^k = 0$. These matrices are called \textit{power convergent to zero}. The convergence does not depend on the choice of norm just like the convergence of vectors.
+
+\begin{theorem}{Limit Zero Characterization}{Limit Zero Characterization}
+  Let $A \in M_n$. Then $\lim_{k \to \infty} A^k = 0$ if and only if $\rho(A) < 1$. That is, there exists a matrix norm $\vvvert \cdot \vvvert$ on $M_n$ such that $\vvvert A \vvvert < 1$.
+\end{theorem}
+
+To approximate the bounds of entries as $k$ grows, we can use the following result:
+\begin{corollary}{Estimate of Matrix Powers}{Estimate of Matrix Powers}
+  Let $A \in M_n$ and $\epsilon > 0$. Then there exists a constant $C(A, \epsilon) > 0$ such that $|(A^k)_{ij}| \leq C(A, \epsilon) (\rho(A) + \epsilon)^k$ for all $i,j$ and $k$.
+\end{corollary}
+\begin{proof}
+  Consider $\tilde{A} = (\rho(A) + \epsilon)^{-1} A$, then $\rho(\tilde{A}) < 1$, so $\tilde{A}^k \to 0$ as $k \to \infty$ thus entries are bounded (take the 1-norm to see). So there exists $C(A, \epsilon) > 0$ such that $|(\tilde{A}^k)_{ij}| \leq C(A, \epsilon)$ for all $i,j$ and $k$. Therefore, we have $|(A^k)_{ij}| = (\rho(A) + \epsilon)^k |(\tilde{A}^k)_{ij}| \leq C(A, \epsilon) (\rho(A) + \epsilon)^k$ for all $i,j$ and $k$.
+\end{proof}
+
+Even though it is not accurate to say that individual entries of $A^k$ behave like $\rho(A)^k$ as $k$ grows, any matrix norm of behaves like that.
+
+\begin{corollary}{Gelfand's Formula}{Gelfand's Formula}
+  Let $\vvvert \cdot \vvvert$ be a matrix norm on $M_n$ and let $A \in M_n$. Then we have
+  \begin{equation}
+    \rho(A) = \lim_{k \to \infty} \vvvert A^k \vvvert^{1/k}.
+  \end{equation}
+\end{corollary}
+\begin{proof}
+  Since $\rho(A)^k = \rho(A^k) \leq \vvvert A^k \vvvert$, we have $\rho(A) \leq \vvvert A^k \vvvert^{1/k}$ for all $k$. Also, if $\epsilon$ is given and $\tilde{A} = (\rho(A) + \epsilon)^{-1} A$ is convergent, so $\vvvert \tilde{A}^k \vvvert \rightarrow 0$ as $k \to \infty$, thus $\vvvert A^k \vvvert \leq (\rho(A) + \epsilon)^k$ for large enough $k$. Therefore, we have $\rho(A) \leq \vvvert A^k \vvvert^{1/k} \leq \rho(A) + \epsilon$ for large enough $k \geq N(\epsilon)$ for all $\epsilon > 0$, so we have $\lim_{k \to \infty} \vvvert A^k \vvvert^{1/k} = \rho(A)$.
+\end{proof}
+
+\begin{remark}
+  Many questions about the convergence of infinite sequences or series of matrices can be answered using norms.
+\end{remark}
+
+\end{document}

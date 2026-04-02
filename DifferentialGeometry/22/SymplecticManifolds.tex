@@ -1,0 +1,346 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\chapter{Symplectic Manifolds}
+A symplectic structure is a new kind of geometric structure that can be put on a smooth manifold.
+
+\section{Symplectic Tensors}
+A 2-covector $\omega$ on on a finite dimensional vector space $V$ defines a linear map $\tilde{\omega}:V\to V^*$ by $\tilde{\omega}(v)(w)=\omega(v,w)$. If $\omega$ is nondegenerate, then $\tilde{\omega}$ is invertible (and vice versa), which is also equivalent of saying that $\omega$ has nonsingular matrix representation in some and hence every basis.
+
+\begin{definition}{Symplectic Tensor}{Symplectic Tensor}
+  A \textbf{symplectic tensor} on a finite dimensional vector space $V$ is a nondegenerate 2-covector.
+\end{definition}
+
+\begin{example}{Symplectic Tensor}{Symplectic Tensor}
+  Let $V$ be a $2n$-dimensional vector space with basis denoted by $(A_1, B_1, \dots, A_n, B_n)$ and its dual $(\alpha^1, \beta^1, \dots, \alpha^n, \beta^n)$. Define a 2-covector $\omega$ by
+  \begin{equation}
+    \omega = \sum_{i=1}^n \alpha^i\wedge \beta^i.
+  \end{equation}
+  Then $\omega(A_i, B_j) = -\omega(B_j, A_i) = \delta_{ij}$ and $\omega(A_i, A_j) = \omega(B_i, B_j) = 0$ for all $i, j$. If for some $u\in V$, we have $\omega(u, v) = 0$ for all $v\in V$, then $v = a^i A_i + b^i B_i$ and $\omega(v, A_j) = -b^j, \omega(v, B_j) = a^j$ for all $j$. Hence $a^i = b^i = 0$ for all $i$, which means $u = 0$. Therefore $\omega$ is nondegenerate and hence a symplectic tensor.
+
+  when $n=1, \dim V = 2$, then every nonzero 2-covector is a symplectic tensor.
+\end{example}
+
+\begin{definition}{Symplectic Complement}{Symplectic Complement}
+  Let $(V, \omega)$ be a symplectic vector space and $S \subseteq V$ be a linear subspace. The \textbf{symplectic complement} of $S$ is the linear subspace
+  \begin{equation}
+    S^\perp = \{v\in V: \omega(v, w) = 0 \text{ for all } w\in S\}.
+  \end{equation}
+\end{definition}
+
+\begin{lemma}{Dimension Theorem for Symplectic Complement}{Dimension Theorem for Symplectic Complement}
+  Let $(V, \omega)$ be a symplectic vector space and $S \subseteq V$ be a linear subspace. Then $\dim S + \dim S^\perp = \dim V$. And also $S^{\perp\perp} = S$.
+\end{lemma}
+\begin{proof}
+  Define a linear map $\Phi: V \to S^*$ by $\Phi(v)(w) = \omega(v, w)$ for all $v\in V$ and $w\in S$. Then $\ker \Phi = S^\perp$. For any $\varphi \in S^*$, we can extend $\varphi$ to a linear functional $\tilde{\varphi}$ on $V$. Since $\tilde{\omega}: V \to V^*$ is an isomorphism, there exists a unique $v\in V$ such that $\tilde{\omega}(v) = v \lrcorner \, \omega = \tilde{\varphi}$. Then $\Phi$ has full rank and hence $\dim S^* = \dim V - \dim S^\perp$. Since $\dim S^* = \dim S$, we have $\dim S + \dim S^\perp = \dim V$.
+\end{proof}
+
+\begin{remark}
+  There is a more intuitive visulization. Writing $\omega$ in matrix form, left taking a row vector $v$ and right taking a column vector $w$, then $v\omega w$ is the value of $\omega(v, w)$, and the $(i,j)$-entry of $\omega$ is $\omega(e_i, e_j)$ where $(e_i)$ is the standard basis. Then $\omega$ is invertible anti-symmetric. For the lemma, take $w$ to be a basis for $S$, then $\omega v$ has the same dimension as $S$ and $S^\perp$ is spanned by the row vectors $v$ such that $v (\omega w) = 0$, which is just the orthogonal complement of the column space of $\omega w$.
+
+  We can see that this is quite different from the case of inner product spaces, where the inner product is represented by a symmetric matrix.
+\end{remark}
+
+A major difference between symplectic vector spaces and inner product spaces is that $S \cap S^\perp$ is not necessarily $\{0\}$ for a symplectic vector space, while it is always $\{0\}$ for an inner product space. In fact, we have the following classification of subspaces of a symplectic vector space.
+
+\begin{definition}{Subspace Classification of Symplectic Vector Space}{Subspace Classification of Symplectic Vector Space}
+  Let $(V, \omega)$ be a symplectic vector space and $S \subseteq V$ be a linear subspace. Then
+  \begin{itemize}
+    \item $S$ is \textbf{symplectic} if $S \cap S^\perp = \{0\}$, which is equivalent to saying that $\omega|_S$ is nondegenerate.
+    \item $S$ is \textbf{isotropic} if $S \subseteq S^\perp$, which is equivalent to saying that $\omega|_S = 0$.
+    \item $S$ is \textbf{coisotropic} if $S^\perp \subseteq S$, which is equivalent to saying that $S^\perp$ is isotropic.
+    \item $S$ is \textbf{Lagrangian} if $S = S^\perp$, which is equivalent to saying that $S$ is both isotropic and coisotropic, or equivalently $\omega|_S = 0$ and $\dim S = \frac{1}{2} \dim V$.
+  \end{itemize}
+\end{definition}
+In matrix form, we assume $S$ is spanned by the first $k$ standard basis vectors. Then $\omega$ can be written in block form as
+\begin{equation}
+  \omega = \begin{pmatrix}
+    A & B \\
+    -B^T & C
+  \end{pmatrix}, \qquad \omega(v, w) = v_1^T A w_1 + v_1^T B w_2 - v_2^T B^T w_1 + v_2^T C w_2
+\end{equation}
+where $A,C$ are anti-symmetric. When $w\in S$, we have $w_2 = 0$ and hence $\omega(v, w) = v_1^T A w_1 - v_2^T B^T w_1$. Then:
+\begin{equation*}
+  S^\perp = \{(v_1, v_2): A v_1 + B v_2 = 0\}.
+\end{equation*}
+\begin{itemize}
+  \item $S$ is symplectic if and only if $A$ is invertible.
+  \item $S$ is isotropic if and only if $A = 0$.
+  \item $S$ is coisotropic if and only if $B$ is injective and $\range A \cap \range B = \{0\}$.
+  \item $S$ is Lagrangian if and only if $A = 0$ and $B$ is injective.
+\end{itemize}
+\begin{proof}
+  \begin{itemize}
+    \item $S$ is symplectic if and only if $(v_1, 0)$ does not satisfy $A v_1 + B 0 = A v_1 = 0$ for any nonzero $v_1$, which is equivalent to saying that $A$ is invertible.
+    \item $S$ is isotropic if and only if all $(v_1, 0)$ satisfy $A v_1 + B 0 = A v_1 = 0$, which is equivalent to saying that $A = 0$.
+    \item $S$ is coisotropic if and only if all $(v_1, v_2)$ satisfying $A v_1 + B v_2 = 0$ would imply $v_2 = 0$. So if $B$ is not injective, then take $v_1 = 0$ would give a nonzero $(0, v_2)$ in $S^\perp$ but not in $S$, so $B$ must be injective. And also, this means that $\range A \cap \range B = \{0\}$. Conversely, it is easy to see.
+    \item $S$ is Lagrangian if and only if $A = 0$ and $B$ is injective and $\range A \cap \range B = \{0\}$, which is equivalent to saying that $A = 0$ and $B$ is injective.
+  \end{itemize}
+\end{proof}
+
+\begin{example}{Symplectic Subspace Classification}{Symplectic Subspace Classification}
+  Let $(V, \omega)$ be a symplectic vector space of dimension $2n$ defined in the previous example. Then for all $k = 0, 1, \dots, n$, 
+  \begin{itemize}
+    \item the subspace $\vspan\{A_1, B_1, \dots, A_k, B_k\}$ is symplectic;
+    \item the subspace $\vspan\{A_1, A_2, \dots, A_k\}$ is isotropic;
+    \item the subspace $\vspan\{A_1, A_2, \dots, A_n, B_1, B_2, \dots, B_k\}$ is coisotropic;
+    \item the subspace $\vspan\{A_1, A_2, \dots, A_n\}$ is Lagrangian.
+  \end{itemize}
+\end{example}
+\begin{proof}
+  The matrix representation of $\omega$ with respect to the standard basis $(A_1, B_1, \dots, A_n, B_n)$ is
+  \begin{equation*}
+    \omega = \begin{pmatrix}
+      0 & I_n \\
+      -I_n & 0
+    \end{pmatrix}.
+  \end{equation*}
+\end{proof}
+
+\begin{proposition}{The Canonical Form of Symplectic Tensors}{The Canonical Form of Symplectic Tensors}
+  Let $\omega$ be a symplectic tensor on an $m$-dimensional vector space $V$. Then $V$ has even dimension $2n$ and there exists a basis of $V$ with respect to which $\omega$ has the form
+  \begin{equation}
+    \omega = \sum_{i=1}^n \alpha^i \wedge \beta^i
+  \end{equation}
+\end{proposition}
+\begin{proof}
+  Writing in matrix form, let $\omega(u,w) = u^T \Omega w$ for some anti-symmetric matrix $\Omega$. From real Schur decomposition, there exists an orthogonal matrix $P$ such that $P^T \Omega P$ is block diagonal with $1\times 1$ blocks and $2\times 2$ blocks of the form $\begin{pmatrix}0 & a_i \\ -a_i & 0\end{pmatrix}$. Since $\Omega$ is antisymmetric, the $1\times 1$ blocks must be zero. Since $\Omega$ is invertible, there are no zero blocks. Hence $\Omega$ has even dimension and is block diagonal with $2\times 2$ blocks of the form above. By rescaling the basis, we can make $a_i = 1$ for all $i$. Then the new basis is the desired one.
+  
+  There is also a more geometric proof by induction. We induct on $m = \dim V$. If $m = 0$, then the statement is trivial. If $m > 0$, then suppose the statement holds for all dimensions less than $m$. Take any $A_1 \in V$, then there exists $B_1 \in V$ such that $\omega(A_1, B_1) = 1$. Since $\omega$ is alternating, $A_1,B_1$ are linearly independent. So $\dim V \geq 2$.
+
+  Take $S = \vspan\{A_1, B_1\}$, then $S$ is symplectic, then $S^\perp$ is also symplectic and $V = S \oplus S^\perp$. By induction hypothesis, there exists a basis of $S^\perp$ with respect to which $\omega|_{S^\perp}$ has the desired form. Then the union of this basis and $\{A_1, B_1\}$ is the desired basis for $V$.
+\end{proof}
+The basis of $V$ with respect to which $\omega$ has the form above is called a \textbf{symplectic basis} of $V$.
+
+\begin{proposition}{Criterion for Nondegeneracy of 2-Covectors}{Criterion for Nondegeneracy of 2-Covectors}
+  Let $\omega$ be a 2-covector on an $2n$-dimensional vector space $V$. Then $\omega$ is nondegenerate if and only if $\omega^n = \omega \wedge \cdots \wedge \omega \neq 0$.
+\end{proposition}
+\begin{proof}
+  If $\omega$ is a symplectic tensor, then write in canonical form, we have $\omega = \sum_{i=1}^n \alpha^i \wedge \beta^i$. Then
+  \begin{equation*}
+    \omega^n = \sum_I \alpha^{i_1} \wedge \beta^{i_1} \wedge \cdots \wedge \alpha^{i_n} \wedge \beta^{i_n} = n! \alpha^1 \wedge \beta^1 \wedge \cdots \wedge \alpha^n \wedge \beta^n.
+  \end{equation*}
+  where $I = (i_1, \dots, i_n)$ runs through all permutations of $(1, \dots, n)$.
+
+  Conversely, if $\omega$ is degenerate, then there exists a nonzero $v\in V$ such that $\omega(v, w) = 0$ for all $w\in V$. Then for any $v_2, \dots, v_{2n} \in V$, we have $\omega^n(v, v_2, \dots, v_{2n}) = 0$. Hence $\omega^n = 0$.
+\end{proof}
+
+\section{Symplectic Structures on Manifolds}
+Let $M$ be a smooth manifold. A nondegenerate 2-form on $M$ is a 2-form $\omega$ such that $\omega_p$ is a nondegenerate 2-covector on $T_p M$ for all $p\in M$.
+
+\begin{definition}{Symplectic Form and Symplectic Manifold}{Symplectic Form and Symplectic Manifold}
+  A \textbf{symplectic form} $\omega$ on a smooth manifold $M$ is a closed nondegenerate 2-form. A \textbf{symplectic manifold} is a pair $(M, \omega)$ where $M$ is a smooth manifold and $\omega$ is a symplectic form on $M$.
+\end{definition}
+
+Proposition \ref{prop:The Canonical Form of Symplectic Tensors} implies that a symplectic manifold must be even-dimensional. However, not all even-dimensional manifolds admit symplectic structures. For example, proposition \ref{prop:Criterion for Nondegeneracy of 2-Covectors} implies that $\omega^n$ is a nonvanishing $2n$-form on $M$, which means that $M$ is orientable.
+
+If $(M_1, \omega_1)$ and $(M_2, \omega_2)$ are symplectic manifolds, then a diffeomorphism $F: M_1 \to M_2$ is called a \textbf{symplectomorphism} if $F^* \omega_2 = \omega_1$. The study of properties of symplectic manifolds that are invariant under symplectomorphisms is called \textbf{symplectic geometry}.
+
+\begin{example}{Symplectic Manifolds}{Symplectic Manifolds}
+  \begin{itemize}
+    \item The standard symplectic structure on $\mathbb{R}^{2n}$ with coordinates $(x_1, y_1, \dots, x_n, y_n)$ is given by
+      \begin{equation*}
+        \omega = \sum_{i=1}^n \mathrm{d} x^i \wedge \mathrm{d} y^i.
+      \end{equation*}
+    \item Suppose $\Sigma$ is any orientable smooth 2-manifold and $\omega$ is a nonvanishing 2-form on $\Sigma$. Then $\mathrm{d} \omega = 0$ so $\omega$ is closed. Also $\omega$ is nondegenerate since in two dimensions, a 2-covector is nondegenerate if and only if it is nonvanishing. Hence $(\Sigma, \omega)$ is a symplectic manifold.
+  \end{itemize}
+\end{example}
+
+Suppose $(M, \omega)$ is a symplectic manifold. An immersed or embedded submanifold $S \subseteq M$ is called \textbf{symplectic}, \textbf{isotropic}, \textbf{coisotropic} or \textbf{Lagrangian} if $T_p S$ has the corresponding property as a subspace of the symplectic vector space $(T_p M, \omega_p)$ for all $p\in S$. Generally, a smooth immersion or embedding $F: S \to M$ is called these properties if $\mathrm{d} F_p(T_p S)$ has the corresponding property as a subspace of $(T_{F(p)} M$ for all $p\in S$.
+
+\subsection{The Canonical Symplectic Form on Cotangent Bundles}
+There is a natural 1-form on the total space of the cotangent bundle $T^* M$ of a smooth manifold $M$, which is called the \textbf{tautological 1-form}.
+
+\begin{definition}{Tautological 1-Form on Cotangent Bundle}{Tautological 1-Form on Cotangent Bundle}
+  Let $(q, \varphi) \in T^* M$ where $q\in M$ and $\varphi \in T_q^* M$. Then the natural projection $\pi: T^* M \to M$ is given by $\pi(q, \varphi) = q$. It induces a pullback map $\pi_{(q, \varphi)}^*: T_q^* M \to T_{(q, \varphi)}^* T^* M$. The \textbf{tautological 1-form} $\tau \in \Omega^1(T^* M)$ is defined by
+  \begin{equation}
+    \tau_{(q, \varphi)} = \pi_{(q, \varphi)}^* \varphi, \qquad \tau_{(q, \varphi)}(v) = \varphi(\mathrm{d} \pi_{(q, \varphi)} v)
+  \end{equation}
+\end{definition}
+
+\begin{remark}
+  We can visualize this as taking a vector at the $(q, \varphi)$-plane. And then projecting it down to the $q$-plane and applying $\varphi$ to it.
+\end{remark}
+
+In coordinates, in a local trivialization of $T^* M$ with coordinates $(x^i, \xi_i)$ where $x^i$ are coordinates on $M$ and $\xi_i$ are the corresponding fiber coordinates, we have $\pi(x, \xi) = x$ and $\mathrm{d} \pi_{(x, \xi)}(\mathrm{d} x^i) = \mathrm{d} x^i$ so we have
+\begin{equation}
+  \tau_{(x, \xi)} = \mathrm{d} \pi_{(x, \xi)}^* (\xi_i \mathrm{d} x^i) = \xi_i \mathrm{d} x^i.
+\end{equation}
+
+\begin{proposition}{Symplectic Form from Tautological 1-Form}{Symplectic Form from Tautological 1-Form}
+  Let $M$ be a smooth manifold and $\tau$ be the tautological 1-form. Then $\tau$ is smooth and $\omega = -\mathrm{d} \tau$ is a symplectic form on $T^* M$, called the \textbf{canonical symplectic form} on $T^* M$.
+\end{proposition}
+\begin{proof}
+  It follows clearly from the coordinate expression that $\tau$ is smooth. Also, we have
+  \begin{equation}
+    \omega = -\mathrm{d} \tau = -\mathrm{d} (\xi_i \mathrm{d} x^i) = \mathrm{d} x^i \wedge \mathrm{d} \xi_i,
+  \end{equation}
+\end{proof}
+
+\begin{proposition}{1-Form as Embedding}{1-Form as Embedding}
+  Let $M$ be a smooth manifold and $\sigma: M \rightarrow T^*M$ be a 1-form on $M$. Then $\sigma$ is a smooth embedding and is closed iff $\sigma(M)$ is a Lagrangian submanifold of $(T^* M, \omega)$.
+\end{proposition}
+\begin{proof}
+  Taking $\omega = \sigma_i \mathrm{d} x^i$ in local coordinates, we have $\sigma$ as a map from $M$ to $T^* M$ given by
+  \begin{equation*}
+    \sigma(x) = (x, \sigma_i(x)).
+  \end{equation*}
+  Then $\sigma$ is a smooth embedding for it is a proper map.
+
+  Because $\sigma(M)$ is $n$-dimensional, it is Lagrangian if and only if it is isotropic, which is equivalent to saying that $\sigma^* \omega = 0$. Since
+  \begin{equation*}
+    \sigma^* \tau = \sigma^* (\xi_i \mathrm{d} x^i) = \sigma_i \mathrm{d} x^i = \sigma,
+  \end{equation*}
+  we have
+  \begin{equation*}
+    \sigma^* \omega = -\sigma^* \mathrm{d} \tau = -\mathrm{d} \sigma^* \tau = -\mathrm{d} \sigma.
+  \end{equation*}
+  Thus we have our conclusion.
+\end{proof}
+
+\section{The Darboux Theorem}
+Unlike Riemannian geometry, there is no local obstruction to a symplectic structure being locally equivalent to the standard flat model.
+
+\begin{theorem}{Darboux Theorem}{Darboux Theorem}
+  Let $(M, \omega)$ be a $2n$-dimensional symplectic manifold. For any point $p\in M$, there exists smooth coordinates $(x_1, y_1, \dots, x_n, y_n)$ defined on a neighborhood of $p$ such that
+  \begin{equation}
+    \omega = \sum_{i=1}^n \mathrm{d} x^i \wedge \mathrm{d} y^i.
+  \end{equation}
+\end{theorem}
+
+\section{Hamiltonian Vector Fields}
+There is a symplectic analogue of the gradient. Suppose $(M, \omega)$ is a symplectic manifold and for any smooth function $f \in C^\infty(M)$, we define the \textbf{Hamiltonian vector field} $X_f$ of $f$ by
+\begin{equation}
+  X_f = \hat{\omega}^{-1}(\mathrm{d} f), \qquad \text{ or } \qquad X_f \lrcorner \, \omega = \mathrm{d} f.
+\end{equation}
+where $\hat{\omega}: TM \to T^* M$ is the isomorphism defined by $\hat{\omega}(v) = v \lrcorner \, \omega$ for all $v\in TM$.
+
+In any Darboux coordinates, we write
+\begin{equation*}
+  X_f = \sum_{i=1}^n \left( a_i \frac{\partial}{\partial x^i} + b_i \frac{\partial}{\partial y^i} \right).
+\end{equation*}
+Then we have
+\begin{equation*}
+  X_f \lrcorner \, \omega = \sum_{i=1}^n (a_i \mathrm{d} y^i - b_i \mathrm{d} x^i) = \mathrm{d} f = \sum_{i=1}^n \left( \frac{\partial f}{\partial x^i} \mathrm{d} x^i + \frac{\partial f}{\partial y^i} \mathrm{d} y^i \right).
+\end{equation*}
+Thus we have
+\begin{equation}
+  X_f = \sum_{i=1}^n \left( \frac{\partial f}{\partial y^i} \frac{\partial}{\partial x^i} - \frac{\partial f}{\partial x^i} \frac{\partial}{\partial y^i} \right).
+\end{equation}
+
+\begin{proposition}{Properties of Hamiltonian Vector Fields}{Properties of Hamiltonian Vector Fields}
+  Let $(M, \omega)$ be a symplectic manifold and $f \in C^\infty(M)$, then
+  \begin{itemize}
+    \item $f$ is constant along the flow of $X_f$.
+    \item At each regular point of $f$, the vector field $X_f$ is tangent to the level set of $f$.
+  \end{itemize}
+\end{proposition}
+\begin{proof}
+  We have
+  \begin{equation*}
+    X_f(f) = \mathrm{d} f(X_f) = (X_f \lrcorner \, \omega)(X_f) = 0.
+  \end{equation*}
+  Hence $f$ is constant along the flow of $X_f$. Also, at each regular point of $f$, we have $\mathrm{d} f \neq 0$, so $X_f = \hat{\omega}^{-1}(\mathrm{d} f) \neq 0$. Since $\hat{\omega}$ is an isomorphism, we have $\hat{\omega}(X_f) = X_f \lrcorner \, \omega = \mathrm{d} f$, which means that $X_f$ is tangent to the level set of $f$.
+\end{proof}
+
+A smooth vector field $X$ on a symplectic manifold $(M, \omega)$ is called \textbf{symplectic} if $\omega$ is invariant under the flow of $X$, which is equivalent to saying that $\mathcal{L}_X \omega = 0$. It is said to be \textbf{Hamiltonian} if there exists a smooth function $f$ such that $X = X_f$, and locally Hamiltonian if for each point $p\in M$, there exists a neighborhood $U$ of $p$ and a smooth function $f$ defined on $U$ such that $X|_U = X_f$.
+
+\begin{proposition}{Hamiltonian and Symplectic Vector Fields}{Hamiltonian and Symplectic Vector Fields}
+  Let $(M, \omega)$ be a symplectic manifold and $X$ be a smooth vector field on $M$. Then $X$ is symplectic if and only if $X$ is locally Hamiltonian. Every locally Hamiltonian vector field is globally Hamiltonian if and only if the first de Rham cohomology group $H_\mathrm{dR}^1(M)$ is trivial.
+\end{proposition}
+\begin{proof}
+  Using Carten's magic formula, we have
+  \begin{equation*}
+    \mathcal{L}_X \omega = \mathrm{d} (X \lrcorner \, \omega) + X \lrcorner \, \mathrm{d} \omega = \mathrm{d} (X \lrcorner \, \omega).
+  \end{equation*}
+  Then $X$ is symplectic if and only if $\mathrm{d} (X \lrcorner \, \omega) = 0$. If $X$ is locally Hamiltonian, then in a neighborhood of each point there is a smooth function $f$ such that $X = X_f$, so $X \lrcorner \, \omega = X_f \lrcorner \, \omega = \mathrm{d} f$ is closed. Conversely, if $X$ is symplectic, then by Poincar\'e lemma, in a neighborhood of each point there is a smooth function $f$ such that $X \lrcorner \, \omega = \mathrm{d} f$, so $X = X_f$ is locally Hamiltonian.
+
+  The second part follows from the fact that a closed 1-form is exact if and only if its cohomology class is zero.
+\end{proof}
+
+In analytical mechanics, a Hamiltonian system is a symplectic manifold $(M, \omega)$ together with a smooth function $H \in C^\infty(M)$ called the Hamiltonian. The flow of the Hamiltonian vector field $X_H$ is called the \textbf{Hamiltonian flow} of $H$. The integral curves of $X_H$ are called the \textbf{trajectories} of the Hamiltonian system. In Darboux coordinates, the Hamiltonian flow of $H$ is given by the system of ordinary differential equations
+\begin{equation}
+  \begin{aligned}
+    \frac{\mathrm{d} x^i}{\mathrm{d} t} &= \frac{\partial H}{\partial y^i}(x(t), y(t)), \\
+    \frac{\mathrm{d} y^i}{\mathrm{d} t} &= -\frac{\partial H}{\partial x^i}(x(t), y(t)).
+  \end{aligned}
+\end{equation}
+called the \textbf{Hamilton's equations}.
+
+\subsection{Poisson Bracket}
+In Hamiltonian system, each smooth function $f$ on $M$ is related to a vector field $X_f$ on $M$.
+
+\begin{definition}{Poisson Bracket}{Poisson Bracket}
+  Let $(M, \omega)$ be a symplectic manifold and $f, g \in C^\infty(M)$ be two smooth functions. The \textbf{Poisson bracket} of $f$ and $g$ is the smooth function $\{f, g\} \in C^\infty(M)$ defined by
+  \begin{equation}
+    \{f, g\} = \omega(X_f, X_g) = X_g(f) = \mathrm{d} f(X_g)
+  \end{equation}
+\end{definition}
+In Darboux coordinates, we have
+\begin{equation}
+  \{f, g\} = \sum_{i=1}^n \left( \frac{\partial f}{\partial x^i} \frac{\partial g}{\partial y^i} - \frac{\partial f}{\partial y^i} \frac{\partial g}{\partial x^i} \right).
+\end{equation}
+
+\begin{remark}
+  Geometrically, the Poisson bracket $\{f, g\}$ is the rate of change of $f$ along the flow of $X_g$.
+\end{remark}
+
+\begin{proposition}{Properties of Poisson Bracket}{Properties of Poisson Bracket}
+  Let $(M, \omega)$ be a symplectic manifold and $f, g, h \in C^\infty(M)$. Then
+  \begin{itemize}
+    \item Bilinearity: $\{a f + b g, h\} = a \{f, h\} + b \{g, h\}$ and $\{h, a f + b g\} = a \{h, f\} + b \{h, g\}$ for all $a, b \in \mathbb{R}$.
+    \item Antisymmetry: $\{f, g\} = -\{g, f\}$.
+    \item Jacobi identity: $\{f, \{g, h\}\} + \{g, \{h, f\}\} + \{h, \{f, g\}\} = 0$.
+    \item $X_{\{f, g\}} = -[X_f, X_g]$.
+  \end{itemize}
+\end{proposition}
+\begin{proof}
+  The first two properties are clear from $X_f = \hat{\omega}^{-1}(\mathrm{d} f)$ depending linearly on $f$ and $\omega$ being antisymmetric. For the Lie bracket, it suffices to show that for any vector field $Y$, we have
+  \begin{equation*}
+    \omega(X_{\{f, g\}}, Y) + \omega([X_f, X_g], Y) = 0.
+  \end{equation*}
+  Firstly, we have
+  \begin{equation*}
+    \omega(X_{\{f, g\}}, Y) = \mathrm{d} \{f, g\}(Y) = Y(\{f, g\}) = Y(X_g(f))
+  \end{equation*}
+  Also, as Hamiltonian vector fields are symplectic, we have
+  \begin{equation*}
+    \begin{aligned}
+      0 &= (\mathcal{L}_{X_g} \omega)(X_f, Y) = X_g(\omega(X_f, Y)) - \omega([X_g, X_f], Y) - \omega(X_f, [X_g, Y]) \\
+      &= X_g(Y(f)) - \omega([X_g, X_f], Y) -\mathrm{d} f([X_g, Y]) \\
+      &= X_g(Y(f)) - \omega([X_g, X_f], Y) - X_g(Y(f)) + Y(X_g(f)) \\
+      &= -\omega([X_g, X_f], Y) + Y(X_g(f)) = \omega([X_f, X_g], Y) + Y(\{f, g\}).
+    \end{aligned}
+  \end{equation*}
+  The Jacobi identity follows from the Lie bracket property and antisymmetry:
+  \begin{equation*}
+    \begin{aligned}
+      \{f, \{g, h\}\} &= X_{\{g, h\}}(f) = -[X_g, X_h](f) = -X_g(X_h(f)) + X_h(X_g(f)) \\
+      &= -X_g(\{f, h\}) + X_h(\{f, g\}) = -\{f, \{g, h\}\} + \{f, \{h, g\}\}.
+    \end{aligned}
+  \end{equation*}
+  Thus we have our conclusion.
+\end{proof}
+
+\begin{corollary}{Lie Algebra Structure on Smooth Functions}{Lie Algebra Structure on Smooth Functions}
+  Let $(M, \omega)$ be a symplectic manifold. Then $C^\infty(M)$ is a Lie algebra under the Poisson bracket.
+\end{corollary}
+
+If $(M, \omega, H)$ is a Hamiltonian system, then any function $f \in C^\infty(M)$ that is constant along every integral curve of $X_H$ is called a \textbf{conserved quantity}. A smooth vector field $V$ on $M$ is called an \textbf{infinitesimal symmetry} of the Hamiltonian system if both $\omega$ and $H$ are invariant under the flow of $V$.
+
+\begin{proposition}{Properties of Conserved Quantities and Infinitesimal Symmetries}{Properties of Conserved Quantities and Infinitesimal Symmetries}
+  Let $(M, \omega, H)$ be a Hamiltonian system, $f \in C^\infty(M)$ be a smooth function and $V$ be a smooth vector field on $M$. Then
+  \begin{itemize}
+    \item $f$ is a conserved quantity if and only if $\{f, H\} = 0$.
+    \item $V$ is an infinitesimal symmetry if and only if $VH = 0$.
+    \item If $\theta$ is the flow of an infinitesimal symmetry $V$ and $\gamma$ is a trajectory of the Hamiltonian system, then for all $s\in \mathbb{R}$ we have $\theta_s \circ \gamma$ is also a trajectory on its domain.
+  \end{itemize}
+\end{proposition}
+
+Now we shall see that there is a one-to-one correspondence between conserved quantities and infinitesimal symmetries of a Hamiltonian system.
+
+\begin{theorem}{Noether's Theorem}{Noether's Theorem}
+  Let $(M, \omega, H)$ be a Hamiltonian system. Then if $f$ is a conserved quantity, then $X_f$ is an infinitesimal symmetry. Conversely, if $H_{\mathrm{dR}}^1(M) = 0$ then each infinitesimal symmetry $V$ is a Hamiltonian vector field $X_f$ for some conserved quantity $f$, unique up to a constant on each connected component of $M$.
+\end{theorem}
+
+\end{document}

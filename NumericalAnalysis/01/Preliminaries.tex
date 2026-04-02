@@ -1,0 +1,189 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\chapter{Preliminaries}
+
+\section{Error Analysis}
+The arithmetic performed by a calculator or computer is not exact. In the computational world, each representable number has only a fixed and finite number of digits. This means, for example, that only some of the rational numbers can be represented exactly.
+
+The error that is produced when a calculator or computer is used to perform real number calculations is called \textbf{round-off error}. In a computer, only a relatively small subset of the real number system is used for the representation of all the real numbers. This subset contains only rational numbers, both positive and negative, and stores the fractional part, together with an exponential part.
+
+\subsection{Binary Machine Numbers}
+IEEE 754-2008 provides standards for binary and decimal floating point numbers, formats for data interchange, algorithms for rounding arithmetic operations, and the handling of exceptions. Formats are specified for single, double, and extended precisions, and these standards are widely used in computer hardware and software.
+
+A 64-bit (binary digit) representation is used for a real number. The first bit $s$ is the sign bit, the next 11 bits are used for the exponent $c$, called the \textbf{characteristic}, and the remaining 52 bits are used for the fraction $f$, called the \textbf{mantissa}. To save storage and provide a unique representation for each floating-point number, a normalization is imposed.
+
+A number with $c \neq 0$ is called a \textbf{normalized number}, and is represented as
+\begin{equation}
+  N = (-1)^s 2^{c-1023} (1 + f),
+\end{equation}
+This represents a number in the range
+\begin{equation*}
+  [N - 2^{-52}, N + 2^{-52})
+\end{equation*}
+Numbers occurring in calculations that have a magnitude less than $2^{-1022}(1+0)$ results in a \textbf{underflow}, and is generally set to zero. Numbers with a magnitude greater than $2^{1023}(2-2^{-52})$ results in an \textbf{overflow}, and generally causes an error message to be generated.
+
+When $c = 0$ and $f \neq 0$, the number is called a \textbf{denormalized number}, and is represented as
+\begin{equation}
+  N = (-1)^s 2^{-1022} f.
+\end{equation}
+zero is represented by $s = 0,1, c = 0, f = 0$, and is called a \textbf{signed zero}.
+
+\subsection{Decimal Machine Numbers}
+The use of binary digits imposes difficulties to examine the problems from finite digit representation. So we shall use a normalized decimal representation of a real number, with the form
+\begin{equation*}
+  N = \pm 0.d_1 d_2 \cdots d_k \times 10^n, \qquad 1 \leq d_1 \leq 9, \quad 0 \leq d_i \leq 9, i = 2,3,\cdots,k,
+\end{equation*}
+This number is called $k$-digit decimal machine number.
+
+From analysis on the real line, there is a way to normalize any positive real number to the form
+\begin{equation*}
+  y = 0.d_1 d_2 \cdots d_k \cdots \times 10^n, 
+\end{equation*}
+The floating point representation of $y$ is obtained by terminating the mantissa after $k$ digits, and is denoted by $fl(y)$. There are two common methods for terminating the mantissa:
+\begin{itemize}
+  \item \textbf{Chopping}: simply drop off the digits after the $k$-th digit.
+  \item \textbf{Rounding}: if $d_{k+1} \geq 5$, then add $10^{-k}$ to the chopped number; otherwise, simply chop off the digits after the $k$-th digit.
+\end{itemize}
+
+The error caused by replacing $y$ by $fl(y)$ is called the \textbf{round-off error}. There are mainly two origins of errors:
+\begin{itemize}
+  \item \textbf{Original error}: the error caused by the initial approximation of a number.
+  \item \textbf{Round-off error}: the error caused by the finite digit representation of a number. (Rounding error and Chopping error are two types of round-off errors.)
+\end{itemize}
+
+\begin{definition}{Error}{Error}
+  Suppose $p^*$ is an approximation to a number $p$. The \textbf{actual error} is defined as $p - p^*$. The \textbf{absolute error} is defined as $|p - p^*|$. The \textbf{relative error} is defined as $\displaystyle \frac{|p - p^*|}{|p|}$, provided $p \neq 0$.
+
+  An error bound is a nonnegative number larger than the absolute error.
+\end{definition}
+
+\begin{remark}
+  We often cannot find an accurate value for the true error in an approximation. Instead, we find a bound for the error, which gives us a “worst-case” error.
+\end{remark}
+
+\begin{definition}{Significant Digits}{Significant Digits}
+  The number $p^*$ is said to approximate $p$ to $t$ \textbf{significant digits}, if $t$ is the largest nonnegative integer such that
+  \begin{equation}
+    \frac{|p - p^*|}{|p|} \leq 5 \times 10^{-t}.
+  \end{equation}
+\end{definition}
+
+The floating point representation of a number $y$ has relative error $\displaystyle \frac{|y - fl(y)|}{|y|}$. If $k$-decimal chopping is used, then
+\begin{equation*}
+  \frac{|y - fl(y)|}{|y|} = \left|\frac{0.d_{k+1} d_{k+2} \cdots \times 10^{n-k}}{0.d_1 d_2 \cdots d_k \times 10^n}\right| \leq \frac{1}{0.1} \times 10^{-k} = 10^{1-k}.
+\end{equation*}
+So $10^{1-k}$ is a error bound for the relative error of $fl(y)$.
+
+Similarly, $0.5 \times 10^{1-k}$ is a error bound for the relative error of $fl(y)$ when $k$-decimal rounding is used.
+
+\subsection{Finite Digit Arithmetic}
+Assume that $x,y \in \mathbb{R}$, define symbols $\oplus, \ominus, \otimes, \odiv$ for the finite digit arithmetic as follows:
+\begin{equation*}
+  \begin{aligned}
+    &x \oplus y = fl(fl(x) + fl(y)), \qquad &x \ominus y = fl(fl(x) - fl(y)),\\
+    &x \otimes y = fl(fl(x) \cdot fl(y)), \qquad &x \odiv y = fl\left(\frac{fl(x)}{fl(y)}\right).
+  \end{aligned}
+\end{equation*}
+
+Some calculation would produce a large error. For example, the cancellation of significant digits due to the subtraction of nearly equal numbers. Suppose $x>y$ have the $k$-digit representations:
+\begin{equation*}
+  \begin{aligned}
+    fl(x) &= 0.d_1 d_2 \cdots d_p \alpha_{p+1} \cdots \alpha_k \times 10^n,\\
+    fl(y) &= 0.d_1 d_2 \cdots d_p \beta_{p+1} \cdots \beta_k \times 10^n,
+  \end{aligned}
+\end{equation*}
+where $\alpha_{p+1} > \beta_{p+1}$. Then we have
+\begin{equation*}
+  \begin{aligned}
+    x \ominus y &= fl(fl(x) - fl(y))\\
+    &= fl\left(0.00 \cdots 0 \sigma_{p+1} \cdots \sigma_k \times 10^n\right)\\
+    &= 0. \sigma_{p+1} \cdots \sigma_k \times 10^{n-p},
+  \end{aligned}
+\end{equation*}
+which has at most $k-p$ significant digits. In any calculation device, the last few digits of $x-y$ would be assigned either zero or some random digits, which may lead to a large relative error in afterwards calculations (for example, dividing by a small number).
+
+Sometimes, the loss of accuracy can be avoided by reformulating the calculation. For example, to compute the root of a quadratic equation $ax^2 + bx + c = 0$ with the root formula:
+\begin{example}{Reformulation of Calculation}{Reformulation of Calculation}
+  Consider $x^2 + 62.1 x + 1 = 0$. The roots are given by
+  \begin{equation*}
+    x_1 \approx -0.01610723, \qquad x_2 \approx -62.08389277.
+  \end{equation*}
+  Note that directly calculating $x_1$ would cause a large error due to the cancellation of significant digits. Instead, we can calculate $x_1$ by a reformulation of the root formula:
+  \begin{equation*}
+    x_1 = \frac{-b - \sqrt{b^2 - 4ac}}{2a} = \frac{-2c}{b + \sqrt{b^2 - 4ac}}
+  \end{equation*}
+  which would result in a much smaller relative error, from $2.4 \times 10^{-1}$ to $6.2 \times 10^{-4}$ for a $4$-digit decimal machine number.
+\end{example}
+
+We can do some approximations on the relative errors as follows: Let $x^*, y^*$ be the approximations of $x,y$ respectively, with relative errors $e_x, e_y$. Then we have
+\begin{itemize}
+  \item Addition and Subtraction: $\displaystyle \frac{|(x\pm y) - (x^* \pm y^*)|}{|x \pm y|} \leq \frac{|x| e_x + |y| e_y}{|x \pm y|}$.
+\end{itemize}
+
+\subsection{Nested Arithmetic}
+This is a way to calculate a polynomial:
+
+Consider the polynomial
+\begin{equation}
+  p(x) = a_0 + a_1 x + a_2 x^2 + \cdots + a_n x^n.
+\end{equation}
+We can calculate $p(x)$ by the following nested form:
+\begin{equation}
+  p(x) = a_0 + x(a_1 + x(a_2 + \cdots + x(a_{n-1} + x a_n) \cdots)).
+\end{equation}
+This reduces the number of multiplications from $n(n+1)/2$ to $n$, and thus significantly reduces the round-off error.
+
+\begin{remark}
+  Polynomials should always be expressed in nested form before performing an evaluation because this form minimizes the number of arithmetic calculations. This shows that one way to reduce round-off error is to reduce the number of computations.
+\end{remark}
+
+\section{Algorithms and Convergence}
+\begin{definition}{Algorithm}{Algorithm}
+  An \textbf{algorithm} is a finite sequence of instructions that, if followed, accomplishes a particular task. The task may be to solve a mathematical problem, or to perform a computation.
+\end{definition}
+We use a pseudocode to describe the algorithms. 
+
+\subsection{Characterization of Algorithms}
+A \textbf{stable} algorithm is one that produces correspondingly small changes in the output for small changes in the input. Some algorithm are \textbf{conditionally stable}, which means that the algorithm is stable for some inputs but not for others.
+
+To quantify this idea, suppose an error with magnitude $E_0 > 0$ is introduced at some stage of the algorithm, and $E_n$ is the magnitude of the error after $n$ steps, then:
+\begin{itemize}
+  \item If $E_n \approx C n E_0$ for some constant $C$, then the growth of the error is \textbf{linear}.
+  \item If $E_n \approx C^n E_0$ for some constant $C > 1$, then the growth of the error is \textbf{exponential}.
+\end{itemize}
+
+Linear growth of error is usually unavoidable, and when $C$ and $E_0$ are small, the results are generally acceptable. Exponential growth of error should be avoided because the term $C^n$ becomes large for even relatively small values of $n$. This leads to unacceptable inaccuracies, regardless of the size of $E_0$. As a consequence, an algorithm that exhibits linear growth of error is stable, whereas an algorithm exhibiting exponential error growth is unstable.
+
+\begin{remark}
+  Usually when we analyze the stability of an algorithm, we only assume the loss of accuracy occurs at the beginning of the algorithm (when input data is read into the computer), and neglect the round-off error produced by the arithmetic operations in the algorithm. This is a simplified model of the error, and the actual error is likely to be larger.
+\end{remark}
+
+\subsection{Rate of Convergence}
+
+\begin{definition}{Rate of Convergence}{Rate of Convergence}
+  Suppose $\{\beta_n\}$ is a sequence converging to zero and $\{\alpha_n\}$ converges to $\alpha$. If there exists a constant $K > 0$ such that
+  \begin{equation*}
+    |\alpha_n - \alpha| \leq K |\beta_n|
+  \end{equation*}
+  for large $n$, then we say $\{\alpha_n\}$ converges to $\alpha$ with \textbf{rate of convergence} $O(\beta_n)$, and write $\alpha_n = \alpha + O(\beta_n)$.
+
+  Similarly for functions, if $\lim_{h \to 0} G(h) = 0$ and $\lim_{h \to 0} F(h) = L$, and there exists a constant $K > 0$ such that
+  \begin{equation*}
+    |F(h) - L| \leq K |G(h)|
+  \end{equation*}
+  for small $h$, then we say $F(h)$ converges to $L$ with \textbf{rate of convergence} $O(G(h))$, and write $F(h) = L + O(G(h))$.
+\end{definition}
+
+\begin{remark}
+  Generally we have the following conclusions for a good approximation algorithm:
+  \begin{itemize}
+    \item Avoid subtraction of nearly equal numbers. (Increase relative error.)
+    \item Avoid division by small numbers. (Increase Absolute error.)
+    \item Avoid adding a small number to a large number.
+    \item Reduce the number of arithmetic calculations. (Increase round-off error.)
+    \item Alogrithms should be stable.
+  \end{itemize}
+\end{remark}
+
+\end{document}

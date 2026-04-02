@@ -1,0 +1,59 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\chapter{Introduction}
+
+\section{Classification of Differential Equations}
+Let $U \subseteq \mathbb{R}^n, V \subseteq \mathbb{R}^m$ and $k\in \mathbb{N}$. Denote $C^k(U,V)$ as the set of all functions $f: U \to V$ having continuous derivatives up to order $k$. We shall abbreviate $C(U,V) = C^0(U,V)$ and $C^\infty(U,V) = \bigcap_{k=0}^\infty C^k(U,V)$, and $C^k(U) = C^k(U,\mathbb{R})$.
+
+\begin{definition}{Ordinary Differential Equation}{Ordinary Differential Equation}
+  A classical \textbf{ordinary differential equation} (ODE) is a functional relation of the form
+  \begin{equation}
+    F(t, x, x^{(1)}, \dots, x^{(k)}) = 0
+  \end{equation}
+  for the unknown function $x\in C^k(J)$, where $J \subseteq \mathbb{R}$. Here $x^{(i)}$ denotes the $i$-th derivative of $x$ with respect to $t$. 
+
+  Here $F\in C(U)$ for some open set $U \subseteq \mathbb{R}^{k+2}$, We call $k$ the \textbf{order} of the ODE.
+
+  A solution of the ODE is a function $\phi\in C^k(I)$ for some interval $I \subseteq J$ such that
+  \begin{equation*}
+    F(t, \phi(t), \phi^{(1)}(t), \dots, \phi^{(k)}(t)) = 0, \forall t \in I.
+  \end{equation*}
+\end{definition}
+
+However, there is too much freedom in the choice of $F$, and from now on we shall only consider ODEs that can solve for the highest order derivative, i.e. ODEs of the form
+\begin{equation*}
+  x^{(k)} = f(t, x, x^{(1)}, \dots, x^{(k-1)})
+\end{equation*}
+By the implicit function theorem, this is be done at least locally near points where $\partial F/\partial x^{(k)} \neq 0$.
+
+If we relax the condition so functions $x: J \to \mathbb{R}^n$, this leads to the system of ODEs:
+\begin{equation*}
+  \begin{aligned}
+    x_1^{(k)} &= f_1(t, x_1, \dots, x_n, x_1^{(1)}, \dots, x_n^{(k-1)}) \\
+    &\vdots \\
+    x_n^{(k)} &= f_n(t, x_1, \dots, x_n, x_1^{(1)}, \dots, x_n^{(k-1)})
+  \end{aligned}
+\end{equation*}
+
+Such a system is called linear if
+\begin{equation*}
+  x_i^{(k)} = g_i(t) + \sum_{l=1}^n \sum_{j=0}^{k-1} f_{i,j,l}(t) x_l^{(j)}, \forall i = 1, \dots, n
+\end{equation*}
+and is called homogeneous if $g_i(t) = 0$ for all $i$.
+
+Moreover, any system can always be reduced to a ﬁrst-order system by treating $x_i^{(j)}$ as a new variable for $j = 0, \dots, k-1$. We can even add $t$ as a new variable to make the system autonomous:
+\begin{equation*}
+  \begin{aligned}
+    \dot{z}_1 &= 1, \dot{z}_2 = z_3, \quad \cdots \quad \dot{z}_k = z_{k+1} \\
+    \dot{z}_{k+1} &= f(z).
+  \end{aligned}
+\end{equation*}
+In particular, it suﬃces to consider the case of autonomous ﬁrst-order systems, which we will frequently do.
+
+If we further loose the condition that $t\in \mathbb{R}^m$, we get the partial differential equations (PDEs).
+
+\section{First Order Autonomous Equations}
+
+
+\end{document}

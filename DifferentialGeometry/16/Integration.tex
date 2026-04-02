@@ -418,6 +418,346 @@ The patching of parametrizations still work here, from proposition \ref{prop:Int
   \end{equation}
 \end{proposition}
 
+\subsection{The Hodge Star Operator}
+We have already given an operator $*: C^\infty (M) \rightarrow \Omega^n(M)$ in a Riemannian manifold before, now here is an important generalization.
+
+Let $(M,g)$ be an oriented Riemannian $n$-manifold, with or without boundary. For each $k = 0, \ldots , n$, $g$ determines a unique inner product $\langle \cdot , \cdot \rangle_g$ on the space $\Lambda^k (T_p^*M)$ of $k$-forms satisfying
+\begin{equation*}
+  \langle \omega^1 \wedge \cdots \wedge \omega^k, \eta^1 \wedge \cdots \wedge \eta^k \rangle_g = \det (\langle (\omega^i)^\sharp, (\eta^j)^\sharp \rangle_g).
+\end{equation*}
+when $\omega^1, \ldots , \omega^k$ and $\eta^1, \ldots , \eta^k$ are covectors at $p$.
+
+Specially, when $k=0$, $\Lambda^0 (T_p^*M) = \mathbb{R}$, so interpret the inner product to be real multiplication.
+
+\begin{remark}
+  For $k=1$, the inner product $\langle \cdot , \cdot \rangle_g$ on $T_p^*M$ is just the dual inner product of the inner product $\langle \cdot , \cdot \rangle_g$ on $T_p M$.
+
+  In general case, we can visualize the inner product as the inner product of the two linear subspaces of $T_p M$ that the two $k$-forms are dual to, that is, the product of the volumes of the two subspaces and the cosine of the angle between them. To prove this, just verify the formula for the inner product on the basis $\epsilon^{i_1} \wedge \cdots \wedge \epsilon^{i_k}$. 
+\end{remark}
+
+\begin{proposition}{Normalization of Full Rank Forms}{Normalization of Full Rank Forms}
+  Let $(M,g)$ be an oriented Riemannian $n$-manifold, with or without boundary, then the Riemannian volume form $\omega_g$ (or $\mathrm{d} V_g$) is the unique $n$-form on $M$ such that $\langle \omega_g, \omega_g \rangle_g = 1$.
+\end{proposition}
+\begin{proof}
+  Quite straightforward as there is only one dimension.
+\end{proof}
+
+\begin{theorem}{The Hodge Star Operator}{The Hodge Star Operator}
+  Let $(M,g)$ be an oriented Riemannian $n$-manifold, with or without boundary, then for each $k = 0, \ldots , n$, there exists a unique smooth bundle homomorphism $*: \Lambda^k T^*M \to \Lambda^{n-k} T^*M$ such that
+  \begin{equation}
+    \omega \wedge *\eta = \langle \omega, \eta \rangle_g \mathrm{d} V_g,
+  \end{equation}
+  for any $\omega, \eta \in \Lambda^k T_p^*M$ and $p\in M$.
+\end{theorem}
+\begin{proof}
+  First, we show uniqueness. Suppose $*$ and $*'$ are two bundle homomorphisms satisfying
+  \begin{equation*}
+  \omega \wedge *\eta = \langle \omega, \eta\rangle_g \, \mathrm{d}V_g = \omega \wedge *'\eta
+  \end{equation*}
+  for all $\omega, \eta \in \Lambda^k T_p^*M$. Then $\omega \wedge (*\eta - *'\eta) = 0$ for every $\omega$. Fix $\eta$ and consider the linear map $L: \Lambda^k T_p^*M \to \Lambda^n T_p^*M$ given by $L(\omega) = \omega \wedge (*\eta - *'\eta)$. Since this vanishes for all $\omega$, and the wedge product pairing $\Lambda^k \times \Lambda^{n-k} \to \Lambda^n$ is nondegenerate (if $\alpha \in \Lambda^{n-k}$ satisfies $\omega \wedge \alpha = 0$ for all $\omega$, then $\alpha = 0$), we conclude $*\eta - *'\eta = 0$. Thus $* = *'$ pointwise, and hence globally.
+
+  For existence, we construct $*$ locally. Let $p \in M$ and choose an oriented orthonormal basis $(e_1,\dots,e_n)$ of $T_pM$ with dual coframe $(\varepsilon^1,\dots,\varepsilon^n)$. Then the Riemannian volume form is $\mathrm{d}V_g = \varepsilon^1 \wedge \cdots \wedge \varepsilon^n$. For any increasing multi-index $I = (i_1 < \cdots < i_k)$, set $\varepsilon^I = \varepsilon^{i_1} \wedge \cdots \wedge \varepsilon^{i_k}$. Let $J = (j_1 < \cdots < j_{n-k})$ be the complementary increasing multi-index. Define
+  \begin{equation*}
+  *(\varepsilon^I) = \varepsilon^J \quad \text{if the permutation } (i_1,\dots,i_k,j_1,\dots,j_{n-k}) \text{ is even, and } -\varepsilon^J \text{ if odd.}
+  \end{equation*}
+  Equivalently, the sign is chosen so that $\varepsilon^I \wedge *\varepsilon^I = \mathrm{d}V_g$. Extend $*$ linearly to all of $\Lambda^k T_p^*M$. Then for any two basis forms $\varepsilon^I$ and $\varepsilon^K$, we have
+  \begin{equation*}
+  \varepsilon^I \wedge *\varepsilon^K = 
+  \begin{cases}
+  \mathrm{d}V_g & \text{if } I = K, \\
+  0 & \text{otherwise.}
+  \end{cases}
+  \end{equation*}
+  On the other hand, because the $\varepsilon^i$ are orthonormal, the inner product on forms satisfies $\langle \varepsilon^I, \varepsilon^K \rangle_g = \delta_{IK}$. Hence
+  \begin{equation*}
+  \varepsilon^I \wedge *\varepsilon^K = \langle \varepsilon^I, \varepsilon^K \rangle_g \, \mathrm{d}V_g.
+  \end{equation*}
+  By bilinearity, for any $\omega, \eta \in \Lambda^k T_p^*M$ we obtain $\omega \wedge *\eta = \langle \omega, \eta\rangle_g \, \mathrm{d}V_g$.
+
+  This construction at each point is independent of the choice of oriented orthonormal basis because the inner product and orientation are fixed; a change of basis preserves the definition (the sign is consistent). Moreover, by using a smooth local orthonormal frame (which exists via Gram–Schmidt), we obtain a smooth bundle homomorphism. Thus $*$ exists globally.
+\end{proof}
+
+\begin{proposition}{Properties of the Hodge Star Operator}{Properties of the Hodge Star Operator}
+  \begin{itemize}
+    \item $*: \Lambda^0 T^*M \to \Lambda^n T^*M$ is given by $*(f) = f \mathrm{d} V_g$ for any $f \in C^\infty (M)$.
+    \item If $\omega$ is a $k$-form, then $**\omega = (-1)^{k(n-k)} \omega$.
+  \end{itemize}  
+\end{proposition}
+
+On Euclidean spaces, we can use the Hodge star operator to rewrite the classical vector calculus operators in terms of differential forms.
+
 \subsection{The Divergence Theorem}
+Let $(M,g)$ be an oriented Riemannian $n$-manifold with or without boundary. In previous chapters, we have defined smooth bundle homomorphisms
+\begin{equation*}
+  *: C^\infty (M) \to \Omega^n(M), \qquad *f = f \mathrm{d} V_g,
+\end{equation*}
+and also
+\begin{equation*}
+  \beta: \mathfrak{X}(M) \to \Omega^{n-1}(M), \qquad \beta(X) = X \lrcorner \, \mathrm{d} V_g,
+\end{equation*}
+writing by Hodge star operator, we have $\beta(X) = * (X^\flat)$, where $X^\flat$ is the 1-form dual to $X$ under the Riemannian metric.
+
+\begin{lemma}{Pullback over Immersed Hypersurfaces}{Pullback over Immersed Hypersurfaces}
+  Let $(M,g)$ be an oriented Riemannian $n$-manifold with or without boundary, and $S \subseteq M$ is an immersed hypersurface with the induced orientation by a unit normal vector field $N$, and $\tilde{g}$ is the induced Riemannian metric on $S$, then for any vector field $X$ along $S$, we have
+  \begin{equation}
+    \iota_S^* \beta(X) = \langle X, N \rangle_g \mathrm{d} V_{\tilde{g}},
+  \end{equation}
+  where $\iota_S: S \hookrightarrow M$ is the inclusion map.
+\end{lemma}
+Geometrically, $\beta(X)$ is the tangent hyperplane flow of $X$, and $\iota_S^* \beta(X)$ is the projection of the tangent hyperplane flow of $X$ onto $S$, which is just the normal component of $X$ times the volume form on $S$.
+
+\begin{definition}{The Divergence of a Vector Field}{The Divergence of a Vector Field}
+  Let $(M,g)$ be an oriented Riemannian $n$-manifold with or without boundary, and $X \in \mathfrak{X}(M)$ be a smooth vector field on $M$, then the \textbf{divergence} of $X$ is defined as $\divergence: \mathfrak{X}(M) \to C^\infty (M)$ given by
+  \begin{equation}
+    \divergence X = *^{-1} \mathrm{d} \beta(X) = * \, \mathrm{d} * (X^\flat).
+  \end{equation}
+  Or equivalently,
+  \begin{equation}
+    \mathrm{d} \beta(X) = \mathrm{d} * (X^\flat) = (\divergence X) \mathrm{d} V_g = * (\divergence X).
+  \end{equation}
+\end{definition}
+Actually, $*=*^{-1}$ for 0-forms and $n$-forms, so the first formula holds.
+
+\begin{theorem}{The Divergence Theorem}{The Divergence Theorem}
+  Let $(M,g)$ be an oriented Riemannian $n$-manifold with boundary, and $X \in \mathfrak{X}(M)$ be a compactly supported smooth vector field on $M$, then we have
+  \begin{equation}
+    \int_M \divergence X \mathrm{d} V_g = \int_{\partial M} \langle X, N \rangle_g \mathrm{d} V_{\tilde{g}},
+  \end{equation}
+  where $\tilde{g}$ is the induced Riemannian metric on $\partial M$, and $N$ is the outward unit normal vector field along $\partial M$.
+\end{theorem}
+\begin{proof}
+  This is equivalent to
+  \begin{equation*}
+    \int_M \mathrm{d} *(X^\flat) = \int_{\partial M} \iota^*_{\partial M} *(X^\flat),
+  \end{equation*}
+  which is just Stokes' theorem for the $(n-1)$-form $*(X^\flat)$.
+\end{proof}
+
+The name divergence comes from the following geometric interpretation. A smooth flow $\theta$ on $M$ is called \textbf{volume-preserving} if for every compact regular domain $D$, we have $\mathrm{Vol}(\theta_t(D)) = \mathrm{Vol}(D)$ whenever $\theta_t$ is defined on $D$.
+
+\begin{proposition}{Geometric Interpretation of Divergence}{Geometric Interpretation of Divergence}
+  Let $(M,g)$ be an oriented Riemannian $n$-manifold, and let $\theta$ be the smooth flow generated by a smooth vector field $X \in \mathfrak{X}(M)$, then $\theta$ is
+  \begin{itemize}
+    \item volume-preserving iff $\divergence X = 0$ on $M$.
+    \item volume-increasing iff $\divergence X > 0$ on $M$.
+    \item volume-decreasing iff $\divergence X < 0$ on $M$.
+  \end{itemize}
+\end{proposition}
+\begin{proof}
+  We have $\theta_t$ being an orientation-preserving diffeomorphism, so we have
+  \begin{equation*}
+    \Vol (\theta_t(D)) = \int_{\theta_t(D)} \mathrm{d} V_g = \int_D \theta_t^* (\mathrm{d} V_g).
+  \end{equation*}
+  As the right hand integrand depends smoothly on $t,p$, we can differentiate under the integral sign (using a partition of unity to rigorously justify this), and we have by Cartan's magic formula,
+  \begin{equation*}
+    \mathcal{L}_X \omega_g = X \lrcorner \, \omega_g + \mathrm{d} (X \lrcorner \, \omega_g) = \divergence X \, \omega_g = \divergence X \mathrm{d} V_g,
+  \end{equation*}
+  so we have
+  \begin{equation*}
+    \begin{aligned}
+      \frac{\mathrm{d} }{\mathrm{d} t} \big|_{t=t_0} \Vol (\theta_t(D)) &= \int_D \frac{\partial}{\partial t} \big|_{t=t_0} \theta_t^* (\mathrm{d} V_g) = \int_D \theta_{t_0}^* (\mathcal{L}_X \mathrm{d} V_g) = \int_D \theta_{t_0}^* (\divergence X \mathrm{d} V_g)\\
+      &= \int_{\theta_{t_0}(D)} \divergence X \mathrm{d} V_g,
+    \end{aligned}
+  \end{equation*}
+  Thus we have our result.
+\end{proof}
+
+\subsection{Surface Integrals}
+Now, we come to the original curl operator in vector calculus.
+
+\begin{definition}{The Curl Operator}{The Curl Operator}
+  Let $(M,g)$ be an oriented Riemannian 3-manifold, with or without boundary, and $X \in \mathfrak{X}(M)$ be a smooth vector field on $M$, then the \textbf{curl} of $X$ is defined as $\curl: \mathfrak{X}(M) \to \mathfrak{X}(M)$ given by
+  \begin{equation}
+    \curl X = \beta^{-1} \mathrm{d} (X^\flat) = (* \, \mathrm{d} X^\flat)^\sharp,
+  \end{equation}
+  or equivalently,
+  \begin{equation*}
+    (\curl X) \lrcorner \, \mathrm{d} V_g = \mathrm{d} (X^\flat).
+  \end{equation*}
+\end{definition}
+Now, if $S \subseteq M$ is a compact 2-dimensional submanifold with or without boundary, and $N$ is a smooth unit normal vector field along $S$, then denote $\mathrm{d} A$ to be the Riemannian volume form on $S$ induced by the Riemannian metric $g$ and the orientation given by $N$, that is,
+\begin{equation*}
+  \mathrm{d} A = \iota_S^* (N \lrcorner \, \mathrm{d} V_g)
+\end{equation*}
+Then the surface integral of a smooth vector field $X$ on $M$ over $S$ is defined by
+\begin{equation}
+  \int_S \langle X, N \rangle_g \mathrm{d} A
+\end{equation}
+
+\begin{theorem}{Stokes' Surface Integral Theorem}{Stokes' Surface Integral Theorem}
+  Let $(M,g)$ be an oriented Riemannian 3-manifold with or without boundary, and $S \subseteq M$ be a compact oriented smooth 2-dimensional submanifold with boundary, and $N$ be the unit normal vector field along $S$ that induces the orientation on $S$, and $T$ be the unit tangent vector field along $\partial S$ that is positively oriented with respect to the orientation on $\partial S$, then we have
+  \begin{equation}
+    \int_S \langle \curl X, N \rangle_g \mathrm{d} A = \int_{\partial S} \langle X, T \rangle_g \mathrm{d} s,
+  \end{equation}
+\end{theorem}
+\begin{proof}
+  Three identities:
+  \begin{equation*}
+    \int_S \mathrm{d} X^\flat = \int_{\partial S} \iota^*_{\partial S} X^\flat, \qquad \iota_S^* \mathrm{d} X^\flat = \langle \curl X, N \rangle_g \mathrm{d} A, \qquad \iota^*_{\partial S} X^\flat = \langle X, T \rangle_g \mathrm{d} s,
+  \end{equation*}
+  where the first one is just Stokes' theorem, the second one is by the definition of curl and the pullback over immersed hypersurfaces \ref{lem:Pullback over Immersed Hypersurfaces}, and the third one is proved by assuming $\iota_{\partial S}^* X^\flat = f \mathrm{d} s$ for some function $f$, then we have
+  \begin{equation*}
+    f = f \mathrm{d} s(T) = X^\flat (T) = \langle X, T \rangle_g,
+  \end{equation*}
+  thus we have our result.
+\end{proof}
+
+\section{Densities}
+There is a way to define integration on nonorientable manifolds as well. The problem with differential forms is that the coordinate transformations of a differential form involves the Jacobian determinant of the transformation map, while the transformation law for integrals involves the absolute value of the Jacobian determinant, so we need to restrict the transition maps to be orientation-preserving to get a well-defined integration of forms (invariant under orientation-preserving diffeomorphisms). 
+
+Now, we may define objects that transform under the absolute value of the Jacobian determinant, for which orientation is not a problem.
+
+\begin{definition}{Densities}{Densities}
+  Let $V$ be an $n$-dimensional real vector space. A density on $V$ is a function
+  \begin{equation}
+    \nu: V^n \to \mathbb{R}
+  \end{equation}  
+  satisfying that if $T: V \to V$ is a linear transformation, then
+  \begin{equation}
+    \mu(T v_1, \ldots , T v_n) = |\det T| \mu(v_1, \ldots , v_n),
+  \end{equation}
+\end{definition}
+Note that densities are not linear, so they are not elements of the tensor algebra of $V$, but they have certain relations. Denote $\mathcal{D}(V)$ to be the space of densities on $V$.
+
+\begin{proposition}{Properties of Densities}{Properties of Densities}
+  Let $V$ be an $n\geq 1$-dimensional real vector space.
+  \begin{itemize}
+    \item $\mathcal{D}(V)$ is a real vector space under pointwise addition and scalar multiplication:
+      \begin{equation*}
+        (c_1 \mu_1 + c_2 \mu_2)(v_1, \ldots , v_n) = c_1 \mu_1(v_1, \ldots , v_n) + c_2 \mu_2(v_1, \ldots , v_n).
+      \end{equation*}
+    \item If $\mu_1, \mu_2 \in \mathcal{D}(V)$ and $\mu_1(E_1, \ldots , E_n) = \mu_2(E_1, \ldots , E_n)$ for some basis $E_1, \ldots , E_n$ of $V$, then $\mu_1 = \mu_2$.
+    \item If $\omega \in \Lambda^n V^*$ is a nonzero $n$-form, then $|\omega|: V^n \to \mathbb{R}$ given by $|\omega|(v_1, \ldots , v_n) = |\omega(v_1, \ldots , v_n)|$ is a density on $V$.
+    \item $\mathcal{D}(V)$ is a 1-dimensional real vector space, spanned by any nonzero $|\omega|$ for $\omega \in \Lambda^n V^*$.
+  \end{itemize}  
+\end{proposition}
+
+A \textbf{positive density} is a density $\mu$ such that $\mu(v_1, \ldots , v_n) > 0$ for any linear independent $v_1, \ldots , v_n$. A negative density is defined similarly. It is easy to see that a density is either positive, negative, or identically zero. For nonzero $\omega \in \Lambda^n V^*$, $|\omega|$ is a positive density, and the positive densities are exactly the positive scalar multiples of $|\omega|$, thus a convex subset of $\mathcal{D}(V)$, (a half line).
+
+Now, if $M$ is a smooth manifold, with or without boundary, then the set
+\begin{equation}
+  \mathcal{D} M = \bigsqcup_{p\in M} \mathcal{D}(T_p M)
+\end{equation}
+is called the \textbf{density bundle} of $M$.
+
+\begin{proposition}{Structure of Density Bundles}{Structure of Density Bundles}
+  Let $M$ be a smooth manifold, with or without boundary, then $\mathcal{D} M$ is a smooth line bundle over $M$, and the transition functions of $\mathcal{D} M$ are given by the absolute value of the Jacobian determinant of the transition maps of $M$.
+\end{proposition}
+
+If $M$ is a smooth $n$-manifold, with or without boundary, then a \textbf{density (field)} on $M$ is a smooth section of the density bundle $\mathcal{D} M$.
+
+\begin{proposition}{Existence of Positive Densities}{Existence of Positive Densities}
+  Let $M$ be a smooth manifold, with or without boundary, then there exists a positive density on $M$.
+\end{proposition}
+\begin{proof}
+  Because the set of positive densities of $M$ in $\mathcal{D}M$ is an open subset whose intersection with each fiber is a half line (convex), so we can use a partition of unity to construct a global positive density from local positive densities.
+\end{proof}
+
+\begin{remark}
+  Unlike forms whose positivity requires an orientation, the positivity of densities is invariant under all diffeomorphisms.
+\end{remark}
+
+Under smooth maps, densities pull back just like forms. If $F: M \to N$ is a smooth map between smooth $n$-manifolds, with or without boundary, and $\mu$ is a density on $N$, then the pullback $F^* \mu$ is defined by
+\begin{equation*}
+  (F^* \mu)_p (v_1, \ldots , v_n) = \mu_{F(p)} (\mathrm{d} F_p (v_1), \ldots , \mathrm{d} F_p (v_n)),
+\end{equation*}
+
+\begin{proposition}{Properties of Pullback of Densities}{Properties of Pullback of Densities}
+  Let $G: P \to M$ and $F: M \to N$ be smooth maps between smooth $n$-manifolds, with or without boundary, and $\mu$ be a density on $N$, then we have
+  \begin{itemize}
+    \item For any $f \in C^\infty (N)$, we have $F^* (f \mu) = (f \circ F) F^* \mu$.
+    \item If $\omega$ is an $n$-form on $N$, then $F^* |\omega| = |F^* \omega|$.
+    \item If $\mu$ is smooth, then $F^* \mu$ is smooth.
+    \item $(F \circ G)^* \mu = G^* (F^* \mu)$.
+  \end{itemize}
+\end{proposition}
+\begin{proposition}{Pullback of Densities in Coordinates}{Pullback of Densities in Coordinates}
+  Suppose $F: M \to N$ is a smooth map between smooth $n$-manifolds, with or without boundary, and $(x^i)$ and $(y^i)$ are local smooth coordinates on open sets $U \subseteq M$ and $V \subseteq N$ respectively, and $u$ is a continuous function on $V$ then on $F^{-1}(V) \cap U$, we have
+  \begin{equation}
+    F^* (u | \mathrm{d} y^1 \wedge \cdots \wedge \mathrm{d} y^n|) = (u \circ F) |\det (\partial F^i / \partial x^j)| |\mathrm{d} x^1 \wedge \cdots \wedge \mathrm{d} x^n|.
+  \end{equation}
+\end{proposition}
+
+Now for integration. First consider the case when $M = \mathbb{R}^n$. If $D$ is a domain of integration and $\mu$ is a density on $\overline{D}$, then we can write $\mu = f |\mathrm{d} x^1 \wedge \cdots \wedge \mathrm{d} x^n|$ for some continuous function $f: \overline{D} \to \mathbb{R}$, and we can define the integral of $\mu$ by
+\begin{equation}
+  \int_D \mu = \int_D f \mathrm{d} x^1 \cdots \mathrm{d} x^n,
+\end{equation}
+Similarly, if $U \subseteq \mathbb{R}^n$ or $\mathbb{H}^n$ is an open set and $\mu$ is compactly supported on $U$, then we can define
+\begin{equation}
+  \int_U \mu = \int_D \mu,
+\end{equation}
+where $D$ is any domain of integration containing $\supp \mu$. This definition is diffeomorphism invariant.
+
+\begin{proposition}{Diffeomorphism Invariance of Integration of Densities}{Diffeomorphism Invariance of Integration of Densities}
+  Let $U,V$ be open sets in $\mathbb{R}^n$ or $\mathbb{H}^n$, and $G: U \to V$ be a diffeomorphism. If $\mu$ is a compactly supported density on $V$, then we have
+  \begin{equation*}
+    \int_V \mu = \int_U G^* \mu.
+  \end{equation*}
+\end{proposition}
+
+Now let $M$ be a smooth $n$-manifold, with or without boundary. If $\mu$ is a density on $M$ that is compactly supported in a chart $(U,\varphi)$, then we can define
+\begin{equation*}
+  \int_M \mu = \int_{\varphi(U)} \varphi^* \mu,
+\end{equation*}
+For arbitrary compactly supported density $\mu$ on $M$, we can use a partition of unity to break down $\mu$ into a sum of compactly supported densities that are supported in charts, and define the integral of $\mu$ by
+\begin{equation*}
+  \int_M \mu = \sum_i \int_M \psi_i \mu
+\end{equation*}
+where $\{\psi_i\}$ is a partition of unity subordinate to an open cover of $M$ by smooth charts.
+
+\begin{proposition}{Properties of Integration of Densities}{Properties of Integration of Densities}
+  Let $M, N$ be smooth $n$-manifolds, with or without boundary, and $\mu, \eta$ be compactly supported densities on $M$, then
+  \begin{itemize}
+    \item Linearity: $\displaystyle \int_M (c_1 \mu + c_2 \eta) = c_1 \int_M \mu + c_2 \int_M \eta$ for any $c_1, c_2 \in \mathbb{R}$.
+    \item Positivity: If $\mu$ is a positive density on $M$, then $\displaystyle \int_M \mu > 0$.
+    \item Diffeomorphism invariance: If $F: M \to N$ is a diffeomorphism, then $\displaystyle \int_N \mu = \int_M F^* \mu$.
+  \end{itemize}
+\end{proposition}
+
+We can also calculate the integral of a density in coordinates by cutting it into pieces like proposition \ref{prop:Integration over Parametrizations} and \ref{prop:Integration over Parametrizations for Manifolds with Corners}.
+
+\begin{proposition}{Integration of Densities over Parametrizations}{Integration of Densities over Parametrizations}
+  Let $M$ be a smooth $n$-manifold, with or without boundary, and $\mu$ be a compactly supported density on $M$. Suppose $D_1, \ldots ,D_k$ are open domains of integration in $\mathbb{R}^n$ and for each $i$, we are given smooth maps $F_i: \overline{D_i} \to M$ saitisfying
+  \begin{itemize}
+    \item $F_i|_{D_i}$ is a diffeomorphism from $D_i$ to its image $W_i \subseteq M$.
+    \item $W_i \cap W_j = \emptyset$ for $i\neq j$.
+    \item $\supp \mu \subseteq \bigcup_i \overline{W_i}$.
+  \end{itemize}
+  Then we have
+  \begin{equation}
+    \int_M \mu = \sum_i \int_{D_i} F_i^* \mu.
+  \end{equation}
+\end{proposition}
+
+\subsection{The Riemannian Density}
+Densities are particularly useful in Riemannian geometry.
+
+\begin{proposition}{Riemannian Density}{Riemannian Density}
+  Let $(M,g)$ be a smooth Riemannian $n$-manifold, with or without boundary, then there is a unique smooth positive density $\mu_g$ on $M$ called the \textbf{Riemannian density} of $g$ such that for any local orthonormal frame $(E_1, \ldots , E_n)$ of $TM$, we have
+  \begin{equation*}
+    \mu_g (E_1, \ldots , E_n) = 1.
+  \end{equation*}
+  Actually, $\mu_g = |\omega_g|$, where $\omega_g$ is the Riemannian volume form of $g$.
+\end{proposition}
+The Riemannian density is invariant under isometries: Suppose $F: (M,g) \to (\tilde{M}, \tilde{g})$ is an isometry between Riemannian manifolds with or without boundary, then $F^* \mu_{\tilde{g}} = \mu_g$.
+
+Sometimes we simply denote $\mathrm{d} V_g$ to be the Riemannian density $\mu_g$. If $f: M \to \mathbb{R}$ is a compactly supported continuous function, then we can define the integral of $f$ by
+\begin{equation*}
+  \int_M f \mathrm{d} V_g = \int_M f \mu_g,
+\end{equation*}
+When $M$ is oriented, it does not matter whether we use the Riemannian volume form $\omega_g$ or the Riemannian density $\mu_g$ to define the integral of $f$, because even when the orientation is reversed, both the integral and $\omega_g$ change sign, so there is no change for the result. When $M$ is nonorientable, we can only use the Riemannian density $\mu_g$ to define the integral of $f$, and this definition is invariant under all diffeomorphisms.
+
+It is fairly surprising that we actually can generalize the divergence theorem to nonorientable Riemannian manifolds.
+
+\begin{theorem}{Divergence Theorem for Nonorientable Riemannian Manifolds}{Divergence Theorem for Nonorientable Riemannian Manifolds}
+  Let $(M,g)$ be a nonorientable Riemannian $n$-manifold with boundary, and $X \in \mathfrak{X}(M)$ be a compactly supported smooth vector field on $M$, then we have
+  \begin{equation}
+    \int_M \divergence X \mu_g = \int_{\partial M} \langle X, N \rangle_g \mu_{\tilde{g}},
+  \end{equation}
+  where $N$ is an outward unit normal vector field along $\partial M$, and $\tilde{g}$ is the induced Riemannian metric on $\partial M$.
+\end{theorem}
+\begin{proof}
+  Let $\hat{\pi}: \hat{M} \to M$ be the orientation double cover of $M$, then it restricts to a generalized smooth covering map $\hat{\pi}: \partial \hat{M} \to \partial M$. Let 
+\end{proof}
 
 \end{document}
