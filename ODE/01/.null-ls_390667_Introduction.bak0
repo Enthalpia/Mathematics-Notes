@@ -7,47 +7,47 @@
 Let $U \subseteq \mathbb{R}^n, V \subseteq \mathbb{R}^m$ and $k\in \mathbb{N}$. Denote $C^k(U,V)$ as the set of all functions $f: U \to V$ having continuous derivatives up to order $k$. We shall abbreviate $C(U,V) = C^0(U,V)$ and $C^\infty(U,V) = \bigcap_{k=0}^\infty C^k(U,V)$, and $C^k(U) = C^k(U,\mathbb{R})$.
 
 \begin{definition}{Ordinary Differential Equation}{Ordinary Differential Equation}
-	A classical \textbf{ordinary differential equation} (ODE) is a functional relation of the form
-	\begin{equation}
-		F(t, x, x^{(1)}, \dots, x^{(k)}) = 0
-	\end{equation}
-	for the unknown function $x\in C^k(J)$, where $J \subseteq \mathbb{R}$. Here $x^{(i)}$ denotes the $i$-th derivative of $x$ with respect to $t$.
+  A classical \textbf{ordinary differential equation} (ODE) is a functional relation of the form
+  \begin{equation}
+    F(t, x, x^{(1)}, \dots, x^{(k)}) = 0
+  \end{equation}
+  for the unknown function $x\in C^k(J)$, where $J \subseteq \mathbb{R}$. Here $x^{(i)}$ denotes the $i$-th derivative of $x$ with respect to $t$. 
 
-	Here $F\in C(U)$ for some open set $U \subseteq \mathbb{R}^{k+2}$, We call $k$ the \textbf{order} of the ODE.
+  Here $F\in C(U)$ for some open set $U \subseteq \mathbb{R}^{k+2}$, We call $k$ the \textbf{order} of the ODE.
 
-	A solution of the ODE is a function $\phi\in C^k(I)$ for some interval $I \subseteq J$ such that
-	\begin{equation*}
-		F(t, \phi(t), \phi^{(1)}(t), \dots, \phi^{(k)}(t)) = 0, \forall t \in I.
-	\end{equation*}
+  A solution of the ODE is a function $\phi\in C^k(I)$ for some interval $I \subseteq J$ such that
+  \begin{equation*}
+    F(t, \phi(t), \phi^{(1)}(t), \dots, \phi^{(k)}(t)) = 0, \forall t \in I.
+  \end{equation*}
 \end{definition}
 
 However, there is too much freedom in the choice of $F$, and from now on we shall only consider ODEs that can solve for the highest order derivative, i.e. ODEs of the form
 \begin{equation*}
-	x^{(k)} = f(t, x, x^{(1)}, \dots, x^{(k-1)})
+  x^{(k)} = f(t, x, x^{(1)}, \dots, x^{(k-1)})
 \end{equation*}
 By the implicit function theorem, this is be done at least locally near points where $\partial F/\partial x^{(k)} \neq 0$.
 
 If we relax the condition so functions $x: J \to \mathbb{R}^n$, this leads to the system of ODEs:
 \begin{equation*}
-	\begin{aligned}
-		x_1^{(k)} & = f_1(t, x_1, \dots, x_n, x_1^{(1)}, \dots, x_n^{(k-1)}) \\
-		          & \vdots                                                   \\
-		x_n^{(k)} & = f_n(t, x_1, \dots, x_n, x_1^{(1)}, \dots, x_n^{(k-1)})
-	\end{aligned}
+  \begin{aligned}
+    x_1^{(k)} &= f_1(t, x_1, \dots, x_n, x_1^{(1)}, \dots, x_n^{(k-1)}) \\
+    &\vdots \\
+    x_n^{(k)} &= f_n(t, x_1, \dots, x_n, x_1^{(1)}, \dots, x_n^{(k-1)})
+  \end{aligned}
 \end{equation*}
 
 Such a system is called linear if
 \begin{equation*}
-	x_i^{(k)} = g_i(t) + \sum_{l=1}^n \sum_{j=0}^{k-1} f_{i,j,l}(t) x_l^{(j)}, \forall i = 1, \dots, n
+  x_i^{(k)} = g_i(t) + \sum_{l=1}^n \sum_{j=0}^{k-1} f_{i,j,l}(t) x_l^{(j)}, \forall i = 1, \dots, n
 \end{equation*}
 and is called homogeneous if $g_i(t) = 0$ for all $i$.
 
 Moreover, any system can always be reduced to a first-order system by treating $x_i^{(j)}$ as a new variable for $j = 0, \dots, k-1$. We can even add $t$ as a new variable to make the system autonomous:
 \begin{equation*}
-	\begin{aligned}
-		\dot{z}_1     & = 1, \dot{z}_2 = z_3, \quad \cdots \quad \dot{z}_k = z_{k+1} \\
-		\dot{z}_{k+1} & = f(z).
-	\end{aligned}
+  \begin{aligned}
+    \dot{z}_1 &= 1, \dot{z}_2 = z_3, \quad \cdots \quad \dot{z}_k = z_{k+1} \\
+    \dot{z}_{k+1} &= f(z).
+  \end{aligned}
 \end{equation*}
 In particular, it success to consider the case of autonomous first-order systems, which we will frequently do.
 
@@ -59,91 +59,91 @@ Finally, note that we could admit complex values for the dependent variables. It
 
 The simplest nontrivial case of a first order autonomous ODE is given by
 \begin{equation}
-	\dot{x} = f(x), \qquad x(0) = x_0, \quad f\in C(\mathbb{R})
+  \dot{x} = f(x), \qquad x(0) = x_0, \quad f\in C(\mathbb{R})
 \end{equation}
 starting at a given point at $t=0$.
 
 This equation can be solved using a small ruse: If $f(x_0) \neq 0$, then locally, we can divide both sides by $f(x)$ and integrate
 \begin{equation*}
-	\int_0^t \frac{\dot{x}(s) \mathrm{d} s}{f(x(s))} = t.
+  \int_0^t \frac{\dot{x}(s) \mathrm{d} s}{f(x(s))} = t.
 \end{equation*}
 Abbreviating $\displaystyle F(x) = \int_{x_0}^x \frac{\mathrm{d} y}{f(y)}$, we see that every solution of the ODE must satisfy $F(x(t)) = t$. Conversely, as $F$ is locally strictly monotonic, it has a unique local inverse, so we can obtain a unique local solution: $\phi(t) = F^{-1}(t)$.
 
 Now let us look at the maximal interval where $\phi$ is defined by this procedure. If $f(x_0) > 0$, then $f$ is positive in a small neighborhood $x_0\in (x_1, x_2)$, so we define
 \begin{equation*}
-	T_+ = \lim_{x \to x_2^-} F(x) \in (0, +\infty], \qquad T_- = \lim_{x \to x_1^+} F(x) \in [-\infty, 0).
+  T_+ = \lim_{x \to x_2^-} F(x) \in (0, +\infty], \qquad T_- = \lim_{x \to x_1^+} F(x) \in [-\infty, 0).
 \end{equation*}
 Then we have $\phi \in C^1((T_-, T_+))$ and
 \begin{equation*}
-	\lim_{t \to T_+^-} \phi(t) = x_2, \qquad \lim_{t \to T_-^+} \phi(t) = x_1.
+  \lim_{t \to T_+^-} \phi(t) = x_2, \qquad \lim_{t \to T_-^+} \phi(t) = x_1.
 \end{equation*}
 In fact, $\phi$ is defined for all $t > 0$ if and only if
 \begin{equation}
-	T_+ = \int_{x_0}^{x_2} \frac{\mathrm{d} y}{f(y)} = +\infty,
+  T_+ = \int_{x_0}^{x_2} \frac{\mathrm{d} y}{f(y)} = +\infty,
 \end{equation}
 The other sides are similar.
 
 If $T_+ < +\infty$, then there are two possibilities:
 \begin{itemize}
-	\item $x_2 = +\infty$, in which case $\phi$ diverges to $+\infty$ in finite time, and there is no way to extend it beyond $T_+$ in a continuous way.
-	\item $x_2 < +\infty$, in which case the solution $\phi$ reaches $x_2$ at time $T_+$, and we can extend it as follows: If $f(x_2) > 0$, then $x_2$ was not chosen maximum and we can increase it, which provides the required extension. Otherwise, if $f(x_2) = 0$, then we can just set $\phi(t) = x_2$ for all $t \geq T_+$, which may NOT be a unique one, but for sure is a solution.
+  \item $x_2 = +\infty$, in which case $\phi$ diverges to $+\infty$ in finite time, and there is no way to extend it beyond $T_+$ in a continuous way.
+  \item $x_2 < +\infty$, in which case the solution $\phi$ reaches $x_2$ at time $T_+$, and we can extend it as follows: If $f(x_2) > 0$, then $x_2$ was not chosen maximum and we can increase it, which provides the required extension. Otherwise, if $f(x_2) = 0$, then we can just set $\phi(t) = x_2$ for all $t \geq T_+$, which may NOT be a unique one, but for sure is a solution.
 \end{itemize}
 
 \begin{example}{First Order Autonomous Equations}{FirstOrderAutonomousEquations}
-	\begin{itemize}
-		\item If $f(x) = x$, $x_0 > 0$, then we have $(x_1, x_2) = (0, +\infty)$ and
-		      \begin{equation*}
-			      F(x) = \int_{x_0}^x \frac{\mathrm{d} y}{y} = \ln \frac{x}{x_0}, \qquad T_+ = +\infty, T_- = -\infty.
-		      \end{equation*}
-		      and the solution is $\phi(t) = x_0 e^t$. Thus the solution is globally defined for all $t \in \mathbb{R}$.
-		\item If $f(x) = x^2$, $x_0 > 0$, then we have $(x_1, x_2) = (0, +\infty)$ and
-		      \begin{equation*}
-			      F(x) = \int_{x_0}^x \frac{\mathrm{d} y}{y^2} = \frac{1}{x_0} - \frac{1}{x}, \qquad T_+ = \frac{1}{x_0}, T_- = -\infty.
-		      \end{equation*}
-		      The solution
-		      \begin{equation*}
-			      \phi(t) = \frac{x_0}{1 - x_0 t}
-		      \end{equation*}
-		      so we have $\lim_{t \to T_+^-} \phi(t) = +\infty$. Thus the solution is only defined for $t < 1/x_0$, and there is no way to extend it beyond $T_+$ in a continuous way.
-	\end{itemize}
+  \begin{itemize}
+    \item If $f(x) = x$, $x_0 > 0$, then we have $(x_1, x_2) = (0, +\infty)$ and
+      \begin{equation*}
+        F(x) = \int_{x_0}^x \frac{\mathrm{d} y}{y} = \ln \frac{x}{x_0}, \qquad T_+ = +\infty, T_- = -\infty.
+      \end{equation*}
+      and the solution is $\phi(t) = x_0 e^t$. Thus the solution is globally defined for all $t \in \mathbb{R}$.
+    \item If $f(x) = x^2$, $x_0 > 0$, then we have $(x_1, x_2) = (0, +\infty)$ and
+      \begin{equation*}
+        F(x) = \int_{x_0}^x \frac{\mathrm{d} y}{y^2} = \frac{1}{x_0} - \frac{1}{x}, \qquad T_+ = \frac{1}{x_0}, T_- = -\infty.
+      \end{equation*}
+      The solution
+      \begin{equation*}
+        \phi(t) = \frac{x_0}{1 - x_0 t}
+      \end{equation*}
+      so we have $\lim_{t \to T_+^-} \phi(t) = +\infty$. Thus the solution is only defined for $t < 1/x_0$, and there is no way to extend it beyond $T_+$ in a continuous way.
+  \end{itemize}
 \end{example}
 
-Now, we consider the zeroes of $f$. If $f(x_0) = 0$, then there is a trivial solution $\phi(t) = x_0$ for all $t$. But this may not be the only one: If we have
+Now, we consider the zeroes of $f$. If $f(x_0) = 0$, then there is a trivial solution $\phi(t) = x_0$ for all $t$. But this may not be the only one: If we have 
 \begin{equation*}
-	\left| \int_{x_0}^{x_0 + \epsilon} \frac{\mathrm{d} y}{f(y)} \right| < +\infty
+  \left| \int_{x_0}^{x_0 + \epsilon} \frac{\mathrm{d} y}{f(y)} \right| < +\infty
 \end{equation*}
 then there is another solution
 \begin{equation*}
-	\phi = F^{-1}(t), \qquad F(x) = \int_{x_0}^x \frac{\mathrm{d} y}{f(y)}.
+  \phi = F^{-1}(t), \qquad F(x) = \int_{x_0}^x \frac{\mathrm{d} y}{f(y)}.
 \end{equation*}
 
 \begin{example}{Zeroes of $f$}{ZeroesOfF}
-	If $f(x) = \sqrt{|x|}$, and $x_0 > 0$, then we have $(x_1, x_2) = (0, +\infty)$ and
-	\begin{equation*}
-		F(x) = \int_{x_0}^x \frac{\mathrm{d} y}{\sqrt{y}} = 2(\sqrt{x} - \sqrt{x_0}), \qquad T_+ = +\infty, T_- = -2\sqrt{x_0}.
-	\end{equation*}
-	and we have
-	\begin{equation*}
-		\phi(t) = (\sqrt{x_0} + \frac{t}{2})^2, \qquad -2\sqrt{x_0} < t < +\infty.
-	\end{equation*}
-	So for $x_0 = 0$, we have several solutions by patching the trivial solution $\phi(t) = 0$ with the above solution like
-	\begin{equation*}
-		\tilde{\phi}(t) = \begin{cases}
-			-\frac{1}{4} (t - t_0)^2, & t < t_0             \\
-			0,                        & t_0 \leq t \leq t_1 \\
-			\frac{1}{4} (t - t_1)^2,  & t > t_1
-		\end{cases}
-	\end{equation*}
-	which holds for any $t_0 \leq t_1$.
+  If $f(x) = \sqrt{|x|}$, and $x_0 > 0$, then we have $(x_1, x_2) = (0, +\infty)$ and
+  \begin{equation*}
+    F(x) = \int_{x_0}^x \frac{\mathrm{d} y}{\sqrt{y}} = 2(\sqrt{x} - \sqrt{x_0}), \qquad T_+ = +\infty, T_- = -2\sqrt{x_0}.
+  \end{equation*}
+  and we have
+  \begin{equation*}
+    \phi(t) = (\sqrt{x_0} + \frac{t}{2})^2, \qquad -2\sqrt{x_0} < t < +\infty.
+  \end{equation*}
+  So for $x_0 = 0$, we have several solutions by patching the trivial solution $\phi(t) = 0$ with the above solution like
+  \begin{equation*}
+    \tilde{\phi}(t) = \begin{cases}
+      -\frac{1}{4} (t - t_0)^2, & t < t_0 \\
+      0, & t_0 \leq t \leq t_1 \\
+      \frac{1}{4} (t - t_1)^2, & t > t_1
+    \end{cases}
+  \end{equation*}
+  which holds for any $t_0 \leq t_1$.
 \end{example}
 
 For separable equations of the form
 \begin{equation}
-	\dot{x} = f(x) g(t), \qquad x(0) = x_0
+  \dot{x} = f(x) g(t), \qquad x(0) = x_0
 \end{equation}
 the same tactics works. If $f(x_0) > 0$, then we have
 \begin{equation*}
-	F(x) = \int_{x_0}^x \frac{\mathrm{d} y}{f(y)}, \qquad G(t) = \int_0^t g(s) \mathrm{d} s
+  F(x) = \int_{x_0}^x \frac{\mathrm{d} y}{f(y)}, \qquad G(t) = \int_0^t g(s) \mathrm{d} s
 \end{equation*}
 giving $F(x(t)) = G(t)$, and the solution is $\phi(t) = F^{-1}(G(t))$, giving appropriate maximal intervals of definition. Specifically, the range which $\left\{ t\in J: G(t) \in (T_-, T_+) \right\}$ has a unique solution.
 
@@ -152,62 +152,62 @@ Here are some classes of first-order equations which are explicitly solvable
 
 \paragraph{Linear Equations} The linear equation
 \begin{equation}
-	\dot{x} = a(t) x
+  \dot{x} = a(t) x
 \end{equation}
 As $T_+ = +\infty$ and $T_- = -\infty$, we have solution for all $t \in \mathbb{R}$:
 \begin{equation}
-	\phi(t) = x_0 A(t, t_0), \qquad A(t, t_0) = \exp\left( \int_{t_0}^t a(s) \mathrm{d} s \right).
+  \phi(t) = x_0 A(t, t_0), \qquad A(t, t_0) = \exp\left( \int_{t_0}^t a(s) \mathrm{d} s \right).
 \end{equation}
 So for the corresponding nonhomogeneous equation
 \begin{equation}
-	\dot{x} = a(t) x + g(t)
+  \dot{x} = a(t) x + g(t)
 \end{equation}
 is given by
 \begin{equation*}
-	\phi(t) = x_0 A(t, t_0) + \int_{t_0}^t A(t, s) g(s) \mathrm{d} s.
+  \phi(t) = x_0 A(t, t_0) + \int_{t_0}^t A(t, s) g(s) \mathrm{d} s.
 \end{equation*}
 This can be verified by a straightforward computation.
 
 Next we turn to the problem of transforming differential equations. We may change
 \begin{equation*}
-	s = \sigma(t, x), \qquad y = \eta(t, x)
+  s = \sigma(t, x), \qquad y = \eta(t, x)
 \end{equation*}
 assume that it is a diffeomorphism. Then, a given function $\phi(t)$ may transformed to $\psi(s)$ by eliminating $t$ from the equations
 \begin{equation*}
-	s = \sigma(t, \phi(t)), \qquad \phi = \eta(t, \phi(t)).
+  s = \sigma(t, \phi(t)), \qquad \phi = \eta(t, \phi(t)).
 \end{equation*}
 
 Unfortunately this will not always be possible (e.g., if we rotate the graph of a function in $\mathbb{R}^2$, the result might not be the graph of a function). To avoid this problem we restrict our attention to the special case of \textbf{fiber-preserving transformations}:
 \begin{equation}
-	t = \tau(s), \qquad x = \xi(s, y)
+  t = \tau(s), \qquad x = \xi(s, y)
 \end{equation}
 \begin{remark}
-	This means viewing $x$ direction as fibers in the base space $t$, and the $\mathbb{R}^2$ plane is thus a fiber bundle over the $t$-axis. The transformation is fiber-preserving if it maps fibers to fibers, i.e. $\tau$ is a function of $s$ only. This a function (which is a section of the fiber bundle) is transformed to another function by the transformation.
+  This means viewing $x$ direction as fibers in the base space $t$, and the $\mathbb{R}^2$ plane is thus a fiber bundle over the $t$-axis. The transformation is fiber-preserving if it maps fibers to fibers, i.e. $\tau$ is a function of $s$ only. This a function (which is a section of the fiber bundle) is transformed to another function by the transformation.
 \end{remark}
 a straightforward application of the chain rule shows that $\phi(t)$ satisfies $\dot{x} = f(t, x)$ if and only if $\psi(s) = \eta(\tau(s), \psi(\tau(s)))$ satisfies
 \begin{equation*}
-	\dot{y} = \dot{\tau}\left( \frac{\partial \eta}{\partial t}(\tau, \xi) + \frac{\partial \eta}{\partial x}(\tau, \xi) f(\tau, \xi) \right).
+  \dot{y} = \dot{\tau}\left( \frac{\partial \eta}{\partial t}(\tau, \xi) + \frac{\partial \eta}{\partial x}(\tau, \xi) f(\tau, \xi) \right).
 \end{equation*}
 Or we can just use the simpler notation
 \begin{equation*}
-	\frac{\mathrm{d} y}{\mathrm{d} s} = \frac{\partial y}{\partial t} \frac{\mathrm{d} t}{\mathrm{d} s} + \frac{\partial y}{\partial x} \frac{\mathrm{d} x}{\mathrm{d} t} \frac{\mathrm{d} t}{\mathrm{d} s}.
+  \frac{\mathrm{d} y}{\mathrm{d} s} = \frac{\partial y}{\partial t} \frac{\mathrm{d} t}{\mathrm{d} s} + \frac{\partial y}{\partial x} \frac{\mathrm{d} x}{\mathrm{d} t} \frac{\mathrm{d} t}{\mathrm{d} s}.
 \end{equation*}
 
 Now, we shall use these tactic to solve some special equations.
 
 \paragraph{Homogeneous Equations} A nonlinear equation of the form
 \begin{equation}
-	\dot{x} = f\left( \frac{x}{t} \right)
+  \dot{x} = f\left( \frac{x}{t} \right)
 \end{equation}
 is called \textbf{homogeneous}. Consider the change of variables $y = x / t (t \neq 0)$, then we have
 \begin{equation*}
-	\dot{y} = \frac{\partial y}{\partial t} + \frac{\partial y}{\partial x} \dot{x} = \frac{f(y) - y}{t}.
+  \dot{y} = \frac{\partial y}{\partial t} + \frac{\partial y}{\partial x} \dot{x} = \frac{f(y) - y}{t}.
 \end{equation*}
 which is separable.
 
 More generally, consider the differential equation
 \begin{equation*}
-	\dot{x} = f\left( \frac{a t + b x + c}{\alpha t + \beta x + \gamma} \right)
+  \dot{x} = f\left( \frac{a t + b x + c}{\alpha t + \beta x + \gamma} \right)
 \end{equation*}
 
 \end{document}
