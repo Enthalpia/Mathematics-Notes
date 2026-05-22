@@ -1,10 +1,8 @@
 \documentclass{mathbook}
 
-\newcommand\re{\operatorname{Re}}
-\newcommand\im{\operatorname{Im}}
 \newcommand\Int{\operatorname{Int}}
 \newcommand\Ext{\operatorname{Ext}}
-\newcommand\ops{\operatorname{ops.}}
+\newcommand\ops{\operatorname{ops}}
 
 \coverimage{./cover.jpg}
 \covertitletext{Numerical Analysis}
@@ -17,7 +15,5 @@
 
 \mainmatter
 
-\subfile{./01/Preliminaries.tex}
-\subfile{./02/LinearSystems.tex}
 
 \end{document}

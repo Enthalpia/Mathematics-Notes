@@ -1,0 +1,1449 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\chapter{Numerical Solution of Linear Systems}
+
+Finding the solution of a linear algebraic equation system of large order and calculating the inverse of a matrix of large order can be difficult numerical tasks. The difficulties are practical and stem from
+\begin{itemize}
+	\item the labor required in a lengthy sequence of calculations.
+	\item the possible loss of accuracy in such lengthy calculations performed with a fixed number of decimal places.
+\end{itemize}
+Thus to determine the feasibility of solving a particular problem with given equipment, several questions should be answered:
+\begin{itemize}
+	\item How many arithmetic operations are required to apply a proposed method?
+	\item What will be the accuracy of a solution to be found by the proposed method (a priori estimate)?
+	\item How can the accuracy of the computed answer be checked (a posteriori estimate)?
+\end{itemize}
+
+In the chapter we mainly discuss two problems:
+\begin{itemize}
+	\item the solution of a linear system of equations $Ax=b$.
+	\item the calculation of the inverse of a matrix $A^{-1}$.
+\end{itemize}
+
+These two problems are closely related: If $A^{-1}$ is known, then the solution of $Ax=b$ can be found by a single matrix-vector multiplication $x=A^{-1}b$. Conversely, if the solution of $Ax=b$ can be found for any $b$, then the inverse of $A$ can be found by solving $n$ systems of equations $Ax=e_i$, where $e_i$ is the $i$-th column of the identity matrix.
+
+\section{Gaussian Elimination}
+Consider the system of linear equations
+\begin{equation}
+	A x = f
+\end{equation}
+where $A = (a_{ij})$ is an $n \times n$ matrix, $x = (x_1, x_2, \ldots, x_n)^T$ is the unknown vector, and $f = (f_1, f_2, \ldots, f_n)^T$ is the known vector.
+
+Giving the system of equations, we perform the row operations to transform the system into an upper triangular form: Let the equation of $k$-th step be $A^{(k)} x = f^{(k)}$. We perform the following row operations:
+\begin{equation} \label{eq:gauss-elimination-coefficients}
+	a_{ij}^{(k)} =
+	\begin{cases}
+		a_{ij}^{(k-1)},                                                                   & i \leq k-1           \\
+		0,                                                                                & i \geq k, j \leq k-1 \\
+		a_{ij}^{(k-1)} - \frac{a_{i,k-1}^{(k-1)}}{a_{k-1,k-1}^{(k-1)}} a_{k-1,j}^{(k-1)}, & i \geq k, j \geq k
+	\end{cases}
+\end{equation}
+and for the right-hand side vector,
+\begin{equation} \label{eq:gauss-elimination-right-hand-side}
+	f_i^{(k)} =
+	\begin{cases}
+		f_i^{(k-1)},                                                                 & i \leq k-1 \\
+		f_i^{(k-1)} - \frac{a_{i,k-1}^{(k-1)}}{a_{k-1,k-1}^{(k-1)}} f_{k-1}^{(k-1)}, & i \geq k
+	\end{cases}
+\end{equation}
+These formulae represent the result of multiplying the $(k-1)$-th equation by $a_{i,k-1}^{(k-1)}/a_{k-1,k-1}^{(k-1)}$ and subtracting it from the $i$-th equation, for $i \geq k$. After $n-1$ steps, we have an upper triangular system of equations. It has been assumed above that the elements $a_{k-1,k-1}^{(k-1)}$ are nonzero for $k=1,2,\ldots,n-1$. This holds if the matrix $A$ is nonsingular.
+
+If this is not the case, we can perform row interchanges to make the pivot element nonzero.
+
+\begin{theorem}{Gauss Elimination}{Gauss Elimination}
+	Let $A$ be be such that the Gaussian elimination procedure in natural order can be performed resulting in an upper triangular system of equations. Then $A$ is nonsigular and in fact
+	\begin{equation}
+		\det A = a_{11}^{(1)} a_{22}^{(2)} \cdots a_{nn}^{(n)}.
+	\end{equation}
+	The final matrix $A^{(n)} = U$ is an upper triangular matrix, and $A$ has the $LU$ factorization $A = LU$, where $L = m_{ik}$ is a unit lower triangular matrix with entries
+	\begin{equation*}
+		m_{ik} =
+		\begin{cases}
+			0,                           & i < k \\
+			1,                           & i = k \\
+			a_{ik}^{(k)} / a_{kk}^{(k)}, & i > k
+		\end{cases}
+	\end{equation*}
+	The final vector $f^{(n)} = g$ is $g = L^{-1} f$.
+\end{theorem}
+
+The system is equivalent to $Ux = g$, which can be solved by back substitution:
+\begin{equation*}
+	x_n = g_n / u_{nn}, \quad x_i = (g_i - \sum_{j=i+1}^n u_{ij} x_j) / u_{ii}, \quad i = n-1, n-2, \ldots, 1.
+\end{equation*}
+
+\begin{theorem}{Gauss Elimination with Pivoting}{Gauss Elimination with Pivoting}
+	Let the matrix $A$ has rank $r$. Then we can find a sequence of distinct row and column indices $(i_1, j_1), (i_2,j_2), \ldots , (i_r,j_r)$ such that the corresponding pivot elements in $A^{(1)}, A^{(2)}, \ldots, A^{(r)}$ are nonzero and that $a_{ij}^{(r)} = 0$ for $i \notin \{i_1, i_2, \ldots, i_r\}$. Let us define the permutation matrices, whose columns are unit vectors,
+	\begin{equation*}
+		P = (e^{(i_1)}, e^{(i_2)}, \ldots, e^{(i_r)}, e^{(i_{r+1})}, \ldots, e^{(i_n)}), \quad Q = (e^{(j_1)}, e^{(j_2)}, \ldots, e^{(j_r)}, e^{(j_{r+1})}, \ldots, e^{(j_n)}).
+	\end{equation*}
+	where $i_1, i_2, \ldots, i_n$ and $j_1, j_2, \ldots, j_n$ are permutations of $1, 2, \ldots, n$. Then the system
+	\begin{equation*}
+		B y = g, \qquad B = P^T A Q, y = Q^T x, g = P^T f
+	\end{equation*}
+	is equivalent to the original system $Ax = f$ and can be reduced to an upper triangular system of equations by Gaussian elimination without pivoting.
+\end{theorem}
+
+In actual computations on digital computers it is a simple matter to record the order of the pivot indices $(i_\nu, j_\nu)$ and to do the arithmetic accordingly.
+
+\begin{remark}
+	One way to pick the pivots is to require that $(i_k, j_k)$ be the indices of a maximal coefficient in the system of $n-k+1$ equations that remain at the $k$-th step. This method of selecting maximal pivots is recommended as being likely to introduce the least loss of accuracy in the arithmetical operations that are based on working with a finite number of digits.
+	\medskip
+
+	Another commonly used pivotal selection method eliminates the variables $x_1, \ldots ,x_{n-1}$ successively by selecting $(i_k, j_k) = (i_k, k)$, where $i_k$ is the index of the largest element in the $k$-th column of the system of $n-k+1$ equations that remain at the $k$-th step. This method of maximal column pivots is particularly convenient for use on an electronic computer if the large matrix of coefficients is stored by columns since the search for a maximal column element is then quicker than the maximal matrix element search.
+\end{remark}
+
+\subsection{Operational Counts}
+If the $n \times n$ matrix $A$ is nonsingular, Gaussian elimination might be employed to solve the $n$ special linear systems and thus to obtain $A^{-1}$. \emph{However, we shall show here that for any value of m this procedure is less efficient than an appropriate application of Gaussian elimination to the $m$ systems in question.}
+
+The current convention is to count only multiplications and divisions. This custom arose because the first modern digital computers performed additions and subtractions much faster than they did multiplications and divisions which were done in comparable lengths of time.
+
+Let us consider first the $m$ systems, with arbitrary $f(j)$, where $j = 1, 2, \ldots, m$. We assume, for the operational count, that the elimination proceeds in the natural order. The most efficient application then performs the operations in equations \eqref{eq:gauss-elimination-coefficients} once for all $m$ systems, and once for each of the $m$ systems for the operations in equations \eqref{eq:gauss-elimination-right-hand-side}. Thus, we find that it requires
+\begin{equation*}
+	\begin{aligned}
+		(n-k+1)^2 + (n-k+1) & \qquad \ops \text{ for \eqref{eq:gauss-elimination-coefficients} }    \\
+		(n-k+1)             & \qquad \ops \text{ for \eqref{eq:gauss-elimination-right-hand-side} }
+	\end{aligned}
+\end{equation*}
+to eliminate $x_{k-1}$. Thus, the total number of operations for the elimination phase is given by summing over $k$:
+\begin{equation*}
+	\begin{aligned}
+		\frac{1}{3} n (n^2 - 1) & \qquad \ops \text{ for triangularization}                        \\
+		\frac{1}{2} n (n-1)     & \qquad \ops \text{ for solving one inhomogeneous vector $f(j)$ }
+	\end{aligned}
+\end{equation*}
+To solve the resulting triangular system, we need $(n-i)$ multiplications and one division for $x_i$. So we have
+\begin{equation*}
+	\frac{1}{2} n (n+1) \qquad \ops \text{ for back substitution}
+\end{equation*}
+
+In total we have
+\begin{lemma}{Operational Count for Gaussian Elimination}{Operational Count for Gaussian Elimination}
+	The total number of multiplications and divisions required to solve $m$ systems of linear equations by Gaussian elimination is
+	\begin{equation}
+		\frac{1}{3} n^3 + m n^2 - \frac{1}{3}n
+	\end{equation}
+\end{lemma}
+
+To compute $A^{-1}$, just set $m = n$ and we get
+\begin{equation*}
+	\frac{4}{3} n^3 - \frac{1}{3} n \qquad \ops \text{ for computing $A^{-1}$ by Gaussian elimination}
+\end{equation*}
+However, here the $n$ inhomogeneous vectors are $e^{(j)}$, which is special. So we can reduce the number of operations with some tactics. That is, for any fixed $1 \leq j \leq n$, the calculations to be counted in \eqref{eq:gauss-elimination-right-hand-side} can start at $i = j$, which is $k = j + 2$. Thus, we have
+\begin{equation*}
+	\sum_{k = j+2}^n (n - k + 1) = \frac{1}{2} (j^2 - (2n - 1) j + n^2 - n)
+\end{equation*}
+to modify the inhomogeneous vector $e^{(j)}$ for $j = 1, 2, \ldots, n - 2$, we have
+\begin{equation*}
+	\frac{1}{6}(n^3 - 3 n^2 + 2 n) \qquad \ops \text{ for modifying the inhomogeneous vectors}
+\end{equation*}
+The other operations are the same as before, so we have
+\begin{lemma}{Operational Count for Inversion}{Operational Count for Inversion}
+	The total number of multiplications and divisions required to compute $A^{-1}$ by Gaussian elimination is
+	\begin{equation}
+		n^3
+	\end{equation}
+\end{lemma}
+Thus, to solve $m$ systems by inversion, we need
+\begin{equation*}
+	n^3 + m n^2 \qquad \ops \text{ for solving $m$ systems by inversion}
+\end{equation*}
+
+\subsection{A Priori Error Estimates and Condition Number}
+In the course of actually carrying out the arithmetic required to solve $A x = f$ by any procedure, round-off errors will in general be introduced.
+
+We recall that a computation is said to be well-posed if ``small'' changes in the data cause ``small'' changes in the solution. Now the data is the matrix $A$ and the vector $f$, and the solution is the vector $x$. Suppose we have a perturbation:
+\begin{equation*}
+	(A + \delta A)(x + \delta x) = f + \delta f
+\end{equation*}
+
+\begin{theorem}{Condition Number}{Condition Number}
+	Let $A$ be a nonsingular matrix. And
+	\begin{equation*}
+		\| \delta A \| < \frac{1}{\| A^{-1} \|}
+	\end{equation*}
+	Then we have
+	\begin{equation}
+		\frac{\| \delta x \|}{\| x \|} \leq \frac{\mu}{1 - \mu \delta A / \| A \|} \left( \frac{\| \delta A \|}{\| A \|} + \frac{\| \delta f \|}{\| f \|} \right)
+	\end{equation}
+	where $\mu = \| A \| \| A^{-1} \|$ is called the condition number of $A$.
+\end{theorem}
+\begin{proof}
+	Since $\| A^{-1} \delta A \| \leq \| A^{-1} \| \| \delta A \| < 1$, we have $I + A^{-1} \delta A$ is nonsingular. Thus,
+	\begin{equation*}
+		\| (I + A^{-1} \delta A)^{-1} \| \leq \frac{1}{1 - \| A^{-1} \delta A \|} \leq \frac{1}{1 - \mu \delta A / \| A \|}
+	\end{equation*}
+	from Taylor expansion. We also have
+	\begin{equation*}
+		\delta x = (I + A^{-1} \delta A)^{-1} A^{-1} (\delta f - \delta A x)
+	\end{equation*}
+	Thus,
+	\begin{equation*}
+		\frac{\| \delta x \|}{\| x \|} \leq \frac{\| A^{-1} \|}{1 - \mu \delta A / \| A \|} \left( \frac{\| \delta f \|}{\| x \|} + \| \delta A \| \right)
+	\end{equation*}
+	Note that
+	\begin{equation*}
+		\| f \| = \| A x \| \leq \| A \| \| x \|
+	\end{equation*}
+	we have
+	\begin{equation*}
+		\frac{\| \delta x \|}{\| x \|} \leq \frac{\mu}{1 - \mu \delta A / \| A \|} \left( \frac{\| \delta A \|}{\| A \|} + \frac{\| \delta f \|}{\| f \|} \right)
+	\end{equation*}
+	giving the desired result.
+\end{proof}
+
+It shows that small relative changes in $A$ and $f$ would cause small relative changes in $x$ if the factor
+\begin{equation*}
+	\frac{\mu}{1 - \mu \delta A / \| A \|}
+\end{equation*}
+is not too large. Thus, it is clear that when the condition number $\mu$ is not too large, the system is well-conditioned. However, we shall note that there is an lower bound for $\mu$:
+\begin{equation*}
+	\| I \| = \| A A^{-1} \| \leq \| A \| \| A^{-1} \| = \mu
+\end{equation*}
+
+We can apply the theorem to estimate the effects of round-off errors committed in solving linear systems by Gaussian elimination and other direct methods. But it is possible to view the computed solution as the exact solution, say $x + \delta x$, of a perturbed system, and the basic problem now is to determine the magnitude of the perturbations, $\delta A$ and $\delta f$. This type of approach is called a \emph{backward error analysis.} It is rather clear that there are many perturbations $\delta A$ and $\delta f$ that give the same result. Our analysis for the Gaussian elimination method will define $\delta A$ and $\delta f$ in a way that
+\begin{equation*}
+	\delta f = 0.
+\end{equation*}
+So that
+\begin{equation*}
+	\frac{\| \delta x \|}{\| x \|} \leq \frac{\mu \| \delta A \| / \| A \|}{1 - \mu \| \delta A \| / \| A \|}
+\end{equation*}
+
+In the case of Gaussian elimination we have seen that exact calculations yield the factorization
+\begin{equation*}
+	L U = A
+\end{equation*}
+
+Now, lets consider the effect of round-off errors in the Gaussian elimination procedure from the perspective of LU factorization. The Gaussian elimination procedure can be viewed as computing $g = L^{-1} f$ and the back substitution as computing $x = U^{-1} g$.
+
+\paragraph{The Gaussian elimination procedure} In the phase, we calculate the entries of $L$ and $U$ by the formulae in \eqref{eq:gauss-elimination-coefficients}. With exact calculations, we have $L U = A$. However, with finite precision arithmetic in these evaluations, we do not obtain exactly $L$ and $U$, but say some triangular matrices $\mathcal{L}$ and $\mathcal{U}$. We define the perturbation $E$ due to inexact calculations by
+\begin{equation*}
+	\mathcal{L} \mathcal{U} = A + E
+\end{equation*}
+
+\paragraph{The back substitution} In the phase, we calculate the entries of $x$ by the formulae in \eqref{eq:gauss-elimination-right-hand-side}. With exact calculations, we have $L g = f$ and $U x = g$. However, with finite precision arithmetic, we have got $g + \delta g$ and $x + \delta x$ such that
+\begin{equation*}
+	\begin{aligned}
+		(\mathcal{L} + \delta \mathcal{L})(g + \delta g) & = f,           \\
+		(\mathcal{U} + \delta \mathcal{U})(x + \delta x) & = g + \delta g
+	\end{aligned}
+\end{equation*}
+Here we use the $\mathcal{L}$ and $\mathcal{U}$ obtained in the Gaussian elimination procedure. We have
+\begin{equation*}
+	A + \delta A = (\mathcal{L} + \delta \mathcal{L})(\mathcal{U} + \delta \mathcal{U}), \qquad \delta A = E + \mathcal{L} (\delta \mathcal{U}) + (\delta \mathcal{L}) \mathcal{U} + (\delta \mathcal{L})(\delta \mathcal{U})
+\end{equation*}
+\begin{remark}
+	We can say that $L$ and $U$ took round-off errors both in the Gaussian elimination procedure and the back substitution, the first phase gives inexact $\mathcal{L}$ and $\mathcal{U}$, and the second phase gives additional perturbations $\delta \mathcal{L}$ and $\delta \mathcal{U}$ here.
+
+	This tactic is useful in analyzing algorithm errors: For inexact solution $A x = f$, we say that the result we got $x + \delta x$ is the exact solution of a perturbed system $(A + \delta A)(x + \delta x) = f$, where we ASSUME (entirely mathematical model) that $f$ is not perturbed and accurate, to eliminate a possible degree of freedom in the choice of $\delta A$ and $\delta f$. Then we can analyze the error by estimating $\| \delta A \|$ and applying the condition number theorem.
+\end{remark}
+
+Now, we must estimate $\| E \|, \| \delta \mathcal{L} \|$ and $\| \delta \mathcal{U} \|$ for the actual computations.
+
+We shall assume that floating-point arithmetic operations are performed with a $t$-digit decimal mantissa and that the system has been ordered so that the natural order of pivots is used.
+
+For a convenient notation, in place of the accurate matrices $A^{(k)}$ defined by \eqref{eq:gauss-elimination-coefficients}, we shall use the matrices $B^{(k)} = (b_{ij}^{(k)})$ with the final such matrix $B^{(n)} = \mathcal{U} = (u_{ij})$. Similarly, the lower triangular matrix $\mathcal{L} = (s_{ij})$ is given by the computed multipliers. For simplicity, we assume that the
+given matrix elements $a_{ij}$ are exactly representable in the floating-point system.
+
+The floating-point calculations yield
+\begin{itemize}
+	\item For $k=1$,
+	      \begin{equation*}
+		      b_{ij}^{(1)} = a_{ij} \qquad i,j = 1, 2, \ldots, n
+	      \end{equation*}
+	\item For $k=1, 2, \ldots, n-1$,
+	      \begin{equation*}
+		      b_{ij}^{(k+1)} =
+		      \begin{cases}
+			      b_{ij}^{(k)},                                                                                      & i \leq k               \\
+			      0,                                                                                                 & i \geq k+1, j \leq k   \\
+			      (b_{ij}^{(k)} - s_{ik} b_{kj}^{(k)}(1 + \theta_{ij}^{(k)} 10^{-t})) (1 + \phi_{ij}^{(k)} 10^{-t}), & i \geq k+1, j \geq k+1
+		      \end{cases}
+	      \end{equation*}
+	      \begin{equation*}
+		      s_{ij} =
+		      \begin{cases}
+			      0,                                                         & i \leq j \\
+			      1,                                                         & i = j    \\
+			      \frac{b_{ij}^{(j)}}{b_{jj}^{(j)}} (1 + \psi_{ij} 10^{-t}), & i > j
+		      \end{cases}
+	      \end{equation*}
+\end{itemize}
+here
+\begin{equation*}
+	| \theta_{ij}^{(k)} | \leq 5, \quad | \phi_{ij}^{(k)} | \leq 5, \quad | \psi_{ij} | \leq 5
+\end{equation*}
+and they account for the rounding procedures in floating-point arithmetic. The above calculations can be carried out iff the $b_{jj}^{(j)}$ are nonzero for $j \leq n-1$. This can be assured by the following lemma.
+
+\begin{lemma}{Numerical Gaussian Elimination}{Numerical Gaussian Elimination}
+	If $A$ is non-singular and $t$ is sufficiently large, then the Gaussian elimination method, with maximal column pivots and floating-point arithmetic (with $t$-digit mantissas), yields multipliers $s_{ij}$ with $|s_{ij}| \leq 1$ and pivots $b_{jj} \neq 0$.
+\end{lemma}
+
+It turns out that we require a bound on the growth of the pivot elements for our error estimates. That is, we seek a quantity $G(n)$, independent of the $a_{ij}$, such that
+\begin{equation} \label{eq:bound-for-pivots}
+	| b_{jj}^{(j)} | \leq G(n) a, \qquad a = \max_{i,j} | a_{ij} |
+\end{equation}
+It is not difficult to see that
+\begin{equation} \label{eq:bound-for-G}
+	G(n) \leq (1 + (1 + 5 \times 10^{-t})^2)^{n-1} = 2^{n-1} + \mathcal{O}((n-1) 10^{1-t})
+\end{equation}
+This establishes the existence of a bound, but it is a tremendous overestimate for large $n$. In fact for exact elimination, using maximal pivots it can be shown that
+\begin{equation}
+	| a_{jj}^{(j)} | < g(j) a, \qquad g(j) \leq 3 j^{1/2 + 1/4 \ln j}
+\end{equation}
+
+The quantity $g(n)$ would be a reasonable estimate for $G(n)$ if the maximal pivots in the sequence $\{ B^{(k)} \}$ were located in the same positions as the maximal pivots in $\{ A^{(k)} \}$. We know that if $A$ is non-singular and $t$ is sufficiently large, then the indices of the maximal pivotal elements used to find $\{ B^{(k)} \}$ are also indices of maximal pivots in an exact Gaussian elimination procedure for $A$. (because of continuity)
+
+The best lower bound for $G(n)$ is not known yet.
+
+We now turn to estimates of the terms in $\delta A$. Our first result is a bound on the elements of $E$:
+\begin{proposition}{Bounds for $E$}{Bounds for E}
+	Under the hypotheses of lemma \ref{lem:Numerical Gaussian Elimination}, the elements of $E$ satisfy
+	\begin{equation}
+		| e_{ij} | \leq
+		\begin{cases}
+			(i-1) 2a G(n) 10^{1-t}, & i \leq j \\
+			j 2a G(n) 10^{1-t},     & i > j
+		\end{cases}
+	\end{equation}
+	For any $G$ satisfying \eqref{eq:bound-for-pivots}.
+\end{proposition}
+\begin{proof}
+	We can write
+	\begin{equation} \label{eq:gauss-elimination-coefficients-with-error}
+		b_{ij}^{(k+1)} = b_{ij}^{(k)} - s_{ik} b_{kj}^{(k)} + \epsilon_{ij}^{(k+1)}, \qquad i \geq k+1, j \geq k+1
+	\end{equation}
+	where
+	\begin{equation*}
+		\epsilon_{ij}^{(k+1)} = b_{ij}^{(k)} \phi_{ij}^{(k)} 10^{-t} - s_{ik} b_{kj}^{(k)} (\theta_{ij}^{(k)} + \phi_{ij}^{(k)}) 10^{-t} - \cdots
+	\end{equation*}
+	For maximal pivots, we have $| s_{ik} | \leq 1$ and $| b_{ij}^{(k)} | \leq G(n) a$, so we have
+	\begin{equation*}
+		| \epsilon_{ij}^{(k+1)} | \leq 2 a G(n) 10^{1-t}
+	\end{equation*}
+	For the second equation
+	\begin{equation*}
+		s_{ij} = \frac{b_{ij}^{(j)}}{b_{jj}^{(j)}} (1 + \psi_{ij} 10^{-t}), \qquad i > j
+	\end{equation*}
+	rewrite it as
+	\begin{equation*}
+		0 = b_{ij}^{(k)} - s_{ij} b_{jj}^{(j)} + \epsilon_{ij}^{(j+1)}, \qquad i > j
+	\end{equation*}
+	where
+	\begin{equation*}
+		\epsilon_{ij}^{(j+1)} = s_{ij} b_{jj}^{(j)} \psi_{ij} 10^{-t}
+	\end{equation*}
+	where again we find that
+	\begin{equation*}
+		|\epsilon_{ij}^{(j+1)}| \leq 2 a G(n) 10^{1-t}
+	\end{equation*}
+
+	Now, we can write $\mathcal{L} = (s_{ij})$ and $\mathcal{U} = (b_{ij}^{(i)})$. We have
+	\begin{equation*}
+		(\mathcal{L} \mathcal{U})_{ij} = \sum_{k=1}^n s_{ik} b_{kj}^{(k)} = \sum_{k=1}^{\min(i,j)} s_{ik} b_{kj}^{(k)}
+	\end{equation*}
+	For $i > j$, as we have
+	\begin{equation*}
+		0 = b_{ij}^{(1)} - \sum_{k=1}^j s_{ik} b_{kj}^{(k)} + \sum_{k=1}^j \epsilon_{ij}^{(k+1)}
+	\end{equation*}
+	from the first $j$ steps of the Gaussian elimination procedure \eqref{eq:gauss-elimination-coefficients-with-error}, we have
+	\begin{equation*}
+		e_{ij} = \sum_{k=1}^j \epsilon_{ij}^{(k+1)}, \qquad i > j
+	\end{equation*}
+	For $i \leq j$, we have
+	\begin{equation*}
+		e_{ij} = \sum_{k=1}^{i-1} \epsilon_{ij}^{(k+1)}, \qquad i \leq j
+	\end{equation*}
+	giving the desired bounds.
+\end{proof}
+
+As a simple corollary of this theorem, we note that since $|e_{ij}| \leq 2 n a G(n) 10^{1-t}$, we have
+\begin{equation*}
+	\| E \|_{\infty} \leq 2 a n (n-1) G(n) 10^{1-t}
+\end{equation*}
+The elements in $\delta \mathcal{L}$ and $\delta \mathcal{U}$ can be estimated from a single analysis of the error in solving any triangular system (with the same arithmetic and rounding). Thus we consider, say, $T u = h$, where $T = (t_{ij})$ is lower triangular and nonsingular. Then we have
+\begin{equation} \label{eq:back-substitution-with-error}
+	u_1 = t_{11}^{-1} h_1, \quad u_i = t_{ii}^{-1} \left( h_i - \sum_{j=1}^{i-1} t_{ij} u_j \right), \quad i = 2, 3, \ldots, n
+\end{equation}
+
+\begin{proposition}{Bounds of Back Substitution Errors}{Bounds of Back Substitution Errors}
+	Let the solution of \eqref{eq:back-substitution-with-error} be computed with floating-point arithmetic with $t$-digit mantissas, then the computed solution $v$ satisfies $(T + \delta T) v = h$, where $\delta T$ is bounded by
+	\begin{equation*}
+		| \delta t_{ij} | \leq \max \{ 2, |i - j + 1| \} | t_{ij} | 10^{1-t} \leq n | t_{ij} | 10^{1-t}
+	\end{equation*}
+	Here $t$ is required to be sufficiently large so that $n 10^{1-t} \leq 1$.
+\end{proposition}
+
+We are now able to obtain estimates of the elements in $\delta \mathcal{L}$ and $\delta \mathcal{U}$, and thus of $\delta A$.
+
+\begin{theorem}{Wilkinson Error Estimate}{Wilkinson Error Estimate}
+	Let the $n$-th order matrix $A$ be non-singular and employ Gaussian elimination with maximal pivots and $t$-digit floating point arithmetic to solve $A x = f$. Let $t$ be sufficiently large so that $n 10^{1-t} \leq 1$. Then the computed solution $x + \delta x$ satisfies
+	\begin{equation*}
+		(A + \delta A)(x + \delta x) = f
+	\end{equation*}
+	where
+	\begin{equation}
+		| \delta a_{ij} | \leq (2n + 3n^2) a G(n) 10^{1-t}
+	\end{equation}
+	and $G(n)$ is any bound satisfying \eqref{eq:bound-for-pivots}.
+\end{theorem}
+\begin{proof}
+	SORRY.
+\end{proof}
+
+From this theorem, it follows that the computed solution is the exact solution of a system only slightly perturbed from the original if enough figures are used. Appropriate values for $t$ depend upon $n$ and the bound $G(n)$. If $G(n) \sim 2^{n-1}$, only relatively small order systems could be treated effectively. On the other hand, if $G(n) \sim g(n) \leq 3 n^{1/2 + 1/4 \ln n}$, then quite large order systems can be treated with the number of digits used on modern digital computers, say $t \geq 8$. It is generally believed, however, that even this latter estimate for $G(n)$ is a gross overestimate when using maximal pivots.
+
+It should be observed that essentially all of the previous analysis is valid if only partial pivoting, say maximal column pivoting, is employed since then $|s_{ij}| \leq 1$ is maintained. However, the growth factor $G(n)$ for this procedure cannot be estimated well in general. In fact, it is possible that the upper bound \eqref{eq:bound-for-G} which still applies may be attained. In spite of this, partial pivoting is found to be effective in practice but the absence of any type of maximal pivoting strategy frequently leads to catastrophic growth of rounding errors.
+
+We can easily see, from \ref{thm:Wilkinson Error Estimate}, that
+\begin{equation*}
+	\| \delta A \|_{\infty} \leq (2n + 3n^2) a G(n) 10^{1-t}
+\end{equation*}
+and this can be employed to obtain maximum norm bounds on the relative error. It is clear that this relative error in $x$ may not be small even though the relative perturbation $ \| \delta A \| / \| A \|$ is small if the condition number $\mu$ is large. For a given $G(n)$ and $\mu(A)$, we can determine the required number of digits $t$ to ensure that the computed solution is accurate to a specified number of digits.
+
+Finally, we recall that a computed inverse of $A$ can be obtained by solving $n$ systems. Denote the calculated inverse by $A^{-1} + F$, then as above we can show that each column vector of it satisfies an equation of the form
+\begin{equation*}
+	(A + \delta A ^{(j)})(A^{-1} + F)_j = e^{(j)}
+\end{equation*}
+If the condition of theorem \ref{thm:Wilkinson Error Estimate} is satisfied, then similarly, we have
+\begin{equation}\label{eq:error-for-inverse}
+	\frac{\| F_j \|}{\| A_j^{-1} \|} \leq \frac{\mu(A) \| \delta A^{(j)} \| / \| A \|}{1 - \mu(A) \| \delta A^{(j)} \| / \| A \|}
+\end{equation}
+
+\subsection{A Posteriori Error Estimates}
+Although we do not advocate inverting a matrix to solve linear systems, it is of interest to consider error estimates related to computed inverses.
+
+Let $A$ be the matrix to be inverted and let $C$ be the computed or alleged inverse, then let $F = C - A^{-1}$ be the error. We also define the \textbf{residue matrix} $R$ by
+\begin{equation}
+	R = A C - I
+\end{equation}
+Then we have
+
+\begin{theorem}{Residue Matrix}{Residue Matrix}
+	If $\| R \| < 1 $, then
+	\begin{itemize}
+		\item $A$ and $C$ are nonsingular;
+		\item $\| A^{-1} \| \leq \| C \| / (1 - \| R \|)$, and $\| C^{-1} \| \leq \| A \| / (1 - \| R \|)$;
+		\item $\| F \| \leq \| C \| \| R \| / (1 - \| R \|)$, and $\| A - C^{-1} \| \leq \| A \| \| R \| / (1 - \| R \|)$.
+	\end{itemize}
+\end{theorem}
+\begin{proof}
+	SORRY.
+\end{proof}
+
+We can also find the perturbation $\delta A$ such that $C$ is the exact inverse of $A + \delta A$. We have
+\begin{equation*}
+	(A + \delta A) C = I, \qquad \delta A = - R C^{-1}
+\end{equation*}
+Taking norms we have
+\begin{equation*}
+	\| \delta A \| \leq \| R \| \| C^{-1} \| \leq \frac{\| A \| \| R \|}{1 - \| R \|}
+\end{equation*}
+
+Finally, we observe that the computed inverse can also be used to estimate the error in solving a linear system. We state this result as
+\begin{theorem}{Error Estimate by Computed Inverse}{Error Estimate by Computed Inverse}
+	Let an approximated solution $y$ of $A x = f$ have the \textbf{residue vector} $r = A y - f$. If an approximated inverse $C$ of $A$ has the residue matrix $\| R \| = \| A C - I \| < 1$, then
+	\begin{equation*}
+		\| y - x \| \leq \frac{\| C \| \| r \|}{1 - \| R \|}
+	\end{equation*}
+\end{theorem}
+
+\begin{remark}
+	It should be noted that the result in this theorem is independent of the manner in which the approximate solution $y$ is obtained. Thus, it was not assumed that $y = C f$.
+\end{remark}
+
+\section{Variants of Gaussian Elimination}
+There are many methods for solving linear systems that are slight variations of the Gaussian elimination method. None of these methods has succeeded in reducing the number of operations required, but some have eliminated much of the intermediate storage or recording requirements.
+
+\paragraph{Gauss-Jordan elimination} The modification due to Jordan circumvents the final back substitution. This is accomplished by eliminate not only the entries below the pivot elements but also those above them in the same column. Thus, the resulting system is diagonal and the solution can be read off directly:
+\begin{itemize}
+	\item $ a_{ij}^{(1)} = a_{ij} $ for $i, j = 1, 2, \ldots, n$;
+	\item $\displaystyle a_{ij}^{(k)} = a_{ij}^{(k-1)} - \frac{a_{i,k-1}^{(k-1)}}{a_{k-1, k-1}^{(k-1)}} a_{k-1, j}^{(k-1)}$ for $i \neq k-1, j \geq k-1$;
+	\item $a_{k-1, j}^{(k)} = a_{k-1, j}^{(k-1)}$ for $j \geq k-1$; and $a_{ij}^{(k)} = a_{ij}^{(k-1)}$ for $j < k-1$.
+\end{itemize}
+Also $f$ takes the same modification as in Gaussian elimination. The result is simply
+\begin{equation*}
+	x_i = \frac{f_i^{(n)}}{a_{ii}^{(n)}} = \frac{f_i^{(n)}}{a_{ii}^{(i)}}, \qquad i = 1, 2, \ldots, n
+\end{equation*}
+
+It is clear that pivoting on the maximal element in the remaining square submatrix may be retained in this procedure. Hence, multipliers for $i < k-1$ may exceeds unity. Furthermore, the number of operations is somewhat greater than in the ordinary Gaussian elimination with back substitution; it is now
+\begin{equation}
+	\frac{1}{2} n^3 + n^2 - \frac{1}{2} n \qquad \ops \text{ for Jordan elimination}
+\end{equation}
+Thus, there does not seem to be any great advantage in using the Jordan elimination in actual calculations with automatic computing equipment.
+
+\paragraph{Crout Reduction} This method is applicable if \emph{the rows and columns are so arranged that no column interchanges are required in the Gaussian elimination procedure.}
+
+Thus, in general, the pivots will not be the maximal elements. Hence, errors may grow very rapidly in the Crout method and it is not recommended unless the system is of relatively small order or if it can be determined that the error growth will not be catastrophic. (In practice one may apply the method and test the accuracy of the solution a posteriori.)
+
+On the other hand, the Crout method is specifically designed to \emph{reduce the number of intermediate quantities which must be retained.} Thus, for hand computations and digital computers with small storage capacities it may be of great value.
+
+Consider the factorization
+\begin{equation*}
+	L U = A
+\end{equation*}
+where $L=(m_{ij})$ and $U=(u_{ij})$ are lower triangular matrix with unit diagonal elements and upper triangular matrix. Writing the formula for $a_{ij}$, we have
+\begin{equation*}
+	a_{ij} = \sum_{k=1}^{\min(i,j)} m_{ik} u_{kj}
+\end{equation*}
+Thus, we have
+\begin{equation} \label{eq:crout-reduction-u}
+	u_{ij} = a_{ij} - \sum_{k=1}^{i-1} m_{ik} u_{kj}, \qquad i \leq j
+\end{equation}
+\begin{equation} \label{eq:crout-reduction-l}
+	m_{ij} = \frac{1}{u_{jj}} \left( a_{ij} - \sum_{k=1}^{j-1} m_{ik} u_{kj} \right), \qquad i > j
+\end{equation}
+
+The actual elimination procedure is as follows:
+\begin{enumerate}
+	\item Compute the first row of $U$ by simply copying the first row of $A$.
+	\item Compute the first column of $L$ by dividing the first column of $A$: $m_{i1} = a_{i1} / u_{11}$ for $i = 2, 3, \ldots, n$.
+	\item Compute the second row of $U$ by using the first column of $L$: $u_{2j} = a_{2j} - m_{21} u_{1j}$ for $j = 2, 3, \ldots, n$.
+	\item Compute the second column of $L$ by using the second row of $U$: $m_{i2} = (a_{i2} - m_{i1} u_{12}) / u_{22}$ for $i = 3, 4, \ldots, n$.
+	\item The procedure continues in this way, alternately computing rows of $U$ and columns of $L$ until the entire factorization is obtained.
+\end{enumerate}
+
+If we append the inhomogeneous vector $f$ to the right of $A$ and apply the above procedure to the resulting augmented matrix, then we can obtain $g$ as the rightmost column of the resulting upper triangular matrix $U$.
+
+The operational count, for producing $L, U$ and $g$ is easily found to be
+\begin{equation*}
+	\frac{1}{3} n^3 + \frac{1}{2} n^2 - \frac{5}{6} n \qquad \ops \text{ for Crout reduction}
+\end{equation*}
+It is not surprising that this is the same as the number of operations required by the conventional Gaussian elimination scheme.
+
+\begin{remark}
+	This ``compact'' elimination procedure is based on the fact that only those elements $a_{ij}^{(k)}$ in the Gaussian elimination, for which $j \geq i$ and $i \leq k$, are required for the final back substitution.
+\end{remark}
+
+We could show now, if the inner products in \ref{eq:crout-reduction-u} and \ref{eq:crout-reduction-l} are evaluated in \emph{double precision} before the sum is rounded, that the effect of rounding errors is appreciably diminished. In fact, the estimate becomes
+\begin{equation}
+	\| \delta A \|_{\infty} = \mathcal{O}(n^2 G(n) a 10^{-t})
+\end{equation}
+
+While Gaussian Elimination and Crout Reduction appear to be different algorithms, they are mathematically equivalent ways of achieving the same goal: the \textbf{$LU$ Factorization} of a matrix $A$.
+
+If no row or column interchanges (pivoting) are performed, both methods produce the exact same matrices $L$ and $U$.
+\begin{itemize}
+	\item \textbf{Gaussian Elimination} is a \textit{procedural} approach that transforms $A$ into an upper triangular matrix $U$ through row operations. The multipliers used during this process form the lower triangular matrix $L$.
+	\item \textbf{Crout Reduction} is a \textit{compact} approach that directly solves the matrix equation $A = LU$ for the unknown elements of $L$ and $U$.
+\end{itemize}
+
+The core connection lies in how the elements are updated. In Gaussian Elimination, an element $a_{ij}$ is updated step-by-step. After $k$ steps, the updated element is:
+\begin{equation*}
+	a_{ij}^{(k)} = a_{ij} - \sum_{p=1}^{k} m_{ip} u_{pj}
+\end{equation*}
+In the \textbf{Crout Method}, we do not store these intermediate $a_{ij}^{(k)}$ values. Instead, we compute the final sum all at once. Looking at the Crout formula for $u_{ij}$:
+\begin{equation*}
+	u_{ij} = a_{ij} - \sum_{k=1}^{i-1} m_{ik} u_{kj}
+\end{equation*}
+This is exactly the value that Gaussian Elimination would have produced in the $i$-th row after all previous rows had been eliminated.
+
+The difference is purely the \textbf{order of operations}:
+\begin{description}
+	\item[Gaussian Elimination (Incremental):] Uses the $k$-th pivot to update \textit{all} remaining elements in the sub-matrix below and to the right. It is ``breadth-first.''
+	\item[Crout Reduction (Compact):] Calculates the final value of one row of $U$ and one column of $L$ at a time. It is ``depth-first.''
+\end{description}
+
+Even though the operational count ($\frac{1}{3}n^3$) is identical, the Crout method is often preferred in specific contexts because:
+\begin{enumerate}
+	\item \textbf{Inner Products:} It expresses the calculation as a series of inner products (dot products).
+	\item \textbf{Precision:} As noted in the text, evaluating these inner products in \textit{double precision} before rounding minimizes the accumulation of rounding errors compared to the step-by-step subtractions in Gaussian Elimination.
+	\item \textbf{Storage:} It reduces the need to store intermediate ``modified'' matrices $A^{(k)}$.
+\end{enumerate}
+
+\begin{remark}
+	In summary, Crout Reduction is simply a \textit{re-ordering} of the arithmetic of Gaussian Elimination designed to optimize memory usage and numerical stability via high-precision accumulation.
+\end{remark}
+
+\section{Direct Factorization Methods}
+
+Now, we perform a more general study of the direct triangular decomposition $A = L U$ of a matrix $A$, where the diagonal elements of $L$ are not necessarily unity. The induction formula thus becomes
+\begin{equation} \label{eq:direct-factorization}
+	\begin{aligned}
+		u_{ij} & = \frac{1}{l_{ii}} \left( a_{ij} - \sum_{k=1}^{i-1} l_{ik} u_{kj} \right), \qquad i \leq j \\
+		l_{ij} & = \frac{1}{u_{jj}} \left( a_{ij} - \sum_{k=1}^{j-1} l_{ik} u_{kj} \right), \qquad i \geq j
+	\end{aligned}
+\end{equation}
+For each row and column, there is a degree of freedom in the choice of the diagonal elements of $L$ and $U$, given by
+\begin{equation*}
+	l_{ii} u_{ii} = a_{ii} - \sum_{k=1}^{i-1} l_{ik} u_{ki}
+\end{equation*}
+If the product $l_{ii} u_{ii}$ is zero, then the factorization fails, unless all of the brackets vanish in \eqref{eq:direct-factorization} for the submatrices later on. When $A$ is non-singular, this may happen if there need row or column interchanges in Gaussian elimination. If $A$ is non-singular, then the use of maximal column pivots results in the sequence $(i_1, 1), (i_2, 2), \ldots, (i_n, n)$ as pivotal elements. Hence, the Gaussian elimination process shows that the triangular decomposition
+
+\begin{equation*}
+	L U = P^T A
+\end{equation*}
+for some row-interchange permutation matrix $P$. In the procedure, if we need to interchange row, we can simply interchange the corresponding rows of $L$ and $A$, and then apply the formulae in \eqref{eq:direct-factorization} to the resulting matrix. At each step, simply calculate the entries of $(l_{in})$ for some $n$ and find the maximum among them, and then interchange the corresponding rows of $L$ and $A$.
+
+\begin{theorem}{Direct LU Factorization}{Direct LU Factorization}
+	If $A$ is non-singular, a triangular decomposition $LU = A$ may not exist. But a permutation of the rows of $A$ always exists such that $B = P^T A = L U$ is a triangular decomposition.
+
+	$P$ can also be chosen so that
+	\begin{equation*}
+		| l_{kk} | \geq | l_{ik} | \qquad i > k, \quad k = 1, 2, \ldots, n-1
+	\end{equation*}
+\end{theorem}
+
+\begin{example}{Direct LU Factorization with Partial Pivoting}{Direct LU Factorization with Partial Pivoting}
+	To illustrate the procedure with the stability condition $|l_{kk}| \geq |l_{ik}|$, consider $A = \begin{psmallmatrix} 1 & 1 & 1 \\ 2 & 2 & 5 \\ 4 & 6 & 8 \end{psmallmatrix}$ using the convention $u_{ii}=1$. At step $k=1$, we calculate the column candidates for $L$ from the current first column of $A$, $(|1|, |2|, |4|)$. Since $4$ is maximal, we interchange row 1 and row 3, resulting in the pivot $l_{11}=4$ and multipliers $l_{21}=2, l_{31}=1$; the first row of $U$ is then $u_{12}=6/4=1.5$ and $u_{13}=8/4=2$. At step $k=2$, we compute candidates for the remaining $L$ entries: for row 2, $a_{22}-l_{21}u_{12} = 2-(2)(1.5)=-1$; for row 3, $a_{32}-l_{31}u_{12} = 1-(1)(1.5)=-0.5$. Since $|-1| > |-0.5|$, no swap is needed. We set $l_{22}=-1, l_{32}=-0.5$ and solve for $u_{23} = (a_{23}-l_{21}u_{13})/l_{22} = (5-4)/(-1) = -1$. Finally, $l_{33} = a_{33}-(l_{31}u_{13}+l_{32}u_{23}) = 1-(2+0.5)=-1.5$. The resulting factorization $LU = P^T A$ is:
+	\begin{equation*}
+		L = \begin{pmatrix} 4 & 0 & 0 \\ 2 & -1 & 0 \\ 1 & -0.5 & -1.5 \end{pmatrix}, \quad U = \begin{pmatrix} 1 & 1.5 & 2 \\ 0 & 1 & -1 \\ 0 & 0 & 1 \end{pmatrix}, \quad P^T A = \begin{pmatrix} 4 & 6 & 8 \\ 2 & 2 & 5 \\ 1 & 1 & 1 \end{pmatrix}
+	\end{equation*}
+\end{example}
+
+We can also append the inhomogeneous vector $f$ to the right of $A$ and apply the above procedure to the resulting augmented matrix as usual.
+
+\subsection{Cholesky Factorization}
+
+The direct factorization method can be further simplified if $A$ is positive definite.
+\begin{theorem}{Cholesky Factorization}{Cholesky Factorization}
+	If $A$ is a positive definite matrix, then there exists a unique lower triangular matrix $L$ with positive diagonal elements such that
+	\begin{equation*}
+		A = L L^T
+	\end{equation*}
+\end{theorem}
+A count of the arithmetic operations can be made if we remark that only the elements in the lower triangular part of $A$ are required. If we count the square root operations separately, we have
+\begin{equation*}
+	\frac{1}{6} n^3 + n^2 - \frac{1}{6} n \ops + n \text{ square roots} \qquad \text{for Cholesky factorization}
+\end{equation*}
+
+In addition, to find $x$ we must solve a triangular system which requires $\frac{1}{2} n^2 + \frac{1}{2} n$ operations.
+
+To apply our previous error analysis, we deduce from
+\begin{equation*}
+	a_{ii} = \sum_{k=1}^i l_{ik}^2
+\end{equation*}
+the bounds
+\begin{equation*}
+	| l_{ik} |^2 \leq a_{ii} \leq a = \max_{i,j} | a_{ij} |
+\end{equation*}
+For single precision square root and $G(n) = 1$, we have
+\begin{theorem}{Error Estimate for Cholesky Factorization}{Error Estimate for Cholesky Factorization}
+	Let $A$ be a positive definite matrix and employ the Cholesky factorization method to solve $A x = f$. Let $t$ be sufficiently large then we have
+	\begin{equation}
+		\| \delta A \|_{\infty} \leq a (2n^2 + 3n^3) 10^{1-t}
+	\end{equation}
+
+	Under the hypotheses of theorem \ref{thm:Wilkinson Error Estimate}, where inner products are accumulated exactly, prior to a final rounding, then for $t$ sufficiently large, we have
+	\begin{equation}
+		\| \delta A \|_{\infty} = \mathcal{O}(n^2 a 10^{-t})
+	\end{equation}
+\end{theorem}
+
+\subsection{Tridiagonal or Jacobi Matrices}
+A coefficient matrix which frequently occurs is the tridiagonal or Jacobi form, in which $a_{ij} = 0$ for $|i-j| > 1$. That is,
+\begin{equation}
+	A = \begin{pmatrix}
+		a_1    & c_1    & 0      & \cdots & 0      \\
+		b_2    & a_2    & c_2    & \cdots & 0      \\
+		0      & b_3    & a_3    & \cdots & 0      \\
+		\vdots & \vdots & \vdots & \ddots & \vdots \\
+		0      & 0      & 0      & \cdots & a_n
+	\end{pmatrix}
+\end{equation}
+Assume this matrix can be factored in the bidiagonal form
+\begin{equation}
+	A = LU \equiv \begin{pmatrix}
+		\alpha_1 &          &          &        &          \\
+		b_2      & \alpha_2 &          &        &          \\
+		         & b_3      & \alpha_3 &        &          \\
+		         &          & \ddots   & \ddots &          \\
+		         &          &          & b_n    & \alpha_n
+	\end{pmatrix} \begin{pmatrix}
+		1 & \gamma_1 &          &        &              \\
+		  & 1        & \gamma_2 &        &              \\
+		  &          & 1        & \ddots &              \\
+		  &          &          & \ddots & \gamma_{n-1} \\
+		  &          &          &        & 1
+	\end{pmatrix}.
+\end{equation}
+Them we find
+\begin{itemize}
+	\item $\alpha_1 = a_1, \gamma_1 = c_1 / \alpha_1$;
+	\item $\alpha_i = a_i - b_i \gamma_{i-1}, i = 2, 3, \ldots, n$;
+	\item $\gamma_i = c_i / \alpha_i, i = 2, 3, \ldots, n-1$.
+\end{itemize}
+Thus, if none of the $\alpha_i$ vanish, the factorization is accomplished by evaluating the recursions.
+
+The intermediate solution $g$ is given by
+\begin{equation*}
+	g_1 = f_1 / \alpha_1, \qquad g_i = (f_i - b_i g_{i-1}) / \alpha_i, \quad i = 2, 3, \ldots, n
+\end{equation*}
+and the final solution is given by
+\begin{equation*}
+	x_n = g_n, \qquad x_i = g_i - \gamma_i x_{i+1}, \quad i = n-1, n-2, \ldots, 1
+\end{equation*}
+In many of the applications of this procedure, the elements of $A$ satisfies:
+\begin{itemize}
+	\item $|a_1| > |c_1| > 0$;
+	\item $|a_i| \geq |b_i| + |c_i|, b_i c_i \neq 0$ for $i = 2, 3, \ldots, n-1$;
+	\item $|a_n| > |b_n| > 0$.
+\end{itemize}
+In such cases, the quantities $\alpha_i$ and $\gamma_i$ are nicely bounded and in fact $A$ is non-singular:
+\begin{theorem}{Tridiagonal Matrices}{Tridiagonal Matrices}
+	If the elements of $A$ satisfy the above conditions, then $\det A \neq 0$ and the elements of $L$ and $U$ are bounded by
+	\begin{itemize}
+		\item $|\gamma_i| < 1$;
+		\item $|a_i| - |b_i| < |\alpha_i| < |a_i| + |b_i|$
+	\end{itemize}
+\end{theorem}
+\begin{proof}
+	We have $|\gamma_1| = |c_1| / |\alpha_1| < 1$. And
+	\begin{equation*}
+		\gamma_i = \frac{c_i}{a_i - b_i \gamma_{i-1}}, \qquad |\gamma_i| \leq \frac{|c_i|}{|a_i| - |b_i||\gamma_{i-1}|} < \frac{|c_i|}{|a_i| - |b_i|} < 1.
+	\end{equation*}
+	Also, we have $\alpha_i = a_i - b_i \gamma_{i-1}$, thus it is easily proved.
+
+	The non-singularity of $A$ follows from
+	\begin{equation*}
+		\det A = \prod_{i=1}^n \alpha_i \neq 0
+	\end{equation*}
+	or from the Gershgorin circle theorem.
+\end{proof}
+
+The operational count for this procedure is somewhat striking. A total or
+\begin{equation*}
+	(3n-2) m + 2 n - 2 \qquad \ops \text{ for $m$ tridiagonal systems}
+\end{equation*}
+Consequently, the inverse can be obtained, although it should never be used in such circumstances to solve the system, in not more than
+\begin{equation*}
+	3n^2 - 2 \qquad \ops \text{ for the inverse of a tridiagonal matrix}
+\end{equation*}
+The low operational counts are due to the fact that the zero elements of $A$ have been accounted for in performing the calculations.
+
+It should be observed that the factorization computed is not unique, for instance, we could try the form
+\begin{equation*}
+	A = LU \equiv \begin{pmatrix}
+		1       &         &        &         &   \\
+		\beta_2 & 1       &        &         &   \\
+		        & \beta_3 & 1      &         &   \\
+		        &         & \ddots & \ddots  &   \\
+		        &         &        & \beta_n & 1
+	\end{pmatrix} \begin{pmatrix}
+		\alpha_1 & c_1      &          &        &          \\
+		         & \alpha_2 & c_2      &        &          \\
+		         &          & \alpha_3 & \ddots &          \\
+		         &          &          & \ddots & c_{n-1}  \\
+		         &          &          &        & \alpha_n
+	\end{pmatrix}
+\end{equation*}
+
+There is a generalization called the \textbf{band matrix}:
+\begin{definition}{Band Matrix}{Band Matrix}
+	A matrix $A$ is called a band matrix of width $(b,a)$ if $a_{ij} = 0$ for $j - i \geq a$ and $i - j \geq b$.
+\end{definition}
+
+\subsection{Block-Tridiagonal Matrices}
+Another form which is encountered frequently, especially in the numerical solution of partial differential equations and integral equations, is the so-called block-tridiagonal matrix:
+\begin{equation}
+	A = \begin{pmatrix}
+		A_1    & C_1    & 0      & \cdots & 0      \\
+		B_2    & A_2    & C_2    & \cdots & 0      \\
+		0      & B_3    & A_3    & \cdots & 0      \\
+		\vdots & \vdots & \vdots & \ddots & \vdots \\
+		0      & 0      & 0      & \cdots & A_n
+	\end{pmatrix}
+\end{equation}
+Here, each of the $A_i$ represents a square matrix, of order $m_i$, and the $B_i$ and $C_i$ are rectangular matrices.
+
+This system may be solved by a procedure formally analogous to the previous factorization of a Jacobi matrix. Thus, let the system be $A x = f$, where $x = (x^{(1)}, x^{(2)}, \ldots, x^{(n)})^T$ and $f = (f^{(1)}, f^{(2)}, \ldots, f^{(n)})^T$ are partitioned conformably with $A$.
+\begin{remark}
+	Thus, the method to be described is a special case of more general methods known as group- or block-elimination.
+\end{remark}
+
+We seek a factorization of the form
+\begin{equation}
+	A = LU \equiv \begin{pmatrix}
+		L_1 &     &        &        &     \\
+		B_2 & L_2 &        &        &     \\
+		    & B_3 & L_3    &        &     \\
+		    &     & \ddots & \ddots &     \\
+		    &     &        & B_n    & L_n
+	\end{pmatrix} \begin{pmatrix}
+		I_1 & \Gamma_1 &          &        &              \\
+		    & I_2      & \Gamma_2 &        &              \\
+		    &          & I_3      & \ddots &              \\
+		    &          &          & \ddots & \Gamma_{n-1} \\
+		    &          &          &        & I_n
+	\end{pmatrix}
+\end{equation}
+where $I_i$ is the identity matrix of order $m_i$. Then we have
+\begin{itemize}
+	\item $L_1 = A_1, \Gamma_1 = L_1^{-1} C_1$;
+	\item $L_i = A_i - B_i \Gamma_{i-1}, i = 2, 3, \ldots, n$;
+	\item $\Gamma_i = L_i^{-1} C_i, i = 2, 3, \ldots, n-1$.
+\end{itemize}
+The system now is equivalent to
+\begin{equation*}
+	L y = f, \qquad U x = y
+\end{equation*}
+where $y = (y^{(1)}, y^{(2)}, \ldots, y^{(n)})^T$ is an intermediate solution vector:
+\begin{equation*}
+	y^{(1)} = L_1^{-1} f^{(1)}, \qquad y^{(i)} = L_i^{-1} (f^{(i)} - B_i y^{(i-1)}), i = 2, 3, \ldots, n
+\end{equation*}
+\begin{equation*}
+	x^{(n)} = y^{(n)}, \qquad x^{(i)} = y^{(i)} - \Gamma_i x^{(i+1)}, i = n-1, n-2, \ldots, 1
+\end{equation*}
+This method requires (or rather seems to require) the inversion of the $n$ matrices $A_i$. To estimate the total number of operations used, we consider the cases where all $m_i = m$. Then with Gaussian elimination to obtain the inverses, we require
+\begin{equation*}
+	n m^3 \qquad \ops \text{ for the inverses of $A_i$}
+\end{equation*}
+The product of two square matrices of order $m$ requires $m^3$ operations, thus we have
+\begin{equation*}
+	2(n - 1)m^3 \qquad \ops \text{ for the products $A_i^{-1} C_i$ and $B_i \Gamma_{i-1}$}
+\end{equation*}
+Thus, the evaluation involves not more than
+\begin{equation*}
+	(3n-2) m^3 \qquad \ops \text{ for the factorization}
+\end{equation*}
+To solve the system, we require
+\begin{equation*}
+	(3n-2) (m^3 + m^2) \qquad \ops \text{ for the solution}
+\end{equation*}
+Notice that this number is much superior to estimates of the form $\frac{1}{3}n^3 m^3$ which would be obtained if the system were solved by Gaussian elimination without taking advantage of the block-tridiagonal structure.
+
+The count is then reduced from the order of $3nm^3$ operations to the order of $\frac{5}{3}nm^3$ operations when we do not compute inverses explicitly, but directly solve the systems whenever we have one.
+
+The justification of the block-factorization method is given in
+\begin{theorem}{Block LU Factorization}{Block LU Factorization}
+	If the leading diagonal blocks $A_i$ are non-singular, then the block-tridiagonal matrix $A$ can be factored as $A = LU$.
+\end{theorem}
+\begin{proof}
+	SORRY.
+\end{proof}
+
+\section{Iterative Methods}
+The previous direct methods for solving general systems of order $n$ require about $\frac{1}{3} n^3$ operations. In addition, it has been indicated that, in practical computations with these methods, the errors which are necessarily introduced through rounding may become quite large for large $n$.
+
+Now we consider iterative methods in which an approximate solution is sought by using fewer operations per iteration. In general, these may be described as methods which proceed from some initial ``guess'' $x^{(0)}$ and define a sequence of successive approximations $x^{(1)}, x^{(2)}, \ldots$ which (hopefully) converges to the exact solution $x$ of $A x = f$. If the convergence is sufficiently rapid, the procedure may be terminated at an early stage in the sequence and will yield a good approximation.
+
+\begin{remark}
+	One of the intrinsic advantages of such methods is the fact that errors, due to roundoff or even blunders, may be damped out as the procedure continues. In fact, special iterative methods are frequently used to improve ``solutions'' obtained by direct methods.
+\end{remark}
+
+A large class of iterative methods may be defined as follows: Let the system to be solved be $A x = f$ where $A$ is a non-singular matrix. We can write
+\begin{equation} \label{eq:iterative-splitting}
+	A = N - P
+\end{equation}
+Then the system is equivalent to
+\begin{equation}
+	N x = P x + f
+\end{equation}
+tarting with some arbitrary vector $x^{(0)}$, we can define the sequence of approximations by
+\begin{equation}\label{eq:iterative-splitting-iteration}
+	N x^{(\nu)} = P x^{(\nu-1)} + f, \qquad \nu = 1, 2, \ldots
+\end{equation}
+Thus we need the $N$ in \eqref{eq:iterative-splitting} to be non-singular:
+\begin{equation*}
+	\det N \neq 0
+\end{equation*}
+it is also clear that $N$ should be chosen so that
+\begin{equation*}
+	N y = z
+\end{equation*}
+can be easily solved for $y$ when $z$ is given.
+
+If greater accuracy is desired, it would be better to calculate with \eqref{eq:iterative-splitting-iteration} in the equivalent form:
+\begin{equation*}
+	N(x^{(\nu)} - x^{(\nu-1)}) = f - A x^{(\nu-1)}
+\end{equation*}
+to get the actual error.
+
+The convergence of the sequence $\{ x^{(\nu)} \}$ to the solution $x$ is studied by introducing
+\begin{equation}
+	M = N^{-1} P, \qquad e^{(\nu)} = x^{(\nu)} - x, \qquad \nu = 0, 1, 2, \ldots
+\end{equation}
+Then we have
+\begin{equation*}
+	e^{(\nu)} = M e^{(\nu-1)} = M^{\nu} e^{(0)}, \qquad \nu = 1, 2, \ldots
+\end{equation*}
+\emph{Thus, it is clear that a sufficient condition for convergence is that $\lim_{\nu \to \infty} M^{\nu} = 0$, and this is also necessary if the method is to converge for all initial guesses $x^{(0)}$.} A matrix $M$ that satisfies this condition is called a \textbf{convergent matrix}.
+
+\begin{theorem}{Convergent Matrix}{Convergent Matrix}
+	A matrix $M$ is convergent if and only if its spectral radius $\rho(M)$ is less than unity, that is, all eigenvalues $|\lambda| < 1$.
+
+	This is also equivalent to: for any matrix norm $\| \cdot \|$, we have $\| M \| < 1$.
+\end{theorem}
+So, if we find a matrix norm such that $\| M \| < 1$, then the method will converge.
+
+\begin{definition}{Rate of Convergence}{Rate of Convergence}
+	The rate of convergence of the method is defined as:
+	\begin{equation}
+		R = - \log \rho(M)
+	\end{equation}
+\end{definition}
+
+As we have
+\begin{equation*}
+	\rho(M) = \sup_{\|\cdot \|} \| M \|
+\end{equation*}
+for all possible matrix norms. Then for a given $\epsilon > 0$, there is a norm that
+\begin{equation*}
+	\| e^{(\nu)} \| \leq \| M \|^{\nu} \| e^{(0)} \| \leq (\rho(M) + \epsilon)^{\nu} \| e^{(0)} \|
+\end{equation*}
+if $e^{(0)}$ is an eigenvector corresponding to the largest eigenvalue $\lambda$ of $M$, then $\| e^{(\nu)} \| = (\rho(M))^{\nu} \| e^{(0)} \|$. Let it be required to reduce the amplitude of the error by a factor of at least $10^{-m}$, then we see that, in some norm, the error amplitude is reduced by a factor close to $\rho(M)^\nu$. The number of iterations required is the least value of $\nu$ such that $\rho(M)^\nu \leq 10^{-m}$, that is,
+\begin{equation}
+	\nu \geq \frac{m}{-\log \rho(M)} = \frac{m}{R}
+\end{equation}
+Thus, the number of iterations required to reduce the initial error by the factor of $10^{-m}$ is inversely proportional to the rate of convergence $R$.
+
+To estimate the error from the iteration stepping $ \delta x^{(\nu)} = x^{(\nu+1)} - x^{(\nu)}$, we have
+\begin{equation*}
+	\delta x^{(\nu)} = x^{(\nu+1)} - x^{(\nu)} = M x^{(\nu)} + N^{-1} f - x^{(\nu)} = M x^{(\nu)} + N^{-1} A x - x^{(\nu)} = -(I - M) e^{(\nu)}
+\end{equation*}
+Thus we have
+\begin{equation*}
+	\| e^{(\nu)} \| \leq \frac{1}{1 - \| M \|} \| \delta x^{(\nu)} \|.
+\end{equation*}
+
+\subsection{Jacobi or Simultaneous Iteration}
+A special case (attributed to Jacobi) of the previous general theory is
+\begin{equation}
+	N = (a_{ii} \delta_{ij}), \qquad P = N - A
+\end{equation}
+The iteration is then given by
+\begin{equation}
+	x_i^{(\nu)} = \frac{1}{a_{ii}} \left( f_i - \sum_{j \neq i} a_{ij} x_j^{(\nu-1)} \right), \qquad i = 1, 2, \ldots, n
+\end{equation}
+Thus, this procedure may be employed provided only that $a_{ii} \neq 0$ for $i = 1, 2, \ldots, n$.
+
+However, for the convergence of these iterations, theorem \ref{thm:Convergent Matrix} requires that all roots of $\det | \lambda I - N^{-1} P | = 0$ lie within the unit circle. Writing out,
+\begin{equation*}
+	\det | \lambda N - P | = \det
+	\begin{pmatrix}
+		\lambda a_{11} & a_{12}         & \cdots & a_{1n}         \\
+		a_{21}         & \lambda a_{22} & \cdots & a_{2n}         \\
+		\vdots         & \vdots         & \ddots & \vdots         \\
+		a_{n1}         & a_{n2}         & \cdots & \lambda a_{nn}
+	\end{pmatrix} = 0
+\end{equation*}
+In general, the roots of such an equation, for large $n$, are not easily obtained and so we seek simpler sufficient conditions for convergence.
+
+We have
+\begin{equation*}
+	M = N^{-1} P = \left(\delta_{ij} - \frac{a_{ij}}{a_{ii}} \right)
+\end{equation*}
+Then consider
+\begin{equation*}
+	\| M \|_{\infty} = \max_i \sum_{i \neq j, j= 1}^n \left| \frac{a_{ij}}{a_{ii}} \right|, \qquad \| M \|_1 = \max_j \sum_{i \neq j, i= 1}^n \left| \frac{a_{ij}}{a_{ii}} \right|
+\end{equation*}
+if either of these is less than unity, then the method will converge. The rate of convergence is then given by
+\begin{equation*}
+	R = - \log \rho(M) \geq - \log \min \{ \| M \|_{\infty}, \| M \|_1 \}
+\end{equation*}
+The operational count for the Jacobi iteration is simply obtained from
+\begin{equation*}
+	n^2 \qquad \ops \text{ for each iteration}
+\end{equation*}
+if these iterations converge they require a total of about
+\begin{equation*}
+	\frac{m n^2}{R} \qquad \ops \text{ to reduce the error by a factor of $10^{-m}$}
+\end{equation*}
+We see that if such an iterative method is to be at least as efficient as the direct elimination method it should have a rate of convergence and required accuracy factor $10^{-m}$ such that
+\begin{equation*}
+	\frac{m}{R} \leq \frac{1}{3} n
+\end{equation*}
+
+\subsection{Gauss-Seidel or Successive Iteration}
+It is clear that in the ordinary Jacobi iterations some components of $x^{(\nu)}$ are known, but not used, while computing the remaining components. The Gauss-Seidel method is a modification of the Jacobi method in which all of the latest known components are used.
+\begin{remark}
+	The term ``successive iteration'' is frequently applied to this method refers to the fact that ``new'' components are successively used as they are obtained. (In contrast, the previous scheme was called ``simultaneous iteration'' because all components of $x^{(\nu)}$ are computed simultaneously from the previous iterate $x^{(\nu-1)}$.)
+\end{remark}
+The obvious modification suggests
+\begin{equation}
+	x_i^{(\nu)} = \frac{1}{a_{ii}} \left( f_i - \sum_{j < i} a_{ij} x_j^{(\nu)} - \sum_{j > i} a_{ij} x_j^{(\nu-1)} \right), \qquad i = 1, 2, \ldots, n
+\end{equation}
+The splitting is now given by
+\begin{equation}
+	N = \begin{pmatrix}
+		a_{11} & 0      & \cdots & 0      \\
+		a_{21} & a_{22} & \cdots & 0      \\
+		\vdots & \vdots & \ddots & \vdots \\
+		a_{n1} & a_{n2} & \cdots & a_{nn}
+	\end{pmatrix}, \qquad P = N - A = \begin{pmatrix}
+		0      & a_{12} & \cdots & a_{1n} \\
+		0      & 0      & \cdots & a_{2n} \\
+		\vdots & \vdots & \ddots & \vdots \\
+		0      & 0      & \cdots & 0
+	\end{pmatrix}
+\end{equation}
+Since $N$ is triangular, $\det N = \prod_{i=1}^n a_{ii} \neq 0$ requires only that $a_{ii} \neq 0$ for $i = 1, 2, \ldots, n$. The characteristic equation, whose roots must be in absolute value less than unity for convergence, is now of the form
+\begin{equation*}
+	\det
+	\begin{pmatrix}
+		\lambda a_{11} & a_{12}         & \cdots & a_{1n}         \\
+		\lambda a_{21} & \lambda a_{22} & \cdots & a_{2n}         \\
+		\vdots         & \vdots         & \ddots & \vdots         \\
+		\lambda a_{n1} & \lambda a_{n2} & \cdots & \lambda a_{nn}
+	\end{pmatrix} = 0
+\end{equation*}
+The roots of this equation are just as difficult to find, so as computing $\| M \|_{\infty}$ and $\| M \|_1$ for the Jacobi method.
+
+However, a simple sufficient condition for convergence of the Gauss-Seidel method can be obtained. The error vectors must satisfy
+\begin{equation*}
+	e_i^{(\nu)} = - \sum_{j < i} \frac{a_{ij}}{a_{ii}} e_j^{(\nu)} - \sum_{j > i} \frac{a_{ij}}{a_{ii}} e_j^{(\nu-1)}, \qquad i = 1, 2, \ldots, n
+\end{equation*}
+
+\begin{remark}
+	This form is simply get if we view error vectors as ``homogeneous'' solutions of the system $A x = 0$.
+\end{remark}
+The result to be proved may now be stated as
+\begin{lemma}{Sufficient Condition for Convergence of Gauss-Seidel Method}{Sufficient Condition for Convergence of Gauss-Seidel Method}
+	Let $e^{(0)}$ be an arbitrary initial error vector. Take maximum norm $\| e^{(\nu)} \|_{\infty} = \max_i | e_i^{(\nu)} |$, and if $A$ is strictly diagonally dominant, that is,
+	\begin{equation}
+		r_i = \sum_{j \neq i} \left| \frac{a_{ij}}{a_{ii}} \right|, \qquad r = \max_i r_i < 1
+	\end{equation}
+	Then we have
+	\begin{equation}
+		\| e^{(\nu)} \|_{\infty} \leq r^{\nu} \| e^{(0)} \|_{\infty},
+	\end{equation}
+	and it converges to zero as $\nu \to \infty$.
+\end{lemma}
+\begin{proof}
+	We shall only need to show that $\| e^{(\nu)} \|_{\infty} \leq r \| e^{(\nu-1)} \|_{\infty}$ for $\nu = 1, 2, \ldots$. We have
+	\begin{equation*}
+		| e_1^{(\nu)} | \leq \sum_{j > 1} \left| \frac{a_{1j}}{a_{11}} \right| | e_j^{(\nu-1)} | \leq \| e^{(\nu-1)} \|_{\infty} \sum_{j > 1} \left| \frac{a_{1j}}{a_{11}} \right| = r_1 \| e^{(\nu-1)} \|_{\infty} \leq r \| e^{(\nu-1)} \|_{\infty}
+	\end{equation*}
+	Now assume $| e_k^{(\nu)} | \leq r \| e^{(\nu-1)} \|_{\infty}$ for $k = 1, 2, \ldots, i-1$. Then
+	\begin{equation*}
+		| e_i^{(\nu)} | \leq \sum_{j < i} \left| \frac{a_{ij}}{a_{ii}} \right| | e_j^{(\nu)} | + \sum_{j > i} \left| \frac{a_{ij}}{a_{ii}} \right| | e_j^{(\nu-1)} | \leq \| e^{(\nu-1)} \|_{\infty} \left( r \sum_{j < i} \left| \frac{a_{ij}}{a_{ii}} \right| + \sum_{j > i} \left| \frac{a_{ij}}{a_{ii}} \right| \right)
+	\end{equation*}
+	Recalling that $r < 1$, we have
+	\begin{equation*}
+		| e_i^{(\nu)} | \leq \| e^{(\nu-1)} \|_{\infty} \sum_{j \neq i} \left| \frac{a_{ij}}{a_{ii}} \right| = r_i \| e^{(\nu-1)} \|_{\infty} \leq r \| e^{(\nu-1)} \|_{\infty}
+	\end{equation*}
+	Thus, the induction argument is complete and since the above inequality is valid.
+\end{proof}
+
+The convergence test of this lemma is easily applied and is formally identical to that of the Jacobi method. However, it is not generally true that if the Gauss-Seidel method converges then the Jacobi method will converge, nor is the converse generally true.
+
+\subsection{Method of Residue Correction}
+This iterative scheme improves upon the accuracy of the approximate
+solution of $Ax = f$, obtained for example by the Gaussian elimination method, by using the approximate numerical triangular factorization of $A$.
+
+Consider the triangular factorization $A$ performed with $t$ digits, producing $\mathcal{L}$, $\mathcal{U}$ and $x^{(0)}$. Now define
+\begin{equation}
+	N = \mathcal{L} \mathcal{U}, \qquad P = N - A, \qquad r^{(0)} = f - A x^{(0)}.
+\end{equation}
+Observe that $N$ is easily invertible, or $\mathcal{L}\mathcal{U} y = z$ can be easily solved for $y$ when $z$ is given, by mere $n(n+1)$ operations (if $\mathcal{L}$ has unit diagonal elements, the count is $n^2$).
+
+The iteration is convergent if $M = N^{-1} P = I - N^{-1} A$ is a convergent matrix. We have
+\begin{equation*}
+	\| M \| = \| I - N^{-1} A \| < 1
+\end{equation*}
+for some matrix norm.
+
+\begin{lemma}{Sufficient Condition for Convergence}{Sufficient Condition for Convergence}
+	If $\| P \| \cdot \|A^{-1}\| < 1 / 2$, then the iterative method converges.
+\end{lemma}
+\begin{proof}
+	We have
+	\begin{equation*}
+		\| M \| = \| I - N^{-1} A \| = \| N^{-1} P \| \leq \| N^{-1} \| \cdot \| P \|
+	\end{equation*}
+	Now, we have
+	\begin{equation*}
+		N^{-1} = (A + P)^{-1} = (I + A^{-1} P)^{-1} A^{-1}
+	\end{equation*}
+	The Neumann series expansion of $(I + A^{-1} P)^{-1}$ is given by
+	\begin{equation*}
+		(I + A^{-1} P)^{-1} = I - A^{-1} P + (A^{-1} P)^2 - (A^{-1} P)^3 + \cdots
+	\end{equation*}
+	if $\| A^{-1} P \| < 1$, then the above series converges and we have
+	\begin{equation*}
+		\| (I + A^{-1} P)^{-1} \| \leq 1 + \| A^{-1} P \| + \| A^{-1} P \|^2 + \cdots = \frac{1}{1 - \| A^{-1} P \|}
+	\end{equation*}
+	The condition $\| A^{-1} P \| < 1 / 2$ implies that $\| (I + A^{-1} P)^{-1} \| < 2$. Thus, we have
+	\begin{equation*}
+		\| M \| = \| N^{-1} P \| = \| (I + A^{-1} P)^{-1} A^{-1} P \| \leq \| (I + A^{-1} P)^{-1} \| \cdot \| A^{-1} P \| < 2 \cdot \frac{1}{2} = 1
+	\end{equation*}
+	The method of residue correction converges.
+\end{proof}
+\begin{remark}
+	The principle is to write $M$ in the form of $A^{-1} P$:
+	\begin{equation*}
+		M = N^{-1} P = (I + A^{-1} P)^{-1} A^{-1} P
+	\end{equation*}
+\end{remark}
+In practice, we do not directly compute
+\begin{equation*}
+	\mathcal{L}\mathcal{U} x^{(\nu)} = (\mathcal{L}\mathcal{U} - A) x^{(\nu-1)} + f.
+\end{equation*}
+If we introduce the \emph{change} in the iterate and residue, we have
+\begin{equation}
+	\delta x^{(\nu)} = x^{(\nu+1)} - x^{(\nu)}, \qquad r^{(\nu)} = f - A x^{(\nu)}
+\end{equation}
+Then we would get
+\begin{equation}
+	\mathcal{L}\mathcal{U} \delta x^{(\nu)} = r^{(\nu)}
+\end{equation}
+and the computations are done with these equations.
+
+For operational count, we need $n^2$ operations to evaluate $r^{(\nu)}$ so each iteration step requires $n(2n+1)$ operations, and only $2n^2$ operations if $\mathcal{L}$ has unit diagonal elements.
+
+Also, in practical computation, the numerical solution of the equation would induce perturbations
+\begin{equation*}
+	\mathcal{L}_{\nu} \mathcal{U}_{\nu} \delta x^{(\nu)} = r^{(\nu)}, \qquad \mathcal{L}_{\nu} = \mathcal{L} + \Delta \mathcal{L}_{\nu}, \qquad \mathcal{U}_{\nu} = \mathcal{U} + \Delta \mathcal{U}_{\nu}
+\end{equation*}
+if we let
+\begin{equation*}
+	N_{\nu} = \mathcal{L}_{\nu} \mathcal{U}_{\nu}, \quad P_{\nu} = N_{\nu} - A, \quad M_{\nu} = N_{\nu}^{-1} P_{\nu}
+\end{equation*}
+Then we have
+\begin{equation*}
+	e^{(\nu)} = M_{\nu-1} e^{(\nu-1)} = M_{\nu-1} M_{\nu-2} \cdots M_0 e^{(0)}
+\end{equation*}
+If $\| M_{\nu} \| \leq q < 1$ for $\nu = 0, 1, 2, \ldots$, then we have $\| e^{(\nu)} \| \leq q^{\nu} \| e^{(0)} \|$ and the method converges for any initial guess $x^{(0)}$.
+
+\subsection{Positive Definite Systems}
+Many of the large order linear systems that arise in practice have real symmetric matrices which are positive definite. In such cases we can show that a quite general class of iteration methods converges. We state this result as
+\begin{theorem}{Convergence of Iteration Methods for Positive Definite Systems}{Convergence of Iteration Methods for Positive Definite Systems}
+	Let $A$ be Hermitian of order $n$ and $N$ be any non-singular matrix for which
+	\begin{equation}
+		Q = N + N^* - A
+	\end{equation}
+	is positive definite. Then the matrix
+	\begin{equation*}
+		M = N^{-1} P = I - N^{-1} A
+	\end{equation*}
+	is convergent if and only if $A$ is positive definite.
+\end{theorem}
+\begin{proof}
+	Take any eigenvalue $\lambda$ and corresponding eigenvector $u$ of $M$, then since $N$ is non-singular, we have
+	\begin{equation*}
+		A u = N(I - M) u = (1 - \lambda) N u.
+	\end{equation*}
+	As $A$ is positive definite, we have $A u \neq 0$ and thus $\lambda \neq 1$. By taking the complex inner product of each side, we have
+	\begin{equation*}
+		\frac{1}{1 - \lambda} = \frac{u^* N u}{u^* A u}, \qquad \frac{1}{\bar{\lambda}} = \frac{u^* N^* u}{u^* A u}
+	\end{equation*}
+	If we add these two equations we get
+	\begin{equation*}
+		2 \re \left( \frac{1}{1 - \lambda} \right) = \frac{u^* (N + N^*) u}{u^* A u},
+	\end{equation*}
+	if we write $\lambda = \alpha + i \beta$, then we have
+	\begin{equation*}
+		\frac{2(1 - \alpha)}{(1 - \alpha)^2 + \beta^2} = 1 + \frac{u^* Q u}{u^* A u} > 1
+	\end{equation*}
+	Simplifying the above inequality we get
+	\begin{equation}
+		|\lambda|^2 = \alpha^2 + \beta^2 < 1.
+	\end{equation}
+	The sufficiency is thus demonstrated.
+
+	To prove necessity, assume $\rho(M) < 1$. For any eigenvalue $\lambda$ of $M$, we have $|\lambda|^2 < 1$. Using the previous identity:
+	\begin{equation*}
+		\frac{u^* Q u}{u^* A u} = \frac{2(1 - \alpha)}{(1 - \alpha)^2 + \beta^2} - 1 = \frac{1 - (\alpha^2 + \beta^2)}{(1 - \alpha)^2 + \beta^2} = \frac{1 - |\lambda|^2}{|1 - \lambda|^2}
+	\end{equation*}
+	Since $|\lambda| < 1$, the right-hand side is strictly positive. Because $Q$ is given as positive definite, $u^* Q u > 0$. For the ratio to be positive, we must have $u^* A u > 0$ for every eigenvector $u$ of $M$. Since $A$ is Hermitian, and the eigenvectors of $M$ can be shown to span the space in this context, it follows that $A$ is positive definite.
+\end{proof}
+
+\begin{remark}
+	Intuitively, we can view this as: if $N$ is ``larger'' than $A / 2$ in some sense, then $I - N^{-1} A$ is a contraction and thus convergent.
+\end{remark}
+
+As an immediate corollary of this theorem, we have a result on the convergence of the Gauss-Seidel method for Hermitian matrices.
+\begin{corollary}{Convergence of Gauss-Seidel Method for Hermitian Matrices}{Convergence of Gauss-Seidel Method for Hermitian Matrices}
+	If $A$ is Hermitian with positive diagonal elements, then the Gauss-Seidel method converges if and only if $A$ is positive definite.
+\end{corollary}
+\begin{proof}
+	For the Gauss-Seidel method, we have
+	\begin{equation*}
+		A = D + E + E^*, \qquad N = D + E, \qquad P = - E^*
+	\end{equation*}
+	where $D$ is the diagonal part of $A$, $E$ is the strictly lower triangular part of $A$, and $E^*$ is the strictly upper triangular part of $A$. Thus we have $Q = N + N^* - A = D$ which is positive definite if the diagonal elements of $A$ are positive.
+\end{proof}
+
+Similarly, we obtain a result on the convergence of the Jacobi iterations as a special case of
+\begin{corollary}{Convergence of Jacobi Method for Hermitian Matrices}{Convergence of Jacobi Method for Hermitian Matrices}
+	Let $D = D^*$ be non-singular and $D - (E + E^*)$ be positive definite, then $D^{-1} (E + E^*)$ is a convergent matrix if and only if $A = D + E + E^*$ is positive definite.
+\end{corollary}
+\begin{proof}
+	Use $N = D$.
+\end{proof}
+If $D$ is diagonal this yields the convergence condition for the Jacobi method for matrix $A$.
+
+\subsection{Block Iteration Methods}
+There are other splittings of $A$ which in many important cases yield rapidly convergent iterations. In particular, since tridiagonal and block-tridiagonal systems are easily solved, it is natural to consider iterations in which $N$ has these forms.
+
+More generally, if the elements are ``close'' to the diagonal of a matrix are large compared to the other elements, it is usually advantageous to include all of these large elements in $N$ (assuming, of course, that the resulting systems which determine the iterates are still easily solved).
+
+\section{The Acceleration of Iteration Methods}
+Given any iteration procedure, for a specific system of equations, it may be possible to improve its rate of convergence by a simple device. Such modifications, which we call \emph{acceleration}, are frequently termed \emph{``extrapolation,'' ``over-relaxation,''} or various other names depending upon the problem to which they are applied or perhaps upon the particular form of device which is used.
+
+In any event, the general principle common to almost all acceleration procedures is the introduction of a splitting, which depends upon some real parameter $\alpha$, in an appropriate way. The splitting is denoted as
+\begin{equation}
+	A = N(\alpha) - P(\alpha), \qquad \det N(\alpha) \neq 0, \qquad M(\alpha) = N(\alpha)^{-1} P(\alpha)
+\end{equation}
+The convergence of the iteration is achieved if all eigenvalues $\lambda_i(\alpha)$ of $M(\alpha)$ satisfy $|\lambda_i(\alpha)| < 1$ for $i = 1, 2, \ldots, n$, or
+\begin{equation*}
+	\rho(M(\alpha)) = \max_i |\lambda_i(\alpha)| < 1
+\end{equation*}
+the rate of convergence is given by
+\begin{equation*}
+	R(\alpha) = - \log \rho(M(\alpha))
+\end{equation*}
+The convergence of the iteration is ``best'' when $R(\alpha)$ is maximum, or equivalently
+\begin{equation}\label{eq:acceleration-optimal-alpha}
+	\rho(M(\alpha_*)) = \min_{\alpha} \rho(M(\alpha))
+\end{equation}
+The selection of an optimal value $\alpha_*$ is the problem of acceleration.
+
+Some acceleration procedures that are commonly used are described as follows: Let some definite splitting be given by
+\begin{equation*}
+	A = N_0 - P_0, \qquad \det N_0 \neq 0, \qquad M_0 = N_0^{-1} P_0
+\end{equation*}
+the eiegenvalues of $M_0$ are $\lambda_i$ for $i = 1, 2, \ldots, n$. Then we introduce the one-parameter family of splittings:
+\begin{equation}\label{eq:acceleration-scheme}
+	\begin{aligned}
+		 & N(\alpha) = (1 + \alpha) N_0, \qquad P(\alpha) = (1 + \alpha) N_0 - A = P_0 + \alpha N_0,     \\
+		 & M(\alpha) = N(\alpha)^{-1} P(\alpha) = \frac{1}{1 + \alpha} M_0 + \frac{\alpha}{1 + \alpha} I
+	\end{aligned}
+\end{equation}
+For $\det N(\alpha) \neq 0$, we only need $\alpha \neq -1$. The eigenvalues of $M(\alpha)$ are given by
+\begin{equation}\label{eq:acceleration-eigenvalues}
+	\mu_i(\alpha) = \frac{\lambda_i + \alpha}{1 + \alpha}, \qquad i = 1, 2, \ldots, n
+\end{equation}
+and the eigenvectors of $M(\alpha)$ are the same as those of $M_0$.
+
+In order to determine convergent schemes, we have
+\begin{theorem}{Convergence of Accelerated Iteration Methods}{Convergence of Accelerated Iteration Methods}
+	Let $N_0$ and $P_0$ be given such that the eigenvalues $\lambda_i$ of $M_0 = N_0^{-1} P_0$ are all real and satisfy
+	\begin{equation*}
+		\lambda_1 \leq \lambda_2 \leq \cdots \leq \lambda_n < 1
+	\end{equation*}
+	Then the scheme defined by \eqref{eq:acceleration-scheme} is convergent for any $\alpha$ such that
+	\begin{equation}
+		\alpha > - \frac{1 + \lambda_1}{2} > -1.
+	\end{equation}
+	Furthermore, the largest rate of convergence for these schemes is obtained when
+	\begin{equation}
+		\alpha = \alpha_* = - \frac{\lambda_1 + \lambda_n}{2},
+	\end{equation}
+	for which we have
+	\begin{equation}
+		\rho(M(\alpha_*)) = \min_{\alpha} \rho(M(\alpha)) = \min_{\alpha} \max_i |\mu_i(\alpha)| = \frac{\lambda_n - \lambda_1}{2 - \lambda_1 - \lambda_n} < 1.
+	\end{equation}
+\end{theorem}
+\begin{proof}
+	The first part of the theorem is clear from \eqref{eq:acceleration-eigenvalues}, just solve the inequality $|\mu_i(\alpha)| < 1$ for $i = 1, 2, \ldots, n$. For the second part, we have
+	\begin{equation*}
+		\rho(M(\alpha)) = \max \{ |\mu_1(\alpha)|, |\mu_n(\alpha)| \}.
+	\end{equation*}
+	The function $\displaystyle \mu(\lambda) = \frac{\lambda + \alpha}{1 + \alpha}$ is monotonic in $\lambda$. Therefore, the maximum absolute value occurs at the boundaries of the spectrum of $M_0$. The optimal $\alpha$ occurs when the two extreme eigenvalues are equal in magnitude but opposite in sign:
+	\begin{equation*}
+		\mu_1(\alpha_*) = -\mu_n(\alpha_*) \implies \frac{\lambda_1 + \alpha_*}{1 + \alpha_*} = -\frac{\lambda_n + \alpha_*}{1 + \alpha_*}.
+	\end{equation*}
+	Solving for $\alpha_*$:
+	\begin{equation*}
+		\lambda_1 + \alpha_* = -\lambda_n - \alpha_* \implies 2\alpha_* = -(\lambda_1 + \lambda_n) \implies \alpha_* = -\frac{\lambda_1 + \lambda_n}{2}.
+	\end{equation*}
+	Substituting $\alpha_*$ back into the expression for $\mu_n(\alpha)$:
+	\begin{equation*}
+		\rho(M(\alpha_*)) = \frac{\lambda_n + \alpha_*}{1 + \alpha_*} = \frac{\lambda_n - \lambda_1}{2 - \lambda_1 - \lambda_n}.
+	\end{equation*}
+	Since $\lambda_1 \leq \lambda_n < 1$, it follows that $\lambda_n - \lambda_1 \geq 0$ and the denominator $2 - \lambda_1 - \lambda_n > 0$. Furthermore, since $2 - \lambda_1 - \lambda_n > \lambda_n - \lambda_1$ (which simplifies to $2 > 2\lambda_n$, or $1 > \lambda_n$), we have $\rho(M(\alpha_*)) < 1$.
+\end{proof}
+\begin{remark}
+	Another set can be found for $\lambda_i > 1$ for $i = 1, 2, \ldots, n$.
+\end{remark}
+
+\begin{figure}[ht]
+	\centering
+	\incfig{optimized-alpha}
+	\caption{Optimized Alpha}
+	\label{fig:optimized-alpha}
+\end{figure}
+
+In the general case, the $\lambda_i$ and hence $\mu_i(\alpha)$ can be complex. Then the schemes in \eqref{eq:acceleration-scheme} are convergent if $|\mu_i(\alpha)| < 1$ for $i = 1, 2, \ldots, n$. Here, the mapping
+\begin{equation*}
+	\mu = \frac{\lambda + \alpha}{1 + \alpha}, \qquad \alpha \neq -1.
+\end{equation*}
+is a well-known M\''obius transformation of the complex plane.
+
+We must note that a valid solution can be found for any circle in the $\lambda$ plane that
+\begin{itemize}
+	\item the center is on the real axis,
+	\item passes through the point $1$,
+	\item all eigenvalues $\lambda_i$ are interior to the circle.
+\end{itemize}
+If such a circle exists, then we call the coordinates of its center $(-\alpha, 0)$ and this value of a yields a convergent scheme. However, now it is not a simple matter to determine the best value of $\alpha$.
+
+\subsection{Practical Acceleration Schemes}
+It is assumed that the basic scheme $A = N_0 - P_0$ can be efficiently computed:
+\begin{equation*}
+	N_0 x^{(\nu)} = P_0 x^{(\nu-1)} + f
+\end{equation*}
+We assume that such systems can be solved in an efficient manner. Now the iterates $x^{(\nu)}$ satisfy:
+\begin{equation*}
+	x^{(\nu)} = M_0 x^{(\nu-1)} + g, \qquad g = N_0^{-1} f
+\end{equation*}
+The accelerated \eqref{eq:acceleration-scheme} can be written as
+\begin{equation} \label{eq:acceleration-iteration}
+	y^{(\nu)} = M(\alpha) y^{(\nu-1)} + \frac{1}{1 + \alpha} g = \frac{\alpha}{1 + \alpha} y^{(\nu-1)} + \frac{1}{1 + \alpha} (M_0 y^{(\nu-1)} + g).
+\end{equation}
+If $\alpha = 0$, then the basic scheme is recovered. If $\alpha > 0$, then for any $a,b\in \mathbb{R}$ we have
+\begin{equation*}
+	\min \{a, b\} \leq \frac{\alpha a + b}{1 + \alpha} \leq \max \{a, b\}
+\end{equation*}
+So in this case, the acceleration scheme yields a vector on the line segment joining the previous iterate and what would have been the next iterate of the basic scheme. The term ``interpolation'' is often applied to this case.
+
+If $-1 < \alpha < 0$, then
+\begin{equation*}
+	\frac{\alpha}{1 + \alpha} a + \frac{1}{1 + \alpha} b 
+	\begin{cases}
+		\leq b, & \text{if $b \leq a$}   \\
+		\geq b, & \text{if $b \geq a$}
+	\end{cases}
+\end{equation*}
+The scheme is now termed an ``extrapolated iteration.'' Similarly, the remaining case $\alpha < -1$ is an ``extrapolated iteration'' in another direction.
+
+To compute using the scheme \eqref{eq:acceleration-iteration}, we let
+\begin{equation*}
+	N_0 z^{(\nu)} = P_0 y^{(\nu-1)} + f, \qquad y^{(\nu)} = \frac{\alpha}{1 + \alpha} y^{(\nu-1)} + \frac{1}{1 + \alpha} z^{(\nu)}
+\end{equation*}
+Thus, as in the basic scheme, the calculations only require the solution of systems of the form $N_0 z = w$.
+
+In general, the eigenvalues $\lambda_i$ of $M_0$ are not known, especially $\lambda_1$ and $\lambda_n$ which me use to determine the optimal $\alpha$. However, it may be possible to approximate the value $\alpha_*$ by some test calculations that are easily performed:
+
+Since the rate of convergence is independent of the inhomogeneous term $f$, we can choose $f = 0$, and the system now has the form $A y = 0$, having a unique solution $y = 0$. Take any non-zero initial guess $y^{(0)}$, and compute $y^{(\nu)}$ by
+\begin{equation*}
+	y^{(\nu)} (\alpha) = M(\alpha) y^{(\nu-1)} = M^{\nu}(\alpha) y^{(0)}
+\end{equation*}
+for some $\alpha = \alpha_1$, if $\alpha_1$ yields a convergent scheme, then we compute until
+\begin{equation*}
+	\| y^{(\nu)} (\alpha_1) \| = \max_i | y_i^{(\nu)} (\alpha_1) | \leq 10^{-m}
+\end{equation*}
+where $m>0$. This requires some minimum number of iterations which we may call $\nu(\alpha_1)$. Now repeat this for a sequence of values $\alpha_1, \alpha_2, \alpha_3, \ldots$ to obtain the corresponding sequence $\nu(\alpha_1), \nu(\alpha_2), \nu(\alpha_3), \ldots$. Choose the value $\alpha_k$ for which $\nu(\alpha_k)$ is minimum, and this value of $\alpha$ is an approximation to the optimal value $\alpha_*$.
+
+An alternative method is to compute $\| y^{(N)} (\alpha) \|$ for some fixed $N$ and a sequence of values $\alpha_1, \alpha_2, \alpha_3, \ldots$, and choose the value $\alpha_k$ for which $\| y^{(N)} (\alpha_k) \|$ is minimum.
+
+\subsection{Generalizations of Acceleration Schemes}
+There are numerous generalizations of the acceleration method which in fact are more powerful. The simplest type of generalization proceeds from a single basic splitting but employs a sequence of parameters $\alpha_1, \alpha_2, \alpha_3, \ldots, \alpha_r$ to define a sequence of splittings
+\begin{equation*}
+	M(\alpha_i) = N(\alpha_i)^{-1} P(\alpha_i) = \frac{\alpha_i}{1 + \alpha_i} I + \frac{1}{1 + \alpha_i} M_0
+\end{equation*}
+The iterations are defined as follows, with $x^{(0)}$ arbitrary:
+\begin{itemize}
+	\item $y^{(\nu, 0)} = x^{(\nu-1)}$,
+	\item $y^{(\nu, s)} = M(\alpha_s) y^{(\nu, s-1)} + N(\alpha_s)^{-1} f$ for $s = 1, 2, \ldots, r$,
+	\item $x^{(\nu)} = y^{(\nu, r)}$.
+\end{itemize}
+\begin{remark}
+	This can be seen as a ``cycle'' of $r$ iterations of the basic acceleration scheme, with different values of $\alpha$ for each iteration.
+\end{remark}
+again we can replace the need to compute inverse by solve an equation
+\begin{equation*}
+	N(\alpha_s) y^{(\nu, s)} = P(\alpha_s) y^{(\nu, s-1)} + f
+\end{equation*}
+With this notation, one iteration of this generalized acceleration scheme requires the same number of computations as $r$ iterations in the ordinary acceleration scheme. The convergence of this method can be analyzed by means of the equivalent formulation:
+\begin{equation*}
+	\begin{aligned}
+		&x^{(\nu)} = M(\alpha_1, \alpha_2, \ldots, \alpha_r) x^{(\nu-1)} + g\\
+		&M(\alpha_1, \alpha_2, \ldots, \alpha_r) = M(\alpha_r) M(\alpha_{r-1}) \cdots M(\alpha_1) \\
+		&g = [N(\alpha_r)^{-1} + M(\alpha_r) N(\alpha_{r-1})^{-1} + \cdots + M(\alpha_r) M(\alpha_{r-1}) \cdots M(\alpha_2) N(\alpha_1)^{-1}] f
+	\end{aligned}
+\end{equation*}
+The eigenvalues of $M(\alpha_1, \alpha_2, \ldots, \alpha_r)$ are given by
+\begin{equation}
+	\mu_i(\alpha_1, \alpha_2, \ldots, \alpha_r) = \prod_{s=1}^r \frac{\lambda_i + \alpha_s}{1 + \alpha_s}, \qquad i = 1, 2, \ldots, n
+\end{equation}
+Now if we define the $r$-th degree polynomial
+\begin{equation*}
+	P_r(\lambda) = \prod_{s=1}^r \frac{\lambda + \alpha_s}{1 + \alpha_s}
+\end{equation*}
+then convergence is implied by $| P_r(\lambda_i) | < 1$ for $i = 1, 2, \ldots, n$. In particular, if all the eigenvalues of $M_0$ are real and satisfy $a \leq \lambda_i \leq b$, then convergence is implied by
+\begin{equation}
+	| P_r(\lambda) | < 1 \text{ for all } a \leq \lambda \leq b.
+\end{equation}
+
+In this case, the fastest convergence can be expected for that polynomial which has the smallest absolute magnitude in the indicated interval. Such problems are considered later.
+
+Another type of generalization of the acceleration method is obtained by employing a sequence of different basic splittings, say
+\begin{equation*}
+	A = N_i - P_i, \qquad \det N_i \neq 0, \qquad M_i = N_i^{-1} P_i, \qquad i = 1, 2, \ldots, r
+\end{equation*}
+and their corresponding accelerated forms $N_i(\alpha_i)$, $P_i(\alpha_i)$, and $M_i(\alpha_i)$.
+
+\section{Matrix Inversion by High-Order Iteration}
+The previous methods of this chapter have been primarily concerned with solving linear systems. Of course, they can all be employed to determine the inverse of any given nonsingular matrix $A$. We consider now an iterative method for directly computing $A^{-1}$.
+
+This method is a means for improving the accuracy of an approximate inverse, say $R_0$, obtained by some other process. However, in many cases the present method is feasible when the initial approximate inverse is assumed to have the simple form $R_0 = \omega I$ for some scalar $\omega$. Because of the large number of operations involved in matrix multiplication, these schemes are not generally used.
+
+We define the error
+\begin{equation*}
+	E_0 = I - A R_0.
+\end{equation*}
+we define a sequence of approximate inverses by
+\begin{itemize}
+	\item $R_{\nu} = R_{\nu-1}(I + E_{\nu-1} + E_{\nu-1}^2 + \cdots + E_{\nu-1}^{p-1})$ for $\nu = 1, 2, \ldots$,
+	\item $E_{\nu} = I - A R_{\nu}$ for $\nu = 0, 1, 2, \ldots$.
+\end{itemize}
+here $p \geq 2$ is a fixed integer. We have
+\begin{equation*}
+	\begin{aligned}
+		E_{\nu} & = I - A R_{\nu} \\
+		& = I - A R_{\nu-1} (I + E_{\nu-1} + E_{\nu-1}^2 + \cdots + E_{\nu-1}^{p-1}) \\
+		& = I - (I - E_{\nu-1}) (I + E_{\nu-1} + E_{\nu-1}^2 + \cdots + E_{\nu-1}^{p-1}) \\
+		& = E_{\nu-1}^p.
+	\end{aligned}
+\end{equation*}
+Thus, in one iteration, the error matrix is raised to the pth power and the method is consequently called the $p$-th order iteration method.
+\begin{remark}
+	Think of this backwards: Our goal is to find a iteration scheme that satisfies $E_{\nu} = E_{\nu-1}^p$. We can write
+	\begin{equation*}
+		\begin{aligned}
+			R_{\nu} & = A^{-1} (I - E_{\nu}) \\
+			& = A^{-1} (I - E_{\nu-1}^p) \\
+			& = A^{-1} (I - E_{\nu-1})(I + E_{\nu-1} + E_{\nu-1}^2 + \cdots + E_{\nu-1}^{p-1}) \\
+			& = R_{\nu-1} (I + E_{\nu-1} + E_{\nu-1}^2 + \cdots + E_{\nu-1}^{p-1})
+		\end{aligned}
+	\end{equation*}
+\end{remark}
+
+Thus we have
+\begin{equation}
+	E_{\nu} = E_0^{(p^{\nu})}
+\end{equation}
+Thus the iteration converges if $E_0$ is a convergent matrix. It true, then the error $E_{\nu}$ vanishes as $\rho(E_0)^{p^{\nu}}$ as $\nu \to \infty$. 
+
+We now pose the problem of determining the ``best'' value of $p$ to be used for any convergent $E_0$. By the best value we mean that procedure which for the least amount of computation yields an approximate inverse of desired accuracy. Alternatively, the best scheme could be defined as the one for which a given amount of computation yields the most accurate inverse.
+
+Adopting our usual convention we find from (2), since the product of two matrices requires $n^3$ operations, that $\nu$ iterations of a $p$-th order method requires 
+\begin{equation*}
+	\nu p n^3 \qquad \ops \text{ for $\nu$ iterations.}
+\end{equation*}
+If only $K$ operations are to be permitted the number of iterations allowed is $\nu = K / (p n^3)$. Thus, the principal eigenvalue is reduced to
+\begin{equation*}
+	\rho^{p^{\nu}} = \rho^{p^{K / (p n^3)}} = \exp \left( p^{K / (p n^3)} \log \rho \right) 
+\end{equation*}
+we find that the error is minimized when $p^{1/ p}$ is a maximum, which is $e \approx 2.71828$. Also, we have
+\begin{equation*}
+	3^{1/3} \approx 1.44225 > 2^{1/2} \approx 1.41421.
+\end{equation*}
+So we see that the $3$-rd order iteration method is the best of the integer-order methods.
+
+In order to apply the procedure, we need to have an initial estimate $R_0$ such that $E_0 = I - A R_0$ is a convergent matrix. For a very important class of matrices such an estimate is easily found. This result is contained in
+
+\begin{theorem}{Convergence of High-Order Iteration Method for Matrix Inversion}{Convergence of High-Order Iteration Method for Matrix Inversion}
+	Let $A$ have real eigenvalues in the interval
+	\begin{equation*}
+		0 < m \leq \lambda_j \leq M, \qquad j = 1,2, \ldots ,n.
+	\end{equation*}
+	Then if $R_0(\omega) = \omega I$ and $E_0(\omega) = I - \omega A$, then $E_0(\omega)$ is a convergent matrix for all $\omega$ in
+	\begin{equation}
+		0 < \omega < \frac{2}{M}.
+	\end{equation}
+	If $\rho(\omega)$ is the spectral radius of $E_0(\omega)$, then
+	\begin{equation}
+		\rho(\omega_*) = \min_{0 < \omega < 2 / M} \rho(\omega) = \frac{M - m}{M + m} < 1, \qquad \omega_* = \frac{2}{M + m}.
+	\end{equation}
+\end{theorem}
+\begin{proof}
+	Obvious as it is, also a restatement of theorem \ref{thm:Convergence of Accelerated Iteration Methods}.
+\end{proof}
+
+
+\end{document}

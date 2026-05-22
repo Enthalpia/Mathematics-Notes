@@ -1,0 +1,279 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\chapter{Iterative Methods for Nonlinear Equations}
+In this chapter, we consider iterative methods for determining the roots of equations
+\begin{equation}
+  f(x) = 0.
+\end{equation}
+where $f$ and $x$ are vectors of the same dimension $k$. Most of the iterative methods can be written in the form $x_{n+1} = g(x_n)$, where $g$ is some suitable function, and given an initial guess $x_0$.
+
+The convergence of this iteration process is assured if the \textbf{mapping is contractive}, i.e., if there exists a constant $M < 1$, called the \emph{Lipschitz constant}, such that
+\begin{equation}
+  \forall x, y \in S \subseteq C_k, \quad \|g(x) - g(y)\| \leq M \|x - y\|.
+\end{equation}
+Such an iteration scheme is sometimes referred to as the \emph{Picard iteration method, or as a functional iteration method.} It can be easily shown under these conditions that $g(x)$ has a \emph{unique fixed point} $\alpha \in S$ that $g(\alpha) = \alpha$.
+
+As a general empirical rule, the schemes which converge more rapidly (i.e., higher order methods) require closer initial estimates. In practice, these higher order schemes may require the use of more significant digits in order that they converge as theoretically predicted. Thus, it is frequently a good idea to use a simple method to start with and then, when fairly close to the root, to use some higher order method for just a few iterations.
+
+\section{Functional Iteration for Single Equation}
+Let us consider a scalar equation of the special form
+\begin{equation}
+  x - g(x) = 0,
+\end{equation}
+if $x_0$ is some initial guess, then a natural scheme is to form the sequence
+\begin{equation}
+  x_{\nu+1} = g(x_\nu), \quad \nu = 0, 1, 2, \ldots
+\end{equation}
+
+\begin{theorem}{Lipschitz Convergence Theorem}{Lipschitz Convergence Theorem}
+  Let $g(x)$ be a function satisfying the \emph{Lipschitz condition}:
+  \begin{equation}
+    |g(x) - g(y)| \leq \lambda |x - y|, \quad \forall x, y \in I = [x_0 - \rho, x_0 + \rho],
+  \end{equation}
+  for some $0 \leq \lambda < 1$. Let the initial guess $x_0$ be such that
+  \begin{equation}
+    |x_0 - g(x_0)| \leq (1 - \lambda) \rho.
+  \end{equation}
+  Then
+  \begin{itemize}
+    \item all iterates $x_\nu$ lie in $I$;
+    \item the sequence $\{x_\nu\}$ converges to some point
+      \begin{equation*}
+        \lim_{\nu \to \infty } x_\nu = \alpha, \qquad |x_\nu - \alpha| \leq \lambda^\nu \rho
+      \end{equation*}
+      which is a root of the equation $x - g(x) = 0$;
+      \item the root $\alpha$ is the only root of the equation in $I$.
+  \end{itemize}
+\end{theorem}
+\begin{proof}
+  Firstly we have
+  \begin{equation*}
+    |x_1 - x_0| = |g(x_0) - x_0| \leq (1 - \lambda) \rho, \quad |x_{\nu+1} - x_\nu| = |g(x_\nu) - g(x_{\nu-1})| \leq \lambda |x_\nu - x_{\nu-1}| \leq \lambda^\nu (1 - \lambda) \rho.
+  \end{equation*}
+  \begin{equation*}
+    \begin{aligned}
+      |x_{\nu} - x_0| & = |(x_{\nu} - x_{\nu-1}) + \cdots + (x_1 - x_0)| \\
+      & \leq |x_{\nu} - x_{\nu-1}| + \cdots + |x_1 - x_0| \\
+      & \leq (\lambda^{\nu-1} + \cdots + 1)(1 - \lambda) \rho \\
+      & = (1 - \lambda^\nu) \rho < \rho.
+    \end{aligned}
+  \end{equation*}
+  To prove convergence, we have
+  \begin{equation*}
+    |x_{m+p} - x_m| \leq (\lambda^{m+p-1} + \cdots + \lambda^m)(1 - \lambda) \rho = (1 - \lambda^p) \lambda^m \rho.
+  \end{equation*}
+  So it is a Cauchy sequence and thus converges to some point $\alpha$. Taking the limit on both sides of $x_{\nu+1} = g(x_\nu)$, we have $\alpha = g(\alpha)$.
+
+  Finally, if there is another root $\beta$ in $I$, then we have
+  \begin{equation*}
+    |\alpha - \beta| = |g(\alpha) - g(\beta)| \leq \lambda |\alpha - \beta| < |\alpha - \beta|,
+  \end{equation*}
+  which is a contradiction.
+\end{proof}
+A simply corollary:
+\begin{corollary}{Lipschitz Convergence Theorem for Differentiable Functions}{Lipschitz Convergence Theorem for Differentiable Functions}
+  Let $g(x)$ be a function defined on $I = [x_0 - \rho, x_0 + \rho]$ and differentiable in the interior of $I$. If there exists some constant $\lambda < 1$ such that $|g'(x)| \leq \lambda$ for all $x \in I$, and the initial guess $x_0$ is such that $|x_0 - g(x_0)| \leq (1 - \lambda) \rho$, then the conclusions of the Lipschitz Convergence Theorem \ref{thm:Lipschitz Convergence Theorem} hold.
+\end{corollary}
+\begin{proof}
+  he mean value theorem implies $|g(x) - g(y)| = |g'(\xi)| |x - y| \leq \lambda |x - y|$ for some $\xi$ between $x$ and $y$.
+\end{proof}
+
+Another convergence theorem is
+\begin{theorem}{Lipschitz Convergence Theorem for Roots}{Lipschitz Convergence Theorem for Roots}
+  If $x = g(x)$ has a root $\alpha$ and $g$ satisfies
+  \begin{equation} \label{eq:Lipschitz condition for roots}
+    \forall |x - \alpha| < \rho, \quad |g(x) - g(\alpha)| \leq \lambda |x - \alpha|,
+  \end{equation}
+  for some $\lambda < 1$, then for any $x_0 \in I = [\alpha - \rho, \alpha + \rho]$, we have
+  \begin{itemize}
+    \item all iterates $x_\nu$ lie in $I$;
+    \item the iteration converges to $\alpha$
+    \item the root $\alpha$ is the only root of the equation in $I$.
+  \end{itemize}
+\end{theorem}
+\begin{proof}
+  Obvious.
+\end{proof}
+Replacing the condition by $|g'(x)| \leq \lambda < 1$ for all $x \in I$, the conclusions still hold.
+
+As we have
+\begin{equation*}
+  \alpha - x_{\nu} = g(\alpha) - g(x_{\nu-1}) = g'(\xi_{\nu-1})(\alpha - x_{\nu-1}),
+\end{equation*}
+so it the iteration converges, then $\xi_{\nu}\to \alpha$ and asymptotically we have
+\begin{equation}
+  |\alpha - x_{k + \nu}| \approx |g'(\alpha)|^\nu |\alpha - x_k|.
+\end{equation}
+for large $k$. Thus, the quantity
+\begin{equation}
+  \hat{\lambda} = |g'(\alpha)|
+\end{equation}
+is frequently called the \emph{asymptotic convergence factor} of the iteration, and in analogy with the case of linear iterations, we define
+\begin{equation}
+  R = -\log \hat{\lambda}
+\end{equation}
+may be called the \emph{asymptotic convergence rate} if $\hat{\lambda} < 1$.
+
+The number of additional iterations required to reduce the error at the $k$-th step by the (additional) factor $10^{-m}$ is approximately
+\begin{equation}
+  \nu = \frac{m}{R}
+\end{equation}
+We call such a scheme \textbf{first-order method}.
+
+\subsection{Error Propagation}
+In actual computations it may not be possible, or practical, to evaluate $g(x)$ exactly. For any value X we may then represent our approximation to the function value $g(X)$ by $G(X) = g(X) + \delta(x)$, where $\delta(X)$ is the error in the evaluation. Usually, we have a bound for the error, i.e., $|\delta(x)| \leq \delta$ for some $\delta > 0$. Thus the actual iteration scheme which is used may be represented as
+\begin{equation}
+  X_{\nu+1} = G(X_\nu) = g(X_\nu) + \delta_\nu, \quad \delta_\nu = \delta(X_\nu), |\delta_\nu| \leq \delta.
+\end{equation}
+We cannot expect the computed iterates $X_{\nu}$ to converge. However, under proper conditions, it should be possible to approximate a root to an accuracy determined essentially by the accuracy of the computations $\delta$.
+
+\begin{theorem}{Error Propagation Bounds}{Error Propagation Bounds}
+  Let $x = g(x)$ satisfy the conditions of theorem \ref{thm:Lipschitz Convergence Theorem for Roots}, and let $X_0 \in I$ where
+  \begin{equation}
+    I = [\alpha - \rho_0, \alpha + \rho_0], \quad 0 < \rho_0 \leq \rho - \frac{\delta}{1 - \lambda}.
+  \end{equation}
+  Then the iterates $X_\nu \in [\alpha - \rho, \alpha + \rho]$ and
+  \begin{equation}\label{eq:Error Propagation Bounds}
+    | \alpha - X_k| \leq \frac{\delta}{1 - \lambda} + \lambda^k \left( \rho_0 - \frac{\delta}{1 - \lambda} \right).
+  \end{equation}
+\end{theorem}
+\begin{proof}
+  We have
+  \begin{equation*}
+    \begin{aligned}
+      |\alpha - X_{\nu+1}| & = |g(\alpha) - g(X_\nu) + \delta_\nu| \\
+      & \leq |g(\alpha) - g(X_\nu)| + |\delta_\nu| \\
+      & \leq \lambda |\alpha - X_\nu| + \delta.
+    \end{aligned}
+  \end{equation*}
+  giving
+  \begin{equation*}
+    \begin{aligned}
+      |\alpha - X_k| & \leq \lambda |\alpha - X_{k-1}| + \delta \\
+      & \leq \lambda^2 |\alpha - X_{k-2}| + \lambda \delta + \delta \\
+      & \leq \cdots \\
+      & \leq \lambda^k |\alpha - X_0| + \lambda^{k-1} \delta + \cdots + \lambda \delta + \delta \\
+      & \leq \lambda^k \rho_0 + \frac{1 - \lambda^k}{1 - \lambda} \delta.
+    \end{aligned}
+  \end{equation*}
+  giving the desired result.
+\end{proof}
+This shows that the method is "as convergent as possible," that is, the computational errors which arise from the evaluations of $g(x)$ may cumulatively produce an error of magnitude at most $\delta/(1 - \lambda)$ in the computed root. It is also clear that such errors limit the size of the error bound independently of the number of iterations. Thus in actual calculations, it is not worthwhile to iterate until $ \lambda^\nu \rho_0 \ll \delta/(1 - \lambda)$. Just make
+\begin{equation*}
+  \lambda^\nu \rho_0 \simeq \frac{\delta}{1 - \lambda}
+\end{equation*}
+The number of iterations required is then about
+\begin{equation}
+  \nu \simeq \log \frac{\delta}{(1 - \lambda) \rho_0} \bigg/ \log \lambda.
+\end{equation}
+
+\subsection{Higher-Order Methods}
+It is clear that from theorem \ref{thm:Lipschitz Convergence Theorem for Roots} that if $g'(\alpha) = 0$, then the iteration converges more rapidly.
+
+Let this be the case and assume further that $g''(x)$ exists and is bounded in some interval $I = [\alpha - \rho, \alpha + \rho]$ in which \eqref{eq:Lipschitz condition for roots} holds. Then, by Taylor's theorem, we have
+\begin{equation}
+  g(x) = g(\alpha) + g'(\alpha)(x - \alpha) + \frac{1}{2} g''(\xi) (x - \alpha)^2 = \alpha + \frac{1}{2} g''(\xi) (x - \alpha)^2,
+\end{equation}
+Assume that $|\frac{1}{2} g''(x)| \leq \lambda < 1$ for all $x \in I$, then we have
+\begin{equation*}
+  |x_{\nu} - \alpha| = | g(x_{\nu-1}) - g(\alpha)| = \left| \frac{1}{2} g''(\xi_{\nu-1}) \right| |x_{\nu-1} - \alpha|^2.
+\end{equation*}
+Thus, the error in any iterate is proportional to the square of the previous error and if $g''(\alpha) \neq 0$, the iteration is said to be a \textbf{second-order method}.
+
+If we have an additional bound on $g''$ by
+\begin{equation}
+  | g''(x) | \leq 2M, \quad |\alpha - x| \leq \rho,
+\end{equation}
+then we have
+\begin{equation}
+  |x_{\nu} - \alpha| \leq (M | x_0 - \alpha |)^{2^\nu - 1} |x_0 - \alpha|.
+\end{equation}
+if $M | x_0 - \alpha | < 1$, then the sequence $\{x_\nu\}$ converges to $\alpha$ and reduces the error by at least a factor of $10^{-m}$ in about
+\begin{equation*}
+  (M | x_0 - \alpha |)^{2^\nu - 1} \simeq 10^{-m}
+\end{equation*}
+The number of iterations required is now obtained from
+\begin{equation}
+  \nu \simeq \frac{1}{\log 2} \log \frac{m}{\log 1 / (M | x_0 - \alpha |)}.
+\end{equation}
+A comparison with first order schemes is given by comparing
+\begin{equation*}
+  2^{\nu_2} \simeq 1 + \nu_1
+\end{equation*}
+A further striking property of second order schemes can be obtained by assume that for all $\nu > \nu_0$ that
+\begin{equation*}
+  |x_{\nu} - \alpha| = 10^{-p_{\nu}}, \quad p_{\nu} > 0.
+\end{equation*}
+where $p_\nu$ is the number of significant digits in $x_\nu$. Then we have
+\begin{equation*}
+  10^{-p_{\nu}} \leq M 10^{-2 p_{\nu-1}} \implies p_\nu \geq 2 p_{\nu-1} - \log M.
+\end{equation*}
+If $M < 1$, then the number of correct decimals more than doubles on each iteration. Even if $M$ is not small, we can say that this holds asymptotically.
+
+Schemes which are more quickly convergent than second order ones are now easily described. Let us assume that at a root $x = \alpha$ we have
+\begin{itemize}
+  \item $g(\alpha) = \alpha$;
+  \item $g'(\alpha) = g''(\alpha) = \cdots = g^{(n-1)}(\alpha) = 0$;
+  \item $g^{(n)}(\alpha) \neq 0$, and $g^{(n)}(x) \leq n! M$ for some $M > 0$ in $|x - \alpha| \leq \rho$.
+\end{itemize}
+Then we have
+\begin{equation*}
+  g(x) = \alpha + \frac{1}{n!} g^{(n)}(\xi) (x - \alpha)^n,
+\end{equation*}
+\begin{equation*}
+  |x_{\nu+1} - \alpha| = \left| \frac{1}{n!} g^{(n)}(\xi_{\nu}) \right| |x_{\nu} - \alpha|^n \leq M |x_{\nu} - \alpha|^n.
+\end{equation*}
+
+In the event that $g(x)$ is calculated with an error of magnitude $\delta$, the root $\alpha$ may be determined only to within an uncertainty of at best $\pm \delta$. This conclusion follows by letting $\lambda \to 0$ in \eqref{eq:Error Propagation Bounds}.
+
+\section{Explicit Iteration Procedures}
+Consider the original problem of finding the root of 
+\begin{equation*}
+  f(x) = 0
+\end{equation*}
+in some interval, say $[a,b]$. Let $\phi(x)$ be any function such that
+\begin{equation}
+  0 < |\phi(x)| < \infty \quad \text{for all } x \in [a,b].
+\end{equation}
+Then the equation
+\begin{equation}
+  x = g(x) = x - \phi(x) f(x)
+\end{equation}
+have the same roots as $f(x) = 0$. Many of the standard iterative methods are obtained for special choices of $\phi(x)$.
+
+Another procedure for defining the function $g(x)$ is to write
+\begin{equation}
+  g(x) = x - F(f(x)),
+\end{equation}
+where $F$ is some function such that $F(0) = 0, \forall y \neq 0, F(y) \neq 0$. Such methods more naturally describe many higher order schemes.
+
+\subsection{The Chord Method (First-Order)}
+The simplest choice for $\phi(x)$ is to take
+\begin{equation}
+  \phi(x) = m \neq 0, \qquad x = g(x) = x - m f(x).
+\end{equation}
+If $f(x)$ is differentiable then
+\begin{equation*}
+  g'(x) = 1 - m f'(x).
+\end{equation*}
+and the scheme will be convergent in some interval of $\alpha$ if
+\begin{equation*}
+  0 < m f'(\alpha) < 2.
+\end{equation*}
+Note that if $f'(\alpha) = 0$, this cannot be satisfied.
+
+This choice yields the iteration equations
+\begin{equation}
+  x_{\nu+1} = x_\nu - m f(x_\nu), \quad \nu = 0, 1, 2, \ldots
+\end{equation}
+These iterates have a geometric realization in which the value $x_{\nu+1}$ is the $x$-intercept of the line through the point $(x_\nu, f(x_\nu))$ with slope $1/m$.
+
+\begin{figure}[ht]
+    \centering
+    \incfig{chord-method}
+    \caption{Chord Method}
+    \label{fig:chord-method}
+\end{figure}
+
+\end{document}

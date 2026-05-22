@@ -1,7 +1,5 @@
 \documentclass{mathbook}
 
-\newcommand\re{\operatorname{Re}}
-\newcommand\im{\operatorname{Im}}
 \newcommand\Int{\operatorname{Int}}
 \newcommand\Ext{\operatorname{Ext}}
 \newcommand\ops{\operatorname{ops.}}

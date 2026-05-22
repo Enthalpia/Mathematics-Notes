@@ -1,0 +1,169 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\chapter{Eigenvalues and Eigenvectors}
+
+The eigenvalue-eigenvector problem for a square matrix $A$ is to find scalars $\lambda$ and nonzero vectors $x$ such that
+\begin{equation}
+  Ax = \lambda x, \qquad x \neq 0.
+\end{equation}
+The problem is clearly non-linear since both $\lambda$ and $x$ are unknowns. In fact, as is well known, the eigenvalues $\lambda$ are the $n$ roots of the characteristic equation
+\begin{equation}
+  \det(\lambda I - A) = p_A(\lambda) = 0,
+\end{equation}
+Thus the eigenvalues can, in principle, be found as the zeros of $p_A$) without recourse to any of the eigenvectors.
+
+Given some eigenvalue $\lambda$, then the corresponding eigenvector is a non-trivial solution of the homogeneous linear system $(\lambda I - A)x = 0$. On the other hand, if some particular eigenvector $x$ is known, then the eigenvalue to which $x$ belongs can be obtained by taking the inner product:
+\begin{equation}
+  \lambda = \frac{x^* A x}{x^* x}.
+\end{equation}
+Alternatively, we could use any non-zero component
+\begin{equation*}
+  \lambda = \frac{1}{x_i} \sum_{j=1}^n a_{ij} x_j.
+\end{equation*}
+Note that if some of the $n$ eigenvalues of $A$ are not distinct, then there may be fewer then $n$ eigenvectors. Take
+\begin{equation*}
+  A = \begin{pmatrix}
+    1 & 1 \\
+    0 & 1
+  \end{pmatrix}.
+\end{equation*}
+for example, the only eigenvalue is $\lambda = 1$, and the only eigenvector is $x = (1, 0)^T$.
+
+\section{Well-Posedness and Error Estimates}
+\begin{theorem}{Gerschgorin Circle Theorem}{Gerschgorin Circle Theorem}
+  Let $A = (a_{ij})$ be an $n \times n$ matrix, having eigenvalues $\lambda$ and define the absolute row and column sums
+  \begin{equation}
+    r_i = \sum_{j \neq i} |a_{ij}|, \qquad c_j = \sum_{i \neq j} |a_{ij}|.
+  \end{equation}
+  Then,
+  \begin{itemize}
+    \item Every eigenvalue $\lambda$ of $A$ lies in the union of the $n$ rows disks
+      \begin{equation}
+        R_i = \{ z \in \mathbb{C} : |z - a_{ii}| \leq r_i \}, \qquad i = 1, 2, \ldots, n,
+      \end{equation}
+    \item Every eigenvalue $\lambda$ of $A$ lies in the union of the $n$ column disks
+      \begin{equation}
+        C_j = \{ z \in \mathbb{C} : |z - a_{jj}| \leq c_j \}, \qquad j = 1, 2, \ldots, n.
+      \end{equation}
+    \item Each connected component of $\bigcup_{i=1}^n R_i$ or $\bigcup_{j=1}^n C_j$ contains as many eigenvalues of $A$ as the number of disks in that component.
+  \end{itemize}  
+\end{theorem}
+\begin{proof}
+We prove the three parts of the theorem as follows:
+
+\paragraph{1. The Row Disks}
+Let $\lambda$ be an eigenvalue of $A$ and let $x = (x_1, x_2, \ldots, x_n)^T$ be a corresponding eigenvector such that $Ax = \lambda x$. Since $x \neq 0$, there exists at least one component with maximum absolute value. Let $i$ be an index such that:
+\begin{equation*}
+    |x_i| = \max_{1 \leq k \leq n} |x_k| > 0.
+\end{equation*}
+From the $i$-th row of the system $Ax = \lambda x$, we have:
+\begin{equation*}
+    \sum_{j=1}^n a_{ij} x_j = \lambda x_i.
+\end{equation*}
+Splitting the sum to isolate the diagonal term $a_{ii}$, we get:
+\begin{equation*}
+    (\lambda - a_{ii})x_i = \sum_{j \neq i} a_{ij} x_j.
+\end{equation*}
+Taking the absolute value of both sides and applying the triangle inequality:
+\begin{equation*}
+    |\lambda - a_{ii}| \cdot |x_i| = \left| \sum_{j \neq i} a_{ij} x_j \right| \leq \sum_{j \neq i} |a_{ij}| \cdot |x_j|.
+\end{equation*}
+Since $|x_i| \geq |x_j|$ for all $j$, we can divide both sides by $|x_i|$ to obtain:
+\begin{equation*}
+    |\lambda - a_{ii}| \leq \sum_{j \neq i} |a_{ij}| \frac{|x_j|}{|x_i|} \leq \sum_{j \neq i} |a_{ij}| = r_i.
+\end{equation*}
+Thus, $\lambda \in R_i$, which implies $\lambda \in \bigcup_{i=1}^n R_i$.
+
+\paragraph{2. The Column Disks}
+The eigenvalues of a matrix $A$ are the same as the eigenvalues of its transpose $A^T$, because they share the same characteristic equation:
+\begin{equation*}
+    \det(\lambda I - A) = \det((\lambda I - A)^T) = \det(\lambda I - A^T).
+\end{equation*}
+The row sums of $A^T$ are exactly the column sums $c_j$ of the original matrix $A$. Applying the row disk result to $A^T$ immediately proves that every eigenvalue lies in the union of the column disks $\bigcup_{j=1}^n C_j$.
+
+\paragraph{3. Connected Components}
+Let $D$ be the diagonal part of $A$ and $B = A - D$ be the off-diagonal part. Define a family of matrices $A(t)$ for $t \in [0, 1]$ by:
+\begin{equation*}
+    A(t) = D + tB.
+\end{equation*}
+At $t=0$, $A(0) = D$, and its eigenvalues are the diagonal entries $a_{ii}$. At $t=1$, $A(1) = A$. The radii of the Gerschgorin disks for $A(t)$ are $t \cdot r_i$. 
+
+As $t$ varies continuously from $0$ to $1$, the eigenvalues of $A(t)$ are continuous functions of $t$ (since they are roots of a polynomial whose coefficients are continuous in $t$). At $t=0$, each disk is a point $\{a_{ii}\}$, so each component contains exactly as many eigenvalues as disks. As $t$ increases, the disks grow, and eigenvalues move. Because an eigenvalue cannot ``jump'' from one connected component of the union of disks to another without passing through the boundary of the disks (which is prohibited by the first part of this proof), the number of eigenvalues in each connected component must remain constant for all $t \in [0, 1]$.
+\end{proof}
+
+We have used the following lemma:
+\begin{lemma}{Continuity of Zeros of Polynomials}{Continuity of Zeros of Polynomials}
+  Let $p(z, t)$ be a polynomial in $z$ whose coefficients depend continuously on a parameter $t$. Then the zeros of $p(z, t)$ depend continuously on $t$.
+\end{lemma}
+
+Gerschgorin's theorem has many applications; the first we make is in the treatment of the well-posedness of the eigenvalue problem. In this connection, it is necessary to introduce the notions of left and right eigenvectors.
+\begin{definition}{Left and Right Eigenvectors}{Left and Right Eigenvectors}
+  Let $A$ be an $n \times n$ matrix. A nonzero vector $x$ is called a right eigenvector of $A$ corresponding to the eigenvalue $\lambda$ if
+  \begin{equation*}
+    Ax = \lambda x.
+  \end{equation*}
+  A nonzero vector $y$ is called a left eigenvector of $A$ corresponding to the eigenvalue $\lambda$ if
+  \begin{equation*}
+    y^* A = \mu y^*.
+  \end{equation*}
+  In other words, $y$ is a left eigenvector of $A$ if it is a right eigenvector of $A^*$.
+\end{definition}
+The set of left and right eigenvalues are the same, as
+\begin{equation*}
+  \det(\lambda I - A) = \overline{\det(\bar{\lambda} I - \overline{A})} = \overline{\det(\bar{\lambda} I - A^*)}.
+\end{equation*}
+where we did a transpose for the last equality.
+
+Now, when the matrix $A$ is Hermitian, the left and right eigenvectors coincide, and the eigenvalues are real. In general however, the left and right eigenvectors are distinct.
+
+\begin{lemma}{Orthogonality of Left and Right Eigenvectors}{Orthogonality of Left and Right Eigenvectors}
+  Let $A$ be an $n \times n$ matrix, and let $\lambda$ and $\mu$ be two distinct eigenvalues of $A$. If $x$ is a right eigenvector corresponding to $\lambda$ and $y$ is a left eigenvector corresponding to $\mu$, then
+  \begin{equation*}
+    y^* x = 0.
+  \end{equation*}
+\end{lemma}
+\begin{proof}
+  As we have $Ax = \lambda x$ and $y^* A = \mu y^*$, we have
+  \begin{equation*}
+    \lambda y^* x = y^* A x = \bar{\mu} y^* x.
+  \end{equation*}
+  Since $\lambda \neq \mu$, we must have $y^* x = 0$.
+\end{proof}
+We say that the left and right eigenvectors are biorthogonal.
+
+\begin{theorem}{Well-Posedness of the Eigenvalue Problem}{Well-Posedness of the Eigenvalue Problem}
+  Let $A$ be an $n \times n$ matrix and have $n$ linearly independent eigenvectors. For any fixed matrix $C$, with $\|C\| = \|A\|$, define the perturbed matrix
+  \begin{equation}
+    A(\epsilon) = A + \epsilon C,
+  \end{equation}
+  then if $\lambda$ is any eigenvalue of $A$ there is an eigenvalue $\lambda(\epsilon)$ of $A(\epsilon)$ such that
+  \begin{equation} \label{eq:well-posedness}
+    |\lambda(\epsilon) - \lambda| = \mathcal{O}(\epsilon).
+  \end{equation}
+  Moreover, if $\lambda$ is simple, then
+  \begin{equation}
+    \lim_{|\epsilon| \to 0} \frac{\lambda(\epsilon) - \lambda}{\epsilon} = \frac{y^* C x}{y^* x},
+  \end{equation}
+  where $x$ and $y$ are the right and left eigenvectors corresponding to $\lambda$, respectively.
+\end{theorem}
+\begin{remark}
+  We note that the geometric multiplicity of an eigenvalue $\lambda$ in $A$ and $A^*$ are the same, and transpose does not change the rank.
+\end{remark}
+
+\begin{proof}
+  Let $P$ be the matrix whose columns are the right eigenvectors of $A$, then
+  \begin{equation}
+    A P = P \Lambda,
+  \end{equation}
+  where $\Lambda = (\lambda_{ij})$ is a diagonal matrix. Therefore, from
+  \begin{equation*}
+    P^{-1} A(\epsilon) P = \Lambda + \epsilon P^{-1} C P = \Lambda + \epsilon E, \qquad E = P^{-1} C P,
+  \end{equation*}
+  The estimate now follows from the Gerschgorin circle theorem, since the eigenvalues of $A(\epsilon)$ are unchanged by the similarity transformation.
+
+  We can now improve upon \eqref{eq:well-posedness} if the eigenvalue $\lambda$ is simple.
+\end{proof}
+
+
+\end{document}
