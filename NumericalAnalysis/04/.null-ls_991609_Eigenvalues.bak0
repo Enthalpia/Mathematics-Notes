@@ -1,0 +1,327 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\chapter{Eigenvalues and Eigenvectors}
+
+The eigenvalue-eigenvector problem for a square matrix $A$ is to find scalars $\lambda$ and nonzero vectors $x$ such that
+\begin{equation}
+	Ax = \lambda x, \qquad x \neq 0.
+\end{equation}
+The problem is clearly non-linear since both $\lambda$ and $x$ are unknowns. In fact, as is well known, the eigenvalues $\lambda$ are the $n$ roots of the characteristic equation
+\begin{equation}
+	\det(\lambda I - A) = p_A(\lambda) = 0,
+\end{equation}
+Thus the eigenvalues can, in principle, be found as the zeros of $p_A$) without recourse to any of the eigenvectors.
+
+Given some eigenvalue $\lambda$, then the corresponding eigenvector is a non-trivial solution of the homogeneous linear system $(\lambda I - A)x = 0$. On the other hand, if some particular eigenvector $x$ is known, then the eigenvalue to which $x$ belongs can be obtained by taking the inner product:
+\begin{equation}
+	\lambda = \frac{x^* A x}{x^* x}.
+\end{equation}
+Alternatively, we could use any non-zero component
+\begin{equation*}
+	\lambda = \frac{1}{x_i} \sum_{j=1}^n a_{ij} x_j.
+\end{equation*}
+Note that if some of the $n$ eigenvalues of $A$ are not distinct, then there may be fewer then $n$ eigenvectors. Take
+\begin{equation*}
+	A = \begin{pmatrix}
+		1 & 1 \\
+		0 & 1
+	\end{pmatrix}.
+\end{equation*}
+for example, the only eigenvalue is $\lambda = 1$, and the only eigenvector is $x = (1, 0)^T$.
+
+\section{Well-Posedness and Error Estimates}
+\begin{theorem}{Gerschgorin Circle Theorem}{Gerschgorin Circle Theorem}
+	Let $A = (a_{ij})$ be an $n \times n$ matrix, having eigenvalues $\lambda$ and define the absolute row and column sums
+	\begin{equation}
+		r_i = \sum_{j \neq i} |a_{ij}|, \qquad c_j = \sum_{i \neq j} |a_{ij}|.
+	\end{equation}
+	Then,
+	\begin{itemize}
+		\item Every eigenvalue $\lambda$ of $A$ lies in the union of the $n$ rows disks
+		      \begin{equation}
+			      R_i = \{ z \in \mathbb{C} : |z - a_{ii}| \leq r_i \}, \qquad i = 1, 2, \ldots, n,
+		      \end{equation}
+		\item Every eigenvalue $\lambda$ of $A$ lies in the union of the $n$ column disks
+		      \begin{equation}
+			      C_j = \{ z \in \mathbb{C} : |z - a_{jj}| \leq c_j \}, \qquad j = 1, 2, \ldots, n.
+		      \end{equation}
+		\item Each connected component of $\bigcup_{i=1}^n R_i$ or $\bigcup_{j=1}^n C_j$ contains as many eigenvalues of $A$ as the number of disks in that component.
+	\end{itemize}
+\end{theorem}
+\begin{proof}
+	We prove the three parts of the theorem as follows:
+
+	\paragraph{1. The Row Disks}
+	Let $\lambda$ be an eigenvalue of $A$ and let $x = (x_1, x_2, \ldots, x_n)^T$ be a corresponding eigenvector such that $Ax = \lambda x$. Since $x \neq 0$, there exists at least one component with maximum absolute value. Let $i$ be an index such that:
+	\begin{equation*}
+		|x_i| = \max_{1 \leq k \leq n} |x_k| > 0.
+	\end{equation*}
+	From the $i$-th row of the system $Ax = \lambda x$, we have:
+	\begin{equation*}
+		\sum_{j=1}^n a_{ij} x_j = \lambda x_i.
+	\end{equation*}
+	Splitting the sum to isolate the diagonal term $a_{ii}$, we get:
+	\begin{equation*}
+		(\lambda - a_{ii})x_i = \sum_{j \neq i} a_{ij} x_j.
+	\end{equation*}
+	Taking the absolute value of both sides and applying the triangle inequality:
+	\begin{equation*}
+		|\lambda - a_{ii}| \cdot |x_i| = \left| \sum_{j \neq i} a_{ij} x_j \right| \leq \sum_{j \neq i} |a_{ij}| \cdot |x_j|.
+	\end{equation*}
+	Since $|x_i| \geq |x_j|$ for all $j$, we can divide both sides by $|x_i|$ to obtain:
+	\begin{equation*}
+		|\lambda - a_{ii}| \leq \sum_{j \neq i} |a_{ij}| \frac{|x_j|}{|x_i|} \leq \sum_{j \neq i} |a_{ij}| = r_i.
+	\end{equation*}
+	Thus, $\lambda \in R_i$, which implies $\lambda \in \bigcup_{i=1}^n R_i$.
+
+	\paragraph{2. The Column Disks}
+	The eigenvalues of a matrix $A$ are the same as the eigenvalues of its transpose $A^T$, because they share the same characteristic equation:
+	\begin{equation*}
+		\det(\lambda I - A) = \det((\lambda I - A)^T) = \det(\lambda I - A^T).
+	\end{equation*}
+	The row sums of $A^T$ are exactly the column sums $c_j$ of the original matrix $A$. Applying the row disk result to $A^T$ immediately proves that every eigenvalue lies in the union of the column disks $\bigcup_{j=1}^n C_j$.
+
+	\paragraph{3. Connected Components}
+	Let $D$ be the diagonal part of $A$ and $B = A - D$ be the off-diagonal part. Define a family of matrices $A(t)$ for $t \in [0, 1]$ by:
+	\begin{equation*}
+		A(t) = D + tB.
+	\end{equation*}
+	At $t=0$, $A(0) = D$, and its eigenvalues are the diagonal entries $a_{ii}$. At $t=1$, $A(1) = A$. The radii of the Gerschgorin disks for $A(t)$ are $t \cdot r_i$.
+
+	As $t$ varies continuously from $0$ to $1$, the eigenvalues of $A(t)$ are continuous functions of $t$ (since they are roots of a polynomial whose coefficients are continuous in $t$). At $t=0$, each disk is a point $\{a_{ii}\}$, so each component contains exactly as many eigenvalues as disks. As $t$ increases, the disks grow, and eigenvalues move. Because an eigenvalue cannot ``jump'' from one connected component of the union of disks to another without passing through the boundary of the disks (which is prohibited by the first part of this proof), the number of eigenvalues in each connected component must remain constant for all $t \in [0, 1]$.
+\end{proof}
+
+We have used the following lemma:
+\begin{lemma}{Continuity of Zeros of Polynomials}{Continuity of Zeros of Polynomials}
+	Let $p(z, t)$ be a polynomial in $z$ whose coefficients depend continuously on a parameter $t$. Then the zeros of $p(z, t)$ depend continuously on $t$.
+\end{lemma}
+
+Gerschgorin's theorem has many applications; the first we make is in the treatment of the well-posedness of the eigenvalue problem. In this connection, it is necessary to introduce the notions of left and right eigenvectors.
+\begin{definition}{Left and Right Eigenvectors}{Left and Right Eigenvectors}
+	Let $A$ be an $n \times n$ matrix. A nonzero vector $x$ is called a right eigenvector of $A$ corresponding to the eigenvalue $\lambda$ if
+	\begin{equation*}
+		Ax = \lambda x.
+	\end{equation*}
+	A nonzero vector $y$ is called a left eigenvector of $A$ corresponding to the eigenvalue $\lambda$ if
+	\begin{equation*}
+		y^* A = \mu y^*.
+	\end{equation*}
+	In other words, $y$ is a left eigenvector of $A$ if it is a right eigenvector of $A^*$.
+\end{definition}
+The set of left and right eigenvalues are the same, as
+\begin{equation*}
+	\det(\lambda I - A) = \overline{\det(\bar{\lambda} I - \overline{A})} = \overline{\det(\bar{\lambda} I - A^*)}.
+\end{equation*}
+where we did a transpose for the last equality.
+
+Now, when the matrix $A$ is Hermitian, the left and right eigenvectors coincide, and the eigenvalues are real. In general however, the left and right eigenvectors are distinct.
+
+\begin{lemma}{Orthogonality of Left and Right Eigenvectors}{Orthogonality of Left and Right Eigenvectors}
+	Let $A$ be an $n \times n$ matrix, and let $\lambda$ and $\mu$ be two distinct eigenvalues of $A$. If $x$ is a right eigenvector corresponding to $\lambda$ and $y$ is a left eigenvector corresponding to $\mu$, then
+	\begin{equation*}
+		y^* x = 0.
+	\end{equation*}
+\end{lemma}
+\begin{proof}
+	As we have $Ax = \lambda x$ and $y^* A = \mu y^*$, we have
+	\begin{equation*}
+		\lambda y^* x = y^* A x = \bar{\mu} y^* x.
+	\end{equation*}
+	Since $\lambda \neq \mu$, we must have $y^* x = 0$.
+\end{proof}
+We say that the left and right eigenvectors are biorthogonal.
+
+\begin{theorem}{Well-Posedness of the Eigenvalue Problem}{Well-Posedness of the Eigenvalue Problem}
+	Let $A$ be an $n \times n$ matrix and have $n$ linearly independent eigenvectors. For any fixed matrix $C$, with $\|C\| = \|A\|$, define the perturbed matrix
+	\begin{equation}
+		A(\epsilon) = A + \epsilon C,
+	\end{equation}
+	then if $\lambda$ is any eigenvalue of $A$ there is an eigenvalue $\lambda(\epsilon)$ of $A(\epsilon)$ such that
+	\begin{equation} \label{eq:well-posedness}
+		|\lambda(\epsilon) - \lambda| = \mathcal{O}(\epsilon).
+	\end{equation}
+	Moreover, if $\lambda$ is simple, then
+	\begin{equation} \label{eq:well-posedness-2}
+		\lim_{|\epsilon| \to 0} \frac{\lambda(\epsilon) - \lambda}{\epsilon} = \frac{y^* C x}{y^* x},
+	\end{equation}
+	where $x$ and $y$ are the right and left eigenvectors corresponding to $\lambda$, respectively.
+\end{theorem}
+\begin{remark}
+	We note that the geometric multiplicity of an eigenvalue $\lambda$ in $A$ and $A^*$ are the same, and transpose does not change the rank.
+\end{remark}
+
+\begin{proof}
+	Let $P$ be the matrix whose columns are the right eigenvectors of $A$, then
+	\begin{equation}
+		A P = P \Lambda,
+	\end{equation}
+	where $\Lambda = (\lambda_{ij})$ is a diagonal matrix. Therefore, from
+	\begin{equation*}
+		P^{-1} A(\epsilon) P = \Lambda + \epsilon P^{-1} C P = \Lambda + \epsilon E, \qquad E = P^{-1} C P,
+	\end{equation*}
+	The estimate now follows from the Gerschgorin circle theorem, since the eigenvalues of $A(\epsilon)$ are unchanged by the similarity transformation.
+
+	We can now improve upon \eqref{eq:well-posedness} if the eigenvalue $\lambda$ is simple. That is, we observe that the circle $R_i(\epsilon)$ of the matrix $P^{-1} A(\epsilon) P$ corresponding to $\lambda$ would not intersect with any other circle for sufficiently small $\epsilon$. Thus, there is a unique eigenvalue $\lambda(\epsilon)$ of $A(\epsilon)$ in $R_i(\epsilon)$, and therefore also a unique corresponding eigenvector $x(\epsilon)$, thus we have
+	\begin{equation*}
+		(A + \epsilon C) x(\epsilon) = \lambda(\epsilon) x(\epsilon), \qquad A x = \lambda x.
+	\end{equation*}
+	\begin{equation*}
+		A(x(\epsilon) - x) + \epsilon C x(\epsilon) = (\lambda(\epsilon) - \lambda) x(\epsilon) + \lambda (x(\epsilon) - x).
+	\end{equation*}
+	Multiplying both sides by $y^*$ that $y^* A = \lambda y^*$, we have
+	\begin{equation} \label{eq:well-posedness-proof}
+		\epsilon y^* C x(\epsilon) = (\lambda(\epsilon) - \lambda) y^* x(\epsilon).
+	\end{equation}
+	so we shall now show that $y^* x(\epsilon) \neq 0$. This is shown by $y^*$ being orthogonal to all other right eigenvectors of $A$, and that $x$ is linear independent of all other right eigenvectors of $A$, thus $y^* x \neq 0$.
+
+	From the simplicity of $\lambda$, we have $x(\epsilon) \to x$ as $\epsilon \to 0$, thus $y^* x(\epsilon) \to y^* x \neq 0$ as $\epsilon \to 0$.
+\end{proof}
+
+\begin{corollary}{Bauer-Fike Theorem}{Bauer-Fike Theorem}
+	Under the same assumptions as in the previous theorem (without simplicity condition), each eigenvalue $\lambda(\epsilon)$ of $A(\epsilon)$ satisfies
+	\begin{equation}
+		\min_{\lambda} |\lambda(\epsilon) - \lambda| \leq |\epsilon| \|C\|_p \|P^{-1}\|_p \|P\|_p,
+	\end{equation}
+	for any $p$-norm, $1 \leq p \leq \infty$.
+\end{corollary}
+
+Observe that algebraically, \eqref{eq:well-posedness} holds if $\lambda$ is a simple zero of the characteristic polynomial $p_A(\lambda)$, but if $\lambda$ has multiplicity $m$, then
+\begin{equation}
+	|\lambda(\epsilon) - \lambda| = \mathcal{O}(\epsilon^{1/m}),
+\end{equation}
+On the other hand, although \eqref{eq:well-posedness-proof} holds for the general case, we cannot expect $y^* x(\epsilon)$ to be non-zero, and thus the limit may not exist.
+
+When \eqref{eq:well-posedness-2} holds, the well-posedness of the eigenvalue problem for determining $\lambda$ is determined by the magnitude of
+\begin{equation*}
+	\left| \frac{y^* C x}{y^* x} \right| \leq \frac{\|C\|_2}{|y^* x|} , \qquad \|x\|_2 = \|y\|_2 = 1.
+\end{equation*}
+In the special case that $C = \| A \|_2 U$ for some unitary matrix $U$ that $U x = y$, we have
+\begin{equation*}
+	\left| \frac{y^* C x}{y^* x} \right| = \| A \|_2 \frac{|y^* y|}{|y^* x|} = \frac{\| C \|_2}{|y^* x|}.
+\end{equation*}
+Now, it is possible that the problem of finding $\lambda$, an eigenvalue of $A$, is not well-posed, although the problem of finding the same $\lambda$ as an eigenvalue of $B = P^{-1} A P$ is well-posed:
+
+\begin{example}{Ill-Posed Eigenvalue Problem}{Ill-Posed Eigenvalue Problem}
+	Consider a set of $n$ eigenvalues $\lambda_1, \lambda_2, \dots, \lambda_n$ and the corresponding right eigenvectors $x_j$ defined as:
+	\begin{equation*}
+		x_1 = \begin{pmatrix} 1 \\ 0 \\ \vdots \\ 0 \end{pmatrix}, \quad
+		x_k = \begin{pmatrix} 1 \\ 0 \\ \vdots \\ \delta \\ \vdots \\ 0 \end{pmatrix} \text{ for } k = 2, \ldots, n,
+	\end{equation*}
+	where for $x_k$, the value $\delta$ is in the $k$-th position and the first entry is $1$. The matrix of eigenvectors $P = (x_1, x_2, \ldots, x_n)$ is then:
+	\begin{equation*}
+		P = \begin{pmatrix}
+			1      & 1      & 1      & \dots  & 1      \\
+			0      & \delta & 0      & \dots  & 0      \\
+			0      & 0      & \delta & \dots  & 0      \\
+			\vdots & \vdots & \vdots & \ddots & \vdots \\
+			0      & 0      & 0      & \dots  & \delta
+		\end{pmatrix}.
+	\end{equation*}
+	To find the matrix $A = P \Lambda P^{-1}$, we first compute $P^{-1}$. By performing row operations or using the block structure, we find:
+	\begin{equation*}
+		P^{-1} = \begin{pmatrix}
+			1      & -1/\delta & -1/\delta & \dots  & -1/\delta \\
+			0      & 1/\delta  & 0         & \dots  & 0         \\
+			0      & 0         & 1/\delta  & \dots  & 0         \\
+			\vdots & \vdots    & \vdots    & \ddots & \vdots    \\
+			0      & 0         & 0         & \dots  & 1/\delta
+		\end{pmatrix}.
+	\end{equation*}
+	The left eigenvectors $y_j$ of $A$ correspond to the rows of $P^{-1}$. Let $w_1^*$ be the first row of $P^{-1}$. To obtain the unit left eigenvector $y_1$, we normalize $w_1$:
+	\begin{equation*}
+		\|w_1\|_2 = \sqrt{1 + \sum_{k=2}^n \left( \frac{-1}{\delta} \right)^2} = \sqrt{1 + \frac{n-1}{\delta^2}} = \frac{\sqrt{\delta^2 + n - 1}}{|\delta|}.
+	\end{equation*}
+	Thus, the first component of the normalized left eigenvector $y_1$ is:
+	\begin{equation*}
+		|y_{11}| = \frac{1}{\|w_1\|_2} = \frac{|\delta|}{\sqrt{\delta^2 + n - 1}} = \mathcal{O}\left( \frac{|\delta|}{\sqrt{n-1}} \right).
+	\end{equation*}
+	The condition number for the eigenvalue $\lambda_1$ is given by $s_1^{-1} = |y_1^* x_1|^{-1}$. Since $x_1 = (1, 0, \dots, 0)^T$, we have $y_1^* x_1 = y_{11}$. Therefore:
+	\begin{equation*}
+		|y_1^* x_1|^{-1} = \frac{1}{|y_{11}|} = \frac{\sqrt{\delta^2 + n - 1}}{|\delta|} = \mathcal{O}\left( \frac{\sqrt{n-1}}{|\delta|} \right).
+	\end{equation*}
+	For very small $\delta$, the reciprocal of the biorthogonality product $|y_1^* x_1|$ becomes exceedingly large. According to \eqref{eq:well-posedness-2}, this implies that the sensitivity of $\lambda_1$ to perturbations in $A$ is proportional to $1/\delta$.
+
+	Consequently, while the eigenvalue problem for $A$ is ill-posed for small $\delta$, the problem for $B = P^{-1}AP = \Lambda$ is perfectly well-posed, as $B$ is diagonal and its left and right eigenvectors are the canonical basis vectors, yielding $|y_i^* x_i|^{-1} = 1$.
+\end{example}
+\begin{remark}
+	Intuitively, eigenvalues become hypersensitive when eigenvectors are nearly parallel. The role of similarity transformations is to find a more suitable basis in which the eigenvectors are more orthogonal, thus improving the conditioning of the eigenvalue problem.
+\end{remark}
+
+The disparity between the well-posedness of the eigenvalue problem for $A$ and for $B = P^{-1}AP$ might at first seem contradictory. However, as noted in the text, the magnitudes of the corresponding perturbations $C$ and $D = P^{-1}CP$ can differ drastically. Specifically, from the property of matrix norms:
+\begin{equation} \label{eq:norm-inequality}
+	\frac{\|C\|}{\|P^{-1}\| \|P\|} \leq \|P^{-1}CP\| \leq \|C\| \|P^{-1}\| \|P\|.
+\end{equation}
+If the condition number of the eigenvector matrix, $\kappa(P) = \|P\| \|P^{-1}\|$, is very large, a "small" perturbation in $B$ could correspond to a "large" perturbation in $A$, and vice versa.
+
+In analyzing well-posedness, we typically consider relative perturbations where $\|C\| = \|A\|$. Under this constraint, and assuming $\|x\|_2 = \|y\|_2 = 1$, the maximum sensitivity of a simple eigenvalue $\lambda$ is given by:
+\begin{equation}
+	\max_{\{C\}} \lim_{\epsilon \to 0} \left| \frac{\lambda(\epsilon) - \lambda}{\epsilon} \right| = \frac{\|A\|_2}{|y^* x|}.
+\end{equation}
+The quantity $s(\lambda) = |y^* x|$ is often called the \textit{condition component} of the eigenvalue. If $s(\lambda)$ is small (close to 0), the eigenvalue is ill-conditioned.
+
+\begin{theorem}{Stability of Hermitian Eigenvalues}{Stability of Hermitian Eigenvalues}
+	If $A$ is Hermitian and $\lambda$ is any eigenvalue of $A$, then the eigenvalue problem for $\lambda$ is well-posed.
+\end{theorem}
+
+\begin{proof}
+	For a Hermitian matrix, the left and right eigenvectors corresponding to an eigenvalue $\lambda$ can be chosen such that $y = x$. If $\lambda$ is simple, then $|y^* x| = \|x\|_2^2 = 1$, which is the maximum possible value for the overlap, signifying perfect conditioning.
+
+	If $\lambda$ is not simple, we can still find $x(\epsilon)$ and $x$ such that $\|x(\epsilon) - x\| \to 0$ as $\epsilon \to 0$. Setting $y = x$, we observe that $y^* x(\epsilon) \to 1$, ensuring that the denominator in the sensitivity formula does not vanish and the problem remains well-posed.
+\end{proof}
+
+In practice, most common numerical methods (such as the QR algorithm) avoid the ill-conditioning of $P$ by using ``orthogonal'' or ``unitary'' similarity transformations. If $P$ is unitary ($P^{-1} = P^*$), then $\|P\|_2 = 1$ and $\|P^{-1}\|_2 = 1$, which implies $\kappa_2(P) = 1$.
+
+In this case, a similarity transformation produces a matrix $B(\epsilon)$ such that:
+\begin{equation}
+	B(\epsilon) = P^{-1}(A + \epsilon C)P,
+\end{equation}
+where the perturbation $C$ satisfies:
+\begin{equation}
+	\|C\|_2 \leq 1; \quad |\epsilon| = \mathcal{O}(n^p 10^{-t} a).
+\end{equation}
+Here, $t$ represents the precision of the arithmetic and $a = \max |a_{ij}|$. Results by Givens and Wilkinson show that such unitary transformations ensure that the errors introduced during the computation are no worse than the inherent sensitivity of the original matrix $A$. Thus, if the original problem for $A$ is well-posed, the numerical algorithm using unitary transforms will be stable.
+
+The use of \textbf{unitary transformations} (where $P^{-1} = P^*$) is fundamental to the stability of modern eigenvalue algorithms like QR. 
+
+\begin{itemize}
+    \item \textbf{Geometric Rigidity:} Unitary matrices are \textit{isometries} ($\|P\|_2 = 1$). Unlike general similarity transforms, they act as rotations that do not stretch space or magnify rounding errors. This keeps the condition number $\kappa_2(P) = 1$, preventing error amplification during the change of basis.
+    
+    \item \textbf{Backward Stability:} The formula $B(\epsilon) = P^{-1}(A + \epsilon C)P$ implies that the computed result is the \textbf{exact} solution to a slightly perturbed problem $A + \epsilon C$. The error magnitude $|\epsilon| \approx 10^{-t}$ is bounded by machine precision, scaled only by a small polynomial in matrix size $n$.
+\end{itemize}
+
+Unitary methods ensure that the algorithm is as accurate as the underlying problem allows. If the resulting eigenvalues are inaccurate, the instability stems from the \textbf{inherent sensitivity} of $A$ (the math problem itself) rather than the \textbf{numerical method} (the computer's execution).
+
+\subsection{A Posteriori Error Estimates}
+In the case of a Hermitian matrix $A$, we can give a simple error estimate for a computed eigenvalue $\lambda$, in terms of the residual vector $\eta = Ax - \lambda x$ for some nonzero vector $x$.
+
+\begin{theorem}{Eigenvalue Bounds for Hermitian Matrices}{Eigenvalue Bounds for Hermitian Matrices}
+Let $A$ be a Hermitian matrix of order $n$ with eigenvalues $\{\lambda_i\}$. If
+\begin{equation} \label{eq:residual}
+    Ax - \lambda x = \eta, \qquad x \neq 0,
+\end{equation}
+then
+\begin{equation}
+    \min_{i} |\lambda - \lambda_i| \leq \frac{\|\eta\|_2}{\|x\|_2}.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+	As $A$ is Hermitian, it has an orthonormal basis of eigenvectors $\{u_i\}$ such that $A u_i = \lambda_i u_i$. We expand $x = \sum a_i u_i$ where $a_i = u_i^* x$, so the residual is $\eta = \sum a_i (\lambda_i - \lambda) u_i$. By orthonormality, $\|\eta\|_2^2 = \sum |a_i|^2 (\lambda_i - \lambda)^2$. Dividing by $\|x\|_2^2 = \sum |a_j|^2$, we obtain:
+	\begin{equation*}
+    	\frac{\|\eta\|_2^2}{\|x\|_2^2} = \sum_{i=1}^n b_i (\lambda_i - \lambda)^2, \quad \text{where } b_i = \frac{|a_i|^2}{\sum |a_j|^2}.
+	\end{equation*}
+	Since $b_i \geq 0$ and $\sum b_i = 1$, the right-hand side is a weighted average. It follows that:
+	\begin{equation*}
+    	\min_{i} (\lambda_i - \lambda)^2 \leq \sum_{i=1}^n b_i (\lambda_i - \lambda)^2 = \frac{\|\eta\|_2^2}{\|x\|_2^2}.
+	\end{equation*}
+	Taking the square root of both sides establishes the result.
+\end{proof}
+
+An obvious way to improve upon $\lambda$ when given an approximate eigenvector $x$ is suggested by
+
+\begin{theorem}{
+	
+\end{theorem}
+
+\end{document}

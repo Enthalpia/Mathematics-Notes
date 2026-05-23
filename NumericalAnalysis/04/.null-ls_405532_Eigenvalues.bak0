@@ -342,14 +342,14 @@ An obvious way to improve upon $\lambda$ when given an approximate eigenvector $
 The relationship between these two theorems is fundamental to eigenvalue computation: \emph{the Rayleigh quotient is the scalar that minimizes the uncertainty bound provided by Theorem \ref{thm:Eigenvalue Bounds for Hermitian Matrices}.}
 
 \begin{itemize}
-	\item \textbf{Minimizing the ``Radius'':} Theorem \ref{thm:Eigenvalue Bounds for Hermitian Matrices} establishes that there is a true eigenvalue within a distance $R = \|\eta\|_2 / \|x\|_2$ of our guess $\lambda$. Theorem 6 proves that for a fixed approximate eigenvector $x$, this radius $R$ is minimized precisely when we choose $\lambda = \lambda_R$. Thus, the Rayleigh quotient yields the ``tightest'' possible guarantee for a given $x$.
-
-	\item \textbf{Geometric Orthogonality:} Minimizing the residual $\|\eta\|_2 = \|Ax - \lambda x\|_2$ is a linear least-squares problem. The norm is minimized when the residual $\eta$ is orthogonal to the basis vector $x$. Setting $x^* \eta = 0$ leads directly to the Rayleigh quotient:
-	      \begin{equation*}
-		      x^*(Ax - \lambda x) = 0 \implies x^*Ax - \lambda x^*x = 0 \implies \lambda_R = \frac{x^*Ax}{x^*x}.
-	      \end{equation*}
-
-	\item \textbf{Accuracy Gain:} While Theorem \ref{thm:Eigenvalue Bounds for Hermitian Matrices} provides a bound of order $O(\|\eta\|)$, it is a known property of Hermitian matrices that if the error in the eigenvector $x$ is $\epsilon$, the error in $\lambda_R$ is $\mathcal{O}(\epsilon^2)$. This makes the Rayleigh quotient significantly more accurate than the residual bound might suggest.
+    \item \textbf{Minimizing the ``Radius'':} Theorem \ref{thm:Eigenvalue Bounds for Hermitian Matrices} establishes that there is a true eigenvalue within a distance $R = \|\eta\|_2 / \|x\|_2$ of our guess $\lambda$. Theorem 6 proves that for a fixed approximate eigenvector $x$, this radius $R$ is minimized precisely when we choose $\lambda = \lambda_R$. Thus, the Rayleigh quotient yields the ``tightest'' possible guarantee for a given $x$.
+    
+    \item \textbf{Geometric Orthogonality:} Minimizing the residual $\|\eta\|_2 = \|Ax - \lambda x\|_2$ is a linear least-squares problem. The norm is minimized when the residual $\eta$ is orthogonal to the basis vector $x$. Setting $x^* \eta = 0$ leads directly to the Rayleigh quotient:
+    \begin{equation*}
+        x^*(Ax - \lambda x) = 0 \implies x^*Ax - \lambda x^*x = 0 \implies \lambda_R = \frac{x^*Ax}{x^*x}.
+    \end{equation*}
+    
+    \item \textbf{Accuracy Gain:} While Theorem \ref{thm:Eigenvalue Bounds for Hermitian Matrices} provides a bound of order $O(\|\eta\|)$, it is a known property of Hermitian matrices that if the error in the eigenvector $x$ is $\epsilon$, the error in $\lambda_R$ is $\mathcal{O}(\epsilon^2)$. This makes the Rayleigh quotient significantly more accurate than the residual bound might suggest.
 \end{itemize}
 
 For the Hermitian matrix $A$ with eigenvalues $\{\lambda_i\}$, and corresponding orthonormal eigenvectors $\{u_i\}$, let $U_r = \vspan\{u_1, u_2, \ldots, u_r\}$ be the subspace spanned by the first $r$ eigenvectors. If we know something about the spacing of the eigenvalues, we may be able to estimate the error $\|x - U_r\|_2$ of an approximate eigenvector $x$. We here denote
@@ -358,70 +358,70 @@ For the Hermitian matrix $A$ with eigenvalues $\{\lambda_i\}$, and corresponding
 \end{equation}
 
 \begin{theorem}{Eigenvector Space Error Bound}{Eigenvector Space Error Bound}
-	If $|\lambda_i - \lambda| \leq \|\eta\|_2$ for $i = 1, 2, \ldots, r$, with $\lambda, \eta$, and $x$ that satisfy $Ax - \lambda x = \eta$ and $x = \sum a_i u_i$; and $|\lambda_i - \lambda| \geq d > 0$ for $i = r + 1, r + 2, \ldots, n$, then
-	\begin{equation} \label{eq:17}
-		\|x - U_r\|_2 \leq \left\| x - \sum_{i=1}^r a_i u_i \right\|_2 \leq \frac{\|\eta\|_2}{d}.
-	\end{equation}
+    If $|\lambda_i - \lambda| \leq \|\eta\|_2$ for $i = 1, 2, \ldots, r$, with $\lambda, \eta$, and $x$ that satisfy $Ax - \lambda x = \eta$ and $x = \sum a_i u_i$; and $|\lambda_i - \lambda| \geq d > 0$ for $i = r + 1, r + 2, \ldots, n$, then
+    \begin{equation} \label{eq:17}
+        \|x - U_r\|_2 \leq \left\| x - \sum_{i=1}^r a_i u_i \right\|_2 \leq \frac{\|\eta\|_2}{d}.
+    \end{equation}
 \end{theorem}
 
 \begin{proof}
-	From the definition of distance and the eigenvector expansion,
-	\begin{equation}
-		\|x - U_r\|_2^2 \leq \left\| x - \sum_{i=1}^r a_i u_i \right\|_2^2 = \sum_{i=r+1}^n |a_i|^2.
-	\end{equation}
-	Now by expanding the residual $\eta$ in the basis of eigenvectors,
-	\begin{equation*}
-		\|\eta\|_2^2 = \sum_{i=1}^n |a_i|^2(\lambda_i - \lambda)^2 \geq \sum_{i=r+1}^n |a_i|^2(\lambda_i - \lambda)^2.
-	\end{equation*}
-	Applying the hypothesis on the eigenvalue spacing ($(\lambda_i - \lambda)^2 \geq d^2$ for $i > r$):
-	\begin{equation*}
-		d^2 \sum_{i=r+1}^n |a_i|^2 \leq \|\eta\|_2^2, \quad \text{whence} \quad \sum_{i=r+1}^n |a_i|^2 \leq \frac{\|\eta\|_2^2}{d^2}.
-	\end{equation*}
-	hence, we have our desired result.
+    From the definition of distance and the eigenvector expansion,
+    \begin{equation} 
+        \|x - U_r\|_2^2 \leq \left\| x - \sum_{i=1}^r a_i u_i \right\|_2^2 = \sum_{i=r+1}^n |a_i|^2.
+    \end{equation}
+    Now by expanding the residual $\eta$ in the basis of eigenvectors,
+    \begin{equation*}
+        \|\eta\|_2^2 = \sum_{i=1}^n |a_i|^2(\lambda_i - \lambda)^2 \geq \sum_{i=r+1}^n |a_i|^2(\lambda_i - \lambda)^2.
+    \end{equation*}
+    Applying the hypothesis on the eigenvalue spacing ($(\lambda_i - \lambda)^2 \geq d^2$ for $i > r$):
+    \begin{equation*}
+        d^2 \sum_{i=r+1}^n |a_i|^2 \leq \|\eta\|_2^2, \quad \text{whence} \quad \sum_{i=r+1}^n |a_i|^2 \leq \frac{\|\eta\|_2^2}{d^2}.
+    \end{equation*}
+    hence, we have our desired result.
 \end{proof}
 
 Theorems \ref{thm:Eigenvalue Bounds for Hermitian Matrices} and \ref{thm:Eigenvector Space Error Bound} give us a posteriori estimates for the error in an approximate eigenvalue and eigenvector of a Hermitian matrix. These estimates do not require detailed information about all of the eigenvalues and eigenvectors of the matrix. Unfortunately, for a non-Hermitian matrix, the situation is more complicated and we state
 
 \begin{theorem}{Franklin's Relative Error Estimate}{Franklin Relative Error Estimate}
-	Let $A$ have a set of $n$ linearly independent eigenvectors $U$ and eigenvalues $\{\lambda_i\}$, satisfying $AU = U\Lambda$. If for some $\epsilon > 0$:
-	\begin{equation} \label{eq:franklin-hypothesis}
-		\|Ax - \lambda x\|_2 \leq \epsilon \|Ax\|_2,
-	\end{equation}
-	then
-	\begin{equation} \label{eq:franklin-result}
-		\min_{\lambda_j \neq 0} \left| 1 - \frac{\lambda}{\lambda_j} \right| \leq \epsilon \|U\|_2 \|U^{-1}\|_2.
-	\end{equation}
+    Let $A$ have a set of $n$ linearly independent eigenvectors $U$ and eigenvalues $\{\lambda_i\}$, satisfying $AU = U\Lambda$. If for some $\epsilon > 0$:
+    \begin{equation} \label{eq:franklin-hypothesis}
+        \|Ax - \lambda x\|_2 \leq \epsilon \|Ax\|_2,
+    \end{equation}
+    then
+    \begin{equation} \label{eq:franklin-result}
+        \min_{\lambda_j \neq 0} \left| 1 - \frac{\lambda}{\lambda_j} \right| \leq \epsilon \|U\|_2 \|U^{-1}\|_2.
+    \end{equation}
 \end{theorem}
 
 \begin{proof}
-	Define $b \equiv U^{-1}x$, so $x = Ub$. The residual is expressed as:
-	\begin{equation} \label{eq:franklin-residual-expansion}
-		Ax - \lambda x = U(\Lambda - \lambda I)b.
-	\end{equation}
-	Using the property $\|y\| = \|U^{-1}Uy\| \leq \|U^{-1}\| \|Uy\|$, we have $\|Uy\| \geq \|U^{-1}\|^{-1} \|y\|$. Applying this to \eqref{eq:franklin-residual-expansion}:
-	\begin{equation} \label{eq:franklin-lower-bound}
-		\|Ax - \lambda x\|_2 \geq \|U^{-1}\|_2^{-1} \|(\Lambda - \lambda I)b\|_2.
-	\end{equation}
-	Combining the hypothesis \eqref{eq:franklin-hypothesis} with \eqref{eq:franklin-lower-bound} and noting $\|Ax\|_2 = \|U\Lambda b\|_2 \leq \|U\|_2 \|\Lambda b\|_2$:
-	\begin{equation} \label{eq:franklin-ratio-bound}
-		\frac{\|(\Lambda - \lambda I)b\|_2}{\|\Lambda b\|_2} \leq \epsilon \|U^{-1}\|_2 \|U\|_2.
-	\end{equation}
-	Expanding the norms in components $b_i$, the left side is a weighted average of relative errors:
-	\begin{equation*}
-		\frac{\|(\Lambda - \lambda I)b\|_2^2}{\|\Lambda b\|_2^2} = \sum_{\lambda_i \neq 0} \left| 1 - \frac{\lambda}{\lambda_i} \right|^2 \frac{|\lambda_i b_i|^2}{\sum |\lambda_j b_j|^2} \geq \min_{\lambda_i \neq 0} \left| 1 - \frac{\lambda}{\lambda_i} \right|^2.
-	\end{equation*}
-	Combining this with \eqref{eq:franklin-ratio-bound} yields the result.
+    Define $b \equiv U^{-1}x$, so $x = Ub$. The residual is expressed as:
+    \begin{equation} \label{eq:franklin-residual-expansion}
+        Ax - \lambda x = U(\Lambda - \lambda I)b.
+    \end{equation}
+    Using the property $\|y\| = \|U^{-1}Uy\| \leq \|U^{-1}\| \|Uy\|$, we have $\|Uy\| \geq \|U^{-1}\|^{-1} \|y\|$. Applying this to \eqref{eq:franklin-residual-expansion}:
+    \begin{equation} \label{eq:franklin-lower-bound}
+        \|Ax - \lambda x\|_2 \geq \|U^{-1}\|_2^{-1} \|(\Lambda - \lambda I)b\|_2.
+    \end{equation}
+    Combining the hypothesis \eqref{eq:franklin-hypothesis} with \eqref{eq:franklin-lower-bound} and noting $\|Ax\|_2 = \|U\Lambda b\|_2 \leq \|U\|_2 \|\Lambda b\|_2$:
+    \begin{equation} \label{eq:franklin-ratio-bound}
+        \frac{\|(\Lambda - \lambda I)b\|_2}{\|\Lambda b\|_2} \leq \epsilon \|U^{-1}\|_2 \|U\|_2.
+    \end{equation}
+    Expanding the norms in components $b_i$, the left side is a weighted average of relative errors:
+    \begin{equation*}
+        \frac{\|(\Lambda - \lambda I)b\|_2^2}{\|\Lambda b\|_2^2} = \sum_{\lambda_i \neq 0} \left| 1 - \frac{\lambda}{\lambda_i} \right|^2 \frac{|\lambda_i b_i|^2}{\sum |\lambda_j b_j|^2} \geq \min_{\lambda_i \neq 0} \left| 1 - \frac{\lambda}{\lambda_i} \right|^2.
+    \end{equation*}
+    Combining this with \eqref{eq:franklin-ratio-bound} yields the result.
 \end{proof}
 
 \begin{theorem}{Absolute Error Estimate}{Absolute Error Estimate}
-	If the hypothesis of Theorem \ref{thm:Franklin Relative Error Estimate} holds with \eqref{eq:franklin-hypothesis} replaced by:
-	\begin{equation} \label{eq:absolute-hypothesis}
-		\|Ax - \lambda x\|_2 \leq \epsilon \|x\|_2,
-	\end{equation}
-	then the absolute error satisfies:
-	\begin{equation} \label{eq:absolute-result}
-		\min_{i} |\lambda - \lambda_i| \leq \epsilon \|U^{-1}\|_2 \|U\|_2.
-	\end{equation}
+  If the hypothesis of Theorem \ref{thm:Franklin Relative Error Estimate} holds with \eqref{eq:franklin-hypothesis} replaced by:
+    \begin{equation} \label{eq:absolute-hypothesis}
+        \|Ax - \lambda x\|_2 \leq \epsilon \|x\|_2,
+    \end{equation}
+    then the absolute error satisfies:
+    \begin{equation} \label{eq:absolute-result}
+        \min_{i} |\lambda - \lambda_i| \leq \epsilon \|U^{-1}\|_2 \|U\|_2.
+    \end{equation}
 \end{theorem}
 
 Unfortunately, Theorems \ref{thm:Franklin Relative Error Estimate} and \ref{thm:Absolute Error Estimate} require information about the matrix of eigenvectors, which is not generally available in problems where we are only interested in obtaining a few of the eigenvalues and eigenvectors. In the special case of a Hermitian matrix $A$, the matrix of eigenvectors is unitary, so $\|U\|_2 = \|U^{-1}\|_2 = 1$, and these estimates reduce to the simpler bounds given by Theorem \ref{thm:Eigenvalue Bounds for Hermitian Matrices} and Theorem \ref{thm:Eigenvector Space Error Bound}.
@@ -446,7 +446,7 @@ write this in the eigenvector basis:
 	x_0 = \sum_{i=1}^n a_i u_i, \qquad a_1 \neq 0,
 \end{equation*}
 so that
-\begin{equation} \label{eq:power-method-eigenvector-expansion}
+\begin{equation}
 	x_{\nu} = \sum_{i=1}^n a_i \lambda_i^{\nu} u_i = \lambda_1^{\nu} \left( a_1 u_1 + \sum_{i=2}^n a_i \left( \frac{\lambda_i}{\lambda_1} \right)^{\nu} u_i \right).
 \end{equation}
 the directions of the vectors $\{x_{\nu}\}$ converge to the direction of $u_1$ as $\nu \to \infty$ if $ a_1 \neq 0$.
@@ -479,7 +479,7 @@ when $A$ is symmetric, and the rate of convergence in this case is twice that of
 
 In order to terminate the iterative computations, we can use a variety of stopping criteria:
 \begin{itemize}
-	\item if the quotients of \eqref{eq:power-method-component-ratio} agree for several values of $k$ (i.e., ratios of several components) then a fairly good approximation to $\lambda_1$ has been obtained.
+	\item if the quotients of \eqref{eq:power-method-component-ratio} agree for several values of $k$ (i.e., ratios of several components) then a fairly good approximation to $\lambda_1$ has been obtained. 
 	\item Usually the obvious test of little or no change in the eigenvalue iterates $\sigma_{\nu}$ or $\sigma_{\nu+1}$ for several successive values of $\nu$ may be successfully employed.
 \end{itemize}
 However, a quantitative test, based on Theorems \ref{thm:Franklin Relative Error Estimate} and \ref{thm:Absolute Error Estimate}, is also possible, and yields very precise information when $A$ is symmetric, say pick an arbitrary $\epsilon > 0$ and iterates until
@@ -493,7 +493,7 @@ where $\sigma = \sigma_{\nu+1}$ or $\sigma = \sigma_{\nu+1}'$. So we have
 For sufficiently large $\nu$ we can be assured that the minimum in is attained for $i = 1$ (when $a_1 \neq 0$). For symmetric $A$, the matrix of eigenvectors is unitary, so $\|U\|_2 \|U^{-1}\|_2 = 1$.
 
 The present iterative scheme usually requires that the iterates $x_{\nu}$ be scaled at each step of the process. Thus we usually set
-\begin{equation} \label{eq:scaled-power-iteration}
+\begin{equation}
 	\xi_{\nu} = A y_{\nu - 1}, \qquad y_{\nu} = \frac{1}{s_{\nu}} \xi_{\nu}, \qquad \nu = 1, 2, \ldots
 \end{equation}
 
@@ -537,7 +537,7 @@ The eigenvalues of $B$ are $\lambda_i + \alpha$. If $\mu_1$ is the unique princi
 	R = -\ln \max_{i \neq 1} \left| \frac{\lambda_i + \alpha}{\lambda_1 + \alpha} \right|.
 \end{equation}
 
-Now, if the eigenvalues are now ordered $\lambda_1 > \lambda_2 \geq \ldots \geq \lambda_n$ (we DON'T require the modulus inequality $| \lambda_2 | \geq \cdots \geq |\lambda_n|$). We minimize this ratio with respect to $\alpha$ and find that the optimal choice is
+Now, if the eigenvalues are now ordered $\lambda_1 > \lambda_2 \geq \ldots \geq \lambda_n$ (we DON'T require the modulus inequality $| \lambda_2 | \geq \cdots \geq |\lambda_n|$). We minimize this ratio with respect to $\alpha$ and find that the optimal choice is 
 \begin{equation}
 	\alpha = \alpha_* = -\frac{\lambda_2 + \lambda_n}{2},
 \end{equation}
@@ -546,23 +546,23 @@ Note that all $\lambda_i \in \mathbb{R}$. The proof is simple, remember to assur
 In order to apply this improvement, estimates of $\lambda_2$ and $\lambda_n$ are required. Such estimates may require auxiliary computations which is one of the disadvantages of the proposed acceleration procedure.
 
 \begin{itemize}
-	\item \textbf{Estimation of $\lambda_n$:}
-	      Suppose a crude estimate $\sigma \approx \lambda_1$ has been obtained (e.g., via a few steps of the ordinary power method). We define the shifted matrix:
-	      \begin{equation} \label{eq:shift-for-lambda-n}
-		      C \equiv A - \sigma I.
-	      \end{equation}
-	      The eigenvalues of $C$ are $\lambda_i - \sigma$. Since $\sigma$ is close to $\lambda_1$, the value $\lambda_1 - \sigma$ is near zero, making $\lambda_n - \sigma$ the eigenvalue of $C$ with the largest magnitude. Applying the power method to $C$ thus yields an estimate of $\lambda_n$.
+    \item \textbf{Estimation of $\lambda_n$:} 
+    Suppose a crude estimate $\sigma \approx \lambda_1$ has been obtained (e.g., via a few steps of the ordinary power method). We define the shifted matrix:
+    \begin{equation} \label{eq:shift-for-lambda-n}
+        C \equiv A - \sigma I.
+    \end{equation}
+    The eigenvalues of $C$ are $\lambda_i - \sigma$. Since $\sigma$ is close to $\lambda_1$, the value $\lambda_1 - \sigma$ is near zero, making $\lambda_n - \sigma$ the eigenvalue of $C$ with the largest magnitude. Applying the power method to $C$ thus yields an estimate of $\lambda_n$.
 
-	\item \textbf{Estimation of $\lambda_2$:}
-	      If an approximation $u \approx u_1$ is available, we can target $\lambda_2$ by choosing an initial vector $x_0$ such that $x_0^* u = 0$. In the eigenvector expansion of the iteration vector $x_\nu$:
-	      \begin{equation} \label{eq:power-expansion-coeffs}
-		      x_\nu = \sum_{i=1}^n a_i \lambda_i^\nu u_i,
-	      \end{equation}
-	      the orthogonality condition ensures that the coefficient $a_1$ is very small. Assuming $|\lambda_2| > |\lambda_n|$, for small values of the iteration count $\nu$, the term involving $\lambda_2$ will dominate the sum because $|\lambda_1^\nu a_1| \ll |\lambda_2^\nu a_2|$. In this transient phase, the ratio of components:
-	      \begin{equation} \label{eq:lambda-2-ratio-estimate}
-		      \frac{x_{k, \nu+1}}{x_{k, \nu}} \approx \lambda_2
-	      \end{equation}
-	      provides a reasonable estimate of $\lambda_2$ before the component of $\lambda_1$ eventually grows to dominate the iteration.
+    \item \textbf{Estimation of $\lambda_2$:}
+    If an approximation $u \approx u_1$ is available, we can target $\lambda_2$ by choosing an initial vector $x_0$ such that $x_0^* u = 0$. In the eigenvector expansion of the iteration vector $x_\nu$:
+    \begin{equation} \label{eq:power-expansion-coeffs}
+        x_\nu = \sum_{i=1}^n a_i \lambda_i^\nu u_i,
+    \end{equation}
+    the orthogonality condition ensures that the coefficient $a_1$ is very small. Assuming $|\lambda_2| > |\lambda_n|$, for small values of the iteration count $\nu$, the term involving $\lambda_2$ will dominate the sum because $|\lambda_1^\nu a_1| \ll |\lambda_2^\nu a_2|$. In this transient phase, the ratio of components:
+    \begin{equation} \label{eq:lambda-2-ratio-estimate}
+        \frac{x_{k, \nu+1}}{x_{k, \nu}} \approx \lambda_2
+    \end{equation}
+    provides a reasonable estimate of $\lambda_2$ before the component of $\lambda_1$ eventually grows to dominate the iteration.
 \end{itemize}
 
 On the other hand, if we are given $\alpha, \beta$ such that
@@ -571,17 +571,17 @@ On the other hand, if we are given $\alpha, \beta$ such that
 \end{equation*}
 more efficient acceleration schemes for finding $\lambda_1$ can be devised by employing a polynomial of the matrix $A$. Let $P_m(\lambda)$ be a polynomial of degree $m$:
 \begin{equation} \label{eq:poly-definition}
-	P_m(\lambda) \equiv c_0\lambda^m + c_1\lambda^{m-1} + \cdots + c_m.
+    P_m(\lambda) \equiv c_0\lambda^m + c_1\lambda^{m-1} + \cdots + c_m.
 \end{equation}
 The eigenvalues of the matrix $P_m(A)$ are $\{P_m(\lambda_i)\}$. Applying the power method to $P_m(A)$ with an initial vector $x_0$ yields, after $\tau$ iterations:
 \begin{align} \label{eq:poly-iteration-expansion}
-	x_\tau & = P_m(A)x_{\tau-1} = P_m^\tau(A)x_0 \nonumber                                                                                \\
-	x_\tau & = P_m^\tau(\lambda_1) \left[ a_1u_1 + \sum_{j=2}^n \left( \frac{P_m(\lambda_j)}{P_m(\lambda_1)} \right)^\tau a_ju_j \right].
+    x_\tau &= P_m(A)x_{\tau-1} = P_m^\tau(A)x_0 \nonumber \\
+    x_\tau &= P_m^\tau(\lambda_1) \left[ a_1u_1 + \sum_{j=2}^n \left( \frac{P_m(\lambda_j)}{P_m(\lambda_1)} \right)^\tau a_ju_j \right].
 \end{align}
 
 To evaluate $x_\tau$, we do not actually form the matrix $P_m(A)$. Instead, we recursively compute the vectors $Ax_{\tau-1}, A^2x_{\tau-1}, \ldots, A^mx_{\tau-1}$. Consequently, the number of operations performed in one iteration of \eqref{eq:poly-iteration-expansion} is equivalent to $m$ iterations of the standard power method. The improvement in convergence rate is assessed by comparing:
 \begin{equation} \label{eq:poly-convergence-comparison}
-	\max_{j \neq 1} \left| \frac{\lambda_j}{\lambda_1} \right|^m \quad \text{and} \quad \max_{j \neq 1} \left| \frac{P_m(\lambda_j)}{P_m(\lambda_1)} \right|.
+    \max_{j \neq 1} \left| \frac{\lambda_j}{\lambda_1} \right|^m \quad \text{and} \quad \max_{j \neq 1} \left| \frac{P_m(\lambda_j)}{P_m(\lambda_1)} \right|.
 \end{equation}
 
 The ``best'' polynomial of degree $\leq m$ to employ is that for which the ratio $\max_z |P_m(z)/P_m(\lambda_1)|$ is minimized over the interval $\alpha \leq z \leq \beta$. This optimization problem is satisfied by the \textbf{Chebyshev polynomials}, which will be discussed later.
@@ -601,9 +601,9 @@ Assume that $A$ is symmetric, with principal eigenvalue $\lambda_1$ and that the
 The matrix $A - \sigma I$ has eigenvalues $\lambda_i - \sigma$ and for real $\sigma$, the principal eigenvalue is either $\lambda_1 - \sigma$ or $\lambda_n - \sigma$. If $\sigma \geq \lambda_1$, the principal eigenvalue is $\lambda_n - \sigma$, and by the ordinary power method $\lambda_n$ can be approximated. However, this device cannot readily be used to yield the intermediate eigenvalues.
 
 \paragraph{The Orthogonal Iteration Method}
-Once $u_1$ has been approximated, we may form a vector $x_0$ which is orthogonal to $u_1$. Such a vector has the eigenvector expansion that $a_1 = 0$. Now the sequence $x_\nu = A x_{\nu - 1}$ is formed and used to compute $\lambda_2$, if $|\lambda_2| > |\lambda_n|$ and $u_2$.
+Once $u_1$ has been approximated, we may form a vector $x_0$ which is orthogonal to $u_1$. Such a vector has the eigenvector expansion that $a_1 = 0$. Now the sequence $x_\nu = A x_{\nu - 1}$ is formed and used to compute $\lambda_2$, if $|\lambda_2| > |\lambda_n|$ and $u_2$. 
 
-However, after several iterations, roundoff errors will usually introduce a small but non-zero component of $u_1$ into the iterates, and subsequent iterations will magnify this component. This contamination by roundoff may be reduced by removing the component of $u_1$ periodically. Say after $r$ iterations, we remove the component of $u_1$ from $x_r$ and then continue the iteration. When $\lambda_2$ and $u_2$ have been approximated, we can, in general, use the same procedure to find $\lambda_3$ and $u_3$, and so on.
+However, after several iterations, roundoff errors will usually introduce a small but non-zero component of $u_1$ into the iterates, and subsequent iterations will magnify this component. This contamination by roundoff may be reduced by removing the component of $u_1$ periodically. Say after $r$ iterations, we remove the component of $u_1$ from $x_r$ and then continue the iteration. When $\lambda_2$ and $u_2$ have been approximated, we can, in general, use the same procedure to find $\lambda_3$ and $u_3$, and so on. 
 
 In general, if $\lambda_i$ and $u_i$ have been approximated for $i = 1, 2, \ldots, s$, then we form, for arbitrary $z\in \mathbb{R}^n$:
 \begin{equation*}
@@ -616,25 +616,25 @@ If the matrix $A$ is not symmetric but possesses a complete set of eigenvectors,
 \paragraph{Finding Principal Eigenvectors}
 The unique principal right eigenvector $u_1$ and left eigenvector $v_1$ (corresponding to $\lambda_1$) are found using the power method:
 \begin{itemize}
-	\item \textbf{Right iteration:} $u_\nu = Au_{\nu-1}$ (standard power iteration).
-	\item \textbf{Left iteration:} With an arbitrary initial vector $y_0^*$, iterate:
-	      \begin{equation} \label{eq:left-power-iteration}
-		      y_\nu^* = y_{\nu-1}^* A, \quad \nu = 1, 2, \dots
-	      \end{equation}
-	      Upon convergence, $y_\nu^* \to v_1^*$.
+    \item \textbf{Right iteration:} $u_\nu = Au_{\nu-1}$ (standard power iteration).
+    \item \textbf{Left iteration:} With an arbitrary initial vector $y_0^*$, iterate:
+    \begin{equation} \label{eq:left-power-iteration}
+        y_\nu^* = y_{\nu-1}^* A, \quad \nu = 1, 2, \dots
+    \end{equation}
+    Upon convergence, $y_\nu^* \to v_1^*$.
 \end{itemize}
 
 \paragraph{Deflation for $\lambda_2$}
 To find the next largest eigenvalue $\lambda_2$, we select an arbitrary vector $z$ and project it to be orthogonal to the previously found principal eigenvectors. This removes the $\lambda_1$ component from the power iteration:
 \begin{itemize}
-	\item To find the second \textbf{right} eigenvector, initialize:
-	      \begin{equation} \label{eq:right-deflation}
-		      x_0 = z - \frac{v_1^* z}{v_1^* v_1} v_1
-	      \end{equation}
-	\item To find the second \textbf{left} eigenvector, initialize:
-	      \begin{equation} \label{eq:left-deflation}
-		      y_0 = z - \frac{u_1^* z}{u_1^* u_1} u_1
-	      \end{equation}
+    \item To find the second \textbf{right} eigenvector, initialize:
+    \begin{equation} \label{eq:right-deflation}
+        x_0 = z - \frac{v_1^* z}{v_1^* v_1} v_1
+    \end{equation}
+    \item To find the second \textbf{left} eigenvector, initialize:
+    \begin{equation} \label{eq:left-deflation}
+        y_0 = z - \frac{u_1^* z}{u_1^* u_1} u_1
+    \end{equation}
 \end{itemize}
 The power methods are then applied starting with $x_0$ or $y_0$. Because $x_0$ is orthogonal to the left eigenvector $v_1$ (and $y_0$ to the right eigenvector $u_1$), the iteration will converge to the next largest eigenvalue $\lambda_2$ and its corresponding eigenvectors.
 
@@ -644,42 +644,7 @@ In practical computations, rounding errors will eventually re-introduce componen
 \begin{remark}
 	Actually, these procedures just make sure that $a_1 = 0$ in the eigenvector expansion of $x_0$ and $y_0$, as the linear subspace spanned by $u_2, u_3, \ldots, u_n$ is the orthogonal complement of $v_1$ and the linear subspace spanned by $v_2, v_3, \ldots, v_n$ is the orthogonal complement of $u_1$.
 
-	The development for higher-order eigenvalues $\lambda_{s+1}$ and eigenvectors $u_{s+1}, v_{s+1}$ follows a similar analog by orthogonalizing against all previously computed eigenvectors.
+    The development for higher-order eigenvalues $\lambda_{s+1}$ and eigenvectors $u_{s+1}, v_{s+1}$ follows a similar analog by orthogonalizing against all previously computed eigenvectors.
 \end{remark}
-
-A method for roughly approximating $\lambda_2$ and $u_2$ is as follows, for a symmetric matrix $A$: with \eqref{eq:power-method-eigenvector-expansion}, we define
-\begin{equation*}
-	z_\nu = x_\nu - \lambda_1^\nu a_1 u_1 = \sum_{i=2}^n a_i \lambda_i^\nu u_i.
-\end{equation*}
-if $|\lambda_2| > |\lambda_3| \geq \cdots \geq |\lambda_n|$, then taking ratios:
-\begin{equation*}
-	\sigma_{\nu+1} = \frac{z_{k,\nu+1}}{z_{k,\nu}} = \lambda_2 + \mathcal{O}\left( \left| \frac{\lambda_3}{\lambda_2} \right|^{\nu} \right),
-\end{equation*}
-also, as $\nu \to \infty$, $z_\nu$ converges to a scalar multiple of $u_2$. 
-
-Unfortunately, the $\lambda_1^\nu a_1 u_1$ term will eventually dominate the iterates $x_\nu$ and the subtraction would lose all accuracy. Hence we must choose $\nu$ judiciously in order to get a reasonable estimate of $\lambda_2$ and $u_2$. Despite this, the method only requires a little extra work beyond the standard power method and can be used to obtain a crude estimate of $\lambda_2$ and $u_2$. Also, This procedure can be readily adapted for the sequence of normalized iterates \eqref{eq:scaled-power-iteration}.
-
-
-These two procedures removed components of the known eigenvectors from the iterated vectors. However, it is also possible to alter the real symmetric matrix $A$ so that the known eigenvectors then correspond to zero eigenvalues. If $\lambda_1$ and $u_1$ are known, assume $u_1^* u_1 = 1$ and define the matrix
-\begin{equation*}
-	A_1 = A - \lambda_1 u_1 u_1^*.
-\end{equation*}
-The eigenvalues of $A_1$ are $\{0, \lambda_2, \ldots, \lambda_n\}$ and the eigenvector corresponding to the zero eigenvalue is $u_1$. Applying the power method to $A_1$ with an arbitrary initial vector $x_0$ that is not orthogonal to $u_2$ will yield approximations to $\lambda_2$ and $u_2$.
-\begin{remark}
-	As for any $z$, we have
-	\begin{equation*}
-		\begin{aligned}
-			z_{\nu} &= A_1 z_{\nu - 1} = A z_{\nu - 1} - \lambda_1 u_1 u_1^* z_{\nu - 1}\\
-							&= A^2 z_{\nu - 2} - \lambda_1 A u_1 u_1^* z_{\nu - 2} - \lambda_1 u_1 u_1^* A z_{\nu - 2} + \lambda_1^2 u_1 u_1^* u_1 u_1^* z_{\nu - 2}\\
-							&= A^2 z_{\nu - 2} - \lambda^2_1 u_1 u_1^* z_{\nu - 2} \\
-							&= A^\nu z_0 - \lambda_1^\nu u_1 u_1^* z_0.
-		\end{aligned}
-	\end{equation*}
-	A comparison of this result and the sequence $\{x_\nu\}$ defined by the power method reveals \emph{for exact computation with normalized eigenvectors, the present method is exactly equivalent to the orthogonalization method.}
-
-	The cancellation errors in the previous method is replaced by $\lambda_1$ and $u_1$ not being known exactly.
-\end{remark}
-
-If $A$ is sparse, then we would not recommend
 
 \end{document}
