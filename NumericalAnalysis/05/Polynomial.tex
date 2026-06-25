@@ -1,0 +1,636 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\chapter{Polynomial Approximation}
+
+In any event, the ``simplest'' approximating functions would seem to be polynomials.
+
+In general, a polynomial, say $P_n$ of degree at most $n$ may be said to be an approximation to a function $f$ if $P_n$ is ``close'' to $f$ in some sense. This notion of approximation becomes precise only when the measure of deviation and magnitude of smallness have been specified.
+
+A measure of the deviation or error in the approximation of $f$ by $P_n$ is usually taken to be a semi-norm of the difference:
+\begin{equation}
+	\| f - P_n \|
+\end{equation}
+
+\begin{definition}{Semi-norm}{SemiNorm}
+	A \textbf{semi-norm} on a vector space $V$ is a function $\| \cdot \| : V \to [0, \infty)$ that satisfies the following properties for all $x, y \in V$ and all scalars $\alpha$:
+	\begin{enumerate}
+		\item Non-negativity: $\| x \| \geq 0$.
+		\item Absolute scalability: $\| \alpha x \| = |\alpha| \| x \|$.
+		\item Triangle inequality: $\| x + y \| \leq \| x \| + \| y \|$.
+	\end{enumerate}
+	It drops the requirement that $\| x \| = 0$ implies $x = 0$, which distinguishes it from a norm.
+\end{definition}
+If we were to introduce here equivalence classes of functions, say $f \sim g$ if $\| f - g \| = 0$, then the semi-norm would become a norm on the quotient space. We shall simply refer to it as a norm for now even though we does not take the quotient.
+
+Once such a norm has been defined three questions are naturally suggested:
+\begin{itemize}
+	\item Does a polynomial exist, of a specified maximum degree, which minimizes the error?
+	\item If such a polynomial exists, is it unique?
+	\item If such a polynomial exists, how can it be found?
+\end{itemize}
+It is clear that
+\begin{equation}
+	d_n = \inf_{P_n} \| f - P_n \| \geq 0
+\end{equation}
+is a monotonically decreasing sequence in $n$. If there exists a unique polynomial $P_n$ of degree at most $n$ such that the minimum is achieved, we may then investigate methods for determining $P_n$ and do error analysis.
+
+\paragraph{Example: Taylor Series.} we consider the linear space $C^n(x_0)$ of functions that are $n$ times continuously differentiable at $x_0$. We define the semi-norm
+\begin{equation}
+	\| f \|^{(n)} = \sum_{k=0}^n |f^{(k)}(x_0)|
+\end{equation}
+Then the Taylor polynomial of degree $n$:
+\begin{equation}
+	P_n(x) = \sum_{k=0}^n \frac{f^{(k)}(x_0)}{k!} (x - x_0)^k
+\end{equation}
+is the unique polynomial of degree at most $n$ that minimizes $\| f - P_n \|^{(n)}$.
+
+\begin{remark}
+	What may be a good approximation when measured in one norm may be a poor approximation when measured in another. For example, the Taylor polynomial of degree $n$ may be a good approximation to $f$ near $x_0$ but a poor approximation to $f$ on an interval containing $x_0$.
+\end{remark}
+
+For the general results to be presented we assume that the polynomials and the functions $f$ to be approximated are in a linear space $C[a,b]$ of functions defined on the closed bounded interval $[a,b]$.
+\begin{theorem}{Existence of Best Approximation}{Existence Best Approximation}
+	Let $\| \cdot \|$ be a semi-norm on $C[a,b]$, and let there exist positive numbers $m_n$ and $M_n$ such that
+	\begin{equation}
+		0 < m_n \leq \| \sum_{k=0}^n b_k x^k \| \leq M_n < \infty, \quad \text{for all } \{b_k\}, \sum_{k=0}^n |b_k|^2 = 1
+	\end{equation}
+	Then for any integer $n$ and any function $f \in C[a,b]$ there exists a polynomial $P_n$ of degree at most $n$ such that
+	\begin{equation}
+		\| f - P_n \| = \inf_{P_n} \| f - P_n \|
+	\end{equation}
+\end{theorem}
+\begin{proof}
+	Let
+	\begin{equation*}
+		\phi(b_0, b_1, \dots, b_n) = \| f - \sum_{k=0}^n b_k x^k \|
+	\end{equation*}
+	Then the condition means $\phi$ is continuous, and we shall show that there exists $R>0$ such that $d_n$ lies in some closed bounded set.
+
+	SORRY
+\end{proof}
+
+\begin{remark}
+	Observe that the function $f(x)$ need not be continuous. Furthermore, note that this theorem gives no estimate of the magnitude of $d_n$.
+\end{remark}
+
+For the uniqueness result, we require the measure of deviation to be strict.
+\begin{definition}{Strict Semi-norm}{Strict Semi-Norm}
+	A semi-norm $\| \cdot \|$ on a vector space $V$ is \textbf{strict} if $\|f + g\| = \|f\| + \|g\|$ implies that $f$ and $g$ are linearly dependent.
+\end{definition}
+
+\begin{theorem}{Uniqueness of Best Approximation}{Uniqueness Best Approximation}
+	If additional to theorem \ref{thm:Existence Best Approximation} the semi-norm $\| \cdot \|$ is strict, then the best approximation $P_n$ is unique.
+\end{theorem}
+\begin{proof}
+	If both $P_n$ and $Q_n$ are both best approximations, then
+	\begin{equation*}
+		d_n \leq \| f - \frac{P_n + Q_n}{2} \| \leq \frac{1}{2} \| f - P_n \| + \frac{1}{2} \| f - Q_n \| = d_n
+	\end{equation*}
+	So we have nontrivial $\alpha, \beta$ that
+	\begin{equation*}
+		\alpha(f - P_n) + \beta(f - Q_n) = 0
+	\end{equation*}
+	if $\alpha = -\beta \neq 0$, then $P_n = Q_n$. Otherwise, $f$ must be a polynomial of degree at most $n$, and $P_n = Q_n = f$.
+\end{proof}
+
+Of course, the minimizing polynomial may be unique even though the norm is not strict.
+
+\section{Weierstrass Approximation Theorem}
+We are justified in seeking a close polynomial approximation to a continuous function throughout a finite interval because of the fundamental result known as the Weierstrass approximation theorem.
+
+\begin{theorem}{Weierstrass Approximation Theorem}{Weierstrass Approximation Theorem}
+	For any continuous function $f$ defined on a closed bounded interval $[a,b]$ and for any $\varepsilon > 0$, there exists $n = n(\epsilon)$ and a polynomial $P_n$ of degree at most $n$ such that
+	\begin{equation}
+		\| f - P_n \|_\infty = \sup_{x \in [a,b]} |f(x) - P_n(x)| < \varepsilon
+	\end{equation}
+\end{theorem}
+
+This theorem guarantees that arbitrarily close polynomial approximations are possible throughout a closed bounded interval provided only that the function being approximated is continuous. The statement of the theorem is one of existence and gives no hint about constructing such approximations. However, a simple and elegant constructive proof of this result is due to Bernstein.
+
+First we shall give some notation. If $f$ is a continuous function defined on some closed bounded interval $[a,b]$, then the \emph{modulus of continuity} is defined by
+\begin{equation}
+	\omega(f, \delta) = \sup_{|x-x'| \leq \delta} |f(x) - f(x')|
+\end{equation}
+for $\delta > 0$. Since $f$ is uniformly continuous on $[a,b]$, we have $\lim_{\delta \to 0} \omega(f, \delta) = 0$.
+
+The \textbf{Lipschitz condition} is a stronger condition than continuity. A function $f$ is said to satisfy a Lipschitz condition on $[a,b]$ if there exists a positive constant $\lambda$ such that
+\begin{equation}
+	|f(x) - f(x')| \leq \lambda |x - x'|, \quad \text{for all } x, x' \in [a,b]
+\end{equation}
+Then we have $\omega(f, \delta) \leq \lambda \delta$ for all $\delta > 0$.
+
+Now, we define the $n$-th degree polynomial
+\begin{equation}
+	\beta_{n,j}(x) = \binom{n}{j} x^j (1-x)^{n-j}, \quad j = 0, 1, \dots, n
+\end{equation}
+Let the unit interval $[0,1]$ be divided into $n$ equal subintervals by the endpoints
+\begin{equation}
+	x_j = \frac{j}{n}, \quad j = 0, 1, \dots, n
+\end{equation}
+Then the $n$-th degree \textbf{Bernstein polynomial} of $f$ is defined by
+\begin{equation}
+	B_n(f;x) = \sum_{j=0}^n f(x_j) \beta_{n,j}(x)
+\end{equation}
+
+\begin{theorem}{Bernstein's Theorem}{Bernstein's Theorem}
+	Let $f$ be a continuous function defined on $[0,1]$. Then for any $n > 0$ and any $x \in [0,1]$ we have
+	\begin{equation}
+		|f(x) - B_n(f;x)| \leq \frac{9}{4} \omega(f, n^{-1/2})
+	\end{equation}
+	If $f$ satisfies a Lipschitz condition on $[0,1]$ with constant $\lambda$, then
+	\begin{equation}
+		|f(x) - B_n(f;x)| \leq \frac{9}{4} \lambda n^{-1/2}
+	\end{equation}
+\end{theorem}
+\begin{proof}
+	SORRY
+\end{proof}
+
+In fact, it can be shown that
+\begin{equation*}
+	\lim_{n \to \infty} n(B_n(f;x) - f(x)) = \frac{1}{2} x(1-x) f''(x)
+\end{equation*}
+As such convergence is quite slow compared to that of many other polynomial approximation methods.
+
+The Weierstrass approximation theorem can be proved by using the Bernstein polynomials by choosing large enough $n$.
+
+The Weierstrass approximation theorem is valid for functions of several variables which are continuous on appropriate sets. In fact, the Bernstein polynomials can again be employed to yield a constructive proof in various cases.
+
+\section{Interpolation Polynomials}
+An approximation polynomial which is equal to the function it approximates at a number of specified points is called \textbf{an interpolation polynomial.}
+
+Given the $n+1$ distinct points $x_0, x_1, \dots, x_n$ in $[a,b]$ and corresponding values $f(x_0), f(x_1), \dots, f(x_n)$, the interpolation polynomial of degree at most $n$ minimizes the norm
+\begin{equation}
+	\| f - P_n \| = \sum_{j=0}^n |f(x_j) - P_n(x_j)|
+\end{equation}
+We shall show that such a polynomial exists (by explicit construction) and is unique; in fact, that the minimum value of the norm above is $0$.
+
+Thus, we seek a polynomial
+\begin{equation*}
+	Q_n(x) = a_0 + a_1 x + \dots + a_n x^n
+\end{equation*}
+such that $Q_n(x_j) = f(x_j)$ for $j = 0, 1, \dots, n$.
+
+This system has a unique solution if the coefficient matrix is non-singular. The determinant of this matrix is called a \emph{Vandermonde determinant} and can be easily evaluated
+\begin{equation}
+	\begin{vmatrix}
+		1      & x_0    & x_0^2  & \dots  & x_0^n  \\
+		1      & x_1    & x_1^2  & \dots  & x_1^n  \\
+		\vdots & \vdots & \vdots & \ddots & \vdots \\
+		1      & x_n    & x_n^2  & \dots  & x_n^n
+	\end{vmatrix} = \prod_{0 \leq j < k \leq n} (x_k - x_j) \neq 0
+\end{equation}
+We may use an alternative procedure to obtain the interpolation polynomial directly. Set
+\begin{equation}\label{eq:LagrangeInterpolation}
+	P_n(x) = \sum_{j=0}^n f(x_j) \phi_{n,j}(x)
+\end{equation}
+where $\phi_{n,j}(x)$ are $n$-th degree polynomials such that $\phi_{n,j}(x_k) = \delta_{jk}$, the Kronecker delta. Such polynomials are easily constructed, since the $x_i$ are distinct:
+\begin{equation}\label{eq:LagrangeInterpolationCoefficients}
+	\phi_{n,j}(x) = \prod_{\substack{0 \leq k \leq n \\ k \neq j}} \frac{x - x_k}{x_j - x_k} = \frac{\omega_n(x)}{(x - x_j) \omega_n'(x_j)}
+\end{equation}
+for $\omega_n(x) = \prod_{k=0}^n (x - x_k)$.
+
+The interpolation polynomial, especially when in the form \eqref{eq:LagrangeInterpolation}, is called the Lagrange interpolation polynomial and the polynomials $\phi_{n,j}(x)$ are called the Lagrange interpolation coefficients. We can use the product notation for $\phi$ which yields
+\begin{equation}
+	P_n(x) = \sum_{j=0}^n f(x_j) \prod_{\substack{0 \leq k \leq n \\ k \neq j}} \frac{x - x_k}{x_j - x_k}
+\end{equation}
+
+The uniqueness is given by
+\begin{lemma}{Uniqueness of Interpolation Polynomial}{Uniqueness Interpolation Polynomial}
+	If $P_n$ and $Q_n$ are two polynomials of degree at most $n$ such that $P_n(x_j) = Q_n(x_j)$ for $j = 0, 1, \dots, n$, then $P_n = Q_n$.
+\end{lemma}
+
+\subsection{The Pointwise Error in Interpolation Polynomials}
+The pointwise error between a function $f$ and a polynomial $P_n$ is given by
+\begin{equation}
+	R_n(x) = f(x) - P_n(x)
+\end{equation}
+For interpolation polynomials, a useful representation of $R_n(x)$ is readily obtained. This result may be stated as
+\begin{theorem}{Error in Interpolation Polynomials}{Error Interpolation Polynomials}
+	If $f$ has $n+1$ continuous derivatives on $[a,b]$, let $P_n$ be the interpolation polynomial of $f$ at the distinct points $x_0, x_1, \dots, x_n$ in $[a,b]$. Then for each $x \in [a,b]$ there exists $\xi = \xi(x)$
+	\begin{equation}
+		\min_{0 \leq j \leq n} x_j < \xi < \max_{0 \leq j \leq n} x_j
+	\end{equation}
+	such that
+	\begin{equation}
+		R_n(x) = \frac{f^{(n+1)}(\xi)}{(n+1)!} \prod_{j=0}^n (x - x_j) = \frac{f^{(n+1)}(\xi)}{(n+1)!} \omega_n(x)
+	\end{equation}
+\end{theorem}
+\begin{proof}
+	SORRY.
+\end{proof}
+
+Does the sequence of interpolation polynomials $P_n$ converge to $f$ if $\{x_j\}$ covers $[a,b]$ as $n \to \infty$? This is a question that is not completely answered. In the case of uniform spacing, we illustrate the fact that divergence is to be expected by studying Runge's example,
+\begin{equation}
+	f(x) = \frac{1}{1 + x^2}, \qquad x \in [-5,5]
+\end{equation}
+But we shall introduce a class of points, called Chebyshev points, for which convergence is guaranteed for all functions with continuous second derivatives.
+
+From the remainder theorem we can deduce some interesting and useful identities satisfied by the Lagrange interpolation coefficients. As any $n$-th degree polynomial $P_n$ has zero $(n+1)$-th derivative, the remainder $R_n(x)$ in the interpolation of $P_n$ is identically zero. Thus, the interpolation of $P_n$ at the points $x_0, x_1, \dots, x_n$ is exact for a polynomial of degree at most $n$.
+
+\subsection{Hermite or Osculating Interpolation}
+The osculating polynomial, a generalization of the interpolation polynomial, is obtained by requiring agreement at the distinct points of interpolation $x_j$ with the first $r_j-1$ derivatives of $f$.
+\begin{remark}
+	This polynomial arises also as the limit of the interpolation polynomials when $r_j$ points of ordinary interpolation approach each other at the point $x_j$.
+\end{remark}
+This procedure contains, as special cases, Taylor's expansion and ordinary interpolation. The number of combinations is boundless, but, in fact, a representation of the osculating polynomial can be found together with an expression for the pointwise error.
+
+We shall consider in detail the case in which the function and its first derivative are to be assigned at each point of interpolation. This special procedure is usually called \emph{Hermite or osculatory interpolation.}
+
+The problem is to find a polynomial of least degree, $H_{2n+1}$ such that
+\begin{equation}
+	H_{2n+1}(x_j) = f(x_j), \quad H_{2n+1}'(x_j) = f'(x_j), \quad j = 0, 1, \dots, n
+\end{equation}
+There are $2n+2$ conditions, so we expect the degree of $H_{2n+1}$ to be at most $2n+1$. Thus, in analogy with the Lagrange interpolation formula, we seek a representation of $H_{2n+1}$ in the form
+\begin{equation}
+	H_{2n+1}(x) = \sum_{j=0}^n f(x_j) \psi_{n,j}(x) + \sum_{j=0}^n f'(x_j) \Psi_{n,j}(x)
+\end{equation}
+for
+\begin{equation}
+	\psi_{n,j}(x_i) = \delta_{ij}, \quad \psi_{n,j}'(x_i) = 0, \quad \Psi_{n,j}(x_i) = 0, \quad \Psi_{n,j}'(x_i) = \delta_{ij}
+\end{equation}
+Such polynomials are given in terms of the Lagrange interpolation coefficients:
+\begin{equation}
+	\psi_{n,j}(x) = (1 - 2(x - x_j) \phi_{n,j}'(x_j)) \phi_{n,j}^2(x), \quad \Psi_{n,j}(x) = (x - x_j) \phi_{n,j}^2(x)
+\end{equation}
+and the error is given by
+\begin{equation}
+	R_{2n+1}(x) = f(x) - H_{2n+1}(x) = \frac{f^{(2n+2)}(\xi)}{(2n+2)!} \prod_{j=0}^n (x - x_j)^2
+\end{equation}
+
+\section{Least Squares Approximation}
+A property which is frequently used to determine an approximating polynomial is the $L_2$ norm
+\begin{equation}
+	\| f - P_n \|_2 = \left( \int_a^b |f(x) - P_n(x)|^2 dx \right)^{1/2}
+\end{equation}
+
+For a general case we define
+\begin{equation}
+	\phi(a_0, a_1, \dots, a_n) = \| f - \sum_{k=0}^n a_k x^k \|_2^2
+\end{equation}
+Then the question is to find a minimum of $\phi$ with respect to the variables $a_0, a_1, \dots, a_n$.
+
+\begin{theorem}{Uniqueness of Least Squares Approximation}{Uniqueness Least Squares Approximation}
+	For any integer $n$ and any function $f \in C[a,b]$, there exists a unique polynomial $P_n$ of degree at most $n$ such that
+	\begin{equation}
+		\| f - P_n \|_2 = \inf_{P_n} \| f - P_n \|_2
+	\end{equation}
+\end{theorem}
+\begin{proof}
+	Obvious.
+\end{proof}
+
+We now give an analytical description of a method for calculating the coefficients $\boldsymbol{a} = (a_0, a_1, \dots, a_n)$. Observe that $\phi$ is a quadratic form in $\boldsymbol{a}$, so the minimum must satisfy the system of equations
+\begin{equation*}
+	\frac{\partial \phi}{\partial a_k} = 0, \quad k = 0, 1, \dots, n
+\end{equation*}
+We write
+\begin{equation*}
+	\phi = \int_a^b f^2(x) dx - 2 \sum_{k=0}^n a_k \int_a^b f(x) x^k dx + \sum_{j=0}^n \sum_{k=0}^n a_j a_k \int_a^b x^{j+k} dx
+\end{equation*}
+Thus we have
+\begin{equation*}
+	\sum_{i=0}^n \hat{a}_i \int_a^b x^{i+k} dx - \int_a^b x^k f(x) dx = 0, \quad k = 0, 1, \dots, n
+\end{equation*}
+A system of $n+1$ linear equations for the determination of the coefficients $\hat{a}_i$ is frequently called the normal system.
+
+If $(a,b) = (0,1)$, then the normal system can be written in matrix form as
+\begin{equation*}
+	H \hat{\boldsymbol{a}} = \boldsymbol{b}
+\end{equation*}
+where $H$ is the Hilbert matrix
+\begin{equation*}
+	H = \begin{bmatrix}
+		1             & \frac{1}{2}   & \frac{1}{3}   & \dots  & \frac{1}{n+1}  \\
+		\frac{1}{2}   & \frac{1}{3}   & \frac{1}{4}   & \dots  & \frac{1}{n+2}  \\
+		\vdots        & \vdots        & \vdots        & \ddots & \vdots         \\
+		\frac{1}{n+1} & \frac{1}{n+2} & \frac{1}{n+3} & \dots  & \frac{1}{2n+2}
+	\end{bmatrix}, \quad
+	\boldsymbol{b} = \begin{bmatrix}
+		\int_0^1 f(x) dx   \\[6pt]
+		\int_0^1 x f(x) dx \\[6pt]
+		\vdots             \\[6pt]
+		\int_0^1 x^n f(x) dx
+	\end{bmatrix}
+\end{equation*}
+
+The least squares polynomial can be determined in a way which avoids the difficulties inherent in directly solving the system. (This alternative procedure is but a special case of the general theory of \textbf{approximation by orthogonal functions.})
+
+Consider a set of $n+1$ polynomials $\{P_0, P_1, \dots, P_n\}$ such that $P_k$ is of degree $k$ and let
+\begin{equation}
+	Q_n(x) = \sum_{k=0}^n c_k P_k(x)
+\end{equation}
+Now the mean square error defines a function
+\begin{equation}
+	J(c_0, c_1, \dots, c_n) = \| f - Q_n \|_2^2
+\end{equation}
+As before, this function is quadratic in the $c_k$ and at a minimum we must have
+\begin{equation*}
+	\sum_{j=0}^n c_j \int_a^b P_j(x) P_k(x) dx - \int_a^b f(x) P_k(x) dx = 0, \quad k = 0, 1, \dots, n
+\end{equation*}
+We shall choose the polynomials $P_k$ to make this equation as simple as possible. If the $P_k$ are chosen to be orthogonal:
+\begin{equation}
+	\int_a^b P_j(x) P_k(x) dx = \delta_{jk}
+\end{equation}
+then the system of equations reduces to
+\begin{equation}
+	c_k = \int_a^b f(x) P_k(x) dx, \quad k = 0, 1, \dots, n
+\end{equation}
+
+Convergence in the mean of the least squares polynomial approximation to a continuous function is easily demonstrated by
+\begin{theorem}{}{}
+	Let $f$ be continuous on $[a,b]$ and let $Q_n$ be the least squares polynomial approximations to $f$ with respect to an orthogonal set of polynomials $\{P_0, P_1, \dots\}$. Then
+	\begin{equation}
+		\lim_{n \to \infty} J_n = \lim_{n \to \infty} \| f - Q_n \|_2^2 = 0
+	\end{equation}
+	and we have Parseval's equality
+	\begin{equation}
+		\int_a^b f^2(x) dx = \sum_{j=0}^\infty c_j^2 = \sum_{j=0}^\infty \left( \int_a^b f(x) P_j(x) dx \right)^2
+	\end{equation}
+\end{theorem}
+
+Unfortunately, these simple results yield no information about the pointwise approximation of $f$ by the least squares approximation. We write
+\begin{equation*}
+	R_n(x) = f(x) - \sum_{j=0}^n P_j(x) \int_a^b f(\xi) P_j(\xi) d\xi = f(x) - \int_a^b G_n(x, \xi) f(\xi) d\xi
+\end{equation*}
+where
+\begin{equation}
+	G_n(x, \xi) = \sum_{j=0}^n P_j(x) P_j(\xi), \qquad \int_a^b G_n(x, \xi) d\xi = 1
+\end{equation}
+The pointwise error is given by
+\begin{equation}
+	R_n(x) = \int_a^b (f(x) - f(\xi)) G_n(x, \xi) d\xi
+\end{equation}
+Now, the rate at which $R_n(x)$ approaches zero depends on the behavior of the kernel $G_n(x, \xi)$ as $n \to \infty$.
+
+A direct verification of convergence is possible if the sequence $Q_n$ converges in the mean to $f$ and converge uniformly on $[a,b]$. In this case the limit is continuous, and from Parseval's equality, the approximation \emph{converges pointwise} to $f$.
+
+Now, it is possible to show that the sequence $Q_n$ converges uniformly if $f$ has two continuous derivatives on $[a,b]$. On the other hand, if the function $f$ is only continuous, then the sequence $Q_n$ may fail to converge pointwise.
+
+\subsection{Construction of Orthonormal Functions}
+This process is known as the \textbf{Gram-Schmidt orthonormalization method}.
+
+We begin by defining the inner product of any pair of real valued functions
+\begin{equation}
+	\langle f, g \rangle = \int_a^b f(x) g(x) dx
+\end{equation}
+We start with the set of linearly independent functions $\{1, x, x^2, \dots\}$ and apply the Gram-Schmidt process to obtain an orthonormal set $\{P_0, P_1, P_2, \dots\}$. We set
+\begin{equation}
+	P_0(x) = \frac{1}{\sqrt{b-a}}
+\end{equation}
+and for $n \geq 1$ we define
+\begin{equation}
+	P_n(x) = \frac{1}{\| Q_n \|_2} \left( x^n - \sum_{k=0}^{n-1} \langle x^n, P_k \rangle P_k(x) \right)
+\end{equation}
+where
+\begin{equation}
+	\| Q_n \|_2^2 = \int_a^b \left( x^n - \sum_{k=0}^{n-1} \langle x^n, P_k \rangle P_k(x) \right)^2 dx
+\end{equation}
+
+Repeated application of this process yields an orthonormal set of polynomials $\{P_0, P_1, P_2, \dots\}$ such that $P_n$ is of degree $n$. If $[a,b] = [-1,1]$, then the resulting polynomials are called Legendre polynomials. For a general interval $[a,b]$, the resulting polynomials are called shifted Legendre polynomials, as we can use a simply linear shift to transform the interval $[a,b]$ to $[-1,1]$.
+
+\subsection{Weighted Least Squares Approximation}
+A natural generalization of the least squares approximation is obtained by introducing a weight function $w(x)$ which is positive and integrable on $[a,b]$:
+\begin{equation}
+	\| f - P_n \|_{2,w} = \left( \int_a^b |f(x) - P_n(x)|^2 w(x) dx \right)^{1/2}
+\end{equation}
+where
+\begin{equation}
+	w(x) \geq 0, \qquad \int_a^b w(x) dx > 0
+\end{equation}
+For convenience, we require that
+\begin{itemize}
+	\item $w$ is continuous in $(a,b)$.
+	\item have at most isolated zeros in this interval.
+\end{itemize}
+By choosing an appropriate function $w$ we may obtain an approximation with good relative accuracy in a specified region of the interval $[a,b]$.
+
+\begin{remark}
+	An extreme example of this is illustrated by the fact that the interpolation problem can be formulated as a special limiting case of the weighted least squares approximation problem by choosing
+	\begin{equation*}
+		w(x) = \sum_{j=0}^n \delta(x - x_j)
+	\end{equation*}
+\end{remark}
+
+We call a set of polynomials $\{P_0, P_1, P_2, \dots\}$ orthogonal with respect to the weight function $w$ if
+\begin{equation}
+	\int_a^b P_j(x) P_k(x) w(x) dx = 0, \quad j \neq k
+\end{equation}
+The least squares approximation with respect to the weight function $w$ can be determined by using an orthogonal set of polynomials $\{P_0, P_1, \dots\}$ with respect to $w$:
+\begin{equation}
+	Q_n(x) = \sum_{k=0}^n c_k P_k(x), \quad c_k = \int_a^b f(x) P_k(x) w(x) dx
+\end{equation}
+
+The generalizations of Bessel's inequality, the mean convergence proof for polynomial approximations of continuous functions and Parseval's relation are valid in the present case with essentially no change in argument.
+\begin{example}{Chebyshev Polynomials}{Chebyshev Polynomials}
+	An important special example of orthogonal polynomials with respect to a weight function is given by the Chebyshev polynomials $T_n$ which are orthogonal with respect to the weight function
+	\begin{equation}
+		w(x) = \frac{1}{\sqrt{1 - x^2}}, \quad x \in (-1,1)
+	\end{equation}
+\end{example}
+
+\subsection{Some Properties of Orthogonal Polynomials}
+Let the polynomials $P_n$ be orthogonal over $[a,b]$ with respect to the weight function $w$. Then the following properties hold:
+\begin{theorem}{}{}
+	The roots $x_j$ of $P_n$ are all real and simple and lie in the open interval $(a,b)$.
+\end{theorem}
+\begin{proof}
+	SORRY.
+\end{proof}
+
+The orthonormal polynomials satisfy a simple recursion formula which is stated in
+
+\begin{theorem}{Recursion Formula for Orthonormal Polynomials}{Recursion Orthonormal Polynomials}
+	The orthonormal polynomials $P_n$ satisfy the recursion formula
+	\begin{equation}
+		P_{n+1}(x) = (A_n x + B_n) P_n(x) - C_n P_{n-1}(x)
+	\end{equation}
+	where $A_n, B_n, C_n$ are constants. If $a_k$ and $b_k$ are the coefficients of degree $k$ and $k-1$ in $P_k$ (The leading coefficients) then
+	\begin{equation}
+		A_n = \frac{a_{n+1}}{a_n}, \quad B_n = \frac{a_{n+1}}{a_n} \left( \frac{b_{n+1}}{a_{n+1}} - \frac{b_n}{a_n} \right), \quad C_n = \frac{a_{n+1}a_{n-1}}{a_n^2}
+	\end{equation}
+\end{theorem}
+This can be used to derive what is known as the Christoffel-Darboux relation. We state this as
+\begin{theorem}{Christoffel-Darboux Relation}{Christoffel-Darboux Relation}
+	The orthonormal polynomials satisfy
+	\begin{equation}
+		\frac{a_n}{a_{n+1}} (P_{n+1}(x) P_n(\xi) - P_n(x) P_{n+1}(\xi)) = (x-\xi) \sum_{j=0}^n P_j(x) P_j(\xi)
+	\end{equation}
+\end{theorem}
+
+\subsection{Pointwise Convergence of Least Squares Approximations}
+We first consider the ordinary least squares approximation over $[-1,1]$ in which case the orthonormal polynomials (Legendre polynomials) are defined as
+\begin{equation}
+	P_n(x) = \sqrt{\frac{2n+1}{2}} \frac{1}{2^n n!} \frac{d^n}{dx^n} (x^2 - 1)^n
+\end{equation}
+Take the least squares approximation of $f$ with respect to the Legendre polynomials $Q_n$.
+
+\begin{theorem}{Uniform Convergence of Legendre Polynomial Approximation}{Uniform Convergence Legendre Approximation}
+	If $f$ has second continuous derivatives on $[-1,1]$, then for all $x\in [-1,1]$ and any $\epsilon > 0$ we have
+	\begin{equation}
+		|f(x) - Q_n(x)| < \frac{\epsilon}{\sqrt{n}}
+	\end{equation}
+	for sufficiently large $n$.
+\end{theorem}
+\begin{proof}
+	We introduce the Legendre polynomials
+	\begin{equation*}
+		p_n(x) = \frac{1}{2^n n!} \frac{d^n}{dx^n} (x^2 - 1)^n = \sqrt{\frac{2}{2n+1}} P_n(x)
+	\end{equation*}
+	SORRY.
+\end{proof}
+
+By using the technique of the above proof, we find
+\begin{theorem}{}{}
+	Let $f$ have a continuous $r$-th derivative on $[-1,1]$ and let $Q_n$ be the least squares approximation of $f$ with respect to the Legendre polynomials.
+	\begin{equation}
+		\lim_{k \to \infty} k^r c_k = 0, \qquad |f(x) - Q_n(x)| = \mathcal{O}(n^{-r+3/2})
+	\end{equation}
+\end{theorem}
+A simple linear change of variable would relax the condition on $f$ to be defined on any closed bounded interval $[a,b]$.
+
+Analogous results can be obtained for various weighted least squares approximations. If the weight function is $w$ and the interval is $[a,b]$, then $Q_n = \sum_{k=0}^n c_k P_k$ where $P_k$ are the orthonormal polynomials with respect to $w$.
+
+A proof of the pointwise convergence of $Q_n$ to a sufficiently smooth function $f$ can be obtained if
+\begin{itemize}
+	\item the $P_n(x)$ are the eigenfunctions of a regular second order differential operator, say
+	      \begin{equation}
+		      \mathcal{L}[P_n] = a(x) P_n'' + b(x) P_n' = \lambda_n P_n
+	      \end{equation}
+	      whose eigenvalues satisfy
+	      \begin{equation}
+		      \lim_{n \to \infty} \lambda_n n^{-2} = \text{constant}.
+	      \end{equation}
+	\item $P_n$ are bounded by
+	      \begin{equation}
+		      |P_n(x)| = \mathcal{O}(n^{1/2}), \forall x \in [a,b]
+	      \end{equation}
+\end{itemize}
+
+For Chebyshev polynomials, we have
+\begin{equation}
+	(1-x^2) T_n''(x) - x T_n'(x) + n^2 T_n(x) = 0
+\end{equation}
+and in this case $\lambda_n = n^2$.
+
+RETURN TO THIS LATER.
+
+\subsection{Discrete Least Squares Approximation}
+RETURN TO THIS LATER.
+
+\section{Polynomials of Best Approximation}
+Another measure of the deviation is called the \textbf{maximum norm} or the $L_\infty$ norm:
+\begin{equation}
+	\| f - P_n \|_\infty = \sup_{x \in [a,b]} |f(x) - P_n(x)|
+\end{equation}
+A polynomial which minimizes this norm is conventionally called a polynomial of best approximation.
+
+It defines a function of the coefficients of the approximating polynomial that is not quite explicit:
+\begin{equation*}
+	d(a_0, a_1, \dots, a_n) = \max_{x \in [a,b]} |f(x) - \sum_{k=0}^n a_k x^k|
+\end{equation*}
+The existence of such a polynomial making $d$ a minimum is shown:
+\begin{theorem}{Existence of Best Approximation in Maximum Norm}{Existence Best Approximation Maximum Norm}
+	Let $f$ be a continuous function defined on $[a,b]$. Then for any integer $n$ there exists a polynomial $P_n$ of degree at most $n$ such that
+	\begin{equation}
+		\| f - P_n \|_\infty = \inf_{P_n} \| f - P_n \|_\infty
+	\end{equation}
+\end{theorem}
+\begin{proof}
+	From theorem \ref{thm:Existence Best Approximation}, we must show that on the subset of polynomials $P_n$ such that
+	\begin{equation*}
+		\sum_{j=0}^{n} a_j^2 = 1, \min \|P_n\|_\infty = m_n > 0
+	\end{equation*}
+	We can see that $\|P_n(x)\|_\infty $ is a continuous function of the coefficients $a_j$, we may apply the Weierstrass theorem which assures us that there is a point at which the minimum is attained. But at this point it is not zero.
+\end{proof}
+\begin{remark}
+	The theorem is also true for all $S \subseteq [a,b]$ containing at least $n+1$ distinct points.
+\end{remark}
+
+However, $\| \cdot \|_\infty$ is not a strict norm, so the uniqueness of the best approximation is not guaranteed from theorem \ref{thm:Uniqueness Best Approximation}.
+
+Nevertheless, the best approximation polynomial is unique.
+
+\subsection{The Error in the Best Approximation}
+It is a relatively easy matter to obtain bounds on the deviation of the best approximation polynomial of degree $n$, denote
+\begin{equation*}
+	d_n(f) = \min_{a_0, a_1, \dots, a_n} d(a_0, a_1, \dots, a_n) = \min_{P_n} D(f, P_n)
+\end{equation*}
+Lowers bounds can be obtained by means of
+
+\begin{theorem}{De la Vallée Poussin's Theorem}{DelaValleePoussin}
+	Let an $n$-th degree polynomial $P_n$ have the deviations from $f$:
+	\begin{equation}
+		f(x_j) - P_n(x_j) = (-1)^j e_j, \quad j = 0, 1, \dots, n+1
+	\end{equation}
+	where $a \leq x_0 < x_1 < \dots < x_{n+1} \leq b$ and all $e_j$ are positive or all negative. Then
+	\begin{equation}
+		\min_j |e_j| \leq d_n(f)
+	\end{equation}
+\end{theorem}
+\begin{proof}
+	Assume that for some $Q_n$ we have $D(f, Q_n) < \min_j |e_j|$. Then then $n$-th degree polynomial
+	\begin{equation}
+		Q_n(x) - P_n(x) = (f(x) - P_n(x)) - (f(x) - Q_n(x))
+	\end{equation}
+	has the same sign at the points $x_j$ as $f(x) - P_n(x)$, so it has at least $n+1$ distinct zeros. This is a contradiction.
+\end{proof}
+
+To employ this theorem we need only construct a polynomial which oscil1ates about the function being approximated at least $n+1$ times. This can usually be done by means of an interpolation polynomial of degree $n$.
+
+A necessary and sufficient condition which characterizes a best approximation polynomial and establishes its uniqueness is contained in
+
+\begin{theorem}{Chebyshev's Theorem}{ChebyshevBestApproximation}
+	A polynomial of degree at most $n$, $P_n$, is a best approximation to $f$ in $[a,b]$ if and only if $f(x) - P_n(x)$ assumes the same values $\pm D(f, P_n)$ altering in sign at least $n+2$ times in $[a,b]$. This best approximation is unique.
+\end{theorem}
+\begin{proof}
+	Suppose $P_n$ has this oscillation property. Let $x_j$ be the $n+2$ points at which this maximum deviation is attained. So we have $d_n(f) \geq |e_j| = D(f, P_n)$ so equality holds. This shows the sufficiency of the uniform oscillation property.
+
+	For necessity, we show that if $f(x) - P_n(x)$ attains its maximum deviation with sign change at most $k$ times with $2 \leq k \leq n+1$, then $D(f, P_n) > d_n(f)$. Suppose with no loss of generality that
+	\begin{equation*}
+		f(x_j) - P_n(x_j) = (-1)^j D(f, P_n), \quad j = 0, 1, \dots, j.
+	\end{equation*}
+	SORRY,
+\end{proof}
+
+This theorem can be used to recognize the best approximation polynomial. It is also the basis, along with Theorem \ref{thm:DelaValleePoussin}, of various methods for approximating the best approximation polynomial. There is no finite procedure for constructing the best approximation polynomial for arbitrary continuous functions. However, the best approximation is known in some important special cases.
+
+As an obvious consequence, it follows that the best approximation $P_n$ is the interpolation polynomial for continuous $f$ at some set of $n+1$ points in $[a,b]$. In special, if $f$ has $n+1$ continuous derivatives on $[a,b]$, then theorem \ref{thm:Error Interpolation Polynomials} applies, and we have determined a form for the error in the best approximation of degree at most $n$.
+
+\begin{theorem}{Error in Best Approximation}{Error Best Approximation}
+	If $f$ has $n+1$ continuous derivatives on $[a,b]$, and $P_n$ is the best approximation of $f$ in $[a,b]$ of degree at most $n$, then there exists $n+1$ distinct points $x_0, x_1, \dots, x_n$ in $[a,b]$ such that
+	\begin{equation}
+		R_n(x) = f(x) - P_n(x) = \frac{f^{(n+1)}(\xi)}{(n+1)!} \prod_{j=0}^n (x - x_j)
+	\end{equation}
+\end{theorem}
+
+\subsection{Chebyshev Polynomials and Best Approximation}
+We observe that if $f^{n+1}$ is a \emph{constant} on $[a,b]$, then the error $R_n$ can actually be calculated! In this case, $f$ is a polynomial of degree at most $n+1$. The error can be minimized by choosing the points $x_j$ to make $\omega_n(x) = \prod_{j=0}^n (x - x_j)$ has the smallest possible maximum absolute value in the interval $[a,b]$.
+\begin{remark}
+	In the general case, the choice of these same interpolation points may be expected to yield a reasonable approximation to the best polynomial. The smaller variation of $f^{(n+1)}$ is, the better the approximation will be.
+\end{remark}
+
+\begin{plainblackenv}
+	Among all polynomials of degree $n+1$ of leading term unity, find the polynomial which deviates least from zero in the interval $[a,b]$.
+\end{plainblackenv}
+A mere stretching of the variable $x$ would bring $[a,b]$ to $[-1,1]$, so we can assume that the interval is $[-1,1]$. substracting $x^{n+1}$ from the desired polynomial, we see that the problem is equivalent to:
+\begin{plainblackenv}
+	Find the best polynomial approximation of degree at most $n$ to the function $f(x) = x^{n+1}$ in the interval $[-1,1]$.
+\end{plainblackenv}
+Take $x = \cos \theta$, which is a one-to-one monotonic transformation of $[-1,1]$ to $[0,\pi]$. Then consider $\cos (n+1) \theta$, attains its maximum absolute value $1$ at $n+2$ points in $[0,\pi]$ with alternating signs. Therefore, the function
+\begin{equation}
+	T_{n+1}(x) = A_{n+1}\cos ((n+1) \arccos x)
+\end{equation}
+giving the Chebyshev polynomials. The leading term being unity requires $A_{n+1} = 2^{-n}
+
+	The interpolation points are the zeros of $T_{n+1}$, which are given by
+\begin{equation}
+	x_j = \cos \left( \frac{2j+1}{2n+2} \pi \right), \quad j = 0, 1, \dots, n
+\end{equation}
+and we have
+\begin{equation}
+	\max |R_n| = 2^{-n} = \frac{1}{2^n} \left| \frac{b-a}{2} \right|^{n+1}
+\end{equation}
+
+\end{document}

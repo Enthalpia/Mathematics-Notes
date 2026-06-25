@@ -1,0 +1,114 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\chapter{Optimization}
+
+Mathematically, optimization is the process of finding the best solution to a problem, often by minimizing or maximizing a function with respect to certain equality and inequality constraints.
+
+Three parts:
+\begin{itemize}
+	\item Variables: The unknowns that we want to solve for.
+	\item Objective function: The function that we want to minimize or maximize.
+	\item Constraints: The conditions that the solution must satisfy, which can be in the form of equalities or inequalities.
+\end{itemize}
+
+\section{The Linear Programming Problem}
+The mathematical formulation of a linear programming problem is as follows:
+\begin{align}
+	\max/\min \quad   & z = c_1 x_1 + c_2 x_2 + \ldots + c_n x_n \\
+	\text{subject to} &                                          %
+	\begin{cases}
+		a_{11} x_1 + a_{12} x_2 + \ldots + a_{1n} x_n \leq(=, \geq) b_1 \\
+		a_{21} x_1 + a_{22} x_2 + \ldots + a_{2n} x_n \leq(=, \geq) b_2 \\
+		\vdots                                                          \\
+		a_{m1} x_1 + a_{m2} x_2 + \ldots + a_{mn} x_n \leq(=, \geq) b_m \\
+		x_1, x_2, \ldots, x_n \geq 0
+	\end{cases}
+\end{align}
+
+If the solution set of the constraints is empty, the problem is said to be \textbf{infeasible}. The solution set is called the \textbf{feasible region}, and the optimal solution is called the \textbf{optimal point}. Some special cases include:
+\begin{itemize}
+	\item Infinite optimal solutions: If the objective function is parallel to a constraint boundary, there may be infinitely many optimal solutions along that boundary.
+	\item Unbounded solutions: If the feasible region is unbounded in the direction of optimization, the optimal value may be infinite.
+	\item No optimal solution: If the feasible region is empty or if the objective function does not have a maximum or minimum value within the feasible region, there may be no optimal solution.
+\end{itemize}
+
+\subsection{The Diagram Method}
+For simple linear programming problems with two variables, we can use the diagram method to find the feasible region and the optimal solution.
+
+From this, we deduce some observations:
+\begin{itemize}
+	\item The feasible region is a convex polygon (or an unbounded region) defined by the intersection of the constraints.
+	\item The optimal solution occurs at a vertex (corner point) of the feasible region.
+\end{itemize}
+
+\subsection{The Standard Form of Linear Programming}
+To apply the simplex method, we need to convert the linear programming problem into its standard form.
+
+The standard form of a linear programming problem is defined as follows:
+\begin{align}
+	\max \quad        & z = c_1 x_1 + c_2 x_2 + \ldots + c_n x_n \\
+	\text{subject to} &                                          %
+	\begin{cases}
+		a_{11} x_1 + a_{12} x_2 + \ldots + a_{1n} x_n = b_1 \geq 0 \\
+		a_{21} x_1 + a_{22} x_2 + \ldots + a_{2n} x_n = b_2 \geq 0 \\
+		\vdots                                                     \\
+		a_{m1} x_1 + a_{m2} x_2 + \ldots + a_{mn} x_n = b_m \geq 0 \\
+		x_1, x_2, \ldots, x_n \geq 0
+	\end{cases}
+\end{align}
+To convert a linear programming problem into standard form, we can follow these steps:
+\begin{itemize}
+	\item If $z$ is a minimization problem, we can take $z \to -z$ to convert it into a maximization problem.
+	\item If a variable is unrestricted in sign, we can replace it with the difference of two non-negative variables: $x_i = x_i' - x_i''$, where $x_i', x_i'' \geq 0$.
+	\item If a constraint is an inequality $\sum_{j=1}^n a_{ij} x_j \leq b_i$, we can introduce a slack variable $s_i \geq 0$ to convert it into an equality: $\sum_{j=1}^n a_{ij} x_j + s_i = b_i$.
+	\item If $b_i < 0$, we can multiply the entire constraint by $-1$.
+	\item Cancelling out redundant constraints to make the constraint matrix $A$ have full row rank.
+\end{itemize}
+
+\begin{definition}{Basis}{Basis}
+	Let $A$ be an $m \times n$ optimization problem constraint matrix. Then $m < n$ and $\rank(A) = m$. A \textbf{basis} is a set of $m \times m$ invertible submatrices of $A$.
+\end{definition}
+Without loss of generality, we can just choose
+\begin{equation}
+	B = \begin{bmatrix}
+		a_{11} & a_{12} & \ldots & a_{1m} \\
+		a_{21} & a_{22} & \ldots & a_{2m} \\
+		\vdots & \vdots & \ddots & \vdots \\
+		a_{m1} & a_{m2} & \ldots & a_{mm}
+	\end{bmatrix} = (\boldsymbol{p}_1, \boldsymbol{p}_2, \ldots, \boldsymbol{p}_m)
+\end{equation}
+where $\boldsymbol{p}_i$ is called the \textbf{basic vector}, and the corresponding variables $x_1, x_2, \ldots, x_m$ are called \textbf{basic variables}. If we set all non-basis variables to zero, we can solve for the basis variables using the equation $B \boldsymbol{x}_B = \boldsymbol{b}$, if the solution is non-negative, then it is called a \textbf{basic feasible solution}. The number of basic feasible solutions is at most $\binom{n}{m}$, 
+
+\begin{theorem}{}{}
+	If the \emph{feasible region} of a linear programming problem is non-empty, then it is \textbf{convex}.
+
+	A feasible solution is a basic feasible solution if and only if it is a vertex of the feasible region.
+
+	If the feasible region is bounded, then the optimal solution occurs at a vertex of the feasible region, which is a basic feasible solution. If it is not bounded, then if there is an optimal solution, it must occur at a vertex of the feasible region.
+\end{theorem}
+
+\subsection{The Simplex Method}
+Usually, the feasible region of a linear programming problem is a convex polyhedron. The simplex method is an algorithm for solving linear programming problems by moving along the edges of the feasible region to find the optimal solution. The main idea is to start at a basic feasible solution and iteratively move to an adjacent basic feasible solution that improves the objective function until no further improvement is possible.
+
+\begin{enumerate}
+	\item Find an initial basic feasible solution. This can be done using the \textbf{Big M method} or the \textbf{Two-Phase method}. Take the basis $B = (\boldsymbol{p}_1, \boldsymbol{p}_2, \ldots, \boldsymbol{p}_m)$, and the corresponding basic feasible solution is $\boldsymbol{x}^{0} = (x_1^0, x_2^0, \ldots, x_m^0, 0, \ldots, 0)$.
+	\item From one basic feasible solution to a nearby basic feasible solution: we need to change one basic variable to another one.
+
+	To bring in a non-basic variable $x_j$ into the basis. Taking a sliding parameter $\lambda$: let
+	\begin{equation*}
+		\boldsymbol{p}_j = \sum_{i=1}^m a_{ij} \boldsymbol{p}_i
+	\end{equation*}
+	sliding on the edge of the feasible region, we have
+	\begin{equation}
+		\boldsymbol{x}^{1} = (x_1^0 - \lambda a_{1j}, x_2^0 - \lambda a_{2j}, \ldots, x_m^0 - \lambda a_{mj}, 0, \ldots, 0, \lambda, 0, \ldots, 0)
+	\end{equation}
+	until one of the basic variables becomes zero, taking
+	\begin{equation}
+		\lambda = \min_{1 \leq i \leq m} \left\{ \frac{x_i^0}{a_{ij}} : a_{ij} > 0 \right\} = \frac{x_l^0}{a_{lj}}
+	\end{equation}
+	would be a feasible solution.
+\item 
+\end{enumerate}
+
+\end{document}

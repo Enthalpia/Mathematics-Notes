@@ -1,0 +1,196 @@
+\documentclass{matharticle}
+
+\title{Review and Micellania}
+\author{}
+\date{\today}
+
+\begin{document}
+\maketitle
+\section{Basics}
+\begin{definition}
+Let $x\in \mathbb{R}$, take an approximation $x^*\in \mathbb{R}$, then the \textbf{absolute error} is defined as $|e|=|x-x^*| \leq \epsilon$ and the \textbf{relative error} is defined as $|e_r|=\frac{|x-x^*|}{|x|} \leq \epsilon_r$.
+
+Let $x$ be a decimal. The \textbf{significant digits} of $x$ are defined as the number of digits in $x$ that are known to be correct. If $x = 1.2345$, then $x$ has 5 significant digits. The error are less then half of the next digit.
+\end{definition}
+
+An efficient way to compute the polynomial $p(x) = a_n x^n + a_{n-1} x^{n-1} + \cdots + a_1 x + a_0$ is to use \textbf{Horner's method}, which rewrites the polynomial as
+\begin{equation}
+p(x) = (((a_n x + a_{n-1}) x + a_{n-2}) x + \cdots + a_1) x + a_0
+\end{equation}
+
+\subsection{The Matrices and Vector Norms}
+\begin{definition}
+A \textbf{vector norm} is a function $\|\cdot\|: \mathbb{R}^n \to \mathbb{R}$ that satisfies the following properties:
+\begin{itemize}
+  \item \textbf{Non-negativity:} $\|x\| \geq 0$ for all $x \in \mathbb{R}^n$, and $\|x\| = 0$ if and only if $x = 0$.
+  \item \textbf{Scalar multiplication:} $\|\alpha x\| = |\alpha| \|x\|$ for all $\alpha \in \mathbb{R}$ and $x \in \mathbb{R}^n$.
+  \item \textbf{Triangle inequality:} $\|x + y\| \leq \|x\| + \|y\|$ for all $x, y \in \mathbb{R}^n$.
+\end{itemize}
+\end{definition}
+A typical example of a vector norm is the $L_p$ norm, defined as
+\begin{equation}
+\|x\|_p = \left( \sum_{i=1}^{n} |x_i|^p \right)^{1/p}, \quad 1 \leq p < \infty
+\end{equation}
+with $L_1, L_2$ and $L_\infty$ norms as special cases.
+
+\begin{definition}
+A \textbf{matrix norm} is a function $\|\cdot\|: \mathbb{R}^{n \times n} \to \mathbb{R}$ that satisfies the following properties:
+\begin{itemize}
+  \item \textbf{Non-negativity:} $\|A\| \geq 0$ for all $A \in \mathbb{R}^{n \times n}$, and $\|A\| = 0$ if and only if $A = 0$.
+  \item \textbf{Scalar multiplication:} $\|\alpha A\| = |\alpha| \|A\|$ for all $\alpha \in \mathbb{R}$ and $A \in \mathbb{R}^{n \times n}$.
+  \item \textbf{Triangle inequality:} $\|A + B\| \leq \|A\| + \|B\|$ for all $A, B \in \mathbb{R}^{n \times n}$.
+  \item \textbf{Submultiplicativity:} $\|AB\| \leq \|A\| \|B\|$ for all $A, B \in \mathbb{R}^{n \times n}$.
+\end{itemize}
+
+A matrix norm is said to be \textbf{consistent} with a vector norm if $\|Ax\| \leq \|A\| \|x\|$ for all $A \in \mathbb{R}^{n \times n}$ and $x \in \mathbb{R}^n$. We can also define the \textbf{induced matrix norm} as
+\begin{equation}
+\|A\| = \sup_{x \neq 0} \frac{\|Ax\|}{\|x\|}
+\end{equation}
+for some vector norm $\|\cdot\|$.
+\end{definition}
+
+Some common matrix norms include
+\begin{itemize}
+  \item $\|A\|_1 = \max \text{ column sum of } |A|$.
+  \item $\|A\|_\infty = \max \text{ row sum of } |A|$.
+  \item $\|A\|_2 = \sqrt{\lambda_{\max}(A^T A)}$, where $\lambda_{\max}$ is the largest eigenvalue of $A^T A$, or just the largest singular value of $A$.
+  \item $\|A\|_F = \sqrt{\sum_{i,j} |a_{ij}|^2}$, the Frobenius norm.
+\end{itemize}
+
+\begin{theorem}
+Every matrix norm is greater than or equal to the spectral radius of the matrix, i.e., $\|A\| \geq \rho(A)$, where $\rho(A)$ is the largest absolute value of the eigenvalues of $A$.
+\end{theorem}
+
+\subsection{Condition Number}
+\begin{definition}
+The \textbf{condition number} of a matrix $A$ with respect to a given matrix norm $\|\cdot\|$ is defined as
+\begin{equation}
+\kappa(A) = \|A\| \|A^{-1}\|
+\end{equation}
+The condition number measures how sensitive the solution of a linear system $Ax = b$ is to changes in the input data $b$ or the matrix $A$. A large condition number indicates that the system is ill-conditioned, meaning that small changes in the input can lead to large changes in the solution. Conversely, a small condition number indicates that the system is well-conditioned, meaning that the solution is relatively insensitive to changes in the input.
+\end{definition}
+
+We have
+\begin{equation}
+\kappa(A) \geq \|A A^{-1}\| = \|I\| = 1
+\end{equation}
+For a perturbation $\delta b$ in the right-hand side of the linear system $Ax = b$, we have
+\begin{equation}
+\frac{\|\delta x\|}{\|x\|} \leq \kappa(A) \frac{\|\delta b\|}{\|b\|}
+\end{equation}
+\begin{proof}
+As we have $A(x+\delta x) = b + \delta b$, we can write $A \delta x = \delta b$, and thus $\delta x = A^{-1} \delta b$. Taking norms, we have $\|\delta x\| = \|A^{-1} \delta b\| \leq \|A^{-1}\| \|\delta b\|$. Dividing both sides by $\|x\|$ and using the fact that $\|b\| = \|Ax\| \leq \|A\| \|x\|$, we obtain the desired inequality.
+\end{proof}
+If $A$ have a perturbation $\delta A$, we have $(A + \delta A)(x + \delta x) = b$.
+\begin{equation}
+\frac{\|\delta x\|}{\|x\|} \leq \kappa(A) \frac{\|\delta A\|}{\|A\|} \bigg/ \left(1 - \kappa(A) \frac{\|\delta A\|}{\|A\|}\right)
+\end{equation}
+For both perturbations $\delta A$ and $\delta b$, we have
+\begin{equation}
+  \frac{\|\delta x\|}{\|x\|} \leq \frac{\kappa(A)}{1 - \kappa(A)} \left( \frac{\|\delta A\|}{\|A\|} + \frac{\|\delta b\|}{\|b\|} \right)
+\end{equation}
+
+\section{Interpolation}
+Let $f$ be a function defined on an interval $[a, b]$, and let $x_0, x_1, \ldots, x_n$ be distinct points in $[a, b]$. The goal of interpolation is to find certain types of function $\varphi$ such that
+\begin{equation}
+  \varphi(x_i) = f(x_i), \quad i = 0, 1, \ldots, n
+\end{equation}
+
+\subsection{The Lagrange Interpolation}
+For the $n+1$ distinct points $(x_0, f(x_0)), (x_1, f(x_1)), \ldots, (x_n, f(x_n))$, we need to find a polynomial $p_n(x)$ of degree at most $n$ to interpolate the function $f$ at these points. The Vandermonde matrix is defined as
+\begin{equation}
+V = \begin{bmatrix}
+1 & x_0 & x_0^2 & \cdots & x_0^n \\
+1 & x_1 & x_1^2 & \cdots & x_1^n \\
+\vdots & \vdots & \vdots & \ddots & \vdots \\
+1 & x_n & x_n^2 & \cdots & x_n^n
+\end{bmatrix}, \qquad \det(V) = \prod_{0 \leq i < j \leq n} (x_j - x_i) \neq 0
+\end{equation}
+So we have a unique solution for the coefficients of the polynomial $p_n(x)$. The \textbf{Lagrange basis polynomials} are defined as
+\begin{equation}
+  l_i(x_j) = \begin{cases}
+    1, & \text{if } i = j \\
+    0, & \text{if } i \neq j
+  \end{cases} = \delta_{ij}
+\end{equation}
+An explicit result is
+\begin{equation}
+  l_i(x) = \prod_{\substack{0 \leq j \leq n \\ j \neq i}} \frac{x - x_j}{x_i - x_j}
+\end{equation}
+
+The Lagrange interpolation polynomial is then given by
+\begin{equation}
+  p_n(x) = \sum_{i=0}^{n} f(x_i) l_i(x)
+\end{equation}
+
+\subsubsection{The Error of Lagrange Interpolation}
+\begin{theorem}
+Let $f \in C^{n+1}[a, b]$, and let $x_0, x_1, \ldots, x_n$ be distinct points in $[a, b]$. Then for each $x \in [a, b]$, there exists a $\xi \in (a, b)$ such that
+\begin{equation}
+  R_n(x) = f(x) - p_n(x) = \frac{f^{(n+1)}(\xi)}{(n+1)!} \prod_{i=0}^{n} (x - x_i)
+\end{equation}
+\end{theorem}
+\begin{proof}
+Let
+\begin{equation}
+  R_n(x) = f(x) - p_n(x) = k(x) \prod_{i=0}^{n} (x - x_i)
+\end{equation}
+for some function $k(x)$. Then we let
+\begin{equation}
+  \phi(t) = f(t) - p_n(t) - k(x) \prod_{i=0}^{n} (t - x_i)
+\end{equation}
+Then $\phi(x) = 0$ and $\phi(x_i) = 0$ for $i = 0, 1, \ldots, n$. By Rolle's theorem, there exists at least one point $\xi \in (a, b)$ such that $\phi^{(n+1)}(\xi) = 0$. Then we have
+\begin{equation}
+  \phi^{(n+1)}(\xi) = f^{(n+1)}(\xi) - k(x) (n+1)! = 0
+\end{equation}
+\end{proof}
+
+\subsection{Difference}
+\begin{definition}
+Let $f$ be a function defined on an interval $[a, b]$, and let $x_0, x_1, \ldots, x_n$ be distinct points in $[a, b]$. The \textbf{forward difference} of $f$ at the points $x_0, x_1, \ldots, x_n$ is defined iteratively as follows:
+\begin{itemize}
+  \item The first forward difference is defined as
+    \begin{equation}
+      f[x_0, x_1] = \frac{f(x_1) - f(x_0)}{x_1 - x_0}
+    \end{equation}
+  \item The $k$-th forward difference is defined as
+    \begin{equation}
+      f[x_0, x_1, \ldots, x_k] = \frac{f[x_1, x_2, \ldots, x_k] - f[x_0, x_1, \ldots, x_{k-1}]}{x_k - x_0}
+    \end{equation}
+\end{itemize}
+\end{definition}
+Some properties of the forward difference are:
+\begin{itemize}
+  \item The difference is the linear combination of the function values at the points $x_0, x_1, \ldots, x_n$:
+    \begin{equation}
+      f[x_0, x_1, \ldots, x_n] = \sum_{i=0}^{n} \frac{f(x_i)}{\prod_{\substack{0 \leq j \leq n \\ j \neq i}} (x_i - x_j)}
+    \end{equation}
+  \item The difference is symmetric in its arguments, i.e., for every $\sigma \in S_{n+1}$ we have
+    \begin{equation}
+      f[x_0, x_1, \ldots, x_n] = f[x_{\sigma(0)}, x_{\sigma(1)}, \ldots, x_{\sigma(n)}]
+    \end{equation}
+\end{itemize}
+
+\subsubsection{The Difference Table}
+To calculate the forward differences, we can use a difference table. The structure of the table is as follows:
+\begin{table}
+\centering
+\begin{tabular}{c|c|c|c|c}
+$x_i$ & $f(x_i)$ & $\Delta f(x_i)$ & $\Delta^2 f(x_i)$ & $\Delta^3 f(x_i)$ \\
+\hline
+$x_0$ & $f(x_0)$ &  &  &  \\
+$x_1$ & $f(x_1)$ & $f[x_0, x_1]$ &  &  \\
+$x_2$ & $f(x_2)$ & $f[x_1, x_2]$ & $f[x_0, x_1, x_2]$ &  \\
+$x_3$ & $f(x_3)$ & $f[x_2, x_3]$ & $f[x_1, x_2, x_3]$ & $f[x_0, x_1, x_2, x_3]$ \\
+\end{tabular}
+\caption{Difference Table}
+\end{table}
+\begin{remark}
+  From the symmetry property of the forward difference, we can use any order of the points $x_0, x_1, \ldots, x_n$ to compute the forward differences.
+\end{remark}
+
+\subsection{Newton's Interpolation}
+Consider writing the interpolation polynomial in the form
+
+
+\end{document}

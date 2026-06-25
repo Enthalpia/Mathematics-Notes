@@ -1,0 +1,537 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\chapter{Optimization}
+
+Mathematically, optimization is the process of finding the best solution to a problem, often by minimizing or maximizing a function with respect to certain equality and inequality constraints.
+
+Three parts:
+\begin{itemize}
+	\item Variables: The unknowns that we want to solve for.
+	\item Objective function: The function that we want to minimize or maximize.
+	\item Constraints: The conditions that the solution must satisfy, which can be in the form of equalities or inequalities.
+\end{itemize}
+
+\section{The Linear Programming Problem}
+The mathematical formulation of a linear programming problem is as follows:
+\begin{align}
+	\max/\min \quad   & z = c_1 x_1 + c_2 x_2 + \ldots + c_n x_n \\
+	\text{subject to} &                                          %
+	\begin{cases}
+		a_{11} x_1 + a_{12} x_2 + \ldots + a_{1n} x_n \leq(=, \geq) b_1 \\
+		a_{21} x_1 + a_{22} x_2 + \ldots + a_{2n} x_n \leq(=, \geq) b_2 \\
+		\vdots                                                          \\
+		a_{m1} x_1 + a_{m2} x_2 + \ldots + a_{mn} x_n \leq(=, \geq) b_m \\
+		x_1, x_2, \ldots, x_n \geq 0
+	\end{cases}
+\end{align}
+
+If the solution set of the constraints is empty, the problem is said to be \textbf{infeasible}. The solution set is called the \textbf{feasible region}, and the optimal solution is called the \textbf{optimal point}. Some special cases include:
+\begin{itemize}
+	\item Infinite optimal solutions: If the objective function is parallel to a constraint boundary, there may be infinitely many optimal solutions along that boundary.
+	\item Unbounded solutions: If the feasible region is unbounded in the direction of optimization, the optimal value may be infinite.
+	\item No optimal solution: If the feasible region is empty or if the objective function does not have a maximum or minimum value within the feasible region, there may be no optimal solution.
+\end{itemize}
+
+\subsection{The Diagram Method}
+For simple linear programming problems with two variables, we can use the diagram method to find the feasible region and the optimal solution.
+
+From this, we deduce some observations:
+\begin{itemize}
+	\item The feasible region is a convex polygon (or an unbounded region) defined by the intersection of the constraints.
+	\item The optimal solution occurs at a vertex (corner point) of the feasible region.
+\end{itemize}
+
+\subsection{The Standard Form of Linear Programming}
+To apply the simplex method, we need to convert the linear programming problem into its standard form.
+
+The standard form of a linear programming problem is defined as follows:
+\begin{align}
+	\max \quad        & z = c_1 x_1 + c_2 x_2 + \ldots + c_n x_n \\
+	\text{subject to} &                                          %
+	\begin{cases}
+		a_{11} x_1 + a_{12} x_2 + \ldots + a_{1n} x_n = b_1 \geq 0 \\
+		a_{21} x_1 + a_{22} x_2 + \ldots + a_{2n} x_n = b_2 \geq 0 \\
+		\vdots                                                     \\
+		a_{m1} x_1 + a_{m2} x_2 + \ldots + a_{mn} x_n = b_m \geq 0 \\
+		x_1, x_2, \ldots, x_n \geq 0
+	\end{cases}
+\end{align}
+To convert a linear programming problem into standard form, we can follow these steps:
+\begin{itemize}
+	\item If $z$ is a minimization problem, we can take $z \to -z$ to convert it into a maximization problem.
+	\item If a variable is unrestricted in sign, we can replace it with the difference of two non-negative variables: $x_i = x_i' - x_i''$, where $x_i', x_i'' \geq 0$.
+	\item If a constraint is an inequality $\sum_{j=1}^n a_{ij} x_j \leq b_i$, we can introduce a slack variable $s_i \geq 0$ to convert it into an equality: $\sum_{j=1}^n a_{ij} x_j + s_i = b_i$.
+	\item If $b_i < 0$, we can multiply the entire constraint by $-1$.
+	\item Cancelling out redundant constraints to make the constraint matrix $A$ have full row rank.
+\end{itemize}
+
+\begin{definition}{Basis}{Basis}
+	Let $A$ be an $m \times n$ optimization problem constraint matrix. Then $m < n$ and $\rank(A) = m$. A \textbf{basis} is a set of $m \times m$ invertible submatrices of $A$.
+\end{definition}
+Without loss of generality, we can just choose
+\begin{equation}
+	B = \begin{bmatrix}
+		a_{11} & a_{12} & \ldots & a_{1m} \\
+		a_{21} & a_{22} & \ldots & a_{2m} \\
+		\vdots & \vdots & \ddots & \vdots \\
+		a_{m1} & a_{m2} & \ldots & a_{mm}
+	\end{bmatrix} = (\boldsymbol{p}_1, \boldsymbol{p}_2, \ldots, \boldsymbol{p}_m)
+\end{equation}
+where $\boldsymbol{p}_i$ is called the \textbf{basic vector}, and the corresponding variables $x_1, x_2, \ldots, x_m$ are called \textbf{basic variables}. If we set all non-basis variables to zero, we can solve for the basis variables using the equation $B \boldsymbol{x}_B = \boldsymbol{b}$, if the solution is non-negative, then it is called a \textbf{basic feasible solution}. The number of basic feasible solutions is at most $\binom{n}{m}$,
+
+\begin{theorem}{}{}
+	If the \emph{feasible region} of a linear programming problem is non-empty, then it is \textbf{convex}.
+
+	A feasible solution is a basic feasible solution if and only if it is a vertex of the feasible region.
+
+	If the feasible region is bounded, then the optimal solution occurs at a vertex of the feasible region, which is a basic feasible solution. If it is not bounded, then if there is an optimal solution, it must occur at a vertex of the feasible region.
+\end{theorem}
+
+\subsection{The Simplex Method}
+Usually, the feasible region of a linear programming problem is a convex polyhedron. The simplex method is an algorithm for solving linear programming problems by moving along the edges of the feasible region to find the optimal solution. The main idea is to start at a basic feasible solution and iteratively move to an adjacent basic feasible solution that improves the objective function until no further improvement is possible.
+
+\begin{enumerate}
+	\item Find an initial basic feasible solution. This can be done using the \textbf{Big M method} or the \textbf{Two-Phase method}. Take the basis $B = (\boldsymbol{p}_1, \boldsymbol{p}_2, \ldots, \boldsymbol{p}_m)$, and the corresponding basic feasible solution is $\boldsymbol{x}^{0} = (x_1^0, x_2^0, \ldots, x_m^0, 0, \ldots, 0)$.
+
+		We can transform the original constraints, solve for the basic variables, and assume $B = I$ without loss of generality, then we have $x_i^0 = b_i$ for $i = 1, 2, \ldots, m$.
+	\item From one basic feasible solution to a nearby basic feasible solution: we need to change one basic variable to another one.
+
+	      To bring in a non-basic variable $x_j$ into the basis. Taking a sliding parameter $\lambda$: let
+	      \begin{equation*}
+		      \boldsymbol{p}_j = \sum_{i=1}^m a_{ij} \boldsymbol{p}_i
+	      \end{equation*}
+	      sliding on the edge of the feasible region, we have
+	      \begin{equation}
+		      \boldsymbol{x}^{1} = (x_1^0 - \lambda a_{1j}, x_2^0 - \lambda a_{2j}, \ldots, x_m^0 - \lambda a_{mj}, 0, \ldots, 0, \lambda, 0, \ldots, 0)
+	      \end{equation}
+	      until one of the basic variables becomes zero, taking
+	      \begin{equation}
+		      \lambda = \min_{1 \leq i \leq m} \left\{ \frac{x_i^0}{a_{ij}} : a_{ij} > 0 \right\} = \frac{x_l^0}{a_{lj}}
+	      \end{equation}
+	      would be a feasible solution.
+			\item Finding the optimal solution: substituting $\boldsymbol{x}^{0}$ and $\boldsymbol{x}^{1}$ into the objective function, we have
+				\begin{equation*}
+					z^{1} = z^{0} + \lambda \left( c_j - \sum_{i=1}^m c_i a_{ij} \right)
+				\end{equation*}
+				Take $\sigma_j = c_j - \sum_{i=1}^m c_i a_{ij}$, if $\sigma_j > 0$, then $z^{1} > z^{0}$, we can move to $\boldsymbol{x}^{1}$.
+\end{enumerate}
+
+If all $\sigma_j \leq 0$, then $\boldsymbol{x}^{0}$ is the unique optimal solution. If there exists some $\sigma_j = 0$ and all $\sigma_j \leq 0$, then there are infinitely many optimal solutions. If there exists some $\sigma_j > 0$, then we can move to $\boldsymbol{x}^{1}$, and repeat the process until we find the optimal solution.
+
+\subsection{The Simplex Tableau}
+To facilitate computation, the data is organized into a \textbf{Simplex Tableau}. The structure is as follows:
+
+\begin{table}[h]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|c|c|c|c|ccc|c|ccc|}
+\hline
+\multicolumn{3}{|c|}{$c_j \to$} & $c_1$ & $\cdots$ & $c_m$ & $\cdots$ & $c_j$ & $\cdots$ & $c_n$ \\ \hline
+$\boldsymbol{c}_B$ & $\boldsymbol{x}_B$ & $\boldsymbol{b}$ & $x_1$ & $\cdots$ & $x_m$ & $\cdots$ & $x_j$ & $\cdots$ & $x_n$ \\ \hline
+$c_1$ & $x_1$ & $b_1$ & 1 & $\cdots$ & 0 & $\cdots$ & $a_{1j}$ & $\cdots$ & $a_{1n}$ \\
+$c_2$ & $x_2$ & $b_2$ & 0 & $\cdots$ & 0 & $\cdots$ & $a_{2j}$ & $\cdots$ & $a_{2n}$ \\
+$\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ & & $\vdots$ & & $\vdots$ & & $\vdots$ \\
+$c_m$ & $x_m$ & $b_m$ & 0 & $\cdots$ & 1 & $\cdots$ & $a_{mj}$ & $\cdots$ & $a_{mn}$ \\ \hline
+\multicolumn{3}{|c|}{$\sigma_j$} & 0 & $\cdots$ & 0 & $\cdots$ & $\sigma_j$ & $\cdots$ & $\sigma_n$ \\ \hline
+\end{tabular}
+\caption{The General Form of a Simplex Tableau}
+\end{table}
+
+\textbf{Key Elements of the Tableau:}
+\begin{itemize}
+    \item \textbf{$\boldsymbol{x}_B$:} The current set of basic variables.
+    \item \textbf{$\boldsymbol{c}_B$:} The coefficients of the basic variables in the objective function.
+    \item \textbf{$\boldsymbol{b}$:} The current values of the basic variables (Right Hand Side).
+    \item \textbf{$\sigma_j$ (Reduced Cost):} Also known as the \textit{check index}, calculated as:
+    \begin{equation}
+        \sigma_j = c_j - \sum_{i=1}^m c_i a_{ij}
+    \end{equation}
+\end{itemize}
+
+\subsection{Optimality and Pivot Rules}
+After constructing the tableau, we follow these criteria to iterate or stop:
+
+\begin{itemize}
+    \item \textbf{Optimality Criterion:} For a maximization problem, if all $\sigma_j \leq 0$ for non-basic variables, the current BFS is the \textbf{optimal solution}.
+    \item \textbf{Entering Variable:} If there are $\sigma_j > 0$, select the variable with the largest $\sigma_j$ to enter the basis to increase $z$ most rapidly.
+    \item \textbf{Unboundedness:} If for an entering variable $x_j$, all $a_{ij} \leq 0$, then the objective function is \textbf{unbounded}.
+    \item \textbf{Leaving Variable:} Use the \textbf{Minimum Ratio Test} to determine which variable leaves the basis: select
+    	\begin{equation}
+			x_l = \arg\min_{1 \leq i \leq m} \left\{ \frac{x_i}{a_{ij}} : a_{ij} > 0 \right\}
+    	\end{equation}
+\end{itemize}
+
+\subsection{The Big M Method}
+When a linear programming problem does not have a natural initial basic feasible solution (e.g., due to $\geq$ or $=$ constraints), we use the Big M method.
+
+\begin{enumerate}
+    \item \textbf{Add Artificial Variables:} For each $=$ or $\geq$ constraint, add an artificial variable $a_i \geq 0$ to create an initial identity matrix in the tableau.
+    \item \textbf{Penalize the Objective:} Modify the objective function by adding a term $-M \sum a_i$ (for maximization), where $M$ is a very large positive constant.
+    \item \textbf{Solve via Simplex:} Perform the Simplex iterations. The large penalty $M$ ensures that the artificial variables are driven out of the basis (become zero).
+    \item \textbf{Interpret Results:}
+    \begin{itemize}
+        \item If all $a_i = 0$ in the final solution, the solution is \textbf{optimal}.
+        \item If any $a_i > 0$ in the final solution, the original problem is \textbf{infeasible} (no real solution exists).
+    \end{itemize}
+\end{enumerate}
+
+Consider the following maximization problem:
+\begin{align*}
+    \max \quad & z = 3x_1 + 2x_2 \\
+    \text{s.t.} \quad & 2x_1 + x_2 \leq 2 \\
+    & 3x_1 + 4x_2 \geq 12 \\
+    & x_1, x_2 \geq 0
+\end{align*}
+
+\textbf{Step 1: Convert to Standard Form} \\
+We add a slack variable $s_1$ to the first constraint. For the second constraint, we add a surplus variable $s_2$ and an artificial variable $a_1$ to create an initial basis.
+\begin{align*}
+    (1) \quad & 2x_1 + x_2 + s_1 = 2 \\
+    (2) \quad & 3x_1 + 4x_2 - s_2 + a_1 = 12
+\end{align*}
+
+\textbf{Step 2: Modify the Objective Function} \\
+We subtract $M a_1$ from the objective function (where $M$ is a very large number) to penalize the presence of the artificial variable:
+\begin{equation*}
+    \max \ z = 3x_1 + 2x_2 + 0s_1 + 0s_2 - M a_1
+\end{equation*}
+
+\textbf{Step 3: Initial Simplex Tableau} \\
+The initial basis consists of $s_1$ (from the first row) and $a_1$ (from the second row). Note how $M$ appears in the $\sigma_j$ calculation for the columns where the artificial variable has a non-zero coefficient in the constraints.
+
+\begin{table}[h]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|c|c|c|ccccc|c|}
+\hline
+\multicolumn{3}{|c|}{$c_j \to$} & 3 & 2 & 0 & 0 & $-M$ & \\ \hline
+$\boldsymbol{c}_B$ & $\boldsymbol{x}_B$ & $\boldsymbol{b}$ & $x_1$ & $x_2$ & $s_1$ & $s_2$ & $a_1$ & $\theta$ \\ \hline
+0 & $s_1$ & 2 & 2 & 1 & 1 & 0 & 0 & 2 \\
+$-M$ & $a_1$ & 12 & 3 & 4 & 0 & -1 & 1 & 3 \\ \hline
+\multicolumn{3}{|c|}{$\sigma_j$} & $3+3M$ & $2+4M$ & 0 & $-M$ & 0 & \\ \hline
+\end{tabular}
+\caption{Initial Tableau for the Big M Example}
+\end{table}
+
+\textbf{Interpretation:} \\
+In the bottom row ($\sigma_j$), the terms with $M$ dominate. Since $4M$ is larger than $3M$, $x_2$ would be the entering variable. The algorithm will then perform pivot operations to drive $a_1$ to zero. If the final tableau still has $a_1 > 0$, we conclude that the original problem has no feasible solution.
+
+\subsection{The Two-Phase Method}
+
+The Two-Phase method handles artificial variables by splitting the optimization into two stages, avoiding the numerical instability of the Big M method.
+
+\textbf{Phase I: Minimize Artificial Variables} \\
+We define a new objective function $w$ which is the sum of artificial variables. We aim to drive $w$ to zero.
+Consider:
+\begin{align*}
+    \text{Minimize} \quad & w = a_1 \\
+    \text{s.t.} \quad & 2x_1 + x_2 + s_1 = 10 \\
+    & 3x_1 + 4x_2 - s_2 + a_1 = 12 \\
+    & x_1, x_2, s_1, s_2, a_1 \geq 0
+\end{align*}
+
+\begin{table}[h]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|c|c|c|ccccc|c|}
+\hline
+\multicolumn{3}{|c|}{$c_j \to$} & 0 & 0 & 0 & 0 & 1 & \\ \hline
+$\boldsymbol{c}_B$ & $\boldsymbol{x}_B$ & $\boldsymbol{b}$ & $x_1$ & $x_2$ & $s_1$ & $s_2$ & $a_1$ & $\theta$ \\ \hline
+0 & $s_1$ & 10 & 2 & 1 & 1 & 0 & 0 & 10 \\
+1 & $a_1$ & 12 & 3 & 4 & 0 & -1 & 1 & 3 \\ \hline
+\multicolumn{3}{|c|}{$\sigma_j$} & -3 & -4 & 0 & 1 & 0 & \\ \hline
+\end{tabular}
+\caption{Phase I Initial Tableau (Minimization)}
+\end{table}
+
+\textbf{Phase II: Optimize Original Objective} \\
+Once Phase I ends with $w=0$ and $a_1$ has left the basis, we:
+\begin{enumerate}
+    \item Remove the artificial variable column ($a_1$) entirely.
+    \item Replace the top row ($c_j$) with the original coefficients (e.g., $z = 3x_1 + 2x_2$).
+    \item Recalculate the bottom row ($\sigma_j$) and continue with the standard Simplex method.
+\end{enumerate}
+
+\begin{table}[h]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|c|c|c|cccc|}
+\hline
+\multicolumn{3}{|c|}{$c_j \to$} & 3 & 2 & 0 & 0 \\ \hline
+$\boldsymbol{c}_B$ & $\boldsymbol{x}_B$ & $\boldsymbol{b}$ & $x_1$ & $x_2$ & $s_1$ & $s_2$ \\ \hline
+\dots & \dots & \dots & \dots & \dots & \dots & \dots \\ \hline
+\end{tabular}
+\caption{Phase II Tableau (Starting from Phase I result)}
+\end{table}
+
+\section{Nonlinear Optimization Problems}
+Generally, nonlinear optimization problems are those where the objective function or any of the constraints are nonlinear. These problems can be more complex than linear programming problems and often require different solution techniques, such as gradient-based methods, interior-point methods, or evolutionary algorithms.
+
+
+\subsection{The Mathematical Model}
+In general, a nonlinear optimization problem can be formulated as follows:
+\begin{align}
+	\min/\max \quad   & f(\boldsymbol{x}), \qquad \boldsymbol{x} \in \mathbb{R}^n \\
+	\text{subject to} &                                          %
+	\begin{cases}
+		c_i(\boldsymbol{x}) \geq 0, \quad i \in \mathcal{I} \\
+		c_j(\boldsymbol{x}) = 0, \quad j \in \mathcal{E}
+	\end{cases}
+\end{align}
+
+\begin{itemize}
+	\item If both $f$ and $c_i$ are linear, then the problem is a linear programming problem.
+	\item If both $f$ and $c_i$ are convex, then the problem is a convex optimization problem.
+\end{itemize}
+
+\begin{definition}{Function Extremum}{FunctionExtremum}
+	Let $f: D \subseteq \mathbb{R}^n \to \mathbb{R}$. For any interior point $\boldsymbol{x}^* \in D$, if there exists a neighborhood $U$ of $\boldsymbol{x}^*$ such that $f(\boldsymbol{x}^*) \leq f(\boldsymbol{x})$ for all $\boldsymbol{x} \in U$, then $\boldsymbol{x}^*$ is called a \textbf{local minimum} of $f$. If $f(\boldsymbol{x}^*) < f(\boldsymbol{x})$ for all $\boldsymbol{x} \in U \setminus \{\boldsymbol{x}^*\}$, then $\boldsymbol{x}^*$ is called a \textbf{strict local minimum}.
+	
+	If $J f(x^*)$ exists for a local extremum $\boldsymbol{x}^*$, then $J f(x^*) = 0$. All interior points such that $J f(x) = 0$ are called \textbf{stationary points} of $f$.
+\end{definition}
+
+We have the following observations:
+\begin{theorem}{Function Extremum by Derivative}{FunctionExtremumByDerivative}
+	Let $f: D \subseteq \mathbb{R}^n \to \mathbb{R}$ be a function and have continuous second-order partial derivatives (that is, $f \in C^2(D)$). Then
+	\begin{itemize}
+		\item If $f$ take local minimum at $\boldsymbol{x}^*$, then $J f(\boldsymbol{x}^*) = 0$ and the Hessian matrix $H f(\boldsymbol{x}^*)$ is positive semi-definite.
+		\item If $J f(\boldsymbol{x}^*) = 0$ and the Hessian matrix $H f(\boldsymbol{x}^*)$ is positive definite, then $f$ takes a strict local minimum at $\boldsymbol{x}^*$.
+	\end{itemize}
+\end{theorem}
+
+The global extremum of a function is defined similar. \emph{For a convex function, any local extremum is also a global extremum.} If $f$ is a \textbf{strictly convex} function, then it has a unique global extremum.
+
+\subsection{The Iteration Method}
+A natural way for the optimization problem is letting $\nabla f(\boldsymbol{x}) = 0$ and solving for $\boldsymbol{x}$. But this is rather complex.
+
+An iterative method is to start with an initial guess $\boldsymbol{x}^0$ and generate a sequence $\{\boldsymbol{x}^k\}$ that converges to the optimal solution.
+
+A common iterative method is the \textbf{Descent Method}, taking
+\begin{equation*}
+	\boldsymbol{x}_{k+1} = \boldsymbol{x}_k + \lambda_k \boldsymbol{p}_k,
+\end{equation*}
+We call $\boldsymbol{p}_k$ the \textbf{search direction} and $\lambda_k$ the \textbf{step size}.
+
+\paragraph{The One-Dimensional Search Method}
+If we have already determined the search direction $\boldsymbol{p}_k$, we can find the optimal step size $\lambda_k$ by solving the following one-dimensional optimization problem:
+\begin{equation}
+	\min_{\lambda \in \mathbb{R}} f(\boldsymbol{x}_k + \lambda \boldsymbol{p}_k).
+\end{equation}
+If we found the next point, then an advantage of this method is that \emph{the gradient of $f$ at the new point is orthogonal to the search direction}, that is, $\nabla f(\boldsymbol{x}_{k+1}) \cdot \boldsymbol{p}_k = 0$.
+
+\begin{definition}{Convergence Order}{ConvergenceOrder}
+	Let $\{\boldsymbol{x}^k\}$ be a sequence that converges to $\boldsymbol{x}^*$. If there exist constants $C > 0$ and $p > 0$ such that
+	\begin{equation*}
+		\|\boldsymbol{x}^{k+1} - \boldsymbol{x}^*\| \leq C \|\boldsymbol{x}^k - \boldsymbol{x}^*\|^p
+	\end{equation*}
+	for sufficiently large $k$, then we say that the sequence $\{\boldsymbol{x}^k\}$ converges to $\boldsymbol{x}^*$ with order $p$.
+\end{definition}
+\begin{itemize}
+	\item $p=2$: called \textbf{quadratic convergence}.
+	\item $1 < p < 2$: called \textbf{superlinear convergence}.
+	\item $p=1$: called \textbf{linear convergence}.
+\end{itemize}
+
+\subsection{One-Dimensional Search Methods}
+The One-Dimensional Search Method is the optimization of functions of a single variable.
+
+Take $\varphi: \mathbb{R} \to \mathbb{R}$, with $\varphi \in C(\mathbb{R})$. If $\lambda^*\geq 0$ with
+\begin{equation}
+	\varphi(\lambda^*) = \min_{\lambda \geq 0} \varphi(\lambda),
+\end{equation}
+then $\lambda^*$ is called the \textbf{optimal step size} of $\varphi$. If there exists $[a,b] \subseteq [0, +\infty)$ such that $\lambda^* \in [a,b]$ then we say $[a,b]$ is a \textbf{search interval} of $\varphi$.
+
+A simple method to determine the search interval is the \textbf{Forward-Backward Method}. We start at some point and use certain step size to move forward until we find a point where the function value increases, then we can move backward to find the search interval:
+\begin{enumerate}
+	\item Setting the initial value $\lambda_0 \geq 0$ and $h_0 > 0$. Take $t > 1$, usually $t=2$. Calculate $\varphi(\lambda_0)$.
+	\item Let $\lambda_{k+1} = \lambda_k + h_k$. Calculate $\varphi(\lambda_{k+1})$. If $\varphi(\lambda_{k+1}) < \varphi(\lambda_k)$, then we proceed. Otherwise, turn to step 4.
+	\item Let $h_{k+1} = t h_k$ and set $k \leftarrow k+1$, then go back to step 2.
+	\item If $k=0$ take $h_k \leftarrow -h_k$ and go back to step 2. Otherwise, stop and take $[a,b] = [\lambda_{k-1}, \lambda_{k+1}]$ as the search interval.
+\end{enumerate}
+
+\paragraph{The Bisection Method}
+This is a way to reduce the search interval. If $[a,b]$ is a \textbf{single-valley} search interval of $\varphi$, then we can take the midpoint $c = \frac{a+b}{2}$ and compare $\varphi'(c)$ with zero. If $\varphi'(c) < 0$, then the optimal step size $\lambda^*$ is in the interval $[c,b]$. If $\varphi'(c) > 0$, then $\lambda^* \in [a,c]$. If $\varphi'(c) = 0$, then $c$ is the optimal step size.
+
+\paragraph{The Golden Section Method}
+We take $[\alpha_k, \beta_k] \subseteq [a,b]$. If $\varphi(\alpha_k) < \varphi(\beta_k)$, then we can take $[a_{k+1}, b_{k+1}] = [a_k, \beta_k]$. Otherwise, we take $[a_{k+1}, b_{k+1}] = [\alpha_k, b_k]$.
+
+We require the points $\alpha_k, \beta_k$ to satisfy:
+\begin{itemize}
+	\item The distance between $\alpha_k, \beta_k$ to the endpoints $a, b$ are the same, that is, $\alpha_k - a = b - \beta_k$.
+	\item Every step, the new search interval have the same shrinking rate: $b_{k+1} - a_{k+1} = \tau(b_k - a_k)$, where $\tau$ is a constant.
+\end{itemize}
+So we have
+\begin{equation*}
+	\alpha_k = a_k + (1-\tau)(b_k - a_k), \qquad \beta_k = a_k + \tau(b_k - a_k).
+\end{equation*}
+If the new interval is $[a_k, \beta_k]$, then we have
+\begin{equation*}
+	\beta_{k+1} = \alpha_{k+1} + \tau(\beta_k - a_k) = a_k + \tau^2(b_k - a_k)
+\end{equation*}
+If we have
+\begin{equation}
+	\tau^2 = 1 - \tau, \qquad \text{that is,} \quad \tau = \frac{\sqrt{5} - 1}{2} \approx 0.618,
+\end{equation}
+Then we do not need to compute $\beta_{k+1}$, as $\beta_{k+1} = \alpha_k$.
+
+The convergence of the Golden Section Method is linear, with a shrinking rate of $\tau \approx 0.618$.
+
+\paragraph{The Fibonacci Method}
+We take the shrinking rate $\tau$ to be the Fibonacci. Take $F_0 = F_1 = 1$, and $F_k = F_{k-1} + F_{k-2}$ for $k \geq 2$.
+
+Take
+\begin{equation}
+	\tau_k = \frac{F_{n-k}}{F_{n-k+1}}, \qquad k = 1, 2, \ldots, n-1.
+\end{equation}
+Then we have
+\begin{equation}
+	\alpha_k = a_k + (1-\tau_k)(b_k - a_k), \qquad \beta_k = a_k + \tau_k(b_k - a_k).
+\end{equation}
+Then we have
+\begin{equation}
+	b_n - a_n = \frac{F_1}{F_n}(b_1 - a_1) = \frac{b_1 - a_1}{F_n}.
+\end{equation}
+The convergence of the Fibonacci Method is the same as the Golden Section Method, with a shrinking rate of $\tau \approx 0.618$.
+
+\begin{remark}
+	It can be proven that the Fibonacci Method is the optimal method among all one-dimensional search methods that do not use derivative information, in terms of the number of function evaluations required to achieve a certain accuracy, and the Golden Section Method is approximately optimal.
+\end{remark}
+
+\paragraph{The Interpolation Method}
+The method uses Interpolation polynomials to approximate the function $\varphi$ and find the optimal step size.
+
+\paragraph{Newton's Method}
+This method uses the values $\varphi(\lambda), \varphi'(\lambda), \varphi''(\lambda)$ to construct a quadratic function that approximates $\varphi$ near the current point, and then finds the minimum of this quadratic function to determine the next point, giving
+\begin{equation}
+	\lambda_{k+1} = \lambda_k - \frac{\varphi'(\lambda_k)}{\varphi''(\lambda_k)}.
+\end{equation}
+with second order convergence.
+
+If we dont want to calculate $\varphi''(\lambda_k)$, we can use
+\begin{equation}
+	\lambda_{k+1} = \lambda_k - \frac{(\lambda_k - \lambda_{k-1}) \varphi'(\lambda_k)}{2\left( \varphi'(\lambda_k) - \frac{\varphi(\lambda_k) - \varphi(\lambda_{k-1})}{\lambda_k - \lambda_{k-1}} \right)}.
+\end{equation}
+with superlinear convergence of $(1 + \sqrt{5})/2 \approx 1.618$.
+
+
+\section{The Steepest Descent Method}
+If $f$ is continuously differentiable near $\boldsymbol{x}_k$ and $\nabla f(\boldsymbol{x}_k) \neq 0$, then
+\begin{equation}
+	f(\boldsymbol{x}) = f(\boldsymbol{x}_k) + (\boldsymbol{x} - \boldsymbol{x}_k) \cdot \nabla f(\boldsymbol{x}_k) + o(\|\boldsymbol{x} - \boldsymbol{x}_k\|).
+\end{equation}
+Take $\boldsymbol{p}_k = -\boldsymbol{g}_k = -\nabla f(\boldsymbol{x}_k)$.
+
+The algorithm:
+\begin{enumerate}
+	\item Choose an initial point $\boldsymbol{x}^0$ and set $k=0$.
+	\item If $\nabla f(\boldsymbol{x}^k) = \boldsymbol{g}_k \neq 0$, then $\boldsymbol{p}_k = -\boldsymbol{g}_k$ is a descent direction.
+	\item Use One-Dimensional Search Method to find the optimal step size $\lambda_k$ that minimizes $f(\boldsymbol{x}^k + \lambda \boldsymbol{p}_k)$.
+	\item Until $\|\boldsymbol{g}_k\| < \epsilon$ for some small $\epsilon > 0$.
+\end{enumerate}
+
+The convergence is at least linear.
+
+\paragraph{The Newton's Method}
+Just take
+\begin{equation}
+	\boldsymbol{x}_{k+1} = \boldsymbol{x}_k - (\nabla ^2 f(\boldsymbol{x}_k))^{-1} \nabla f(\boldsymbol{x}_k).
+\end{equation}
+which has quadratic convergence. Note that the $\boldsymbol{p}_k$ may not be negative gradient for a eclipse Hessian matrix.
+
+Consider the minimization problem
+\begin{equation}
+	\min_{\boldsymbol{h} \in \mathbb{R}^n} \boldsymbol{g}_k \cdot \boldsymbol{h} / \|h\|.
+\end{equation}
+If $\|h\|$ use the Euclidean norm, we get the steepest descent method. If $\|h\|$ use the norm defined by the Hessian matrix $\|h\|^2 = \boldsymbol{h}^T G \boldsymbol{h}$, then we get the Newton's method. By
+\begin{equation}
+	G_k \boldsymbol{h} = -\boldsymbol{g}_k,
+\end{equation}
+
+After finding $\boldsymbol{h}$, we can again use the One-Dimensional Search Method to find the optimal step size $\lambda_k$ that minimizes $f(\boldsymbol{x}^k + \lambda \boldsymbol{h})$.
+
+\paragraph{The Conjugate Gradient Method}
+
+\begin{definition}{Conjugate Vectors}{ConjugateVectors}
+	Let $G$ be a symmetric positive definite matrix. Two non-zero vectors $\boldsymbol{p}, \boldsymbol{q} \in \mathbb{R}^n$ are called \textbf{conjugate} with respect to $G$ if $\boldsymbol{p}^T G \boldsymbol{q} = 0$. A set of non-zero vectors $\{\boldsymbol{p}_1, \boldsymbol{p}_2, \ldots, \boldsymbol{p}_m\}$ is called a set of \textbf{conjugate vectors} with respect to $G$ if $\boldsymbol{p}_i^T G \boldsymbol{p}_j = 0$ for all $i \neq j$. If $G=I$, then the conjugate vectors are just orthogonal vectors.
+\end{definition}
+\begin{remark}
+	It is just the orthogoanlization in the inner product space defined by $G$.
+\end{remark}
+
+The algorithm:
+\begin{enumerate}
+	\item Take initial point $\boldsymbol{x}_0 \in \mathbb{R}^n$ and take initial direction $\boldsymbol{g}_0$. Calculate $\boldsymbol{p}_0$ such that $\boldsymbol{p}_0^T \boldsymbol{g}_0 < 0$.
+	\item One-Dimensional Search Method to find the optimal step size $\lambda_k$ that minimizes $f(\boldsymbol{x}^k + \lambda \boldsymbol{p}_k)$, and update $\boldsymbol{x}^{k+1} = \boldsymbol{x}^k + \lambda_k \boldsymbol{p}_k$.
+	\item Take $\boldsymbol{p}_{k+1}$ that $\boldsymbol{p}_{k+1}^T G \boldsymbol{p}_j = 0$ for $j = 0, 1, \ldots, k$.
+\end{enumerate}
+
+For any positive definite function $f$, the conjugate gradient method converges in at most $n$ steps accurately.
+
+Solving a positive definite linear system $A \boldsymbol{x} = \boldsymbol{b}$ is equivalent to minimizing the quadratic function
+\begin{equation}
+	f(\boldsymbol{x}) = \frac{1}{2} \boldsymbol{x}^T A \boldsymbol{x} - \boldsymbol{b}^T \boldsymbol{x}.
+\end{equation}
+Take the search direction
+\begin{equation}
+	\boldsymbol{p}_k = -\boldsymbol{g}_k + \beta_{k-1} \boldsymbol{p}_{k-1},
+\end{equation}
+where $\beta_{k-1}$ is a constant such that $\boldsymbol{p}_k$ is conjugate to $\boldsymbol{p}_{k-1}$. So we have
+\begin{equation}
+	\beta_{k-1} = \frac{\boldsymbol{g}_k^T G \boldsymbol{p}_{k-1}}{\boldsymbol{p}_{k-1}^T G \boldsymbol{p}_{k-1}}.
+\end{equation}
+We can just take $\boldsymbol{p}_0 = -\boldsymbol{g}_0$ and prove that $\boldsymbol{p}_k$ for $k = 1, 2, \ldots$ are conjugate to each other, and 
+\begin{equation}
+	\boldsymbol{p}_k, \boldsymbol{g}_k \in \mathcal{K}(\boldsymbol{g}_0; k) = \text{span}\{\boldsymbol{g}_0, G \boldsymbol{g}_0, \ldots, G^{k} \boldsymbol{g}_0\}.
+\end{equation}
+called the \textbf{Krylov subspace} generated by $\boldsymbol{g}_0$.
+
+The One-Dimensional Search step
+\begin{equation}
+	\lambda_k = -\frac{\boldsymbol{p}_k^T \boldsymbol{g}_k}{\boldsymbol{p}_k^T G \boldsymbol{p}_k} = \frac{\boldsymbol{g}_k^T \boldsymbol{g}_k}{\boldsymbol{p}_k^T G \boldsymbol{p}_k}.
+\end{equation}
+
+\subsection{The Quasi-Newton Method}
+Let $f: \mathbb{R}^n \to \mathbb{R}$ be a function with continuous second-order partial derivatives. Expand it near $\boldsymbol{x}_{k+1}$:
+\begin{equation}
+	f(\boldsymbol{x}) \approx f(\boldsymbol{x}_{k+1}) + \boldsymbol{g}_{k+1}^T (\boldsymbol{x} - \boldsymbol{x}_{k+1}) + \frac{1}{2} (\boldsymbol{x} - \boldsymbol{x}_{k+1})^T G_{k+1} (\boldsymbol{x} - \boldsymbol{x}_{k+1}),
+\end{equation}
+so
+\begin{equation}
+	\nabla f(\boldsymbol{x}) \approx \boldsymbol{g}_{k+1} + G_{k+1} (\boldsymbol{x} - \boldsymbol{x}_{k+1}).
+\end{equation}
+Take $\boldsymbol{x} = \boldsymbol{x}_k$, and $\boldsymbol{s}_k = \boldsymbol{x}_{k+1} - \boldsymbol{x}_k$, $\boldsymbol{y}_k = \boldsymbol{g}_{k+1} - \boldsymbol{g}_k$, we have
+\begin{equation}
+	G_{k+1} ^{-1} \boldsymbol{y}_k \approx \boldsymbol{s}_k.
+\end{equation}
+We require a constructed Hessian inverse $H_{k+1}$ satisfies
+\begin{equation}
+	H_{k+1} \boldsymbol{y}_k = \boldsymbol{s}_k,
+\end{equation}
+called \textbf{the Quasi-Newton condition}.
+
+The algorithm:
+\begin{enumerate}
+	\item Choose an initial point $\boldsymbol{x}^0$ and $\epsilon > 0$ and $H_0 \in \mathbb{R}^{n \times n}$.
+	\item Calculate $\boldsymbol{g}_k = \nabla f(\boldsymbol{x}^k)$. If $\|\boldsymbol{g}_k\| < \epsilon$, stop, otherwise, take $\boldsymbol{p}_k = -H_k \boldsymbol{g}_k$ as the search direction.
+	\item Use One-Dimensional Search Method to find the optimal step size $\lambda_k$.
+	\item Update $\boldsymbol{x}^{k+1} = \boldsymbol{x}^k + \lambda_k \boldsymbol{p}_k$ and calculate $\boldsymbol{s}_k, \boldsymbol{y}_k$. Construct $H_{k+1}$ that satisfies the Quasi-Newton condition.
+	\item Set $k \leftarrow k+1$ and go back to step 2.
+\end{enumerate}
+
+How to construct $H_{k+1}$? We can take
+\begin{equation}
+	H_{k+1} = H_k + a \boldsymbol{u} \boldsymbol{u}^T + b \boldsymbol{v} \boldsymbol{v}^T.
+\end{equation}
+Just take $\boldsymbol{u} = s_k, \boldsymbol{v} = H_k \boldsymbol{y}_k$ and we have
+\begin{equation}
+	H_{k+1} = H_k + \frac{\boldsymbol{s}_k \boldsymbol{s}_k^T}{\boldsymbol{s}_k^T \boldsymbol{y}_k} - \frac{H_k \boldsymbol{y}_k (H_k \boldsymbol{y}_k)^T}{\boldsymbol{y}_k^T H_k \boldsymbol{y}_k},
+\end{equation}
+called the \textbf{Davidon-Fletcher-Powell (DFP) formula}.
+
+Another formula is the \textbf{Broyden-Fletcher-Goldfarb-Shanno (BFGS) formula}:
+\begin{equation}
+	H_{k+1} = H_k + \left( 1 + \frac{\boldsymbol{y}_k^T H_k \boldsymbol{y}_k}{\boldsymbol{s}_k^T \boldsymbol{y}_k} \right) \frac{\boldsymbol{s}_k \boldsymbol{s}_k^T}{\boldsymbol{s}_k^T \boldsymbol{y}_k} - \frac{\boldsymbol{s}_k \boldsymbol{y}_k^T H_k + H_k \boldsymbol{y}_k \boldsymbol{s}_k^T}{\boldsymbol{s}_k^T \boldsymbol{y}_k}.
+\end{equation}
+
+\end{document}

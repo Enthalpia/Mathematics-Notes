@@ -1,0 +1,40 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\chapter{Polynomial Approximation}
+
+In any event, the ``simplest'' approximating functions would seem to be polynomials.
+
+In general, a polynomial, say $P_n$ of degree at most $n$ may be said to be an approximation to a function $f$ if $P_n$ is ``close'' to $f$ in some sense. This notion of approximation becomes precise only when the measure of deviation and magnitude of smallness have been specified.
+
+A measure of the deviation or error in the approximation of $f$ by $P_n$ is usually taken to be a semi-norm of the difference:
+\begin{equation}
+  \| f - P_n \|
+\end{equation}
+
+\begin{definition}{Semi-norm}{SemiNorm}
+  A \textbf{semi-norm} on a vector space $V$ is a function $\| \cdot \| : V \to [0, \infty)$ that satisfies the following properties for all $x, y \in V$ and all scalars $\alpha$:
+  \begin{enumerate}
+    \item Non-negativity: $\| x \| \geq 0$.
+    \item Absolute scalability: $\| \alpha x \| = |\alpha| \| x \|$.
+    \item Triangle inequality: $\| x + y \| \leq \| x \| + \| y \|$.
+  \end{enumerate}
+  It drops the requirement that $\| x \| = 0$ implies $x = 0$, which distinguishes it from a norm.
+\end{definition}
+If we were to introduce here equivalence classes of functions, say $f \sim g$ if $\| f - g \| = 0$, then the semi-norm would become a norm on the quotient space. We shall simply refer to it as a norm for now even though we does not take the quotient.
+
+Once such a norm has been defined three questions are naturally suggested:
+\begin{itemize}
+  \item Does a polynomial exist, of a specified maximum degree, which minimizes the error?
+  \item If such a polynomial exists, is it unique?
+  \item If such a polynomial exists, how can it be found?
+\end{itemize}
+It is clear that
+\begin{equation}
+  d_n = \inf_{P_n} \| f - P_n \| \geq 0
+\end{equation}
+is a monotonically decreasing sequence in $n$. If there exists a unique polynomial $P_n$ of degree at most $n$ such that the minimum is achieved, we may then investigate methods for determining $P_n$ and do error analysis.
+
+\paragraph{
+
+\end{document}

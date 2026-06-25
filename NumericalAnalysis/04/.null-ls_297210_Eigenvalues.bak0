@@ -655,9 +655,10 @@ if $|\lambda_2| > |\lambda_3| \geq \cdots \geq |\lambda_n|$, then taking ratios:
 \begin{equation*}
 	\sigma_{\nu+1} = \frac{z_{k,\nu+1}}{z_{k,\nu}} = \lambda_2 + \mathcal{O}\left( \left| \frac{\lambda_3}{\lambda_2} \right|^{\nu} \right),
 \end{equation*}
-also, as $\nu \to \infty$, $z_\nu$ converges to a scalar multiple of $u_2$.
+also, as $\nu \to \infty$, $z_\nu$ converges to a scalar multiple of $u_2$. 
 
 Unfortunately, the $\lambda_1^\nu a_1 u_1$ term will eventually dominate the iterates $x_\nu$ and the subtraction would lose all accuracy. Hence we must choose $\nu$ judiciously in order to get a reasonable estimate of $\lambda_2$ and $u_2$. Despite this, the method only requires a little extra work beyond the standard power method and can be used to obtain a crude estimate of $\lambda_2$ and $u_2$. Also, This procedure can be readily adapted for the sequence of normalized iterates \eqref{eq:scaled-power-iteration}.
+
 
 These two procedures removed components of the known eigenvectors from the iterated vectors. However, it is also possible to alter the real symmetric matrix $A$ so that the known eigenvectors then correspond to zero eigenvalues. If $\lambda_1$ and $u_1$ are known, assume $u_1^* u_1 = 1$ and define the matrix
 \begin{equation*}
@@ -668,10 +669,10 @@ The eigenvalues of $A_1$ are $\{0, \lambda_2, \ldots, \lambda_n\}$ and the eigen
 	As for any $z$, we have
 	\begin{equation*}
 		\begin{aligned}
-			z_{\nu} & = A_1 z_{\nu - 1} = A z_{\nu - 1} - \lambda_1 u_1 u_1^* z_{\nu - 1}                                                                     \\
-			        & = A^2 z_{\nu - 2} - \lambda_1 A u_1 u_1^* z_{\nu - 2} - \lambda_1 u_1 u_1^* A z_{\nu - 2} + \lambda_1^2 u_1 u_1^* u_1 u_1^* z_{\nu - 2} \\
-			        & = A^2 z_{\nu - 2} - \lambda^2_1 u_1 u_1^* z_{\nu - 2}                                                                                   \\
-			        & = A^\nu z_0 - \lambda_1^\nu u_1 u_1^* z_0.
+			z_{\nu} &= A_1 z_{\nu - 1} = A z_{\nu - 1} - \lambda_1 u_1 u_1^* z_{\nu - 1}\\
+							&= A^2 z_{\nu - 2} - \lambda_1 A u_1 u_1^* z_{\nu - 2} - \lambda_1 u_1 u_1^* A z_{\nu - 2} + \lambda_1^2 u_1 u_1^* u_1 u_1^* z_{\nu - 2}\\
+							&= A^2 z_{\nu - 2} - \lambda^2_1 u_1 u_1^* z_{\nu - 2} \\
+							&= A^\nu z_0 - \lambda_1^\nu u_1 u_1^* z_0.
 		\end{aligned}
 	\end{equation*}
 	A comparison of this result and the sequence $\{x_\nu\}$ defined by the power method reveals \emph{for exact computation with normalized eigenvectors, the present method is exactly equivalent to the orthogonalization method.}
@@ -679,7 +680,7 @@ The eigenvalues of $A_1$ are $\{0, \lambda_2, \ldots, \lambda_n\}$ and the eigen
 	The cancellation errors in the previous method is replaced by $\lambda_1$ and $u_1$ not being known exactly.
 \end{remark}
 \begin{remark}
-	If $A$ is sparse, then we would not recommend using the above method since it would generally destroy the sparsity of $A$ and produce a full matrix $A_1$.
+	If $A$ is sparse, then we would not recommend using the above method since it would generally destroy the sparsity of $A$ and produce a full matrix $A_1$. 
 \end{remark}
 
 Similarly, when $\lambda_2$ and $u_2$ is known, we can define $A_2 = A_1 - \lambda_2 u_2 u_2^*$, and the eigenvalues of $A_2$ are $\{0, 0, \lambda_3, \ldots, \lambda_n\}$ with $u_1$ and $u_2$ corresponding to the zero eigenvalues, thus to determine the remaining eigenvalues and eigenvectors.
@@ -737,15 +738,15 @@ If we are interested in finding all of the eigenvalues and eigenvectors then the
 
 We will first describe Jacobi's, Givens', and Householder's methods for treating the Hermitian matrix $A$. We shall $A$ is real symmetric matrix. All of these methods, however, require only simple modifications to be directly applicable to the Hermitian case.
 
-\subsection{Jacobi's Method}
-Jacobi's method reduces the \textbf{real symmetric matrix} $A$ by an infinite sequence of simple orthogonal similarity transformations (two dimensional rotations) to diagonal form.
+\paragraph{Jacobi's Method}
+Jacobi's method reduces the real symmetric matrix $A$ by an infinite sequence of simple orthogonal similarity transformations (two dimensional rotations) to diagonal form.
 
 \begin{lemma}{Two Dimensional Rotation}{Two Dimensional Rotation}
 	Let
 	\begin{equation*}
 		A_{ij} = \begin{pmatrix}
-			a_{ii} & a_{ij} \\
-			a_{ji} & a_{jj}
+		a_{ii} & a_{ij} \\
+		a_{ji} & a_{jj}
 		\end{pmatrix}, \qquad i \neq j,
 	\end{equation*}
 	be a $2 \times 2$ submatrix of $A$. And let
@@ -754,9 +755,9 @@ Jacobi's method reduces the \textbf{real symmetric matrix} $A$ by an infinite se
 			r_{ii} & r_{ij} \\
 			r_{ji} & r_{jj}
 		\end{pmatrix} = \begin{pmatrix}
-			\cos \phi  & \sin \phi \\
-			-\sin \phi & \cos \phi
-		\end{pmatrix}, \qquad \tan 2 \phi = \frac{2 a_{ij}}{a_{jj} - a_{ii}}, -\frac{\pi}{4} < \phi < \frac{\pi}{4},
+		\cos \phi & \sin \phi \\
+		-\sin \phi & \cos \phi
+	\end{pmatrix}, \qquad \tan \phi = \frac{2 a_{ij}}{a_{jj} - a_{ii}}, -\frac{\pi}{4} < \phi < \frac{\pi}{4},
 	\end{equation}
 	Then we have
 	\begin{equation}
@@ -764,136 +765,5 @@ Jacobi's method reduces the \textbf{real symmetric matrix} $A$ by an infinite se
 	\end{equation}
 	is a diagonal matrix with the same eigenvalues as $A_{ij}$.
 \end{lemma}
-\begin{proof}
-	Just a direct calculation:
-	\begin{equation*}
-		B_{ij, 12} = (a_{ii} - a_{jj}) \sin \phi \cos \phi + a_{ij} (\cos^2 \phi - \sin^2 \phi) = 0,
-	\end{equation*}
-	which gives
-	\begin{equation*}
-		\tan 2\phi = \frac{2 a_{ij}}{a_{jj} - a_{ii}}.
-	\end{equation*}
-\end{proof}
-Since $A_{ij}$ and $B_{ij}$ are orthogoally similar, they have the same eigenvalues. The matrix $R_{ij}$ is called a \textbf{Givens rotation}. We have
-\begin{equation*}
-	b_{ii}^2 + b_{ij}^2 = a_{ii}^2 + 2 a_{ij}^2 + a_{jj}^2
-\end{equation*}
-We say that the matrix $R$ reduced to zero the element $a_{ij}$. We now construct an orthogonal matrix of order $n$ to reduce the element $a_{ij}$ to zero:
-\begin{equation}
-	P = (p_{st}), \qquad 
-	\begin{pmatrix}
-		p_{ii} & p_{ij} \\
-		p_{ji} & p_{jj}
-	\end{pmatrix} = R_{ij}, \qquad p_{st} = \delta_{st}, \text{ otherwise}.
-\end{equation}
-Then $P$ is a two-dimensional rotation matrix that $B = P^* A P$ has $b_{ij} = 0$. We now can show that $P$ reduces the sum of the squares of the off-diagonal elements of $A$. We have
-\begin{equation*}
-	\tr (A^*A) = \sum_{i,j=1}^n a_{ij}^2
-\end{equation*}
-We have
-\begin{equation*}
-	\begin{aligned}
-		\sum_{r \neq s} b_{rs}^2%
-		&= \tr (B^* B) - \sum_{r=1}^n b_{rr}^2 = \tr (A^* A) - \sum_{r=1}^n b_{rr}^2 \\
-		&= \tr (A^* A) - \sum_{r=1}^n a_{rr}^2 - 2 a_{ij}^2 = \sum_{r \neq s} a_{rs}^2 - 2 a_{ij}^2 < \sum_{r \neq s} a_{rs}^2.
-	\end{aligned}
-\end{equation*}
-If we pick the largest off-diagonal element: $a_{ij}^2 = \max_{k \neq s} a_{ks}^2$, then we have
-\begin{equation*}
-	a_{ij}^2 \geq \frac{1}{n(n-1)} \sum_{k \neq s} a_{ks}^2 = \frac{1}{n(n-1)} \left( \tr (A^* A) - \sum_{r=1}^n a_{rr}^2 \right).
-\end{equation*}
-Therefore, we have
-\begin{equation}
-	\sum_{r \neq s} b_{rs}^2 \leq \left( 1 - \frac{2}{n(n-1)} \right) \sum_{r \neq s} a_{rs}^2,
-\end{equation}
-In fact, this is true to any $a_{ij}$ that have absolute value greater than average of the off-diagonal elements.
-
-\begin{theorem}{Jacobi's Method Convergence}{Jacobi's Method Convergence}
-	Let $A$ be symmetric with eigenvalues $\{\lambda_i\}$ and let the matrices $\{P_m\}$ be two dimensional rotation matrices defined successively so that an above-average element of $B_0=A$ is reduced to zero by $P_1$, and for $m \geq 2$, an above-average element of $B_{m-1} = P_{m-1}^* B_{m-2} P_{m-1}$ is reduced to zero by $P_m$. Let
-	\begin{equation}
-		Q_m = P_1 P_2 \cdots P_m, \qquad B_m = Q_m^* A Q_m.
-	\end{equation}
-	Then we have
-	\begin{equation}
-		\lim_{m \to \infty} B_m = \Lambda
-	\end{equation}
-	where $\Lambda$ is the diagonal matrix with the eigenvalues of $A$ on the diagonal.
-\end{theorem}
-\begin{proof}
-	We can see that the off-diagonal square sum tends to zero as $m \to \infty$. From Gershgorin's theorem, we have $B_m$ approximately a diagonal matrix $\Lambda$.
-\end{proof}
-
-Jacobi's method is the scheme in which we choose the \textbf{largest} off-diagonal element to reduce to zero at each step. We can see the only elements that change in going from $B_k$ to $B_{k+1}$ are the $i$-th and $j$-th rows and columns. Hence, the list of maximal elements in each row of $B_{k+1}$ is easily constructed from the list for $B_k$ by making at most $2n-1$ comparisons.
-
-\paragraph{Implementation and Variations}
-In practice, Jacobi's method is implemented by maintaining a list of the magnitude and column index of the maximal off-diagonal element in each row of $B_k$. When moving from $B_k$ to $B_{k+1}$ via a rotation in the $(i, j)$ plane, the only elements that change are those in the rows and columns of index $i$ or $j$. Consequently, the list of maximal elements for $B_{k+1}$ can be updated from the previous list by making at most $2n - 1$ comparisons.
-
-A common variation is the \textbf{threshold scheme}. Instead of searching for the absolute maximum, we examine off-diagonal elements in a systematic cyclic order: $(1, 2), (1, 3), \dots, (1, n), (2, 3), \dots, (n-1, n)$. We perform a rotation for the first element $b_{ij}^{(m)}$ that satisfies:
-\begin{equation}
-    |b_{ij}^{(m)}| \geq t_m,
-\end{equation}
-where $\{t_m\}$ is a prescribed decreasing sequence of positive numbers called \textbf{thresholds}.
-
-A simpler approach is the \textbf{cyclic Jacobi scheme}, where rotations are performed on all off-diagonal elements in sequence, irrespective of their size. While this seems less efficient per rotation, Forsythe and Henrici showed that with a minor change in the definition of the angle $\phi$ (specifically when $\phi \cong \pm \pi/4$), the cyclic scheme also converges.
-
-\paragraph{Quadratic Convergence}
-The primary advantage of the cyclic Jacobi scheme is its convergence rate. Let $q = (n^2 - n)/2$ be the number of off-diagonal pairs (one full cycle). If we compare the residual off-diagonal sum of squares after each complete cycle, it can be shown that the method converges \textbf{quadratically} for $m$ large enough. 
-
-\begin{theorem}{Convergence Rate of Cyclic Jacobi}{cyclic_conv}
-    For the cyclic Jacobi scheme, there exists a constant $K$ such that for sufficiently large $m$:
-    \begin{equation}
-        \sum_{r \neq s} (b_{rs}^{(m+q)})^2 \leq K \left[ \sum_{r \neq s} (b_{rs}^{(m)})^2 \right]^2.
-    \end{equation}
-\end{theorem}
-This indicates that once the matrix is ``nearly diagonal,'' the error (the sum of squares of the off-diagonal elements) vanishes very rapidly.
-
-\paragraph{Eigenvectors and Computational Cost}
-In the Jacobi schemes described above, the eigenvalues of $A$ are approximated by the diagonal elements of $B_m$ for sufficiently large $m$. Furthermore, the corresponding eigenvectors of $B_m$ are approximately the unit vectors $\{e_i\}$. Consequently, the eigenvectors of $A$ are approximated by the columns of the accumulated transformation matrix:
-\begin{equation}
-    Q_m = P_1 P_2 \cdots P_m.
-\end{equation}
-Regarding computational efficiency, since only two columns of $Q_m$ are changed in the transition from $Q_m$ to $Q_{m+1}$, only $4n$ multiplications are involved in this step. Similarly, for the matrix $B_m$, only elements in rows and columns $i$ and $j$ are affected. Due to symmetry, approximately $4n$ multiplications are required to transform $B_m$ into $B_{m+1}$ (neglecting the square root operations for $\cos \phi$ and $\sin \phi$). Thus, approximately $8n$ multiplications are required per iteration to update both $B_m$ and $Q_m$.
-
-\subsection{Givens Transformation}
-Unlike the Jacobi method, which is iterative, the Givens transformation uses a finite sequence of rotations to reduce a real symmetric matrix $A$ to \textbf{tridiagonal} form. The total number of rotations required is:
-\begin{equation}
-    M \equiv \frac{(n - 2)(n - 1)}{2}.
-\end{equation}
-We successively construct a sequence of matrices $\{P_k\}$ for $k = 1, 2, \dots, M$ and define:
-\begin{equation}
-    B_0 \equiv A, \quad B_k \equiv P_k^* B_{k-1} P_k, \quad 1 \leq k \leq M.
-\end{equation}
-The two dimensional rotations $P_k$ are chosen to zero out the \textit{not-codiagonal} elements (elements $a_{rs}$ where $|r-s| > 1$). These elements are targeted cyclically in the following order of indices:
-\begin{equation}
-    (1, 3), (1, 4), \dots, (1, n), (2, 4), (2, 5), \dots, (2, n), \dots, (n - 2, n).
-\end{equation}
-
-\begin{theorem}{Givens Method}{Givens Method}
-    Let $A$ be real symmetric and $B_0 \equiv A$. Let $(i - 1, j)$ be the $k$-th pair of indices in the cyclic sequence defined above. Let $B_{k-1}$ have elements $(b_{rs}^{(k-1)})$. 
-    If $b_{i-1, j}^{(k-1)} = 0$, let $P_k \equiv I$. Otherwise, let $P_k \equiv (p_{rs}^{(k)})$ be a rotation in the $(i, j)$ plane with:
-    \begin{equation}
-        \begin{aligned}
-            p_{ii}^{(k)} = p_{jj}^{(k)} &= \frac{b_{i-1, i}^{(k-1)}}{\sqrt{(b_{i-1, i}^{(k-1)})^2 + (b_{i-1, j}^{(k-1)})^2}}, \\
-            p_{ij}^{(k)} = -p_{ji}^{(k)} &= -\frac{b_{i-1, j}^{(k-1)}}{\sqrt{(b_{i-1, i}^{(k-1)})^2 + (b_{i-1, j}^{(k-1)})^2}}, \\
-            p_{rs}^{(k)} &= \delta_{rs} \quad \text{for all other } (r, s).
-        \end{aligned}
-    \end{equation}
-    Then $B_k$ is real symmetric, and the first $k$ not-codiagonal elements of $B_k$ are zero. After $M$ steps, $B_M$ is a tridiagonal matrix.
-\end{theorem}
-
-\begin{remark}
-	To cancel out $b_{i-1,j}$, instead of directly annihilating the $(i-1, j)$ rows and columns, we here use Givens rotation for $(i, j)$ to annihilate the $(i-1, j)$ element. In this way, we would not disturb the previously annihilated elements in the $i-1$-th row and column, which would be the case if we directly annihilate the $(i-1, j)$ element by a rotation in the $(i-1, j)$ plane.
-\end{remark}
-
-The Givens method requires about
-\begin{equation}
-	\frac{4}{3}n^3 + \mathcal{O}(n^2), \quad \ops
-\end{equation}
-to reduce a real symmetric matrix to tridiagonal form.
-
-We shall complete the description of Givens' method for determining the eigenvalues and eigenvectors just a bit later.
-
-\subsection{Householder's Method}
-
 
 \end{document}

@@ -1,0 +1,744 @@
+\documentclass{matharticle}
+
+\title{Review and Micellania}
+\author{}
+\date{\today}
+
+\begin{document}
+\maketitle
+\section{Basics}
+\begin{definition}
+	Let $x\in \mathbb{R}$, take an approximation $x^*\in \mathbb{R}$, then the \textbf{absolute error} is defined as $|e|=|x-x^*| \leq \epsilon$ and the \textbf{relative error} is defined as $|e_r|=\frac{|x-x^*|}{|x|} \leq \epsilon_r$.
+
+	Let $x$ be a decimal. The \textbf{significant digits} of $x$ are defined as the number of digits in $x$ that are known to be correct. If $x = 1.2345$, then $x$ has 5 significant digits. The error are less then half of the next digit.
+\end{definition}
+
+An efficient way to compute the polynomial $p(x) = a_n x^n + a_{n-1} x^{n-1} + \cdots + a_1 x + a_0$ is to use \textbf{Horner's method}, which rewrites the polynomial as
+\begin{equation}
+	p(x) = (((a_n x + a_{n-1}) x + a_{n-2}) x + \cdots + a_1) x + a_0
+\end{equation}
+
+\subsection{The Matrices and Vector Norms}
+\begin{definition}
+	A \textbf{vector norm} is a function $\|\cdot\|: \mathbb{R}^n \to \mathbb{R}$ that satisfies the following properties:
+	\begin{itemize}
+		\item \textbf{Non-negativity:} $\|x\| \geq 0$ for all $x \in \mathbb{R}^n$, and $\|x\| = 0$ if and only if $x = 0$.
+		\item \textbf{Scalar multiplication:} $\|\alpha x\| = |\alpha| \|x\|$ for all $\alpha \in \mathbb{R}$ and $x \in \mathbb{R}^n$.
+		\item \textbf{Triangle inequality:} $\|x + y\| \leq \|x\| + \|y\|$ for all $x, y \in \mathbb{R}^n$.
+	\end{itemize}
+\end{definition}
+A typical example of a vector norm is the $L_p$ norm, defined as
+\begin{equation}
+	\|x\|_p = \left( \sum_{i=1}^{n} |x_i|^p \right)^{1/p}, \quad 1 \leq p < \infty
+\end{equation}
+with $L_1, L_2$ and $L_\infty$ norms as special cases.
+
+\begin{definition}
+	A \textbf{matrix norm} is a function $\|\cdot\|: \mathbb{R}^{n \times n} \to \mathbb{R}$ that satisfies the following properties:
+	\begin{itemize}
+		\item \textbf{Non-negativity:} $\|A\| \geq 0$ for all $A \in \mathbb{R}^{n \times n}$, and $\|A\| = 0$ if and only if $A = 0$.
+		\item \textbf{Scalar multiplication:} $\|\alpha A\| = |\alpha| \|A\|$ for all $\alpha \in \mathbb{R}$ and $A \in \mathbb{R}^{n \times n}$.
+		\item \textbf{Triangle inequality:} $\|A + B\| \leq \|A\| + \|B\|$ for all $A, B \in \mathbb{R}^{n \times n}$.
+		\item \textbf{Submultiplicativity:} $\|AB\| \leq \|A\| \|B\|$ for all $A, B \in \mathbb{R}^{n \times n}$.
+	\end{itemize}
+
+	A matrix norm is said to be \textbf{consistent} with a vector norm if $\|Ax\| \leq \|A\| \|x\|$ for all $A \in \mathbb{R}^{n \times n}$ and $x \in \mathbb{R}^n$. We can also define the \textbf{induced matrix norm} as
+	\begin{equation}
+		\|A\| = \sup_{x \neq 0} \frac{\|Ax\|}{\|x\|}
+	\end{equation}
+	for some vector norm $\|\cdot\|$.
+\end{definition}
+
+Some common matrix norms include
+\begin{itemize}
+	\item $\|A\|_1 = \max \text{ column sum of } |A|$.
+	\item $\|A\|_\infty = \max \text{ row sum of } |A|$.
+	\item $\|A\|_2 = \sqrt{\lambda_{\max}(A^T A)}$, where $\lambda_{\max}$ is the largest eigenvalue of $A^T A$, or just the largest singular value of $A$.
+	\item $\|A\|_F = \sqrt{\sum_{i,j} |a_{ij}|^2}$, the Frobenius norm.
+\end{itemize}
+
+\begin{theorem}
+	Every matrix norm is greater than or equal to the spectral radius of the matrix, i.e., $\|A\| \geq \rho(A)$, where $\rho(A)$ is the largest absolute value of the eigenvalues of $A$.
+\end{theorem}
+
+\subsection{Condition Number}
+\begin{definition}
+	The \textbf{condition number} of a matrix $A$ with respect to a given matrix norm $\|\cdot\|$ is defined as
+	\begin{equation}
+		\kappa(A) = \|A\| \|A^{-1}\|
+	\end{equation}
+	The condition number measures how sensitive the solution of a linear system $Ax = b$ is to changes in the input data $b$ or the matrix $A$. A large condition number indicates that the system is ill-conditioned, meaning that small changes in the input can lead to large changes in the solution. Conversely, a small condition number indicates that the system is well-conditioned, meaning that the solution is relatively insensitive to changes in the input.
+\end{definition}
+
+We have
+\begin{equation}
+	\kappa(A) \geq \|A A^{-1}\| = \|I\| = 1
+\end{equation}
+For a perturbation $\delta b$ in the right-hand side of the linear system $Ax = b$, we have
+\begin{equation}
+	\frac{\|\delta x\|}{\|x\|} \leq \kappa(A) \frac{\|\delta b\|}{\|b\|}
+\end{equation}
+\begin{proof}
+	As we have $A(x+\delta x) = b + \delta b$, we can write $A \delta x = \delta b$, and thus $\delta x = A^{-1} \delta b$. Taking norms, we have $\|\delta x\| = \|A^{-1} \delta b\| \leq \|A^{-1}\| \|\delta b\|$. Dividing both sides by $\|x\|$ and using the fact that $\|b\| = \|Ax\| \leq \|A\| \|x\|$, we obtain the desired inequality.
+\end{proof}
+If $A$ have a perturbation $\delta A$, we have $(A + \delta A)(x + \delta x) = b$.
+\begin{equation}
+	\frac{\|\delta x\|}{\|x\|} \leq \kappa(A) \frac{\|\delta A\|}{\|A\|} \bigg/ \left(1 - \kappa(A) \frac{\|\delta A\|}{\|A\|}\right)
+\end{equation}
+For both perturbations $\delta A$ and $\delta b$, we have
+\begin{equation}
+	\frac{\|\delta x\|}{\|x\|} \leq \frac{\kappa(A)}{1 - \kappa(A)} \left( \frac{\|\delta A\|}{\|A\|} + \frac{\|\delta b\|}{\|b\|} \right)
+\end{equation}
+
+\section{Interpolation}
+Let $f$ be a function defined on an interval $[a, b]$, and let $x_0, x_1, \ldots, x_n$ be distinct points in $[a, b]$. The goal of interpolation is to find certain types of function $\varphi$ such that
+\begin{equation}
+	\varphi(x_i) = f(x_i), \quad i = 0, 1, \ldots, n
+\end{equation}
+
+\subsection{The Lagrange Interpolation}
+For the $n+1$ distinct points $(x_0, f(x_0)), (x_1, f(x_1)), \ldots, (x_n, f(x_n))$, we need to find a polynomial $p_n(x)$ of degree at most $n$ to interpolate the function $f$ at these points. The Vandermonde matrix is defined as
+\begin{equation}
+	V = \begin{bmatrix}
+		1      & x_0    & x_0^2  & \cdots & x_0^n  \\
+		1      & x_1    & x_1^2  & \cdots & x_1^n  \\
+		\vdots & \vdots & \vdots & \ddots & \vdots \\
+		1      & x_n    & x_n^2  & \cdots & x_n^n
+	\end{bmatrix}, \qquad \det(V) = \prod_{0 \leq i < j \leq n} (x_j - x_i) \neq 0
+\end{equation}
+So we have a unique solution for the coefficients of the polynomial $p_n(x)$. The \textbf{Lagrange basis polynomials} are defined as
+\begin{equation}
+	l_i(x_j) = \begin{cases}
+		1, & \text{if } i = j    \\
+		0, & \text{if } i \neq j
+	\end{cases} = \delta_{ij}
+\end{equation}
+An explicit result is
+\begin{equation}
+	l_i(x) = \prod_{\substack{0 \leq j \leq n \\ j \neq i}} \frac{x - x_j}{x_i - x_j}
+\end{equation}
+
+The Lagrange interpolation polynomial is then given by
+\begin{equation}
+	p_n(x) = \sum_{i=0}^{n} f(x_i) l_i(x)
+\end{equation}
+
+\subsubsection{The Error of Lagrange Interpolation}
+\begin{theorem}
+	Let $f \in C^{n+1}[a, b]$, and let $x_0, x_1, \ldots, x_n$ be distinct points in $[a, b]$. Then for each $x \in [a, b]$, there exists a $\xi \in (a, b)$ such that
+	\begin{equation}
+		R_n(x) = f(x) - p_n(x) = \frac{f^{(n+1)}(\xi)}{(n+1)!} \prod_{i=0}^{n} (x - x_i)
+	\end{equation}
+\end{theorem}
+\begin{proof}
+	Let
+	\begin{equation}
+		R_n(x) = f(x) - p_n(x) = k(x) \prod_{i=0}^{n} (x - x_i)
+	\end{equation}
+	for some function $k(x)$. Then we let
+	\begin{equation}
+		\phi(t) = f(t) - p_n(t) - k(x) \prod_{i=0}^{n} (t - x_i)
+	\end{equation}
+	Then $\phi(x) = 0$ and $\phi(x_i) = 0$ for $i = 0, 1, \ldots, n$. By Rolle's theorem, there exists at least one point $\xi \in (a, b)$ such that $\phi^{(n+1)}(\xi) = 0$. Then we have
+	\begin{equation}
+		\phi^{(n+1)}(\xi) = f^{(n+1)}(\xi) - k(x) (n+1)! = 0
+	\end{equation}
+\end{proof}
+
+\subsection{Difference}
+\begin{definition}
+	Let $f$ be a function defined on an interval $[a, b]$, and let $x_0, x_1, \ldots, x_n$ be distinct points in $[a, b]$. The \textbf{forward difference} of $f$ at the points $x_0, x_1, \ldots, x_n$ is defined iteratively as follows:
+	\begin{itemize}
+		\item The first forward difference is defined as
+		      \begin{equation}
+			      f[x_0, x_1] = \frac{f(x_1) - f(x_0)}{x_1 - x_0}
+		      \end{equation}
+		\item The $k$-th forward difference is defined as
+		      \begin{equation}
+			      f[x_0, x_1, \ldots, x_k] = \frac{f[x_1, x_2, \ldots, x_k] - f[x_0, x_1, \ldots, x_{k-1}]}{x_k - x_0}
+		      \end{equation}
+	\end{itemize}
+\end{definition}
+Some properties of the forward difference are:
+\begin{itemize}
+	\item The difference is the linear combination of the function values at the points $x_0, x_1, \ldots, x_n$:
+	      \begin{equation}
+		      f[x_0, x_1, \ldots, x_n] = \sum_{i=0}^{n} \frac{f(x_i)}{\prod_{\substack{0 \leq j \leq n \\ j \neq i}} (x_i - x_j)}
+	      \end{equation}
+	\item The difference is symmetric in its arguments, i.e., for every $\sigma \in S_{n+1}$ we have
+	      \begin{equation}
+		      f[x_0, x_1, \ldots, x_n] = f[x_{\sigma(0)}, x_{\sigma(1)}, \ldots, x_{\sigma(n)}]
+	      \end{equation}
+\end{itemize}
+
+\subsubsection{The Difference Table}
+To calculate the forward differences, we can use a difference table. The structure of the table is as follows:
+\begin{table}
+	\centering
+	\begin{tabular}{c|c|c|c|c}
+		$x_i$ & $f(x_i)$ & $\Delta f(x_i)$ & $\Delta^2 f(x_i)$  & $\Delta^3 f(x_i)$       \\
+		\hline
+		$x_0$ & $f(x_0)$ &                 &                    &                         \\
+		$x_1$ & $f(x_1)$ & $f[x_0, x_1]$   &                    &                         \\
+		$x_2$ & $f(x_2)$ & $f[x_1, x_2]$   & $f[x_0, x_1, x_2]$ &                         \\
+		$x_3$ & $f(x_3)$ & $f[x_2, x_3]$   & $f[x_1, x_2, x_3]$ & $f[x_0, x_1, x_2, x_3]$ \\
+	\end{tabular}
+	\caption{Difference Table}
+\end{table}
+\begin{remark}
+	From the symmetry property of the forward difference, we can use any order of the points $x_0, x_1, \ldots, x_n$ to compute the forward differences.
+\end{remark}
+
+\subsection{Newton's Interpolation}
+Consider writing the interpolation polynomial in the form
+\begin{equation}
+	N(x) = a_0 + a_1(x - x_0) + a_2(x - x_0)(x - x_1) + \cdots + a_n(x - x_0)(x - x_1) \cdots (x - x_{n-1}).
+\end{equation}
+The \textbf{Newton basis polynomials} are defined as
+\begin{equation}
+	1, \quad (x - x_0), \quad (x - x_0)(x - x_1), \quad \ldots, \quad (x - x_0)(x - x_1) \cdots (x - x_{n-1})
+\end{equation}
+To determine the coefficients $a_0, a_1, \ldots, a_n$, let $x = x_i$ and we get
+\begin{itemize}
+	\item For $x = x_0$, we have $N(x_0) = a_0 = f(x_0)$.
+	\item For $x = x_1$, we have $N(x_1) = f(x_0) + a_1(x_1 - x_0) = f(x_1)$, which gives $a_1 = \frac{f(x_1) - f(x_0)}{x_1 - x_0} = f[x_0, x_1]$.
+	\item For $x = x_2$, we have $N(x_2) = f(x_0) + f[x_0, x_1](x_2 - x_0) + a_2(x_2 - x_0)(x_2 - x_1) = f(x_2)$, which gives $a_2 = f[x_0, x_1, x_2]$.
+\end{itemize}
+This gives us the general formula for the coefficients:
+\begin{equation}
+	\begin{aligned}
+		f(x) &= N_n(x) + R_n(x)\\
+		N_n(x) &= f(x_0) + f[x_0, x_1](x - x_0) + f[x_0, x_1, x_2](x - x_0)(x - x_1) + \cdots \\
+					 & \quad + f[x_0, x_1, \ldots, x_n](x - x_0)(x - x_1) \cdots (x - x_{n-1})\\
+		R_n(x) &= f[x_0, x_1, \ldots, x_n, x](x - x_0)(x - x_1) \cdots (x - x_n)
+	\end{aligned}
+\end{equation}
+which can be proved by induction on $n$.
+
+The uniqueness of the interpolation polynomial implies that the Lagrange interpolation polynomial and the Newton interpolation polynomial are equivalent, i.e., $p_n(x) = N_n(x)$. So the remaining term $R_n(x)$ is the same as the Lagrange interpolation error. So we have
+\begin{equation}
+	f[x_0, x_1, \ldots, x_n, x] = \frac{f^{(n+1)}(\xi)}{(n+1)!} \quad \text{for some } \xi \in (a, b)
+\end{equation}
+
+\subsection{The Hermite Interpolation}
+If $f$ has first-order continuous derivatives, consider a polynomial $H_{2n+1}(x)$ of degree at most $2n+1$ such that
+\begin{equation}
+	H_{2n+1}(x_i) = f(x_i), \quad H_{2n+1}'(x_i) = f'(x_i), \quad i = 0, 1, \ldots, n
+\end{equation}
+We can use the same idea as the Lagrange interpolation to construct the Hermite interpolation polynomial. The \textbf{Hermite basis polynomials} are defined as
+\begin{equation}
+	\begin{aligned}
+		&h_i(x_j) = \delta_{ij}, \quad h_i'(x_j) = 0, \quad i, j = 0, 1, \ldots, n \\
+		&g_i(x_j) = 0, \quad g_i'(x_j) = \delta_{ij}, \quad i, j = 0, 1, \ldots, n
+	\end{aligned}
+\end{equation}
+Then we can construct the Hermite interpolation polynomial as
+\begin{equation}
+	H_{2n+1}(x) = \sum_{i=0}^{n} f(x_i) h_i(x) + \sum_{i=0}^{n} f'(x_i) g_i(x)
+\end{equation}
+\begin{plainblackenv}
+	We first construct $h_i$ as follows: For every $j \neq i$, we have $h_i(x_j) = h_i'(x_j) = 0$. So we can write
+	\begin{equation*}
+		h_i(x) = (a + b x) \prod_{j \neq i} (x - x_j)^2
+	\end{equation*}
+	This gives
+	\begin{equation*}
+		h_i(x_i) = (a + b x_i) \prod_{j \neq i} (x_i - x_j)^2 = 1, \quad (\ln h_i(x))'|_{x = x_i} = \frac{b}{a + b x_i} + 2 \sum_{j \neq i} \frac{1}{x_i - x_j} = 0
+	\end{equation*}
+	which gives
+	\begin{equation*}
+		b = -\frac{2 \sum_{j \neq i} \frac{1}{x_i - x_j}}{\prod_{j \neq i} (x_i - x_j)^2}, \quad a + b x_i = \frac{1}{\prod_{j \neq i} (x_i - x_j)^2}
+	\end{equation*}
+	So we have
+	\begin{equation*}
+		h_i(x) = (a + b x_i + b (x - x_i)) \prod_{j \neq i} (x - x_j)^2 = \left( 1 - 2 (x - x_i) \sum_{j \neq i} \frac{1}{x_i - x_j} \right) \prod_{j \neq i} \left( \frac{x - x_j}{x_i - x_j} \right)^2
+	\end{equation*}
+	or just use
+	\begin{equation}
+		h_i(x) = \left(1 - 2 (x - x_i) \sum_{j \neq i} \frac{1}{x_i - x_j}\right) l_i^2(x)
+	\end{equation}
+	where $l_i(x) = \prod_{j \neq i} \frac{x - x_j}{x_i - x_j}$ is the Lagrange basis polynomial. Then we can construct $g_i$ as follows:
+	\begin{equation*}
+		g_i(x) = k (x - x_i) \prod_{j \neq i} (x - x_j)^2
+	\end{equation*}
+	as we have
+	\begin{equation*}
+		g_i'(x_i) = k \prod_{j \neq i} (x_i - x_j)^2 = 1 \implies k = \frac{1}{\prod_{j \neq i} (x_i - x_j)^2}
+	\end{equation*}
+	So we have
+	\begin{equation}
+		g_i(x) = (x - x_i) \prod_{j \neq i} \left( \frac{x - x_j}{x_i - x_j} \right)^2 = (x - x_i) l_i^2(x)
+	\end{equation}
+\end{plainblackenv}
+
+We can also use Newton's method for this. We can interpret the Hermite interpolation as a divided difference with repeated nodes. For example, we have $f[x_i, x_i] = f'(x_i)$, and we can construct the divided difference table as follows:
+\begin{table}[H]
+	\centering
+	\begin{tabular}{c|c|c|c|c}
+		$x_0$ & $f(x_0)$ & & & \\
+		$x_0$ & $f(x_0)$ & $f[x_0, x_0] = f'(x_0)$ & & \\
+		$x_1$ & $f(x_1)$ & $f[x_0, x_1]$ & $f[x_0, x_0, x_1]$ & \\
+		$x_1$ & $f(x_1)$ & $f[x_1, x_1] = f'(x_1)$ & $f[x_0, x_1, x_1]$ & $f[x_0, x_0, x_1, x_1]$
+	\end{tabular}
+	\caption{Divided Difference Table for Hermite Interpolation}
+\end{table}
+A similar method can be used to construct the interpolation polynomial for higher-order derivatives. We just use
+\begin{equation}
+	f[x_i, x_i, \ldots, x_i] = \frac{f^{(k)}(x_i)}{k!}
+\end{equation}
+
+\subsection{The Piecewise Interpolation}
+In some cases, increasing the number of interpolation points may not improve the accuracy of the interpolation polynomial. In fact, it may lead to oscillations and large errors, especially near the endpoints of the interval. This phenomenon is known as \textbf{Runge's phenomenon}. To avoid this issue, we can use piecewise interpolation, which involves dividing the interval into smaller subintervals and constructing separate interpolation polynomials for each subinterval. This approach can provide better accuracy and stability, especially for functions with high variability or discontinuities.
+
+We divide the interval $[a, b]$ into subintervals 
+\begin{equation*}
+	a = x_0 < x_1 < \cdots < x_n = b
+\end{equation*}
+Take the linear interpolation on each subinterval $[x_i, x_{i+1}]$ as
+\begin{equation*}
+	p_i(x) = \frac{x - x_i}{x_{i+1} - x_i} f(x_{i+1}) + \frac{x_{i+1} - x}{x_{i+1} - x_i} f(x_i), \quad i = 0, 1, \ldots, n-1
+\end{equation*}
+for $x\in [x_i, x_{i+1}]$, we have
+\begin{equation*}
+	f(x) - p(x) = f(x) - p_i(x) = \frac{f''(\xi)}{2} (x - x_i)(x - x_{i+1})
+\end{equation*}
+Thus we have
+\begin{equation*}
+	|f(x) - p(x)| \leq \frac{M_2}{2}|x - x_i||x - x_{i+1}| \leq \frac{M_2}{8} (x_{i+1} - x_i)^2, \qquad M_2 = \max_{x \in [a, b]} |f''(x)|
+\end{equation*}
+which converges to zero as the maximum subinterval length goes to zero.
+
+\subsection{The Cubic Spline Interpolation}
+
+\begin{definition}
+	In the interval $[a, b]$, let $a = x_0 < x_1 < \cdots < x_n = b$ be a partition of the interval. A function $S(x)$ is called a \textbf{cubic spline} if it satisfies the following conditions:
+	\begin{itemize}
+		\item On each subinterval $[x_i, x_{i+1}]$, $S(x)$ is a cubic polynomial, i.e., $S(x) \in P_3$.
+		\item $S(x_i) = f(x_i)$ for $i = 0, 1, \ldots, n$ (interpolation condition).
+		\item $S(x)$ has continuous first and second derivatives on $[a, b]$, i.e., $S'(x)$ and $S''(x)$ are continuous.
+	\end{itemize}
+	If we add two boundary conditions, we can uniquely determine the cubic spline. The most common boundary conditions are:
+	\begin{itemize}
+		\item \textbf{Natural spline:} $S''(x_0) = S''(x_n) = 0$.
+		\item \textbf{Clamped spline:} $S'(x_0) = f'(x_0)$ and $S'(x_n) = f'(x_n)$.
+	\end{itemize}
+\end{definition}
+
+We introduce the notation
+\begin{equation}
+	M_i = S''(x_i), \quad m_i = S'(x_i), \quad i = 0, 1, \ldots, n
+\end{equation}
+and we can use these two notations to express the cubic spline on each subinterval and derive a system of equations to solve for the unknowns $M_i$ and $m_i$. The resulting system is a tridiagonal linear system, which can be solved efficiently using methods such as Gaussian elimination or the Thomas algorithm.
+
+\paragraph{The Big $M$ Method}
+Let $S_i(x)$ be the cubic polynomial on the subinterval $[x_i, x_{i+1}]$. We can express $S_i''(x)$ in terms of $M_i$ and $M_{i+1}$ as a linear function:
+\begin{equation}
+	S_i''(x) = \frac{x - x_{i+1}}{x_i - x_{i+1}} M_i + \frac{x - x_i}{x_{i+1} - x_i} M_{i+1}
+\end{equation}
+Let $h_i = x_{i+1} - x_i$, we can integrate $S_i''(x)$ twice to obtain $S_i(x)$. Using the interpolation conditions $S_i(x_i) = f(x_i)$ and $S_i(x_{i+1}) = f(x_{i+1})$, we have
+\begin{equation}
+	\begin{aligned}
+		S(x) &= \frac{1}{6 h_i} \left[ (x_{i+1} - x)^3 M_i + (x - x_i)^3 M_{i+1} \right] + \frac{1}{h_i} \left[ (x_{i+1} - x) f(x_i) + (x - x_i) f(x_{i+1}) \right]\\
+				 &\quad - \frac{h_i}{6} \left[ (x_{i+1} - x) M_i + (x - x_i) M_{i+1} \right]
+	\end{aligned}
+\end{equation}
+For inner points $x_1, x_2, \ldots, x_{n-1}$, we have the continuity of the first derivative. This gives us the following system of equations:
+\begin{equation}
+	\mu_i M_{i-1} + 2 M_i + \lambda_i M_{i+1} = d_i, \quad i = 1, 2, \ldots, n-1
+\end{equation}
+where
+\begin{equation}
+	\lambda_i = \frac{h_i}{h_i + h_{i-1}}, \quad \mu_i = 1 - \lambda_i, \quad d_i = 6 f[x_{i-1}, x_i, x_{i+1}]
+\end{equation}
+
+For boundary conditions:
+\begin{itemize}
+	\item If we are given $M_0$ and $M_n$, we can directly use them in the system of equations.
+	\item If we are given $m_0$ and $m_n$, we can add a ``virtual'' point $x_{-1}$ and $x_{n+1}$ to the system of equations, and use the following equations:
+	      \begin{equation}
+		      \begin{aligned}
+			      2 M_0 + M_1 &= d_0, \quad d_0 = 6 f[x_{-1}, x_0, x_1] = 6 \frac{f[x_0, x_1] - m_0}{h_0}\\
+			      M_{n-1} + 2 M_n &= d_n, \quad d_n = 6 f[x_{n-1}, x_n, x_{n+1}] = 6 \frac{m_n - f[x_{n-1}, x_n]}{h_{n-1}}
+		      \end{aligned}
+	      \end{equation}
+	      here $\lambda_0$ and $\mu_n$ are just one, as the interval $[x_{-1}, x_0]$ and $[x_n, x_{n+1}]$ are zero length.
+\end{itemize}
+
+\paragraph{The Small $m$ Method}
+We use Hermite interpolation on each subinterval $[x_i, x_{i+1}]$ to construct the cubic spline. This results in
+\begin{equation}
+	\lambda_i m_{i-1} + 2 m_i + \mu_i m_{i+1} = c_i, \quad i = 1, 2, \ldots, n-1
+\end{equation}
+where
+\begin{equation}
+	\lambda_i = \frac{h_i}{h_i + h_{i-1}}, \quad \mu_i = 1 - \lambda_i, \quad c_i = 3 \left( \lambda_i f[x_{i-1}, x_i] + \mu_i f[x_i, x_{i+1}] \right)
+\end{equation}
+
+\section{The Least Squares Approximation}
+Consider a set of data points $(x_i, y_i)$ for $i = 1, 2, \ldots, n$, and use a function $\varphi(x)$ to approximate the data points. The goal is to find the function $\varphi(x)$ that minimizes the norm $\| Z - Y \|$ where
+\begin{equation}
+	Z = \begin{bmatrix}
+		\varphi(x_1)\\
+		\varphi(x_2)\\
+		\vdots\\
+		\varphi(x_n)
+	\end{bmatrix}, \quad Y = \begin{bmatrix}
+		y_1\\
+		y_2\\
+		\vdots\\
+		y_n
+	\end{bmatrix}
+\end{equation}
+The least squares approximation is typically used when the vector norm is the $L_2$ norm, which minimizes
+\begin{equation}
+	Q = \| Z - Y \|_2^2 = \sum_{i=1}^{n} (\varphi(x_i) - y_i)^2 = \int_{a}^{b} (\varphi(x) - f(x))^2 dx
+For boundary conditions:
+\end{equation}
+
+\subsection{Inconsistent Linear Systems}
+For a linear system $Ax = b$, if the system is inconsistent, we can use the least squares approximation to find an approximate solution. The goal is to minimize the norm $\| Ax - b \|_2^2$. The normal equations are given by
+\begin{equation}
+	A^T A x = A^T b
+\end{equation}
+
+\subsection{Polynomial Least Squares Approximation}
+We can use a polynomial of degree $n$ to approximate the data points $(x_i, y_i)$ for $i = 1, 2, \ldots, m$. We have
+\begin{equation*}
+	Q(\alpha) = \sum_{i=1}^{m} \left( a_0 + a_1 x_i + a_2 x_i^2 + \cdots + a_n x_i^n - y_i \right)^2
+\end{equation*}
+We can either use the partial derivatives to find the minimum of $Q(\alpha)$, or we can use the normal equations. We solve for $A \alpha = Y$ where
+\begin{equation}
+	A = \begin{bmatrix}
+		1 & x_1 & x_1^2 & \cdots & x_1^n\\
+		1 & x_2 & x_2^2 & \cdots & x_2^n\\
+		\vdots & \vdots & \vdots & \ddots & \vdots\\
+		1 & x_m & x_m^2 & \cdots & x_m^n
+	\end{bmatrix}, \quad Y = \begin{bmatrix}
+		y_1\\
+		y_2\\
+		\vdots\\
+		y_m
+	\end{bmatrix}, \quad \alpha = \begin{bmatrix}
+		a_0\\
+		a_1\\
+		\vdots\\
+		a_n
+	\end{bmatrix}
+\end{equation}
+and $A^T A \alpha = A^T Y$ would yield the least squares solution.
+
+\section{Solution for Nonlinear Equations}
+A general nonlinear equation can be written as
+\begin{equation}
+	f(x) = 0
+\end{equation}
+And we need to find a solution $x^*$.
+
+\paragraph{The Bisection Method}
+If $f$ is continuous on the interval $[a, b]$ and $f(a) f(b) < 0$, then there exists a root $x^* \in (a, b)$ such that $f(x^*) = 0$. The bisection method is an iterative method that repeatedly bisects the interval and selects the subinterval in which the root lies.
+
+\subsection{The Iterative Method}
+Let $\alpha$ be a solution of the equation $f(x) = 0$. We define the \textbf{order of convergence} of a sequence $\{x_k\}$ to $\alpha$ as follows:
+\begin{definition}
+	If there exist $M > 0$ such that
+	\begin{equation}
+		\lim_{k \to \infty} \frac{e_{k+1}}{e_k^p} = \lim_{k \to \infty} \frac{|x_{k+1} - \alpha|}{|x_k - \alpha|^p} = M
+	\end{equation}
+	then we say that the sequence $\{x_k\}$ converges to $\alpha$ with order $p$. If $p = 1$, we say that the convergence is linear; if $p = 2$, we say that the convergence is quadratic; if $p = 3$, we say that the convergence is cubic; and so on.
+\end{definition}
+
+Consider an iterative method of the form
+\begin{equation}
+	x_{k+1} = \varphi(x_k), \quad k = 0, 1, 2, \ldots
+\end{equation}
+Then we may write
+\begin{equation}
+	\begin{aligned}
+		x_{k+1} - \alpha &= \varphi(x_k) - \varphi(\alpha)\\
+		&= \varphi'(\alpha) (x_k - \alpha) + \frac{\varphi''(\alpha)}{2} (x_k - \alpha)^2 + \cdots
+	\end{aligned}
+\end{equation}
+To find the order of convergence, we just need to find the first nonzero derivative of $\varphi$ at $\alpha$.
+
+\paragraph{The Fixed-Point Iteration Method}
+Consider the function $x = \varphi(x)$. Take an initial guess $x_0$ and generate a sequence $\{x_k\}$ by the iteration
+\begin{equation}
+	x_{k+1} = \varphi(x_k), \quad k = 0, 1, 2, \ldots
+\end{equation}
+If $\varphi$ is continuous and the sequence $\{x_k\}$ converges to a point $x^*$, then $x^*$ is a fixed point of $\varphi$, i.e., $x^* = \varphi(x^*)$.
+
+\begin{theorem}
+	Let $\varphi$ be a continuous function on the interval $[a, b]$ such that
+	\begin{itemize}
+		\item $\varphi([a, b]) \subseteq [a, b]$ (the function maps the interval into itself),
+		\item $\varphi$ is differentiable on $(a, b)$ and there exists a constant $L < 1$ such that $|\varphi'(x)| \leq L$ for all $x \in (a, b)$ (the function is a contraction).
+	\end{itemize}
+	Then, there exists a unique fixed point $x^* \in [a, b]$ such that $x^* = \varphi(x^*)$. Moreover, for any initial guess $x_0 \in [a, b]$, the sequence $\{x_k\}$ defined by $x_{k+1} = \varphi(x_k)$ converges to $x^*$.
+\end{theorem}
+From the condition, we have
+\begin{equation*}
+	|x_k - x^*| \leq L |x_{k-1} - x^*| \leq L^k |x_0 - x^*|
+\end{equation*}
+and we have
+\begin{equation*}
+	|x_{k+p} - x_k| \leq (L^k + L^{k+1} + \cdots + L^{k+p-1}) |x_1 - x_0| = \frac{L^k (1 - L^p)}{1 - L} |x_1 - x_0|
+\end{equation*}
+So the error
+\begin{equation}
+	|x_k - x^*| \leq \frac{L^k}{1 - L} |x_1 - x_0|
+\end{equation}
+
+\paragraph{The Newton-Raphson Method}
+Consider the Taylor expansion of $f$ at $x$:
+\begin{equation}
+	f(x) = f(x_0) + f'(x_0)(x - x_0) + \frac{f''(\xi)}{2} (x - x_0)^2
+\end{equation}
+This gives motivation for the Newton-Raphson method. We take an initial guess $x_0$ and generate a sequence $\{x_k\}$ by the iteration
+\begin{equation}
+	x_{k+1} = x_k - \frac{f(x_k)}{f'(x_k)}, \quad k = 0, 1, 2, \ldots
+\end{equation}
+which geometrically corresponds to the intersection of the tangent line at $(x_k, f(x_k))$ with the $x$-axis.
+
+We have
+\begin{equation*}
+	\varphi'(x) = 1 - \frac{f'(x) f'(x) - f(x) f''(x)}{(f'(x))^2} = \frac{f(x) f''(x)}{(f'(x))^2}
+\end{equation*}
+so the order of convergence is quadratic if $f''(x^*) \neq 0$. If $\alpha$ is a $p$-fold root of $f$, then the order of convergence is linear with rate $1 - \frac{1}{p}$. But we can modify the Newton-Raphson method to achieve quadratic convergence even for multiple roots by using the iteration
+\begin{equation}
+	x_{k+1} = x_k - p \frac{f(x_k)}{f'(x_k)}, \quad k = 0, 1, 2, \ldots
+\end{equation}
+
+\paragraph{The Secant Method}
+The secant method have the iteration
+\begin{equation}
+	x_{k+1} = x_k - f(x_k) \frac{x_k - x_{k-1}}{f(x_k) - f(x_{k-1})}, \quad k = 1, 2, \ldots
+\end{equation}
+which have the order of convergence $\frac{1 + \sqrt{5}}{2} \approx 1.618$.
+
+\subsection{The Newton's Method for Systems of Nonlinear Equations}
+The iteration for the Newton's method for systems of nonlinear equations is given by
+\begin{equation}
+	x_{k+1} = x_k - J_f(x_k)^{-1} f(x_k), \quad k = 0, 1, 2, \ldots
+\end{equation}
+
+\section{The Linear Equations}
+For a general linear system $Ax = b$, we can use the Gaussian elimination method to solve it.
+
+\subsection{The Gaussian Elimination Method}
+\begin{itemize}
+	\item The Gaussian elimination method: use the natural order of the equations and eliminate the variables one by one to get an upper triangular system, then use back substitution to solve the system.
+	\item The Gauss-Jordan elimination method: use the natural order of the equations and eliminate the variables one by one to get a diagonal system.
+	\item If there is a zero pivot, we can use partial pivoting or complete pivoting to avoid division by zero and improve numerical stability.
+\end{itemize}
+
+The number of operations for the Gaussian elimination method is $O(n^3)$.
+
+\subsection{The Decomposition Method}
+We can decompose the matrix $A$ into a product of a lower triangular matrix $L$ and an upper triangular matrix $U$, i.e., $A = LU$.
+
+\paragraph{The Doolittle Decomposition Method}
+Let
+\begin{equation}
+	\begin{bmatrix}
+		a_{11} & a_{12} & \cdots & a_{1n}\\
+		a_{21} & a_{22} & \cdots & a_{2n}\\
+		\vdots & \vdots & \ddots & \vdots\\
+		a_{n1} & a_{n2} & \cdots & a_{nn}
+	\end{bmatrix} = \begin{bmatrix}
+		1 & & &\\
+		l_{21} & 1 & &\\
+		\vdots & \vdots & \ddots &\\
+		l_{n1} & l_{n2} & \cdots & 1
+	\end{bmatrix} \begin{bmatrix}
+		u_{11} & u_{12} & \cdots & u_{1n}\\
+		& u_{22} & \cdots & u_{2n}\\
+		& & \ddots & \vdots\\
+		& & & u_{nn}
+	\end{bmatrix}
+\end{equation}
+Then:
+\begin{itemize}
+	\item Compute the first row of $U$.
+	\item Compute the first column of $L$.
+	\item Compute the second row of $U$.
+	\item Compute the second column of $L$, and so on.
+\end{itemize}
+
+\paragraph{The Crout Decomposition Method}
+Just like the Doolittle decomposition method, but we set the diagonal elements of $U$ to be 1.
+
+\paragraph{The Cholesky Decomposition Method for Symmetric Positive Definite Matrices}
+Use either the Doolittle decomposition method or the Crout decomposition method, but decompose into
+\begin{equation}
+	A = LDL^T
+\end{equation}
+to make sure the diagonal elements of $L$ are one.
+
+\subsection{The Iterative Method}
+Let $A = N - P$ for some invertible matrix $N$, then we can rewrite the linear system $Ax = b$ as
+\begin{equation}
+	X = N^{-1} P X + N^{-1} b = M X + g
+\end{equation}
+So we can use the iteration
+\begin{equation}
+	X^{(k+1)} = M X^{(k)} + g, \quad k = 0, 1, 2, \ldots
+\end{equation}
+This converges if and only if the spectral radius $\rho(M) < 1$.
+
+\paragraph{The Jacobi Method}
+Let $N = D$ be the diagonal part of $A$, then we have
+\begin{equation}
+	\begin{aligned}
+		x_1^{(k+1)} &= \frac{1}{a_{11}} \left( b_1 - a_{12} x_2^{(k)} - \cdots - a_{1n} x_n^{(k)} \right)\\
+		x_2^{(k+1)} &= \frac{1}{a_{22}} \left( b_2 - a_{21} x_1^{(k)} - \cdots - a_{2n} x_n^{(k)} \right)\\
+		&\vdots\\
+		x_n^{(k+1)} &= \frac{1}{a_{nn}} \left( b_n - a_{n1} x_1^{(k)} - \cdots - a_{n,n-1} x_{n-1}^{(k)} \right)
+	\end{aligned}
+\end{equation}
+or in matrix form
+\begin{equation}
+	X^{(k+1)} = D^{-1} (D - A) X^{(k)} + D^{-1} b, \qquad R = I - D^{-1} A, g = D^{-1} b
+\end{equation}
+
+\begin{theorem}
+	If $A$ is strictly diagonally dominant (either by rows or by columns), then the Jacobi method converges.
+\end{theorem}
+\begin{proof}
+	For strictly diagonally dominant by rows, we have
+	\begin{equation}
+		\rho(I - D^{-1} A) \leq \| I - D^{-1} A \|_\infty = \max_{1 \leq i \leq n} \sum_{j=1}^{n} |(I - D^{-1} A)_{ij}| = \max_{1 \leq i \leq n} \sum_{j=1, j \neq i}^{n} |\frac{a_{ij}}{a_{ii}}| < 1
+	\end{equation}
+	for strictly diagonally dominant by columns, just replace the infinity norm with the 1-norm.
+\end{proof}
+
+\paragraph{The Gauss-Seidel Method}
+We can reuse the updated values of $x_i^{(k+1)}$ in the iteration, which gives us
+\begin{equation}
+	\begin{aligned}
+		x_1^{(k+1)} &= \frac{1}{a_{11}} \left( b_1 - a_{12} x_2^{(k)} - \cdots - a_{1n} x_n^{(k)} \right)\\
+		x_2^{(k+1)} &= \frac{1}{a_{22}} \left( b_2 - a_{21} x_1^{(k+1)} - a_{23} x_3^{(k)} - \cdots - a_{2n} x_n^{(k)} \right)\\
+		&\vdots\\
+		x_n^{(k+1)} &= \frac{1}{a_{nn}} \left( b_n - a_{n1} x_1^{(k+1)} - a_{n2} x_2^{(k+1)} - \cdots - a_{n,n-1} x_{n-1}^{(k+1)} \right)
+	\end{aligned}
+\end{equation}
+The matrix form: let $A = L + D + U$, where $L$ is the strictly lower triangular part of $A$, $D$ is the diagonal part of $A$, and $U$ is the strictly upper triangular part of $A$. Then we have $(D + L) X^{(k+1)} = - U X^{(k)} + b$, which gives us
+\begin{equation}
+	X^{(k+1)} = S X^{(k)} + f, \quad S = -(D + L)^{-1} U, \quad f = (D + L)^{-1} b
+\end{equation}
+
+\begin{theorem}
+	If $A$ is strictly diagonally dominant (either by rows or by columns), then the Gauss-Seidel method converges.
+\end{theorem}
+\begin{proof}
+	SORRY.
+\end{proof}
+
+\begin{theorem}
+	If $A$ is symmetric positive definite, then the Gauss-Seidel method converges.
+\end{theorem}
+\begin{proof}
+	SORRY.
+\end{proof}
+
+\paragraph{The Successive Over-Relaxation (SOR) Method}
+The Gauss-Seidel method is given by
+\begin{equation*}
+	(D + L) X^{(k+1)} = - U X^{(k)} + b, \qquad X^{(k+1)} = -D^{-1} L X^{(k+1)} - D^{-1} U X^{(k)} + D^{-1} b
+\end{equation*}
+we write it as
+\begin{equation*}
+	X^{(k+1)} = \tilde{L} X^{(k+1)} + \tilde{U} X^{(k)} + \tilde{b}, \quad \tilde{L} = -D^{-1} L, \quad \tilde{U} = -D^{-1} U, \quad \tilde{b} = D^{-1} b
+\end{equation*}
+The SOR method is given by
+\begin{equation}
+	X^{(k+1)} = (1- \omega) X^{(k)} + \omega (\tilde{L} X^{(k+1)} + \tilde{U} X^{(k)} + \tilde{b}), \quad k = 0, 1, 2, \ldots
+\end{equation}
+or
+\begin{equation}
+	\begin{aligned}
+		x_1^{(k+1)} &= (1 - \omega) x_1^{(k)} + \frac{\omega}{a_{11}} \left( b_1 - a_{12} x_2^{(k)} - \cdots - a_{1n} x_n^{(k)} \right)\\
+		x_2^{(k+1)} &= (1 - \omega) x_2^{(k)} + \frac{\omega}{a_{22}} \left( b_2 - a_{21} x_1^{(k+1)} - a_{23} x_3^{(k)} - \cdots - a_{2n} x_n^{(k)} \right)\\
+		&\vdots\\
+		x_n^{(k+1)} &= (1 - \omega) x_n^{(k)} + \frac{\omega}{a_{nn}} \left( b_n - a_{n1} x_1^{(k+1)} - a_{n2} x_2^{(k+1)} - \cdots - a_{n,n-1} x_{n-1}^{(k+1)} \right)
+	\end{aligned}
+\end{equation}
+
+\section{Numerical Integration}
+The Riemann integral of a function $f$ on the interval $[a, b]$ is defined as
+\begin{equation}
+	\int_{a}^{b} f(x) dx = \lim_{\Delta x_i \to 0} \sum_{i=1}^{n} f(x_i^*) \Delta x_i
+\end{equation}
+In numerical integration, we approximate the integral by a finite sum of function values at specific points multiplied by weights:
+\begin{equation}
+	I(f) = \int_{a}^{b} f(x) dx, \qquad I_n(f) = \sum_{i=0}^{n} \alpha_i f(x_i)
+\end{equation}
+
+\begin{definition}
+	The \textbf{algebraic degree of precision} of a numerical integration formula is the largest integer $m$ such that the formula is exact for all polynomials of degree less than or equal to $m$. In other words, if the formula satisfies:
+	\begin{equation}
+		E_n(x^k) = I(x^k) - I_n(x^k) = 0, \quad k = 0, 1, \ldots, m, \qquad E_n(x^{m+1}) \neq 0
+	\end{equation}
+	then the algebraic degree of precision of the formula is $m$.
+\end{definition}
+
+\subsection{The Interpolation Method}
+We can use the interpolation method to derive numerical integration formulas. We approximate the function $f(x)$ by the Lagrange interpolation polynomial $L_n(x)$ of degree $n$ that passes through the points $(x_i, f(x_i))$ for $i = 0, 1, \ldots, n$. Then we integrate the interpolation polynomial to obtain the numerical integration formula:
+\begin{equation}
+	\int_{a}^{b} f(x) dx \approx \int_{a}^{b} L_n(x) dx = \sum_{i=0}^{n} f(x_i) \int_{a}^{b} l_i(x) dx = \sum_{i=0}^{n} \alpha_i f(x_i)
+\end{equation}
+so we have
+\begin{equation}
+	\alpha_i = \int_{a}^{b} l_i(x) dx, \quad i = 0, 1, \ldots, n
+\end{equation}
+The Error is
+\begin{equation}
+	\begin{aligned}
+		E_n(f) &= \int_{a}^{b} f[x_0, x_1, \ldots, x_n, x] \prod_{i=0}^{n} (x - x_i) dx\\
+					 &= \frac{1}{(n+1)!} \int_{a}^{b} f^{(n+1)}(\xi(x)) \prod_{i=0}^{n} (x - x_i) dx.
+	\end{aligned}
+\end{equation}
+
+\paragraph{General Newton-Cotes Formulas}
+The Newton-Cotes formulas are a family of numerical integration formulas that use equally spaced interpolation points: $a = x_0 < x_1 < \cdots < x_n = b$, where $x_i = a + i h$ and $h = \frac{b - a}{n}$. The error of the Newton-Cotes formulas is given by
+\begin{itemize}
+	\item If $n$ is odd, then
+	      \begin{equation}
+		      E_n(f) = \frac{f^{(n+1)}(\xi)}{(n+1)!} \int_{a}^{b} \prod_{i=0}^{n} (x - x_i) dx
+	      \end{equation}
+	      which has $n$-th order convergence.
+	    \item If $n$ is even, then
+	      \begin{equation}
+		      E_n(f) = \frac{f^{(n+2)}(\xi)}{(n+2)!} \int_{a}^{b} (x - a)(x - b) \prod_{i=0}^{n} (x - x_i) dx
+	      \end{equation}
+	      which has $(n+1)$-th order convergence.
+\end{itemize}
+
+\paragraph{The Trapezoidal Rule}
+Take $(a,f(a))$ and $(b,f(b))$ as the interpolation points, we have
+\begin{equation*}
+	\alpha_0 = \int_{a}^{b} l_0(x) dx = \int_{a}^{b} \frac{x - b}{a - b} dx = \frac{b - a}{2}, \quad \alpha_1 = \int_{a}^{b} l_1(x) dx = \int_{a}^{b} \frac{x - a}{b - a} dx = \frac{b - a}{2}
+\end{equation*}
+So we have
+\begin{equation}
+	\int_{a}^{b} f(x) dx \approx \frac{b - a}{2} (f(a) + f(b))
+\end{equation}
+The error is
+\begin{equation}
+	E_1(f) = \frac{f''(\xi)}{2} \int_{a}^{b} (x - a)(x - b) dx = -\frac{(b - a)^3}{12} f''(\xi), \quad \xi \in (a, b)
+\end{equation}
+
+\begin{remark}
+	To apply the first mean value theorem for integrals, we need to make sure that the weight DOES NOT change sign in the interval. For example, for the trapezoidal rule, the weight is $(x - a)(x - b)$, which is negative in the interval $(a, b)$. So we can take $g(x) = -(x - a)(x - b)$ and $h(x) = f''(\xi(x))$ to apply the first mean value theorem for integrals.
+\end{remark}
+
+\paragraph{The Simpson's Rule}
+Take $(a,f(a))$, $(\frac{a+b}{2}, f(\frac{a+b}{2}))$, and $(b,f(b))$ as the interpolation points, we have
+\begin{equation}
+	\alpha_0 = \frac{1}{6} (b - a), \quad \alpha_1 = \frac{4}{6} (b - a), \quad \alpha_2 = \frac{1}{6} (b - a)
+\end{equation}
+So we have
+\begin{equation}
+	\int_{a}^{b} f(x) dx \approx \frac{b - a}{6} (f(a) + 4 f(\frac{a+b}{2}) + f(b))
+\end{equation}
+
+\end{document}
