@@ -1,0 +1,655 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\chapter{Lebesgue Measure}
+
+\section{Introduction}
+The Riemann integral of a bounded function over a closed, bounded interval is defined using approximations of the function that are associated with partitions of its domain into finite collections of subintervals. However, this approach has limitations, particularly when dealing with functions that are not continuous or when the domain is not a closed interval. The Lebesgue integral extends the concept of integration to a broader class of functions and domains by focusing on the measure of sets rather than the partitions of intervals.
+
+The generalization of the Riemann integral to the Lebesgue integral will be achieved by using approximations of the function that are associated with decompositions of its domain into finite collections of sets which we call Lebesgue measurable. Each interval is Lebesgue measurable. The richness of the collection of Lebesgue measurable sets provides better upper and lower approximations of a function, and therefore of its integral, than are possible by just employing intervals. This leads to a larger class of functions that are Lebesgue integrable over very general domains and an integral that has better properties.
+
+\begin{remark}
+  The \textbf{length} of an interval is defined as the difference between its endpoints if it is bounded, and as infinity if it is unbounded. Length is an example of a set function, that is, a function that associates an extended real number to each set in a collection of sets. In the case of length, the domain is the collection of all intervals. In this chapter we extend the set function length to a large collection of sets of real numbers.
+
+  For instance, the ``length'' of an open set will be the sum of the lengths of the countable number of open intervals of which it is composed. However, the collection of sets consisting of intervals and open sets is still too limited for our purposes. We will construct a collection of sets that is called \textbf{the Lebesgue measurable sets} and a set function called \textbf{the Lebesgue measure}, denoted by $m$.
+\end{remark}
+
+\begin{definition}{Lebesgue Measurable Sets}{Lebesgue Measurable Sets}
+  The collection of \textbf{Lebesgue measurable sets} is a $\sigma$-algebra of subsets of $\mathbb{R}$ that contains all open sets and closed sets. This conditions are not enough to define the collection of Lebesgue measurable sets, but we will give a more precise definition later in this chapter by Carath\'eodory's criterion for measurability.
+\end{definition}
+
+\begin{definition}{Lebesgue Measure}{Lebesgue Measure}
+  The \textbf{Lebesgue measure} is a set function $m$ defined on the collection of Lebesgue measurable sets that satisfies the following properties:
+  \begin{itemize}
+    \item Each nonempty interval is Lebesgue measurable and its measure is equal to its length.
+    \item Measure is translation invariant: if $E$ is Lebesgue measurable and $x \in \mathbb{R}$, then $E + x = \{y + x : y \in E\}$ is Lebesgue measurable and $m(E + x) = m(E)$.
+    \item Measure is countably additive over disjoint sets: if $\{E_n\}_{n=1}^{\infty}$ is a countable collection of pairwise disjoint Lebesgue measurable sets, then $\bigcup_{n=1}^{\infty} E_n$ is Lebesgue measurable and $m\left(\bigcup_{n=1}^{\infty} E_n\right) = \sum_{n=1}^{\infty} m(E_n)$.
+  \end{itemize}
+\end{definition}
+
+It is not possible to construct a set function that possesses the above three properties and is defined for all sets of real numbers. We respond to this limitation by constructing a set function on a very rich class of sets that does possess the above three properties. The construction has two stages.
+
+We first construct a set function called the \textbf{outer measure}, denoted by $m^*$, which is defined for all sets of real numbers and possesses the first two properties above: outer measure is translation invariant and the outer measure of an interval is equal to its length. However, outer measure is not finitely additive. But it is countably subadditive, which means that if $\{E_n\}_{n=1}^{\infty}$ is a countable collection of sets of real numbers, then
+\begin{equation}
+  m^*\left(\bigcup_{n=1}^{\infty} E_n\right) \leq \sum_{n=1}^{\infty} m^*(E_n).
+\end{equation}
+The second stage in the construction is to determine what it means for a set to be Lebesgue measurable. We then restrict the set function $m^*$ to the collection of Lebesgue measurable sets to obtain the Lebesgue measure $m$.
+
+\section{Lebesgue Outer Measure}
+We define the length of an interval $I$ as follows:
+\begin{equation}
+  \ell(I) = \begin{cases}
+    b - a & \text{if } I = [a, b], (a, b), [a, b), (a, b] \\
+    \infty & \text{if } I = [a, \infty), (a, \infty), (-\infty, b], (-\infty, b), (-\infty, \infty)
+  \end{cases}
+\end{equation}
+
+Consider a set $A \subseteq \mathbb{R}$, consider the countable collection of nonempty bounded open intervals $\{I_n\}_{n=1}^{\infty}$ that cover $A$, that is, $A \subseteq \bigcup_{n=1}^{\infty} I_n$. For each such collection, consider the sum of the lengths of the intervals in the collection. Since the lengths are positive numbers, each sum is uniquely defined independently of the order of the terms. We then take the infimum of all such sums over all countable collections of nonempty bounded open intervals that cover $A$. This infimum is called the outer measure of $A$.
+
+\begin{definition}{Outer Measure}{Outer Measure}
+  The \textbf{outer measure} of a set $A \subseteq \mathbb{R}$ is defined as
+  \begin{equation}
+    m^*(A) = \inf\left\{\sum_{n=1}^{\infty} \ell(I_n) : A \subseteq \bigcup_{n=1}^{\infty} I_n, I_n \text{ is a nonempty bounded open interval}\right\}.
+  \end{equation}
+\end{definition}
+
+It follows immediately from the definition of outer measure that $m^*(\emptyset) = 0$ and is \textbf{monotone}, that if $A \subseteq B$, then $m^*(A) \leq m^*(B)$.
+
+\begin{example}{Outer Measure}{Outer Measure}
+  \textbf{A countable set has outer measure zero:}
+
+  \begin{proof}
+    Let $A = \{x_1, x_2, x_3, \ldots\}$ be a countable set. For each $n \in \mathbb{N}$, let $I_n$ be the open interval $(x_n - \epsilon/2^{n+1}, x_n + \epsilon/2^{n+1})$. Then $\{I_n\}_{n=1}^{\infty}$ is a countable collection of nonempty bounded open intervals that cover $A$. The sum of the lengths of the intervals in this collection is
+    \begin{equation}
+      \sum_{n=1}^{\infty} \ell(I_n) = \sum_{n=1}^{\infty} \frac{\epsilon}{2^n} = \epsilon.
+    \end{equation}
+    Since $\epsilon > 0$ is arbitrary, it follows that $m^*(A) = 0$.
+  \end{proof}
+\end{example}
+
+\begin{proposition}{Outer Measure of Intervals}{Outer Measure of Intervals}
+  The outer measure of an interval is equal to its length.
+\end{proposition}
+\begin{proof}
+  \textbf{The Closed Bounded Interval:} Let $[a, b]$ be a closed bounded interval. Let $\epsilon > 0$, we can cover $[a, b]$ with the open interval $(a - \epsilon, b + \epsilon)$, so we have $m^*([a, b]) \leq b - a$.
+
+  The other direction is more difficult. Let $\{I_k\}_{k=1}^{\infty}$ be a countable collection of nonempty bounded open intervals that cover $[a, b]$. Since $[a, b]$ is compact, there exists a finite subcollection $\{I_k\}_{k=1}^{n}$ that covers $[a, b]$. We study the behavior of the finite sum:
+
+  Since $a \in [a, b]$, there exists $I_{k_1}$ such that $a \in I_{k_1}$. Let $b_1$ be the right endpoint of $I_{k_1}$. If $b_1 \geq b$, then we have covered the entire interval and we are done. If not, then there exists $I_{k_2}$ such that $b_1 \in I_{k_2}$. Let $b_2$ be the right endpoint of $I_{k_2}$ and continue this process, as it must terminate after a finite number of steps since we have a finite collection of intervals. We obtain a finite collection of intervals $\{I_{k_1}, I_{k_2}, \ldots, I_{k_m}\}$ that covers $[a, b]$ and such that the right endpoint of $I_{k_m}$ is greater than or equal to $b$. The sum of the lengths of these intervals is greater than or equal to $b - a$, since they cover the interval $[a, b]$. Therefore, we have
+  \begin{equation*}
+    \sum_{k=1}^{n} \ell(I_k) \geq b - a.
+  \end{equation*}
+  So we have $m^*([a, b]) \geq b - a$. Combining this with the previous inequality, we conclude that $m^*([a, b]) = b - a$.
+
+  \textbf{Any Bounded Interval:} The proof for any bounded interval follows from the fact that take any bounded interval, for any $\epsilon > 0$ there exists closed bounded interval $J_1$ and $J_2$ such that $J_1 \subseteq I \subseteq J_2$ and $\ell(I) - \epsilon < \ell(J_1)$ and $\ell(J_2) < \ell(I) + \epsilon$. Then we have
+  \begin{equation*}
+    \ell(I) - \epsilon < m^*(J_1) \leq m^*(I) \leq m^*(J_2) < \ell(I) + \epsilon.
+  \end{equation*}
+  which implies that $m^*(I) = \ell(I)$.
+
+  \textbf{Unbounded Interval:} The proof for any unbounded interval follows from the fact that take any unbounded interval, for any $M > 0$ there exists a bounded interval $J$ such that $J \subseteq I$ and $\ell(J) > M$. Then we have
+  \begin{equation*}
+    M < m^*(J) \leq m^*(I).
+  \end{equation*}
+  therefore $m^*(I) = \infty$.
+\end{proof}
+
+\begin{proposition}{Outer Measure is Translation Invariant}{Outer Measure is Translation Invariant}
+  The outer measure is translation invariant, that is, if $A \subseteq \mathbb{R}$ and $x \in \mathbb{R}$, then $m^*(A + x) = m^*(A)$.
+\end{proposition}
+\begin{proof}
+  Simply follows that if $\{I_n\}_{n=1}^{\infty}$ is a countable collection of nonempty bounded open intervals that cover $A$, then $\{I_n + x\}_{n=1}^{\infty}$ is a countable collection of nonempty bounded open intervals that cover $A + x$ and they have the same total length. Therefore, we have $m^*(A + x) = m^*(A)$.
+\end{proof}
+
+\begin{proposition}{Outer Measure is Countably Subadditive}{Outer Measure is Countably Subadditive}
+  The outer measure is countably subadditive, that is, if $\{E_n\}_{n=1}^{\infty}$ is a countable collection of sets of real numbers, then
+  \begin{equation}
+    m^*\left(\bigcup_{n=1}^{\infty} E_n\right) \leq \sum_{n=1}^{\infty} m^*(E_n).
+  \end{equation}
+\end{proposition}
+\begin{proof}
+  If one of $E_n$ has infinite outer measure, then the inequality is trivial. So we assume that $m^*(E_n) < \infty$ for all $n \in \mathbb{N}$.
+
+  We begin by noting that from the definition of outer measure, for each $\epsilon > 0$, there exists a countable collection of nonempty bounded open intervals $\{I_{n, k}\}_{k=1}^{\infty}$ that cover $E_n$ such that their total length $\sum_{k=1}^{\infty} \ell(I_{n, k}) < m^*(E_n) + \epsilon/2^n$. Then we have the union of all these intervals $\{I_{n, k}\}_{n, k=1}^{\infty}$ is a countable collection of nonempty bounded open intervals that cover $\bigcup_{n=1}^{\infty} E_n$. So we have
+  \begin{equation*}
+    m^*\left(\bigcup_{n=1}^{\infty} E_n\right) \leq \sum_{n=1}^{\infty} \sum_{k=1}^{\infty} \ell(I_{n, k}) < \sum_{n=1}^{\infty} m^*(E_n) + \epsilon.
+  \end{equation*}
+  which completes the proof since $\epsilon > 0$ is arbitrary.
+\end{proof}
+
+We can also take $E_n = \emptyset $ for all $n$ sufficiently large, to get the finite version of the above proposition, which is called \textbf{finite subadditivity}.
+
+\section{The $\sigma$-algebra of Lebesgue Measurable Sets}
+Outer measure has four virtues:
+\begin{itemize}
+  \item It is defined for all sets of real numbers.
+  \item The outer measure of an interval is equal to its length.
+  \item It is countably subadditive.
+  \item It is translation invariant.
+\end{itemize}
+But outer measure fails to be countably additive. In fact, it is not even finitely additive: there are disjoint sets $A$ and $B$ such that $m^*(A \cup B) < m^*(A) + m^*(B)$.
+
+To ameliorate this fundamental defect we identify a $\sigma$-algebra of sets, called the Lebesgue measurable sets, which contains all intervals and all open sets and has the property that the restriction of the set function outer measure to the collection of Lebesgue measurable sets is countably additive. There are a number of ways to define what it means for a set to be measurable.
+
+We follow an approach due to Constantine Carath\'eodory, which is based on the following idea: a set $E$ is Lebesgue measurable if for every set $A$, the outer measure of $A$ is equal to the sum of the outer measures of the parts of $A$ that are inside and outside of $E$. In other words
+\begin{definition}{Carath\'eodory's Criterion for Measurability}{Caratheodorys Criterion for Measurability}
+  A set $E \subseteq \mathbb{R}$ is \textbf{Lebesgue measurable} if for every set $A \subseteq \mathbb{R}$, we have
+  \begin{equation}
+    m^*(A) = m^*(A \cap E) + m^*(A \cap E^c).
+  \end{equation}
+\end{definition}
+
+\begin{remark}
+	To truly understand why the outer measure $m^*$ fails to be additive, we must look at the ``economical'' nature of its definition. Recall that $m^*(E)$ is an \textit{infimum}—it represents the cheapest possible cost (in total length) to cover a set $E$ using a union of open intervals.
+
+	\vspace{1em}
+	\noindent \textbf{The ``Double-Dipping'' Phenomenon} \\
+	The fundamental reason additivity fails ($m^*(A \cup B) < m^*(A) + m^*(B)$) is that open intervals are ``blunt'' instruments. If two disjoint sets $A$ and $B$ are extremely \textit{intertwined} or \textit{tangled} (like the rational and irrational numbers), they may occupy the same general ``region'' of space without sharing any specific points.
+	
+	When we measure them separately:
+	\begin{itemize}
+		\item To cover $A$, we must use intervals that inevitably contain a lot of ``empty space'' around the points of $A$.
+		\item To cover $B$, we similarly use intervals that contain empty space around the points of $B$.
+	\end{itemize}
+	Because $A$ and $B$ are intertwined, the ``empty space'' we used to cover $A$ likely already contains the points of $B$. When we calculate $m^*(A \cup B)$, the outer measure is ``smart'' and uses one set of intervals to cover both simultaneously. In this sense, $m^*(A \cup B)$ is a ``discounted price.'' However, the sum $m^*(A) + m^*(B)$ forces us to pay for that same overlapping space twice. Thus, the sum of the parts appears larger than the whole.
+
+	\vspace{1em}
+	\noindent \textbf{Disjointness vs. Metric Separation} \\
+	In elementary geometry, we assume that if two things don't touch, they are separate. In Real Analysis, this is not true. Two sets can have an intersection that is empty ($A \cap B = \emptyset$) while their \textit{distance} is zero ($\text{dist}(A,B) = 0$). Outer measure is perfectly additive for sets that have a physical gap between them. The failure of additivity only occurs when sets are ``infinitely close'' at every point, a condition that occurs with non-measurable sets like the Vitali set.
+
+	\vspace{1em}
+	\noindent \textbf{The ``Clean Slicer'' Analogy for Carathéodory} \\
+	Carathéodory’s Criterion ($\forall A: m^*(A) = m^*(A \cap E) + m^*(A \cap E^c)$) defines a measurable set $E$ as a set that acts as a \textbf{perfectly sharp knife}.
+	
+	Most sets in $\mathbb{R}$ are ``fuzzy'' or ``porous'' at a microscopic level. If you try to use a ``fuzzy'' set $E$ to slice a ``test set'' $A$, the boundary of $E$ will ``fray'' the edges of $A$. This fraying creates the overlap discussed above, causing $m^*(A \cap E) + m^*(A \cap E^c)$ to become larger than the original $m^*(A)$.
+	
+	A set $E$ is \textbf{measurable} if it is ``solid'' enough that it can slice \textit{any} other set $A$ (no matter how complicated or non-measurable $A$ itself is) without creating any new overlapping covers. We use an arbitrary ``test set'' $A$ because we want to ensure $E$ is well-behaved everywhere. If $E$ can partition \textit{every} possible set in the universe without ``adding'' fake volume via overlapping covers, then $E$ is stable enough to belong to our $\sigma$-algebra.
+
+	\vspace{1em}
+	\noindent \textbf{Summary of the Logic} \\
+	Non-additivity is a byproduct of the fact that we cover sets with \textbf{open intervals}. Because open intervals have ``insides,'' they cannot perfectly conform to the jagged, ``point-cloud'' nature of non-measurable sets. Carathéodory's definition filters out these jagged sets, leaving us with a collection (the Lebesgue sets) where the ``bluntness'' of our intervals no longer causes mathematical errors.
+\end{remark}
+
+It is easy to see that this means that if $E$ is Lebesgue measurable then for every other set $A$ that is disjoint from $E$, we have
+\begin{equation*}
+  m^*(A \sqcup E) = m^*(A) + m^*(E),
+\end{equation*}
+just taking the test set to be $A \sqcup E$ would do.
+
+Observe that the definition of measurability is symmetric in $E$ and $E^c$. Therefore, if $E$ is Lebesgue measurable, then $E^c$ is also Lebesgue measurable. And clearly, $\mathbb{R}$ and $\emptyset$ are Lebesgue measurable.
+
+\begin{proposition}{}{}
+  Any set of outer measure zero is measurable. In particular, any countable set is measurable.
+\end{proposition}
+\begin{proof}
+  Let $E$ be a set of outer measure zero. Then for any set $A$, we have
+  \begin{equation*}
+    m^*(A) \leq m^*(A \cap E) + m^*(A \cap E^c) \leq m^*(E) + m^*(A) = 0 + m^*(A) = m^*(A).
+  \end{equation*}
+  Therefore, $E$ is measurable.
+\end{proof}
+
+\begin{proposition}{}{}
+  The union of a finite collection of measurable sets is measurable.
+\end{proposition}
+\begin{proof}
+  Just give the case for two sets, the general case follows by induction. Let $E_1$ and $E_2$ be two measurable sets. Then for any set $A$, we try to partition $A$ into four parts: $A \cap E_1 \cap E_2$, $A \cap E_1 \cap E_2^c$, $A \cap E_1^c \cap E_2$, and $A \cap E_1^c \cap E_2^c$. Then we first use the measurability of $E_1$ to get
+  \begin{equation*}
+    m^*(A) = m^*(A \cap E_1) + m^*(A \cap E_1^c).
+  \end{equation*}
+  and then we use the measurability of $E_2$ and let the test set be $A \cap E_1$ and $A \cap E_1^c$ respectively to get
+  \begin{equation*}
+    \begin{aligned}
+      m^*(A \cap E_1) &= m^*(A \cap E_1 \cap E_2) + m^*(A \cap E_1 \cap E_2^c), \\
+      m^*(A \cap E_1^c) &= m^*(A \cap E_1^c \cap E_2) + m^*(A \cap E_1^c \cap E_2^c).
+    \end{aligned}
+  \end{equation*}
+  Adding these two equations together, and combine the three terms on the right hand side and use subadditivity to get
+  \begin{equation*}
+    m^*(A) \geq m^*(A \cap (E_1 \cup E_2)) + m^*(A \cap (E_1 \cup E_2)^c).
+  \end{equation*}
+  The equality in the other direction follows from direct application of subadditivity. Therefore, $E_1 \cup E_2$ is measurable.
+\end{proof}
+
+\begin{proposition}{Additivity of Outer Measure on Measurable Sets}{Additivity of Outer Measure on Measurable Sets}
+  If $\{E_k\}_{k=1}^{n}$ is a finite collection of pairwise disjoint measurable sets, then for any set $A$, we have
+  \begin{equation}
+    m^*\left(A \cap \bigcup_{k=1}^{n} E_k\right) = \sum_{k=1}^{n} m^*(A \cap E_k).
+  \end{equation}
+  In particular, if $A = \bigcup_{k=1}^{n} E_k$, then we have
+  \begin{equation}
+    m^*\left(\bigcup_{k=1}^{n} E_k\right) = \sum_{k=1}^{n} m^*(E_k).
+  \end{equation}
+\end{proposition}
+\begin{proof}
+  Again, we prove the case for $n = 2$, the general case follows by induction. Let $E_1$ and $E_2$ be two disjoint measurable sets. Then for any set $A$, we have
+  \begin{equation*}
+    m^*(A) = m^*(A \cap (E_1 \cup E_2)) + m^*(A \cap (E_1 \cup E_2)^c).
+  \end{equation*}
+  and also according to above proposition, we have
+  \begin{equation*}
+    m^*(A) = m^*(A \cap (E_1 \cap E_2^c)) + m^*(A \cap (E_1^c \cap E_2)) + m^*(A \cap (E_1^c \cap E_2^c)).
+  \end{equation*}
+  as they are disjoint, using the outer measure of empty set is zero. We can simplify the above equation to get
+  \begin{equation*}
+    m^*(A) = m^*(A \cap E_1) + m^*(A \cap E_2) + m^*(A \cap (E_1 \cup E_2)^c).
+  \end{equation*}
+  So we have
+  \begin{equation*}
+    m^*(A \cap (E_1 \cup E_2)) = m^*(A \cap E_1) + m^*(A \cap E_2).
+  \end{equation*}
+  as desired. The second part of the proposition follows by taking $A = E_1 \cup E_2$.
+\end{proof}
+
+\begin{definition}{Algebra}{Algebra}
+  A collection $\mathcal{A}$ of subsets of a set $X$ is called an \textbf{algebra} if it satisfies the following properties:
+  \begin{itemize}
+    \item $X \in \mathcal{A}$.
+    \item If $A \in \mathcal{A}$, then $A^c \in \mathcal{A}$.
+    \item If $A, B \in \mathcal{A}$, then $A \cup B \in \mathcal{A}$.
+  \end{itemize}
+\end{definition}
+\begin{remark}
+  The difference of an algebra and a $\sigma$-algebra is that an algebra is closed under finite unions, while a $\sigma$-algebra is closed under countable unions. Therefore, every $\sigma$-algebra is an algebra, but not vice versa.
+
+  We have thereby established that the collection of Lebesgue measurable sets is an algebra, and that the restriction of the outer measure to this algebra is finitely additive.
+\end{remark}
+
+To proceed the discussion, we need to adopt a useful trick to turn a countable union of sets into a disjoint union. Consider $\{E_n\}_{n=1}^{\infty}$ be a countable collection of sets. We can define a new collection of sets $\{E_n'\}_{n=1}^{\infty}$ by
+\begin{equation}
+  E_1' = E_1, \quad E_n' = E_n \setminus \bigcup_{k=1}^{n-1} E_k, \quad n \geq 2.
+\end{equation}
+As Lebesgue measurable sets form an algebra, we have that $E_n'$ is Lebesgue measurable for all $n \in \mathbb{N}$. It is easy to see that $\{E_n'\}_{n=1}^{\infty}$ is a countable collection of pairwise disjoint sets and have the same partial union as $\{E_n\}_{n=1}^{\infty}$, that is, $\bigcup_{k=1}^{n} E_k' = \bigcup_{k=1}^{n} E_k$ for all $n \in \mathbb{N}$.
+
+\begin{proposition}{Countable Union of Measurable Sets is Measurable}{Countable Union of Measurable Sets is Measurable}
+  The union of a countable collection of measurable sets is measurable.
+\end{proposition}
+\begin{proof}
+  As said above, we may just assume that the collection of sets $\{E_n\}_{n=1}^{\infty}$ is pairwise disjoint. Take $F_n = \bigcup_{k=1}^{n} E_k$, and $E = \bigcup_{k=1}^{\infty} E_k$. Then $F_n$ is measurable for all $n \in \mathbb{N}$, and we need to show that $E$ is measurable. For any set $A$, we have
+  \begin{equation}
+    m^*(A) = m^*(A \cap F_n) + m^*(A \cap F_n^c) \geq m^*(A \cap F_n) + m^*(A \cap E^c).
+  \end{equation}
+  Consider the sequence $\{m^*(A \cap F_n)\}_{n=1}^{\infty}$. It is a nondecreasing sequence with an upper bound $m^*(A\cap E)$. Therefore, we have
+  \begin{equation}
+    m^*(A) \geq \lim_{n \to \infty} m^*(A \cap F_n) + m^*(A \cap E^c) = m^*(A \cap E) + m^*(A \cap E^c).
+  \end{equation}
+  and the other direction of the inequality follows from subadditivity. Therefore, $E$ is measurable.
+\end{proof}
+
+We have now established that the collection of Lebesgue measurable sets is a $\sigma$-algebra.
+
+\begin{proposition}{Interval is Measurable}{Interval is Measurable}
+  Every interval is measurable.
+\end{proposition}
+\begin{proof}
+  We need only prove that $(a, \infty)$ is measurable, as the other cases follow from this one by intersection and complementation.
+
+  For any set $A$, assume $a \notin A$, otherwise we can just remove $a$ from $A$ without changing the outer measure. Partition $A$ into two parts: $A_1 = A \cap (-\infty, a)$ and $A_2 = A \cap (a, \infty)$. Then consider any open bounded intervals $\{I_k\}_{k=1}^{\infty}$ that cover $A$, we partition them into two parts: $I_k' = I_k \cap (-\infty, a)$ and $I_k'' = I_k \cap (a, \infty)$, each of which is an open bounded interval that covers $A_1$ and $A_2$ respectively. Then we have
+  \begin{equation*}
+    \ell(I_k) = \ell(I_k') + \ell(I_k'').
+  \end{equation*}
+  and by definition,
+  \begin{equation*}
+    m^*(A_1) \leq \sum_{k=1}^{\infty} \ell(I_k'), \quad m^*(A_2) \leq \sum_{k=1}^{\infty} \ell(I_k'').
+  \end{equation*}
+  which gives
+  \begin{equation*}
+    m^*(A_1) + m^*(A_2) \leq \sum_{k=1}^{\infty} \ell(I_k).
+  \end{equation*}
+  And as $m^*(A)$ is the infimum of all such sums, we have
+  \begin{equation}
+    m^*(A_1) + m^*(A_2) \leq m^*(A).
+  \end{equation}
+  so we have our desired result.
+\end{proof}
+
+As every open set is a countable union of open intervals, we have that every open set is measurable. And as the complement of an open set is closed, we have that every closed set is measurable.
+
+We have now established that the collection of Lebesgue measurable sets is a $\sigma$-algebra that contains all open sets and closed sets. This means that it contains the Borel $\sigma$-algebra, which is the smallest $\sigma$-algebra that contains all open and closed sets. Therefore, every Borel set is Lebesgue measurable.
+
+\begin{proposition}{Translation Invariance of Measurable Sets}{Translation Invariance of Measurable Sets}
+  If $E$ is a measurable set and $x \in \mathbb{R}$, then $E + x = \{y + x : y \in E\}$ is measurable.
+\end{proposition}
+\begin{proof}
+  Easy, just move the test set $A$ by $-x$ and use the translation invariance of outer measure:
+  \begin{equation*}
+    m^*(A) = m^*(A - x) = m^*((A - x) \cap E) + m^*((A - x) \cap E^c) = m^*(A \cap (E + x)) + m^*(A \cap (E + x)^c).
+  \end{equation*}
+  which shows that $E + x$ is measurable.
+\end{proof}
+
+\section{Outer and Inner Approximations of Measurable Sets}
+We now present two characterizations of measurability of a set, one based on inner approximation by closed sets and the other on outer approximation by open sets, which provide alternate angles of vision on measurability. These characterizations will be essential tools for our forthcoming study of approximation properties of measurable and integrable functions.
+
+Measurable sets have a \textbf{Excision Property}, which means that if $A$ is a measurable set with finite outer measure, and $A \subseteq B$, then we have
+\begin{equation}
+  m^*(B \setminus A) = m^*(B) - m^*(A).
+\end{equation}
+which is quite useful but very obvious from the definition. The finiteness of the outer measure of $A$ is necessary for the subtraction to make sense.
+
+\begin{theorem}{Equivalent Characterizations of Measurability}{Equivalent Characterizations of Measurability}
+  Let $E \subseteq \mathbb{R}$ be a set. The following statements are equivalent to $E$ being Lebesgue measurable:
+  \begin{enumerate}
+    \item $E$ is Lebesgue measurable.
+    \item For every $\epsilon > 0$, there exists an open set $\mathcal{O}$ such that $E \subseteq \mathcal{O}$ and $m^*(\mathcal{O} \setminus E) < \epsilon$.
+    \item There exists a $G_\delta$ set $G$ such that $E \subseteq G$ and $m^*(G \setminus E) = 0$.
+    \item For every $\epsilon > 0$, there exists a closed set $F$ such that $F \subseteq E$ and $m^*(E \setminus F) < \epsilon$.
+    \item There exists an $F_\sigma$ set $F$ such that $F \subseteq E$ and $m^*(E \setminus F) = 0$.
+  \end{enumerate}
+\end{theorem}
+\begin{proof}
+  Proving the first two statements would be suffice, as the other two statements follow from the first two by taking complements.
+
+  \paragraph{(1) $\Rightarrow$ (2)} Assume $E$ is measurable. Let $\epsilon > 0$. First consider the case that $m^*(E) < \infty$. Then by the definition we can find a countable collection of nonempty bounded open intervals $\{I_n\}_{n=1}^{\infty}$ that cover $E$ such that $\sum_{n=1}^{\infty} \ell(I_n) < m^*(E) + \epsilon$. Let $\mathcal{O} = \bigcup_{n=1}^{\infty} I_n$, then we have $E \subseteq \mathcal{O}$ and $m^*(\mathcal{O}) \leq \sum_{n=1}^{\infty} \ell(I_n) < m^*(E) + \epsilon$, which is the desired result.
+
+  Now consider the case that $m^*(E) = \infty$. Then we express $E$ as a countable disjoint union of measurable sets with finite outer measure, This can be accomplished by taking $E_n = E \cap [-n, n]$ for $n \in \mathbb{N}$ and making them disjoint by subtracting the previous sets. Then for the finite case, we let
+  \begin{equation*}
+    m^*(\mathcal{O}_k \setminus E_k) < \epsilon/2^k, \quad k = 1, 2, \ldots
+  \end{equation*}
+  Then we have $\mathcal{O} = \bigcup_{k=1}^{\infty} \mathcal{O}_k$ is an open set that contains $E$ and $\mathcal{O} \setminus E = \bigcup_{k=1}^{\infty} (\mathcal{O}_k \setminus E_k)$. Then by subadditivity, we have
+  \begin{equation*}
+    m^*(\mathcal{O} \setminus E) \leq \sum_{k=1}^{\infty} m^*(\mathcal{O}_k \setminus E_k) < \sum_{k=1}^{\infty} \epsilon/2^k = \epsilon.
+  \end{equation*}
+
+  \paragraph{(2) $\Rightarrow$ (3)} Take a sequence of $\mathcal{O}_k$ such that $m^*(\mathcal{O}_k \setminus E) < 1/k$ for $k = 1, 2, \ldots$. Then define $G = \bigcap_{k=1}^{\infty} \mathcal{O}_k$, which is a $G_\delta$ set. Then we have $E \subseteq G$ and 
+  \begin{equation*}
+    m^*(G \setminus E) \leq m^*(\mathcal{O}_k \setminus E) < 1/k, \quad k = 1, 2, \ldots
+  \end{equation*}
+  implying that $m^*(G \setminus E) = 0$.
+
+  \paragraph{(3) $\Rightarrow$ (1)} Let $G$ be a $G_\delta$ set such that $E \subseteq G$ and $m^*(G \setminus E) = 0$. Then both a $G_{\delta}$ set and a set of outer measure zero are measurable, so $E$ is measurable.
+\end{proof}
+
+\begin{remark}
+  This theorem shows that a set is measurable if and only if an outer approximation by open sets can be chosen so that it does not cover too much extra space, or equivalently, if and only if an inner approximation by closed sets can be chosen so that it does not miss too much of the set. This is a very useful characterization of measurability.
+\end{remark}
+
+The following property of measurable sets of finite outer measure asserts that such sets are nearly equal to the disjoint union of a finite number of open intervals.
+
+\begin{theorem}{Littlewood's First Principle}{Littlewood First Principle}
+  Let $E \subseteq \mathbb{R}$ be a measurable set with finite outer measure. Then for every $\epsilon > 0$, there exists a finite collection of disjoint open intervals $\{I_k\}_{k=1}^{n}$ such that if $\mathcal{O} = \bigcup_{k=1}^{n} I_k$, then 
+  \begin{equation}
+    m^*(\mathcal{O} \setminus E) + m^*(E \setminus \mathcal{O}) < \epsilon.
+  \end{equation}
+\end{theorem}
+\begin{proof}
+  This is quite straightforward from the previous theorem. Let $\epsilon > 0$. Then there exists an open set $\mathcal{U}$ such that $E \subseteq \mathcal{U}$ and $m^*(\mathcal{U} \setminus E) < \epsilon/2$. Then we can express $\mathcal{U}$ as a countable union of disjoint open intervals $\{I_k\}_{k=1}^{\infty}$. Since we have
+  \begin{equation*}
+    \sum_{k=1}^{n} \ell(I_k) = m^*\left(\bigcup_{k=1}^{n} I_k\right) \leq m^*(\mathcal{U}) < \infty
+  \end{equation*}
+  we can find $n$ sufficiently large such that
+  \begin{equation*}
+    \sum_{k=n+1}^{\infty} \ell(I_k) < \epsilon/2.
+  \end{equation*}
+  the remaining intervals $\{I_k\}_{k=1}^{n}$ give the desired result.
+\end{proof}
+
+\section{Countable Additivity, Continuity, and Borel-Cantelli Lemma}
+
+We hereby fill the last puzzle piece of the theory of Lebesgue measure by proving that the restriction of outer measure to the $\sigma$-algebra of Lebesgue measurable sets is countably additive.
+
+\begin{definition}{Lebesgue Measure}{Lebesgue Measure}
+  The restriction of outer measure to the $\sigma$-algebra of Lebesgue measurable sets is called \textbf{Lebesgue measure}, and is denoted by $m$.
+\end{definition}
+
+\begin{proposition}{Countable Additivity of Lebesgue Measure}{Countable Additivity of Lebesgue Measure}
+  If $\{E_n\}_{n=1}^{\infty}$ is a countable collection of pairwise disjoint measurable sets, then
+  \begin{equation}
+    m\left(\bigcup_{n=1}^{\infty} E_n\right) = \sum_{n=1}^{\infty} m(E_n).
+  \end{equation}
+\end{proposition}
+\begin{proof}
+  We have already proved that the union of a countable collection of measurable sets is measurable, so the left hand side is well-defined. The finite version and the monotonicity of outer measure shows that
+  \begin{equation*}
+    m\left(\bigcup_{k=1}^{\infty } E_k\right) \geq m\left(\bigcup_{k=1}^{n} E_k\right) = \sum_{k=1}^{n} m(E_k), \quad n = 1, 2, \ldots
+  \end{equation*}
+  so we have
+  \begin{equation*}
+    m\left(\bigcup_{k=1}^{\infty } E_k\right) \geq \sum_{k=1}^{\infty} m(E_k).
+  \end{equation*}
+  the equality follows from the countable subadditivity of outer measure.
+\end{proof}
+
+\begin{theorem}{The Lebesgue Measure}{The Lebesgue Measure}
+   The set function Lebesgue measure, defined on the $\sigma$-algebra of Lebesgue measurable sets, assigns length to any interval, is translation invariant, and is countable additive.
+\end{theorem}
+
+\begin{remark}
+    It is natural to ask if the Lebesgue measurable sets $\mathcal{M}$ constructed above is the largest possible $\sigma$-algebra that admits a Lebesgue measure. The answer depends on our requirements:
+    \begin{itemize}
+        \item \textbf{Existence:} By the Vitali Theorem, no such measure can exist on the full power set $\mathcal{P}(\mathbb{R})$.
+        \item \textbf{Canonicity:} The Lebesgue $\sigma$-algebra $\mathcal{M}$ is the \textbf{largest} collection of sets that can be derived canonically from the outer measure $m^*$ using the Carathéodory criterion. 
+        \item \textbf{Extensions:} While it is possible to extend the measure to even larger $\sigma$-algebras using the Axiom of Choice, such extensions are not unique and lack the structural "elegance" required for standard analysis.
+    \end{itemize}
+    Thus, for all practical purposes in analysis and probability, $\mathcal{M}$ is treated as the maximal domain for the Lebesgue measure.
+
+    Some would say the existence of larger $\sigma$-algebras with a Lebesgue measure is not quite surprising when we look at the Carathéodory criterion. The criterion itself gives a stronger requirements that a measurable set must give a good partition to ANY other set, which is a very strong requirement, compared to the natural requirement that a measurable set need only give a good partition to other measurable sets. This is not quite right, as one can prove that we can weaken the Carathéodory criterion to only require that a measurable set gives a good partition to other OPEN sets, and this is equivalent to the original definition.
+
+    We may well regard the above construction of the Lebesgue measure as the definition for both Lebesgue measure and Lebesgue measurable sets, and the above theorem as the fundamental properties of the Lebesgue measure. But it may feel unsatisfactory that we have not given an axiomatic definition. It is natural to think that the Lebesgue measurable sets are the ``maximal'' $\sigma$-algebra that satisfy some natural properties. As we see that the above three properties are natural but not enough, we need to compel ourself to another another restriction.
+\end{remark}
+
+\begin{definition}{Lebesgue Measurable Sets and Lebesgue Measure}{Lebesgue Measurable Sets and Lebesgue Measure}
+  The \textbf{Lebesgue measurable sets} $\mathcal{M}$ and the \textbf{Lebesgue measure} $m$ are defined as the unique maximal $\sigma$-algebra and its associated set function $m: \mathcal{M} \to [0, \infty]$ such that:
+  \begin{itemize}
+    \item $m$ is a \textbf{measure} (it is countably additive over disjoint sets).
+    \item $\mathcal{M}$ contains all intervals and $m(I) = \ell(I)$.
+    \item $m$ is \textbf{translation invariant}.
+    \item $m$ is \textbf{consistent with outer measure}: $m(E) = m^*(E)$ for all $E \in \mathcal{M}$.
+  \end{itemize}
+\end{definition}
+
+Next we move on to discuss the properties of the Lebesgue measure.
+
+\begin{theorem}{Continuity of Measure}{Continuity of Measure}
+  Lebesgue measure possesses the following continuity properties:
+  \begin{itemize}
+    \item If $\{A_k\}_{k=1}^{\infty}$ is an ascending sequence of measurable sets, then
+      \begin{equation}
+        m\left(\bigcup_{k=1}^{\infty} A_k\right) = \lim_{k \to \infty} m(A_k).
+      \end{equation}
+    \item If $\{A_k\}_{k=1}^{\infty}$ is a descending sequence of measurable sets with $m(A_1) < \infty$, then
+      \begin{equation}
+        m\left(\bigcap_{k=1}^{\infty} A_k\right) = \lim_{k \to \infty} m(A_k).
+      \end{equation}
+  \end{itemize}
+\end{theorem}
+\begin{proof}
+  First we prove the first statement. If these is one $k$ such that $m(A_k) = \infty$, then the result is trivial. Otherwise, we have $m(A_k) < \infty$ for all $k$. Let $C_k = A_k \setminus A_{k-1}$ for $k \geq 2$ and $C_1 = A_1$. Then $\{C_k\}_{k=1}^{\infty}$ is a countable collection of pairwise disjoint measurable sets, and we have
+  \begin{equation*}
+    \bigcup_{k=1}^{\infty} A_k = \bigcup_{k=1}^{\infty} C_k.
+  \end{equation*}
+  so we have
+  \begin{equation*}
+    m\left(\bigcup_{k=1}^{\infty} A_k\right) = m\left(\bigcup_{k=1}^{\infty} C_k\right) = \sum_{k=1}^{\infty} m(C_k) = \lim_{n \to \infty} \sum_{k=1}^{n} m(C_k) = \lim_{n \to \infty} m(A_n).
+  \end{equation*}
+
+  The second part of the theorem follows from the first part by taking complements.
+\end{proof}
+
+\begin{definition}{Almost Everywhere}{Almost Everywhere}
+  A property $P$ is said to hold \textbf{almost everywhere} (a.e.) on a set $E$ if the set of points in $E$ where $P$ fails has Lebesgue measure zero. In other words, if $F = \{x \in E : P(x) \text{ does not hold}\}$, then $m(F) = 0$.
+\end{definition}
+
+\begin{lemma}{The Borel-Cantelli Lemma}{The Borel-Cantelli Lemma}
+  Let $\{E_n\}_{n=1}^{\infty}$ be a sequence of measurable sets. If $\sum_{n=1}^{\infty} m(E_n) < \infty$, then the set of points that belong to infinitely many $E_n$ has measure zero. In other words, if we define
+  \begin{equation}
+    E = \limsup_{n \to \infty} E_n = \bigcap_{n=1}^{\infty} \bigcup_{k=n}^{\infty} E_k,
+  \end{equation}
+  then $m(E) = 0$.
+\end{lemma}
+\begin{proof}
+  As we have
+  \begin{equation*}
+    m\left( \bigcup_{k=n}^{\infty} E_k \right) \leq \sum_{k=n}^{\infty} m(E_k) < \infty
+  \end{equation*}
+  Hence, by the continuity of measure,
+  \begin{equation*}
+    m(E) = \lim_{n \to \infty} m\left( \bigcup_{k=n}^{\infty} E_k \right) \leq \lim_{n \to \infty} \sum_{k=n}^{\infty} m(E_k) = 0.
+  \end{equation*}
+  so we have $m(E) = 0$.
+\end{proof}
+
+The set function Lebesgue measure inherits the properties possessed by Lebesgue outer measure. For future reference we name some of these properties.
+\begin{itemize}
+  \item \textbf{Finite Additivity:} If $E_1, E_2, \ldots, E_n$ are pairwise disjoint measurable sets, then
+    \begin{equation}
+      m\left(\bigcup_{k=1}^{n} E_k\right) = \sum_{k=1}^{n} m(E_k).
+    \end{equation}
+  \item \textbf{Monotonicity:} If $E_1 \subseteq E_2$ are measurable sets, then
+    \begin{equation}
+      m(E_1) \leq m(E_2).
+    \end{equation}
+  \item \textbf{Excision Property:} If $E_1 \subseteq E_2$ are measurable sets with $m(E_1) < \infty$, then
+    \begin{equation}
+      m(E_2 \setminus E_1) = m(E_2) - m(E_1).
+    \end{equation}
+  \item \textbf{Countable Monotonicity:} If $\{E_n\}_{n=1}^{\infty}$ is a countable collection of measurable sets, then
+    \begin{equation}
+      m\left(\bigcup_{n=1}^{\infty} E_n\right) \leq \sum_{n=1}^{\infty} m(E_n).
+    \end{equation}
+\end{itemize}
+
+\begin{remark}
+  In our forthcoming study of Lebesgue integration it will be apparent that it is the countable additivity of Lebesgue measure that provides the Lebesgue integral with its decisive advantage over the Riemann integral.
+\end{remark}
+
+\section{Non-measurable Sets}
+We have defined what it means for a set to be measurable and studied properties of the collection of measurable sets. It is only natural to ask if, in fact, there are any sets that fail to be measurable.
+
+It is not quite obvious that measurability does not preserve under subsets. For a set $E$ that has zero measure, any subset of $E$ has outer measure zero and is therefore measurable. But we shall see that this fails for any set that has positive measure.
+
+\begin{lemma}{Infinite Packing Lemma}{Infinite Packing Lemma}
+  Let $E$ be a bounded measurable set. Suppose there is a bounded, countably infinite set of real numbers $\Lambda$ such that the translates $\{E + \lambda : \lambda \in \Lambda\}$ are pairwise disjoint. Then $m(E) = 0$.
+\end{lemma}
+\begin{proof}
+  This actually means that a finite area cannot be packed by infinite many disjoint copies of itself unless it has zero area, which is quite obvious. We just write
+  \begin{equation*}
+    m\left(\bigcup_{\lambda \in \Lambda} (E + \lambda)\right) = \sum_{\lambda \in \Lambda} m(E + \lambda) = \sum_{\lambda \in \Lambda} m(E) = \infty
+  \end{equation*}
+  unless $m(E) = 0$.
+\end{proof}
+
+We define two reals to be \textbf{rationally equivalent} if their difference is a rational number. This is an equivalence relation on $\mathbb{R}$, and for any set $E \subseteq \mathbb{R}$, we partition $E$ into equivalence classes under this relation. By the Axiom of Choice, we can select one representative from each equivalence class to form a set $\mathcal{C}_E$, so that
+\begin{itemize}
+  \item The difference of any two elements of $\mathcal{C}_E$ is irrational.
+  \item For any $x \in E$, there exists a unique $c \in \mathcal{C}_E$ such that $x - c$ is rational.
+\end{itemize}
+
+\begin{theorem}{(Vitali)}{Vitali}
+  Any set $E$ of positive outer measure contains a non-measurable subset.
+\end{theorem}
+\begin{proof}
+  Suppose $E$ is bounded, otherwise, from continuity, we can intersect $E$ with a sufficiently large bounded interval to get a bounded set of positive outer measure. Let $\mathcal{C}_E$ be any choice of representatives of the rational equivalence classes of $E$. Then if it is measurable, let $\Lambda_0$ be any bounded, countably infinite set of rational numbers, then the translates $\{\mathcal{C}_E + \lambda : \lambda \in \Lambda_0\}$ are pairwise disjoint and contained in a bounded interval, which means that $m(\mathcal{C}_E) = 0$ by the infinite packing lemma.
+
+  Now, using the countable additivity of Lebesgue measure, we have
+  \begin{equation*}
+    m\left(\bigcup_{\lambda \in \Lambda_0} (\mathcal{C}_E + \lambda)\right) = \sum_{\lambda \in \Lambda_0} m(\mathcal{C}_E + \lambda) = \sum_{\lambda \in \Lambda_0} m(\mathcal{C}_E) = 0.
+  \end{equation*}
+
+  To obtain a contradiction we make a special choice of $\Lambda_0$ that make $E$ contained in the union of the translates. Let $E \subseteq [-b, b]$ for some $b > 0$. Let $\Lambda_0 = [-2b, 2b] \cap \mathbb{Q}$, which is a bounded, countably infinite set of rational numbers. This obviously makes $E \subseteq \bigcup_{\lambda \in \Lambda_0} (\mathcal{C}_E + \lambda)$, which implies that
+  \begin{equation*}
+    m(E) \leq m\left(\bigcup_{\lambda \in \Lambda_0} (\mathcal{C}_E + \lambda)\right) = 0,
+  \end{equation*}
+  a contradiction to the assumption.
+\end{proof}
+
+\begin{remark}
+  A direct intuition of the above theorem is that we cannot pack a finite area with infinitely many disjoint copies of something that has a well-defined area.
+\end{remark}
+
+\begin{proposition}{}{}
+  There are disjoint sets of real numbers $A,B$ such that
+  \begin{equation}
+    m^*(A \cup B) < m^*(A) + m^*(B).
+  \end{equation}
+\end{proposition}
+\begin{proof}
+  Otherwise every set follows the Carathéodory criterion and is therefore measurable, which contradicts the existence of non-measurable sets.
+\end{proof}
+
+\section{The Cantor Set and Cantor-Lebesgue Function}
+We hereby give examples of the relation or countability and zero measure, and the relation between Borel sets and Lebesgue measurable sets. We have already seen, and will see more:
+\begin{itemize}
+  \item Every countable set has measure zero, but there are uncountable sets that have measure zero.
+  \item Every Borel set is Lebesgue measurable, but there are Lebesgue measurable sets that are not Borel sets.
+\end{itemize}
+
+\paragraph{The Cantor Set} The Cantor set is a classic example of a set that is uncountable yet has measure zero. Visually, it is a fractal-like set that is constructed by repeatedly removing the middle third of intervals:
+
+We start at the closed interval $[0, 1]$. In the first step, we remove the open middle third $(\frac{1}{3}, \frac{2}{3})$, leaving two closed intervals: $[0, \frac{1}{3}]$ and $[\frac{2}{3}, 1]$. In the second step, we remove the middle third of each of these intervals, leaving four intervals: $[0, \frac{1}{9}]$, $[\frac{2}{9}, \frac{1}{3}]$, $[\frac{2}{3}, \frac{7}{9}]$, and $[\frac{8}{9}, 1]$. We continue this process indefinitely. Formally speaking, denote each step as $C_k$, where $C_0 = [0, 1]$ and $C_{k+1}$ is obtained from $C_k$ by removing the open middle third of each interval in $C_k$. The Cantor set $C$ is defined as the intersection of all these sets:
+\begin{equation}
+  C = \bigcap_{k=0}^{\infty} C_k.
+\end{equation}
+
+Some direct observations about the Cantor set:
+\begin{itemize}
+  \item The sequence $\{C_k\}_{k=1}^{\infty}$ is a descending sequence of closed sets.
+  \item For each $k$, $C_k$ consists of $2^k$ closed intervals, each of length $1 / 3^k$.
+\end{itemize}
+
+\begin{theorem}{Measurability of the Cantor Set}{Measurability of the Cantor Set}
+  The Cantor set $C$ is a closed, uncountable set of measure zero. 
+\end{theorem}
+\begin{proof}
+  The Cantor set is closed as it is the intersection of closed sets. As $C_k$ is closed, so $C$ is closed.
+
+  The measure of $C_k$ is $m(C_k) = 2^k / 3^k = (2/3)^k$, which tends to zero as $k \to \infty$. By the continuity of measure, we have $m(C) = \lim_{k \to \infty} m(C_k) = 0$.
+
+  Suppose $C$ is countable. Then we can enumerate its elements as $\{c_k\}_{k=1}^{\infty}$. One of the two intervals in $C_1$ does not contain $c_1$, denote it as $F_1$. Then one of the two intervals in $F_1$ does not contain $c_2$, denote it as $F_2$. Continuing in this way, we construct a countable collection of sets $\{F_k\}_{k=1}^{\infty}$ such that $F_k$ is a closed interval in $C_k$ that does not contain $c_1, c_2, \ldots, c_k$. Then this is a nesting sequence of closed intervals, and by the nested interval theorem, we have $\bigcap_{k=1}^{\infty} F_k \neq \emptyset$. But this intersection does not contain any $c_k$ but is contained in $C$, which is a contradiction. Therefore, $C$ is uncountable.
+\end{proof}
+
+We denote a function to be \textbf{increasing} if $x_1 < x_2$ implies $f(x_1) \leq f(x_2)$, and \textbf{strictly increasing} if $x_1 < x_2$ implies $f(x_1) < f(x_2)$.
+
+\paragraph{The Cantor-Lebesgue Function}
+We now define the Cantor-Lebesgue function, a continuous, increasing function $\varphi$ on $[0, 1]$ that despite $\varphi(0) < \varphi(1)$, has derivative zero almost everywhere.
+
+We draft the construction of the Cantor-Lebesgue function $\varphi$ in a stepwise manner. First, let the middle-thirds part of the interval $[0, 1]$ be mapped to the constant value $1/2$. Then, for the two remaining intervals $[0, 1/3]$ and $[2/3, 1]$, we map each middle-thirds part to the constant values $1/4$ and $3/4$, respectively. In the $k$-step, we add the definition to the deleted middle-thirds parts of the Cantor set $C_k$ by mapping them to the constant values that is the average of the values of the two side intervals. In this way, we have defined all the values of $\varphi$ on $\mathcal{O} = [0, 1] \setminus C$.
+
+For the values of $\varphi$ on the Cantor set $C$, we extend the definition of $\varphi$ to $C$ by 
+\begin{equation}
+  \varphi(0) = 0, \quad \varphi(x) = \sup\{\varphi(t) : t \in \mathcal{O} \cap [0, x)\}, \quad x \in C.
+\end{equation}
+
+\begin{proposition}{The Cantor-Lebesgue Function}{The Cantor-Lebesgue Function}
+  The Cantor-Lebesgue function $\varphi$ is an increasing continuous function that maps $[0, 1]$ onto $[0, 1]$. Its derivative exists on the open set $\mathcal{O} = [0, 1] \setminus C$ and is zero on $\mathcal{O}$, which has measure $1$.
+\end{proposition}
+\begin{proof}
+  Since $\varphi$ is increasing on $\mathcal{O}$, so is its extension to $C$. 
+
+  As for continuity, $\varphi$ is certainly continuous at $\mathcal{O}$, so we only need to check continuity at $C$. Let $x \in C$ and $\epsilon > 0$. Then there exists $k$ sufficiently large such that $1/2^k < \epsilon$. Then the nearby staircases of $\varphi$ are all within $1/2^k$ of $\varphi(x)$, which shows that $\varphi$ is continuous at $x$, which shows that $\varphi$ is continuous on $[0, 1]$.
+
+  We use intermediate value theorem to show that $\varphi$ maps $[0, 1]$ onto $[0, 1]$, just from the continuity of $\varphi$ and the fact that $\varphi(0) = 0$ and $\varphi(1) = 1$.
+\end{proof}
+
+\begin{proposition}{}{}
+  Let $\varphi$ be the Cantor-Lebesgue function. Then define
+  \begin{equation}
+    \psi(x) = \varphi(x) + x, \quad x \in [0, 1].
+  \end{equation}
+  being a strictly increasing continuous function that maps $[0, 1]$ onto $[0, 2]$. It
+  \begin{itemize}
+    \item maps the Cantor set $C$ onto a set of positive measure, and
+    \item maps a subset of $C$ (a measurable set) onto a non-measurable set.
+  \end{itemize}
+\end{proposition}
+\begin{proof}
+  For a strictly increasing continuous function, we have $[0,1] = C \sqcup \mathcal{O}$, and $\psi([0, 1]) = [0, 2] = \psi(C) \sqcup \psi(\mathcal{O})$. We calculate $m(\psi(\mathcal{O}))$:
+
+  As $\mathcal{O}$ is a countable union of some $\mathcal{O}_k = [0, 1] \setminus C_k$, we have $\psi(\mathcal{O}_k) = 1 - (2 / 3)^k$, which means that $m(\psi(\mathcal{O})) = \lim_{k \to \infty} m(\psi(\mathcal{O}_k)) = 1$. Hence, we have $m(\psi(C)) = m([0, 2]) - m(\psi(\mathcal{O})) = 2 - 1 = 1$, which shows that $\psi(C)$ has positive measure.
+
+  For the second part, we can take a non-measurable set $E \subseteq \psi(C)$ from Vitali's theorem, and then $\psi^{-1}(E)$ is a measurable set that is mapped onto a non-measurable set $E$.
+\end{proof}
+
+As $\psi$ is a homeomorphism, it should map Borel sets to Borel sets, as they only concerns topological properties.
+
+\begin{remark}
+  Well, a Borel set is a topological property, but a Lebesgue measurable set is not. We can see that the definition of Lebesgue measurable sets needs other structure, like a metric system, to describe lengths of intervals, the outer measure and the Carathéodory criterion. Hence, a homeomorphism does not necessarily map Lebesgue measurable sets to Lebesgue measurable sets.
+
+  We may not directly see this from the definition as we always concern $\mathbb{R}$ as an embedded example, which has profound structures. We will encounter more abstract discussions in the future, and we will see then that the required structures to establish these theories.
+\end{remark}
+
+\begin{proposition}{}{}
+  There is a measurable set, a subset of the Cantor set, that is not a Borel set.
+\end{proposition}
+
+\end{document}

@@ -94,7 +94,7 @@ Usually, the feasible region of a linear programming problem is a convex polyhed
 \begin{enumerate}
 	\item Find an initial basic feasible solution. This can be done using the \textbf{Big M method} or the \textbf{Two-Phase method}. Take the basis $B = (\boldsymbol{p}_1, \boldsymbol{p}_2, \ldots, \boldsymbol{p}_m)$, and the corresponding basic feasible solution is $\boldsymbol{x}^{0} = (x_1^0, x_2^0, \ldots, x_m^0, 0, \ldots, 0)$.
 
-	      We can transform the original constraints, solve for the basic variables, and assume $B = I$ without loss of generality, then we have $x_i^0 = b_i$ for $i = 1, 2, \ldots, m$.
+		We can transform the original constraints, solve for the basic variables, and assume $B = I$ without loss of generality, then we have $x_i^0 = b_i$ for $i = 1, 2, \ldots, m$.
 	\item From one basic feasible solution to a nearby basic feasible solution: we need to change one basic variable to another one.
 
 	      To bring in a non-basic variable $x_j$ into the basis. Taking a sliding parameter $\lambda$: let
@@ -110,11 +110,11 @@ Usually, the feasible region of a linear programming problem is a convex polyhed
 		      \lambda = \min_{1 \leq i \leq m} \left\{ \frac{x_i^0}{a_{ij}} : a_{ij} > 0 \right\} = \frac{x_l^0}{a_{lj}}
 	      \end{equation}
 	      would be a feasible solution.
-	\item Finding the optimal solution: substituting $\boldsymbol{x}^{0}$ and $\boldsymbol{x}^{1}$ into the objective function, we have
-	      \begin{equation*}
-		      z^{1} = z^{0} + \lambda \left( c_j - \sum_{i=1}^m c_i a_{ij} \right)
-	      \end{equation*}
-	      Take $\sigma_j = c_j - \sum_{i=1}^m c_i a_{ij}$, if $\sigma_j > 0$, then $z^{1} > z^{0}$, we can move to $\boldsymbol{x}^{1}$.
+			\item Finding the optimal solution: substituting $\boldsymbol{x}^{0}$ and $\boldsymbol{x}^{1}$ into the objective function, we have
+				\begin{equation*}
+					z^{1} = z^{0} + \lambda \left( c_j - \sum_{i=1}^m c_i a_{ij} \right)
+				\end{equation*}
+				Take $\sigma_j = c_j - \sum_{i=1}^m c_i a_{ij}$, if $\sigma_j > 0$, then $z^{1} > z^{0}$, we can move to $\boldsymbol{x}^{1}$.
 \end{enumerate}
 
 If all $\sigma_j \leq 0$, then $\boldsymbol{x}^{0}$ is the unique optimal solution. If there exists some $\sigma_j = 0$ and all $\sigma_j \leq 0$, then there are infinitely many optimal solutions. If there exists some $\sigma_j > 0$, then we can move to $\boldsymbol{x}^{1}$, and repeat the process until we find the optimal solution.
@@ -123,95 +123,95 @@ If all $\sigma_j \leq 0$, then $\boldsymbol{x}^{0}$ is the unique optimal soluti
 To facilitate computation, the data is organized into a \textbf{Simplex Tableau}. The structure is as follows:
 
 \begin{table}[h]
-	\centering
-	\renewcommand{\arraystretch}{1.5}
-	\begin{tabular}{|c|c|c|c|ccc|c|ccc|}
-		\hline
-		\multicolumn{3}{|c|}{$c_j \to$}  & $c_1$              & $\cdots$         & $c_m$    & $\cdots$ & $c_j$      & $\cdots$ & $c_n$                            \\ \hline
-		$\boldsymbol{c}_B$               & $\boldsymbol{x}_B$ & $\boldsymbol{b}$ & $x_1$    & $\cdots$ & $x_m$      & $\cdots$ & $x_j$      & $\cdots$ & $x_n$    \\ \hline
-		$c_1$                            & $x_1$              & $b_1$            & 1        & $\cdots$ & 0          & $\cdots$ & $a_{1j}$   & $\cdots$ & $a_{1n}$ \\
-		$c_2$                            & $x_2$              & $b_2$            & 0        & $\cdots$ & 0          & $\cdots$ & $a_{2j}$   & $\cdots$ & $a_{2n}$ \\
-		$\vdots$                         & $\vdots$           & $\vdots$         & $\vdots$ &          & $\vdots$   &          & $\vdots$   &          & $\vdots$ \\
-		$c_m$                            & $x_m$              & $b_m$            & 0        & $\cdots$ & 1          & $\cdots$ & $a_{mj}$   & $\cdots$ & $a_{mn}$ \\ \hline
-		\multicolumn{3}{|c|}{$\sigma_j$} & 0                  & $\cdots$         & 0        & $\cdots$ & $\sigma_j$ & $\cdots$ & $\sigma_n$                       \\ \hline
-	\end{tabular}
-	\caption{The General Form of a Simplex Tableau}
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|c|c|c|c|ccc|c|ccc|}
+\hline
+\multicolumn{3}{|c|}{$c_j \to$} & $c_1$ & $\cdots$ & $c_m$ & $\cdots$ & $c_j$ & $\cdots$ & $c_n$ \\ \hline
+$\boldsymbol{c}_B$ & $\boldsymbol{x}_B$ & $\boldsymbol{b}$ & $x_1$ & $\cdots$ & $x_m$ & $\cdots$ & $x_j$ & $\cdots$ & $x_n$ \\ \hline
+$c_1$ & $x_1$ & $b_1$ & 1 & $\cdots$ & 0 & $\cdots$ & $a_{1j}$ & $\cdots$ & $a_{1n}$ \\
+$c_2$ & $x_2$ & $b_2$ & 0 & $\cdots$ & 0 & $\cdots$ & $a_{2j}$ & $\cdots$ & $a_{2n}$ \\
+$\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ & & $\vdots$ & & $\vdots$ & & $\vdots$ \\
+$c_m$ & $x_m$ & $b_m$ & 0 & $\cdots$ & 1 & $\cdots$ & $a_{mj}$ & $\cdots$ & $a_{mn}$ \\ \hline
+\multicolumn{3}{|c|}{$\sigma_j$} & 0 & $\cdots$ & 0 & $\cdots$ & $\sigma_j$ & $\cdots$ & $\sigma_n$ \\ \hline
+\end{tabular}
+\caption{The General Form of a Simplex Tableau}
 \end{table}
 
 \textbf{Key Elements of the Tableau:}
 \begin{itemize}
-	\item \textbf{$\boldsymbol{x}_B$:} The current set of basic variables.
-	\item \textbf{$\boldsymbol{c}_B$:} The coefficients of the basic variables in the objective function.
-	\item \textbf{$\boldsymbol{b}$:} The current values of the basic variables (Right Hand Side).
-	\item \textbf{$\sigma_j$ (Reduced Cost):} Also known as the \textit{check index}, calculated as:
-	      \begin{equation}
-		      \sigma_j = c_j - \sum_{i=1}^m c_i a_{ij}
-	      \end{equation}
+    \item \textbf{$\boldsymbol{x}_B$:} The current set of basic variables.
+    \item \textbf{$\boldsymbol{c}_B$:} The coefficients of the basic variables in the objective function.
+    \item \textbf{$\boldsymbol{b}$:} The current values of the basic variables (Right Hand Side).
+    \item \textbf{$\sigma_j$ (Reduced Cost):} Also known as the \textit{check index}, calculated as:
+    \begin{equation}
+        \sigma_j = c_j - \sum_{i=1}^m c_i a_{ij}
+    \end{equation}
 \end{itemize}
 
 \subsection{Optimality and Pivot Rules}
 After constructing the tableau, we follow these criteria to iterate or stop:
 
 \begin{itemize}
-	\item \textbf{Optimality Criterion:} For a maximization problem, if all $\sigma_j \leq 0$ for non-basic variables, the current BFS is the \textbf{optimal solution}.
-	\item \textbf{Entering Variable:} If there are $\sigma_j > 0$, select the variable with the largest $\sigma_j$ to enter the basis to increase $z$ most rapidly.
-	\item \textbf{Unboundedness:} If for an entering variable $x_j$, all $a_{ij} \leq 0$, then the objective function is \textbf{unbounded}.
-	\item \textbf{Leaving Variable:} Use the \textbf{Minimum Ratio Test} to determine which variable leaves the basis: select
-	      \begin{equation}
-		      x_l = \arg\min_{1 \leq i \leq m} \left\{ \frac{x_i}{a_{ij}} : a_{ij} > 0 \right\}
-	      \end{equation}
+    \item \textbf{Optimality Criterion:} For a maximization problem, if all $\sigma_j \leq 0$ for non-basic variables, the current BFS is the \textbf{optimal solution}.
+    \item \textbf{Entering Variable:} If there are $\sigma_j > 0$, select the variable with the largest $\sigma_j$ to enter the basis to increase $z$ most rapidly.
+    \item \textbf{Unboundedness:} If for an entering variable $x_j$, all $a_{ij} \leq 0$, then the objective function is \textbf{unbounded}.
+    \item \textbf{Leaving Variable:} Use the \textbf{Minimum Ratio Test} to determine which variable leaves the basis: select
+    	\begin{equation}
+			x_l = \arg\min_{1 \leq i \leq m} \left\{ \frac{x_i}{a_{ij}} : a_{ij} > 0 \right\}
+    	\end{equation}
 \end{itemize}
 
 \subsection{The Big M Method}
 When a linear programming problem does not have a natural initial basic feasible solution (e.g., due to $\geq$ or $=$ constraints), we use the Big M method.
 
 \begin{enumerate}
-	\item \textbf{Add Artificial Variables:} For each $=$ or $\geq$ constraint, add an artificial variable $a_i \geq 0$ to create an initial identity matrix in the tableau.
-	\item \textbf{Penalize the Objective:} Modify the objective function by adding a term $-M \sum a_i$ (for maximization), where $M$ is a very large positive constant.
-	\item \textbf{Solve via Simplex:} Perform the Simplex iterations. The large penalty $M$ ensures that the artificial variables are driven out of the basis (become zero).
-	\item \textbf{Interpret Results:}
-	      \begin{itemize}
-		      \item If all $a_i = 0$ in the final solution, the solution is \textbf{optimal}.
-		      \item If any $a_i > 0$ in the final solution, the original problem is \textbf{infeasible} (no real solution exists).
-	      \end{itemize}
+    \item \textbf{Add Artificial Variables:} For each $=$ or $\geq$ constraint, add an artificial variable $a_i \geq 0$ to create an initial identity matrix in the tableau.
+    \item \textbf{Penalize the Objective:} Modify the objective function by adding a term $-M \sum a_i$ (for maximization), where $M$ is a very large positive constant.
+    \item \textbf{Solve via Simplex:} Perform the Simplex iterations. The large penalty $M$ ensures that the artificial variables are driven out of the basis (become zero).
+    \item \textbf{Interpret Results:}
+    \begin{itemize}
+        \item If all $a_i = 0$ in the final solution, the solution is \textbf{optimal}.
+        \item If any $a_i > 0$ in the final solution, the original problem is \textbf{infeasible} (no real solution exists).
+    \end{itemize}
 \end{enumerate}
 
 Consider the following maximization problem:
 \begin{align*}
-	\max \quad        & z = 3x_1 + 2x_2     \\
-	\text{s.t.} \quad & 2x_1 + x_2 \leq 2   \\
-	                  & 3x_1 + 4x_2 \geq 12 \\
-	                  & x_1, x_2 \geq 0
+    \max \quad & z = 3x_1 + 2x_2 \\
+    \text{s.t.} \quad & 2x_1 + x_2 \leq 2 \\
+    & 3x_1 + 4x_2 \geq 12 \\
+    & x_1, x_2 \geq 0
 \end{align*}
 
 \textbf{Step 1: Convert to Standard Form} \\
 We add a slack variable $s_1$ to the first constraint. For the second constraint, we add a surplus variable $s_2$ and an artificial variable $a_1$ to create an initial basis.
 \begin{align*}
-	(1) \quad & 2x_1 + x_2 + s_1 = 2         \\
-	(2) \quad & 3x_1 + 4x_2 - s_2 + a_1 = 12
+    (1) \quad & 2x_1 + x_2 + s_1 = 2 \\
+    (2) \quad & 3x_1 + 4x_2 - s_2 + a_1 = 12
 \end{align*}
 
 \textbf{Step 2: Modify the Objective Function} \\
 We subtract $M a_1$ from the objective function (where $M$ is a very large number) to penalize the presence of the artificial variable:
 \begin{equation*}
-	\max \ z = 3x_1 + 2x_2 + 0s_1 + 0s_2 - M a_1
+    \max \ z = 3x_1 + 2x_2 + 0s_1 + 0s_2 - M a_1
 \end{equation*}
 
 \textbf{Step 3: Initial Simplex Tableau} \\
 The initial basis consists of $s_1$ (from the first row) and $a_1$ (from the second row). Note how $M$ appears in the $\sigma_j$ calculation for the columns where the artificial variable has a non-zero coefficient in the constraints.
 
 \begin{table}[h]
-	\centering
-	\renewcommand{\arraystretch}{1.5}
-	\begin{tabular}{|c|c|c|ccccc|c|}
-		\hline
-		\multicolumn{3}{|c|}{$c_j \to$}  & 3                  & 2                & 0     & 0     & $-M$  &                          \\ \hline
-		$\boldsymbol{c}_B$               & $\boldsymbol{x}_B$ & $\boldsymbol{b}$ & $x_1$ & $x_2$ & $s_1$ & $s_2$ & $a_1$ & $\theta$ \\ \hline
-		0                                & $s_1$              & 2                & 2     & 1     & 1     & 0     & 0     & 2        \\
-		$-M$                             & $a_1$              & 12               & 3     & 4     & 0     & -1    & 1     & 3        \\ \hline
-		\multicolumn{3}{|c|}{$\sigma_j$} & $3+3M$             & $2+4M$           & 0     & $-M$  & 0     &                          \\ \hline
-	\end{tabular}
-	\caption{Initial Tableau for the Big M Example}
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|c|c|c|ccccc|c|}
+\hline
+\multicolumn{3}{|c|}{$c_j \to$} & 3 & 2 & 0 & 0 & $-M$ & \\ \hline
+$\boldsymbol{c}_B$ & $\boldsymbol{x}_B$ & $\boldsymbol{b}$ & $x_1$ & $x_2$ & $s_1$ & $s_2$ & $a_1$ & $\theta$ \\ \hline
+0 & $s_1$ & 2 & 2 & 1 & 1 & 0 & 0 & 2 \\
+$-M$ & $a_1$ & 12 & 3 & 4 & 0 & -1 & 1 & 3 \\ \hline
+\multicolumn{3}{|c|}{$\sigma_j$} & $3+3M$ & $2+4M$ & 0 & $-M$ & 0 & \\ \hline
+\end{tabular}
+\caption{Initial Tableau for the Big M Example}
 \end{table}
 
 \textbf{Interpretation:} \\
@@ -225,54 +225,55 @@ The Two-Phase method handles artificial variables by splitting the optimization 
 We define a new objective function $w$ which is the sum of artificial variables. We aim to drive $w$ to zero.
 Consider:
 \begin{align*}
-	\text{Minimize} \quad & w = a_1                        \\
-	\text{s.t.} \quad     & 2x_1 + x_2 + s_1 = 10          \\
-	                      & 3x_1 + 4x_2 - s_2 + a_1 = 12   \\
-	                      & x_1, x_2, s_1, s_2, a_1 \geq 0
+    \text{Minimize} \quad & w = a_1 \\
+    \text{s.t.} \quad & 2x_1 + x_2 + s_1 = 10 \\
+    & 3x_1 + 4x_2 - s_2 + a_1 = 12 \\
+    & x_1, x_2, s_1, s_2, a_1 \geq 0
 \end{align*}
 
 \begin{table}[h]
-	\centering
-	\renewcommand{\arraystretch}{1.5}
-	\begin{tabular}{|c|c|c|ccccc|c|}
-		\hline
-		\multicolumn{3}{|c|}{$c_j \to$}  & 0                  & 0                & 0     & 0     & 1     &                          \\ \hline
-		$\boldsymbol{c}_B$               & $\boldsymbol{x}_B$ & $\boldsymbol{b}$ & $x_1$ & $x_2$ & $s_1$ & $s_2$ & $a_1$ & $\theta$ \\ \hline
-		0                                & $s_1$              & 10               & 2     & 1     & 1     & 0     & 0     & 10       \\
-		1                                & $a_1$              & 12               & 3     & 4     & 0     & -1    & 1     & 3        \\ \hline
-		\multicolumn{3}{|c|}{$\sigma_j$} & -3                 & -4               & 0     & 1     & 0     &                          \\ \hline
-	\end{tabular}
-	\caption{Phase I Initial Tableau (Minimization)}
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|c|c|c|ccccc|c|}
+\hline
+\multicolumn{3}{|c|}{$c_j \to$} & 0 & 0 & 0 & 0 & 1 & \\ \hline
+$\boldsymbol{c}_B$ & $\boldsymbol{x}_B$ & $\boldsymbol{b}$ & $x_1$ & $x_2$ & $s_1$ & $s_2$ & $a_1$ & $\theta$ \\ \hline
+0 & $s_1$ & 10 & 2 & 1 & 1 & 0 & 0 & 10 \\
+1 & $a_1$ & 12 & 3 & 4 & 0 & -1 & 1 & 3 \\ \hline
+\multicolumn{3}{|c|}{$\sigma_j$} & -3 & -4 & 0 & 1 & 0 & \\ \hline
+\end{tabular}
+\caption{Phase I Initial Tableau (Minimization)}
 \end{table}
 
 \textbf{Phase II: Optimize Original Objective} \\
 Once Phase I ends with $w=0$ and $a_1$ has left the basis, we:
 \begin{enumerate}
-	\item Remove the artificial variable column ($a_1$) entirely.
-	\item Replace the top row ($c_j$) with the original coefficients (e.g., $z = 3x_1 + 2x_2$).
-	\item Recalculate the bottom row ($\sigma_j$) and continue with the standard Simplex method.
+    \item Remove the artificial variable column ($a_1$) entirely.
+    \item Replace the top row ($c_j$) with the original coefficients (e.g., $z = 3x_1 + 2x_2$).
+    \item Recalculate the bottom row ($\sigma_j$) and continue with the standard Simplex method.
 \end{enumerate}
 
 \begin{table}[h]
-	\centering
-	\renewcommand{\arraystretch}{1.5}
-	\begin{tabular}{|c|c|c|cccc|}
-		\hline
-		\multicolumn{3}{|c|}{$c_j \to$} & 3                  & 2                & 0     & 0                     \\ \hline
-		$\boldsymbol{c}_B$              & $\boldsymbol{x}_B$ & $\boldsymbol{b}$ & $x_1$ & $x_2$ & $s_1$ & $s_2$ \\ \hline
-		\dots                           & \dots              & \dots            & \dots & \dots & \dots & \dots \\ \hline
-	\end{tabular}
-	\caption{Phase II Tableau (Starting from Phase I result)}
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|c|c|c|cccc|}
+\hline
+\multicolumn{3}{|c|}{$c_j \to$} & 3 & 2 & 0 & 0 \\ \hline
+$\boldsymbol{c}_B$ & $\boldsymbol{x}_B$ & $\boldsymbol{b}$ & $x_1$ & $x_2$ & $s_1$ & $s_2$ \\ \hline
+\dots & \dots & \dots & \dots & \dots & \dots & \dots \\ \hline
+\end{tabular}
+\caption{Phase II Tableau (Starting from Phase I result)}
 \end{table}
 
 \section{Nonlinear Optimization Problems}
 Generally, nonlinear optimization problems are those where the objective function or any of the constraints are nonlinear. These problems can be more complex than linear programming problems and often require different solution techniques, such as gradient-based methods, interior-point methods, or evolutionary algorithms.
 
+
 \subsection{The Mathematical Model}
 In general, a nonlinear optimization problem can be formulated as follows:
 \begin{align}
 	\min/\max \quad   & f(\boldsymbol{x}), \qquad \boldsymbol{x} \in \mathbb{R}^n \\
-	\text{subject to} &                                                           %
+	\text{subject to} &                                          %
 	\begin{cases}
 		c_i(\boldsymbol{x}) \geq 0, \quad i \in \mathcal{I} \\
 		c_j(\boldsymbol{x}) = 0, \quad j \in \mathcal{E}
@@ -286,7 +287,7 @@ In general, a nonlinear optimization problem can be formulated as follows:
 
 \begin{definition}{Function Extremum}{FunctionExtremum}
 	Let $f: D \subseteq \mathbb{R}^n \to \mathbb{R}$. For any interior point $\boldsymbol{x}^* \in D$, if there exists a neighborhood $U$ of $\boldsymbol{x}^*$ such that $f(\boldsymbol{x}^*) \leq f(\boldsymbol{x})$ for all $\boldsymbol{x} \in U$, then $\boldsymbol{x}^*$ is called a \textbf{local minimum} of $f$. If $f(\boldsymbol{x}^*) < f(\boldsymbol{x})$ for all $\boldsymbol{x} \in U \setminus \{\boldsymbol{x}^*\}$, then $\boldsymbol{x}^*$ is called a \textbf{strict local minimum}.
-
+	
 	If $J f(x^*)$ exists for a local extremum $\boldsymbol{x}^*$, then $J f(x^*) = 0$. All interior points such that $J f(x) = 0$ are called \textbf{stationary points} of $f$.
 \end{definition}
 
@@ -413,6 +414,7 @@ If we dont want to calculate $\varphi''(\lambda_k)$, we can use
 \end{equation}
 with superlinear convergence of $(1 + \sqrt{5})/2 \approx 1.618$.
 
+
 \section{The Steepest Descent Method}
 If $f$ is continuously differentiable near $\boldsymbol{x}_k$ and $\nabla f(\boldsymbol{x}_k) \neq 0$, then
 \begin{equation}
@@ -478,7 +480,7 @@ where $\beta_{k-1}$ is a constant such that $\boldsymbol{p}_k$ is conjugate to $
 \begin{equation}
 	\beta_{k-1} = \frac{\boldsymbol{g}_k^T G \boldsymbol{p}_{k-1}}{\boldsymbol{p}_{k-1}^T G \boldsymbol{p}_{k-1}}.
 \end{equation}
-We can just take $\boldsymbol{p}_0 = -\boldsymbol{g}_0$ and prove that $\boldsymbol{p}_k$ for $k = 1, 2, \ldots$ are conjugate to each other, and
+We can just take $\boldsymbol{p}_0 = -\boldsymbol{g}_0$ and prove that $\boldsymbol{p}_k$ for $k = 1, 2, \ldots$ are conjugate to each other, and 
 \begin{equation}
 	\boldsymbol{p}_k, \boldsymbol{g}_k \in \mathcal{K}(\boldsymbol{g}_0; k) = \text{span}\{\boldsymbol{g}_0, G \boldsymbol{g}_0, \ldots, G^{k} \boldsymbol{g}_0\}.
 \end{equation}

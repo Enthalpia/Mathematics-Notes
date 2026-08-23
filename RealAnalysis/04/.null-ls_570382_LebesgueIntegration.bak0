@@ -1,0 +1,317 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\chapter{Lebesgue Integration}
+
+Lebesgue integration is a fundamental concept in real analysis that extends the notion of integration beyond the limitations of Riemann integration. It allows for the integration of a wider class of functions and provides a more robust framework for analyzing convergence and measure theory.
+
+\section{The Riemann Integral}
+We begin by recalling the definition and properties of the Riemann integral.
+
+Let $f$ be a bounded real-valued function defined on a closed interval $[a, b]$. Let $P = \{ x_0, \ldots , x_n \}$ be a partition of the interval $[a, b]$, given by
+\begin{equation*}
+	a = x_0 < x_1 < \ldots < x_n = b,
+\end{equation*}
+
+Now define the lower and upper \textbf{Darboux sums} of $f$ with respect to the partition $P$ as follows:
+\begin{equation}
+	L(f, P) = \sum_{i=1}^{n} m_i (x_i - x_{i-1}) \quad \text{and} \quad U(f, P) = \sum_{i=1}^{n} M_i (x_i - x_{i-1}),
+\end{equation}
+where
+\begin{equation}
+	m_i = \inf \{ f(x) : x \in (x_{i-1}, x_i) \} \quad \text{and} \quad M_i = \sup \{ f(x) : x \in (x_{i-1}, x_i) \}.
+\end{equation}
+then we define the \textbf{lower and upper Riemann integrals} of $f$ on $[a, b]$ as
+\begin{equation}
+	\begin{aligned}
+		 & (R) \underline{\int_a^b} f = \sup \{ L(f, P) : P \text{ is a partition of } [a, b] \} \\
+		 & (R) \overline{\int_a^b} f = \inf \{ U(f, P) : P \text{ is a partition of } [a, b] \}.
+	\end{aligned}
+\end{equation}
+Since $f$ is assume bounded so the lower and upper Riemann integrals are finite. The upper integral is always at least as large as the lower integral, and if the two are equal we say that $f$ is \textbf{Riemann integrable} on $[a, b]$, and we denote the common value by
+\begin{equation}
+	(R) \int_a^b f = (R) \underline{\int_a^b} f = (R) \overline{\int_a^b} f.
+\end{equation}
+to temporarily distinguish it from the Lebesgue integral, which we consider in the next section.
+
+A real-valued function $\psi$ is called a \textbf{step function} on $[a, b]$ if there exists a partition $P = \{ x_0, \ldots , x_n \}$ of $[a, b]$ such that $\psi$ is constant $c_i$ on each open subinterval $(x_{i-1}, x_i)$ for $i = 1, \ldots , n$.
+
+Then naturally
+\begin{equation*}
+	L(\psi, P) = \sum_{i=1}^{n} c_i (x_i - x_{i-1}) = U(\psi, P),
+\end{equation*}
+so the step function $\psi$ is Riemann integrable and we have
+\begin{equation*}
+	(R) \int_a^b \psi = \sum_{i=1}^{n} c_i (x_i - x_{i-1}).
+\end{equation*}
+
+Therefore, we may reformulate the definition of the lower andupper Riemann integrals as follows:
+\begin{equation}
+	\begin{aligned}
+		 & (R) \underline{\int_a^b} f = \sup \{ (R) \int_a^b \psi : \psi \text{ is a step function on } [a, b] \text{ and } \psi \leq f \} \\
+		 & (R) \overline{\int_a^b} f = \inf \{ (R) \int_a^b \psi : \psi \text{ is a step function on } [a, b] \text{ and } f \leq \psi \}.
+	\end{aligned}
+\end{equation}
+
+\begin{example}{Dirichlet Function}{Dirichlet Function}
+	The Dirichlet function $D: [0, 1] \to \mathbb{R}$ is defined by
+	\begin{equation*}
+		D(x) = \begin{cases}
+			1, & \text{if } x \in \mathbb{Q} \cap [0, 1],      \\
+			0, & \text{if } x \in [0, 1] \setminus \mathbb{Q}.
+		\end{cases}
+	\end{equation*}
+	We easily see that $D$ is bounded, but it is not Riemann integrable on $[0, 1]$, for $L(D, P) = 0$ and $U(D, P) = 1$ for any partition $P$ of $[0, 1]$.
+
+	As rationals are countable, we can find a sequence of Riemann integrable functions $\{ f_n \}$ that converges pointwise to $D$ on $[0, 1]$, by just defining $f_n$ to be the function that is equal to $1$ on the first $n$ rational numbers in $[0, 1]$ and equal to $0$ elsewhere. Each $f_n$ is Riemann integrable, but the limit function $D$ is not.
+\end{example}
+
+\begin{remark}
+	\textbf{Step Functions vs. Simple Functions}
+
+	The reformulation of the Riemann integral using step functions is the key to understanding the Lebesgue integral.
+	\begin{itemize}
+		\item \textbf{Riemann Approach:} Approximates $f$ using \textbf{step functions} (constant on intervals). This partitions the \textit{domain} into chunks of length $\Delta x$.
+		\item \textbf{Lebesgue Approach:} Approximates $f$ using \textbf{simple functions} (constant on measurable sets). This effectively partitions the \textit{range} into chunks of height $\Delta y$, where the ``width'' of the chunk is given by the measure $m(E_i)$.
+	\end{itemize}
+	Since the collection of measurable sets is much richer than the collection of intervals, simple functions can ``track'' the behavior of functions like the Dirichlet function where step functions fail.
+\end{remark}
+
+\section{Lebesgue Integral: Bounded Functions, Finite Measure}
+
+The Dirichlet function, which was examined in the preceding section, exhibits one of the principal shortcomings of the Riemann integral: a uniformly bounded sequence of Riemann integrable functions on a closed, bounded interval can converge pointwise to a function that is not Riemann integrable. We will see that the Lebesgue integral does not suffer from this shortcoming.
+
+Henceforth we only consider the Lebesgue integral, unless explicitly mentioned otherwise, and so we use the pure integral symbol to denote the Lebesgue integral.
+
+\begin{definition}{Lebesgue Integral of Simple Functions}{Lebesgue Integral of Simple Functions}
+	Let $E \subseteq \mathbb{R}$ be a measurable set with finite measure, and let $\phi$ be a simple function on $E$ given by
+	\begin{equation*}
+		\phi = \sum_{i=1}^{n} a_i \chi_{E_i},
+	\end{equation*}
+	where $a_i \in \mathbb{R}$ and $E_i$ are measurable subsets of $E$. The Lebesgue integral of $\phi$ over $E$ is defined as
+	\begin{equation}
+		\int_E \phi = \sum_{i=1}^{n} a_i m(E_i),
+	\end{equation}
+\end{definition}
+
+From the additivity of measure, this form holds also when the $\{a_i\}$ are not necessarily distinct, which naturally leads to the addition and multiplication properties of the Lebesgue integral for simple functions.
+
+\begin{proposition}{Linearly and Monotonicity of Integration}{Linearly and Monotonicity of Integration}
+	Let $\varphi$ and $\psi$ be simple functions on a measurable set $E$ with finite measure, and let $\alpha, \beta \in \mathbb{R}$. Then
+	\begin{equation}
+		\int_E (\alpha \varphi + \beta \psi) = \alpha \int_E \varphi + \beta \int_E \psi,
+	\end{equation}
+	Moreover, if $\varphi \leq \psi$ on $E$, then
+	\begin{equation}
+		\int_E \varphi \leq \int_E \psi.
+	\end{equation}
+\end{proposition}
+\begin{proof}
+	As there are only finitely many measurable sets in which $\varphi$ and $\psi$ are both constant, we can write
+	\begin{equation*}
+		\int_E (\alpha \varphi + \beta \psi) = \sum_{i=1}^{n} (\alpha a_i + \beta b_i) m(E_i) = \alpha \sum_{i=1}^{n} a_i m(E_i) + \beta \sum_{i=1}^{n} b_i m(E_i) = \alpha \int_E \varphi + \beta \int_E \psi.
+	\end{equation*}
+	the second part follows from subtracting the two integrals and using the fact that nonnegative simple functions have nonnegative integrals.
+\end{proof}
+
+This shows
+\begin{proposition}{}{}
+	Let $\{E_i\}_{i=1}^{n}$ be a finite collection of measurable subsets of a set $E$ with finite measure, not necessarily disjoint, and let $a_i \in \mathbb{R}$. Then if $\phi = \sum_{i=1}^{n} a_i \chi_{E_i}$ we have
+	\begin{equation}
+		\int_E \phi = \sum_{i=1}^{n} a_i m(E_i).
+	\end{equation}
+\end{proposition}
+\begin{proof}
+	This follows from the linearity of the integral and
+	\begin{equation*}
+		\int_E \chi_{E_i} = m(E_i).
+	\end{equation*}
+\end{proof}
+
+A step function takes only a finite number of values and each interval is measurable. Thus a step function is simple. Since the measure of a singleton set is zero and the measure of an interval is its length, we infer from the linearity of Lebesgue integration for simple functions defined on sets of finite measure that the Riemann integral over a closed, bounded interval of a step function agrees with the Lebesgue integral.
+
+Now, let $f$ be a bounded real-valued function defined on a measurable set $E$ with finite measure. By analogy with the Riemann integral, we define the \textbf{lower and upper Lebesgue integrals} of $f$ on $E$ as
+\begin{equation}
+	\begin{aligned}
+		 & \underline{\int_E} f = \sup \left\{ \int_E \phi : \phi \text{ is a simple function on } E \text{ and } \phi \leq f \right\} \\
+		 & \overline{\int_E} f = \inf \left\{ \int_E \phi : \phi \text{ is a simple function on } E \text{ and } f \leq \phi \right\}.
+	\end{aligned}
+\end{equation}
+
+Since $f$ is assumed to be bounded, by the monotonicity property of the integral for simple functions, the lower and upper integrals are finite and the upper integral is always at least as large as the lower integral.
+
+\begin{definition}{Lebesgue Integral of Bounded Functions on Finite Measure Sets}{Lebesgue Integral of Bounded Functions on Finite Measure Sets}
+	A bounded real-valued function $f$ defined on a measurable set $E$ with finite measure is said to be \textbf{Lebesgue integrable} on $E$ if the lower and upper Lebesgue integrals of $f$ on $E$ are equal. In this case, we denote the common value by $\int_E f$ and call it the \textbf{Lebesgue integral} of $f$ over $E$.
+\end{definition}
+
+\begin{theorem}{Riemann Integrable and Lebesgue Integrable: Bounded Functions on Finite Measure Sets}{Riemann Integrable and Lebesgue Integrable: Bounded Functions on Finite Measure Sets}
+	Let $f$ be a bounded real-valued function defined on a closed, bounded interval $[a, b]$. Then if $f$ is Riemann integrable on $[a, b]$, it is also Lebesgue integrable on $[a, b]$, and the two integrals are equal.
+\end{theorem}
+\begin{proof}
+	As step functions are simple, and for them the Riemann and Lebesgue integrals agree, we have
+	\begin{equation*}
+		\begin{aligned}
+			 & \sup \{ (R) \int_a^b \psi : \psi \text{ is a step function on } [a, b] \text{ and } \psi \leq f \}       \\
+			 & \leq \sup \{ \int_a^b \phi : \phi \text{ is a simple function on } [a, b] \text{ and } \phi \leq f \}    \\
+			 & \leq \inf \{ \int_a^b \phi : \phi \text{ is a simple function on } [a, b] \text{ and } f \leq \phi \}    \\
+			 & \leq \inf \{ (R) \int_a^b \psi : \psi \text{ is a step function on } [a, b] \text{ and } f \leq \psi \}.
+		\end{aligned}
+	\end{equation*}
+	Riemann integrability of $f$ implies that the first and last expressions are equal, which in turn implies that the second and third expressions are equal, and hence that $f$ is Lebesgue integrable on $[a, b]$ and the two integrals are equal.
+\end{proof}
+
+\begin{remark}
+	We can see now, that the set of simple functions is much richer than the set of step functions, and hence the Lebesgue integral is more general than the Riemann integral. In particular, the Dirichlet function is Lebesgue integrable on $[0, 1]$ with integral equal to $0$, since it is equal to $0$ almost everywhere on $[0, 1]$. It is itself a simple function, as it can be expressed as $D = 1 \cdot \chi_{\mathbb{Q} \cap [0, 1]} + 0 \cdot \chi_{[0, 1] \setminus \mathbb{Q}}$, but not as a step function, since it is not constant on any interval.
+\end{remark}
+
+\begin{theorem}{Measurable Functions and Lebesgue Integrability}{Measurable Functions and Lebesgue Integrability}
+	Let $f$ be a bounded measurable function defined on a measurable set $E$ with finite measure. Then $f$ is Lebesgue integrable on $E$.
+\end{theorem}
+\begin{proof}
+	According to the Simple Approximation Theorem, there exists simple functions $\varphi_n$ and $\psi_n$ such that $\varphi_n \leq f \leq \psi_n$ and $0 \leq \psi_n - \varphi_n \leq 1/n$ for all $n \in \mathbb{N}$. Then we have
+	\begin{equation*}
+		0 \leq \int_E \psi_n - \int_E \varphi_n = \int_E (\psi_n - \varphi_n) \leq \frac{1}{n} m(E),
+	\end{equation*}
+	we also have
+	\begin{equation*}
+		0 \leq \overline{\int_E} f - \underline{\int_E} f \leq \int_E \psi_n - \int_E \varphi_n \leq \frac{1}{n} m(E),
+	\end{equation*}
+	and since $n$ is arbitrary, we conclude that $\overline{\int_E} f = \underline{\int_E} f$, and hence $f$ is Lebesgue integrable on $E$.
+\end{proof}
+
+\begin{remark}
+	This is a good place to review the intuition of the definition of measurable functions. A function $f$ is measurable if the preimage of any interval is a measurable set. This property allows us to approximate $f$ from below and above by simple functions, which are constant on measurable sets.
+
+	Lebesgue integration itself is just the act of partitioning the range of a function into small intervals, and then measuring the size of the preimage of each interval. So we need to ensure that the preimage of each interval is measurable, which is exactly what the definition of a measurable function guarantees.
+\end{remark}
+
+It turns out that the converse of the preceding theorem is true; a bounded function on a set of finite measure is Lebesgue integrable if and only if it is measurable: we will prove this later. This shows, in particular, that not every bounded function defined on a set of finite measure is Lebesgue integrable. For example, the characteristic function of a nonmeasurable set is bounded but not Lebesgue integrable, since the lower and upper Lebesgue integrals of such a function are the inner and outer measures of the set, which are not equal.
+
+\begin{theorem}{Linearity and Monotonicity of Integration)}{Linearity and Monotonicity of Integration}
+	Let $f$ and $g$ be bounded measurable functions defined on a measurable set $E$ with finite measure, and let $\alpha, \beta \in \mathbb{R}$. Then
+	\begin{equation}
+		\int_E (\alpha f + \beta g) = \alpha \int_E f + \beta \int_E g,
+	\end{equation}
+	Moreover, if $f \leq g$ on $E$, then
+	\begin{equation}
+		\int_E f \leq \int_E g.
+	\end{equation}
+\end{theorem}
+\begin{proof}
+	As linear combinations of measurable functions are measurable, $\alpha f + \beta g$ is measurable and thus Lebesgue integrable on $E$.
+
+	For the scalar multiplication, we divide cases. If $\alpha = 0$, then the result is trivial. If $\alpha > 0$, then we have
+	\begin{equation*}
+		\int_E (\alpha f) = \inf_{\psi \geq \alpha f} \int_E \psi = \alpha \inf_{\psi / \alpha \geq f} \int_E \frac{\psi}{\alpha} = \alpha \int_E f.
+	\end{equation*}
+	and the same goes for $\alpha < 0$. So we only need to consider $\alpha = \beta = 1$. Let $\psi_1$ and $\psi_2$ be simple functions such that $f \leq \psi_1$ and $g \leq \psi_2$. Then we have $\psi_1 + \psi_2$ is a simple function and $f + g \leq \psi_1 + \psi_2$, so we have
+	\begin{equation*}
+		\int_E (f + g) \leq \int_E (\psi_1 + \psi_2) = \int_E \psi_1 + \int_E \psi_2.
+	\end{equation*}
+	Taking the infimum over all such $\psi_1$ and $\psi_2$, we obtain
+	\begin{equation*}
+		\int_E (f + g) \leq \inf_{\psi_1 \geq f} \int_E \psi_1 + \inf_{\psi_2 \geq g} \int_E \psi_2 = \int_E f + \int_E g.
+	\end{equation*}
+	the next direction follows from the same argument, using the lower bounds of the integrals would do.
+
+	The monotonicity property follows from subtracting the two integrals and using the fact that nonnegative measurable functions have nonnegative integrals, as $0$ is a lower approximate simple function having integral equal to $0$.
+\end{proof}
+
+\begin{proposition}{Patching Domains}{Patching Domains}
+	Let $f$ be a bounded measurable function defined on a measurable set $E$ with finite measure, and let $A$ and $B$ be measurable subsets of $E$ and disjoint. Then
+	\begin{equation}
+		\int_{A \cup B} f = \int_A f + \int_B f.
+	\end{equation}
+\end{proposition}
+\begin{proof}
+	Integrating by
+	\begin{equation*}
+		f \cdot \chi_{A \cup B} = f \cdot \chi_A + f \cdot \chi_B,
+	\end{equation*}
+	would do.
+\end{proof}
+
+\begin{proposition}{Absolute Value Inequality}{Absolute Value Inequality}
+	Let $f$ be a bounded measurable function defined on a measurable set $E$ with finite measure. Then
+	\begin{equation}
+		\left| \int_E f \right| \leq \int_E |f|.
+	\end{equation}
+\end{proposition}
+\begin{proof}
+	As $|f|$ is measurable and bounded, we have $-|f| \leq f \leq |f|$, and hence by the monotonicity property of the integral, we have our result.
+\end{proof}
+
+\begin{proposition}{Uniform Limits}{Uniform Limits}
+	Let $\{ f_n \}$ be a sequence of bounded measurable functions defined on a measurable set $E$ with finite measure, and suppose that $f_n$ converges uniformly to a function $f$ on $E$. Then $f$ is bounded and measurable on $E$, and
+	\begin{equation}
+		\lim_{n \to \infty} \int_E f_n = \int_E f.
+	\end{equation}
+\end{proposition}
+\begin{proof}
+	The proof is the same as the proof of the corresponding result for Riemann integrals, just take $\epsilon > 0$ and choose $N$ such that $|f_n(x) - f(x)| < \epsilon / m(E)$ for all $x \in E$ and $n \geq N$. Then we have
+	\begin{equation*}
+		\left| \int_E f_n - \int_E f \right| = \left| \int_E (f_n - f) \right| \leq \int_E |f_n - f| < \epsilon,
+	\end{equation*}
+	so we have $\lim_{n \to \infty} \int_E f_n = \int_E f$.
+\end{proof}
+
+This proposition is rather weak since frequently a sequence will be presented that converges pointwise but not uniformly. . It is important to understand when it is possible to infer from pointwise convergence of a sequence of functions to the convergence of the corresponding sequence of integrals. We refer to this equality as \textbf{passing the limit under the integral sign}.
+
+We shall illustrate this idea with an example.
+
+\begin{example}{}{}
+	We define a sequence of functions $\{ f_n \}$ on $[0, 1]$ by:
+	\begin{itemize}
+		\item $f_n(x) = 0$ for $x \geq 2/n$,
+		\item $f_n(0) = 0, f(1/n) = n$, and $f_n$ is linear on $[0, 1/n]$ and $[1/n, 2/n]$.
+	\end{itemize}
+	which is a sharp triangular spike of height $n$ and base $2/n$. Then we have $\int_0^1 f_n = 1$ for all $n$, but $f_n \to 0$ pointwise on $[0, 1]$.
+
+	Thus, pointwise convergence alone is not sufficient to justify passage of the limit under the integral sign.
+\end{example}
+
+\begin{theorem}{Bounded Convergence Theorem}{Bounded Convergence Theorem}
+	Let $\{ f_n \}$ be a sequence of measurable functions defined on a measurable set $E$ with finite measure, and suppose that $\{ f_n \}$ is uniformly pointwise bounded on $E$, i.e., there exists a constant $M > 0$ such that $|f_n(x)| \leq M$ for all $x \in E$ and all $n \in \mathbb{N}$. Then if $f_n$ converges pointwise to a function $f$ on $E$, we have
+	\begin{equation*}
+		\lim_{n \to \infty} \int_E f_n = \int_E f.
+	\end{equation*}
+\end{theorem}
+\begin{proof}
+	The proof of this theorem furnishes a nice illustration of Littlewood's Third Principle. If the convergence is uniform, we have the easy proof of the preceding proposition. However, Egoroff's Theorem tells us, roughly, that pointwise convergence is ``nearly uniform'' convergence.
+
+	The pointwise limit of a sequence of measurable functions is measurable. Therefore $f$ is measurable and $|f| \leq M$ on $E$, and we take any measurable set $A \subseteq E$ and write
+	\begin{equation*}
+		\int_E f_n - \int_E f = \int_A (f_n - f) + \int_{E \setminus A} f_n - \int_{E \setminus A} f.
+	\end{equation*}
+	We now apply the Egoroff's Theorem. For any $\epsilon > 0$, there exists a measurable set $A \subseteq E$ such that $m(E \setminus A) < \epsilon / (4M)$ and $f_n \to f$ uniformly on $A$. Then there is an $N$ such that
+	\begin{equation*}
+		\forall n \geq N, \forall x \in A, |f_n(x) - f(x)| < \epsilon / (2 m(E)).
+	\end{equation*}
+	and adding the integrals we have our result.
+\end{proof}
+
+\begin{remark}
+	We notice that the bound $M$ is essential in the proof. It guarantees that small measure sets do not contribute significantly to the integral, allowing us to control the error in the approximation by Egoroff's theorem. Without this uniform bound, the integrals over small measure sets could be arbitrarily large, and the conclusion of the theorem would not hold.
+\end{remark}
+
+\begin{remark}
+\textbf{Comparison with the Riemann Integral: Arzelà's Theorem}
+
+It is noteworthy that a version of this theorem exists for the Riemann integral, known as \textbf{Arzelà's Bounded Convergence Theorem} (1885). However, the Riemann version is significantly less powerful due to two major limitations:
+\begin{itemize}
+\item \textbf{The Integrability of the Limit:} In Riemann theory, the pointwise limit of integrable functions is not necessarily integrable (as seen with the sequence $\{f_n\}$ converging to the Dirichlet function $D$). Therefore, Arzelà's theorem must \textit{assume} as a hypothesis that the limit function $f$ is Riemann integrable. In Lebesgue theory, we get the measurability of $f$ ``for free.''
+\item \textbf{The Difficulty of Proof:} Without the tools of measure theory (specifically Egoroff's Theorem), Arzelà's original proof was notoriously difficult and technically complex.
+\end{itemize}
+By using Egoroff's Theorem, the Lebesgue theory effectively ``decomposes'' the problem: we use measure theory to handle the ``bad'' sets of points where convergence is slow, and use the uniform bound $M$ to ensure these sets do not contribute significantly to the integral. This illustrates how the Lebesgue integral ``repairs'' the convergence defects of the Riemann integral.
+\end{remark}
+
+Prior to the proof of the Bounded Convergence Theorem, no use was made of the countable additivity of Lebesgue measure on the real line. Only finite additivity was used, and it was used just once, in the proof of linearity of simple function integration. But for the proof of the Bounded Convergence Theorem we used Egoroff's Theorem. The proof of Egoroff's Theorem needed the continuity of Lebesgue measure, a consequence of countable additivity of Lebesgue measure.
+
+\section{Lebesgue Integral: Nonnegative Functions}
+A measurable function $f$ on $E$ is said to vanish \textbf{outside a set of finite measure} if there exists a measurable set $E_0 \subseteq E$ with finite measure such that $f = 0$ on $E \setminus E_0$. In measure theory, we often define the \textbf{support} of a function $f$ as the set
+\begin{equation}
+	\supp(f) = \{x \in E : f(x) \neq 0\},
+\end{equation}
+
+
+\end{document}

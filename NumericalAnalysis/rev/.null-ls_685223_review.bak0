@@ -1194,32 +1194,10 @@ and all the previous methods can be applied to this system of ODEs:
 		      Y_{n+1} = Y_n + h F(x_n, Y_n)
 	      \end{equation}
 	\item Backward Euler Method:
-			  \begin{equation}
-			    Y_{n+1} = Y_n + h F(x_{n+1}, Y_{n+1})
-			  \end{equation}
+			      \begin{equation}
+			      			      Y_{n+1} = Y_n + h F(x_{n+1}, Y_{n+1})
+			      \end{equation}
 \end{itemize}
-
-\subsection{Absolute Stability}
-Consider the test equation
-\begin{equation*}
-	\begin{aligned}
-		y' & = \lambda y, \\
-		y(0) & = 1
-	\end{aligned}
-\end{equation*}
-If there is some error $\rho_n$ for $y_n$, let $y_n^* = y_n + \rho_n$, then we have the forward Euler method
-\begin{equation*}
-	y_{n+1} = y_n + h \lambda y_n, \quad y_{n+1}^* = y_n^* + h \lambda y_n^*
-\end{equation*}
-so we have
-\begin{equation*}
-	\rho_{n+1} = y_{n+1}^* - y_{n+1} = (1 + h \lambda) \rho_n, \quad \frac{|\rho_{n+1}|}{|\rho_n|} = |1 + h \lambda|
-\end{equation*}
-If we have $|1 + h \lambda| < 1$, then the error will decay, otherwise it will grow. So we have the absolute stability region of the forward Euler method is a circle where $\lambda h$ is inside the circle with center $-1$ and radius $1$.
-
-\begin{definition}
-	If some numerical method to solve the test equation $y' = \lambda y$ always have a region in the negative half-plane that makes the error decay, then this method is called \textbf{Absolutely Stable}, the region where the error decays is called the \textbf{Absolute Stability Region}.
-\end{definition}
 
 \section{The Eigenvalue Problem}
 We need to find the eigenvalues and eigenvectors of a matrix $A \in \mathbb{R}^{n \times n}$.

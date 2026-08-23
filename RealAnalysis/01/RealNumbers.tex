@@ -1,0 +1,303 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\chapter{The Real Numbers}
+
+We assume that the set of real numbers, which is denoted by $\mathbb{R}$ satisfies three types of axioms.
+
+NOTICE: IN THIS BOOK WE DENOTE THE NATURAL NUMBERS $\mathbb{N} = \mathbb{Z}_+$ WITHOUT $0$.
+
+\section{The Axioms}
+The axioms are as follows:
+
+\paragraph{The Field Axioms} $\mathbb{R}$ is a field: there are binary operation $+, \cdot $ on $\mathbb{R}$ that:
+\begin{itemize}
+	\item Commutativity of Addition: $\forall a,b\in \mathbb{R}, a+b=b+a$.
+	\item Associativity of Addition: $\forall a,b,c\in \mathbb{R}, a+(b+c) = (a+b)+c$.
+	\item The Additive Identity: $\exists 0\in \mathbb{R}, \forall a\in \mathbb{R},a+0=0+a=a$.
+	\item The Additive Inverse: $\forall a\in \mathbb{R}, \exists b\in \mathbb{R}, a+b=0$.
+	\item Commutativity of Multiplication: $\forall a,b\in \mathbb{R}, ab=ba$.
+	\item Associativity of Multiplication: $\forall a,b,c\in \mathbb{R}, (ab)c=a(bc)$.
+	\item The Multiplicative Identity: $\exists 1 \in \mathbb{R}, \forall a\in \mathbb{R}, 1a=a 1=a$.
+	\item The Multiplicative Inverse: $\forall a\neq 0 \in \mathbb{R}, \exists b\in \mathbb{R}, ab=1$.
+	\item The Distributive Property: $\forall a,b,c\in \mathbb{R}, a(b+c) = ab+ac$.
+	\item The Nontriviality Assumption: $1 \neq 0$.
+\end{itemize}
+
+Any set that satisfies these axioms is called a \textbf{field}. It follows from the commutativity of addition that the additive identity, $0$, is unique, and we infer from the commutativity of multiplication that the multiplicative unit, $1$, also is unique. The additive inverse and multiplicative inverse also are unique, denoted by $-a$ and $a^{-1}$ respectively.
+
+\paragraph{The Positivity Axioms}
+In the real numbers there is a natural notion of order: greater than, less than, and so on. A convenient way to codify these properties is by specifying axioms satisfied by the set of positive numbers.
+
+There is a set of real numbers, denoted by $\mathcal{P}$, called the set of \textbf{positive numbers}, having the following properties:
+\begin{itemize}
+	\item If $a,b\in \mathcal{P}$, then $ab, a+b \in \mathcal{P}$.
+	\item $\forall a\in \mathbb{R}$ exactly one of the following three alternatives is true: $a \in \mathcal{P}, a = 0, -a\in \mathcal{P}$.
+\end{itemize}
+
+The Positivity Axioms lead in a natural way to an ordering of the real numbers: for real numbers $a,b$, we define $a>b$ to mean $a-b$ is positive, and other ordering relation is defined similarly.
+
+Using the Field Axioms and the Positivity Axioms, it is possible to formally establish the familiar properties of inequalities. We define the intervals:
+\begin{equation}
+	\begin{aligned}
+		 & (a,b) = \left\{ x:a<x<b \right\}, [a,b] = \left\{ x:a\leq x\leq b \right\} \\
+		 & [a,b) = \left\{ x:a\leq x<b \right\},(a,b] = \left\{ x:a<x\leq b \right\}.
+	\end{aligned}
+\end{equation}
+
+\paragraph{The Completeness Axiom} A nonempty subset $E \subseteq \mathbb{R}$ is called \textbf{bounded above} if $\exists b\in \mathbb{R}, \forall x\in E, x \leq b$. The number $b$ is called the upper bound for $E$. A lower bound is defined similarly.
+
+The completeness axiom is as follows
+\begin{quote}
+	Let $E$ be a nonempty subset of $\mathbb{R}$ that is bounded above. Then the set of upper bounds for $E$ has a minimum value, called the least upper bound, or \textbf{supremum}, denoted by $\sup E$.
+\end{quote}
+
+Similarly, the greatest lower bound is called the \textbf{infimum} denoted by $\inf E$.
+
+\paragraph{The Triangle Inequality} We define the absolute value of a real number $x$, to be $x$ if $x \geq 0$ and $-x$ if $x < 0$, denoted by $|x|$.
+
+The following inequality, called the Triangle Inequality, is fundamental in mathematical analysis:
+\begin{equation}
+	\forall a,b\in \mathbb{R}, |a+b| \leq |a| + |b|.
+\end{equation}
+
+\paragraph{The Extended Real Numbers} It is convenient to introduce the symbol $\infty $ and $-\infty $ and write
+\begin{equation}
+	\forall x\in \mathbb{R}, -\infty <x< \infty
+\end{equation}
+we called $\mathbb{R} \cup \pm \infty $ the \textbf{extended real numbers}. If a nonempty $E \subseteq \mathbb{R}$ has no upper bound we denote $\sup E = \infty $, and if $E = \emptyset $ we denote $\sup E = -\infty $, (which is perfectly true because every real number is an upper bound for an empty set.) Therefore every set of real numbers has a supremum that belongs to the extended real-numbers. Similarly, we can extend the concept of infimum so every set of real numbers has an infimum that belongs to the extended real numbers. We will define limits of sequences of real numbers and it is convenient to allow limits that are extended real numbers. Many properties of sequences of real numbers that converge to real numbers, such as the limit of the sum is the sum of the limits and the limit of the product is the product of the limit, continue to hold for limits that are $\pm \infty $, provided we make the following extension of the meaning of sum and product:
+\begin{itemize}
+	\item $\infty +\infty =\infty , -\infty -\infty =-\infty $.
+	\item $\forall x\in \mathbb{R}, x+\infty =\infty , x-\infty =-\infty $.
+	\item $\forall x\in \mathbb{R},x>0$ we have $x\cdot \infty =\infty , x \cdot (-\infty ) = -\infty $.
+	\item $\forall x\in \mathbb{R}< x<0$ we have $x\cdot \infty  = -\infty , x \cdot (-\infty ) = \infty $.
+\end{itemize}
+We also define
+\begin{equation}
+	\begin{aligned}
+		 & (a, \infty ) = \left\{ x\in \mathbb{R}: a<x \right\}, (-\infty ,b) = \left\{ x\in \mathbb{R}: x<b \right\}         \\
+		 & [a, \infty ) = \left\{ x\in \mathbb{R}: a\leq x \right\}, (-\infty ,b] = \left\{ x\in \mathbb{R}: x\leq b \right\} \\
+	\end{aligned}
+\end{equation}
+
+Sets of the above form are unbounded intervals.
+
+\section{Countable and Uncountable Sets}
+We call two sets $A,B$ equipotent if there is a one-to-one mapping $f:A \rightarrow B$. Equipotence defines an equivalence relation among sets, that is, it is reflexive, symmetric, and transitive.
+
+We denote $\left\{ 1,2, \ldots ,n \right\} = \left\{ k\in \mathbb{Z}_+: 1\leq k\leq n \right\}$. The first observation regarding equipotence is that for any positive integers $n,m$, the set $\left\{ 1, \ldots ,n+m \right\}$ is not equipotent to $\left\{ 1, \ldots ,n \right\}$. This observation is often called the \textbf{pigeonhole principle} and may be proved by an induction argument with respect to $n$.
+
+\begin{definition}{Sets Classification}{Sets Classification}
+	A set $E$ is called finite if it is empty or there is a positive integer $n$ such that $E$ is equipotent to $\left\{ 1, \ldots ,n \right\}$.
+
+	We call $E$ \textbf{countably infinite} if $E$ is equipotent to $\mathbb{Z}_+$. A set that is either finite or countably infinite is called \textbf{countable} and otherwise \textbf{uncountable}.
+\end{definition}
+
+\begin{proposition}{Subssets Countability}{Subssets Countability}
+	A subset of a countable set is countable. In particular, every set of natural numbers is countable.
+\end{proposition}
+
+\begin{example}{Countable Sets}{Countable Sets}
+	For all $n\in \mathbb{N}$, we have $\mathbb{N}^n$ and $\mathbb{Q}$ are countably infinite.
+\end{example}
+
+\begin{proposition}{Image Countability}{Image Countability}
+	A nonempty set is countable if and only if it is the image of a function whose domain is a nonempty countable set.
+\end{proposition}
+
+\begin{proposition}{}{}
+	The union of a countable collection of countable sets is countable.
+\end{proposition}
+
+\begin{theorem}{Real Number Countability}{Real Number Countability}
+	A nondegenerate interval of real numbers is uncountable.
+\end{theorem}
+\begin{proof}
+	Let $I$ be a nondegenerate interval of $\mathbb{R}$. Clearly $I$ is not finite.
+
+	Suppose $I$ is countable, let $\left\{ x_n:n\in \mathbb{N} \right\}$ be an enumeration of $I$. Let $[a_1, b_1]$ be a nondegenerate closed, bounded subinterval of $I$ which does not contain $x_1$. Then let $[a_2,b_2] \subseteq [a_1,b_1]$ be a nondegenerate subset does not contain $x_2$, and go on. For each $n$, we have $x_n \notin [a_n,b_n]$, So we have an ascending sequence $a_n$ and descending $b_n$. The completeness axiom tell us that there is $x^* = \sup \left\{ a_n \right\}$. As all $b_n$ are upper bounds of $a_n$ so we have $x^* \leq b_n$. We found an $x^*$ that is not in any $x_n$.
+\end{proof}
+
+\section{Open, Closed and Borel Sets}
+The natural topology on $\mathbb{R}$ is given by the metric $d(x,y) = |x-y|$. This induces open and closed sets.
+\begin{definition}{Open Sets}{Open Sets}
+	A set $\mathcal{O} \subseteq \mathbb{R}$ is open if $\forall x\in \mathcal{O}$, there is an interval $(x-r,x+r) \subseteq \mathcal{O}$.
+\end{definition}
+\begin{proposition}{The Topology of Real Numbers}{The Topology of Real Numbers}
+	The set of real numbers $\mathbb{R}$ and the empty-set $\emptyset $ are open; the intersection of any finite collection of open sets is open; and the union of any collection of open sets is open.
+\end{proposition}
+
+\begin{proposition}{Open Set Composition Theorem}{Open Set Composition Theorem}
+	Every nonempty open set is the disjoint union of a countable collection of open intervals.
+\end{proposition}
+\begin{proof}
+	Let $\mathcal{O}$ be a nonempty open set. For each $x\in \mathcal{O}$, there is $y > x$ and $z < x$ such that $(z,y) \subseteq \mathcal{O}$. Let extended real numbers $a_x = \inf \left\{ z:(z,y) \subseteq \mathcal{O} \right\}$ and $b_x = \sup \left\{ y:(z,y) \subseteq \mathcal{O} \right\}$. Then $x \in (a_x,b_x)$. We claim that
+	\begin{equation*}
+		I_x = (a_x,b_x) \subseteq \mathcal{O}, a_x \notin \mathcal{O}, b_x \notin \mathcal{O}.
+	\end{equation*}
+	which can be verified easily. Consider the collection of intervals $\left\{ I_x:x\in \mathcal{O} \right\}$, we have
+	\begin{equation*}
+		\mathcal{O} = \bigcup_{x\in \mathcal{O}} I_x.
+	\end{equation*}
+	and this collection is disjoint. (because endpoints of each interval are not in $\mathcal{O}$).
+
+	It remains to show that this collection is countable. By the density of the rationals, each of these open intervals contains a rational number. This establishes a one-to-one correspondence between the collection of open intervals and a subset of the rational numbers. As any set of rational numbers is countable, therefore $\mathcal{O}$ is the union of a countable disjoint collection of open intervals.
+\end{proof}
+
+\begin{theorem}{The Heine-Borel Theorem}{The Heine-Borel Theorem}
+	Every closed and bounded set of real numbers is compact, that is, every open cover of the set has a finite subcover.
+\end{theorem}
+
+\begin{definition}{Descending and Ascending Sets}{Descending and Ascending Sets}
+	We say that a sequence of sets $\left\{ E_n \right\}$ is descending if $E_1 \supseteq E_2 \supseteq E_3 \supseteq \ldots $ and ascending if $E_1 \subseteq E_2 \subseteq E_3 \subseteq \ldots $.
+\end{definition}
+
+\begin{theorem}{The Nested Set Theorem}{The Nested Set Theorem}
+	Let $\left\{ E_n \right\}$ be a descending sequence of nonempty closed and bounded sets of real numbers. Then the intersection $\bigcap_{n=1}^{\infty} E_n$ is nonempty.
+\end{theorem}
+
+This compactness leads to many general results, like the nested set theorem.
+
+\begin{definition}{$\sigma$-algebra}{sigma-algebra}
+	Given a set $X$, a $\sigma$-algebra $\mathcal{A}$ is a collection of subsets of $X$ such that:
+	\begin{itemize}
+		\item $\emptyset \in \mathcal{A}$.
+		\item If $A \in \mathcal{A}$, then its complement $X \setminus A \in \mathcal{A}$.
+		\item The union of a countable collection of sets in $\mathcal{A}$ is also in $\mathcal{A}$, that is, if $A_1, A_2, \ldots \in \mathcal{A}$, then $\bigcup_{n=1}^{\infty} A_n \in \mathcal{A}$.
+	\end{itemize}
+\end{definition}
+
+\begin{remark}
+	As a comparison, a topology $\mathcal{T}$ on a set $X$ requires closure under arbitrary unions and finite intersections, while a $\sigma$-algebra requires closure under countable unions and (because of complements) countable intersections.
+\end{remark}
+
+Given a set $X$, the collection $\{\emptyset , X\}$ is the smallest $\sigma$-algebra on $X$, and the power set $2^X$ is the largest $\sigma$-algebra on $X$. Also, as $\emptyset \in \mathcal{A}$, we infer that finite unions and finite intersections of sets in $\mathcal{A}$ are also in $\mathcal{A}$.
+
+We also observe that a $\sigma$-algebra is closed under relative complements: if $A,B \in \mathcal{A}$, then $A \setminus B = A \cap (X \setminus B) \in \mathcal{A}$.
+
+\begin{theorem}{Generating Minimal $\sigma$-algebra}{Generating Minimal sigma-algebra}
+	Let $\mathcal{F}$ be a collection of subsets of $X$. Then the intersection of all $\sigma$-algebras containing $\mathcal{F}$ is the smallest $\sigma$-algebra containing $\mathcal{F}$, in the sense that it is contained in every $\sigma$-algebra containing $\mathcal{F}$.
+\end{theorem}
+
+We need to introduce the concept of limit superior and limit inferior of a sequence of sets.
+
+\begin{definition}{Limit Superior and Limit Inferior of Sets}{Limit Superior and Limit Inferior of Sets}
+	Let $\left\{ E_n \right\}$ be a sequence of sets. The limit superior of the sequence is defined as
+	\begin{equation}
+		\limsup_{n \to \infty} E_n = \bigcap_{n=1}^{\infty} \bigcup_{k=n}^{\infty} E_k,
+	\end{equation}
+	and the limit inferior of the sequence is defined as
+	\begin{equation}
+		\liminf_{n \to \infty} E_n = \bigcup_{n=1}^{\infty} \bigcap_{k=n}^{\infty} E_k.
+	\end{equation}
+\end{definition}
+
+\begin{remark}
+	Intuitively speaking, $\limsup_{n \to \infty} E_n$ consists of the elements that belong to infinitely many of the sets $E_n$, while $\liminf_{n \to \infty} E_n$ consists of the elements that belong to all but finitely many of the sets $E_n$.
+
+	Let's compare this to that of a sequence of real numbers $\left\{ x_n \right\}$. The limit superior of the sequence is defined as
+	\begin{equation*}
+		\limsup_{n \to \infty} x_n = \lim_{n \to \infty} \sup_{k \geq n} x_k,
+	\end{equation*}
+	which means the largest limit point of the sequence, while the limit inferior of the sequence is defined as
+	\begin{equation*}
+		\liminf_{n \to \infty} x_n = \lim_{n \to \infty} \inf_{k \geq n} x_k,
+	\end{equation*}
+	which means the smallest limit point of the sequence.
+\end{remark}
+
+Not let $\{A_n\}$ be a sequence of sets that belong to a $\sigma$-algebra $\mathcal{A}$. Then we have
+\begin{equation}
+	\limsup_{n \to \infty} A_n, \liminf_{n \to \infty} A_n \in \mathcal{A}.
+\end{equation}
+because $\mathcal{A}$ is closed under countable unions and intersections.
+
+Although the union of any collection of open sets is open and the intersection of any finite collection of open sets is open, as we have seen, the intersection of a countable collection of open sets need not be open. Here, we shall see that the smallest $\sigma$-algebra containing all open sets on the real line is quite worthy of attention.
+\begin{definition}{The Borel $\sigma$-algebra}{The Borel sigma-algebra}
+	The smallest $\sigma$-algebra containing all open sets of $\mathbb{R}$ is called the \textbf{Borel $\sigma$-algebra} and is denoted by $\mathcal{B}(\mathbb{R})$. The elements of $\mathcal{B}(\mathbb{R})$ are called \textbf{Borel sets}.
+\end{definition}
+
+\begin{itemize}
+	\item Every open set is a Borel set and since a $\sigma$-algebra is closed with respect to the formation of complements, every closed set is also a Borel set.
+	\item Therefore, since each singleton set is closed, every countable set is a Borel set.
+\end{itemize}
+
+\begin{definition}{$F_\sigma$ and $G_\delta$ Sets}{Fsigma and Gdelta Sets}
+	A set that is a countable union of closed sets is called an $F_\sigma$ set, and a set that is a countable intersection of open sets is called a $G_\delta$ set.
+\end{definition}
+
+\begin{itemize}
+	\item Therefore, each $F_\sigma$ set is a Borel set, and each $G_\delta$ set is a Borel set.
+	\item Moreover, both the $\limsup_{n \to \infty} A_n$ and $\liminf_{n \to \infty} A_n$ of a sequence of Borel sets are Borel sets.
+\end{itemize}
+
+\section{Sequence of Real Numbers}
+
+We now review the concept of a sequence of real numbers, which is a fundamental concept in analysis.
+\begin{definition}{Sequence of Real Numbers}{Sequence of Real Numbers}
+	A sequence of real numbers is a function $f: \mathbb{N} \to \mathbb{R}$, which we denote by $\left\{ x_n \right\}_{n=1}^{\infty}$, where $x_n = f(n)$.
+
+	A sequence $\left\{ a_n \right\}$ is said to \textbf{converge} to a real number $a$ if for every $\epsilon > 0$, there exists a positive integer $N$ such that for all $n \geq N$, we have $|a_n - a| < \epsilon$. In this case, we write $\lim_{n \to \infty} a_n = a$ or $a_n \to a$ as $n \to \infty$.
+
+	A \textbf{Cauchy sequence} is a sequence $\left\{ a_n \right\}$ such that for every $\epsilon > 0$, there exists a positive integer $N$ such that for all $m,n \geq N$, we have $|a_n - a_m| < \epsilon$.
+\end{definition}
+
+\begin{itemize}
+	\item \textbf{Monotone Convergence Theorem}: A monotone sequence of real numbers converges if and only if it is bounded.
+	\item \textbf{The Bolzano-Weierstrass Theorem}: Every bounded sequence of real numbers has a convergent subsequence.
+	\item \textbf{Cauchy Criterion}: A sequence of real numbers converges if and only if it is a Cauchy sequence.
+	\item \textbf{Linearity and Montonicity of Convergence of Real Sequences}: Let $\left\{ a_n \right\}$ and $\left\{ b_n \right\}$ be two convergent sequences of real numbers, with limits $a$ and $b$ respectively. Then for every real number $\alpha, \beta$, the sequence $\left\{ \alpha a_n + \beta b_n \right\}$ converges to $\alpha a + \beta b$. If $a_n \leq b_n$ for all $n$, then $a \leq b$.
+\end{itemize}
+
+Convergence to infinity is defined as follows: A sequence $\left\{ a_n \right\}$ converges to $+\infty$ if for every real number $M$, there exists a positive integer $N$ such that for all $n \geq N$, we have $a_n > M$. Similarly, $\left\{ a_n \right\}$ converges to $-\infty$ if for every real number $M$, there exists a positive integer $N$ such that for all $n \geq N$, we have $a_n < M$.
+
+The \textbf{Limit Superior} and \textbf{Limit Inferior} of a sequence $\left\{ a_n \right\}$ are defined as follows:
+\begin{equation}
+	\limsup_{n \to \infty} a_n = \lim_{n \to \infty} \sup_{k \geq n} a_k, \quad \liminf_{n \to \infty} a_n = \lim_{n \to \infty} \inf_{k \geq n} a_k.
+\end{equation}
+
+Let $\left\{ a_n \right\}$ and $\left\{ b_n \right\}$ be two sequences of real numbers. We have
+\begin{itemize}
+	\item $\limsup_{n \to \infty} \{a_n\} = l \in \mathbb{R}$ if and only if for every $\epsilon > 0$, there are infinitely many $n$ such that $a_n > l - \epsilon$ and only finitely many $n$ such that $a_n > l + \epsilon$.
+	\item $\liminf_{n \to \infty} \{a_n\} = \infty $ if and only if the sequence $\left\{ a_n \right\}$ is not bounded above.
+	\item The equality:
+	      \begin{equation}
+		      \limsup_{n \to \infty} \{a_n\} = -\liminf_{n \to \infty} \{-a_n\}
+	      \end{equation}
+	\item The sequence $\left\{ a_n \right\}$ converges to an extended real number $a$ if and only if
+	      \begin{equation}
+		      \limsup_{n \to \infty} \{a_n\} = \liminf_{n \to \infty} \{a_n\} = a
+	      \end{equation}
+	\item If $a_n \leq b_n$ for all $n$, then
+	      \begin{equation}
+		      \limsup_{n \to \infty} \{a_n\} \leq \limsup_{n \to \infty} \{b_n\}, \quad \liminf_{n \to \infty} \{a_n\} \leq \liminf_{n \to \infty} \{b_n\}
+	      \end{equation}
+\end{itemize}
+The same logic and be applied to sequences of sets, as we have seen in the previous section.
+
+A \textbf{series} is a sequence of partial sums of a sequence $\left\{ a_n \right\}$, denoted by $\sum_{n=1}^{\infty} a_n$. The series converges to a real number $s$ if the sequence of partial sums converges to $s$, that is, if
+\begin{equation}
+	\lim_{N \to \infty} \sum_{n=1}^{N} a_n = s.
+\end{equation}
+
+\section{Continuous Real-Valued Functions}
+
+Let $f$ be a real-valued function defined on a subset $E$ of $\mathbb{R}$. We say that $f$ is continuous at a point $x_0 \in E$ if for every $\epsilon > 0$, there exists a $\delta > 0$ such that for all $x \in E$ with $|x - x_0| < \delta$, we have $|f(x) - f(x_0)| < \epsilon$. If $f$ is continuous at every point in $E$, we say that $f$ is continuous on $E$.
+
+We say that $f$ is \textbf{Lipchitz continuous} on $E$ if there exists a constant $c > 0$ such that for all $x,y \in E$, we have $|f(x) - f(y)| \leq c |x - y|$. It is clear that a Lipschitz function is continuous, but the converse is not true in general (take $\sqrt{x}$ as an example).
+
+We say that $f$ is \textbf{uniformly continuous} on $E$ if for every $\epsilon > 0$, there exists a $\delta > 0$ such that for all $x,y \in E$ with $|x - y| < \delta$, we have $|f(x) - f(y)| < \epsilon$. It is clear that a uniformly continuous function is continuous, but the converse is not true in general (take $\frac{1}{x}$ on $(0,1)$ as an example).
+
+\begin{proposition}{}{}
+	A real-valued function $f$ defined on $E \subseteq \mathbb{R}$ is continuous at $x_* \in E$ if and only if for every sequence $\left\{ x_n \right\}$ in $E$ that converges to $x_*$, the sequence $\left\{ f(x_n) \right\}$ converges to $f(x_*)$.
+
+	$f$ is continuous on $E$ if and only if for every open set $\mathcal{O} \subseteq \mathbb{R}$, the preimage $f^{-1}(\mathcal{O}) = \left\{ x \in E: f(x) \in \mathcal{O} \right\}$ is open in $E$.
+
+	\textbf{The Extreme Value Theorem}: If $f$ is continuous on a closed and bounded interval $[a,b]$, then $f$ attains its maximum and minimum values on $[a,b]$.
+
+	\textbf{The Intermediate Value Theorem}: If $f$ is continuous on a closed interval $[a,b]$ and $f(a) < f(b)$, then for every $y$ between $f(a)$ and $f(b)$, there exists a point $c \in (a,b)$ such that $f(c) = y$.
+
+	\textbf{The Uniform Continuity Theorem}: If $f$ is continuous on a closed and bounded interval $[a,b]$, then $f$ is uniformly continuous on $[a,b]$.
+\end{proposition}
+
+\end{document}

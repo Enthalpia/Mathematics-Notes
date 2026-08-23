@@ -1,0 +1,83 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\chapter{Differentiation and Integration}
+
+The fundamental theorems of integral and differential calculus, with respect to the Riemann integral, are two of the most important results in basic analysis. We shall reformulate these theorems in the context of the Lebesgue integral.
+
+\section{Continuity of Monotone Functions}
+Recall that a function is defined to be monotone if it is either increasing or decreasing.
+
+\begin{theorem}{Continuity of Monotone Functions}{Continuity of Monotone Functions}
+  Let $f$ be a monotone real-valued function defined on an open interval $(a,b)$. Then $f$ is continuous except possibly at a countable set of points in $(a,b)$.
+\end{theorem}
+\begin{proof}
+  Assume $f$ is increasing. First consider that $f$ is increasing on the bounded closed interval $[a,b]$. For any $x_0 \in (a,b)$, we have
+  \begin{equation*}
+    f(x_0^-) = \sup_{a < x < x_0} f(x) \qquad f(x_0^+) = \inf_{x_0 < x < b} f(x)
+  \end{equation*}
+  Since $f$ is increasing, we have $f(x_0^-) \leq f(x_0^+)$. We know that $f$ is continuous at $x_0$ if and only if $f(x_0^-) = f(x_0^+)$.
+
+  Actually, this needs some justification. Firstly, consider any sequence $\{x_n\}$ such that $x_n \to x_0$ and $x_n < x_0$ for all $n$. Then, we can find an increasing subsequence $\{x_{n_k}\}$ such that $x_{n_k} \to x_0$. Since $f$ is increasing, we have $f(x_{n_k}) \leq f(x_0^-)$ for all $k$ and increasing, so it has a limit. Therefore, we can prove that every point in this monotone function has a left-hand limit and a right-hand limit. Therefore, $f$ is continuous at $x_0$ if and only if $f(x_0^-) = f(x_0^+)$.
+
+  For any discontinuity point $x_0$, we have $f(x_0^-) < f(x_0^+)$, and we set $J(x_0) = (f(x_0^-), f(x_0^+))$. Then each different $J(x_0)$ is disjoint, and inside $[f(a), f(b)]$, which is bounded. Therefore, there are at most countably many discontinuity points in $(a,b)$: To justify this, consider $K_n = \{x_0 \in (a,b) : |J(x_0)| > 1/n\}$. Then $K_n$ is finite, since we have the set of discontinuity points $K = \bigcup_{n=1}^{\infty} K_n$. Therefore, $K$ is countable. This proves the theorem for the bounded closed interval $[a,b]$.
+
+  For a general open interval $(a,b)$, we can write it as a countable union of bounded closed intervals, and the result follows.
+\end{proof}
+
+\begin{proposition}{}{}
+  Let $C$ be a countable subset of $(a,b)$. Then there exists an increasing real-valued function $f$ on $(a,b)$ such that $C$ is the set of discontinuity points of $f$.
+\end{proposition}
+\begin{proof}
+  If $C$ is finite it is easy. If $C$ is countably infinite, we can write $C = \{q_1, q_2, \ldots\}$ and define
+  \begin{equation}
+    f(x) = \sum_{n: q_n < x} 2^{-n}
+  \end{equation}
+  which obviously is increasing and has discontinuity points exactly at $C$.
+\end{proof}
+
+\section{Differentiation of Monotone Functions}
+
+A closed bounded interval $[a,b]$ is said to be \textbf{non-degenerate} if $a < b$.
+
+\begin{definition}{Vitali Cover}{Vitali Cover}
+  A collection $\mathcal{F}$ of non-degenerate closed bounded intervals is said to cover a set $E \subset \mathbb{R}$ \textbf{in the sense of Vitali} if for every $x \in E$ and every $\epsilon > 0$, there exists an interval $I \in \mathcal{F}$ such that $x \in I$ and $\ell(I) < \epsilon$.
+\end{definition}
+
+\begin{remark}
+  To remember this, this looks a bit like first-countablity, but the difference is that Vitali cover is a collection of intervals, while first-countability is the requirement for a topological space. Both gives us a profound storage of ``very small'' sets to approximate something.
+\end{remark}
+
+\begin{lemma}{Vitali Covering Lemma}{Vitali Covering Lemma}
+  Let $E$ be a set of finite outer measure and let $\mathcal{F}$ be a Vitali cover of $E$. Then for every $\epsilon > 0$, there exists a finite disjoint subcollection $\{I_1, \ldots, I_n\} \subset \mathcal{F}$ such that
+  \begin{equation}
+    m^*\left(E \setminus \bigcup_{k=1}^{n} I_k\right) < \epsilon
+  \end{equation}
+\end{lemma}
+\begin{proof}
+  This constructive proof is a very good illustration of the ``greedy algorithm'' idea. Imagine you have a messy set $E$ on the floor and a giant pile of stickers (intervals) of all different sizes. You want to cover as much of $E$ as possible, but there is one rule: The stickers are not allowed to overlap.
+
+  Take an open set $\mathcal{O}$ of finite measure such that $E \subset \mathcal{O}$ and just assume each interval in $\mathcal{F}$ is contained in $\mathcal{O}$. (We do this by for any $x\in E$, throw away the intervals that are not contained in $\mathcal{O}$, and we still have a Vitali cover of $E$.)
+
+  If there is a finite disjoint subcollection of $\mathcal{F}$ that covers $E$ the proof is complete. Otherwise, we intuctively choose a sequence of intervals $\{I_n\}$ from $\mathcal{F}$ as follows:
+  \begin{itemize}
+    \item Choose $I_1$. We are inclined to choose the largest interval in $\mathcal{F}$, but naturally there may not be a largest interval. So we choose a supremum $s_1 = \sup\{\ell(I): I \in \mathcal{F}\}$ and choose $I_1$ such that $\ell(I_1) > s_1/2$, where the ``$/2$'' is arbitrary.
+    \item As we are looking for a disjoint subcollection, we throw away all intervals that intersect $I_1$ and the rest of the intervals forms a subset $\mathcal{F}_1 \subseteq \mathcal{F}$. This set is not empty, since $I_1$ does not cover $E$ and take any $x \in E \setminus I_1$ and as $I_1$ is closed, $x$ must have some finite distance to $I_1$, and using Vitali cover property, we can find an interval $I \in \mathcal{F}$ that contains $x$ and is contained in the small $\epsilon$-neighborhood of $x$. Actually, this makes $\mathcal{F}_1$ a Vitali cover of $E \setminus I_1$.
+    \item We can repeat this process to get a sequence of intervals $\{I_n\}$ such that $I_n \in \mathcal{F}_{n-1}$ and $\ell(I_n) > s_n/2$, where $s_n = \sup\{\ell(I): I \in \mathcal{F}_{n-1}\}$. This is a disjoint sequence of intervals.
+    \item This process would not terminate, since we assumed there is no finite disjoint subcollection of $\mathcal{F}$ that covers $E$. Therefore, we have an infinite sequence of intervals $\{I_n\}$.
+  \end{itemize}
+
+  Now, as each $\{I_n\}$ is disjoint, we have
+  \begin{equation*}
+    \sum_{n=1}^{\infty} \ell(I_n) \leq m(\mathcal{O}) < \infty
+  \end{equation*}
+  so $\ell(I_n) \to 0$ as $n \to \infty$.
+
+  Let $R_n$ be the remainder set
+  \begin{equation}
+    R_n = E \setminus \bigcup_{k=1}^{n} I_k
+  \end{equation}
+  which means that $\mathcal{F}_n$ is a Vitali cover of $R_n$. Let $x \in R_n$ then there exists an interval $I \in \mathcal{F}_n$ such that $x \in I$ 
+\end{proof}
+
+\end{document}

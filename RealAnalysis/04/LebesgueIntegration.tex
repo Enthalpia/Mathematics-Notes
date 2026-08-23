@@ -1,0 +1,969 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\chapter{Lebesgue Integration}
+
+Lebesgue integration is a fundamental concept in real analysis that extends the notion of integration beyond the limitations of Riemann integration. It allows for the integration of a wider class of functions and provides a more robust framework for analyzing convergence and measure theory.
+
+\section{The Riemann Integral}
+We begin by recalling the definition and properties of the Riemann integral.
+
+Let $f$ be a bounded real-valued function defined on a closed interval $[a, b]$. Let $P = \{ x_0, \ldots , x_n \}$ be a partition of the interval $[a, b]$, given by
+\begin{equation*}
+	a = x_0 < x_1 < \ldots < x_n = b,
+\end{equation*}
+
+Now define the lower and upper \textbf{Darboux sums} of $f$ with respect to the partition $P$ as follows:
+\begin{equation}
+	L(f, P) = \sum_{i=1}^{n} m_i (x_i - x_{i-1}) \quad \text{and} \quad U(f, P) = \sum_{i=1}^{n} M_i (x_i - x_{i-1}),
+\end{equation}
+where
+\begin{equation}
+	m_i = \inf \{ f(x) : x \in (x_{i-1}, x_i) \} \quad \text{and} \quad M_i = \sup \{ f(x) : x \in (x_{i-1}, x_i) \}.
+\end{equation}
+then we define the \textbf{lower and upper Riemann integrals} of $f$ on $[a, b]$ as
+\begin{equation}
+	\begin{aligned}
+		 & (R) \underline{\int_a^b} f = \sup \{ L(f, P) : P \text{ is a partition of } [a, b] \} \\
+		 & (R) \overline{\int_a^b} f = \inf \{ U(f, P) : P \text{ is a partition of } [a, b] \}.
+	\end{aligned}
+\end{equation}
+Since $f$ is assume bounded so the lower and upper Riemann integrals are finite. The upper integral is always at least as large as the lower integral, and if the two are equal we say that $f$ is \textbf{Riemann integrable} on $[a, b]$, and we denote the common value by
+\begin{equation}
+	(R) \int_a^b f = (R) \underline{\int_a^b} f = (R) \overline{\int_a^b} f.
+\end{equation}
+to temporarily distinguish it from the Lebesgue integral, which we consider in the next section.
+
+A real-valued function $\psi$ is called a \textbf{step function} on $[a, b]$ if there exists a partition $P = \{ x_0, \ldots , x_n \}$ of $[a, b]$ such that $\psi$ is constant $c_i$ on each open subinterval $(x_{i-1}, x_i)$ for $i = 1, \ldots , n$.
+
+Then naturally
+\begin{equation*}
+	L(\psi, P) = \sum_{i=1}^{n} c_i (x_i - x_{i-1}) = U(\psi, P),
+\end{equation*}
+so the step function $\psi$ is Riemann integrable and we have
+\begin{equation*}
+	(R) \int_a^b \psi = \sum_{i=1}^{n} c_i (x_i - x_{i-1}).
+\end{equation*}
+
+Therefore, we may reformulate the definition of the lower and upper Riemann integrals as follows:
+\begin{equation}
+	\begin{aligned}
+		 & (R) \underline{\int_a^b} f = \sup \{ (R) \int_a^b \psi : \psi \text{ is a step function on } [a, b] \text{ and } \psi \leq f \} \\
+		 & (R) \overline{\int_a^b} f = \inf \{ (R) \int_a^b \psi : \psi \text{ is a step function on } [a, b] \text{ and } f \leq \psi \}.
+	\end{aligned}
+\end{equation}
+
+\begin{example}{Dirichlet Function}{Dirichlet Function}
+	The Dirichlet function $D: [0, 1] \to \mathbb{R}$ is defined by
+	\begin{equation*}
+		D(x) = \begin{cases}
+			1, & \text{if } x \in \mathbb{Q} \cap [0, 1],      \\
+			0, & \text{if } x \in [0, 1] \setminus \mathbb{Q}.
+		\end{cases}
+	\end{equation*}
+	We easily see that $D$ is bounded, but it is not Riemann integrable on $[0, 1]$, for $L(D, P) = 0$ and $U(D, P) = 1$ for any partition $P$ of $[0, 1]$.
+
+	As rationals are countable, we can find a sequence of Riemann integrable functions $\{ f_n \}$ that converges pointwise to $D$ on $[0, 1]$, by just defining $f_n$ to be the function that is equal to $1$ on the first $n$ rational numbers in $[0, 1]$ and equal to $0$ elsewhere. Each $f_n$ is Riemann integrable, but the limit function $D$ is not.
+\end{example}
+
+\begin{remark}
+	\textbf{Step Functions vs. Simple Functions}
+
+	The reformulation of the Riemann integral using step functions is the key to understanding the Lebesgue integral.
+	\begin{itemize}
+		\item \textbf{Riemann Approach:} Approximates $f$ using \textbf{step functions} (constant on intervals). This partitions the \textit{domain} into chunks of length $\Delta x$.
+		\item \textbf{Lebesgue Approach:} Approximates $f$ using \textbf{simple functions} (constant on measurable sets). This effectively partitions the \textit{range} into chunks of height $\Delta y$, where the ``width'' of the chunk is given by the measure $m(E_i)$.
+	\end{itemize}
+	Since the collection of measurable sets is much richer than the collection of intervals, simple functions can ``track'' the behavior of functions like the Dirichlet function where step functions fail.
+\end{remark}
+
+\section{Lebesgue Integral: Bounded Functions, Finite Measure}
+
+The Dirichlet function, which was examined in the preceding section, exhibits one of the principal shortcomings of the Riemann integral: a uniformly bounded sequence of Riemann integrable functions on a closed, bounded interval can converge pointwise to a function that is not Riemann integrable. We will see that the Lebesgue integral does not suffer from this shortcoming.
+
+Henceforth we only consider the Lebesgue integral, unless explicitly mentioned otherwise, and so we use the pure integral symbol to denote the Lebesgue integral.
+
+\begin{definition}{Lebesgue Integral of Simple Functions}{Lebesgue Integral of Simple Functions}
+	Let $E \subseteq \mathbb{R}$ be a measurable set with finite measure, and let $\phi$ be a simple function on $E$ given by
+	\begin{equation*}
+		\phi = \sum_{i=1}^{n} a_i \chi_{E_i},
+	\end{equation*}
+	where $a_i \in \mathbb{R}$ and $E_i$ are measurable subsets of $E$. The Lebesgue integral of $\phi$ over $E$ is defined as
+	\begin{equation}
+		\int_E \phi = \sum_{i=1}^{n} a_i m(E_i),
+	\end{equation}
+\end{definition}
+
+From the additivity of measure, this form holds also when the $\{a_i\}$ are not necessarily distinct, which naturally leads to the addition and multiplication properties of the Lebesgue integral for simple functions.
+
+\begin{proposition}{Linearly and Monotonicity of Integration}{Linearly and Monotonicity of Integration}
+	Let $\varphi$ and $\psi$ be simple functions on a measurable set $E$ with finite measure, and let $\alpha, \beta \in \mathbb{R}$. Then
+	\begin{equation}
+		\int_E (\alpha \varphi + \beta \psi) = \alpha \int_E \varphi + \beta \int_E \psi,
+	\end{equation}
+	Moreover, if $\varphi \leq \psi$ on $E$, then
+	\begin{equation}
+		\int_E \varphi \leq \int_E \psi.
+	\end{equation}
+\end{proposition}
+\begin{proof}
+	As there are only finitely many measurable sets in which $\varphi$ and $\psi$ are both constant, we can write
+	\begin{equation*}
+		\int_E (\alpha \varphi + \beta \psi) = \sum_{i=1}^{n} (\alpha a_i + \beta b_i) m(E_i) = \alpha \sum_{i=1}^{n} a_i m(E_i) + \beta \sum_{i=1}^{n} b_i m(E_i) = \alpha \int_E \varphi + \beta \int_E \psi.
+	\end{equation*}
+	the second part follows from subtracting the two integrals and using the fact that nonnegative simple functions have nonnegative integrals.
+\end{proof}
+
+This shows
+\begin{proposition}{}{}
+	Let $\{E_i\}_{i=1}^{n}$ be a finite collection of measurable subsets of a set $E$ with finite measure, not necessarily disjoint, and let $a_i \in \mathbb{R}$. Then if $\phi = \sum_{i=1}^{n} a_i \chi_{E_i}$ we have
+	\begin{equation}
+		\int_E \phi = \sum_{i=1}^{n} a_i m(E_i).
+	\end{equation}
+\end{proposition}
+\begin{proof}
+	This follows from the linearity of the integral and
+	\begin{equation*}
+		\int_E \chi_{E_i} = m(E_i).
+	\end{equation*}
+\end{proof}
+
+A step function takes only a finite number of values and each interval is measurable. Thus a step function is simple. Since the measure of a singleton set is zero and the measure of an interval is its length, we infer from the linearity of Lebesgue integration for simple functions defined on sets of finite measure that the Riemann integral over a closed, bounded interval of a step function agrees with the Lebesgue integral.
+
+Now, let $f$ be a bounded real-valued function defined on a measurable set $E$ with finite measure. By analogy with the Riemann integral, we define the \textbf{lower and upper Lebesgue integrals} of $f$ on $E$ as
+\begin{equation}
+	\begin{aligned}
+		 & \underline{\int_E} f = \sup \left\{ \int_E \phi : \phi \text{ is a simple function on } E \text{ and } \phi \leq f \right\} \\
+		 & \overline{\int_E} f = \inf \left\{ \int_E \phi : \phi \text{ is a simple function on } E \text{ and } f \leq \phi \right\}.
+	\end{aligned}
+\end{equation}
+
+Since $f$ is assumed to be bounded, by the monotonicity property of the integral for simple functions, the lower and upper integrals are finite and the upper integral is always at least as large as the lower integral.
+
+\begin{definition}{Lebesgue Integral of Bounded Functions on Finite Measure Sets}{Lebesgue Integral of Bounded Functions on Finite Measure Sets}
+	A bounded real-valued function $f$ defined on a measurable set $E$ with finite measure is said to be \textbf{Lebesgue integrable} on $E$ if the lower and upper Lebesgue integrals of $f$ on $E$ are equal. In this case, we denote the common value by $\int_E f$ and call it the \textbf{Lebesgue integral} of $f$ over $E$.
+\end{definition}
+
+\begin{theorem}{Riemann Integrable and Lebesgue Integrable: Bounded Functions on Finite Measure Sets}{Riemann Integrable and Lebesgue Integrable: Bounded Functions on Finite Measure Sets}
+	Let $f$ be a bounded real-valued function defined on a closed, bounded interval $[a, b]$. Then if $f$ is Riemann integrable on $[a, b]$, it is also Lebesgue integrable on $[a, b]$, and the two integrals are equal.
+\end{theorem}
+\begin{proof}
+	As step functions are simple, and for them the Riemann and Lebesgue integrals agree, we have
+	\begin{equation*}
+		\begin{aligned}
+			 & \sup \{ (R) \int_a^b \psi : \psi \text{ is a step function on } [a, b] \text{ and } \psi \leq f \}       \\
+			 & \leq \sup \{ \int_a^b \phi : \phi \text{ is a simple function on } [a, b] \text{ and } \phi \leq f \}    \\
+			 & \leq \inf \{ \int_a^b \phi : \phi \text{ is a simple function on } [a, b] \text{ and } f \leq \phi \}    \\
+			 & \leq \inf \{ (R) \int_a^b \psi : \psi \text{ is a step function on } [a, b] \text{ and } f \leq \psi \}.
+		\end{aligned}
+	\end{equation*}
+	Riemann integrability of $f$ implies that the first and last expressions are equal, which in turn implies that the second and third expressions are equal, and hence that $f$ is Lebesgue integrable on $[a, b]$ and the two integrals are equal.
+\end{proof}
+
+\begin{remark}
+	We can see now, that the set of simple functions is much richer than the set of step functions, and hence the Lebesgue integral is more general than the Riemann integral. In particular, the Dirichlet function is Lebesgue integrable on $[0, 1]$ with integral equal to $0$, since it is equal to $0$ almost everywhere on $[0, 1]$. It is itself a simple function, as it can be expressed as $D = 1 \cdot \chi_{\mathbb{Q} \cap [0, 1]} + 0 \cdot \chi_{[0, 1] \setminus \mathbb{Q}}$, but not as a step function, since it is not constant on any interval.
+\end{remark}
+
+\begin{theorem}{Measurable Functions and Lebesgue Integrability}{Measurable Functions and Lebesgue Integrability}
+	Let $f$ be a bounded measurable function defined on a measurable set $E$ with finite measure. Then $f$ is Lebesgue integrable on $E$.
+\end{theorem}
+\begin{proof}
+	According to the Simple Approximation Theorem, there exists simple functions $\varphi_n$ and $\psi_n$ such that $\varphi_n \leq f \leq \psi_n$ and $0 \leq \psi_n - \varphi_n \leq 1/n$ for all $n \in \mathbb{N}$. Then we have
+	\begin{equation*}
+		0 \leq \int_E \psi_n - \int_E \varphi_n = \int_E (\psi_n - \varphi_n) \leq \frac{1}{n} m(E),
+	\end{equation*}
+	we also have
+	\begin{equation*}
+		0 \leq \overline{\int_E} f - \underline{\int_E} f \leq \int_E \psi_n - \int_E \varphi_n \leq \frac{1}{n} m(E),
+	\end{equation*}
+	and since $n$ is arbitrary, we conclude that $\overline{\int_E} f = \underline{\int_E} f$, and hence $f$ is Lebesgue integrable on $E$.
+\end{proof}
+
+\begin{remark}
+	This is a good place to review the intuition of the definition of measurable functions. A function $f$ is measurable if the preimage of any interval is a measurable set. This property allows us to approximate $f$ from below and above by simple functions, which are constant on measurable sets.
+
+	Lebesgue integration itself is just the act of partitioning the range of a function into small intervals, and then measuring the size of the preimage of each interval. So we need to ensure that the preimage of each interval is measurable, which is exactly what the definition of a measurable function guarantees.
+\end{remark}
+
+It turns out that the converse of the preceding theorem is true; a bounded function on a set of finite measure is Lebesgue integrable if and only if it is measurable: we will prove this later. This shows, in particular, that not every bounded function defined on a set of finite measure is Lebesgue integrable. For example, the characteristic function of a nonmeasurable set is bounded but not Lebesgue integrable, since the lower and upper Lebesgue integrals of such a function are the inner and outer measures of the set, which are not equal.
+
+\begin{theorem}{Linearity and Monotonicity of Integration)}{Linearity and Monotonicity of Integration}
+	Let $f$ and $g$ be bounded measurable functions defined on a measurable set $E$ with finite measure, and let $\alpha, \beta \in \mathbb{R}$. Then
+	\begin{equation}
+		\int_E (\alpha f + \beta g) = \alpha \int_E f + \beta \int_E g,
+	\end{equation}
+	Moreover, if $f \leq g$ on $E$, then
+	\begin{equation}
+		\int_E f \leq \int_E g.
+	\end{equation}
+\end{theorem}
+\begin{proof}
+	As linear combinations of measurable functions are measurable, $\alpha f + \beta g$ is measurable and thus Lebesgue integrable on $E$.
+
+	For the scalar multiplication, we divide cases. If $\alpha = 0$, then the result is trivial. If $\alpha > 0$, then we have
+	\begin{equation*}
+		\int_E (\alpha f) = \inf_{\psi \geq \alpha f} \int_E \psi = \alpha \inf_{\psi / \alpha \geq f} \int_E \frac{\psi}{\alpha} = \alpha \int_E f.
+	\end{equation*}
+	and the same goes for $\alpha < 0$. So we only need to consider $\alpha = \beta = 1$. Let $\psi_1$ and $\psi_2$ be simple functions such that $f \leq \psi_1$ and $g \leq \psi_2$. Then we have $\psi_1 + \psi_2$ is a simple function and $f + g \leq \psi_1 + \psi_2$, so we have
+	\begin{equation*}
+		\int_E (f + g) \leq \int_E (\psi_1 + \psi_2) = \int_E \psi_1 + \int_E \psi_2.
+	\end{equation*}
+	Taking the infimum over all such $\psi_1$ and $\psi_2$, we obtain
+	\begin{equation*}
+		\int_E (f + g) \leq \inf_{\psi_1 \geq f} \int_E \psi_1 + \inf_{\psi_2 \geq g} \int_E \psi_2 = \int_E f + \int_E g.
+	\end{equation*}
+	the next direction follows from the same argument, using the lower bounds of the integrals would do.
+
+	The monotonicity property follows from subtracting the two integrals and using the fact that nonnegative measurable functions have nonnegative integrals, as $0$ is a lower approximate simple function having integral equal to $0$.
+\end{proof}
+
+\begin{proposition}{Patching Domains}{Patching Domains}
+	Let $f$ be a bounded measurable function defined on a measurable set $E$ with finite measure, and let $A$ and $B$ be measurable subsets of $E$ and disjoint. Then
+	\begin{equation}
+		\int_{A \cup B} f = \int_A f + \int_B f.
+	\end{equation}
+\end{proposition}
+\begin{proof}
+	Integrating by
+	\begin{equation*}
+		f \cdot \chi_{A \cup B} = f \cdot \chi_A + f \cdot \chi_B,
+	\end{equation*}
+	would do.
+\end{proof}
+
+\begin{proposition}{Absolute Value Inequality}{Absolute Value Inequality}
+	Let $f$ be a bounded measurable function defined on a measurable set $E$ with finite measure. Then
+	\begin{equation}
+		\left| \int_E f \right| \leq \int_E |f|.
+	\end{equation}
+\end{proposition}
+\begin{proof}
+	As $|f|$ is measurable and bounded, we have $-|f| \leq f \leq |f|$, and hence by the monotonicity property of the integral, we have our result.
+\end{proof}
+
+\begin{proposition}{Uniform Limits}{Uniform Limits}
+	Let $\{ f_n \}$ be a sequence of bounded measurable functions defined on a measurable set $E$ with finite measure, and suppose that $f_n$ converges uniformly to a function $f$ on $E$. Then $f$ is bounded and measurable on $E$, and
+	\begin{equation}
+		\lim_{n \to \infty} \int_E f_n = \int_E f.
+	\end{equation}
+\end{proposition}
+\begin{proof}
+	The proof is the same as the proof of the corresponding result for Riemann integrals, just take $\epsilon > 0$ and choose $N$ such that $|f_n(x) - f(x)| < \epsilon / m(E)$ for all $x \in E$ and $n \geq N$. Then we have
+	\begin{equation*}
+		\left| \int_E f_n - \int_E f \right| = \left| \int_E (f_n - f) \right| \leq \int_E |f_n - f| < \epsilon,
+	\end{equation*}
+	so we have $\lim_{n \to \infty} \int_E f_n = \int_E f$.
+\end{proof}
+
+This proposition is rather weak since frequently a sequence will be presented that converges pointwise but not uniformly. . It is important to understand when it is possible to infer from pointwise convergence of a sequence of functions to the convergence of the corresponding sequence of integrals. We refer to this equality as \textbf{passing the limit under the integral sign}.
+
+We shall illustrate this idea with an example.
+
+\begin{example}{}{}
+	We define a sequence of functions $\{ f_n \}$ on $[0, 1]$ by:
+	\begin{itemize}
+		\item $f_n(x) = 0$ for $x \geq 2/n$,
+		\item $f_n(0) = 0, f(1/n) = n$, and $f_n$ is linear on $[0, 1/n]$ and $[1/n, 2/n]$.
+	\end{itemize}
+	which is a sharp triangular spike of height $n$ and base $2/n$. Then we have $\int_0^1 f_n = 1$ for all $n$, but $f_n \to 0$ pointwise on $[0, 1]$.
+
+	Thus, pointwise convergence alone is not sufficient to justify passage of the limit under the integral sign.
+\end{example}
+
+\begin{theorem}{Bounded Convergence Theorem}{Bounded Convergence Theorem}
+	Let $\{ f_n \}$ be a sequence of measurable functions defined on a measurable set $E$ with finite measure, and suppose that $\{ f_n \}$ is uniformly pointwise bounded on $E$, i.e., there exists a constant $M > 0$ such that $|f_n(x)| \leq M$ for all $x \in E$ and all $n \in \mathbb{N}$. Then if $f_n$ converges pointwise to a function $f$ on $E$, we have
+	\begin{equation*}
+		\lim_{n \to \infty} \int_E f_n = \int_E f.
+	\end{equation*}
+\end{theorem}
+\begin{proof}
+	The proof of this theorem furnishes a nice illustration of Littlewood's Third Principle. If the convergence is uniform, we have the easy proof of the preceding proposition. However, Egoroff's Theorem tells us, roughly, that pointwise convergence is ``nearly uniform'' convergence.
+
+	The pointwise limit of a sequence of measurable functions is measurable. Therefore $f$ is measurable and $|f| \leq M$ on $E$, and we take any measurable set $A \subseteq E$ and write
+	\begin{equation*}
+		\int_E f_n - \int_E f = \int_A (f_n - f) + \int_{E \setminus A} f_n - \int_{E \setminus A} f.
+	\end{equation*}
+	We now apply the Egoroff's Theorem. For any $\epsilon > 0$, there exists a measurable set $A \subseteq E$ such that $m(E \setminus A) < \epsilon / (4M)$ and $f_n \to f$ uniformly on $A$. Then there is an $N$ such that
+	\begin{equation*}
+		\forall n \geq N, \forall x \in A, |f_n(x) - f(x)| < \epsilon / (2 m(E)).
+	\end{equation*}
+	and adding the integrals we have our result.
+\end{proof}
+
+\begin{remark}
+	We notice that the bound $M$ is essential in the proof. It guarantees that small measure sets do not contribute significantly to the integral, allowing us to control the error in the approximation by Egoroff's theorem. Without this uniform bound, the integrals over small measure sets could be arbitrarily large, and the conclusion of the theorem would not hold.
+\end{remark}
+
+\begin{remark}
+	\textbf{Comparison with the Riemann Integral: Arzelà's Theorem}
+
+	It is noteworthy that a version of this theorem exists for the Riemann integral, known as \textbf{Arzelà's Bounded Convergence Theorem} (1885). However, the Riemann version is significantly less powerful due to two major limitations:
+	\begin{itemize}
+		\item \textbf{The Integrability of the Limit:} In Riemann theory, the pointwise limit of integrable functions is not necessarily integrable (as seen with the sequence $\{f_n\}$ converging to the Dirichlet function $D$). Therefore, Arzelà's theorem must \textit{assume} as a hypothesis that the limit function $f$ is Riemann integrable. In Lebesgue theory, we get the measurability of $f$ ``for free.''
+		\item \textbf{The Difficulty of Proof:} Without the tools of measure theory (specifically Egoroff's Theorem), Arzelà's original proof was notoriously difficult and technically complex.
+	\end{itemize}
+	By using Egoroff's Theorem, the Lebesgue theory effectively ``decomposes'' the problem: we use measure theory to handle the ``bad'' sets of points where convergence is slow, and use the uniform bound $M$ to ensure these sets do not contribute significantly to the integral. This illustrates how the Lebesgue integral ``repairs'' the convergence defects of the Riemann integral.
+\end{remark}
+
+Prior to the proof of the Bounded Convergence Theorem, no use was made of the countable additivity of Lebesgue measure on the real line. Only finite additivity was used, and it was used just once, in the proof of linearity of simple function integration. But for the proof of the Bounded Convergence Theorem we used Egoroff's Theorem. The proof of Egoroff's Theorem needed the continuity of Lebesgue measure, a consequence of countable additivity of Lebesgue measure.
+
+\section{Lebesgue Integral: Nonnegative Functions}
+A measurable function $f$ on $E$ is said to vanish \textbf{outside a set of finite measure} if there exists a measurable set $E_0 \subseteq E$ with finite measure such that $f = 0$ on $E \setminus E_0$. In measure theory, we often define the \textbf{support} of a function $f$ as the set
+\begin{equation}
+	\supp(f) = \{x \in E : f(x) \neq 0\},
+\end{equation}
+
+\begin{remark}
+	Note that this definition of support is not the same as the topological definition of support, which is defined as the closure of the set where $f$ is nonzero. In measure theory, we are often more concerned with sets of points instead of the influence of some single point.
+\end{remark}
+
+In the preceding section, we defined the integral of a bounded measurable function on a set of finite measure. If $m(E) = \infty$, we can still define the integral of a bounded measurable function $f$ on $E$ if $f$ vanishes outside a set of finite measure $E_0$, in which case we define
+\begin{equation}
+	\int_E f = \int_{E_0} f.
+\end{equation}
+where $E_0 \subseteq E$ has finite measure and $f = 0$ on $E \setminus E_0$. This integral is properly defined, that is, it is independent of the choice of set of finite measure $E_0$, which is a consequence of the additivity of the integral.
+
+\begin{definition}{Integral of Nonnegative Functions}{Integral of Nonnegative Functions}
+	Let $f$ be a nonnegative measurable function defined on a measurable set $E$. We define the Lebesgue integral of $f$ over $E$ as
+	\begin{equation}
+		\int_E f = \sup \left\{ \int_E h: h \text{ bounded, measurable, of finite support, and } 0 \leq h \leq f \right\}.
+	\end{equation}
+\end{definition}
+
+\begin{theorem}{Chebyshev Inequality}{Chebyshev Inequality}
+	Let $f$ be a nonnegative measurable function defined on a measurable set $E$, and let $\lambda > 0$. Then
+	\begin{equation}
+		m(\{x \in E : f(x) \geq \lambda\}) \leq \frac{1}{\lambda} \int_E f.
+	\end{equation}
+\end{theorem}
+\begin{proof}
+	Geometrically, $ \lambda m(\{x \in E : f(x) \geq \lambda\})$ is the area of a rectangle with height $\lambda$ and base $m(\{x \in E : f(x) \geq \lambda\})$, which is contained in the area under the graph of $f$.
+
+	To prove this, define $E_\lambda = \{x \in E : f(x) \geq \lambda\}$. Then if $m(E_\lambda) < \infty$, we just use $\psi = \lambda \chi_{E_\lambda}$ as a lower approximate simple function of $f$ and we have $0 \leq \psi \leq f$ and
+	\begin{equation*}
+		\lambda \cdot m(E_\lambda) = \int_E \psi \leq \int_E f.
+	\end{equation*}
+	If $m(E_\lambda) = \infty$, then take $E_{\lambda, n} = E_\lambda \cap [-n, n]$ for $n \in \mathbb{N}$, which is a measurable set of finite measure. Then we define $\psi_n = \lambda \chi_{E_{\lambda, n}}$, which have $0 \leq \psi_n \leq f$ and
+	\begin{equation*}
+		\lambda \cdot m(E_{\lambda, n}) = \int_E \psi_n \leq \int_E f.
+	\end{equation*}
+	taking the limit as $n \to \infty$ and using the continuity of measure, we have our result: both sides of the inequality are $\infty$.
+\end{proof}
+
+\begin{proposition}{}{}
+	Let $f$ be a nonnegative measurable function defined on a measurable set $E$. Then $\int_E f = 0$ if and only if $f = 0$ almost everywhere on $E$.
+\end{proposition}
+\begin{proof}
+	If $f = 0$ almost everywhere on $E$, then for any bounded measurable function $h$ of finite support with $0 \leq h \leq f$, we have $h = 0$ almost everywhere on $E$, and hence $\int_E h = 0$. Therefore, $\int_E f = \sup \{ \int_E h : 0 \leq h \leq f \} = 0$.
+
+	Conversely, if $\int_E f = 0$, then for any $\lambda > 0$, we have
+	\begin{equation*}
+		m(\{x \in E : f(x) \geq \lambda\}) \leq \frac{1}{\lambda} \int_E f = 0,
+	\end{equation*}
+	which implies that the set $\{x \in E : f(x) > 0\}$ has measure zero (continuity of measure). Therefore, $f = 0$ almost everywhere on $E$.
+\end{proof}
+
+\begin{theorem}{Linearity and Monotonicity of Integration: Nonnegative Functions}{Linearity and Monotonicity of Integration: Nonnegative Functions}
+	Let $f$ and $g$ be nonnegative measurable functions defined on a measurable set $E$, and let $\alpha, \beta > 0$. Then
+	\begin{equation}
+		\int_E (\alpha f + \beta g) = \alpha \int_E f + \beta \int_E g,
+	\end{equation}
+	Moreover, if $f \leq g$ on $E$, then
+	\begin{equation}
+		\int_E f \leq \int_E g.
+	\end{equation}
+\end{theorem}
+\begin{proof}
+	For $\alpha > 0$, we have $0 \leq h \leq f$ if and only if $0 \leq \alpha h \leq \alpha f$, and hence by the definition it is easy to see that $\int_E \alpha f = \alpha \int_E f$. Now consider $\alpha = \beta = 1$, Let $h,g$ be bounded measurable functions of finite support such that $0 \leq h \leq f$ and $0 \leq g \leq g$. Then we have $0 \leq h + g \leq f + g$. Thus, by the linearity of integration for bounded measurable functions of finite support, 
+	\begin{equation*}
+		\int_E h + \int_E k = \int_E (h + k) \leq \int_E (f + g).
+	\end{equation*}
+	and taking least upper bounds over all such $h$ and $k$, we have
+	\begin{equation*}
+		\int_E f + \int_E g \leq \int_E (f + g).
+	\end{equation*}
+	To prove the other side, we need to \emph{decompose} an approximating function of $f + g$ into two approximating functions of $f$ and $g$. Take $l$ to be a bounded measurable function of finite support such that $0 \leq l \leq f + g$. Then we define
+	\begin{equation*}
+		h = \min\{f, l\}, \quad k = l - h.
+	\end{equation*}
+	then $h$ have finite support and $0 \leq h \leq f$, and $k$ have finite support and $0 \leq k \leq g$. Thus, similar to the previous argument, we have the equality.
+
+	The second part follows from every approximating function of $f$ is also an approximating function of $g$, so taking supremum over all such functions, we have our result.
+\end{proof}
+
+\begin{theorem}{Additivity Over Domains of Integration}{Additivity Over Domains of Integration}
+	Let $f$ be a nonnegative measurable function defined on a measurable set $E$, and let $A$ and $B$ be measurable subsets of $E$ and disjoint. Then
+	\begin{equation}
+		\int_{A \cup B} f = \int_A f + \int_B f.
+	\end{equation}
+	In particular, if $E_0 \subseteq E$ is a subset of measure zero, then $\int_E f = \int_{E \setminus E_0} f$.
+\end{theorem}
+\begin{proof}
+	Just take approximating functions and using characteristic functions to decompose. And use the integration of zero measure sets is zero.
+\end{proof}
+
+The following lemma will enable us to establish several criteria to justify passage of the limit under the integral sign.
+
+\begin{lemma}{Fatou's Lemma}{Fatous Lemma}
+	Let $\{ f_n \}$ be a sequence of nonnegative measurable functions defined on a measurable set $E$. Then if $f_n \to f$ pointwise a.e.\ on $E$, we have
+	\begin{equation}
+		\int_E f \leq \liminf_{n \to \infty} \int_E f_n.
+	\end{equation}
+\end{lemma}
+
+\begin{remark}
+	It is fairly possible that the sequence $\int_E f_n$ does not converge when $f_n \to f$ pointwise on $E$, as we have seen that pointwise convergence alone cannot rule out possible sharp spikes in the sequence of functions that contribute significantly to the integral. A good intuition of Fatou's Lemma is that these sharp spikes can only contribute positively to the integral because pointing downwards would break nonnegativity.
+
+	There are two main ways area ``escape'' the limit:
+	\begin{itemize}
+		\item Escaping to height: a thinner and taller spike would contribute more area to the integral, but do not violate the pointwise convergence.
+		\item Escaping to width: a spike that is continuously moving to one side of the domain would contribute to the integral, but do not violate the pointwise convergence.
+	\end{itemize}
+
+	We also remark that the bounded convergence theorem solved this by requiring a uniform bound on the sequence of functions, which prevents the first type of escape. The second type of escape is prevented by assuming that the domain of integration has finite measure.
+\end{remark}
+
+\begin{proof}
+	We shall just assume that $f_n \to f$ pointwise on $E$, since the set of points where convergence fails is a set of measure zero, and hence does not contribute to the integral. We can see $f$ is itself nonnegative and measurable, since it is the pointwise limit of a sequence of nonnegative measurable functions.
+
+	Take any bounded measurable function $h$ of finite support $E_0$ such that $0 \leq h \leq f$. We shall prove that for sufficiently large $n$, all later $f_n$ would exceed the integral of $h$. To see this, we first consider a ``smaller box'' $(1 - \epsilon) h$ for some $\epsilon > 0$. Then we have
+	\begin{equation*}
+		f - (1 - \epsilon) h \geq \epsilon h \geq 0,
+	\end{equation*}
+	Note that we do not have uniform convergence here, but luckily, we only care about the integral. The following argument is a nice illustration of the power of measurability. We first define the set of points which is already safe:
+	\begin{equation}
+		E_n = \{x \in E_0 : \forall k \geq n, f_k(x) \geq (1 - \epsilon) h(x)\},
+	\end{equation}
+	and the union $\bigcup_{n=1}^{\infty} E_n = E_0$, since $f_n \to f$ pointwise on $E_0$. As $E_n$ is increasing, we have $m(E_n) \to m(E_0)$ as $n \to \infty$. We have
+	\begin{equation*}
+		\int_E f_n \geq \int_{E_n} f_n \geq \int_{E_n} (1 - \epsilon) h = (1 - \epsilon) \int_{E_n} h.
+	\end{equation*}
+	as $h$ is bounded, we have
+	\begin{equation*}
+		\int_{E_0 \setminus E_n} h \leq M m(E_0 \setminus E_n) \to 0,
+	\end{equation*}
+	so we have $\int_{E_n} h \to \int_{E_0} h$ as $n \to \infty$. Thus, taking limit infimum on both sides, we have
+	\begin{equation*}
+		\liminf_{n \to \infty} \int_E f_n \geq (1 - \epsilon) \int_{E_0} h = (1 - \epsilon) \int_E h,
+	\end{equation*}
+	as $\epsilon$ and $h$ are arbitrary, we have our result.
+\end{proof}
+
+\begin{remark}
+	Another way to this proof is letting $h_n = \min\{f_n, h\}$, which is a bounded measurable function of finite support inside $E_0$ and $0 \leq h_n \leq f_n$. Since $f_n \to f$ pointwise on $E_0$, we have $h_n \to h$ pointwise on $E_0$. . We infer from the Bounded Convergence Theorem applied to the uniformly bounded sequence of restrictions of $h_n$ to $E_0$ that
+	\begin{equation*}
+		\lim_{n \to \infty} \int_E h_n = \lim_{n \to \infty} \int_{E_0} h_n = \int_{E_0} h = \int_E h.
+	\end{equation*}
+	Also, as $h_n \leq f_n$, we have $\int_E h_n \leq \int_E f_n$. Taking limit infimum on both sides, we have
+	\begin{equation*}
+		\liminf_{n \to \infty} \int_E f_n \geq \lim_{n \to \infty} \int_E h_n = \int_E h.
+	\end{equation*}
+\end{remark}
+
+The inequality of Fatou's Lemma can be strict, obviously.
+\begin{example}{Fatou's Lemma}{Fatous Lemma}
+	Let $E = (0,1]$ and define a sequence of functions $\{ f_n \}$ on $E$ by $f_n(x) = n \chi_{(0, 1/n)}(x)$. Then we have $f_n \to 0$ pointwise on $E$, but $\int_E f_n = 1$ for all $n$, so we have
+	\begin{equation*}
+		0 = \int_E 0 < \liminf_{n \to \infty} \int_E f_n = 1.
+	\end{equation*}
+	which is the ``escaping to height'' type of escape.
+
+	Let $E = \mathbb{R}$ and define a sequence of functions $\{ f_n \}$ on $E$ by $f_n(x) = \chi_{(n, n+1)}(x)$. Then we have $f_n \to 0$ pointwise on $E$, but $\int_E f_n = 1$ for all $n$, so we have
+	\begin{equation*}
+		0 = \int_E 0 < \liminf_{n \to \infty} \int_E f_n = 1.
+	\end{equation*}
+	which is the ``escaping to width'' type of escape.
+\end{example}
+
+However, the inequality in Fatou's Lemma is an equality if the sequence $\{ f_n \}$ is increasing:
+
+\begin{theorem}{Monotone Convergence Theorem}{Monotone Convergence Theorem}
+	Let $\{ f_n \}$ be an increasing sequence of nonnegative measurable functions defined on a measurable set $E$. Then if $f_n \to f$ pointwise a.e.\ on $E$, we have
+	\begin{equation}
+		\lim_{n \to \infty} \int_E f_n = \int_E f.
+	\end{equation}
+\end{theorem}
+\begin{proof}
+	From Fatou's Lemma, we have
+	\begin{equation*}
+		\int_E f \leq \liminf_{n \to \infty} \int_E f_n.
+	\end{equation*}
+	as $f_n \leq f$ a.e.\ on $E$, we have $\int_E f_n \leq \int_E f$ for all $n$, and hence
+	\begin{equation*}
+		\limsup_{n \to \infty} \int_E f_n \leq \int_E f.
+	\end{equation*}
+	Combining the two inequalities, we have our equality.
+\end{proof}
+
+\begin{corollary}{}{}
+	Let $\{ u_n \}$ be a sequence of nonnegative measurable functions defined on a measurable set $E$. Then
+	\begin{equation}
+		\text{ If } f = \sum_{n=1}^{\infty} u_n \text{ pointwise a.e.\ on } E, \text{ then } \int_E f = \sum_{n=1}^{\infty} \int_E u_n.
+	\end{equation}
+\end{corollary}
+\begin{proof}
+	Just take $f_n = \sum_{k=1}^{n} u_k$, which is an increasing sequence of nonnegative measurable functions, and apply the Monotone Convergence Theorem.
+\end{proof}
+
+\begin{definition}{Integrable of Nonnegative Functions}{Integrable of Nonnegative Functions}
+	Let $f$ be a nonnegative measurable function defined on a measurable set $E$. We say that $f$ is \textbf{Lebesgue integrable} on $E$ if $\int_E f < \infty$.
+\end{definition}
+
+\begin{proposition}{}{}
+	If a nonnegative measurable function $f$ is Lebesgue integrable on a measurable set $E$, then $f$ is finite almost everywhere on $E$.
+\end{proposition}
+\begin{proof}
+	Chebychev's Inequality and the monotonicity of measure tell us that
+	\begin{equation*}
+		m(\{x \in E : f(x) = \infty\}) \leq m(\{x \in E : f(x) \geq n\}) \leq \frac{1}{n} \int_E f,
+	\end{equation*}
+	which means it is zero.
+\end{proof}
+
+\begin{lemma}{Beppo Levi's Lemma}{Beppo Levis Lemma}
+	Let $\{ f_n \}$ be a sequence of increasing nonnegative measurable functions defined on a measurable set $E$. Then if the sequence $\{ \int_E f_n \}$ is bounded, there exists a nonnegative measurable function $f$ finite a.e.\ on $E$ such that $f_n \to f$ pointwise on $E$, and
+	\begin{equation*}
+		\lim_{n \to \infty} \int_E f_n = \int_E f < \infty.
+	\end{equation*}
+\end{lemma}
+\begin{proof}
+	Every monotone sequence of extended real numbers converges to an extended real number. So we may just define
+	\begin{equation*}
+		f(x) = \lim_{n \to \infty} f_n(x), \quad \forall x \in E.
+	\end{equation*}
+	which is nonnegative and measurable. From the Monotone Convergence Theorem and as $\{ \int_E f_n \}$ is bounded, we have $\int_E f < \infty$, and hence $f$ is finite a.e.\ on $E$.
+\end{proof}
+
+\section{The General Lebesgue Integral}
+For an extended real-valued function $f$ defined on a measurable set $E$, we define the positive and negative parts of $f$ as
+\begin{equation*}
+	f^+(x) = \max\{f(x), 0\}, \quad f^-(x) = \max\{-f(x), 0\},
+\end{equation*}
+which means
+\begin{equation*}
+	f(x) = f^+(x) - f^-(x), \quad |f(x)| = f^+(x) + f^-(x).
+\end{equation*}
+note that $f$ is measurable if and only if $f^+$ and $f^-$ are measurable.
+
+\begin{proposition}{}{}
+	Let $f$ be a measurable function defined on a measurable set $E$. Then $f^+$ and $f^-$ are integrable on $E$ if and only if $|f|$ is integrable over $E$.
+\end{proposition}
+\begin{proof}
+	If $f^+$ and $f^-$ are integrable on $E$, then we have $|f| = f^+ + f^-$ is integrable on $E$. Conversely, if $|f|$ is integrable on $E$, then we have $0 \leq f^+ \leq |f|$ and $0 \leq f^- \leq |f|$, and hence by the monotonicity of the integral, we have $f^+$ and $f^-$ are integrable on $E$.
+\end{proof}
+
+\begin{definition}{Lebesgue Integrability}{Lebesgue Integrability}
+	Let $f$ be a measurable function defined on a measurable set $E$. We say that $f$ is \textbf{Lebesgue integrable} on $E$ if $|f|$ is integrable over $E$, and we define the Lebesgue integral of $f$ over $E$ as
+	\begin{equation}
+		\int_E f = \int_E f^+ - \int_E f^-.
+	\end{equation}
+\end{definition}
+
+Of course, for a nonnegative function $f$, we have $f = f^+$ and $f^- = 0$, so the definition of the Lebesgue integral of a nonnegative function is consistent with the general definition. By the linearity of integration for bounded measurable functions of finite support, the above definition of integral also agrees with the definition of integral for this class of functions.
+
+\begin{proposition}{}{}
+	If $f$ is integrable on a measurable set $E$, then $f$ is finite almost everywhere on $E$, and
+	\begin{equation*}
+		\int_E f = \int_{E \setminus E_0} f, \text{ if } E_0 \subseteq E \text{ and } m(E_0) = 0.
+	\end{equation*}
+\end{proposition}
+
+The following criterion for integrability is the Lebesgue integral correspondent of the comparison test for the convergence of series of real numbers.
+
+\begin{proposition}{the Integral Comparison Test}{the Integral Comparison Test}
+	Let $f$ be a measurable function defined on a measurable set $E$, and suppose that there exists a nonnegative integrable function $g$ on $E$ such that $|f| \leq g$ on $E$. Then $f$ is integrable on $E$, and
+	\begin{equation}
+		\left| \int_E f \right| \leq \int_E |f| \leq \int_E g.
+	\end{equation}
+\end{proposition}
+\begin{proof}
+	By the monotonicity of integration for nonnegative functions, we have $0 \leq |f| \leq g$ on $E$, and hence $\int_E |f| \leq \int_E g < \infty$. Therefore, $|f|$ is integrable on $E$, and hence $f$ is integral on $E$. The second part follows
+	\begin{equation*}
+		\left| \int_E f \right| = \left| \int_E f^+ - \int_E f^- \right| \leq \int_E f^+ + \int_E f^- = \int_E |f| \leq \int_E g.
+	\end{equation*}
+\end{proof}
+
+We have arrived at our final stage of generality for the Lebesgue integral for functions of a single real variable.
+
+Before a general discussion of linearity, we need to consider the case of some point $x$ where $f(x)$ and $g(x)$ are both infinite and have opposite signs. But, as integrability implies finiteness almost everywhere, this is not a problem. We can define the set $A$ which consists of all points $x$ in $E$ where $f(x)$ and $g(x)$ are both finite, and then $m(E \setminus A) = 0$. Then we can define the sum $f + g$ on $A$, and then extend it to $E$ by defining $(f + g)(x) = 0$ for all $x \in E \setminus A$, which does not affect the integral.
+
+\begin{remark}
+	Here we should note that intuitively, the set of measure zero is dominant in the sense that it does not contribute to the integral, even if the function is infinite on that set. We can memorize this by saying that $0 \cdot \infty = 0$ in the context of Lebesgue integration, which is a useful mnemonic for understanding how measure zero sets behave under integration. The origin of this bizarre rule is that we define Lebesgue integrals as the supremum of integrals of bounded measurable functions of finite support, and any bounded measurable function of finite support is zero on a set of measure zero, so the integral is not affected by the value of the function on that set.
+\end{remark}
+
+\begin{theorem}{Linearity and Monotonicity of Integration}{Linearity and Monotonicity of Integration}
+	Let $f$ and $g$ be integrable functions defined on a measurable set $E$, and let $\alpha, \beta \in \mathbb{R}$. Then $\alpha f + \beta g$ is integrable on $E$, and
+	\begin{equation}
+		\int_E (\alpha f + \beta g) = \alpha \int_E f + \beta \int_E g.
+	\end{equation}
+	Moreover, if $f \leq g$ on $E$, then
+	\begin{equation}
+		\int_E f \leq \int_E g.
+	\end{equation}
+\end{theorem}
+\begin{proof}
+	Just decompose $f$ and $g$ into their positive and negative parts, and apply the linearity and monotonicity of integration for nonnegative functions. The second parts follows from subtraction.
+\end{proof}
+
+\begin{corollary}{Additivity Over Domains of Integration}{Additivity Over Domains of Integration}
+	Let $f$ be an integrable function defined on a measurable set $E$, and let $A$ and $B$ be measurable subsets of $E$ and disjoint. Then
+	\begin{equation}
+		\int_{A \cup B} f = \int_A f + \int_B f.
+	\end{equation}
+	In particular, if $E_0 \subseteq E$ is a subset of measure zero, then $\int_E f = \int_{E \setminus E_0} f$.
+\end{corollary}
+\begin{proof}
+	By the integral comparison test, the measurable functions $f \chi_A$ and $f \chi_B$ are integrable on $E$.
+\end{proof}
+
+The following generalization of the Bounded Convergence Theorem provides another justification for passage of the limit under the integral sign.
+
+\begin{theorem}{The Lebesgue Dominated Convergence Theorem}{The Lebesgue Dominated Convergence Theorem}
+	Let $\{ f_n \}$ be a sequence of measurable functions defined on a measurable set $E$, and suppose that there exists an integrable function $g$ on $E$ such that $|f_n| \leq g$ on $E$ for all $n \in \mathbb{N}$. Then if $f_n$ converges pointwise a.e.\ to a function $f$ on $E$, then $f$ is integrable on $E$, and
+	\begin{equation*}
+		\lim_{n \to \infty} \int_E f_n = \int_E f.
+	\end{equation*}
+\end{theorem}
+\begin{proof}
+	By the integral comparison test, we have $f_n$ and $f$ are integrable on $E$. Cutting out the set that $f_n$ and $f$ are infinite (which has measure zero as countable union of measure zero sets is measure zero), we can assume that $f_n$ and $f$ are finite on $E$. Then by Fatou's Lemma, we have
+	\begin{equation*}
+		\int_E (g - f) \leq \liminf_{n \to \infty} \int_E (g - f_n), \quad \int_E (g + f) \leq \liminf_{n \to \infty} \int_E (g + f_n),
+	\end{equation*}
+	using linearity of integration, we have
+	\begin{equation*}
+		\limsup_{n \to \infty} \int_E f_n \leq \int_E f \leq \liminf_{n \to \infty} \int_E f_n,
+	\end{equation*}
+	which implies the convergence of $\int_E f_n$ to $\int_E f$.
+\end{proof}
+
+\begin{remark}
+	Intuitively, the integrability of the dominating function $g$ prevents both types of escape that we discussed in the context of Fatou's Lemma. The uniform bound provided by $g$ ensures that the sequence $\{ f_n \}$ cannot have arbitrarily large spikes moving beyond a set of measure zero, and cannot move far away from the domain of integration without being controlled.
+\end{remark}
+
+The following generalization of the Lebesgue Dominated Convergence Theorem provides a way to make the dominating function $g$ more flexible, allowing it to depend on $n$.
+\begin{theorem}{General Lebesgue Dominated Convergence Theorem}{General Lebesgue Dominated Convergence Theorem}
+	Let $\{ f_n \}$ be a sequence of measurable functions defined on a measurable set $E$, and converges pointwise a.e.\ to a function $f$ on $E$. Suppose that there exists a sequence of nonnegative measurable functions $\{ g_n \}$ on $E$ that converges pointwise a.e.\ to a function $g$ on $E$, and that $|f_n| \leq g_n$ on $E$ for all $n \in \mathbb{N}$, and that
+	\begin{equation}
+		\text{ If } \lim_{n \to \infty} \int_E g_n = \int_E g < \infty, \text{ then } \lim_{n \to \infty} \int_E f_n = \int_E f.
+	\end{equation}
+\end{theorem}
+\begin{proof}
+	The proof resembles the previous theorem with hardly any changes.
+\end{proof}
+
+
+\section{Countable Additivity and Continuity of Integration}
+
+The linearity and monotonicity properties of the Lebesgue integral, which we established in the preceding section, are extensions of familiar properties of the Riemann integral. Now we establish two properties of the Lebesgue integral which have no counterpart for the Riemann integral. The following countable additivity property for Lebesgue integration is a companion of the countable additivity property for Lebesgue measure.
+
+\begin{theorem}{Countable Additivity of Integration}{Countable Additivity of Integration}
+	Let $\{ E_n \}$ be a sequence of disjoint measurable sets whose union is a measurable set $E$, and let $f$ be an integrable function defined on $E$. Then
+	\begin{equation}
+		\int_E f = \sum_{n=1}^{\infty} \int_{E_n} f.
+	\end{equation}
+\end{theorem}
+\begin{proof}
+	Just take $f_n = f \chi_{E_n}$, which is measurable and by $|f_n| \leq |f|$ and the integral comparison test, we have $f_n$ is integrable on $E$. By the Lebesgue Dominated Convergence Theorem, we have
+	\begin{equation*}
+		\int_E f = \lim_{n \to \infty} \int_E f_n
+	\end{equation*}
+	On the other hand, since $E_n$ are disjoint, we have
+	\begin{equation*}
+		\int_E f_n = \sum_{k=1}^{n} \int_{E_k} f,
+	\end{equation*}
+	Taking limit on both sides, we have our result.
+\end{proof}
+
+\begin{theorem}{Continuity of Integration}{Continuity of Integration}
+	Let $f$ be an integrable function defined on a measurable set $E$.
+	\begin{itemize}
+		\item If $\{ E_n \}$ is an increasing sequence of measurable subsets of $E$ then
+			\begin{equation}
+				\int_{\bigcup_{n=1}^{\infty} E_n} f = \lim_{n \to \infty} \int_{E_n} f.
+			\end{equation}
+		\item If $\{ E_n \}$ is a decreasing sequence of measurable subsets of $E$ such that $m(E_1) < \infty$, then
+			\begin{equation}
+				\int_{\bigcap_{n=1}^{\infty} E_n} f = \lim_{n \to \infty} \int_{E_n} f.
+			\end{equation}
+	\end{itemize}
+\end{theorem}
+\begin{proof}
+	Just use the ptevious theorem.
+\end{proof}
+
+\section{Uniform Integrability and the Vitali Convergence Theorem}
+We give another criterion for the passage of the limit under the integral sign.
+
+\begin{lemma}{}{}
+	Let $E$ be a set of finite measure, and let $\delta > 0$. Then $E$ is the disjoint union of a finite collection of measurable sets $E_1, E_2, \ldots, E_n$ such that $m(E_k) < \delta$ for $k = 1, 2, \ldots, n$.
+\end{lemma}
+\begin{proof}
+	As $\lim_{n \to \infty } m(E \setminus [-n, n]) = 0$, we can take $N$ large enough such that $m(E \setminus [-N, N]) < \delta$. Then we can take a fine partition of $[-N, N]$ into intervals of length less than $\delta$, and then intersecting with $E$ to get the desired sets.
+\end{proof}
+
+\begin{proposition}{}{}
+	Let $f$ be a measurable function defined on a measurable set $E$. If $f$ is integrable on $E$, then for every $\epsilon > 0$, there exists a $\delta > 0$ such that if $A \subseteq E$ is a measurable set with $m(A) < \delta$, then $\int_A |f| < \epsilon$.
+
+	Conversely in the case that $m(E) < \infty$, if for every $\epsilon > 0$, there exists a $\delta > 0$ such that $\forall A \subseteq E$ measurable with $m(A) < \delta$ leads to $\int_A |f| < \epsilon$, then $f$ is integrable on $E$.
+\end{proposition}
+\begin{proof}
+	The theorem follows by establishing it separately for the positive and negative parts of $f$.
+
+	First suppose $f \geq 0$ on $E$. Assume that $f$ is integrable on $E$. Then for any $\epsilon > 0$, there exists a bounded measurable function of finite support $f_{\epsilon}$ such that
+	\begin{equation*}
+		0 \leq f_{\epsilon} \leq f, \quad \int_E f - \int_E f_{\epsilon} < \frac{\epsilon}{2}.
+	\end{equation*}
+	If $A \subseteq E$ is a measurable set, then we have
+	\begin{equation*}
+		\int_A f - \int_A f_{\epsilon} = \int_A (f - f_{\epsilon}) \leq \int_E (f - f_{\epsilon}) < \frac{\epsilon}{2}.
+	\end{equation*}
+	Suppose $f_{\epsilon}$ is bounded by $M$ then
+	\begin{equation*}
+		\int_A f < \int_A f_{\epsilon} + \frac{\epsilon}{2} \leq M m(A) + \frac{\epsilon}{2}.
+	\end{equation*}
+	Choosing $\delta = \epsilon / (2M)$, we have $m(A) < \delta$ implies $\int_A f < \epsilon$.
+
+	For a general integrable function $f$, we have both $f^+$ and $f^-$ are integrable on $E$, and hence we get a $\delta_1$ and $\delta_2$ for $f^+$ and $f^-$ respectively. Then taking minimum $\delta$ we assume $\int_A |f| = \int_A f^+ + \int_A f^- < \epsilon$.
+
+	Conversely, if $m(E) < \infty$, then we can use the previous lemma to decompose $E$ into a finite collection of measurable sets $E_1, E_2, \ldots, E_n$ such that $m(E_k) < \delta$ for $k = 1, 2, \ldots, n$. Then we have our result by summing over all $E_k$.
+\end{proof}
+
+\begin{definition}{Uniform Integrability}{Uniform Integrability}
+	A family $\mathcal{F}$ of integrable functions defined on a measurable set $E$ is said to be \textbf{uniformly integrable} if for every $\epsilon > 0$, there exists a $\delta > 0$ such that if $A \subseteq E$ is a measurable set with $m(A) < \delta$, then
+	\begin{equation}
+		\forall f \in \mathcal{F}, \quad \int_A |f| < \epsilon.
+	\end{equation}
+\end{definition}
+
+The previous proposition tells us that a single integrable function has this property, and hence any finite collection of integrable functions is uniformly integrable.
+
+\begin{example}{Uniform Integrability}{Uniform Integrability}
+	Let $g$ be a nonnegative integrable function defined on a measurable set $E$. Then the family of measurable functions $\mathcal{F} = \{ f : |f| \leq g \text{ on } E \}$ is uniformly integrable.
+
+	This is quite obvious since for any measurable set $A \subseteq E$, we have
+	\begin{equation*}
+		\forall f \in \mathcal{F}, \quad \int_A |f| \leq \int_A g.
+	\end{equation*}
+	so a delta that works for $g$ works for all $f \in \mathcal{F}$.
+\end{example}
+
+\begin{proposition}{}{}
+	Assume $E$ is a measurable set of finite measure. Let the sequence of measurable functions $\{ f_n \}$ defined on $E$ be uniformly integrable and converges pointwise a.e.\ to a function $f$ on $E$. Then $f$ is integrable on $E$.
+\end{proposition}
+\begin{proof}
+	Just take any $\epsilon$ and the corresponding $\delta$ from the definition of uniform integrability. Then we can decompose $E$ into a finite collection of disjoint measurable sets $E_1, E_2, \ldots, E_n$ such that $m(E_k) < \delta$ for $k = 1, 2, \ldots, n$. Then we have
+	\begin{equation*}
+		\int_E |f_n| = \sum_{k=1}^{n} \int_{E_k} |f_n| < n \epsilon,
+	\end{equation*}
+	So from Fatou's Lemma, we have
+	\begin{equation*}
+		\int_E |f| \leq \liminf_{n \to \infty} \int_E |f_n| < n \epsilon,
+	\end{equation*}
+	so $f$ is integrable on $E$.
+\end{proof}
+
+\begin{theorem}{The Vitali Convergence Theorem}{The Vitali Convergence Theorem}
+	Let $E$ be a measurable set of finite measure. Suppose that the sequence of measurable functions $\{ f_n \}$ defined on $E$ is uniformly integrable and converges pointwise a.e.\ to a function $f$ on $E$. Then $f$ is integrable on $E$, and
+	\begin{equation}
+		\lim_{n \to \infty} \int_E f_n = \int_E f.
+	\end{equation}
+\end{theorem}
+\begin{proof}
+	The previous proposition tells us that $f$ is integrable on $E$. Then we can assume that $f_n$ and $f$ are finite on $E$ and the convergence is pointwise on $E$. As for every measurable set $A \subseteq E$, we have
+	\begin{equation*}
+		\left| \int_E f_n - \int_E f \right| \leq \int_E |f_n - f| \leq \int_{E \setminus A} |f_n - f| + \int_A |f_n| + \int_A |f|.
+	\end{equation*}
+
+	By the uniformly integrability of $\{ f_n \}$, for any $\epsilon > 0$, we can find a $\delta > 0$ such that if $m(A) < \delta$, then $\int_A |f_n| < \epsilon / 3$ for all $n$. Then from Fatou's Lemma, we have $\int_A |f| \leq \liminf_{n \to \infty} \int_A |f_n| < \epsilon / 3$. Then from Egoroff's Theorem, we can find a measurable set $A \subseteq E$ such that $m(A) < \delta$ and $f_n \to f$ uniformly on $E \setminus A$. Then there exists an $N$ such that for all $n > N$, we have $\int_{E \setminus A} |f_n - f| < \epsilon / 3$. Combining all these, we have our result.
+\end{proof}
+
+\begin{remark}
+	The uniform integrability prevents the ``escaping to height'' type of escape because it literally means that the sequence of functions cannot have a huge contribution to the integral on a set of small measure. The finite measure of the domain prevents the ``escaping to width'' type of escape.
+\end{remark}
+
+We will also see that the uniform integrability is a necessary condition for a special case:
+
+\begin{theorem}{}{}
+	Let $E$ be a measurable set of finite measure. Suppose that the sequence of \emph{nonnegative} measurable functions $\{ h_n \}$ defined on $E$ converges pointwise a.e.\ to $h = 0$ on $E$, then $\lim_{n \to \infty} \int_E h_n = 0$ if and only if $\{ h_n \}$ is uniformly integrable.
+\end{theorem}
+\begin{proof}
+	If $\lim_{n \to \infty} \int_E h_n = 0$, then for any $\epsilon > 0$, there exists an $N$ such that for all $n > N$, we have $\int_E h_n < \epsilon$, and as $h_n$ is nonnegative, for any $A \subseteq E$, we have $\int_A h_n \leq \int_E h_n < \epsilon / 2$. For $n \leq N$, as $h_n$ is integrable, we can find a delta to make the finite collection of integrals small. Then we have our result. The converse follows Vitali Convergence Theorem.
+\end{proof}
+
+\section{Generalization of Vitali Convergence Theorem}
+
+The previous Vitali Convergence Theorem requires the domain of integration to be of finite measure, which prevents the ``escaping to width'' type of escape. Indeed, a simple counterexample is the sequence of functions $f_n = \chi_{(n, n+1)}$ on $\mathbb{R}$, which converges pointwise to $0$, but $\int_{\mathbb{R}} f_n = 1$ for all $n$.
+
+We can generalize the Vitali Convergence Theorem to the case of infinite measure by adding some condition under investigation.
+
+\begin{proposition}{}{}
+	Let $f$ be integrable on a measurable set $E$, then for each $\epsilon > 0$, there exists a measurable set $E_0 \subseteq E$ of finite measure such that
+	\begin{equation}
+		\int_{E \setminus E_0} |f| < \epsilon.
+	\end{equation}
+\end{proposition}
+\begin{proof}
+	The nonnegative measurable function $|f|$ is integrable on $E$, so we can find a bounded measurable function of finite support $E_0$ $g$ such that $\int_E |f| - \int_E g < \epsilon$. Then we have
+	\begin{equation*}
+		\int_{E \setminus E_0} |f| = \int_E |f| - \int_{E_0} |f| \leq \int_E |f| - \int_E g < \epsilon.
+	\end{equation*}
+	so we have our result.
+\end{proof}
+This holds the intuition that an integrable function is ``almost'' of finite support, and the contribution to the integral from the ``tail'' of the function can be made arbitrarily small. This is quite useful if we want to control the ``escaping to width'' type of escape outside a domain of finite measure, just like what we did in the Dominated Convergence Theorem.
+
+\begin{definition}{Tightness}{Tightness}
+	A family $\mathcal{F}$ of integrable functions defined on a measurable set $E$ is said to be \textbf{tight} if for every $\epsilon > 0$, there exists a measurable set $E_0 \subseteq E$ of finite measure such that
+	\begin{equation}
+		\forall f \in \mathcal{F}, \quad \int_{E \setminus E_0} |f| < \epsilon.
+	\end{equation}
+\end{definition}
+
+\begin{remark}
+	In some literature, this is also called ``Uniformly vanishing at infinity.'' It is the horizontal analogue to uniform integrability.
+\end{remark}
+
+So we have the following generalization of the Vitali Convergence Theorem:
+\begin{theorem}{Generalized Vitali Convergence Theorem}{Generalized Vitali Convergence Theorem}
+	Let $E$ be a measurable set, and let the sequence of measurable functions $\{ f_n \}$ defined on $E$ be uniformly integrable and tight, and converges pointwise a.e.\ to a function $f$ on $E$. Then $f$ is integrable on $E$, and
+	\begin{equation}
+		\lim_{n \to \infty} \int_E f_n = \int_E f.
+	\end{equation}
+\end{theorem}
+\begin{proof}
+	Just take $E_0 \subseteq E$ of finite measure such that $\int_{E \setminus E_0} |f_n| < \epsilon / 4$ for all $n$, so from Fatou's Lemma, we have $f$ is integrable on $E \setminus E_0$ and $\int_{E \setminus E_0} |f| < \epsilon / 4$. Then we can apply the Vitali Convergence Theorem on $E_0$ to get our result.
+\end{proof}
+
+We have the same generalization of the previous corollary:
+\begin{proposition}{}{}
+	Let $\{ h_n \}$ be a sequence of nonnegative measurable functions defined on a measurable set $E$ that converges pointwise a.e.\ to $h = 0$ on $E$, then $\lim_{n \to \infty} \int_E h_n = 0$ if and only if $\{ h_n \}$ is uniformly integrable and tight.
+\end{proposition}
+\begin{proof}
+	Uniform integrability follows the same argument as before, and for tightness, for any $\epsilon > 0$, there is $N$ such that for all $n > N$, we have $\int_E h_n < \epsilon $, so there are only finitely many $h_n$ that are not small, and we can find a finite measure set $E_0$ such that $\int_{E \setminus E_0} h_n < \epsilon $ for all $n \leq N$. Then we have our result.
+\end{proof}
+
+\section{Convergence in Measure}
+We have considered sequences of functions that converge uniformly, that converge pointwise, and that converge pointwise almost everywhere. To this list we add one more mode of convergence that has useful relationships both to pointwise convergence almost everywhere and to forthcoming criteria for justifying the passage of the limit under the integral sign.
+
+\begin{definition}{Convergence in Measure}{Convergence in Measure}
+	Let $\{ f_n \}$ be a sequence of measurable functions defined on a measurable set $E$, and $f$ be a measurable function defined on $E$. We say that $\{ f_n \}$ converges to $f$ \textbf{in measure} on $E$ if for every $\eta > 0$, we have
+	\begin{equation}
+		\lim_{n \to \infty} m(\{ x \in E : |f_n(x) - f(x)| > \eta \}) = 0.
+	\end{equation}
+	where we require that $f_n$ and $f$ are finite a.e.\ on $E$.
+\end{definition}
+
+\begin{remark}
+	We assume $f_n,f$ are measurable and finite a.e.\ on $E$ when we say $f_n \to f$ in measure on $E$.
+\end{remark}
+
+It is easy to see that if $\{ f_n \}$ converges to a finite function $f$ uniformly on $E$, then $\{ f_n \}$ converges to $f$ in measure on $E$. But the relation between pointwise convergence almost everywhere and convergence in measure is more subtle. We shall see that neither implies the other.
+
+\begin{proposition}{}{}
+	Let $E$ be a measurable set of finite measure. Let $\{ f_n \}$ be a sequence of measurable functions defined on $E$ that converges pointwise a.e.\ to a function $f$ on $E$, and $f$ is finite a.e.\ on $E$. Then $\{ f_n \}$ converges to $f$ in measure on $E$.
+\end{proposition}
+\begin{proof}
+	As $f$ is measurable and finite a.e.\ on $E$. Let $\eta > 0$, then let $\epsilon > 0$, we need to find an $N$ such that for all $n > N$, we have
+	\begin{equation*}
+		m(\{ x \in E : |f_n(x) - f(x)| > \eta \}) < \epsilon.
+	\end{equation*}
+	Using Egoroff's Theorem, we can find a measurable set $E_0 \subseteq E$ such that $m(E \setminus E_0) < \epsilon$ and $f_n \to f$ uniformly on $E_0$. Then there exists an $N$ such that for all $n > N$, we have $|f_n(x) - f(x)| < \eta$ for all $x \in E_0$, which means for all $n > N$, we have $\{ x \in E : |f_n(x) - f(x)| > \eta \} \subseteq E \setminus E_0$, and hence we get our result.
+\end{proof}
+
+To get intuition on why this holds and a general case does not, consider the examples:
+\begin{example}{Convergence in Measure and Pointwise a.e.}{Convergence in Measure and Pointwise ae}
+	Consider the sequence of functions $f_n = \chi_{(n, n+1)}$ on $\mathbb{R}$, which converges pointwise to $0$, but does not converge in measure to $0$ since we have $m(\{ x \in \mathbb{R} : |f_n(x) - 0| > 1/2 \}) = m((n, n+1)) = 1$ for all $n$. Note that this provides the intuition. that the ``escaping to width'' type of escape is already prohibited by convergence in measure! Although the ``escaping to height'' type of escape is not prohibited, as the ``shrinking spike'' example does not violate convergence in measure.
+
+	\medskip
+	Now, consider the sequence of functions $f_n$ defined on $[0, 1]$ as the concatenation of
+	\begin{equation}
+		f_{m,n} = \chi_{[\frac{m-1}{n}, \frac{m}{n}]} \text{ for } m = 1, 2, \ldots, n, \quad n = 1, 2, \ldots
+	\end{equation}
+	It is easy to see that $f_n$ converges in measure to $0$, but does not converge pointwise a.e.\ to $0$. This example provides intuition of the Riesz theorem.
+\end{example}
+
+\begin{theorem}{(Riesz)}{Riesz}
+	If $f_n \to f$ in measure, then there exists a subsequence $\{ f_{n_k} \}$ of $\{ f_n \}$ such that $f_{n_k} \to f$ pointwise a.e.
+\end{theorem}
+\begin{proof}
+	We need to examine why the previous counterexample fails. A first glance shows that as the width of the spike does not shrink fast enough, every point in $[0, 1]$ is covered by infinitely many spikes, and hence the pointwise convergence fails. We need to ensure that the width of the spike shrinks fast enough so that at most zero measure of points have this property. Recall the Borel-Cantelli Lemma, which states that if $\{ E_n \}$ is a sequence of measurable sets such that $\sum_{n=1}^{\infty} m(E_n) < \infty$, then $m(\limsup_{n \to \infty} E_n) = 0$, which is exactly what we need.
+
+	By the definition of convergence in measure, there is a strictly increasing sequence of natural numbers $\{ n_k \}$ such that
+	\begin{equation}
+		m(\{ x \in E : |f_j(x) - f(x)| > 1/k \}) < 1/2^k \text{ for all } j \geq n_k.
+	\end{equation}
+	Define $E_k = \{ x \in E : |f_{n_k}(x) - f(x)| > 1/k \}$, then we have $m(E_k) < 1/2^k$, and hence $\sum_{k=1}^{\infty} m(E_k) < \infty$. By the Borel-Cantelli Lemma, we have $m(\limsup_{k \to \infty} E_k) = 0$, which means that for almost every $x \in E$ exists only finitely many $E_k$, which leads to $f_{n_k} \to f$ pointwise a.e.
+\end{proof}
+
+\begin{corollary}{}{}
+	Let $\{ f_n \}$ be a sequence of nonnegative integrable functions defined on a measurable set $E$. Then $\lim_{n \to \infty} \int_E f_n = 0$ if and only if $\{ f_n \}$ converges to $0$ in measure and is uniformly integrable and tight over $E$.
+\end{corollary}
+
+This is slightly different from the previous corollary, as we have replaced the global requirement of pointwise convergence a.e.\ with the local requirement of convergence in measure.
+
+\begin{proof}
+	For the forward direction, we have $\lim_{n \to \infty} \int_E f_n = 0$, so we have for any $\eta > 0$, we have, from Chebyshev's inequality,
+	\begin{equation*}
+		m(\{ x \in E : |f_n(x)| > \eta \}) \leq \frac{1}{\eta} \int_E |f_n| \to 0,
+	\end{equation*}
+	Uniform integrability and tightness follows the same argument as before.
+
+	For the converse direction, we do by contradiction. Suppose there is $\epsilon > 0$ such that there exists infinitely many $n$ such that $\int_E f_n \geq \epsilon$. Then we can find a subsequence $\{ f_{n_k} \}$ such that $\int_E f_{n_k} \geq \epsilon$ for all $k$. However, as $\{ f_{n_k} \}$ converges to $0$ in measure, we can find a subsequence of this subsequence that converges pointwise a.e.\ to $0$, and as $\{ f_{n_k} \}$ is uniformly integrable and tight, we arrive at a contradiction by the Vitali Convergence Theorem.
+\end{proof}
+
+\section{Riemann and Lebesgue Integrals}
+
+\begin{proposition}{}{}
+	Let $\{ \varphi_n \}$ and $\{ \psi_n \}$ be sequences of function s integrable on a measurable set $E$ such that $\{\varphi_n\}$ is increasing and $\{\psi_n\}$ is decreasing. Let $f$ be a function defined on $E$ such that $\varphi_n \leq f \leq \psi_n$ on $E$ for all $n$.
+
+	Then, if
+	\begin{equation*}
+		\lim_{n \to \infty} \int_E (\psi_n - \varphi_n) = 0,
+	\end{equation*}
+	we have $\{\varphi_n\}$ and $\{\psi_n\}$ converge pointwise a.e.\ to the same function $f$ on $E$, and $f$ is integrable on $E$, and
+	\begin{equation*}
+		\lim_{n \to \infty} \int_E \varphi_n = \lim_{n \to \infty} \int_E \psi_n = \int_E f.
+	\end{equation*}
+\end{proposition}
+\begin{proof}
+	As monotone sequence of functions have limits, define
+	\begin{equation*}
+		\varphi^* = \lim_{n \to \infty} \varphi_n, \quad \psi^* = \lim_{n \to \infty} \psi_n,
+	\end{equation*}
+	then we have $\varphi_n \leq \varphi^* \leq f \leq \psi^* \leq \psi_n$ on $E$ for all $n$. Then we have
+	\begin{equation*}
+		\int_E (\psi^* - \varphi^*) \leq \lim_{n \to \infty} \int_E (\psi_n - \varphi_n) = 0,
+	\end{equation*}
+	which is zero. A nonnegative measurable function has integration zero means it is zero a.e., so we have $\psi^* = \varphi^*$ a.e., and hence $f = \psi^* = \varphi^*$ a.e. on $E$. Then we have proved that $\{\varphi_n\}$ and $\{\psi_n\}$ converge pointwise a.e.\ to the same function $f$ on $E$, and $f$ is measurable and integrable on $E$ from the comparison test. Then we have
+	\begin{equation*}
+		0 \leq \int_E \psi_n - \int_E f = \int_E (\psi_n - f) \leq \int_E (\psi_n - \varphi_n) \to 0,
+	\end{equation*}
+	so we have our result.
+\end{proof}
+
+\begin{theorem}{Measurable and Lebesgue Integrable}{Measurable and Lebesgue Integrable}
+	Let $f$ be a bounded function defined on a measurable set $E$ of finite measure. Then $f$ is Lebesgue integrable on $E$ if and only if $f$ is measurable on $E$.
+\end{theorem}
+\begin{proof}
+	We have already proved that a bounded measurable function defined on a measurable set of finite measure is Lebesgue integrable. Conversely, if $f$ is Lebesgue integrable on $E$, from the equality of the upper and lower Lebesgue integrals we conclude that there are sequences of simple functions $\{ \varphi_n \}$ and $\{ \psi_n \}$ that
+	\begin{equation*}
+		\varphi_n \leq f \leq \psi_n, \quad \lim_{n \to \infty} \int_E (\psi_n - \varphi_n) = 0,
+	\end{equation*}
+	Since the maximum and minimum of a pair of simple functions are again simple, using the monotonicity of integration and by possibly replacing $\varphi_n$ and $\psi_n$ by $\max(\varphi_1, \ldots, \varphi_n)$ and $\min(\psi_1, \ldots, \psi_n)$ respectively, we can assume that $\{\varphi_n\}$ is increasing and $\{\psi_n\}$ is decreasing. Then we can apply the previous proposition to get our result.
+\end{proof}
+
+\begin{remark}
+	Recall the previous definitions. We didn't require the measurability of the function to be integrable when we discuss the case of bounded functions on a measurable set of finite measure. We defined the Lebesgue integral of a bounded function on a measurable set of finite measure to be the common value of the upper and lower Lebesgue integrals.
+
+	While for later generalizations of the Lebesgue integral we did require the measurability of the function as a prerequisite for discussing the integrability, where we defined the Lebesgue integral of nonnegative measurable functions on a measurable set to be the supremum of the integrals of simple functions that are dominated by the function. This is because as functions that are not bounded may reach infinity so it is not possible to ``squeeze'' the function between two simple functions (as subtracting infinite is not well-defined). Because we lose the ``top-down'' squeeze, we must rely on the ``bottom-up'' approach, and hence require the measurability of the function to ensure the consistency and conciseness of the definition of the Lebesgue integral, as we have proved that in finite case, measurability ensures that the supremum of the integrals of simple functions that are dominated by the function is equal to the infimum of the integrals of simple functions that dominate the function, and the integral of the function itself.
+\end{remark}
+
+Recall theorem \ref{thm:Riemann Integrable and Lebesgue Integrable: Bounded Functions on Finite Measure Sets}, where we showed that if a bounded function on the closed, bounded interval is Riemann integrable, then it is Lebesgue integrable and the two integrals are equal (by squeezing the functions of course). We may therefore infer from the preceding theorem that if a bounded function on a closed, bounded interval is Riemann integrable, then it is measurable.
+
+\begin{theorem}{(Lebesgue)}{Lebesgue}
+	Let $f$ be a bounded function defined on a closed, bounded interval $[a, b]$. Then $f$ is Riemann integrable on $[a, b]$ if and only if the set of points of discontinuity of $f$ has measure zero on $[a, b]$.
+\end{theorem}
+\begin{proof}
+	SORRY.
+\end{proof}
+
+\end{document}
