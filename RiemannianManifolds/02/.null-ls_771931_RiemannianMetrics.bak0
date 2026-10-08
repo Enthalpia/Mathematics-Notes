@@ -1,0 +1,562 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\chapter{Riemannian Metrics}
+
+In this chapter we officially define Riemannian metrics, and discuss some of the basic computational techniques associated with them.
+
+\section{Definitions}
+The Euclidean geometry is just $\mathbb{R}^n$ with an inner product $\langle \cdot, \cdot \rangle$. A general inner product on a vector space $V$ allows us to define lengths, angles, and orthogonality. The isomorphisms that preserve the inner product are called \textbf{linear isometries}.
+
+\subsection{Riemannian Metrics}
+To extend these geometric ideas to abstract smooth manifolds, we define a structure that amounts to a smoothly varying choice of inner product on each tangent space.
+
+\begin{definition}{Riemannian Metric}{Riemannian Metric}
+	Let $M$ be a smooth manifold. A \textbf{Riemannian metric} on $M$ is a smooth covariant 2-tensor field $g \in \mathcal{T}^2(M)$ whose value $g_p$ at each point $p \in M$ is an inner product on the tangent space $T_pM$. A smooth manifold equipped with a Riemannian metric is called a \textbf{Riemannian manifold}.
+\end{definition}
+
+\begin{proposition}{Existence of Riemannian Metrics}{Existence of Riemannian Metrics}
+	Any smooth manifold admits a Riemannian metric.
+\end{proposition}
+\begin{proof}
+	As a finite sum of inner products is an inner product, this follows from the existence of partitions of unity.
+\end{proof}
+
+This definition is also valid for smooth manifold with boundary. And many proofs of theorems in Riemannian geometry works for smooth manifolds with boundary as well. Many problems involving Riemannian manifolds with boundary can be addressed by embedding into a larger manifold without boundary and extending the Riemannian metric arbitrarily to the larger manifold.
+
+\begin{remark}
+	A Riemannian metric is not the same as a metric in the sense of metric spaces. For convenience, we shall just use the term \textbf{metric} to refer to a Riemannian metric.
+\end{remark}
+
+\begin{example}{Euclidean Metric}{Euclidean Metric}
+	The Euclidean metric $\bar{g}$ is the Riemannian metric on $\mathbb{R}^n$ given by the standard inner product, under the natural identification of $T_p\mathbb{R}^n$ with $\mathbb{R}^n$ for each $p \in \mathbb{R}^n$. In coordinates, the Euclidean metric is given by
+	\begin{equation*}
+		\langle v, w \rangle_{\bar{g}} = \sum_{i=1}^n v^i w^i
+	\end{equation*}
+\end{example}
+We shall always assume that we are working with Euclidean metric on $\mathbb{R}^n$ unless otherwise specified.
+
+\subsection{Isometries}
+
+We give the following definition of isometries between Riemannian manifolds.
+\begin{definition}{Isometries}{Isometries}
+	Suppose $(M, g)$ and $(\tilde{M}, \tilde{g})$ are Riemannian manifolds, with or without boundary. An \textbf{isometry} from $(M, g)$ to $(\tilde{M}, \tilde{g})$ is a diffeomorphism $\varphi: M \to \tilde{M}$ such that $\varphi^*\tilde{g} = g$. In other words, $\varphi$ is a smooth bijection such that $\mathrm{d} \varphi_p: T_pM \to T_{\varphi(p)}\tilde{M}$ is a linear isometry for each $p \in M$.
+
+	We say that $(M, g)$ and $(\tilde{M}, \tilde{g})$ are \textbf{isometric} if there exists an isometry from $(M, g)$ to $(\tilde{M}, \tilde{g})$.
+\end{definition}
+
+A composition of isometries and the inverse of an isometry are again isometries, so being isometric is an equivalence relation on the class of Riemannian manifolds with or without boundary. Our subject, Riemannian geometry, is concerned primarily with properties of Riemannian manifolds that are preserved by isometries.
+
+\begin{definition}{Local Isometries}{Local Isometries}
+	Suppose $(M, g)$ and $(\tilde{M}, \tilde{g})$ are Riemannian manifolds, with or without boundary. A \textbf{local isometry} from $(M, g)$ to $(\tilde{M}, \tilde{g})$ is a smooth map $\varphi: M \to \tilde{M}$ such that for each $p \in M$, there exists an open neighborhood $U$ of $p$ such that $\varphi|_U: U \to \varphi(U)$ is an isometry onto its image.
+\end{definition}
+
+\begin{proposition}{Local Isometry Criterion}{Local Isometry Criterion}
+	If $(M, g)$ and $(\tilde{M}, \tilde{g})$ are Riemannian manifolds of the same dimension, then a smooth map $\varphi: M \to \tilde{M}$ is a local isometry if and only if $\varphi^*\tilde{g} = g$.
+\end{proposition}
+\begin{proof}
+	Easy, as $\mathrm{d} \varphi_p$ is a linear isometry and by the inverse function theorem, $\varphi$ is a local diffeomorphism.
+\end{proof}
+
+\begin{definition}{Flatness}{Flatness}
+	A Riemannian $n$-manifold $(M, g)$ is said to be \textbf{flat} if for each $p \in M$, there exists an open neighborhood $U$ of $p$ and an isometry $\varphi: U \to V$ onto an open subset $V \subseteq \mathbb{R}^n$ with the Euclidean metric. We say that $(M, g)$ is \textbf{locally isometric} to $\mathbb{R}^n$ with the Euclidean metric.
+\end{definition}
+
+\begin{definition}{Isometry Group}{Isometry Group}
+	Let $(M, g)$ be a Riemannian manifold. The \textbf{isometry group} of $(M, g)$ is the set of all isometries from $(M, g)$ to itself, with the operation of composition. We denote the isometry group by $\Iso(M, g)$.
+\end{definition}
+
+\begin{remark}
+	Summer B. Myers and Norman E. Steenrod proved that if $M$ has finite many components, then $\Iso(M, g)$ have a finite-dimensional Lie group structure, acting smoothly on $M$.
+\end{remark}
+
+\subsection{Local Representation of Riemannian Metrics}
+Let $(M, g)$ be a Riemannian manifold with or without boundary. Let $(x^1, \ldots, x^n)$ be a local coordinate system on $U \subseteq M$. Then the Riemannian metric $g$ can be expressed in terms of the local coordinates as
+\begin{equation}
+	g = g_{ij} \mathrm{d}x^i \otimes \mathrm{d}x^j
+\end{equation}
+for some smooth functions $g_{ij}: U \to \mathbb{R}$. The component functions of this tensor field constitute a matrix-valued function $(g_{ij})$ on $U$, with
+\begin{equation*}
+	g_{ij}(p) = \left\langle \frac{\partial}{\partial x^i}\Big|_p, \frac{\partial}{\partial x^j}\Big|_p \right\rangle_g
+\end{equation*}
+The matrix $(g_{ij})$ is symmetric and positive definite at each point $p \in U$, so we can express it as the symmetric product by
+\begin{equation*}
+	g = g_{ij} \mathrm{d}x^i \mathrm{d}x^j
+\end{equation*}
+For example, the Euclidean metric on $\mathbb{R}^n$ is given in the standard coordinates by
+\begin{equation*}
+	\bar{g} = \delta_{ij} \mathrm{d}x^i \mathrm{d}x^j
+\end{equation*}
+
+More generally, if $(E_1, \ldots, E_n)$ is a smooth local frame on $U$, and $(\epsilon^1, \ldots, \epsilon^n)$ is the dual coframe, then we can express the Riemannian metric as
+\begin{equation}
+	g = g_{ij} \epsilon^i \epsilon^j
+\end{equation}
+
+$g$ also acts on a pair of smooth vector fields $X, Y \in \mathfrak{X}(M)$ by
+\begin{equation}
+	g(X, Y) = g_{ij} X^i Y^j = \langle X, Y \rangle_g
+\end{equation}
+yeilding a smooth function on $M$.
+
+A local frame $(E_1, \ldots, E_n)$ is said to be \textbf{orthonormal} if $g(E_i, E_j) = \delta_{ij}$ for all $i, j$. In this case, the Riemannian metric can be expressed as
+\begin{equation*}
+	g = (\epsilon^1)^2 + \cdots + (\epsilon^n)^2
+\end{equation*}
+
+\begin{proposition}{Existence of Orthonormal Frames}{Existence of Orthonormal Frames}
+	Let $(M, g)$ be a Riemannian $n$-manifold with or without boundary. Then if $(X_j)$ is any smooth local frame for $TM$ over $U \subseteq M$, then there exists a smooth local frame $(E_j)$ on $U$ such that $\vspan\{E_1, \ldots, E_k\} = \vspan\{X_1, \ldots, X_k\}$ for each $k = 1, \ldots, n$, and $(E_j)$ is orthonormal with respect to $g$.
+
+	In particular, every point $p \in M$ has a neighborhood $U$ on which there exists a smooth orthonormal frame $(E_1, \ldots, E_n)$ for $TM$.
+\end{proposition}
+
+\begin{remark}
+	Warning: This does not say that we can find a smooth orthonormal \textbf{coordinate} frame. In fact, it is not possible to find a smooth orthonormal coordinate frame in general. Many would think that if we have a smooth orthonormal frame, then we can assign coordinates to the flow lines of the frame, and then we would have a smooth orthonormal coordinate frame. But this is not true in general because the flows may not commute. A concrete example would be the polar coordinates on $\mathbb{R}^2 \setminus \{0\}$, where the coordinate vector fields $\frac{\partial}{\partial r}$ and $\frac{\partial}{\partial \theta}$ do not commute.
+\end{remark}
+
+\begin{definition}{Unit Tangent Bundle}{Unit Tangent Bundle}
+	For a Riemannian manifold $(M, g)$, the \textbf{unit tangent bundle} of $M$ is the set
+	\begin{equation}
+		UTM = \{(p, v) \in TM : g_p(v, v) = 1\}
+	\end{equation}
+\end{definition}
+
+\begin{proposition}{Properties of the Unit Tangent Bundle}{Properties of the Unit Tangent Bundle}
+	Let $(M, g)$ be a Riemannian manifold with or without boundary. Then $UTM$ is a smooth, properly embedded codimension-1 submanifold with boundary of $TM$. And $\partial(UTM) = \pi^{-1}(\partial M)$, where $\pi: TM \to M$ is the projection map.
+
+	The unit tangent bundle is connected if and only if $M$ is connected if $n \geq 2$.
+
+	The unit tangent bundle is compact if and only if $M$ is compact.
+\end{proposition}
+\begin{proof}
+	We give the proof of each part.
+
+	\textbf{codimension-1:} Use the level set theorem, as $F: TM \to \mathbb{R}$ defined by $F(p, v) = g_p(v, v)$ is smooth and $1$ is a regular value of $F$, then $UTM = F^{-1}(1)$ is a smooth codimension-1 submanifold of $TM$.
+
+	\textbf{properly embedded:} A closed embedded submanifold is properly embedded: its inclusion into $TM$ is a proper map.
+
+	\textbf{boundary:} Just use the boundary coordinate chart to check that $\partial(UTM) = \pi^{-1}(\partial M)$.
+
+	Connectedness and compactness are easy to check.
+\end{proof}
+
+\section{Methods for Constructing Riemannian Metrics}
+Many examples of Riemannian manifolds arise naturally as submanifolds, products, and quotients of other Riemannian manifolds. In this section, we introduce some of the tools for constructing such metrics.
+
+\subsection{Riemannian Submanifolds}
+Every submanifold of a Riemannian manifold automatically inherits a Riemannian metric, and many interesting Riemannian metrics are defined in this way.
+
+\begin{lemma}{Riemannian Manifold by Immersion}{Riemannian Manifold by Immersion}
+	Suppose $(\tilde{M}, \tilde{g})$ is a Riemannian manifold with or without boundary, and $M$ is a smooth manifold with or without boundary. If $F: M \to \tilde{M}$ is a smooth map, then the smooth covariant 2-tensor field $g = F^*\tilde{g}$ is a Riemannian metric on $M$ if and only if $F$ is an immersion.
+\end{lemma}
+\begin{proof}
+	Simply from non degeneracy of
+\end{proof}
+
+This metric $g$ is said to be \textbf{induced} by the immersion $F$.And $F$ that satisfy $g = F^*\tilde{g}$ are called \textbf{isometric immersions}.
+
+The most important examples of induced metrics occur on submanifolds. Suppose $M \subseteq \tilde{M}$ is an (immersed or embedded) submanifold of a Riemannian manifold $(\tilde{M}, \tilde{g})$. Then the inclusion map $\iota: M \hookrightarrow \tilde{M}$ is an immersion, and the induced metric $g = \iota^*\tilde{g}$ is a Riemannian metric on $M$. We say that $(M, g)$ is a \textbf{Riemannian submanifold} of $(\tilde{M}, \tilde{g})$. By
+\begin{equation}
+	g_p(v, w) = \tilde{g}_p(\mathrm{d} \iota_p(v), \mathrm{d} \iota_p(w))
+\end{equation}
+Because we usually identify $T_pM$ with a subspace of $T_p\tilde{M}$, we can write $\tilde{g}_p(v, w)$ instead of $\tilde{g}_p(\mathrm{d} \iota_p(v), \mathrm{d} \iota_p(w))$.
+
+\begin{example}{Spheres}{Spheres}
+	For $n \geq 1$, the $n$-sphere $S^n \subseteq \mathbb{R}^{n+1}$ is a smooth embedded submanifold of $\mathbb{R}^{n+1}$, and the Euclidean metric on $\mathbb{R}^{n+1}$ induces a Riemannian metric on $S^n$. This is the standard Riemannian metric on $S^n$, or called the \textbf{round metric}.
+\end{example}
+
+Now, if $(\tilde{M}, \tilde{g})$ is an $m$-dimensional smooth Riemannian manifold with or without boundary, and $M \subseteq \tilde{M}$ is an $n$-dimensional smooth submanifold with or without boundary, then a local frame $(\tilde{E}_1, \ldots, \tilde{E}_m)$ for $\tilde{M}$ over an open set $\tilde{U} \subseteq \tilde{M}$ is said to be \textbf{adapted} to $M$ if $(\tilde{E}_1, \ldots, \tilde{E}_n)$ is tangent to $M$. In case $\tilde{M}$ has empty boundary, the slice coordinates are available, adapted local orthonormal frames are easy to find.
+
+\begin{proposition}{Existence of Adapted Orthonormal Frames}{Existence of Adapted Orthonormal Frames}
+	Let $(\tilde{M}, \tilde{g})$ be an $m$-dimensional Riemannian manifold without boundary, and let $M \subseteq \tilde{M}$ be an $n$-dimensional embedded submanifold with or without boundary. Then for each point $p \in M$, there exists a neighborhood $\tilde{U} \subseteq \tilde{M}$ of $p$ and a smooth local orthonormal frame $(\tilde{E}_1, \ldots, \tilde{E}_m)$ on $\tilde{U}$ that is adapted to $M$.
+\end{proposition}
+\begin{proof}
+	Apply the Gram–Schmidt algorithm to a coordinate frame in slice coordinates. Embedded manifolds imply the existence of slice coordinates.
+\end{proof}
+
+\begin{definition}{Normal}{Normal}
+	Let $(\tilde{M}, \tilde{g})$ be a Riemannian manifold and let $M \subseteq \tilde{M}$ be a smooth submanifold with or without boundary. For any $p\in M$, a vector $v \in T_p\tilde{M}$ is said to be \textbf{normal} to $M$ at $p$ if $\forall w \in T_pM, \tilde{g}_p(v, w) = 0$.
+
+	The \textbf{normal space} to $M$ at $p$ is the subspace of $T_p\tilde{M}$ consisting of all vectors normal to $M$ at $p$, denoted by $N_pM$. We can decompose
+	\begin{equation}
+		T_p\tilde{M} = T_pM \oplus N_pM
+	\end{equation}
+	The \textbf{normal bundle} of $M$ in $\tilde{M}$ is the vector bundle
+	\begin{equation}
+		NM = \bigsqcup_{p \in M} N_pM
+	\end{equation}
+\end{definition}
+
+\begin{proposition}{The Normal Bundle}{The Normal Bundle}
+	Let $(\tilde{M}, \tilde{g})$ be an $m$-dimensional Riemannian manifold and let $M \subseteq \tilde{M}$ be an $n$-dimensional immersed or embedded submanifold with or without boundary. Then the normal bundle $NM$ is a smooth rank-$(m-n)$ vector subbundle of $T\tilde{M}|_M$. There are smooth bundle homomorphisms
+	\begin{equation}
+		\pi^{\perp}: T\tilde{M}|_M \to NM, \quad \pi^{\top}: T\tilde{M}|_M \to TM
+	\end{equation}
+	called the \textbf{normal projection} and the \textbf{tangential projection}, respectively, such that for each $p \in M$, $\pi^{\perp}_p: T_p\tilde{M} \to N_pM$ and $\pi^{\top}_p: T_p\tilde{M} \to T_pM$ are the orthogonal projections onto $N_pM$ and $T_pM$, respectively.
+\end{proposition}
+\begin{proof}
+	For any $p \in M$, there is a neighborhood $U \subseteq M$ of $p$ that is embedded in $\tilde{M}$. The rest follows from the existence of adapted orthonormal frames.
+\end{proof}
+
+\begin{remark}
+	In case $\tilde{M}$ is a manifold with boundary, the preceding constructions do not always work, because there is not a fully general construction of slice coordinates in that case. However, there is a satisfactory result in case the submanifold is the boundary itself, using boundary coordinates in place of slice coordinates.
+\end{remark}
+
+\begin{proposition}{Existence of Outward-Pointing Normal}{Existence of Outward-Pointing Normal}
+	If $(M, g)$ is a smooth Riemannian manifold with boundary, the normal bundle to $\partial M$ is a smooth rank-1 subbundle over $\partial M$, and there is a unique smooth outward-pointing unit normal vector field along all of $\partial M$.
+\end{proposition}
+
+Computations on a submanifold $M \subseteq \tilde{M}$ are carried out most conveniently in terms of a \textbf{smooth local parametrization} which is a smooth map $X: U \to \tilde{M}$ from an open set $U \subseteq \mathbb{R}^n$ such that $X(U)$ is an open subset of $M$ and $X: U \to X(U)$ is a diffeomorphism. Then for $V = X(U)$ and $\varphi = X^{-1}: V \to U$, we have $(V, \varphi)$ is a smooth local coordinate chart on $M$.
+
+Suppose $(M, g)$ is a Riemannian submanifold of $(\tilde{M}, \tilde{g})$, and $X: U \to \tilde{M}$ is a smooth local parametrization of $M$. Then the coordinate representation of $g$ in these coordinates is given by
+\begin{equation}
+	(\varphi^{-1})^*g = X^*g = X^*\iota^*\tilde{g} = (\iota \circ X)^*\tilde{g}
+\end{equation}
+
+The simplicity of the formula for the pullback of a tensor field makes this expression exceedingly easy to compute, once a coordinate expression for $\tilde{g}$ is known. In particular, if $M$ is an immersed $n$-dimensional Riemannian submanifold of $\mathbb{R}^m$ and $X: U \to \mathbb{R}^n$ is a smooth local parametrization of $M$, then the induced metric on $U$ is given by
+\begin{equation}
+	g = X^*\bar{g} = \sum_{i=1}^m \mathrm{d}X^i \mathrm{d} X^i = \sum_{i=1}^m \left(\frac{\partial X^i}{\partial u^j} \mathrm{d}u^j\right)^2 = \sum_{i=1}^m \sum_{j, k=1}^n \frac{\partial X^i}{\partial u^j} \frac{\partial X^i}{\partial u^k} \mathrm{d}u^j \mathrm{d}u^k
+\end{equation}
+
+\begin{example}{Metrics in Graph Coordinates}{Metrics in Graph Coordinates}
+	If $U \subseteq \mathbb{R}^n$ is open and $f: U \to \mathbb{R}$ is a smooth function, then the graph of $f$ is the subset
+	\begin{equation}
+		\Gamma(f) = \{(x, f(x)) : x \in U\} \subseteq \mathbb{R}^{n+1}
+	\end{equation}
+	which is an $n$-dimensional embedded submanifold of $\mathbb{R}^{n+1}$. It has a global parametrization $X: U \to \mathbb{R}^{n+1}$ given by $X(u) = (u, f(u))$. The corresponding coordinates $(u^1, \ldots, u^n)$ on $M = \Gamma(f)$ are called \textbf{graph coordinates}. The induced metric on $M$ is given in graph coordinates by
+	\begin{equation*}
+		X^*\bar{g} = (\mathrm{d} u^1)^2 + \cdots + (\mathrm{d}u^n)^2 + \mathrm{d} f^2
+	\end{equation*}
+\end{example}
+
+\begin{example}{Surface of Revolution}{Surface of Revolution}
+	Let $H$ be the half plane $\{(r, z) \in \mathbb{R}^2 : r > 0\}$, and suppose $C \subseteq H$ is an embedded 1-dimensional submanifold. The \textbf{surface of revolution} generated by $C$ is the subset
+	\begin{equation}
+		S_C = \left\{(x, y, z) \in \mathbb{R}^3 : \left(\sqrt{x^2 + y^2}, z\right) \in C\right\} \subseteq \mathbb{R}^3
+	\end{equation}
+	Here $C$ is called the \textbf{generating curve}. Every smooth local parametrization $\gamma(t) = (a(t), b(t))$ of $C$ gives rise to a smooth local parametrization for $S_C$ given by
+	\begin{equation}
+		X(t, \theta) = (a(t)\cos\theta, a(t)\sin\theta, b(t))
+	\end{equation}
+	at some small open set of $(t, \theta)$. The $t$-coordinate curves $t \mapsto X(t, \theta_0)$ are the \textbf{meridians}, and the $\theta$-coordinate curves $\theta \mapsto X(t_0, \theta)$ are the \textbf{parallels}. The induced metric on $S_C$ is given in these coordinates by
+	\begin{equation*}
+		X^*\bar{g} = (a'(t)^2 + b'(t)^2) \mathrm{d}t^2 + a(t)^2 \mathrm{d}\theta^2
+	\end{equation*}
+\end{example}
+
+\begin{example}{$n$-Torus}{n-Torus}
+	The smooth covering map $X: \mathbb{R}^n \to T^n$ restricts to a smooth local parametrization on any sufficiently small open subset of $\mathbb{R}^n$, and the induced metric is equal to the Euclidean metric in these coordinates. So the $n$-torus is flat.
+\end{example}
+
+\subsection{Riemannian Products}
+Next, we discuss the construction of Riemannian metrics on products of Riemannian manifolds. Let $(M_1, g_1)$ and $(M_2, g_2)$ be Riemannian manifolds, the product manifold $M_1 \times M_2$ has a natural Riemannian metric $g = g_1 \oplus g_2$ called the \textbf{Riemannian product metric}, defined by
+\begin{equation}
+	g_{(p_1, p_2)}((v_1, v_2), (w_1, w_2)) = g_{1, p_1}(v_1, w_1) + g_{2, p_2}(v_2, w_2)
+\end{equation}
+In coordinates, if $(x^1, \ldots, x^{n})$ are local coordinates on $M_1$ and $(x^{n+1}, \ldots, x^{n+m})$ are local coordinates on $M_2$, then $(x^1, \ldots, x^{n+m})$ are local coordinates on $M_1 \times M_2$, and the Riemannian product metric is given by
+\begin{equation}
+	(g_{ij}) = \begin{pmatrix}
+		(g_1)_{ij} & 0          \\
+		0          & (g_2)_{ij}
+	\end{pmatrix}
+\end{equation}
+
+Here is an important generalization of product metrics. Suppose $(M_1, g_1)$ and $(M_2, g_2)$ are Riemannian manifolds, and $f: M_1 \to \mathbb{R}_+$ is a \emph{strictly positive} smooth function. Then the \textbf{warped product} $M_1 \times_f M_2$ is the product manifold $M_1 \times M_2$ equipped with the Riemannian metric $g = g_1 \oplus f^2 g_2$, defined by
+\begin{equation}
+	g_{(p_1, p_2)}((v_1, v_2), (w_1, w_2)) = g_1|_{p_1}(v_1, w_1) + f(p_1)^2 g_2|_{p_2}(v_2, w_2)
+\end{equation}
+
+\begin{remark}
+	Despite the name, a warped product is generally not a product metric unless $f$ is constant. The warped product metric can be visualized as smoothly scaling $M_2$ when attaching it to different points of $M_1$. A wide variety of metrics can be constructed in this way.
+\end{remark}
+
+\begin{example}{Warped Products}{Warped Products}
+	\begin{itemize}
+		\item With $f=1$, the warped product $M_1 \times_f M_2$ is just the Riemannian product $M_1 \times M_2$.
+		\item Every surface of revolution can be expressed as a warped product. Let $H$ be the half plane $\{(r, z) \in \mathbb{R}^2 : r > 0\}$, and let $C \subseteq H$ be an embedded 1-dimensional submanifold. The surface of revolution $S_C$ generated by $C$ is diffeomorphic to the warped product $C \times_r S^1$, where $r: C \to \mathbb{R}_+$ is the projection onto the first coordinate. The diffeomorphism is given by $(p, e^{i\theta}) \mapsto (r(p)\cos\theta, r(p)\sin\theta, z(p))$. The induced metric on $S_C$ is equal to the warped product metric on $C \times_r S^1$.
+		\item Let $\rho$ be the standard coordinate function on $\mathbb{R}_+$. Then the map $\Phi(\rho, \omega) = \rho \omega$ gives an isometry from the warped product $\mathbb{R}_+ \times_\rho S^{n-1}$ to $\mathbb{R}^n \setminus \{0\}$ with the Euclidean metric. This is the polar coordinates.
+	\end{itemize}
+\end{example}
+
+\subsection{Riemannian Submersions}
+Unlike submanifolds and products of Riemannian manifolds, which automatically inherit Riemannian metrics of their own, quotients of Riemannian manifolds inherit Riemannian metrics only under very special circumstances.
+
+Suppose $\tilde{M}$ and $M$ are smooth manifolds, and $\pi: \tilde{M} \to M$ is a smooth submersion. Take $\tilde{g}$ to be a Riemannian metric on $\tilde{M}$. By the submersion level set theorem, each fiber $\tilde{M}_y = \pi^{-1}(y)$ is a properly embedded smooth submanifold of $\tilde{M}$, and at each point $x \in \tilde{M}$, we define two subspaces of the tangent space $T_x\tilde{M}$:
+\begin{itemize}
+	\item The \textbf{vertical subspace}
+	      \begin{equation}
+		      V_x = \ker(\mathrm{d}\pi_x) = T_x\tilde{M}_{\pi(x)}
+	      \end{equation}
+	\item The \textbf{horizontal subspace}
+	      \begin{equation}
+		      H_x = V_x^\perp
+	      \end{equation}
+\end{itemize}
+Then $T_x\tilde{M} = V_x \oplus H_x$. Note that the vertical space is well defined for every submersion, because it does not refer to the metric; but the horizontal space depends on the metric.
+
+A vector field on $\tilde{M}$ is said to be \textbf{vertical} if it is tangent to the fibers of $\pi$, and \textbf{horizontal} if it is everywhere tangent to the horizontal subspaces. Given a smooth vector field $X$ on $M$, a vector field $\tilde{X}$ on $\tilde{M}$ is said to be a \textbf{horizontal lift} of $X$ if $\tilde{X}$ is horizontal and $\pi$-related to $X$, i.e. $\mathrm{d}\pi_x(\tilde{X}_x) = X_{\pi(x)}$ for all $x \in \tilde{M}$.
+
+The next proposition is the principal tool for doing computations on Riemannian submersions.
+
+\begin{proposition}{Properties of Horizontal Vector Fields}{Properties of Horizontal Vector Fields}
+	Let $\tilde{M}$ and $M$ be smooth manifolds, and let $\pi: \tilde{M} \to M$ be a smooth submersion. Let $\tilde{g}$ be a Riemannian metric on $\tilde{M}$.
+	\begin{itemize}
+		\item Every smooth vector field $W$ on $\tilde{M}$ can be uniquely decomposed as $W = W^H + W^V$, where $W^H$ is horizontal and $W^V$ is vertical.
+		\item Every smooth vector field $X$ on $M$ has a unique horizontal lift $\tilde{X}$ to $\tilde{M}$.
+		\item For any $x \in \tilde{M}$, and $v \in H_x$, there exists a vector field $X$ on $M$ whose horizontal lift $\tilde{X}$ satisfies $\tilde{X}_x = v$.
+	\end{itemize}
+\end{proposition}
+\begin{proof}
+	SORRY
+\end{proof}
+
+\begin{remark}
+	It is important to be aware, though, that not every horizontal vector field on $\tilde{M}$ is the horizontal lift of a vector field on $M$. This is easy to understand geometrically: a horizontal lift should have the ``same'' vector field along each fiber, but a horizontal vector field on $\tilde{M}$ can vary along a fiber. As a counterexample, consider $\pi: \mathbb{R}^2 \to \mathbb{R}$ given by $\pi(x, y) = x$, and $W = y \partial_x$ on $\mathbb{R}^2$. Then $W$ is horizontal, but it is not the horizontal lift of any vector field on $\mathbb{R}$.
+\end{remark}
+
+Now we can identify some quotients of Riemannian manifolds that inherit metrics of their own.
+
+\begin{definition}{Riemannian Submersions}{Riemannian Submersions}
+	Suppose $(\tilde{M}, \tilde{g})$ and $(M, g)$ are Riemannian manifolds, and $\pi: \tilde{M} \to M$ is a smooth submersion. Then $\pi$ is said to be a \textbf{Riemannian submersion} if for each $x \in \tilde{M}$, the differential $\mathrm{d}\pi_x|_{H_x}: H_x \to T_{\pi(x)}M$ is a linear isometry. In other words, $\tilde{g}_x(v, w) = g_{\pi(x)}(\mathrm{d}\pi_x(v), \mathrm{d}\pi_x(w))$ for all $v, w \in H_x$.
+\end{definition}
+This just means that the metric $\tilde{g}$ ``behaves'' the same along each fiber of $\pi$, so that the metric $g$ on $M$ is well defined.
+
+Given a Riemannian manifold $(\tilde{M}, \tilde{g})$ and a surjective submersion $\pi: \tilde{M} \to M$, it is almost never the case that there is a metric on $M$ that makes $\pi$ a Riemannian submersion, because this requires that the metric $\tilde{g}$ be ``consistent'' along each fiber of $\pi$. There is, however, an important special case in which there is such a metric. Suppose $\pi: \tilde{M} \to M$ is a smooth surjective submersion, and $G$ is a group acting on $\tilde{M}$. We say that the action is \textbf{vertical} if every element $\varphi \in G$ takes each fiber to itself, meaning that $\pi(\varphi \cdot x) = \pi(x)$ for all $x \in \tilde{M}$. We say that the action is \textbf{transitive on fibers} if for each $p, q \in \tilde{M}$ with $\pi(p) = \pi(q)$, there exists $\varphi \in G$ such that $\varphi \cdot p = q$.
+
+If in addition $\tilde{M}$ has a Riemannian metric $\tilde{g}$, we say that the action is \textbf{isometric} if for each $\varphi \in G$, the map $x \mapsto \varphi \cdot x$ is an isometry. In that case, provided the action is effective (meaning that $\varphi \cdot x = x$ for all $x \in \tilde{M}$ implies $\varphi$ is the identity), we can identify $G$ with a subgroup of the isometry group $\Iso(\tilde{M}, \tilde{g})$. Since an isometry is, in particular, a diffeomorphism, every isometric action is an action by diffeomorphisms.
+
+\begin{theorem}{Riemannian Submersions}{Riemannian Submersions}
+	Let $(\tilde{M}, \tilde{g})$ be a Riemannian manifold, and let $\pi: \tilde{M} \to M$ be a smooth surjective submersion. Suppose $G$ is a group acting on $\tilde{M}$ that is vertical, transitive on fibers, and isometric. Then there exists a unique Riemannian metric $g$ on $M$ such that $\pi: (\tilde{M}, \tilde{g}) \to (M, g)$ is a Riemannian submersion.
+\end{theorem}
+\begin{proof}
+	By intuition this fulfills the requirement that the metric $\tilde{g}$ be ``consistent'' along each fiber of $\pi$.
+\end{proof}
+
+\begin{remark}
+	\textbf{The Role of the Group Action}
+
+	The introduction of the group $G$ may at first seem unnecessary. Indeed, the essential issue is simply whether $\tilde g$ is consistent along the fibers of $\pi$, so that one can define
+	\begin{equation*}
+		g_p(u,v)=\tilde g_x(\tilde u,\tilde v),
+	\end{equation*}
+	where $x\in\pi^{-1}(p)$ and $\tilde u,\tilde v\in(\ker d\pi_x)^\perp$ are the horizontal lifts of $u,v\in T_pM$. The required condition is that this expression be independent of the choice of $x$ in the fiber. Thus, one could in principle assume this consistency directly.
+
+	The purpose of the group action is to provide a natural mechanism for guaranteeing this condition. If $x,y$ lie in the same fiber, transitivity gives $\varphi\in G$ such that $y=\varphi\cdot x$. Since the action is vertical, $\pi\circ\varphi=\pi$, and hence
+	\begin{equation*}
+		d\pi_y\circ d\varphi_x=d\pi_x.
+	\end{equation*}
+	Thus $d\varphi_x$ carries horizontal lifts at $x$ to the corresponding horizontal lifts at $y$. Since the action is isometric,
+	\begin{equation*}
+		\tilde g_y(d\varphi_xX,d\varphi_xY)=\tilde g_x(X,Y),
+	\end{equation*}
+	so the horizontal inner products are the same at all points of a fiber.
+
+	Therefore, the group action is not necessary for the existence of a Riemannian submersion; rather, it is a structural way to guarantee the necessary fiber-consistency. In many important examples, the group is already present because $M$ is constructed as a quotient $\tilde M/G$, in which case the fibers are the $G$-orbits and the consistency follows from the isometry of the action.
+\end{remark}
+
+The next corollary describes one important situation to which the preceding theorem applies.
+
+\begin{corollary}{Lie Group Quotients}{Lie Group Quotients}
+	Let $(\tilde{M}, \tilde{g})$ be a Riemannian manifold, and let $G$ be a Lie group acting smoothly, freely, properly, and isometrically on $\tilde{M}$. Then the orbit space $M = \tilde{M}/G$ has a unique smooth manifold structure and Riemannian metric such that $\pi: (\tilde{M}, \tilde{g}) \to (M, g)$ is a Riemannian submersion.
+\end{corollary}
+\begin{proof}
+	The smooth structure follows the quotient manifold theorem, and the Riemannian metric follows from the preceding theorem.
+\end{proof}
+
+\begin{example}{The Fubini–Study Metric}{The FubiniStudy Metric}
+	Let $n \in \mathbb{Z}_+$, and consider the complex projective space $\mathbb{CP}^n$. The map $\pi: \mathbb{C}^{n+1} \setminus \{0\} \to \mathbb{CP}^n$ by the equivalence relation $z \sim \lambda z$ for $\lambda \in \mathbb{C}^*$ is a smooth surjective submersion. Identifying $\mathbb{C}^{n+1}$ with $\mathbb{R}^{2n+2}$, we can equip $\mathbb{C}^{n+1} \setminus \{0\}$ with the Euclidean metric. Let $p$ be the restriction of $\pi$ to the unit sphere $S^{2n+1} \subseteq \mathbb{C}^{n+1}$. Then $p: S^{2n+1} \to \mathbb{CP}^n$ is a smooth surjective submersion, and the group $S^1$ acts smoothly, freely, properly, and isometrically on $S^{2n+1}$ by complex multiplication:
+	\begin{equation*}
+		\lambda \cdot (z^1, \ldots, z^{n+1}) = (\lambda z^1, \ldots, \lambda z^{n+1})
+	\end{equation*}
+	Therefore, by the preceding corollary, there exists a unique Riemannian metric on $\mathbb{CP}^n$ such that $p: S^{2n+1} \to \mathbb{CP}^n$ is a Riemannian submersion. This metric is called the \textbf{Fubini–Study metric}.
+\end{example}
+
+\subsection{Riemannian Coverings}
+Another important special case of Riemannian submersions occurs in the context of covering maps.
+\begin{definition}{Riemannian Coverings}{Riemannian Coverings}
+	Suppose $(\tilde{M}, \tilde{g})$ and $(M, g)$ are Riemannian manifolds. A smooth covering map $\pi: \tilde{M} \to M$ is a \textbf{Riemannian covering} if $\pi$ is a local isometry.
+\end{definition}
+
+\begin{proposition}{Existence of Riemannian Coverings}{Existence of Riemannian Coverings}
+	Suppose $\pi: \tilde{M} \to M$ is a smooth normal covering map (which means that the deck transformation group acts transitively on the fibers of $\pi$). And $\tilde{g}$ is any Riemannian metric on $\tilde{M}$ that is invariant under all deck transformations. Then there exists a unique Riemannian metric $g$ on $M$ such that $\pi: (\tilde{M}, \tilde{g}) \to (M, g)$ is a Riemannian covering.
+\end{proposition}
+\begin{proof}
+	SORRY
+\end{proof}
+
+\begin{proposition}{Construct Normal Covering}{Construct Normal Covering}
+	Suppose $(\tilde{M}, \tilde{g})$ is a Riemannian manifold, and $\Gamma$ is a \textbf{discrete Lie group} acting smoothly, freely, properly, and isometrically on $\tilde{M}$. Then the orbit space $M = \tilde{M}/\Gamma$ has a unique Riemannian metric $g$ such that the quotient map $\pi: \tilde{M} \to \tilde{M}/\Gamma$ is a normal Riemannian covering.
+\end{proposition}
+
+This gives
+\begin{proposition}{}{}
+	Suppose $(M, g)$ and $(\tilde{M}, \tilde{g})$ are connected Riemannian manifolds, and $\pi: \tilde{M} \to M$ is a normal Riemannian covering map, and $\Gamma = \Aut_\pi(\tilde{M})$ then $M$ is isometric to the quotient $\tilde{M}/\Gamma$.
+\end{proposition}
+
+\begin{example}{}{}
+	The two element group $\Gamma = \{1, -1\}$ acts smoothly, freely, properly, and isometrically on the unit sphere $S^n$ by multiplication. The quotient space $S^n/\Gamma$ is the real projective space $\mathbb{RP}^n$, and the quotient map $q: S^n \to \mathbb{RP}^n$ is a normal Riemannian covering. As the action is isometric, there is a unique Riemannian metric on $\mathbb{RP}^n$ such that $q$ is a Riemannian covering.
+\end{example}
+
+\begin{example}{}{}
+	The open Mobius band is a quotient $\mathbb{R}^2/\mathbb{Z}$ by $n \cdot (x, y) = (x+n, (-1)^n y)$, and the action is smooth, free, proper, and isometric. Therefore, the open Mobius band inherits a Riemannian metric from the Euclidean metric on $\mathbb{R}^2$.
+\end{example}
+
+\section{Basic Constructions on Riemannian Manifolds}
+Throughout this section $M$ is a smooth manifold with or without boundary.
+
+\subsection{Raising and Lowering Indices}
+An inner product gives a natural isomorphism between a vector space and its dual by the Riesz representation theorem. In the context of Riemannian manifolds, the Riemannian metric $g$ does the same thing. We define a bundle homomorphism $\hat{g}: TM \to T^*M$ by
+\begin{equation}
+	\hat{g}(v)(w) = g_p(v, w)
+\end{equation}
+for all $v, w \in T_pM$. If $X,Y$ are smooth vector fields on $M$, then $\hat{g}(X)(Y) = g(X, Y)$. This means that $\hat{g}(X)$ is a smooth covector field (by the \textbf{Tensor Characterization Lemma}), and that $\hat{g}: \mathfrak{X}(M) \to \Omega^1(M)$ is a linear map over $C^\infty(M)$. This means that $\hat{g}$ is a smooth bundle homomorphism.
+
+Given a smooth local frame $(E_1, \ldots, E_n)$ and its dual frame $(\epsilon^1, \ldots, \epsilon^n)$, let $g = g_{ij} \epsilon^i \epsilon^j$ be the local coordinate representation of $g$. If $X = X^i E_i$ is a smooth vector field, then
+\begin{equation}
+	\hat{g}(X) = g_{ij} X^i \epsilon^j = X_j \epsilon^j
+\end{equation}
+where we define
+\begin{equation}
+	X_j = g_{ij} X^i
+\end{equation}
+called the \textbf{lowered index} of $X$. With this in mind, the covector field $\hat{g}(X)$ is often denoted by $X^\flat$.
+
+The inverse of the map $\hat{g}$ is denoted by $\hat{g}^{-1} = (g^{ij})$, and thus we have $g^{ik} g_{kj} = \delta^i_j$. In terms of a local frame, the inverse map is given by
+\begin{equation}
+	\hat{g}^{-1}(\omega) = \omega_i E^i, \qquad \omega_i = g^{ij} \omega_j
+\end{equation}
+called the \textbf{raised index} of $\omega$, denoted by $\omega^\sharp$. These two operations are called \textbf{lowering and raising indices}, or \textbf{musical isomorphisms}.
+
+Probably the most important application of the sharp operator is to extend the classical gradient operator to Riemannian manifolds. If $g$ is a Riemannian metric on $M$, and $f \in C^\infty(M)$, then the \textbf{gradient} of $f$ is the smooth vector field
+\begin{equation}
+	\grad f = (\mathrm{d}f)^\sharp
+\end{equation}
+Unwinding the definitions, we see that
+\begin{equation}
+	\mathrm{d} f_p(w) = \langle \grad f |_p, w \rangle, \quad \forall p \in M, w \in T_pM
+\end{equation}
+and the local basis representation of $\grad f$ is given by
+\begin{equation}
+	\grad f = (g^{ij} E_i(f)) E_j
+\end{equation}
+
+The next proposition shows that the gradient has the same geometric interpretation on a Riemannian manifold as it does in Euclidean space. If $f$ is a smooth real-valued function on a smooth manifold $M$, recall $p\in M$ is called \textbf{a regular point} of $f$ if $\mathrm{d}f_p \neq 0$, and a \textbf{critical point} of $f$ if $\mathrm{d}f_p = 0$. And a level set $f^{-1}(c)$ is called \textbf{regular} if every point of $f^{-1}(c)$ is a regular point of $f$, and we have shown that each regular level set is an embedded smooth hypersurface of $M$.
+
+\begin{proposition}{Gradient is Normal}{Gradient is Normal}
+	Suppose $(M, g)$ is a Riemannian manifold, and $f \in C^\infty(M)$. Let $\mathcal{R} \subseteq M$ be the set of regular points of $f$. Then for each $c \in \mathbb{R}$, let the set $M_c = f^{-1}(c) \cap \mathcal{R}$. Then if $M_c \neq \emptyset$, it is an embedded smooth hypersurface of $M$, and the gradient $\grad f$ is everywhere normal to $M_c$.
+\end{proposition}
+
+The flat and sharp operators can be applied to tensors of any rank, in any index position, to convert tensors from covariant to contravariant or vice versa. We define them formally.
+
+\begin{definition}{Musical Operation}{Musical Operation}
+	If $F$ is any $(k, l)$-tensor field and $i \in \{1, \ldots, k+l\}$ is any covariant index position, we can form a new tensor field $F^\sharp$ of type $(k+1, l-1)$ by setting
+	\begin{equation}
+		F^\sharp(\alpha_1, \ldots, \alpha_{k+l}) = F(\alpha_1, \ldots, \alpha_{i-1}, \alpha_i^\sharp, \alpha_{i+1}, \ldots, \alpha_{k+l})
+	\end{equation}
+	whenever $\alpha_i$ are vector fields or covector fields as appropriate. Similarly we can define $F^\flat$ by
+	\begin{equation}
+		F^\flat(\alpha_1, \ldots, \alpha_{k+l}) = F(\alpha_1, \ldots, \alpha_{i-1}, \alpha_i^\flat, \alpha_{i+1}, \ldots, \alpha_{k+l})
+	\end{equation}
+\end{definition}
+In coordinates, this is simply raising or lowering the $i$-th index of the tensor using the metric and its inverse.
+
+Another important application of the flat and sharp operators is to extend the trace operator to covariant tensors. If $h$ is any covariant $k$-tensor field with $k \geq 2$, 2, we can raise one of its indices (say the last one for definiteness) and obtain a $(1, k-1)$-tensor field. We define the \textbf{trace} of $h$ to be
+\begin{equation}
+	\tr_g(h) = \tr(h^\sharp)
+\end{equation}
+The most important case is that of a covariant 2-tensor field, in which
+\begin{equation}
+	\tr_g(h) = g^{ij} h_{ij}
+\end{equation}
+
+\subsection{Inner Products of Tensors}
+A Riemannian metric yields, by definition, an inner product on tangent vectors at each point. Because of the musical isomorphisms between vectors and covectors, it is easy to carry the inner product over to covectors as well.
+
+Suppose $g$ is a Riemannian metric on $M$, and $x\in M$. We can define an inner product on the cotangent space $T^*_xM$ by
+\begin{equation}
+	\langle \omega, \eta \rangle_g = \langle \omega^\sharp, \eta^\sharp \rangle_g
+\end{equation}
+in coordinates
+\begin{equation*}
+	\langle \omega, \eta \rangle = g_{kl} (g^{ki} \omega_i) (g^{lj} \eta_j) = g^{ij} \omega_i \eta_j = \omega_i \eta^i = \omega^i \eta_i
+\end{equation*}
+
+This construction can be extended to tensor bundles of any rank, as the following proposition shows. If $E \to M$ is a smooth vector bundle, then a \textbf{smooth fiber metric} on $E$ is an inner product on each fiber $E_p$ that varies smoothly, in the sense that for any (local) smooth sections $\sigma, \tau$ of $E$, the inner product $\langle \sigma, \tau \rangle$ is a smooth function on $M$.
+
+\begin{remark}
+	Well, a smooth fiber metric is just a generalization of a Riemannian metric to arbitrary vector bundles.
+\end{remark}
+
+\begin{proposition}{Inner Products of Tensors}{Inner Products of Tensors}
+	Let $(M, g)$ be an $n$-dimensional Riemannian manifold with or without boundary. There is a unique smooth fiber metric on each tensor bundle $T^{(k, l)}TM$ with the property that if $\alpha_1, \ldots , \alpha_{k+1}$ and $\beta_1, \ldots, \beta_{l+1}$ are smooth vector or covector fields as appropriate, then
+	\begin{equation}
+		\langle \alpha_1 \otimes \cdots \otimes \alpha_k, \beta_1 \otimes \cdots \otimes \beta_l \rangle_g = \prod_{i=1}^k \langle \alpha_i, \beta_i \rangle_g
+	\end{equation}
+	With this inner product, if $(E_1, \ldots, E_n)$ is a smooth local orthogonal frame for $TM$ and $(\epsilon^1, \ldots, \epsilon^n)$ is the dual frame for $T^*M$, then the collection of tensor fields $E_{i_1} \otimes \cdots \otimes E_{i_k} \otimes \epsilon^{j_1} \otimes \cdots \otimes \epsilon^{j_l}$ for $1 \leq i_1, \ldots, i_k, j_1, \ldots, j_l \leq n$ is a smooth local orthogonal frame for $T^{(k, l)}TM$. In terms of any (not necessarily orthonormal) frame, this fiber metric satisfies
+	\begin{equation}
+		\langle F, G \rangle = g_{i_1 r_1} \cdots g_{i_k r_k} g^{j_1 s_1} \cdots g^{j_l s_l} F^{i_1 \ldots i_k}_{j_1 \ldots j_l} G^{r_1 \ldots r_k}_{s_1 \ldots s_l}
+	\end{equation}
+\end{proposition}
+
+\subsection{The Volume Form and Integration}
+Another important construction provided by a metric on an oriented manifold is a canonical volume form.
+
+\begin{proposition}{The Riemannian Volume Form}{The Riemannian Volume Form}
+	Let $(M, g)$ be an oriented $n$-dimensional Riemannian manifold with or without boundary. Then there exists a unique smooth $n$-form $\mathrm{d} V_g$ on $M$, called the \textbf{Riemannian volume form}, such that:
+	\begin{itemize}
+		\item If $(\epsilon^1, \ldots, \epsilon^n)$ is any smooth local orthonormal coframe on $T^*M$, then
+		      \begin{equation}
+			      \mathrm{d} V_g = \epsilon^1 \wedge \cdots \wedge \epsilon^n
+		      \end{equation}
+		\item If $(E_1, \ldots, E_n)$ is any smooth local orthonormal frame on $TM$, then
+		      \begin{equation}
+			      \mathrm{d} V_g(E_1, \ldots, E_n) = 1
+		      \end{equation}
+		\item If $(x^1, \ldots, x^n)$ are local coordinates on $M$, then
+		      \begin{equation}
+			      \mathrm{d} V_g = \sqrt{\det(g_{ij})} \mathrm{d}x^1 \wedge \cdots \wedge \mathrm{d}x^n
+		      \end{equation}
+	\end{itemize}
+\end{proposition}
+
+The significance of the Riemannian volume form is that it allows us to integrate functions on an oriented Riemannian manifold, not just differential forms.
+
+If $f$ is a continuous, compactly supported real-valued function on an oriented Riemannian $n$-manifold $(M, g)$ with or without boundary, then $f \mathrm{d} V_g$ is a compactly supported $n$-form, and we define the integral of $f$ over $M$ by
+\begin{equation}
+	\int_M f \mathrm{d} V_g
+\end{equation}
+If $M$ is compact, the volume of $M$ is defined to be
+\begin{equation}
+	\Vol_g(M) = \int_M \mathrm{d} V_g
+\end{equation}
+
+\begin{remark}
+	Note the notation $\mathrm{d} V_g$ is used just by convenience, not meaning it is an exact form. In fact, if $M$ is a compact oriented Riemannian manifold without boundary, then $\mathrm{d} V_g$ is never exact. If it were exact, then by Stokes' theorem we would have integration of $\mathrm{d} V_g$ over $M$ equal to zero, which is impossible since the volume is positive.
+\end{remark}
+
+For Riemannian hypersurfaces, we have the following important characterization of the volume form on the hypersurface in terms of that of the ambient manifold. If $X$ is a vector field and $\mu$ is a differential form, recall $X \lrcorner \mu$ is the interior multiplication of $\mu$ by $X$, defined by $(X \lrcorner \mu)(X_1, \ldots, X_{k-1}) = \mu(X, X_1, \ldots, X_{k-1})$.
+
+\begin{proposition}{Volume Form by Interior Multiplication}{Volume Form by Interior Multiplication}
+	Suppose $M$ is a hypersurface in an oriented Riemannian manifold $(\tilde{M}, \tilde{g})$ and $g$ is the induced Riemannian metric on $M$. Then $M$ is orientable if and only if there exists a global unit normal vector field $N$ on $M$, and in that case, the Riemannian volume form $\mathrm{d} V_g$ on $M$ is given by
+	\begin{equation}
+		\mathrm{d} V_g = (N \lrcorner \mathrm{d} V_{\tilde{g}})|_M
+	\end{equation}
+\end{proposition}
+
+When $M$ is not orientable, we can still define integrals of functions, but now we have to use densities instead of differential forms
+\begin{proposition}{Riemannian Density}{Riemannian Density}
+	If $(M, g)$ is a Riemannian manifold, then there exists a unique smooth positive density $\mu$ on $M$, called the \textbf{Riemannian density}, such that for ever local orthogonal frame $(E_1, \ldots, E_n)$ we have
+	\begin{equation}
+		\mu(E_1, \ldots, E_n) = 1
+	\end{equation}
+\end{proposition}
+\begin{proof}
+	$\mu$ can be defined in terms of any local orthogonal frame $(E_1, \ldots, E_n)$ by
+	\begin{equation*}
+		\mu = | \epsilon^1 \wedge \cdots \wedge \epsilon^n |
+	\end{equation*}
+\end{proof}
+
+
+
+\end{document}

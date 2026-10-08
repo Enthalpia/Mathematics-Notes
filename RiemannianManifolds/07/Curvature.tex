@@ -1,0 +1,613 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\chapter{Curvature}
+
+In this chapter, we begin our study of the local invariants of Riemannian metrics.
+
+\section{Local Invariants of Riemannian Metrics}
+We care about ``local equivalence'' of geometric structures. This would mean that for every point, in some sufficiently small neighborhood, the two structures are equivalent. If we only consider the smooth structure, then all smooth manifolds are locally equivalent, which is justified by the definition itself.
+
+There are some interesting and useful structures in differential geometry that have the property that all such structures on manifolds of the same dimension are locally equivalent to each other. For example:
+\begin{itemize}
+	\item \textbf{Nonvanishing Vector Fields:} Every nonvanishing vector field can be written as $X = \partial / \partial x^1$ in some local coordinates $(x^1, \ldots, x^n)$.
+	\item \textbf{Riemannian Metrics on 1-Dimensional Manifolds:} Every Riemannian metric on a 1-dimensional manifold is locally equivalent to $\mathbb{R}$.
+	\item \textbf{Symplectic Forms:} By Darboux's theorem, every symplectic form is locally equivalent to the standard symplectic form on $\mathbb{R}^{2n}$ with the standard coordinates $\sum_{i=1}^n dx^i \wedge dy^i$.
+\end{itemize}
+
+\begin{example}{Locality of $S^2$}{Locality of S2}
+	No neighborhood of any $p \in S^2$ is isometric to an open subset of $\mathbb{R}^2$.
+
+	To justify this, we use the following argument: Recall that a vector field $Y$ on a Riemannian manifold $(M, g)$ is called \textbf{parallel} if $\nabla Y = 0$.
+	\begin{enumerate}
+		\item Let $p \in \mathbb{R}^n$ and $v \in T_p \mathbb{R}^n$. Then there exists a unique parallel vector field $Y$ on $\mathbb{R}^n$ such that $Y(p) = v$.
+		\item Let $X(\varphi, \theta) = (\sin \varphi \cos \theta, \sin \varphi \sin \theta, \cos \varphi)$ be the spherical coordinate parametrization of an open subset $U \subseteq S^2$. Let $X_{\theta} = X_*(\partial_\theta)$ and $X_{\varphi} = X_*(\partial_\varphi)$ denote the pushforwards of the coordinate vector fields. We compute
+		      \begin{equation*}
+			      \nabla_{X_\theta} X_\varphi = \cot \varphi X_\theta, \qquad \nabla_{X_\varphi} X_\varphi = 0.
+		      \end{equation*}
+		      so that $X_{\varphi}$ is parallel along the meridians $\theta = \text{constant}$, and on the equator $\varphi = \pi/2$.
+		\item Let $p = (1, 0, 0) \in S^2$, then we show that there is no parallel vector field $W$ on any neighborhood of $p$ such that $W(p) = X_\varphi(p)$. By the uniqueness of parallel vector fields, we assume the neighborhood is a circular neighborhood, then every point in the neighborhood can be parallel transported from $p$ along the equator than along the meridian. So we have $W = X_\varphi$ in that neighborhood, arriving at a contradiction since $X_{\varphi}$ is not parallel.
+		\item We conclude that there is no neighborhood of $p$ that is isometric to an open subset of $\mathbb{R}^2$, since parallel vector fields are preserved under isometries.
+	\end{enumerate}
+\end{example}
+
+The most important technique for proving that two geometric structures are not locally equivalent is to find a local invariant of the structure. In order to address the general problem of local equivalence of Riemannian or pseudo-Riemannian metrics, we will define a local invariant for all such metrics called \textbf{curvature}. Initially, its definition will have nothing to do with the curvature of curves, but later we will see that the two concepts are intimately related.
+
+The above example give us a hint that every tangent vector in the plane can be extended to a parallel vector field, so every Riemannian manifold that is locally isometric to $\mathbb{R}^2$ must have the same property locally.
+
+Now, given a Riemannian 2-manifold $(M, g)$, with any smooth coordinate ball $(x^1, x^2)$, we can extend a vector $v \in T_0 M$ to a vector field $Z$ by parallel transport along the $x^1$ axis, then parallel transport along the $x^2$ direction just like above. We naturally have $\nabla_{\partial_2} Z = 0$ for all points and $\nabla_{\partial_1} Z = 0$ along the $x^1$ axis. However, in general, $\nabla_{\partial_1} Z \neq 0$ away from the $x^1$ axis.
+
+If we can show that $\nabla_{\partial_2} \nabla_{\partial_1} Z = 0$, then we can conclude that $\nabla_{\partial_1} Z = 0$ everywhere, and hence $Z$ is parallel. This motivates whether we have the commutation
+\begin{equation*}
+	\nabla_{\partial_2} \nabla_{\partial_1} Z = \nabla_{\partial_1} \nabla_{\partial_2} Z.
+\end{equation*}
+because the latter is zero since $\nabla_{\partial_2} Z = 0$. We know that this is true for the Euclidean space, but not in general, just like the example of $S^2$ above. To express this noncommutativity in a coordinate-independent way, let us look more closely at the quantity $\bar{\nabla}_X \bar{\nabla}_Y Z - \bar{\nabla}_Y \bar{\nabla}_X Z$ for vector fields $X, Y, Z$. On $\mathbb{R}^2$, we have
+\begin{equation}
+	\bar{\nabla}_X \bar{\nabla}_Y Z - \bar{\nabla}_Y \bar{\nabla}_X Z = \bar{\nabla}_{[X, Y]} Z,
+\end{equation}
+as is easily seen from $\bar{\nabla}_X \bar{\nabla}_Y Z = \bar{\nabla}_X (Y(Z^k) \partial_k) = XY(Z^k) \partial_k$.
+
+Recall that a Riemannian manifold is said to be flat if it is locally isometric to a Euclidean space. Similarly, a pseudo-Riemannian manifold is flat if it is locally isometric to a pseudo-Euclidean space. The computation above leads to the following simple necessary condition for a Riemannian or pseudo-Riemannian manifold to be flat.
+
+We say that a connection $\nabla$ on a smooth manifold $M$ satisfies the \textbf{flatness condition} if for all vector fields $X, Y, Z$ on $M$, we have
+\begin{equation}
+	\nabla_X \nabla_Y Z - \nabla_Y \nabla_X Z = \nabla_{[X, Y]} Z.
+\end{equation}
+
+\begin{example}{Flatness}{Flatness}
+	The $n$-torus is flat, because it is locally isometric to $\mathbb{R}^n$ with the embedding in $\mathbb{R}^{2n}$.
+\end{example}
+
+\begin{proposition}{}{}
+	If $(M, g)$ is a \emph{flat} Riemannian or pseudo-Riemannian manifold, then the Levi-Civita connection $\nabla$ satisfies the flatness condition.
+\end{proposition}
+\begin{proof}
+	By naturality, the Levi-Civita connection on every manifold that is locally isometric to a Euclidean or pseudo-Euclidean space must also satisfy the same identity.
+\end{proof}
+
+\section{The Curvature Tensor}
+Motivated by the computation in the preceding section, we make the following definition.
+\begin{definition}{Curvature Tensor}{Curvature Tensor}
+	Let $(M, g)$ be a Riemannian or pseudo-Riemannian manifold, and define a map $R: \mathfrak{X}(M) \times \mathfrak{X}(M) \times \mathfrak{X}(M) \to \mathfrak{X}(M)$ by
+	\begin{equation}
+		R(X, Y)Z = \nabla_X \nabla_Y Z - \nabla_Y \nabla_X Z - \nabla_{[X, Y]} Z.
+	\end{equation}
+\end{definition}
+
+\begin{proposition}{Curvature is Tensor}{Curvature is Tensor}
+	The map $R$ defined above is multilinear over $C^\infty(M)$, and hence is a $(1, 3)$-tensor field on $M$.
+\end{proposition}
+\begin{proof}
+	For $f \in C^\infty(M)$, we have
+	\begin{equation*}
+		\begin{aligned}
+			R(X, fY)Z &= \nabla_X \nabla_{fY} Z - \nabla_{fY} \nabla_X Z - \nabla_{[X, fY]} Z \\
+			&= \nabla_X (f \nabla_Y Z) - f \nabla_Y \nabla_X Z - \nabla_{f[X, Y] +(Xf)Y} Z \\
+			&= (Xf) \nabla_Y Z + f \nabla_X \nabla_Y Z - f \nabla_Y \nabla_X Z - f \nabla_{[X, Y]} Z - (Xf) \nabla_Y Z \\
+			&= f R(X, Y)Z.
+		\end{aligned}
+	\end{equation*}
+	and
+	\begin{equation*}
+		\begin{aligned}
+			R(X, Y)(fZ) &= \nabla_X \nabla_Y (fZ) - \nabla_Y \nabla_X (fZ) - \nabla_{[X, Y]} (fZ) \\
+			&= \nabla_X (Y(f)Z + f \nabla_Y Z) - \nabla_Y (X(f)Z + f \nabla_X Z) - [X, Y](f)Z - f \nabla_{[X, Y]} Z \\
+			&= X(Y(f))Z + Y(f) \nabla_X Z + X(f) \nabla_Y Z + f \nabla_X \nabla_Y Z \\
+			&\quad - Y(X(f))Z - X(f) \nabla_Y Z - Y(f) \nabla_X Z - f \nabla_Y \nabla_X Z - [X, Y](f)Z - f \nabla_{[X, Y]} Z \\
+			&= f R(X, Y)Z.
+		\end{aligned}
+	\end{equation*}
+	So we're done.
+\end{proof}
+
+\begin{remark}
+	The tensorial property of $R$ is important because it shows that the value of $R(X, Y)Z$ at a point $p \in M$ depends only on the values of $X, Y, Z$ at $p$, and not on its neighborhood!
+
+	The intuitive interpretation of $R(X, Y)Z$ is that it measures the small variation of $Z$ when it is parallel transported along the parallelogram spanned by small deplacements in the directions of $X$ and $Y$.
+\end{remark}
+
+For each pair of $X, Y \in \mathfrak{X}(M)$, the map $Z \mapsto R(X, Y)Z$ is a smooth bundle endomorphism of $TM$, called the \textbf{curvature endomorphism} determined by $X$ and $Y$. $R$ itself is called the \textbf{curvature endormorphism} or the \textbf{$(1, 3)$-curvature tensor} of $(M, g)$.
+
+As a $(1, 3)$-tensor, $R$ can be expressed in local coordinates by
+\begin{equation}
+	R = R_{ijk}^{\ \ \ l} \mathrm{d} x^i \otimes \mathrm{d} x^j \otimes \mathrm{d} x^k \otimes \partial_l, \quad R_{ijk}^{\ \ \ l} \partial_l = R(\partial_i, \partial_j) \partial_k 
+\end{equation}
+
+Using the definition of $R$, we can compute the components of $R$ in local coordinates as follows:
+\begin{proposition}{Local Coordinates of Curvature}{Local Coordinates of Curvature}
+	Let $(M, g)$ be a Riemannian or pseudo-Riemannian manifold, and let $(x^1, \ldots, x^n)$ be local coordinates on $M$. Then the components of the curvature tensor $R$ in these coordinates are given by
+	\begin{equation}
+		R_{ijk}^{\ \ \ l} = \partial_i \Gamma_{jk}^l - \partial_j \Gamma_{ik}^l + \Gamma_{jk}^m \Gamma_{im}^l - \Gamma_{ik}^m \Gamma_{jm}^l,
+	\end{equation}
+\end{proposition}
+
+The curvature endormorphism also measures the failure of the second covariant derivatives along families of curves to commute:
+
+\begin{proposition}{}{}
+	Suppose $(M, g)$ is a Riemannian or pseudo-Riemannian manifold, and let $\Gamma: J \times I \to M$ be a smooth one-parameter family of curves, then for any vector field $V$ along $\Gamma$, we have
+	\begin{equation}
+		D_s D_t V - D_t D_s V = R(\partial_s \Gamma, \partial_t \Gamma) V,
+	\end{equation}
+	where $\partial_t \Gamma(s, t) = (\Gamma_s)'(t)$ and $\partial_s \Gamma(s, t) = (\Gamma^{(t)})'(s)$ are smooth vector fields along $\Gamma$.
+\end{proposition}
+\begin{proof}
+	Just write in local coordinates and use the definition of $R$.
+\end{proof}
+
+Up till now, we have not yet used the metric structure of $(M, g)$, but we can use it to define a covariant $4$-tensor by the musical isomorphism:
+\begin{definition}{Riemannian Curvature Tensor}{Riemannian Curvature Tensor}
+	We define the Riemannian curvature tensor $Rm = R^{\flat}$ by
+	\begin{equation}
+		Rm(X, Y, Z, W) = \langle R(X, Y)Z, W \rangle_g.
+	\end{equation}
+\end{definition}
+
+The next proposition gives one reason for our interest in the curvature tensor.
+
+\begin{proposition}{Local Invariance of Curvature}{Local Invariance of Curvature}
+	The curvature tensor $Rm$ is a local isometry invariant: If $(M, g)$ and $(\tilde{M}, \tilde{g})$ are Riemannian or pseudo-Riemannian manifolds, and $\phi: M \to \tilde{M}$ is a local isometry, then $\varphi^* \tilde{Rm} = Rm$.
+\end{proposition}
+\begin{proof}
+	Once you have established that the Levi-Civita connection itself is preserved by local isometries, the proposition is almost tautological.
+\end{proof}
+
+\section{Flat Manifolds}
+To give a qualitative geometric interpretation to the curvature tensor, we will show that it is precisely the obstruction to being locally isometric to Euclidean (or pseudoEuclidean) space.
+
+\begin{lemma}{}{}
+	Suppose $M$ is a smooth manifold, and $\nabla$ is any connection on $M$ that satisfies the flatness condition. Then for any point $p \in M$, and $v \in T_p M$, there exists a unique parallel vector field $V$ defined on a neighborhood of $p$ such that $V(p) = v$.
+\end{lemma}
+\begin{proof}
+	Consider a coordinate ball $C_\epsilon$ around $p$ with coordinates $(x^1, \ldots, x^n)$ such that $x^i(p) = 0$. We construct a vector field $V$ on $C_\epsilon$ by parallel transporting $v$ along the coordinate axes $x^1, \ldots, x^n$ sequentially. The smoothness of $V$ follows from an inductive application of the theorem concerning smooth dependence of solutions to linear ODEs on initial conditions.
+
+	To show flatness, we need to show that $\nabla_{\partial_i} V = 0$ for all $i$. By construction, $\nabla_{\partial_k} V = 0$ along the $(x^1, \ldots , x^k)$-coordinate plane. We proceed by induction on $k$. The flatness condition implies that
+	\begin{equation*}
+		\nabla_{\partial_i} \nabla_{\partial_j} V - \nabla_{\partial_j} \nabla_{\partial_i} V = \nabla_{[\partial_i, \partial_j]} V = 0,
+	\end{equation*}
+	and we have our result easily.
+\end{proof}
+
+\begin{theorem}{Flatness and Curvature}{Flatness and Curvature}
+	A Riemannian or pseudo-Riemannian manifold is flat if and only if its curvature tensor vanishes identically.
+\end{theorem}
+\begin{proof}
+	We have already showed that the Levi-Civita connection of a flat metric satisfies the flatness condition, and hence its curvature tensor vanishes identically.
+
+	Now, suppose $(M, g)$ is a Riemannian or pseudo-Riemannian manifold whose curvature tensor vanishes identically. This means that the curvature endomorphism vanishes as well, so the Levi-Civita connection satisfies the flatness criterion. (Note that this is different from the flatness of the metric itself, which requires the existence of a local isometry to Euclidean or pseudo-Euclidean space.) We begin by showing that $g$ shares one important property with Euclidean and pseudo-Euclidean metrics: it admits a parallel orthonormal frame in a neighborhood of each point.
+
+	Let $p \in M$ ,and choose an orthonormal basis $(b_1, \ldots, b_n)$ of $T_p M$. In the pseudo-Riemanniancase,we may assume that the basis is in standard order (with positive entries before negative ones in the matrix of the metric). The preceding lemma shows that there exists a unique parallel vector field $E_i$ defined on a neighborhood of $p$ such that $E_i(p) = b_i$. Because parallel transport preserves inner products, the vector fields $(E_1, \ldots, E_n)$ form a parallel orthonormal frame on a neighborhood of $p$. Because the Levi-Civita connection is symmetric, we have
+	\begin{equation*}
+		\nabla_{E_i} E_j - \nabla_{E_j} E_i = [E_i, E_j] = 0,
+	\end{equation*}
+	The canonical form theorem for commuting vector fields shows that there exists a coordinate system $(y^1, \ldots, y^n)$ on a neighborhood of $p$ such that $E_i = \partial / \partial y^i$. So we have our local isometry.
+\end{proof}
+
+Using similar ideas, we can give a more precise interpretation of the meaning of the curvature tensor: it is a measure of the extent to which parallel transport around a small rectangle fails to be the identity map.
+
+\begin{theorem}{Geometric Intuition of Curvature}{Geometric Intuition of Curvature}
+	Let $(M, g)$ be a Riemannian or pseudo-Riemannian manifold, and let $I$ be an open interval containing $0$. Let $\Gamma: I \times I \to M$ be a smooth one-parameter family of curves, and let $p = \Gamma(0, 0), x = \partial_s \Gamma(0, 0), y = \partial_t \Gamma(0, 0)$. For any $s_1,s_2,t_1,t_2 \in I$, let $P_{s_1, t_1}^{s_1, t_2}: T_{\Gamma(s_1, t_1)} M \to T_{\Gamma(s_1, t_2)} M$ denote the parallel transport along the curve $t \mapsto \Gamma(s_1, t)$ from $t_1$ to $t_2$, and $P_{s_1, t_1}^{s_2, t_1}: T_{\Gamma(s_1, t_1)} M \to T_{\Gamma(s_2, t_1)} M$ denote the parallel transport along the curve $s \mapsto \Gamma(s, t_1)$ from $s_1$ to $s_2$. Then for any vector $v \in T_p M$, we have
+	\begin{equation}
+		R(x, y)z = \lim_{\delta, \epsilon \to 0} \frac{P_{\delta, 0}^{0, 0} \circ P_{\delta, \epsilon}^{\delta, 0} \circ P_{0, \epsilon}^{\delta, \epsilon} \circ P_{0, 0}^{0, \epsilon} (z) - z}{\delta \epsilon}.
+	\end{equation}
+\end{theorem}
+\begin{proof}
+	SORRY.
+\end{proof}
+
+\section{Symmetries of the Curvature Tensor}
+The curvature tensor on a Riemannian or pseudo-Riemannian manifold has a number of symmetries besides the obvious skew-symmetry in its first two arguments.
+
+\begin{proposition}{Symmetries of the Curvature Tensor}{Symmetries of the Curvature Tensor}
+	Let $(M, g)$ be a Riemannian or pseudo-Riemannian manifold, and let $Rm$ be its curvature tensor. Then for all vector fields $X, Y, Z, W$ on $M$, we have
+	\begin{itemize}
+		\item $Rm(X, Y, Z, W) = - Rm(Y, X, Z, W)$ or $R_{ijkl} = - R_{jikl}$.
+		\item $Rm(X, Y, Z, W) = - Rm(X, Y, W, Z)$ or $R_{ijkl} = - R_{ijlk}$.
+		\item $Rm(X, Y, Z, W) = Rm(Z, W, X, Y)$ or $R_{ijkl} = R_{klij}$.
+		\item $Rm(X, Y, Z, W) + Rm(Y, Z, X, W) + Rm(Z, X, Y, W) = 0$ or $R_{ijkl} + R_{jkil} + R_{kijl} = 0$.
+	\end{itemize}
+\end{proposition}
+
+\begin{proposition}{Differential Bianchi Identity}{Differential Bianchi Identity}
+	The total covariant derivatives of the curvature tensor satisfies the following identity: (cycling the last $3$ indices)
+	\begin{equation}
+		\nabla Rm(X, Y, Z, V, W) + \nabla Rm(X, Y, V, W, Z) + \nabla Rm(X, Y, W, Z, V) = 0,
+	\end{equation}
+	or in coordinates,
+	\begin{equation}
+		R_{ijkl;m} + R_{ijlm;k} + R_{ijmk;l} = 0.
+	\end{equation}
+	or an equivalent form (cycling the $1,2,5$-indices)
+	\begin{equation}
+		\nabla Rm(Z, V, X, Y, W) + \nabla Rm(V, X, X, Y, Z) + \nabla Rm(W, Z, X, Y, V) = 0,
+	\end{equation}
+\end{proposition}
+
+\section{The Ricci Identities}
+Given vector fields $X, Y$, we let $R(X, Y)^*: T^* M \to T^* M$ denote the dual of the curvature endomorphism $R(X, Y): TM \to TM$. Then we have $(R(X, Y)^* \eta)(Z) = \eta(R(X, Y)Z)$ for all $\eta \in T^* M$ and $Z \in TM$.
+
+\begin{theorem}{Ricci Identities}{Ricci Identities}
+	On a Riemannian or pseudo-Riemannian manifold $M$, the second total covariant derivatives of vector and tensor fields satisfy the following identities. If $Z$ is a smooth vector field on $M$, then
+	\begin{equation}
+		\nabla_{X, Y}^2 Z - \nabla_{Y, X}^2 Z = R(X, Y)Z,
+	\end{equation}
+	And if $\beta$ is a smooth $1$-form on $M$, then
+	\begin{equation}
+		\nabla_{X, Y}^2 \beta - \nabla_{Y, X}^2 \beta = - R(X, Y)^* \beta.
+	\end{equation}
+	If $B$ is a smooth $(k, l)$-tensor field on $M$, then
+	\begin{equation}
+		\begin{aligned}
+			&\quad (\nabla_{X, Y}^2 B - \nabla_{Y, X}^2 B)(\omega^1, \ldots, \omega^k, V_1, \ldots, V_l) \\
+			&= B(R(X, Y)^* \omega^1, \omega^2, \ldots, \omega^k, V_1, \ldots, V_l) + \cdots \\
+			&\quad + B(\omega^1, \ldots, \omega^{k-1}, R(X, Y)^* \omega^k, V_1, \ldots, V_l) \\
+			&\quad - B(\omega^1, \ldots, \omega^k, R(X, Y)V_1, V_2, \ldots, V_l) - \cdots \\
+			&\quad - B(\omega^1, \ldots, \omega^k, V_1, \ldots, V_{l-1}, R(X, Y)V_l).
+		\end{aligned}
+	\end{equation}
+\end{theorem}
+
+\section{Ricci and Scalar Curvatures}
+Suppose $(M, g)$ is an $n$-dimensional Riemannian or pseudo-Riemannian manifold. As $4$-tensors are so complicated, it is often useful to construct simpler tensors that summarize some of the information contained in the curvature tensor. The most important such tensor is the \textbf{Ricci tensor} or \textbf{Ricci curvature}, denoted by $Rc$.
+
+\begin{definition}{Ricci Curvatures}{Ricci Curvatures}
+	The Ricci curvature is the covariant $2$-tensor obtained by taking the trace of the curvature tensor
+	\begin{equation}
+		R_{ij} = R_{kij}^{\ \ \ k}.
+	\end{equation}
+	The scalar curvature is then
+	\begin{equation}
+		S = R_{i}^{\ i}
+	\end{equation}
+\end{definition}
+
+\begin{remark}
+	It is probably not clear at this point why the Ricci tensor or scalar curvature might be interesting, and we do not yet have the tools to give them geometric interpretations.
+\end{remark}
+
+\begin{lemma}{Properties of Ricci Curvature}{Properties of Ricci Curvature}
+	The Ricci curvature is a symmetric 2-tensor field. It can be expressed in local coordinates as
+	\begin{equation}
+		R_{ij} = R_{kij}^{\ \ \ k} = R_{ik\ j}^{\ \ k} = -R_{ki\ j}^{\ \ k} = -R_{ikj}^{\ \ \ k} = R_{ji}.
+	\end{equation}
+\end{lemma}
+\begin{proof}
+	The symmetry of the Ricci tensor follows from the Bianchi identity:
+	\begin{equation*}
+		R_{ijkl} + R_{jkil} + R_{kijl} = 0
+	\end{equation*}
+	Taking the trace on the first and last indices, we have
+	\begin{equation*}
+		R_{ijk}^{\ \ \ k} + R_{jki}^{\ \ \ k} + R_{kij}^{\ \ \ k} = 0
+	\end{equation*}
+	The first term vanishes because of the skew-symmetry of the curvature tensor in its first two indices, and the second term is just $-R_{ji}$, so we have $R_{ij} = R_{ji}$.
+\end{proof}
+
+Define the \textbf{traceless Ricci tensor} by
+\begin{equation}
+	\mathring{Rc} = Rc - \frac{1}{n} S g.
+\end{equation}
+
+\begin{proposition}{Traceless Ricci Tensor}{Traceless Ricci Tensor}
+	Let $(M, g)$ be an $n$-dimensional Riemannian or pseudo-Riemannian manifold. Then $\tr_g \mathring{Rc} = 0$ and
+	\begin{equation}
+		Rc = \mathring{Rc} + \frac{1}{n} S g.
+	\end{equation}
+	is an orthogonal decomposition of the Ricci tensor into its traceless and pure-trace parts.
+
+	Therefore, in Riemannian case, we have
+	\begin{equation}
+		|Rc|_g^2 = |\mathring{Rc}|_g^2 + \frac{1}{n} S^2.
+	\end{equation}
+\end{proposition}
+
+We now define another operator on tensor fields. If $T$ is a smooth 2-tensor field on a Riemannian or pseudo-Riemannian manifold $(M, g)$, we define the \textbf{exterior covariant derivative} of $T$ to be the smooth 3-tensor field $DT$ defined by
+\begin{equation}
+	(DT)(X, Y, Z) = -(\nabla T)(X, Y, Z) + (\nabla T)(X, Z, Y),
+\end{equation}
+or in local coordinates,
+\begin{equation}
+	(DT)_{ijk} = -(\nabla T)_{ij;k} + (\nabla T)_{ik;j}.
+\end{equation}
+
+\begin{remark}
+	This operator is a generalization of the ordinary exterior derivative of a 1-form, which can be expressed in terms of the total covariant derivative by $(\mathrm{d} \eta)(Y, Z) = -(\nabla \eta)(Y, Z) + (\nabla \eta)(Z, Y)$. The exterior covariant derivative can be generalized to other types of tensors as well.
+
+	The original definition of exterior derivative of a 1-form $\eta$ is $(\mathrm{d} \eta)(Y, Z) = Y(\eta(Z)) - Z(\eta(Y)) - \eta([Y, Z])$, which can be shown to be equivalent to the definition above by using the torsion-free property of the Levi-Civita connection.
+
+	We would note that $D$ would not reduce to $\mathrm{d}$ even if $T$ is an ordinary 2-form, because we only antisymmetrize the last two indices of $\nabla T$ instead of all three indices.
+\end{remark}
+
+\begin{proposition}{Contracted Bianchi Identities}{Contracted Bianchi Identities}
+	Let $(M, g)$ be a Riemannian or pseudo-Riemannian manifold. The covariant derivatives of the Riemann, Ricci, and scalar curvatures of $g$ satisfy the following identities:
+	\begin{equation}
+		\tr_g(\nabla Rm) = -D(Rc), \quad R_{ijkl;}^{\ \ \ \ i} = R_{jk;l} - R_{jl;k},
+	\end{equation}
+	\begin{equation}
+		\tr_g(\nabla Rc) = \frac{1}{2} \mathrm{d} S, \quad R_{il;}^{\ \ i} = \frac{1}{2} S_{;l},
+	\end{equation}
+	where the trace in each case is on the first and last indices.
+\end{proposition}
+\begin{proof}
+	Use the component form of the differential Bianchi identity \ref{prop:Differential Bianchi Identity} and take the trace on the first and last indices.
+\end{proof}
+
+\begin{definition}{Einstein Metric}{Einstein Metric}
+	A Riemannian or pseudo-Riemannian metric is said to be an \textbf{Einstein metric} if its Ricci tensor is a constant multiple of the metric:
+	\begin{equation}
+		Rc = \lambda g, \qquad \text{ for some constant } \lambda \in \mathbb{R}.
+	\end{equation}
+	This equation is known as the Einstein equation.
+\end{definition}
+
+As the next proposition shows, for connected manifolds of dimension greater than 2, it is not necessary to assume that $\lambda$ is constant; just assuming that the Ricci tensor is a function times the metric is sufficient.
+
+\begin{proposition}{Schur's Lemma}{Schurs Lemma}
+	Suppose $(M, g)$ is a connected Riemannian or pseudo-Riemannian manifold of dimension $n \geq 3$, and suppose that the Ricci tensor of $g$ satisfies $Rc = f g$ for some smooth function $f$. Then $f$ is constant, and hence $g$ is an Einstein metric.
+\end{proposition}
+\begin{proof}
+	Taking the trace of the equation $Rc = f g$, we have $f = S/n$. Then the traceless Ricci tensor $\mathring{Rc} = Rc - \frac{1}{n} S g$ vanishes identically, which means this implies the following equation in any coordinate chart:
+	\begin{equation*}
+		0 = R_{ij;k} - \frac{1}{n} S_{;k} g_{ij}.
+	\end{equation*}
+	Tracing with $i,k$ and using the contracted Bianchi identity, we have
+	\begin{equation*}
+		0 = \frac{1}{2} S_{;j} - \frac{1}{n} S_{;j}
+	\end{equation*}
+	so that $S_{;j} = 0$ for all $j$, and hence $\nabla S = \mathrm{d} S = 0$. This shows that $S$ is constant, and hence $f = S/n$ is constant as well.
+\end{proof}
+
+\begin{proposition}{}{}
+	If $(M, g)$ is a connected Riemannian or pseudo-Riemannian manifold of dimension $n \geq 3$, $g$ is Einstein if and only if $\mathring{Rc} = 0$.
+\end{proposition}
+\begin{proof}
+	Just a corollary of Schur's lemma.
+\end{proof}
+
+\begin{remark}
+	Hilbert showed that Einstein metrics are critical points for the \textbf{total curvature functional} $\mathcal{S}(g) = \int_M S \mathrm{d} V_g$ on the space of all metrics on $M$ with fixed volume.
+
+	Thus Einstein metrics can be viewed as optimal metrics in a certain sense, and as such they form an appealing higher-dimensional analogue of locally homogeneous metrics on 2-manifolds, with which one might hope to prove some sort of generalization of the uniformization theorem.
+\end{remark}
+
+The central assertion of Einstein’s general theory of relativity is that physical spacetime is modeled by a 4-manifold that carries a Lorentz metric whose Ricci curvature satisfies the following \textbf{Einstein field equation}:
+\begin{equation}
+	Rc - \frac{1}{2} S g = T.
+\end{equation}
+where $T$ is the stress-energy tensor of the matter and energy in spacetime. In particular, if $T = 0$, then the Einstein field equation reduces to $Rc = \frac{1}{2} S g$, and taking the trace of both sides gives $Rc = 0$.
+
+Einstein considered adding a term $\Lambda g$ to the left-hand side of the Einstein field equation, where $\Lambda$ is a constant called the \textbf{cosmological constant}. With this modification the vacuum Einstein field equation would be exactly the same as the mathematicians' Einstein equation.
+
+\section{The Weyl Tensor}
+As noted above, the Ricci and scalar curvatures contain only part of the information encoded into the curvature tensor. In this section, we introduce a tensor field called the Weyl tensor, which encodes all the rest.
+
+Firstly, we consider a $n$-dimensional linear space $V$. Let $\mathcal{R}(V^*) \subseteq T^4(V^*)$ denotes the vector space of all covariant 4-tensors $T$ on $V$ that preserves the curvature symmetry:
+\begin{itemize}
+	\item $T(x, y, z, w) = - T(y, x, z, w)$.
+	\item $T(x, y, z, w) = - T(x, y, w, z)$.
+	\item $T(x, y, z, w) = T(z, w, x, y)$.
+	\item $T(x, y, z, w) + T(y, z, x, w) + T(z, x, y, w) = 0$.
+\end{itemize}
+\begin{remark}
+	We can say that the third symmetry can be inferred from the 1,2,4 symmetries, but we will be convenient just to include all four.
+\end{remark}
+An element of $\mathcal{R}$ is called an \textbf{algebraic curvature tensor} on $V$.
+
+\begin{proposition}{Dimension of $\mathcal{R}$}{Dimension of mathcalR}
+	If the vector space $V$ has dimension $n$, then
+	\begin{equation}
+		\dim \mathcal{R}(V^*) = \frac{n^2(n^2 - 1)}{12}.
+	\end{equation}
+\end{proposition}
+\begin{proof}
+	We look for a simplified model of $\mathcal{R}(V^*)$ to study its structure. Let $\mathcal{B}(V^*) \subseteq T^4(V^*)$ be the vector space of all covariant 4-tensors $T$ on $V$ that preserves the first three curvature symmetries. And we let $\Sigma^2(\Lambda^2(V)^*) \subseteq T^4(V^*)$ be the vector space of all symmetric bilinear forms on $\Lambda^2(V)$ of all alternating 2-tensors on $V$. Then we define a map $\Phi: \Sigma^2(\Lambda^2(V)^*) \to \mathcal{B}(V^*)$ by
+	\begin{equation}
+		\Phi(B)(x, y, z, w) = B(x \wedge y, z \wedge w).
+	\end{equation}
+	and it is easy to see $\Phi$ is an isomorphism. This gives us the dimension of $\mathcal{B}(V^*)$:
+	\begin{equation*}
+		\dim \mathcal{B}(V^*) = \dim \Sigma^2(\Lambda^2(V)^*) = \frac{1}{2} \left( \frac{n(n-1)}{2} \right) \left( \frac{n(n-1)}{2} + 1 \right) = \frac{n(n-1)(n^2 - n + 2)}{8}.
+	\end{equation*}
+
+	We have one more symmetry yet to consider. The fourth symmetry is equivalent to the kernel of the linear map $\pi: \mathcal{B}(V^*) \to T^4(V^*)$ defined by
+	\begin{equation*}
+		\pi(T)(x, y, z, w) = \frac{1}{3}(T(x, y, z, w) + T(y, z, x, w) + T(z, x, y, w)).
+	\end{equation*}
+	A direct computation shows that $\pi(T)$ is actually fully alternating in all four arguments, so $\pi(T) \in \Lambda^4(V^*)$, and conversely, every totally alternating 4-tensor is in $B(V^*)$. So $\pi$ is surjective, and thus, we have
+	\begin{equation*}
+		\dim \mathcal{R}(V^*) = \dim \ker \pi = \dim \mathcal{B}(V^*) - \dim \Lambda^4(V^*).
+	\end{equation*}
+	which reduces to our result.
+\end{proof}
+
+Let us now assume that our vector space $V$ is endowed with a (not necessarily positive definite) inner product $g \in \Sigma^2(V^*)$. Then let $\tr_g: \mathcal{R}(V^*) \to \Sigma^2(V^*)$ be the trace on the first and last indices. To answer how much information about $\mathcal{R}$ is lost in the trace, we need to study the kernel and image of $\tr_g$. One way to try to answer the question is to attempt to construct a right inverse for the trace operator, a linear map $G: \Sigma^2(V^*) \to \mathcal{R}(V^*)$ such that $\tr_g \circ G = \mathrm{id}_{\Sigma^2(V^*)}$.
+
+We would be happy to see that there is actually a natural way to do this, called the \textbf{Kulkarni-Nomizu product}. The definition is as follows:
+\begin{definition}{Kulkarni-Nomizu Product}{Kulkarni-Nomizu Product}
+	Let $h, k \in \Sigma^2(V^*)$ be two symmetric bilinear forms on $V$. Then the Kulkarni-Nomizu product of $h$ and $k$ is the covariant 4-tensor $h \wedge k \in T^4(V^*)$ defined by
+	\begin{equation}
+		(h \owedge k)(x, y, z, w) = h(x, w) k(y, z) + h(y, z) k(x, w) - h(x, z) k(y, w) - h(y, w) k(x, z).
+	\end{equation}
+	or in coordinates,
+	\begin{equation*}
+		(h \owedge k)_{ijlm} = h_{im} k_{jl} + h_{jl} k_{im} - h_{il} k_{jm} - h_{jm} k_{il}.
+	\end{equation*}
+\end{definition}
+
+\begin{lemma}{Kulkarni–Nomizu Product}{KulkarniNomizu Product}
+	Let $V$ be an $n$-dimensional vector space endowed with an inner product $g \in \Sigma^2(V^*)$. For any $h, k \in \Sigma^2(V^*)$, the we have
+	\begin{itemize}
+		\item $h \owedge k$ is an algebraic curvature tensor.
+		\item $h \owedge k = k \owedge h$.
+		\item $\tr_g(h \owedge g) = (n-2) h + (\tr_g h) g$.
+		\item $\tr_g(g \owedge g) = 2(n-1) g$.
+		\item $\langle T, h \owedge g \rangle_g = 4 \langle \tr_g T, h \rangle_g$.
+		\item If $g$ is positive definite, then $|g \owedge h|_g^2 = 4(n-2) |h|_g^2 + 4 (\tr_g h)^2$.
+	\end{itemize}
+\end{lemma}
+
+From that, we can constrict a right inverse of the trace operator $\tr_g$ as follows:
+\begin{proposition}{Right Inverse of Trace}{Right Inverse of Trace}
+	Let $(V, g)$ be an $n$-dimensional inner product space with $n \geq 3$. Then the linear map $G: \Sigma^2(V^*) \to \mathcal{R}(V^*)$ defined by
+	\begin{equation}
+		G(h) = \frac{1}{n-2} \left( h - \frac{\tr_g h}{2(n-1)} g \right) \owedge g
+	\end{equation}
+	is a right inverse of the trace operator $\tr_g: \mathcal{R}(V^*) \to \Sigma^2(V^*)$, and its image is the orthogonal complement of the kernel of $\tr_g$ in $\mathcal{R}(V^*)$.
+\end{proposition}
+
+Now, suppose $g$ is a Riemannian or pseudo-Riemannian metric. We can define the \textbf{Schouten tensor of} $g$ by a symmetric 2-tensor field $P$ defined by
+\begin{equation}
+	P = \frac{1}{n-2} \left( Rc - \frac{S}{2(n-1)} g \right).
+\end{equation}
+and the \textbf{Weyl tensor of} $g$ by
+\begin{equation}
+	W = Rm - P \owedge g.
+\end{equation}
+which is just the orthogonal projection of the curvature tensor $Rm$ onto the kernel of the trace operator $\tr_g$.
+
+\begin{proposition}{Orthogonal Decomposition of Curvature}{Orthogonal Decomposition of Curvature}
+	For every Riemannian or pseudo-Riemannian manifold $(M, g)$ of dimension $n \geq 3$, the trace of the Weyl tensor is zero, and $Rm = W + P \owedge g$ is an orthogonal decomposition of the curvature tensor as $\mathcal{R}(V^*) = \ker \tr_g \oplus (\ker \tr_g)^{\perp}$.
+\end{proposition}
+
+So we can make simple treatment of lower-dimensional cases:
+
+\begin{corollary}{Lower Dimensional Curvature}{Lower Dimensional Curvature}
+	Let $V$ be an $n$-dimensional real vector space.
+	\begin{itemize}
+		\item If $n=0$ or $n=1$, then $\mathcal{R}(V^*) = \{0\}$.
+		\item If $n=2$, then $\mathcal{R}(V^*)$ is 1-dimensional, spanned by $g \owedge g$.
+		\item If $n=3$, then $\mathcal{R}(V^*)$ is 6-dimensional, and $G$ is an isomorphism.
+	\end{itemize}
+\end{corollary}
+
+This means that in dimension 3, the curvature tensor is completely determined by the Ricci tensor:
+
+\begin{corollary}{The Curvature Tensor in Dimension 3}{The Curvature Tensor in Dimension 3}
+	On every Riemannian or pseudo-Riemannian manifold of dimension 3, the Weyl tensor vanishes identically, and the curvature tensor is completely determined by the Ricci tensor:
+	\begin{equation}
+		Rm = P \owedge g = Rc \owedge g - \frac{1}{4} S g \owedge g.
+	\end{equation}
+\end{corollary}
+
+In dimension 2, the definitions of the Weyl and Schouten tensors do not make sense; but we have the following analogous result instead.
+
+\begin{corollary}{The Curvature Tensor in Dimension 2}{The Curvature Tensor in Dimension 2}
+	On every Riemannian or pseudo-Riemannian manifold of dimension 2, the curvature tensor is completely determined by the scalar curvature:
+	\begin{equation}
+		Rm = \frac{1}{4} S g \owedge g, \qquad Rc = \frac{1}{2} S g.
+	\end{equation}
+\end{corollary}
+
+\begin{remark}
+	Although the traceless Ricci tensor is always zero on a 2-manifold, this does not imply that $S$ is constant, since the proof of Schur’s lemma fails in dimension 2. Einstein metrics in dimension 2 are simply those with constant scalar curvature.
+\end{remark}
+
+We can also decompose the Ricci tensor into its traceless and pure-trace parts in terms of the Schouten tensor:
+\begin{proposition}{The Ricci Decomposition of the Curvature Tensor}{The Ricci Decomposition of the Curvature Tensor}
+	Let $(M, g)$ be a Riemannian or pseudo-Riemannian manifold of dimension $n \geq 3$. Then we have the following decomposition:
+	\begin{equation}
+		Rm = W + \frac{1}{n-2} \mathring{Rc} \owedge g + \frac{1}{2n(n-1)} S g \owedge g.
+	\end{equation}
+	Therefore, in the Riemannian case, we have
+	\begin{equation}
+		\begin{aligned}
+			|Rm|_g^2 &= |W|_g^2 + \frac{1}{(n-2)^2} |\mathring{Rc} \owedge g|_g^2 + \frac{1}{4n^2(n-1)^2} |S g \owedge g|_g^2 \\
+							 &= |W|_g^2 + \frac{4}{n-2} |\mathring{Rc}|_g^2 + \frac{2}{n(n-1)} S^2.
+		\end{aligned}
+	\end{equation}
+\end{proposition}
+
+\section{Curvatures of Conformally Related Metrics}
+Recall that two Riemannian or pseudo-Riemannian metrics on the same manifold are said to be conformal to each other if one is a positive function times the other. For example, we have seen that the round metrics and the hyperbolic metrics are all conformal to Euclidean metrics, at least locally.
+
+If $g$ and $\tilde{g}$ are conformal metrics on a manifold $M$, there is no reason to expect that the curvature tensors of $g$ and $\tilde{g}$ are related in any simple way. However, the Weyl tensor has a very interesting property here. To begin, we right
+\begin{equation}
+	\tilde{g} = e^{2f} g
+\end{equation}
+for some smooth function $f$ on $M$.
+
+\begin{proposition}{Conformal Transformation of the Levi-Civita Connection}{Conformal Transformation of the Levi-Civita Connection}
+	Let $(M, g)$ be a Riemannian or pseudo-Riemannian manifold of dimension $n$, with or without boundary, and let $\tilde{g} = e^{2f} g$ be a conformal metric on $M$. Then the Levi-Civita connections $\nabla$ and $\tilde{\nabla}$ of $g$ and $\tilde{g}$ are related by
+	\begin{equation}
+		\tilde{\nabla}_X Y = \nabla_X Y + X(f) Y + Y(f) X - \langle X, Y \rangle_g \nabla f
+	\end{equation}
+	In any local coordinates, the Christoffel symbols of the two connections are related by
+	\begin{equation}
+		\tilde{\Gamma}_{ij}^k = \Gamma_{ij}^k + f_{;i} \delta_j^k + f_{;j} \delta_i^k - g^{kl} f_{;l} g_{ij}.
+	\end{equation}
+\end{proposition}
+
+This result leads to transformation laws for the various curvature tensors.
+
+\begin{theorem}{Conformal Transformation of the Curvature}{Conformal Transformation of the Curvature}
+	Let $g$ be a Riemannian or pseudo-Riemannian metric on an $n$-manifold $M$ with or without boundary, $f\in C^\infty(M)$, and $\tilde g=e^{2f}g$. In the Riemannian case, the curvature tensors of $\tilde g$ are related to those of $g$ by the following formulas:
+	\begin{equation}
+		\tilde{Rm}=e^{2f}\left(Rm-(\nabla^2f)\owedge g+(df\otimes df)\owedge g-\frac{1}{2}|df|_g^2(g\owedge g)\right),
+	\end{equation}
+	\begin{equation}
+		\tilde{Rc}=Rc-(n-2)(\nabla^2f)+(n-2)(df\otimes df)-\left(\Delta f+(n-2)|df|_g^2\right)g,
+	\end{equation}
+	\begin{equation}
+		\tilde S=e^{-2f}\left(S-2(n-1)\Delta f-(n-1)(n-2)|df|_g^2\right),
+	\end{equation}
+	where the curvatures and covariant derivatives on the right are those of $g$, and $\Delta f= \divergence(\grad f)$ is the Laplacian of $f$. If in addition $n\geq 3$, then
+	\begin{equation}
+		\tilde P=P-\nabla^2f+(df\otimes df)-\frac{1}{2}|df|_g^2g,
+	\end{equation}
+	\begin{equation}
+		\tilde W=e^{2f}W.
+	\end{equation}
+	In the pseudo-Riemannian case, the same formulas hold with each occurrence of $|df|_g^2$ replaced by $\langle df,df\rangle_g$.
+\end{theorem}
+
+The next corollary begins to explain the geometric significance of the Weyl tensor.
+
+\begin{corollary}{Weyl Tensor and Conformal Flatness}{Weyl Tensor and Conformal Flatness}
+	Suppose $(M, g)$ is a Riemannian or pseudo-Riemannian manifold of dimension $n \geq 3$. Then if $g$ is \textbf{locally conformally flat}, meaning that for every point $p \in M$ there is a neighborhood $U$ that is conformal to (pseudo-)Euclidean space, then the Weyl tensor of $g$ vanishes identically on $M$.
+\end{corollary}
+
+Thus a necessary condition for a smooth manifold of dimension at least 3 to be locally conformally flat is that its Weyl tensor vanish identically.
+
+However, in 3 dimension the Weyl tensor vanishes identically for all metrics, so we need a different condition to characterize local conformal flatness in this case.
+
+\begin{definition}{Cotton Tensor}{Cotton Tensor}
+	On a Riemannian or pseudo-Riemannian manifold $(M, g)$ the \textbf{Cotton tensor} is defined as
+	\begin{equation}
+		C = -D P, \qquad C_{ijk} = P_{ij;k} - P_{ik;j}.
+	\end{equation}
+	where $P$ is the Schouten tensor of $g$.
+\end{definition}
+
+The relation between the Cotton tensor and the Weyl tensor is given by the following proposition:
+\begin{proposition}{Cotton Tensor and Weyl Tensor}{Cotton Tensor and Weyl Tensor}
+	On a Riemannian or pseudo-Riemannian manifold $(M, g)$ of dimension $n \geq 3$, the Cotton tensor is related to the Weyl tensor by
+	\begin{equation}
+		\tr_g(\nabla W) = (n-3) C, \qquad W_{ijkl;}^{\ \ \ \ i} = (n-3) C_{jkl}.
+	\end{equation}
+\end{proposition}
+
+Therefore, if $\dim M \geq 4$, then the vanishing of the Weyl tensor implies the vanishing of the Cotton tensor.
+
+\begin{proposition}{Conformal Invariance of the Cotton Tensor in Dimension 3)}{Conformal Invariance of the Cotton Tensor in Dimension 3}
+	Suppose $(M, g)$ is a Riemannian or pseudo-Riemannian manifold of dimension $n = 3$, and let $\tilde{g} = e^{2f} g$ be a conformal metric on $M$. Then the Cotton tensors of $g$ and $\tilde{g}$ are the same: $\tilde{C} = C$.
+\end{proposition}
+
+So if $(M, g)$ is locally conformally flat 3-manifold, then its Cotton tensor vanishes identically. In fact, we summarize the results as:
+
+\begin{theorem}{(Weyl–Schouten)}{WeylSchouten}
+	Let $(M, g)$ be a Riemannian or pseudo-Riemannian manifold of dimension $n \geq 3$. Then
+	\begin{itemize}
+		\item $n \geq 4$: $g$ is locally conformally flat if and only if its Weyl tensor vanishes identically.
+		\item $n = 3$: $g$ is locally conformally flat if and only if its Cotton tensor vanishes identically.
+	\end{itemize}
+\end{theorem}
+\begin{proof}
+	SORRY.
+\end{proof}
+
+\begin{remark}
+	Because all Riemannian 1-manifolds are flat, the only nontrivial case that is not addressed by the Weyl–Schouten theorem is that of dimension 2. Smooth coordinates that provide a conformal equivalence between an open subset of a Riemannian or pseudo-Riemannian 2-manifold and an open subset of Because all Riemannian 1-manifolds are flat, the only nontrivial case that is not addressed by the Weyl–Schouten theorem is that of dimension 2. Smooth coordinates that provide a conformal equivalence between an open subset of a Riemannian or pseudo-Riemannian 2-manifold and an open subset of $\mathbb{R}^2$ are called \textbf{isothermal coordinates}, and it is a fact that such coordinates always exist locally. Therefore, every Riemannian or pseudo-Riemannian 2-manifold is locally conformally flat.
+\end{remark}
+
+
+
+\end{document}

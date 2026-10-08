@@ -1,0 +1,35 @@
+\documentclass{mathbook}
+
+
+\DeclareMathOperator{\Iso}{Iso}
+\DeclareMathOperator{\vspan}{span}
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\grad}{grad}
+\DeclareMathOperator{\divergence}{div}
+\DeclareMathOperator{\curl}{curl}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Vol}{Vol}
+%\newcommand{\owedge}{\mathbin{\bigcirc\mspace{-15mu}\wedge\mspace{3mu}}}
+\newcommand*\owedge{\mathpalette\@owedge\relax}
+\newcommand*\@owedge[1]{%
+  \mathbin{%
+    \ooalign{%
+      $#1\m@th\bigcirc$\cr
+      \hidewidth$#1\m@th\wedge$\hidewidth\cr
+    }%
+  }%
+}
+
+\coverimage{./cover.jpg}
+\covertitletext{Introduction to Riemannian Manifolds}
+\date{\today}
+
+\begin{document}
+\makecover
+\frontmatter
+\tableofcontents
+
+\mainmatter
+\subfile{./02/RiemannianMetrics.tex}
+
+\end{document}

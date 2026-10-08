@@ -1,0 +1,68 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\chapter{Curvature}
+
+In this chapter, we begin our study of the local invariants of Riemannian metrics.
+
+\section{Local Invariants of Riemannian Metrics}
+We care about ``local equivalence'' of geometric structures. This would mean that for every point, in some sufficiently small neighborhood, the two structures are equivalent. If we only consider the smooth structure, then all smooth manifolds are locally equivalent, which is justified by the definition itself.
+
+There are some interesting and useful structures in differential geometry that have the property that all such structures on manifolds of the same dimension are locally equivalent to each other. For example:
+\begin{itemize}
+  \item \textbf{Nonvanishing Vector Fields:} Every nonvanishing vector field can be written as $X = \partial / \partial x^1$ in some local coordinates $(x^1, \ldots, x^n)$.
+  \item \textbf{Riemannian Metrics on 1-Dimensional Manifolds:} Every Riemannian metric on a 1-dimensional manifold is locally equivalent to $\mathbb{R}$.
+  \item \textbf{Symplectic Forms:} By Darboux's theorem, every symplectic form is locally equivalent to the standard symplectic form on $\mathbb{R}^{2n}$ with the standard coordinates $\sum_{i=1}^n dx^i \wedge dy^i$.
+\end{itemize}
+
+\begin{example}{Locality of $S^2$}{Locality of S2}
+  No neighborhood of any $p \in S^2$ is isometric to an open subset of $\mathbb{R}^2$.
+
+  To justify this, we use the following argument: Recall that a vector field $Y$ on a Riemannian manifold $(M, g)$ is called \textbf{parallel} if $\nabla Y = 0$.
+  \begin{enumerate}
+    \item Let $p \in \mathbb{R}^n$ and $v \in T_p \mathbb{R}^n$. Then there exists a unique parallel vector field $Y$ on $\mathbb{R}^n$ such that $Y(p) = v$.
+    \item Let $X(\varphi, \theta) = (\sin \varphi \cos \theta, \sin \varphi \sin \theta, \cos \varphi)$ be the spherical coordinate parametrization of an open subset $U \subseteq S^2$. Let $X_{\theta} = X_*(\partial_\theta)$ and $X_{\varphi} = X_*(\partial_\varphi)$ denote the pushforwards of the coordinate vector fields. We compute
+      \begin{equation*}
+        \nabla_{X_\theta} X_\varphi = \cot \varphi X_\theta, \qquad \nabla_{X_\varphi} X_\varphi = 0.
+      \end{equation*}
+      so that $X_{\varphi}$ is parallel along the meridians $\theta = \text{constant}$, and on the equator $\varphi = \pi/2$.
+    \item Let $p = (1, 0, 0) \in S^2$, then we show that there is no parallel vector field $W$ on any neighborhood of $p$ such that $W(p) = X_\varphi(p)$. By the uniqueness of parallel vector fields, we assume the neighborhood is a circular neighborhood, then every point in the neighborhood can be parallel transported from $p$ along the equator than along the meridian. So we have $W = X_\varphi$ in that neighborhood, arriving at a contradiction since $X_{\varphi}$ is not parallel.
+    \item We conclude that there is no neighborhood of $p$ that is isometric to an open subset of $\mathbb{R}^2$, since parallel vector fields are preserved under isometries.
+  \end{enumerate}
+\end{example}
+
+The most important technique for proving that two geometric structures are not locally equivalent is to find a local invariant of the structure. In order to address the general problem of local equivalence of Riemannian or pseudo-Riemannian metrics, we will define a local invariant for all such metrics called \textbf{curvature}. Initially, its definition will have nothing to do with the curvature of curves, but later we will see that the two concepts are intimately related.
+
+The above example give us a hint that every tangent vector in the plane can be extended to a parallel vector field, so every Riemannian manifold that is locally isometric to $\mathbb{R}^2$ must have the same property locally. 
+
+Now, given a Riemannian 2-manifold $(M, g)$, with any smooth coordinate ball $(x^1, x^2)$, we can extend a vector $v \in T_0 M$ to a vector field $Z$ by parallel transport along the $x^1$ axis, then parallel transport along the $x^2$ direction just like above. We naturally have $\nabla_{\partial_2} Z = 0$ for all points and $\nabla_{\partial_1} Z = 0$ along the $x^1$ axis. However, in general, $\nabla_{\partial_1} Z \neq 0$ away from the $x^1$ axis.
+
+If we can show that $\nabla_{\partial_2} \nabla_{\partial_1} Z = 0$, then we can conclude that $\nabla_{\partial_1} Z = 0$ everywhere, and hence $Z$ is parallel. This motivates whether we have the commutation
+\begin{equation*}
+  \nabla_{\partial_2} \nabla_{\partial_1} Z = \nabla_{\partial_1} \nabla_{\partial_2} Z.
+\end{equation*}
+because the latter is zero since $\nabla_{\partial_2} Z = 0$. We know that this is true for the Euclidean space, but not in general, just like the example of $S^2$ above. To express this noncommutativity in a coordinate-independent way, let us look more closely at the quantity $\bar{\nabla}_X \bar{\nabla}_Y Z - \bar{\nabla}_Y \bar{\nabla}_X Z$ for vector fields $X, Y, Z$. On $\mathbb{R}^2$, we have
+\begin{equation}
+  \bar{\nabla}_X \bar{\nabla}_Y Z - \bar{\nabla}_Y \bar{\nabla}_X Z = \bar{\nabla}_{[X, Y]} Z,
+\end{equation}
+as is easily seen from $\bar{\nabla}_X \bar{\nabla}_Y Z = \bar{\nabla}_X (Y(Z^k) \partial_k) = XY(Z^k) \partial_k$.
+
+Recall that a Riemannian manifold is said to be flat if it is locally isometric to a Euclidean space. Similarly, a pseudo-Riemannian manifold is flat if it is locally isometric to a pseudo-Euclidean space. The computation above leads to the following simple necessary condition for a Riemannian or pseudo-Riemannian manifold to be flat.
+
+We say that a connection $\nabla$ on a smooth manifold $M$ satisfies the \textbf{flatness condition} if for all vector fields $X, Y, Z$ on $M$, we have
+\begin{equation}
+  \nabla_X \nabla_Y Z - \nabla_Y \nabla_X Z = \nabla_{[X, Y]} Z.
+\end{equation}
+
+\begin{example}{Flatness}{Flatness}
+  The $n$-torus is flat, because it is locally isometric to $\mathbb{R}^n$ with the embedding in $\mathbb{R}^{2n}$.
+\end{example}
+
+\begin{proposition}{}{}
+  If $(M, g)$ is a \emph{flat} Riemannian or pseudo-Riemannian manifold, then the Levi-Civita connection $\nabla$ satisfies the flatness condition.
+\end{proposition}
+\begin{proof}
+  By naturality, the Levi-Civita connection on every manifold that is locally isometric to a Euclidean or pseudo-Euclidean space must also satisfy the same identity.
+\end{proof}
+
+\end{document}

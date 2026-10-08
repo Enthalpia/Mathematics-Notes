@@ -1,0 +1,365 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\chapter{Levi-Civita Connection}
+
+If we are to use geodesics and covariant derivatives as tools for studying Riemannian geometry, it is evident that we need a way to single out a particular connection on a Riemannian manifold that reflects the properties of the metric.
+
+Except where noted otherwise, the results and proofs of this chapter do not use positivity of the metric, so they apply equally well to Riemannian and pseudo-Riemannian manifolds.
+
+\section{The Tangential Connection Revisited}
+Since we get most of our intuition about Riemannian manifolds from studying submanifolds of $\mathbb{R}^n$, let us start by examining that case.
+
+Let $M \subseteq \mathbb{R}^n$ be an embedded submanifold. We recall the motivation of the geodesic: a geodesic in $M$ should be ``as straight as possible''. A reasonable way to make this rigorous is to require that the geodesic have no acceleration in directions tangent to the manifold, or in other words that its acceleration vector have zero orthogonal projection onto $TM$. We have shown that the tangential connection $\nabla$ on $M$ does exactly this: by taking ordinary derivatives in $\mathbb{R}^n$ and projecting the result onto $TM$.
+
+Suppose $\gamma: I \to M$ is a smooth curve in $M$. Let $\bar{D}_t V$ denote the covariant derivative of $V$ along $\gamma$ with respect to the Euclidean connection $\bar{\nabla}$ on $\mathbb{R}^n$, and $D_t^\top V$ denote the covariant derivative of $V$ along $\gamma$ with respect to the tangential connection $\nabla$ on $M$. Then we have
+
+\begin{proposition}{}{}
+  Let $M \subseteq \mathbb{R}^n$ be an embedded submanifold, and let $\gamma: I \to M$ be a smooth curve in $M$. Then for any vector field $V$ along $\gamma$ in $TM$, we have
+  \begin{equation}
+    D_t^\top V(t) = \pi^\top(\bar{D}_t V(t)),
+  \end{equation}
+\end{proposition}
+\begin{proof}
+  Use adapted local orthonormal frames for $TM$ and use coordinate representations of the covariant derivatives.
+\end{proof}
+
+\begin{proposition}{Geodesics in $\mathbb{R}^n$ Submanifolds}{Geodesics in mathbbRn Submanifolds}
+  Suppose $M \subseteq \mathbb{R}^n$ is an embedded submanifold, and let $\gamma: I \to M$ be a smooth curve in $M$. Then $\gamma$ is a geodesic in $M$ with respect to the tangential connection $\nabla$ if and only if its ordinary acceleration vector $\gamma''(t)$ is orthogonal to $T_{\gamma(t)}M$ for all $t \in I$.
+\end{proposition}
+
+These considerations can be extended to pseudo-Riemannian manifolds as well. Let $(\mathbb{R}^{r,s}, \bar{q}^{(r,s)}$ be the pseudo-Euclidean space of signature $(r,s)$. If $M \subseteq \mathbb{R}^{r,s}$ is an embedded pseudo-Riemannian submanifold, then for each $p \in M$, the tangent space $T_p \mathbb{R}^{r,s}$ can be decomposed as a direct sum $T_p \mathbb{R}^{r,s} = T_p M \oplus N_p M$, where $N_p M$ is the normal space of $M$ at $p$. We let $\pi^\top: T_p \mathbb{R}^{r,s} \to T_p M$ be the $\bar{q}^{(r,s)}$-orthogonal projection onto $T_p M$. Then we can define the tangential connection $\nabla^{\top}$ on $M$ by
+\begin{equation}
+  \nabla^{\top}_X Y = \pi^\top(\bar{\nabla}_{\tilde{X}} \tilde{Y}),
+\end{equation}
+where $\tilde{X}$ and $\tilde{Y}$ are any smooth extensions of $X$ and $Y$ to neighborhoods of $M$. This is a well-defined connection on $M$ be exactly the same argument as in the Riemannian case.
+
+\begin{proposition}{}{}
+  Suppose $M$ is an embedded Riemannian or pseudo-Riemannian submanifold of $\mathbb{R}^{r,s}$, and a smooth curve $\gamma: I \to M$ is a geodesic in $M$ with respect to the tangential connection $\nabla^{\top}$ if and only if its ordinary acceleration vector $\gamma''(t)$ is orthogonal to $T_{\gamma(t)}M$ for all $t \in I$.
+\end{proposition}
+
+\section{Connections on Abstract Riemannian Manifolds}
+\begin{remark}
+  There is a celebrated (and hard) theorem of John Nash that says that every Riemannian metric on a smooth manifold can be realized as the induced metric of some embedding in a Euclidean space. That theorem was later generalized independently by Robert Greene and Chris J. S. Clarke to pseudo-Riemannian metrics. Thus, in a certain sense, we would lose no generality by studying only submanifolds of Euclidean and pseudo-Euclidean spaces with their induced metrics, for which the tangential connection would suffice. However, when we are trying to understand intrinsic properties of a Riemannian manifold, an embedding introduces a great deal of extraneous information, and in some cases actually makes it harder to discern which geometric properties depend only on the metric.
+\end{remark}
+
+\subsection{Metric Connections}
+The Euclidean connection on $\mathbb{R}^n$ has one very nice property with respect to the Euclidean metric:
+\begin{equation}
+  \bar{\nabla}_X \langle Y, Z \rangle = \langle \bar{\nabla}_X Y, Z \rangle + \langle Y, \bar{\nabla}_X Z \rangle,
+\end{equation}
+to verify, just use the coordinate representation.
+
+This property makes sense on an abstract Riemannian or pseudo-Riemannian manifold. 
+\begin{definition}{Compatible Connections}{Compatible Connections}
+Let $g$ be a Riemannian or pseudo-Riemannian metric on a smooth manifold $M$, with or without boundary. A connection $\nabla$ on $TM$ is said to be \textbf{compatible} with $g$, or to be the \textbf{metric connection}, if it satisfies
+\begin{equation}
+  \nabla_X \langle Y, Z \rangle = \langle \nabla_X Y, Z \rangle + \langle Y, \nabla_X Z \rangle,
+\end{equation}
+for all smooth vector fields $X, Y, Z$ on $M$.
+\end{definition}
+
+\begin{proposition}{Characterizations of Metric Connections}{Characterizations of Metric Connections}
+  Let $(M, g)$ be a Riemannian or pseudo-Riemannian manifold, with or without boundary, and let $\nabla$ be a connection on $TM$. Then the following are equivalent:
+  \begin{itemize}
+    \item $\nabla$ is compatible with $g$: $\nabla_X \langle Y, Z \rangle = \langle \nabla_X Y, Z \rangle + \langle Y, \nabla_X Z \rangle$ for all smooth vector fields $X, Y, Z$ on $M$.
+    \item $g$ is parallel with respect to $\nabla$: $\nabla g = 0$.
+    \item In terms of any smooth local frame $(E_i)$, the connection coefficients of $\nabla$ satisfy
+      \begin{equation}
+        \Gamma_{ki}^l g_{lj} + \Gamma_{kj}^l g_{il} = E_k(g_{ij}),
+      \end{equation}
+    \item If $V,W$ are smooth vector fields along any smooth curve $\gamma: I \to M$, then
+      \begin{equation}
+        \frac{\mathrm{d}}{\mathrm{d}t} \langle V, W \rangle = \langle D_t V, W \rangle + \langle V, D_t W \rangle.
+      \end{equation}
+    \item If $V,W$ are parallel vector fields along any smooth curve $\gamma: I \to M$, then $\langle V, W \rangle$ is constant along $\gamma$.
+    \item Given any smooth curve $\gamma: I \to M$, every parallel transport map along $\gamma$ is a linear isometry. (This means the parallel vectors have the same angle and length in the metric along the transport.)
+    \item Given any smooth curve $\gamma$ in $M$, every orthonormal basis at a point in $\gamma$ can be extended to a parallel orthonormal frame along $\gamma$.
+  \end{itemize}
+\end{proposition}
+
+\begin{proposition}{}{}
+  Suppose $(M, g)$ is a Riemannian or pseudo-Riemannian manifold, with or without boundary, and let $\nabla$ be a connection on $TM$. Let $\gamma: I \to M$ be a smooth curve in $M$,
+  \begin{itemize}
+    \item $|\gamma'(t)|$ is constant if and only if $D_t \gamma'(t)$ is orthogonal to $\gamma'(t)$ for all $t \in I$.
+    \item If $\gamma$ is a geodesic, then $|\gamma'(t)|$ is constant.
+  \end{itemize}
+\end{proposition}
+
+\begin{proposition}{}{}
+  If $M$ is an embedded Riemannian or pseudo-Riemannian submanifold of $\mathbb{R}^{r,s}$, then the tangential connection $\nabla^{\top}$ is compatible with the induced metric on $M$.
+\end{proposition}
+\begin{proof}
+  Suppose $X, Y, Z$ are smooth vector fields on $M$, and let $\tilde{X}, \tilde{Y}, \tilde{Z}$ be any smooth extensions of $X, Y, Z$ to neighborhoods of $M$. Then we have
+  \begin{equation*}
+    \begin{aligned}
+      \nabla^{\top}_X \langle Y, Z \rangle &= \pi^\top(\bar{\nabla}_{\tilde{X}} \langle \tilde{Y}, \tilde{Z} \rangle) \\
+      &= \pi^\top(\langle \bar{\nabla}_{\tilde{X}} \tilde{Y}, \tilde{Z} \rangle + \langle \tilde{Y}, \bar{\nabla}_{\tilde{X}} \tilde{Z} \rangle) \\
+      &= \langle \pi^\top(\bar{\nabla}_{\tilde{X}} \tilde{Y}), Z \rangle + \langle Y, \pi^\top(\bar{\nabla}_{\tilde{X}} \tilde{Z}) \rangle \\
+      &= \langle \nabla^{\top}_X Y, Z \rangle + \langle Y, \nabla^{\top}_X Z \rangle.
+    \end{aligned}
+  \end{equation*}
+  where we used the fact that $\tilde{Y}$ and $\tilde{Z}$ are tangent to $M$.
+\end{proof}
+
+\subsection{Symmetric Connections}
+It turns out that every abstract Riemannian or pseudo-Riemannian manifold admits many different metric connections.
+
+\begin{proposition}{}{}
+  Let $(M, g)$ be a Riemannian or pseudo-Riemannian manifold, and let $\nabla$ and $\tilde{\nabla}$ be two connections on $TM$. Let $D(X, Y) = \tilde{\nabla}_X Y - \nabla_X Y$ be the difference tensor of $\tilde{\nabla}$ and $\nabla$.
+
+  Then let $D^{\flat}(X, Y, Z) = \langle D(X, Y), Z \rangle$ be a covariant 3-tensor field. If $\nabla$ is compatible with $g$, then $\tilde{\nabla}$ is compatible with $g$ if and only if $D^{\flat}$ is antisymmetric in the last two arguments, i.e. $D^{\flat}(X, Y, Z) = -D^{\flat}(X, Z, Y)$ for all smooth vector fields $X, Y, Z$ on $M$.
+\end{proposition}
+
+\begin{proof}
+  This can be interpreted as follows. The two connections say $\tilde{\nabla}_X V = \nabla_X V + D(X, V)$, so $D(X, V)$ is literally the extra infinitesimal change of $V$ along $X$. To preserve the metric, we must have
+  \begin{equation*}
+    \tilde{\nabla}_X \langle Y, Z \rangle = \langle \tilde{\nabla}_X Y, Z \rangle + \langle Y, \tilde{\nabla}_X Z \rangle,
+  \end{equation*}
+  expanding this out, we get
+  \begin{equation*}
+    \nabla_X \langle Y, Z \rangle = \langle \nabla_X Y, Z \rangle + \langle Y, \nabla_X Z \rangle + D^{\flat}(X, Y, Z) + D^{\flat}(X, Z, Y),
+  \end{equation*}
+  so, we have our result.
+\end{proof}
+
+Therefore, requiring compatibility with the metric is not sufficient to pin down a unique connection on such a manifold. Recall the definition of the Euclidean connection on $\mathbb{R}^n$:
+\begin{equation*}
+  \tilde{\nabla}_X Y = \sum_{i=1}^n X(Y^i) \frac{\partial}{\partial x^i},
+\end{equation*}
+which gives us a hint on the difference
+\begin{equation}
+  \tilde{\nabla}_X Y - \tilde{\nabla}_Y X = \sum_{i=1}^n (X(Y^i) - Y(X^i)) \frac{\partial}{\partial x^i} = [X, Y],
+\end{equation}
+where $[X, Y]$ is the Lie bracket of $X$ and $Y$.
+
+This expression has the virtue that it is coordinate-independent and makes sense for every connection on the tangent bundle.
+\begin{definition}{Symmetric Connection}{Symmetric Connection}
+  A connection $\nabla$ on the tangent bundle of a smooth manifold $M$ is said to be \textbf{symmetric} if
+  \begin{equation}
+    \nabla_X Y - \nabla_Y X = [X, Y],
+  \end{equation}
+  for all smooth vector fields $X, Y$ on $M$. Otherwise, we define the \textbf{torsion tensor} $\tau$ of $\nabla$ by
+  \begin{equation}
+    \tau(X, Y) = \nabla_X Y - \nabla_Y X - [X, Y].
+  \end{equation}
+  so $\tau: \mathfrak{X}(M) \times \mathfrak{X}(M) \to \mathfrak{X}(M)$ is a smooth $(1,2)$-tensor field on $M$.
+\end{definition}
+
+It is easy to check that in coordinates, the symmetry condition is equivalent to the connection coefficients being symmetric in the lower two indices:
+\begin{equation}
+  \Gamma_{ij}^k = \Gamma_{ji}^k,
+\end{equation}
+
+\begin{proposition}{Euclidean Connection is Symmetric}{Euclidean Connection is Symmetric}
+  If $M$ is an embedded Riemannian or pseudo-Riemannian submanifold of $\mathbb{R}^{r,s}$, then the tangential connection $\nabla^{\top}$ is symmetric.
+\end{proposition}
+
+\begin{remark}
+  The last two propositions show that if we wish to single out a connection on each Riemannian or pseudo-Riemannian manifold in such a way that it matches the tangential connection when the manifold is presented as an embedded submanifold of $\mathbb{R}^n$ or $\mathbb{R}^{(r,s)}$ with the induced metric, then we must require at least that the connection be compatible with the metric and symmetric. It is a pleasant fact that these two conditions are enough to determine a unique connection. 
+\end{remark}
+
+\begin{theorem}{Fundamental Theorem of Riemannian Geometry}{Fundamental Theorem of Riemannian Geometry}
+  Let $(M, g)$ be a Riemannian or pseudo-Riemannian manifold, with or without boundary. Then there exists a unique connection $\nabla$ on $TM$ that is compatible with $g$ and symmetric. This connection is called the \textbf{Levi-Civita connection} of $(M, g)$.
+\end{theorem}
+\begin{proof}
+  We prove uniqueness first: Suppose, therefore, that $\nabla$ is such a connection. Then for any smooth vector fields $X, Y, Z$ on $M$, we have
+  \begin{equation*}
+    \begin{aligned}
+      X\langle Y, Z \rangle &= \langle \nabla_X Y, Z \rangle + \langle Y, \nabla_X Z \rangle, \\
+      Y\langle Z, X \rangle &= \langle \nabla_Y Z, X \rangle + \langle Z, \nabla_Y X \rangle, \\
+      Z\langle X, Y \rangle &= \langle \nabla_Z X, Y \rangle + \langle X, \nabla_Z Y \rangle.
+    \end{aligned}
+  \end{equation*}
+  Adding the first two equations and subtracting the third, we get
+  \begin{equation*}
+    X\langle Y, Z \rangle + Y\langle Z, X \rangle - Z\langle X, Y \rangle = 2\langle \nabla_X Y, Z \rangle + \langle Y, [X, Z] \rangle + \langle Z, [Y, X] \rangle - \langle X, [Z, Y] \rangle,
+  \end{equation*}
+  So we have
+  \begin{equation} \label{eq:Levi-Civita-uniqueness}
+    \langle \nabla_X Y, Z \rangle = \frac{1}{2} \left( X\langle Y, Z \rangle + Y\langle Z, X \rangle - Z\langle X, Y \rangle - \langle Y, [X, Z] \rangle - \langle Z, [Y, X] \rangle + \langle X, [Z, Y] \rangle \right).
+  \end{equation}
+  The right hand side does not depend on $\nabla$, so this shows that $\nabla$ is uniquely determined by $g$.
+
+  For uniqueness, we can define $\nabla$ by the above formula, and then check that it is indeed a connection on $TM$ that is compatible with $g$ and symmetric.
+\end{proof}
+
+In coordinate representations, we get
+\begin{equation}
+  \langle \nabla_{\partial_i} \partial_j, \partial_l \rangle = \frac{1}{2} \left( \partial_i \langle \partial_j, \partial_l \rangle + \partial_j \langle \partial_l, \partial_i \rangle - \partial_l \langle \partial_i, \partial_j \rangle \right),
+\end{equation}
+or written in $g$ and $\Gamma$ we have
+\begin{equation}
+  \Gamma_{ij}^m g_{ml} = \frac{1}{2} \left( \partial_i g_{jl} + \partial_j g_{li} - \partial_l g_{ij} \right),
+\end{equation}
+or
+\begin{equation}
+  \Gamma_{ij}^k = \frac{1}{2} g^{kl} \left( \partial_i g_{jl} + \partial_j g_{li} - \partial_l g_{ij} \right),
+\end{equation}
+This formula certainly defines a connection in each chart, and it is evident from the formula that the connection is symmetric. For compatibility with the metric, we can check that
+\begin{equation*}
+  \Gamma_{ki}^l g_{lj} + \Gamma_{kj}^l g_{il} = \frac{1}{2} \left( \partial_k g_{ij} + \partial_i g_{kj} - \partial_j g_{ki} + \partial_k g_{ji} + \partial_j g_{ki} - \partial_i g_{kj} \right) = \partial_k g_{ij},
+\end{equation*}
+which means that the connection is compatible with the metric.
+
+A bonus of this proof is that it gives us explicit formulas that can be used for computing the Levi-Civita connection in various circumstances.
+
+\begin{theorem}{Formulas for the Levi-Civita Connection}{Formulas for the Levi-Civita Connection}
+  Let $(M, g)$ be a Riemannian or pseudo-Riemannian manifold, with or without boundary. Then the Levi-Civita connection $\nabla$ of $(M, g)$ is given by the following formulas:
+  \begin{itemize}
+    \item \textbf{Vector Fields: } If $X, Y, Z$ are smooth vector fields on $M$, then
+      \begin{equation}
+        \langle \nabla_X Y, Z \rangle = \frac{1}{2} \left( X\langle Y, Z \rangle + Y\langle Z, X \rangle - Z\langle X, Y \rangle - \langle Y, [X, Z] \rangle - \langle Z, [Y, X] \rangle + \langle X, [Z, Y] \rangle \right).
+      \end{equation}
+      called the \textbf{Koszul formula}.
+    \item \textbf{Coordinates: } If $(x^i)$ are local coordinates on $M$, then the connection coefficients of $\nabla$ are given by
+      \begin{equation}
+        \Gamma_{ij}^k = \frac{1}{2} g^{kl} \left( \partial_i g_{jl} + \partial_j g_{li} - \partial_l g_{ij} \right).
+      \end{equation}
+    \item \textbf{Local Frames: } If $(E_i)$ is a smooth local frame on $M$, then we let
+      \begin{equation}
+        [E_i, E_j] = c_{ij}^k E_k,
+      \end{equation}
+      Then the connection coefficients of $\nabla$ with respect to $(E_i)$ are given by
+      \begin{equation}
+        \Gamma_{ij}^k = \frac{1}{2} g^{kl} \left( E_i(g_{jl}) + E_j(g_{li}) - E_l(g_{ij}) - g_{jm} c_{il}^m - g_{lm} c_{ji}^m + g_{im} c_{lj}^m \right).
+      \end{equation}
+    \item \textbf{Local Orthonormal Frames: } If $g$ is Riemannian and $(E_i)$ is a smooth local orthonormal frame on $M$, then the connection coefficients of $\nabla$ with respect to $(E_i)$ are given by
+      \begin{equation}
+        \Gamma_{ij}^k = \frac{1}{2} \left( c_{ij}^k - c_{ik}^j - c_{jk}^i \right).
+      \end{equation}
+  \end{itemize}
+\end{theorem}
+
+On every Riemannian or pseudo-Riemannian manifold, we will always use the Levi-Civita connection from now on without further comment.Geodesics with respect to this connection are called \textbf{Riemannian geodesics} or \textbf{pseudo-Riemannian geodesics}. The connection coefficients of the Levi-Civita connection are called \textbf{Christoffel symbols}.
+
+The next proposition shows that these connections are familiar ones in the case of embedded submanifolds of Euclidean or pseudo-Euclidean spaces.
+\begin{proposition}{Euclidean Connections are Levi-Civita Connections}{Euclidean Connections are Levi-Civita Connections}
+  \begin{itemize}
+    \item The Levi-Civita connection on a (pseudo-)Euclidean space $(\mathbb{R}^{r,s}, \bar{q}^{(r,s)})$ is the Euclidean connection $\bar{\nabla}$.
+    \item Suppose $M$ is an embedded Riemannian or pseudo-Riemannian submanifold of $\mathbb{R}^{r,s}$, with the induced metric. Then the Levi-Civita connection on $M$ is the tangential connection $\nabla^{\top}$.
+  \end{itemize}
+\end{proposition}
+
+An important consequence of the definition is that because Levi-Civita connections are defined in coordinate-independent terms, they behave well with respect to isometries.
+
+\begin{proposition}{Naturality of the Levi-Civita Connection}{Naturality of the Levi-Civita Connection}
+  Let $(M, g)$ and $(\tilde{M}, \tilde{g})$ be Riemannian or pseudo-Riemannian manifolds, with or without boundary, and let $\nabla$ denote the Levi-Civita connection of $g$ and $\tilde{\nabla}$ of $\tilde{g}$. If $\varphi: M \to \tilde{M}$ is an isometry, then $\varphi^*\tilde{\nabla} = \nabla$.
+\end{proposition}
+
+\begin{proposition}{Naturality of Geodesics}{Naturality of Geodesics}
+  Let $(M, g)$ and $(\tilde{M}, \tilde{g})$ be Riemannian or pseudo-Riemannian manifolds, with or without boundary. If $\varphi: M \to \tilde{M}$ is an isometry, then $\varphi$ maps geodesics in $M$ to geodesics in $\tilde{M}$.
+\end{proposition}
+
+Like every connection on the tangent bundle, the Levi-Civita connection induces connections on all tensor bundles.
+
+\begin{proposition}{}{}
+  Suppose $(M, g)$ is a Riemannian or pseudo-Riemannian manifold. Then connections induced on each tensor bundle by the Levi-Civita connection are compatible with the induced inner products on the tensor bundles: $X \langle F, G \rangle = \langle \nabla_X F, G \rangle + \langle F, \nabla_X G \rangle$ for all smooth vector fields $X$ and smooth tensor fields $F, G$ on $M$.
+\end{proposition}
+
+\begin{proposition}{The Volume Form is Parallel}{The Volume Form is Parallel}
+  Let $(M, g)$ be an oriented Riemannian manifold. The Riemannian volume form $\mathrm{d} V_g$ is parallel with respect to the Levi-Civita connection: $\nabla \mathrm{d} V_g = 0$.
+\end{proposition}
+\begin{proof}
+  Let $p\in M$ and $v\in T_p M$. Let $\gamma: I \to M$ be a smooth curve with $\gamma(0) = p$ and $\gamma'(0) = v$. Let $(E_i)$ be a parallel oriented orthonormal frame along $\gamma$. Since $\mathrm{d} V_g(E_1, \ldots, E_n) = 1$ is constant along $\gamma$, we have $\nabla_v \mathrm{d} V_g = D_t \mathrm{d} V_g(\gamma'(t))|_{t=0} = 0$.
+\end{proof}
+
+\begin{proposition}{}{}
+  The musical isomorphisms commute with the total covariant derivative operator: we have $\nabla(F^\flat) = (\nabla F)^\flat$ and $\nabla(G^\sharp) = (\nabla G)^\sharp$.
+\end{proposition}
+\begin{proof}
+  Just take $F^\flat = \tr (F \otimes g)$ and $G^\sharp = \tr (G \otimes g^{-1})$ and use the fact that $\nabla g = 0$.
+\end{proof}
+
+\section{The Exponential Map}
+Throughout this section, we let $(M, g)$ be a Riemannian or pseudo-Riemannian $n$-manifold, endowed with the Levi-Civita connection $\nabla$. To deepen our understanding of geodesics, we need to study their collective behavior, and in particular, to address the following question: How do geodesics change if we vary the initial point or the initial velocity?
+
+The dependence of geodesics on the initial data is encoded in a map from the tangent bundle into the manifold, called the exponential map.
+
+\begin{remark}
+  It is worth noting that the existence of the exponential map and the basic properties expressed below hold for every connection in TM, not just for the Levi-Civita connection. For simplicity, we restrict attention here to the latter case, because that is all we need. We also restrict to manifolds without boundary, in order to avoid complications with geodesics running into a boundary.
+\end{remark}
+
+The next lemma shows that geodesics with proportional initial velocities are related in a simple way.
+\begin{lemma}{Rescaling Lemma}{Rescaling Lemma}
+  For every $p \in M$, $v \in T_p M$, and $c,t \in \mathbb{R}$, we have
+  \begin{equation}
+    \gamma_{cv}(t) = \gamma_v(ct),
+  \end{equation}
+  whenever either side is defined.
+\end{lemma}
+\begin{proof}
+  SORRY.
+\end{proof}
+
+\begin{remark}
+  Naturally, the geodesic is a geometric object, which can be physically understood as the path of a particle moving under no forces. So if the initial velocity is scaled by a factor of $c$, then the particle will move along the same path, but with a speed that is scaled by $c$. This is exactly what the lemma says.
+\end{remark}
+
+The assignment $v \mapsto \gamma_v$ defines a map from the tangent bundle $TM$ into the set of geodesics in $M$. More importantly, by virtue of the rescaling lemma, it allows us to define a map from (a subset of) the tangent bundle to $M$ itself:
+
+\begin{definition}{Exponential Map}{Exponential Map}
+  Define a subset $\mathcal{E} \subseteq TM$, the \textbf{domain of the exponential map}, by
+  \begin{equation}
+    \mathcal{E} = \{ v \in TM : \gamma_v \text{ is defined at an interval containing } [0,1] \}.
+  \end{equation}
+  and then define the \textbf{exponential map} $\exp: \mathcal{E} \to M$ by
+  \begin{equation}
+    \exp(v) = \gamma_v(1).
+  \end{equation}
+\end{definition}
+The definition of the exponential map is interpreted as ``where does the free particle go after unit time if it starts at $p$ with initial velocity $v$?'' If we fix $p$ and vary $v$ we would get the geodesic emanating from $p$ in the direction of $v$, from the above lemma.
+
+\begin{remark}
+  The exponential map of a Riemannian manifold should not be confused with the exponential map of a Lie group. The two are closely related for bi-invariant metrics, but in general they need not be. To avoid confusion, we always designate the exponential map of a Lie group $G$ by $\exp^G$.
+\end{remark}
+
+The next proposition describes some essential features of the exponential map. Recall that a subset of a vector space $V$ is called \textbf{star-shaped} with respect to a point $x \in S$ if for every $y \in S$, the line segment from $x$ to $y$ is contained in $S$.
+
+\begin{proposition}{Properties of the Exponential Map}{Properties of the Exponential Map}
+  Let $(M, g)$ be a Riemannian or pseudo-Riemannian manifold, and let $\exp: \mathcal{E} \to M$ be the exponential map.
+  \begin{itemize}
+    \item $\mathcal{E}$ is an open subset of $TM$ containing the zero section, and each set $\mathcal{E}_p \subseteq T_p M$ is star-shaped with respect to $0 \in T_p M$.
+    \item For each $v \in TM$, the geodesic $\gamma_v$ is given by
+      \begin{equation}
+        \gamma_v(t) = \exp(tv),
+      \end{equation}
+      for all $t$ such that either side is defined.
+    \item The exponential map is smooth.
+    \item For each $p \in M$, the differential $\mathrm{d} (\exp_p)_0: T_0(T_p M) \to T_p M$ is the identity map of $T_p M$.
+  \end{itemize}
+\end{proposition}
+\begin{proof}
+  SORRY.
+\end{proof}
+
+\begin{proposition}{Naturality of the Exponential Map}{Naturality of the Exponential Map}
+  Suppose $(M, g)$ and $(\tilde{M}, \tilde{g})$ are Riemannian or pseudo-Riemannian manifolds, and let $\varphi: M \to \tilde{M}$ be a local isometry. Then for every $p \in M$, the following diagram commutes:
+  \begin{equation}
+    \begin{tikzcd}
+      \mathcal{E}_p \arrow[r, "\mathrm{d} \varphi_p"] \arrow[d, "\exp_p"'] & \tilde{\mathcal{E}}_{\varphi(p)} \arrow[d, "\exp_{\varphi(p)}"] \\
+      M \arrow[r, "\varphi"] & \tilde{M}
+    \end{tikzcd}
+  \end{equation}
+  where $\mathcal{E}_p \subseteq T_p M$ and $\tilde{\mathcal{E}}_{\varphi(p)} \subseteq T_{\varphi(p)} \tilde{M}$ are the domains of the exponential maps at $p$ and $\varphi(p)$, respectively.
+\end{proposition}
+
+An important consequence of the naturality of the exponential map is the following proposition, which says that local isometries of connected manifolds are completely determined by their values and differentials at a single point.
+
+\begin{proposition}{}{}
+  Suppose $(M, g)$ and $(\tilde{M}, \tilde{g})$ are Riemannian or pseudo-Riemannian manifolds, with $M$ connected. Suppose $\varphi, \psi: M \to \tilde{M}$ are local isometries, such that for some $p \in M$, we have $\varphi(p) = \psi(p)$ and $\mathrm{d} \varphi_p = \mathrm{d} \psi_p$. Then $\varphi = \psi$.
+\end{proposition}
+
+A Riemannian or pseudo-Riemannian manifold $(M, g)$ is said to be \textbf{geodesically complete} if every maximal geodesic is defined for all $t \in \mathbb{R}$, or equivalently, if $\mathcal{E} = TM$. (Counterexamples include proper open subsets of $\mathbb{R}^n$.)
+
+Nevertheless, geodesically complete manifolds are the natural setting for global questions in Riemannian or pseudo-Riemannian geometry.
+
+\section{Normal Neighborhoods and Normal Coordinates}
+We continue to let $(M, g)$ be a Riemannian or pseudo-Riemannian manifold of dimension $n$ (without boundary).
+
+As $\mathrm{d} (\exp_p)_0$ is invertible, the inverse function theorem guarantees that there exist a neighborhood $V$ of $0 \in T_p M$ and a neighborhood $U$ of $p \in M$ such that $\exp_p: V \to U$ is a diffeomorphism.
+\begin{definition}{Normal Neighborhoods}{Normal Neighborhoods}
+  A neighborhood $U$ of $p \in M$ is called a \textbf{normal neighborhood} of $p$ if it is the diffeomorphic image of a \emph{star-shaped} neighborhood $V$ of $0 \in T_p M$ under the exponential map $\exp_p: V \to U$.
+\end{definition}
+
+\end{document}

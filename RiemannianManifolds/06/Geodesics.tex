@@ -1,0 +1,182 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\chapter{Geodesics and Distance}
+
+In this chapter, we explore the relationships among geodesics, lengths, and distances on a Riemannian manifold. A primary goal is to show that all length-minimizing curves are geodesics, and that all geodesics are locally length-minimizing.
+
+\section{Geodesics and Minimizing Curves}
+\begin{definition}{Minimizing Curve}{Minimizing Curve}
+  Let $(M,g)$ be a Riemannian manifold. An admissible curve $\gamma$ in $M$ is called a \emph{minimizing curve} if $L_g(\gamma) \leq L_g(\tilde{\gamma})$ for all admissible curves $\tilde{\gamma}$ with the same endpoints as $\gamma$.
+\end{definition}
+
+When $M$ is connected, then $\gamma$ is minimizing if and only if $L_g(\gamma)$ is the distance between its endpoints.
+
+Our first goal in this section is to show that all minimizing curves are geodesics. As $L_g$ is a functional, this brings us to the brink of the subject known as the calculus of variations.
+
+\subsection{Families of Curves}
+To make the discussion rigorous, we need to do some definitions. Let $(M,g)$ be a Riemannian manifold.
+
+\begin{definition}{Families of Curves}{Families of Curves}
+  Given intervals $I,J \subset \mathbb{R}$, a continuous map $\Gamma: J \times I \to M$ is called a \emph{one-parameter family of curves}. Such a family defines two collections of curves in $M$:
+  \begin{itemize}
+    \item The \textbf{Main Family} of curves $\Gamma_s: I \to M$ defined by $\Gamma_s(t) = \Gamma(s,t)$ for each $s \in J$.
+    \item The \textbf{Transverse Family} of curves $\Gamma^{(t)}: J \to M$ defined by $\Gamma^{(t)}(s) = \Gamma(s,t)$ for each $t \in I$.
+  \end{itemize}
+\end{definition}
+If such a family is smooth, (or at least continuously differentiable), we denote the velocity vectors of the main and transverse curves by
+\begin{equation}
+  \partial_t \Gamma(s,t) = (\Gamma_s)'(t) \in T_{\Gamma(s,t)}M, \quad \partial_s \Gamma(s,t) = (\Gamma^{(t)})'(s) \in T_{\Gamma(s,t)}M.
+\end{equation}
+Each of these is an example of a vector field along $\Gamma$.
+
+A one-parameter family of curves is called an \textbf{admissible family} if
+\begin{itemize}
+  \item Its domain is of the form $J \times [a,b]$ for some open interval $J \subset \mathbb{R}$.
+  \item There is a partition $(a_0, \ldots, a_k)$ of $[a,b]$ such that $\Gamma$ is smooth on each $J \times (a_{i-1}, a_i)$.
+  \item For each $s \in J$, the curve $\Gamma_s$ is admissible.
+\end{itemize}
+Every such partition is called an \textbf{admissible partition for the family} $\Gamma$.
+
+\begin{remark}
+  Recall an admissible curve cannot have derivatives that are zero on any subinterval.
+\end{remark}
+
+If $\gamma: [a,b] \to M$ is an admissible curve, then a \textbf{variation of $\gamma$} is an admissible family $\Gamma: J \times [a,b] \to M$ such that $0 \in J$ and $\Gamma_0 = \gamma$. Its called a \textbf{proper variation} if in addition, all of the main curves have the same starting and ending points: $\Gamma_s(a) = \gamma(a)$ and $\Gamma_s(b) = \gamma(b)$ for all $s \in J$.
+
+\begin{remark}
+  In the case of an admissible family, the transverse curves are smooth on $J$ for each fixed $t \in [a,b]$, but the main curves are in general only piecewise regular. Thus the velocity vector fields $\partial_t \Gamma$ and $\partial_s \Gamma$ are smooth in each rectangle $J \times [a_{i-1}, a_i]$, but may not be smooth on the entire domain $J \times [a,b]$. Globally speaking, $\partial_t \Gamma$ may not even be well-defined at the admissible partition points $a_i$. So what we really do here is just taking it to be a vector field on each rectangle $J \times [a_{i-1}, a_i]$ and not a global vector field.
+\end{remark}
+
+A \textbf{piecewise smooth vector field along $\gamma$} is a continuous vector field along $\gamma$ whose restriction to each rectangle $J \times [a_{i-1}, a_i]$ is smooth for some partition $(a_0, \ldots, a_k)$ of $[a,b]$. In fact, $\Gamma_s$ is always a piecewise smooth vector field.
+
+\begin{remark}
+  Remember that being smooth on some closed subset means that is=t has a smooth extension to an open neighborhood of that subset.
+\end{remark}
+
+If $\Gamma$ is a variation of $\gamma$, then the \textbf{variation field} of $\Gamma$ is the piecewise smooth vector field $V(t) = \partial_s \Gamma(0,t)$ along $\gamma$. We say that a vector field $V$ along $\gamma$ is \textbf{proper} if $V(a) = V(b) = 0$, so it follows easily from the definitions that the variation field of every proper variation is itself proper.
+
+\begin{lemma}{}{}
+  If $\gamma$ is an admissible curve and $V$ is a piecewise smooth vector field along $\gamma$, then $V$ is the variation field of some variation of $\gamma$. If $V$ is proper, then it is the variation field of some proper variation of $\gamma$.
+\end{lemma}
+\begin{proof}
+  Let $\Gamma(s,t) = \exp_{\gamma(t)}(sV(t))$ for $s$ in some small interval $(-\epsilon, \epsilon)$ that makes $\Gamma$ well-defined (this is possible because $[a,b]$ is compact).
+\end{proof}
+
+If $V$ is a piecewise smooth vector field along $\Gamma$, we can compute the covariant derivative of $V$ along the main curves (at points where $V$ is smooth) denoted by $D_t V(s,t)$ and the covariant derivative of $V$ along the transverse curves, denoted by $D_s V(s,t)$.
+
+A key ingredient in the proof that minimizing curves are geodesics is the symmetry of the Levi-Civita connection.
+
+\begin{lemma}{Symmetry Lemma}{Symmetry Lemma}
+  Let $\Gamma: J \times [a,b] \to M$ be an admissible family of curves in a Riemannian manifold $(M,g)$. On every rectangle $J \times [a_{i-1}, a_i]$ where $\Gamma$ is smooth, we have
+  \begin{equation}
+    D_s \partial_t \Gamma = D_t \partial_s \Gamma.
+  \end{equation}
+  for ANY symmetric connection on $M$. In particular, this holds for the Levi-Civita connection.
+\end{lemma}
+\begin{proof}
+  We write in local coordinates $(x^1, \ldots, x^n)$ on $M$ and write $\Gamma(s,t) = (x^1(s,t), \ldots, x^n(s,t))$. Then we have
+  \begin{equation*}
+    \partial_t \Gamma = \frac{\partial x^k}{\partial t} \partial_k, \quad \partial_s \Gamma = \frac{\partial x^k}{\partial s} \partial_k.
+  \end{equation*}
+  Then, we have
+  \begin{equation*}
+    D_s \partial_t \Gamma = \left( \frac{\partial^2 x^k}{\partial s \partial t} + \frac{\partial x^i}{\partial t} \frac{\partial x^j}{\partial s} \Gamma_{ji}^k \right) \partial_k, \quad D_t \partial_s \Gamma = \left( \frac{\partial^2 x^k}{\partial t \partial s} + \frac{\partial x^i}{\partial s} \frac{\partial x^j}{\partial t} \Gamma_{ij}^k \right) \partial_k.
+  \end{equation*}
+  The symmetry of the connection implies that $\Gamma_{ij}^k = \Gamma_{ji}^k$.
+\end{proof}
+
+\subsection{Minimizing Curves Are Geodesics}
+We can now compute an expression for the derivative of the length functional along a variation of a curve. Traditionally, the derivative of a functional on a space of maps is called its \emph{first variation}.
+
+\begin{theorem}{First Variation Formula}{First Variation Formula}
+  Let $(M,g)$ be a Riemannian manifold and let $\gamma: [a,b] \to M$ be a unit-speed admissible curve. Let $\Gamma: J \times [a,b] \to M$ be a variation of $\gamma$ and let $V$ be the variation field of $\Gamma$. Then $L_g(\Gamma_s)$ is a smooth function of $s$ and
+  \begin{equation}
+    \frac{\mathrm{d}}{\mathrm{d} s} \bigg|_{s=0} L_g(\Gamma_s) = -\int_a^b \langle V, D_t \gamma' \rangle \mathrm{d} t - \sum_{i=1}^{k-1} \langle V(a_i), \Delta_i \gamma' \rangle + \langle V(b), \gamma'(b) \rangle - \langle V(a), \gamma'(a) \rangle,
+  \end{equation}
+  where $(a_0, \ldots, a_k)$ is an admissible partition for $V$ and $\Delta_i \gamma' = \gamma'(a_i^+) - \gamma'(a_i^-)$ is the jump in the velocity vector at $a_i$. If $\gamma$ is a proper variation, then the last two terms vanish.
+\end{theorem}
+\begin{proof}
+  On every rectangle $J \times [a_{i-1}, a_i]$ where $\Gamma$ is smooth, since the integrand in $L_g(\Gamma_s)$ is smooth and the domain of integration is compact, we can differentiate under the integral sign as many times as we like. Because $L_g(\Gamma_s)$ is a finite sum of such integrals, it is smooth in $s$.
+
+  To be concise, we write $T(s,t) = \partial_t \Gamma(s,t)$ and $S(s,t) = \partial_s \Gamma(s,t)$. Then we have
+  \begin{equation*}
+    \begin{aligned}
+      \frac{\mathrm{d}}{\mathrm{d} s} L_g(\Gamma_s|_{[a_{i-1}, a_i]}) %
+      &= \int_{a_{i-1}}^{a_i} \frac{\partial}{\partial s} \langle T, T \rangle^{1/2} \mathrm{d} t = \int_{a_{i-1}}^{a_i} \frac{1}{2} \langle T, T \rangle^{-1/2} 2 \langle D_s T, T \rangle \mathrm{d} t \\
+      &= \int_{a_{i-1}}^{a_i} \langle D_s T, T \rangle \mathrm{d} t = \int_{a_{i-1}}^{a_i} \langle D_t V, \gamma' \rangle \mathrm{d} t = \int_{a_{i-1}}^{a_i} \left( \frac{\mathrm{d}}{\mathrm{d} t} \langle V, \gamma' \rangle - \langle V, D_t \gamma' \rangle \right) \mathrm{d} t \\
+      &= \langle V(a_i), \gamma'(a_i^-) \rangle - \langle V(a_{i-1}), \gamma'(a_{i-1}^+) \rangle - \int_{a_{i-1}}^{a_i} \langle V, D_t \gamma' \rangle \mathrm{d} t.
+    \end{aligned}
+  \end{equation*}
+  where we have use the symmetry lemma, the unit speed $|T(0,t)|_g = 1$, the characterization of the metric connection $\frac{\mathrm{d}}{\mathrm{d} t} \langle V, W \rangle = \langle D_t V, W \rangle + \langle V, D_t W \rangle$ and the fundamental theorem of calculus.
+\end{proof}
+
+\begin{remark}
+    Well, recall the Euler-Lagrange equations, We have $S(\gamma) = \int_a^b L(\gamma, \gamma') \mathrm{d} t$ and then we have
+  \begin{equation*}
+    \delta S(\gamma) = \int_a^b \left( \frac{\partial L}{\partial \gamma} - \frac{\mathrm{d}}{\mathrm{d} t} \frac{\partial L}{\partial \gamma'} \right) \delta \gamma \mathrm{d} t + \left[ \frac{\partial L}{\partial \gamma'} \delta \gamma \right]_a^b.
+  \end{equation*}
+  here we have $L(\gamma, \gamma') = |\gamma'|_g$ and then we have $\frac{\partial L}{\partial \gamma} = 0$ and $\frac{\partial L}{\partial \gamma'} = \frac{\gamma'}{|\gamma'|_g} = \gamma'$ since $\gamma$ is unit speed. Here $V$ plays the role of $\delta \gamma$.
+
+  Because every admissible curve has a unit-speed parametrization and length is independent of parametrization, the requirement in the above proposition that $\gamma$ be of unit speed is not a real restriction, but rather just a computational convenience.
+\end{remark}
+
+\begin{theorem}{Minimizing Curves are Geodesics}{Minimizing Curves are Geodesics}
+  In a Riemannian manifold, every minimizing curve is a geodesic when it is given a unit-speed parametrization.
+\end{theorem}
+\begin{proof}
+  If $\gamma: [a,b] \to M$ is a minimizing curve of unit speed, and $(a_0, \ldots, a_k)$ is an admissible partition for $\gamma$, and if $\Gamma$ is a proper variation of $\gamma$ then $L_g(\Gamma_s)$ is a smooth function of $s$. So, it follows from elementary calculus that $\mathrm{d} L_g(\Gamma_s)/\mathrm{d} s|_{s=0} = 0$. Since every proper vector field along $\gamma$ is the variation field of some proper variation, it follows the right-hand side of the first variation formula vanishes for every proper piecewise smooth vector field $V$ along $\gamma$.
+
+  \medskip
+  First, we show that $D_t \gamma' = 0$ on each interval $[a_{i-1}, a_i]$. Choose one such interval, and let $\varphi \in C^{\infty}(\mathbb{R})$ be a bump function that $\varphi > 0$ on $(a_{i-1}, a_i)$ and $\varphi = 0$ elsewhere. Then Let
+  \begin{equation}
+    V(t) = \varphi(t) D_t \gamma'(t)
+  \end{equation}
+  Then we have
+  \begin{equation}
+    0 = -\int_a^b \langle V, D_t \gamma' \rangle \mathrm{d} t = -\int_{a_{i-1}}^{a_i} \varphi(t) |D_t \gamma'|_g^2 \mathrm{d} t.
+  \end{equation}
+  This shows that $D_t \gamma' = 0$ on $[a_{i-1}, a_i]$.
+
+  \medskip
+  Next we need to show that $\Delta_i \gamma' = 0$ for each $i = 1, \ldots, k-1$. For each $i$, we use a bump function in a coordinate chart to construct a piecewise smooth vector field $V$ along $\gamma$ that $V(a_i) = \Delta_i \gamma'$ and $V(a_j) = 0$ for all $j \neq i$. Then we have $-|\Delta_i \gamma'|_g^2 = 0$, which shows that $\Delta_i \gamma' = 0$.
+
+  Finally, since the two one-sided velocity vectors of $\gamma$ match up at each $a_i$, it follows from the uniqueness of geodesics that $\gamma|_{[a_i, a_{i+1}]}$ is the unique continuation of $\gamma|_{[a_{i-1}, a_i]}$ as a geodesic. Thus $\gamma$ is a geodesic on all of $[a,b]$.
+\end{proof}
+
+\begin{remark}
+  The above proof also gives insight: The negative sign tells us that ``deforming'' a curve in the direction of its acceleration will decrease its length, as well as ``rounding off'' any corners in the curve. This is exactly what we would expect from a minimizing curve.
+
+  \medskip
+  Also, as is easily notice, we do not need to assume that the curve is minimizing in the above proof. We say that an admissible curve $\gamma$ is a \textbf{critical point} of the length functional $L_g$ if for every proper variation $\Gamma_s$ of $\gamma$, we have $\mathrm{d} L_g(\Gamma_s)/\mathrm{d} s|_{s=0} = 0$. Then the above proof shows that every critical point of $L_g$ is a geodesic.
+\end{remark}
+
+\begin{proposition}{Critical Curves Equals Geodesics}{Critical Curves Equals Geodesics}
+  A unit-speed admissible curve $\gamma$ is a critical point of the length functional $L_g$ if and only if it is a geodesic.
+\end{proposition}
+\begin{proof}
+  Just use the first variation formula and the same argument as in the proof of the previous theorem.
+\end{proof}
+
+The geodesic equation $D_t \gamma' = 0$ thus characterizes the critical points of the length functional. In general, the equation that characterizes critical points of a functional on a space of maps is called the \emph{Euler-Lagrange equation} for that functional. Many interesting equations in differential geometry arise as variational equations.
+
+\subsection{Geodesics Are Locally Minimizing}
+Next we turn to the converse of Theorem \ref{thm:Minimizing Curves are Geodesics}. It is easy to see that the literal converse is not true, because not every geodesic segment is minimizing. For example, every geodesic segment on $S^n$ that goes more than halfway around the sphere is not minimizing, because the other portion of the same great circle is a shorter curve segment between the same two points. For that reason, we concentrate initially on local minimization properties of geodesics.
+
+\begin{definition}{Locally Minimizing}{Locally Minimizing}
+  Let $(M,g)$ be a Riemannian manifold. A regular (or piecewise regular) curve $\gamma: I \to M$ is called \textbf{locally minimizing} if for every $t_0 \in I$, there exists a neighborhood $I_0 \subset I$ of $t_0$ such that whenever $a, b \in I_0$ with $a < b$, the restriction $\gamma|_{[a,b]}$ is a minimizing curve.
+\end{definition}
+This means that it is a minimizing curve in a sufficiently small neighborhood.
+
+\begin{lemma}{Global Minimizing to Locally Minimizing}{Global Minimizing to Locally Minimizing}
+  Every minimizing admissible curve segment is locally minimizing.
+\end{lemma}
+\begin{proof}
+  Obvious as if we find a piece that is not locally minimizing, then we just replace the piece with a shorter curve, and we get a shorter admissible curve globally.
+\end{proof}
+
+Our goal in this section is to show that geodesics are locally minimizing. The proof will be based on a careful analysis of the geodesic equation in Riemannian normal coordinates.
+
+SORRY, return to this later, I need to finish the chapter on curvature first.
+
+\end{document}

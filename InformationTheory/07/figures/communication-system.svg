@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="240mm"
+   height="120mm"
+   viewBox="0 0 240 120"
+   version="1.1"
+   id="svg8"
+   inkscape:version="1.4.4 (dcaf3e7d9e, 2026-05-05)"
+   sodipodi:docname="communication-system.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <defs
+     id="defs2">
+    <marker
+       id="marker-arrow-1.5923999999999998"
+       orient="auto-start-reverse"
+       refY="0"
+       refX="0"
+       markerHeight="1.690"
+       markerWidth="0.911">
+      <g
+         transform="scale(1.0733986435568954)"
+         id="g1">
+        <path
+           d="M -1.55415,2.0722 C -1.42464,1.29512 0,0.1295 0.38852,0 0,-0.1295 -1.42464,-1.29512 -1.55415,-2.0722"
+           style="fill:none;stroke:#000000;stroke-width:0.6;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           inkscape:connector-curvature="0"
+           id="path1" />
+      </g>
+    </marker>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.5"
+     inkscape:cx="369"
+     inkscape:cy="239"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     showborder="true"
+     width="200mm"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     inkscape:window-width="1216"
+     inkscape:window-height="810"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:showpageshadow="2"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid815"
+       units="mm"
+       spacingx="10"
+       spacingy="10"
+       empspacing="4"
+       dotted="false"
+       originx="0"
+       originy="0" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-177)">
+    <rect
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.421322;stroke-dasharray:none;stroke-opacity:1;marker-start:none;marker-end:none"
+       id="rect1"
+       width="31.142857"
+       height="20.200769"
+       x="46.370335"
+       y="226.89961" />
+    <rect
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.421322;stroke-dasharray:none;stroke-opacity:1;marker-start:none;marker-end:none"
+       id="rect2"
+       width="44.372101"
+       height="20.200769"
+       x="95.432732"
+       y="226.89961" />
+    <rect
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.421322;stroke-dasharray:none;stroke-opacity:1;marker-start:none;marker-end:none"
+       id="rect4"
+       width="31.142857"
+       height="20.200769"
+       x="160.28128"
+       y="226.89961" />
+    <text
+       style="font-size:2.64583px;font-family:monospace;-inkscape-font-specification:'monospace, Normal';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       xml:space="preserve"
+       id="text1"
+       y="238.52135"
+       x="51.534378"><tspan
+         sodipodi:role="line"
+         id="tspan1"
+         x="51.534378"
+         y="238.52135"
+         style="stroke-width:0.264583">Encoder</tspan></text>
+    <text
+       style="font-size:2.64583px;font-family:monospace;-inkscape-font-specification:'monospace, Normal';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       xml:space="preserve"
+       id="text1-3"
+       y="237.6813"
+       x="98.322723"><tspan
+         sodipodi:role="line"
+         id="tspan1-6"
+         x="98.322723"
+         y="237.6813"
+         style="stroke-width:0.264583">Channel $p(y|x)$</tspan></text>
+    <text
+       style="font-size:2.64583px;font-family:monospace;-inkscape-font-specification:'monospace, Normal';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       xml:space="preserve"
+       id="text1-7"
+       y="239.05051"
+       x="166.00763"><tspan
+         sodipodi:role="line"
+         id="tspan1-5"
+         x="166.00763"
+         y="239.05051"
+         style="stroke-width:0.264583">Decoder</tspan></text>
+    <path
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.421322;stroke-dasharray:none;stroke-opacity:1;marker-start:none;marker-end:url(#marker-arrow-1.5923999999999998)"
+       d="M 25.581316,237.15478 46.370337,237"
+       id="path5" />
+    <path
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.421322;stroke-dasharray:none;stroke-opacity:1;marker-start:none;marker-end:url(#marker-arrow-1.5923999999999998)"
+       d="M 77.513194,237 H 95.432707"
+       id="path6" />
+    <path
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.421322;stroke-dasharray:none;stroke-opacity:1;marker-start:none;marker-end:url(#marker-arrow-1.5923999999999998)"
+       d="m 139.80478,237 h 20.47658"
+       id="path7" />
+    <path
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.421322;stroke-dasharray:none;stroke-opacity:1;marker-start:none;marker-end:url(#marker-arrow-1.5923999999999998)"
+       d="m 191.42421,237 h 19.79843"
+       id="path8" />
+    <text
+       style="font-size:2.64583px;font-family:monospace;-inkscape-font-specification:'monospace, Normal';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       xml:space="preserve"
+       id="text1-35"
+       y="229.94812"
+       x="15.192255"><tspan
+         sodipodi:role="line"
+         id="tspan1-62"
+         x="15.192255"
+         y="229.94812"
+         style="stroke-width:0.264583">Message $W$</tspan></text>
+    <text
+       style="font-size:2.64583px;font-family:monospace;-inkscape-font-specification:'monospace, Normal';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       xml:space="preserve"
+       id="text1-9"
+       y="232.03334"
+       x="82.285408"><tspan
+         sodipodi:role="line"
+         id="tspan1-1"
+         x="82.285408"
+         y="232.03334"
+         style="stroke-width:0.264583">$X^n$</tspan></text>
+    <text
+       style="font-size:2.64583px;font-family:monospace;-inkscape-font-specification:'monospace, Normal';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       xml:space="preserve"
+       id="text1-2"
+       y="229.3875"
+       x="146.31453"><tspan
+         sodipodi:role="line"
+         id="tspan1-7"
+         x="146.31453"
+         y="229.3875"
+         style="stroke-width:0.264583">$Y^n$</tspan></text>
+    <text
+       style="font-size:2.64583px;font-family:monospace;-inkscape-font-specification:'monospace, Normal';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       xml:space="preserve"
+       id="text1-0"
+       y="229.65208"
+       x="203.19994"><tspan
+         sodipodi:role="line"
+         id="tspan1-9"
+         x="203.19994"
+         y="229.65208"
+         style="stroke-width:0.264583">Estimation $\hat{W}$</tspan></text>
+  </g>
+</svg>

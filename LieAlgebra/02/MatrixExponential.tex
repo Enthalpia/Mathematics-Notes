@@ -1,0 +1,121 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\chapter{The Matrix Exponential}
+
+\section{Exponential of a Matrix}
+The exponential enters into the definition of the Lie algebra of a matrix Lie group and is the mechanism for passing information from the Lie algebra to the Lie group.
+
+For $X \in M_n(\mathbb{F})$, the exponential of $X$ is defined by the power series
+\begin{equation}
+  e^X = \sum_{k=0}^{\infty} \frac{X^k}{k!} = I + X + \frac{1}{2!}X^2 + \frac{1}{3!}X^3 + \cdots
+\end{equation}
+
+\begin{proposition}{Convergence of Exponential}{Convergence of Exponential}
+  The series defining $e^X$ converges for all $X \in M_n(\mathbb{F})$, and $e^X$ is a continuous function of $X$.
+\end{proposition}
+
+\begin{proposition}{Properties of Exponential}{Properties of Exponential}
+  Let $X, Y \in M_n(\mathbb{F})$. Then
+  \begin{itemize}
+    \item $e^0 = I$.
+    \item $(e^X)^* = e^{X^*}$.
+    \item $e^X$ is invertible and $(e^X)^{-1} = e^{-X}$.
+    \item For all $\alpha, \beta \in \mathbb{F}$, $e^{(\alpha + \beta)X} = e^{\alpha X}e^{\beta X}$.
+    \item If $XY = YX$, then $e^{X+Y} = e^Xe^Y = e^Ye^X$.
+    \item If $C \in GL(n, \mathbb{F})$, then $e^{CXC^{-1}} = Ce^XC^{-1}$.
+  \end{itemize}
+\end{proposition}
+
+\begin{proposition}{Transport}{Transport}
+  Let $X \in M_n(\mathbb{C})$ and then $e^{tX}$ is a smooth curve in $M_n(\mathbb{C})$ and
+  \begin{equation}
+    \frac{\mathrm{d}}{\mathrm{d} t} e^{tX} = Xe^{tX} = e^{tX}X.
+  \end{equation}
+\end{proposition}
+
+\section{Computing the Exponential}
+We consider here methods for exponentiating general matrices. If $X$ is diagonalizable, then $X = CDC^{-1}$, where $D$ is a diagonal matrix. Then
+\begin{equation}
+  e^X = e^{CDC^{-1}} = Ce^DC^{-1},
+\end{equation}
+is very easy to compute, since $e^D$ is just the diagonal matrix with entries $e^{\lambda_i}$, where $\lambda_i$ are the eigenvalues of $X$.
+
+If $X$ is nilpotent, then $X^k = 0$ for some $k$, and the series for $e^X$ truncates to a finite sum.
+
+For a general matrix $X$, we can use the Jordan canonical form $X = CJC^{-1}$, where $J$ is a block diagonal matrix with Jordan blocks $J_i$ on the diagonal. Then for each Jordan block $J_i$, we have
+\begin{equation*}
+  J_i = \lambda_i I + N_i = D_i + N_i,
+\end{equation*}
+and it is easy to see that $D_i$ and $N_i$ commute, so that
+\begin{equation}
+  e^{J_i} = e^{D_i + N_i} = e^{D_i}e^{N_i} = e^{\lambda_i}e^{N_i},
+\end{equation}
+were $D_i$ is diagonal and $N_i$ is nilpotent. Different blocks $J_i$ and $J_j$ commute, so they do not affect each other.
+
+\section{The Matrix Logarithm}
+We now wish to define a matrix logarithm, which should be an inverse function (to the extent possible) to the matrix exponential. The simplest way to define the matrix logarithm is by a power series. We recall how this works in the complex case. So
+
+\begin{definition}{Matrix Logarithm}{Matrix Logarithm}
+  For an $n \times n$ matrix, define $\log A$ by
+  \begin{equation}
+    \log A = \sum_{m=1}^{\infty } (-1)^{m+1} \frac{(A-I)^m}{m}
+  \end{equation}
+  whenever the series converges.
+\end{definition}
+
+\begin{remark}
+  We are confident that the series would converge if $\|A - I\| < 1$ for any matrix norm. But even if $\|A - I\| > 1$ the series might converge, for example, if $\|A - I\|$ is nilpotent. A good way to see this is to write it in Jordan form.
+\end{remark}
+
+\begin{theorem}{}{}
+  The function $\log A$ defined this way is continuous on the disk $\|A - I\| < 1$, and
+  \begin{itemize}
+    \item For all $A \in M_n(\mathbb{C})$ that $\|A - I\| < 1$, we have
+      \begin{equation}
+        e^{\log A} = A.
+      \end{equation}
+    \item For all $X \in M_n(\mathbb{C})$ that $\|X\| < \log 2$, then $\|e^X - I\| < 1$ and we have
+      \begin{equation}
+        \log e^X = X.
+      \end{equation}
+  \end{itemize}
+\end{theorem}
+
+To understand this, we have seen that the logarithm is multi-valued in complex domain, and to define it appropriately we need to choose a principal branch.
+
+\begin{remark}
+  Continuity follows from inner compact uniform convergence.
+
+  Suppose $A$ satisfies $\|A - I\| < 1$. If $A$ is diagonalizable the problem reduces to complex analysis and if $A$ is not diagonalizable we can appropriate it with a sequence of diagonalizable matrices and the result follows from continuity.
+\end{remark}
+
+\begin{theorem}{Existence of Matrix Logarithm}{Existence of Matrix Logarithm}
+  Every invertible $n \times n$ matrix can be expressed as $e^X$ for some $X \in M_n(\mathbb{C})$.
+\end{theorem}
+
+We can look at this from Jordan block. SORRY
+
+\section{Properties of Exponential}
+In this section, we give several additional results involving the exponential of a matrix that will be important in our study of Lie algebras.
+
+\begin{theorem}{Lie Product Formula}{Lie Product Formula}
+  For all $X, Y\in M_n(\mathbb{C})$ we have
+  \begin{equation}
+    e^{X + Y} = \lim_{m \to \infty} \left(e^{X / m}e^{Y / m}\right)^m
+  \end{equation}
+\end{theorem}
+\begin{remark}
+  This result shows that exponential in the $X+Y$ direction can be appropriated by infinite step of infinitesimal process of exponential in $X$ and then in $Y$ directions.
+
+  As we have
+  \begin{equation}
+    e^{X/m}e^{Y/m} = I + \frac{X}{m} + \frac{Y}{m} + O\left(\frac{1}{m^2}\right)
+  \end{equation}
+  As $m \to \infty$, $e^{X/m}e^{Y/m}$ is in the domain of the logarithm for all sufficiently large $m$, then we have
+  \begin{equation}
+    
+  \end{equation}
+\end{remark}
+
+\end{document}

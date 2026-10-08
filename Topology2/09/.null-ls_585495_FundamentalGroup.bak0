@@ -120,7 +120,7 @@ It is rather annoying that the fundamental group depends on the choice of the ba
 \end{proof}
 
 \begin{corollary}{Isomorphism of Fundamental Groups}{Isomorphism of Fundamental Groups}
-	If $X$ is path connected, then for any $x_0,x_1 \in X$, $\pi_1(X,x_0) \cong \pi_1(X,x_1)$.
+	If $X$ is path connected, then for any $x_0,x_1 \in X$, $\pi_1(X,x_0) \cong \pi_1(X,x_1)$.	
 \end{corollary}
 
 Also, suppose $C$ is a path-component of $X$, then for any $x_0\in C$, we have $\pi_1(C,x_0) \cong \pi_1(X,x_0)$. So all the structures and elements of the fundamental group are determined by the path-components of $X$. \emph{It is customary to study the fundamental group of path-connected spaces only, and we will do so in the rest of this chapter.}
@@ -164,9 +164,9 @@ The map $h_*$ is well-defined because if $F$ is a path homotopy between $f$ and 
 \begin{proposition}{Properties of the Induced Homomorphisms}{Properties of the Induced Homomorphisms}
 	\begin{itemize}
 		\item If $h : (X,x_0) \to (Y,y_0)$ and $k : (Y,y_0) \to (Z,z_0)$ are continuous maps, then
-		      \begin{equation*}
-			      (k \circ h)_* = k_* \circ h_*.
-		      \end{equation*}
+		  \begin{equation*}
+			  (k \circ h)_* = k_* \circ h_*.
+		  \end{equation*}
 		\item If $i : (X,x_0) \to (X,x_0)$ is the identity map, then $i_* : \pi_1(X,x_0) \to \pi_1(X,x_0)$ is the identity homomorphism.
 		\item If $h : (X,x_0) \to (Y,y_0)$ is a homeomorphism, then $h_* : \pi_1(X,x_0) \to \pi_1(Y,y_0)$ is a group isomorphism.
 	\end{itemize}
@@ -350,10 +350,10 @@ For later use, we prove here a strengthened version of theorem \ref{thm:Surjecti
 	\begin{itemize}
 		\item The homomorphism $p_*: \pi_1(E,e_0) \rightarrow \pi_1(B,b_0)$ induced by $p$ is injective.
 		\item Let $H = p_*(\pi_1(E,e_0)) \subseteq \pi_1(B,b_0)$. Then the lifting correspondence $\phi: \pi_1(B,b_0) \rightarrow p^{-1}(b_0)$ induces an injective map
-		      \begin{equation}
-			      \Phi: \pi_1(B,b_0)/ H \rightarrow p^{-1}(b_0), \quad \Phi([f]H) = \bar{f}(1),
-		      \end{equation}
-		      where we take the set of left cosets of $H$ in $\pi_1(B,b_0)$, and $\Phi$ is bijective if $E$ is path connected.
+			\begin{equation}
+				\Phi: \pi_1(B,b_0)/ H \rightarrow p^{-1}(b_0), \quad \Phi([f]H) = \bar{f}(1),
+			\end{equation}
+			where we take the set of left cosets of $H$ in $\pi_1(B,b_0)$, and $\Phi$ is bijective if $E$ is path connected.
 		\item If $f$ is a loop in $B$ based at $b_0$, then $[f] \in H$ if and only if the unique lifting $\bar{f}$ of $f$ starting at $e_0$ is a loop in $E$ based at $e_0$.
 	\end{itemize}
 \end{theorem}

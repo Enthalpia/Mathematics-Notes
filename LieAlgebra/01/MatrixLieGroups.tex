@@ -136,7 +136,7 @@ A mere taking both sides' determinants shows that $\det(A) = \pm 1$ for all $A \
 \end{proof}
 The same goes for the complex case: $Sp(n;\mathbb{C})$ is the set of all $A \in GL(2n;\mathbb{C})$ that preserve the bilinear form. Same again, we have $\det(A) = 1$ for all $A \in Sp(n;\mathbb{C})$.
 
-We shall also define the \textbf{compalex symplectic group} as
+We shall also define the \textbf{compact symplectic group} as
 \begin{equation*}
 	Sp(n) = Sp(n;\mathbb{C}) \cap U(2n).
 \end{equation*}
@@ -511,5 +511,111 @@ We shall see that $\mathbb{R}P^n$ is metrizable, by defining
 
 $\mathbb{R}P^n$ is not simply connected for $n \geq 2$. In fact, take the continuous path on $S^n$ from $u$ to $-u$ along a great circle, then project it down to $\mathbb{R}P^n$. The resulting loop cannot be contracted to a point.
 
+We can also use the projection to make $\mathbb{R}P^n$ to be a unit ball in $\mathbb{R}^n$ with antipodal points on the boundary identified.
+
+We now turn to a topological analysis of $SO(3)$.
+\begin{proposition}{Structure of $SO(3)$}{Structure of SO3}
+	There is a continuous bijection between $SO(3)$ and $\mathbb{R}P^3$. It is a Lie group isomorphism.
+
+	So, $SO(3)$ is connected but not simply connected.
+\end{proposition}
+\begin{proof}
+	For any $v \in S^2$, let $R_{v, \theta} \in SO(3)$ consisting of a right-handed rotation by angle $\theta$ in the plane orthogonal to $v$. Then $R_{v, \theta} = R_{-v, -\theta}$. It is also not hard to show that every $R \in SO(3)$ can be expressed as $R_{v, \theta}$ for some $v \in S^2$ and $\theta \in [-\pi, \pi]$. Furthermore, we can arrange that $\theta \in [0, \pi]$ by replacing $v$ with $-v$ if necessary.
+
+	If $R = I$, then $R = R_{v, 0}$ for all $v \in S^2$. If $R$ is a rotation by $\pi$, then $R = R_{v, \pi} = R_{-v, \pi}$ for some $v \in S^2$. Otherwise, $R = R_{v, \theta}$ for a unique $v \in S^2$ and $\theta \in (0, \pi)$.
+
+	Now, denote $B^3 = \{ x \in \mathbb{R}^3 : \|x\| \leq \pi \}$, and consider $\Phi: B^3 \to SO(3)$ defined by
+	\begin{equation}
+		\Phi(u) = R_{u/\|u\|, \|u\|}, \qquad \Phi(0) = 1.
+	\end{equation}
+	well, we can see that $\Phi$ is continuous and injective except at antipodals at the boundary of $B^3$. Therefore, $\Phi$ induces a continuous bijection from $\mathbb{R}P^3$ to $SO(3)$.
+\end{proof}
+
+\subsection{Topology of $SU(2)$}
+
+We can also identify $SU(2)$ with $S^3$.
+\begin{proposition}{Structure of $SU(2)$}{Structure of SU2}
+	There is a continuous bijection between $SU(2)$ and $S^3$. It is a Lie group isomorphism.
+\end{proposition}
+
+\section{Homomorphisms}
+We now look at the notion of homomorphisms for matrix Lie groups.
+
+\begin{definition}{Lie Group Homomorphisms}{Lie Group Homomorphisms}
+	Let $G$ and $H$ be matrix Lie groups. A map $\Phi$ from $G$ to $H$ is called a \textbf{Lie group homomorphism} if
+	\begin{itemize}
+		\item $\Phi$ is a group homomorphism.
+		\item $\Phi$ is continuous.
+	\end{itemize}
+	If in addition $\Phi$ is a homeomorphism onto its image, then $\Phi$ is called a \textbf{Lie group embedding}. If $\Phi$ is a bijection and $\Phi^{-1}$ is continuous, then $\Phi$ is called a \textbf{Lie group isomorphism}.
+\end{definition}
+
+The simplest interesting example of a Lie group homomorphism is the determinant, which is a homomorphism of $GL(n;\mathbb{C})$ into $\mathbb{C}^*$. Another simple example is the map $\Phi: \mathbb{R} \to SO(2)$ defined by
+\begin{equation*}
+	\Phi(t) = \begin{pmatrix}
+		\cos t & -\sin t \\
+		\sin t & \cos t
+	\end{pmatrix}.
+\end{equation*}
+
+\begin{example}{$SU(2)$ and $SO(3)$}{SU2 and SO3}
+	We shall see that there exists a Lie group homomorphism $\Phi: SU(2) \to SO(3)$ that is two-to-one and surjective.
+
+	Consider the space $V$ of all $2 \times 2$ complex matrices $X$ which are self-adjoint and have trace zero. We can write
+	\begin{equation}
+		X = \begin{pmatrix}
+			x_1 & x_2 + i x_3 \\
+			x_2 - i x_3 & -x_1
+		\end{pmatrix},
+	\end{equation}
+	with $x_1, x_2, x_3 \in \mathbb{R}$, to identify $V$ with $\mathbb{R}^3$.
+
+	By simple calculations, we can show that the standard inner product on $\mathbb{R}^3$ is given by in $V$:
+	\begin{equation}
+		\langle X_1, X_2 \rangle = \frac{1}{2} \tr(X_1 X_2), \qquad X_1, X_2 \in V.
+	\end{equation}
+	For each $U \in SU(2)$, define $\Phi_U: V \to V$ by $\Phi_U(X) = U X U^{-1}$. Then $\Phi_U$ is a linear transformation on $V$ that preserves the inner product. It follows that $U \mapsto \Phi_U$ is a homomorphism from $SU(2)$ into the group of orthogonal linear transformations of $V \cong \mathbb{R}^3$. Since $SU(2)$ is connected, the image of this homomorphism lies in $SO(3)$ from continuity.
+
+	Next, both $\Phi_I$ and $\Phi_{-I}$ are identity elements in $SO(3)$. Suppose, for example, that
+	\begin{equation}
+		U = \begin{pmatrix}
+			e^{i \theta / 2} & 0 \\
+			0 & e^{-i \theta / 2}
+		\end{pmatrix} \in SU(2).
+	\end{equation}
+	Then by direct calculations, we can show that $\Phi_U$ is a rotation by angle $\theta$ about the $x_1$-axis.
+\end{example}
+
+\begin{proposition}{Structure of $SU(2)$ to $SO(3)$}{Structure of SU2 to SO3}
+	The map $U \mapsto \Phi_U$ is a 2-1 and surjective map from $SU(2)$ to $SO(3)$, with kernel $\{I, -I\}$. $\Phi$ is also a \textbf{double cover} in the topological sense.
+\end{proposition}
+
+\begin{remark}
+	Since $SU(2)$ is homeomorphic to $S^3$, the proposition gives another way of seeing that $SO(3)$ is homeomorphic to $\mathbb{R}P^3$. It follows by the theory of covering maps that $SO(3)$ cannot be simply connected and, indeed, it must have fundamental group $\mathbb{Z} / 2$.
+\end{remark}
+
+\section{Lie Groups}
+\begin{definition}{Lie Groups}{Lie Groups}
+	A Lie group is a smooth manifold equipped with a group structure such that the operations of group multiplication and inversion are smooth.
+\end{definition}
+As the terminology suggests, every matrix Lie group is a Lie group. The reverse is not true: Not every Lie group is isomorphic to a matrix Lie group. Nevertheless, we have restricted our attention in this book to matrix Lie groups.
+
+\begin{example}{Lie Groups}{Lie Groups}
+	Let
+	\begin{equation}
+		G = \mathbb{R} \times \mathbb{R} \times S^1
+	\end{equation}
+	equipped with the group product given by 
+	\begin{equation}
+		(x_1, y_1, u_1) \cdot (x_2, y_2, u_2) = (x_1 + x_2, y_1 + y_2, e^{i x_1 y_2} u_1 u_2).
+	\end{equation}
+	Then $G$ is a Lie group that is not isomorphic to any matrix Lie group.
+\end{example}
+
+\begin{remark}
+	It is customary to call a map $\Phi$ between two Lie groups a Lie group homomorphism if $\Phi$ is \textbf{smooth} group homomorphism. We will show, however, that every continuous homomorphism between matrix Lie groups is automatically smooth, so that there is no conflict of terminology in definition \ref{def:Lie Group Homomorphisms}.
+
+	Finally, we note that since every matrix Lie group $G$ is a manifold, $G$ must be locally path connected. It then follows by a standard topological argument that $G$ is connected if and only if it is path connected.
+\end{remark}
 
 \end{document}

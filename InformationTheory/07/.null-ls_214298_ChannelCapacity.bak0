@@ -1,0 +1,8 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\chapter{Channel Capacity}
+What do we mean when we say that $A$ communicates with $B$? We mean the physical act of $A$ can result in a desired physical state of $B$. This transfer of information is a physical process and therefore is subject to the uncontrollable ambient noise and imperfections of the physical signaling process itself. The communication is successful if the receiver $B$ and the transmitter $A$ can agree on the message that was sent.
+
+
+\end{document}

@@ -1,0 +1,146 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\chapter{Model Riemannian Manifolds}
+
+Before we delve into the general theory of Riemannian manifolds, we pause to give it some substance by introducing a variety of ``model Riemannian manifolds'' that should help to motivate the general theory. These manifolds are distinguished by having a high degree of symmetry.
+
+\section{Symmetries of Riemannian Manifolds}
+The main feature of the Riemannian manifolds we are going to introduce in this chapter is that they are all highly symmetric, meaning that they have large groups of isometries.
+
+\begin{definition}{Homogeneous}{Homogeneous}
+  Let $(M,g)$ be a Riemannian manifold. We say that $(M,g)$ is \emph{homogeneous} if $\Iso(M,g)$ acts transitively on $M$, i.e., for any two points $p,q \in M$, there exists an isometry $\phi \in \Iso(M,g)$ such that $\phi(p) = q$.
+\end{definition}
+
+Given a point $p \in M$ let $\Iso(M,g)_p$ denote the subgroup of $\Iso(M,g)$ consisting of isometries that fix $p$ (i.e., $\Iso(M,g)_p = \{\phi \in \Iso(M,g) : \phi(p) = p\}$). Then for each $\varphi \in \Iso_p(M,g)$, the differential $\mathrm{d} \varphi_p$ takes the tangent space $T_p M$ to itself, and the map $I_p: \Iso_p(M,g) \to GL(T_p M)$ defined by $I_p(\varphi) = \mathrm{d} \varphi_p$ is a representation of the group $\Iso_p(M,g)$, called the \textbf{isotropy representation}. We say that $M$ is \textbf{isotropic} at $p$ if the isotropy representation of $\Iso_p(M,g)$ acts transitively on the set of unit vectors in $T_p M$. We say that $(M,g)$ is \textbf{isotropic} if it is isotropic at every point $p \in M$.
+
+\begin{remark}
+  The injectivity of $I_p$ is not that obvious at first glance. We shall prove this later, which implies that the Riemannian manifolds are ``rigid'' in the sense that an isometry is completely determined by its value and its differential at a single point.
+\end{remark}
+
+There is an even stronger kind of symmetry than isotropy. Let $O(M)$ denote the set of all orthonormal bases for all tangent spaces of $M$.
+\begin{equation}
+  O(M) = \bigcup_{p \in M} \{ \text{orthonormal bases for } T_p M \}
+\end{equation}
+There is an induced action of $\Iso(M,g)$ on $O(M)$ defined by using the differential of an isometry $\varphi$ to push an orthonormal basis at $p$ forward to an orthonormal basis at $\varphi(p)$.
+\begin{equation}
+  \varphi \cdot (b_1, \ldots, b_n) = (\mathrm{d} \varphi_p(b_1), \ldots, \mathrm{d} \varphi_p(b_n)) \in O_{\varphi(p)}(M)
+\end{equation}
+We say that $(M,g)$ is \textbf{frame homogeneous} if this induced action is transitive on $O(M)$, i.e., for any two orthonormal bases at $p,q$, there exists an isometry taking $p$ to $q$ and taking the first basis to the second basis.
+
+\begin{proposition}{}{}
+  Let $(M,g)$ be a Riemannian manifold.
+  \begin{itemize}
+    \item If $M$ is isotropic at one point and it is homogeneous, then it is isotropic at every point.
+    \item If $M$ is frame homogeneous, then it is isotropic and homogeneous.
+  \end{itemize}
+\end{proposition}
+\begin{proof}
+  The first statement is proved by ``pulling back'' the isotropy at one point to any other point using the homogeneity. Just use $\varphi^{-1}$ to pull two arbitrary unit vectors at $q$ back to $p$, and then use the isotropy at $p$ to find an isometry that takes one of the pulled back vectors to the other. Then push this isometry forward to $q$ using $\varphi$.
+
+  The second statement is obvious.
+\end{proof}
+
+\begin{remark}
+  A homogeneous Riemannian manifold looks geometrically the same at every point, while an isotropic one looks the same in every direction. It turns out that an isotropic Riemannian manifold is automatically homogeneous; however, a Riemannian manifold can be 
+  \begin{itemize}
+    \item isotropic at one point without being isotropic (for a paraboloid of revolution, for example).
+    \item homogeneous without being isotropic anywhere (for the Berger metric on $S^3$, for example).
+    \item homogeneous and isotropic without being frame homogeneous (for the Fubini-Study metric on $\mathbb{CP}^n$, for example).
+  \end{itemize}
+  The proofs of these claims will have to wait until we have developed the theories of geodesics and curvature.
+\end{remark}
+Myers–Steenrod theorem shows that $\Iso(M,g)$ is always a Lie group acting smoothly on $M$.
+
+\section{Euclidean Space}
+The simplest and most important model Riemannian manifold is of course $n$-dimensional Euclidean space $\mathbb{R}^n$ with its standard metric $\bar{g}$.
+
+It is easy to construct isometries of the Riemannian manifold $(\mathbb{R}^n, \bar{g})$. For every orthogonal linear transformation $A \in O(n)$ and every translation vector $b \in \mathbb{R}^n$, the map $x \mapsto b + Ax$ is an isometry of $(\mathbb{R}^n, \bar{g})$. In fact, every isometry of $(\mathbb{R}^n, \bar{g})$ is of this form.
+
+It turns out that the set of all such isometries can be realized as a Lie group acting smoothly on $\mathbb{R}^n$. Define the Euclidean group $E(n)$ to be the semi-direct product
+\begin{equation}
+  E(n) = \mathbb{R}^n \rtimes_{\theta} O(n)
+\end{equation}
+where $\theta$ is the natural action of $O(n)$ on $\mathbb{R}^n$. The underlying manifold of $E(n)$ is the Cartesian product $\mathbb{R}^n \times O(n)$, with multiplication defined by
+\begin{equation}
+  (b_1, A_1) \cdot (b_2, A_2) = (b_1 + A_1 b_2, A_1 A_2)
+\end{equation}
+It has a faithful representation given by the map $\rho: E(n) \to GL(n+1, \mathbb{R})$ defined by
+\begin{equation}
+    \rho(b, A) = \begin{pmatrix}
+      A & b \\
+      0 & 1
+    \end{pmatrix}
+\end{equation}
+
+It is easy to check that each Euclidean space is frame-homogeneous by using the isometries.
+
+\section{Spheres}
+Given $R > 0$, let $S^n(R)$ denote the $n$-dimensional sphere of radius $R$ in $\mathbb{R}^{n+1}$, endowed with the Riemannian metric $\mathring{g}_R$ (called the \textbf{round metric} of radius $R$) induced from the Euclidean metric $\bar{g}$ on $\mathbb{R}^{n+1}$. We abbreviate $S^n(1)$ as $S^n$ and $\mathring{g}_1$ as $\mathring{g}$.
+
+We can immediately write down a large group of isometries of $S^n(R)$ / by observing that the linear action of the orthogonal group $O(n+1)$ on $\mathbb{R}^{n+1}$ preserves $S^n(R)$ and the Euclidean metric $\bar{g}$.
+
+\begin{proposition}{}{}
+  The group $O(n+1)$ acts transitively on $O(S^n(R))$, and thus each round sphere is frame-homogeneous.
+\end{proposition}
+
+Another important feature of the round metrics—one that is much less evident than their symmetry—is that they bear a certain close relationship to the Euclidean metrics, which we now describe.
+\begin{definition}{Conformal Metrics}{Conformal Metrics}
+  Two metrics $g_1$ and $g_2$ on a manifold $M$ are said to be \emph{conformally related} if there exists a positive function $f \in C^{\infty}(M)$ such that $g_2 = f g_1$.
+
+  Given two Riemannian manifolds $(M_1, g_1)$ and $(M_2, g_2)$, a diffeomorphism $\varphi: M_1 \to M_2$ is said to be a \emph{conformal diffeomorphism} if the pullback metric $\varphi^* g_2$ is conformally related to $g_1$.
+\end{definition}
+
+We can show that conformal diffeomorphisms are the same as angle-preserving diffeomorphisms. Two Riemannian manifolds are said to be conformally equivalent if there is a conformal diffeomorphism between them.
+
+A Riemannian manifold $(M,g)$ is said to be \emph{locally conformally flat} if every point $p \in M$ has a neighborhood $U$ that is conformally equivalent to an open subset of Euclidean space $(\mathbb{R}^n, \bar{g})$.
+
+\begin{proposition}{Conformal}{Conformal}
+  \begin{itemize}
+    \item For every smooth manifold $M$, conformality is an equivalence relation on the set of Riemannian metrics on $M$.
+    \item The conformal equivalence is an equivalence relation on the class of Riemannian manifolds.
+    \item Suppose $g_2=fg_1$ are conformally related metrics on an oriented $n$-dimensional manifold $M$. Then the volume forms $\mathrm{d} V_{g_1}$ and $\mathrm{d} V_{g_2}$ are related by
+      \begin{equation}
+        \mathrm{d} V_{g_2} = f^{n/2} \mathrm{d} V_{g_1}
+      \end{equation}
+  \end{itemize}
+\end{proposition}
+
+A conformal equivalence between $\mathbb{R}^n$ and $S^n \setminus \{N\}$, where $N$ is the north pole of $S^n$, can be constructed using \textbf{stereographic projection}. Therefore, Each sphere with a round metric is locally conformally flat.
+
+\section{Hyperbolic Space}
+The hyperbolic space $\mathbb{H}^n(R)$ of radius $R$ is a frame-homogeneous Riemannian manifold. There are four equivalent models of the hyperbolic spaces, each of which is useful in certain contexts. In the next theorem, we introduce all of them and show that they are isometric.
+
+\begin{theorem}{Hyperbolic Spaces}{Hyperbolic Spaces}
+  Let $n\in \mathbb{Z}_{\geq 1}$ and $R > 0$. The following four Riemannian manifolds are all isometric to each other:
+  \begin{itemize}
+    \item \textbf{Hyperboloid model:} The hyperboloid $\mathbb{H}^n(R)$ is the submanifold of the Minkowski space $\mathbb{R}^{n,1}$ defined in standard coordinates $(\xi^1, \ldots , \xi^n, \tau)$ as the ``upper sheet'' $\{\tau > 0\}$ of the two-sheeted hyperboloid $\{(\xi^1)^2 + \ldots + (\xi^n)^2 - \tau^2 = -R^2\}$, with the induced metric
+      \begin{equation}
+        \breve{g}_R^1 = \iota^* \bar{q}
+      \end{equation}
+    \item \textbf{Beltrami-Klein model:} $\mathbb{K}^n(R)$ is the ball of radius $R$ centered at the origin in $\mathbb{R}^n$, with the metric given in coordinates $(w^1, \ldots , w^n)$ by
+      \begin{equation}
+        \breve{g}_R^2 = R^2 \frac{(\mathrm{d} w^1)^2 + \ldots + (\mathrm{d} w^n)^2}{(R^2 - |w|^2)} + R^2 \frac{(w^1 \mathrm{d} w^1 + \ldots + w^n \mathrm{d} w^n)^2}{(R^2 - |w|^2)^2}
+      \end{equation}
+    \item \textbf{Poincaré ball model:} $\mathbb{B}^n(R)$ is the ball of radius $R$ centered at the origin in $\mathbb{R}^n$, with the metric given in coordinates $(u^1, \ldots , u^n)$ by
+      \begin{equation}
+        \breve{g}_R^3 = 4 R^4 \frac{(\mathrm{d} u^1)^2 + \ldots + (\mathrm{d} u^n)^2}{(R^2 - |u|^2)^2}
+      \end{equation}
+    \item \textbf{Poincaré half-space model:} $\mathbb{U}^n(R)$ is the upper half-space in $\mathbb{R}^n$ defined in coordinates $(x^1, \ldots , x^{n-1}, y)$ by $\mathbb{U}^n(R) = \{(x, y): y > 0\}$, with the metric given by
+      \begin{equation}
+        \breve{g}_R^4 = R^2 \frac{(\mathrm{d} x^1)^2 + \ldots + (\mathrm{d} x^{n-1})^2 + (\mathrm{d} y)^2}{y^2}
+      \end{equation}
+  \end{itemize}
+\end{theorem}
+\begin{proof}
+  We illustrate the isometries between the four models in the case $n=2$. The general case is similar. Technically speaking, these isometries are obtained by choosing an appropriate projection method from the hyperboloid model to a plane, and then \emph{define} the metric on the plane to be the one that makes the projection an isometry.
+\end{proof}
+
+\begin{figure}[ht]
+    \centering
+    \incfig{hyperbolic-space}
+    \caption{Hyperbolic Space}
+    \label{fig:hyperbolic-space}
+\end{figure}
+
+\end{document}

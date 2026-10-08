@@ -1,0 +1,409 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\chapter{Entropy}
+
+Information theory answers two fundamental questions in communication theory: What is the ultimate data compression (answered by \textbf{entropy}) and what is the ultimate transmission rate of communication (answered by \textbf{channel capacity}). In this chapter we introduce most of the basic definitions required for subsequent development of the theory.
+
+The concept of information is too broad to be captured completely by a single definition. However, for any probability distribution, we define a quantity called the \textbf{entropy}.
+
+\section{Entropy}
+The \textbf{entropy} is a measure of the uncertainty of a random variable.
+
+\begin{example}{}{}
+  Consider a random variable that has a uniform distribution over $32$ outcomes. To identify an outcome, we need a label that takes $5$ bits, since $2^5 = 32$. So we may say that the entropy of this random variable is $5$ bits.
+
+  \medskip
+  Now, for an example of nonuniform distribution, consider $8$ outcomes with probabilities $p = (1/2, 1/4, 1/8, 1/16, 1/64, 1/64, 1/64, 1/64)$. While $3$ bits, of course, are sufficient to identify an outcome, but as the outcomes are not equally likely, we may be able to do better. We can assign shorter labels to more likely outcomes and longer labels to less likely outcomes. For example, we can assign the following labels: $(0, 10, 110, 1110, 111100, 111101, 111110, 111111)$. The average length of the labels is $2$ bits, which is less than $3$ bits.
+\end{example}
+
+\begin{definition}{Entropy}{Entropy}
+  Let $X$ be a discrete random variable with alphabet $\mathcal{X}$ and probability mass function $p(x) = \Pr(X=x)$ for $x \in \mathcal{X}$. The entropy of $X$, denoted by $H(X)$, is defined as
+  \begin{equation}
+    H(X) = -\sum_{x \in \mathcal{X}} p(x) \log_2 p(x)
+  \end{equation}
+\end{definition}
+The log is to the base $2$ and entropy is expressed in bits. A fair coin toss has an entropy of $1$ bit, while a biased coin with probability $p$ of heads has an entropy of
+\begin{equation*}
+  H(X) = -p \log_2 p - (1-p) \log_2 (1-p)
+\end{equation*}
+which is maximized at $p=0.5$ and minimized at $p=0$ or $p=1$, a symmetric hill-shaped curve. Adding terms of zero probability does not change the entropy.
+
+If the base of the logarithm is changed to $b$, we denote the entropy as $H_b(X)$ and if $b=e$, the natural logarithm, entropy is measured in \textbf{nats}. Unless otherwise specified, we will take all logarithms to base $2$, and hence all the entropies will be measured in bits.
+
+\begin{remark}
+  Note that entropy is a functional of the distribution of $X$. It does not depend on the actual values taken by the random variable $X$, but only on the probabilities. 
+
+  We can verify that this definition of entropy is consistent with our intuition above. Informally, the entropy is the average number of bits required to describe the random variable $X$, or the average number of information I can learn about $X$ by observing its value. If $\Pr(X=x) = 1$, then knowing the value of $X$ does not give us any information, as its certain. Meanwhile, if $\Pr(X=x) = 1/2$ for two values of $x$, then knowing the value of $X$ gives us $1$ bit of information. So its quite obvious why the maximum entropy is achieved when the distribution is uniform, and the minimum entropy is achieved when the distribution is degenerate.
+\end{remark}
+
+The expectation is denoted by $E[\cdot]$ and if $X \sim p(x)$, then the expected value of a function $g(X)$ is given by
+\begin{equation*}
+  E[g(X)] = \sum_{x \in \mathcal{X}} p(x) g(x)
+\end{equation*}
+
+\begin{remark}
+  The entropy can be expressed as the expected value of the random variable $-\log_2 p(X)$, i.e.,
+  \begin{equation}
+    H(X) = E[-\log_2 p(X)] = -\sum_{x \in \mathcal{X}} p(x) \log_2 p(x)
+  \end{equation}
+  This definition of entropy is related to the definition of entropy in thermodynamics.
+
+  This gives another interpretation of entropy. If $\Pr(X=x) = p(x)$, then $-\log_2 p(x)$ is the number of bits of information we learn about $X$ when we observe that $X=x$. The entropy is the expected value of this quantity, i.e., the average number of bits of information we learn about $X$ when we observe its value.
+\end{remark}
+
+It is possible to derive the definition of entropy axiomatically by defining certain properties that the entropy of a random variable must satisfy. Here, we shall show that the definition of entropy arises as the answer to a number of natural questions, like ``What is the average length of the shortest description of the random variable $X$?'' First, we show some properties of entropy.
+
+\begin{proposition}{Properties of Entropy}{Properties of Entropy}
+  Some properties of entropy are as follows:
+  \begin{itemize}
+    \item $H(X) \geq 0$.
+    \item $H(X) = 0$ if and only if $X$ is a constant random variable.
+    \item $H_b(X) = \log_b a H_a(X)$ for any $a,b > 0$.
+  \end{itemize}
+\end{proposition}
+
+\section{Joint Entropy and Conditional Entropy}
+We now extend the definition to a pair of random variables. There is nothing really new in this definition because $(X,Y)$ can be treated as a vector-valued random variable.
+
+\begin{definition}{Joint Entropy}{Joint Entropy}
+  Let $(X,Y)$ be a pair of discrete random variables with joint alphabet $\mathcal{X} \times \mathcal{Y}$ and joint probability mass function $p(x,y) = \Pr(X=x,Y=y)$ for $(x,y) \in \mathcal{X} \times \mathcal{Y}$. The joint entropy of $(X,Y)$, denoted by $H(X,Y)$, is defined as
+  \begin{equation}
+    H(X,Y) = -\sum_{(x,y) \in \mathcal{X} \times \mathcal{Y}} p(x,y) \log_2 p(x,y) = -E[\log_2 p(X,Y)]
+  \end{equation}
+\end{definition}
+
+We also define the conditional entropy of a random variable given another as the expected value of the entropies of the conditional distributions, averaged over the conditioning random variable.
+
+\begin{definition}{Conditional Entropy}{Conditional Entropy}
+  Let $(X,Y)$ be a pair of discrete random variables with joint alphabet $\mathcal{X} \times \mathcal{Y}$ and joint probability mass function $p(x,y) = \Pr(X=x,Y=y)$ for $(x,y) \in \mathcal{X} \times \mathcal{Y}$. The conditional entropy of $X$ given $Y$, denoted by $H(X|Y)$, is defined as
+  \begin{equation}
+    \begin{aligned}
+      H(X|Y) &= -\sum_{x \in \mathcal{X}} p(x) H(Y|X=x)\\
+             &= -\sum_{(x,y) \in \mathcal{X} \times \mathcal{Y}} p(x,y) \log_2 p(x|y)\\
+             &= -E[\log_2 p(X|Y)]
+    \end{aligned}
+  \end{equation}
+  where $p(x|y) = \Pr(X=x|Y=y)$ is the conditional probability mass function of $X$ given $Y$.
+\end{definition}
+
+The naturalness of the definition of joint entropy and conditional entropy is exhibited by the fact that the entropy of a pair of random variables is the entropy of one plus the conditional entropy of the other.
+
+\begin{theorem}{Chain Rule}{Chain Rule}
+  Let $(X,Y)$ be a pair of discrete random variables with joint alphabet $\mathcal{X} \times \mathcal{Y}$ and joint probability mass function $p(x,y) = \Pr(X=x,Y=y)$ for $(x,y) \in \mathcal{X} \times \mathcal{Y}$. Then the entropy of the pair $(X,Y)$ is given by
+  \begin{equation}
+    H(X,Y) = H(X) + H(Y|X) = H(Y) + H(X|Y)
+  \end{equation}
+\end{theorem}
+\begin{proof}
+  As we have
+  \begin{equation*}
+    \log_2 p(x,y) = \log_2 p(x) + \log_2 p(y|x)
+  \end{equation*}
+  and taking the expected value of both sides, we have our result.
+\end{proof}
+
+\begin{remark}
+  The conditional entropy $H(Y|X)$ is the average uncertainty remaining about $Y$ when $X$ is known. The chain rule shows that the total uncertainty about $(X,Y)$ can be decomposed into the uncertainty about $X$ and the uncertainty about $Y$ given $X$, which is quite reasonable. This also gives intuition of why the conditional entropy is defined as it is: the average uncertainty about $Y$ given $X$ is the average of the uncertainties about $Y$ for each value of $X$, weighted by the probability of that value of $X$.
+\end{remark}
+
+We also have
+\begin{equation}
+  H(X, Y | Z) = H(X | Z) + H(Y | X, Z)
+\end{equation}
+similarly.
+
+\begin{remark}
+  Note that $H(X|Y) \neq H(Y|X)$ in general.
+\end{remark}
+
+\section{Relative Entropy and Mutual Information}
+The entropy of a random variable is a measure of the uncertainty of the random variable; it is a measure of the amount of information required on the average to describe the random variable. In this section we introduce two related concepts: relative entropy and mutual information. 
+
+The \textbf{relative entropy} or \textbf{Kullback-Leibler divergence} is a measure of the difference between two probability distributions. In statistics, it arises as an expected logarithm of the likelihood ratio. The relative entropy $D(p||q)$ is a measure of the inefficiency of assuming that the distribution is $q$ when the true distribution is $p$.
+
+\begin{definition}{Relative Entropy}{Relative Entropy}
+  Let $p(x)$ and $q(x)$ be two probability mass functions defined on the same alphabet $\mathcal{X}$. The relative entropy of $p$ with respect to $q$, denoted by $D(p||q)$, is defined as
+  \begin{equation}
+    D(p||q) = \sum_{x \in \mathcal{X}} p(x) \log_2 \frac{p(x)}{q(x)} = E_p \left[ \log_2 \frac{p(X)}{q(X)} \right]
+  \end{equation}
+  where we use the convention that $0 \log 0 / 0 = 0$, $0 \log 0 / q = 0$ for $q > 0$, and $p \log p / 0 = \infty$ for $p > 0$.
+\end{definition}
+
+We will see that the relative entropy is always nonnegative, and is zero if and only if $p = q$. However, it is not a true distance between distributions since it is not symmetric and does not satisfy the triangle inequality. Nonetheless, it is often useful to think of relative entropy as a ``distance'' between distributions. 
+
+We now introduce mutual information, which is a measure of the amount of information that one random variable contains about another random variable. It is the reduction in the uncertainty of one random variable due to the knowledge of the other.
+
+\begin{definition}{Mutual Information}{Mutual Information}
+  Let $(X,Y)$ be a pair of discrete random variables with joint alphabet $\mathcal{X} \times \mathcal{Y}$ and joint probability mass function $p(x,y) = \Pr(X=x,Y=y)$ for $(x,y) \in \mathcal{X} \times \mathcal{Y}$. The mutual information between $X$ and $Y$, denoted by $I(X;Y)$, is defined as
+  \begin{equation}
+    I(X;Y) = D(p(x,y) || p(x)p(y)) = H(X) - H(X|Y) = H(Y) - H(Y|X)
+  \end{equation}
+  where $p(x)p(y)$ is the product of the marginal distributions of $X$ and $Y$.
+\end{definition}
+
+To prove the expression, we have
+\begin{equation*}
+  \begin{aligned}
+    I(X;Y) &= D(p(x,y) || p(x)p(y))\\
+           &= \sum_{(x,y) \in \mathcal{X} \times \mathcal{Y}} p(x,y) \log_2 \frac{p(x,y)}{p(x)p(y)}\\
+           &= \sum_{(x,y) \in \mathcal{X} \times \mathcal{Y}} p(x,y) \log_2 p(x,y) - \sum_{(x,y) \in \mathcal{X} \times \mathcal{Y}} p(x,y) \log_2 p(x)p(y)\\
+           &= -H(X,Y) + H(X) + H(Y)
+  \end{aligned}
+\end{equation*}
+
+\begin{remark}
+  We can easily memorize the relationship between entropy, conditional entropy, and mutual information in a Venn diagram.
+  \begin{equation*}
+    \begin{aligned}
+      H(X) &= H(X|Y) + I(X;Y)\\
+      H(Y) &= H(Y|X) + I(X;Y)\\
+      H(X,Y) &= H(X|Y) + H(Y|X) + I(X;Y)
+    \end{aligned}
+  \end{equation*}
+\end{remark}
+
+\section{Chain Rules}
+Here is a generalization of the chain rule:
+\begin{theorem}{Chain Rule}{Chain Rule}
+  Let $(X_1, X_2, \ldots, X_n)$ be a sequence of discrete random variables with joint alphabet $\mathcal{X}_1 \times \mathcal{X}_2 \times \ldots \times \mathcal{X}_n$ and joint probability mass function $p(x_1, x_2, \ldots, x_n) = \Pr(X_1=x_1, X_2=x_2, \ldots, X_n=x_n)$ for $(x_1, x_2, \ldots, x_n) \in \mathcal{X}_1 \times \mathcal{X}_2 \times \ldots \times \mathcal{X}_n$. Then the entropy of the sequence $(X_1, X_2, \ldots, X_n)$ is given by
+  \begin{equation}
+    H(X_1, X_2, \ldots, X_n) = H(X_1) + H(X_2|X_1) + H(X_3|X_1,X_2) + \ldots + H(X_n|X_1,X_2,\ldots,X_{n-1})
+  \end{equation}
+\end{theorem}
+\begin{proof}
+  Just expand $\log_2 p$ in the definition and take the expected value.
+\end{proof}
+
+If we define the conditional mutual information as
+\begin{equation}
+  I(X;Y|Z) = H(X|Z) - H(X|Y,Z)
+\end{equation}
+which is pretty straightforward, as $Z$ is just the conditioning random variable, then we have the following chain rule for mutual information:
+\begin{theorem}{Chain Rule for Mutual Information}{Chain Rule for Mutual Information}
+  Let $(X_1, X_2, \ldots, X_n)$ and $Y$ be discrete random variables, then we have
+  \begin{equation}
+    I(X_1, X_2, \ldots, X_n; Y) = I(X_1; Y) + I(X_2; Y|X_1) + \ldots + I(X_n; Y|X_1,X_2,\ldots,X_{n-1})
+  \end{equation}
+\end{theorem}
+which is very straightforward to prove via the Venn diagram point of view.
+
+We define a conditional version of the relative entropy.
+\begin{definition}{Conditional Relative Entropy}{Conditional Relative Entropy}
+  Let $(X,Y)$ be a pair of discrete random variables with joint alphabet $\mathcal{X} \times \mathcal{Y}$ and joint probability mass function $p(x,y) = \Pr(X=x,Y=y)$ for $(x,y) \in \mathcal{X} \times \mathcal{Y}$. Let $q(x|y)$ be a conditional probability mass function of $X$ given $Y$. The conditional relative entropy of $p(x|y)$ with respect to $q(x|y)$, denoted by $D(p(x|y)||q(x|y))$, is defined as
+  \begin{equation}
+    D(p(x|y)||q(x|y)) = E_{p(y)}[D(p(x|y)||q(x|y))] = E_{p(x,y)}\left[\log_2 \frac{p(x|y)}{q(x|y)}\right]
+  \end{equation}
+\end{definition}
+
+The relative entropy between two joint distributions on a pair of random variables can be expanded as the sum of a relative entropy and a conditional relative entropy.
+
+\begin{theorem}{Chain Rule for Relative Entropy}{Chain Rule for Relative Entropy}
+  Let $(X,Y)$ be a pair of discrete random variables with joint alphabet $\mathcal{X} \times \mathcal{Y}$ and joint probability mass function $p(x,y) = \Pr(X=x,Y=y)$ for $(x,y) \in \mathcal{X} \times \mathcal{Y}$. Let $q(x,y) = q(y)q(x|y)$ be another joint probability mass function on the same alphabet. Then we have
+  \begin{equation}
+    D(p(x,y)||q(x,y)) = D(p(y)||q(y)) + D(p(x|y)||q(x|y))
+  \end{equation}
+\end{theorem}
+\begin{proof}
+  Direct expansion gives
+  \begin{equation*}
+    \begin{aligned}
+      D(p(x,y)||q(x,y)) &= \sum_{x,y} p(x,y) \log_2 \frac{p(x,y)}{q(x,y)}\\
+      &= \sum_{x,y} p(x,y) \log_2 \frac{p(y)p(x|y)}{q(y)q(x|y)}\\
+      &= \sum_{x,y} p(x,y) \log_2 \frac{p(y)}{q(y)} + \sum_{x,y} p(x,y) \log_2 \frac{p(x|y)}{q(x|y)}\\
+      &= D(p(y)||q(y)) + D(p(x|y)||q(x|y))
+    \end{aligned}
+  \end{equation*}
+\end{proof}
+
+\section{Some Useful Properties}
+
+We hereby give some useful properties.
+\begin{theorem}{Information Inequality}{Information Inequality}
+  Let $p(x)$, $q(x)$ be two probability mass functions defined on the same alphabet $\mathcal{X}$. Then we have $D(p||q) \geq 0$ with equality if and only if $p(x) = q(x)$ for all $x \in \mathcal{X}$.
+\end{theorem}
+\begin{proof}
+  Let $A$ be the support of $p(x)$, i.e., $A = \{x \in \mathcal{X} : p(x) > 0\}$. Then we have
+  \begin{equation*}
+    \begin{aligned}
+      D(p||q) &= \sum_{x \in A} p(x) \log_2 \frac{p(x)}{q(x)} = -\sum_{x \in A} p(x) \log_2 \frac{q(x)}{p(x)}\\
+      &\geq -\log_2 \sum_{x \in A} p(x) \frac{q(x)}{p(x)} = -\log_2 \sum_{x \in A} q(x) \geq -\log_2 1 = 0
+    \end{aligned}
+  \end{equation*}
+  where the first inequality follows from Jensen's inequality: as $\log_2$ is concave, we have
+  \begin{equation*}
+    \sum_{x \in A} p(x) \log_2 \frac{q(x)}{p(x)} \leq \log_2 \sum_{x \in A} p(x) \frac{q(x)}{p(x)}
+  \end{equation*}
+  and the equality holds if and only if $\frac{q(x)}{p(x)}$ is constant for all $x \in A$, i.e., $q(x) = p(x)$ for all $x \in A$.
+\end{proof}
+
+\begin{corollary}{Nonnegativity of mutual information}{Nonnegativity of mutual information}
+  Let $(X,Y)$ be a pair of discrete random variables then we have $I(X;Y) \geq 0$ with equality if and only if $X$ and $Y$ are independent.
+\end{corollary}
+\begin{proof}
+  As $I(X;Y) = D(p(x,y)||p(x)p(y))$, the result follows from the information inequality.
+\end{proof}
+
+Other corollaries include the following:
+\begin{itemize}
+  \item The conditional relative entropy is nonnegative, i.e.,
+    \begin{equation}
+      D(p(x|y)||q(x|y)) \geq 0
+    \end{equation}
+    with equality if and only if $p(x|y) = q(x|y)$ for all $x \in \mathcal{X}$ and $y \in \mathcal{Y}$, and
+  \item The conditional mutual information is nonnegative, i.e.,
+    \begin{equation}
+      I(X;Y|Z) \geq 0
+    \end{equation}
+    with equality if and only if $X$ and $Y$ are conditionally independent given $Z$.
+\end{itemize}
+
+We now show that the uniform distribution over the range $\mathcal{X}$ maximizes the entropy.
+\begin{theorem}{Maximal Entropy}{Maximal Entropy}
+  Let $X$ be a discrete random variable with alphabet $\mathcal{X}$ and probability mass function $p(x) = \Pr(X=x)$ for $x \in \mathcal{X}$. Then we have
+  \begin{equation}
+    H(X) \leq \log_2 |\mathcal{X}|
+  \end{equation}
+  with equality if and only if $p(x) = 1/|\mathcal{X}|$ for all $x \in \mathcal{X}$, i.e., $X$ is uniformly distributed over $\mathcal{X}$.
+\end{theorem}
+\begin{proof}
+  Let the uniform distribution over $\mathcal{X}$ be $u(x) = 1/|\mathcal{X}|$ for all $x \in \mathcal{X}$. Then we have
+  \begin{equation*}
+    D(p||u) = \sum_{x \in \mathcal{X}} p(x) \log_2 \frac{p(x)}{u(x)} = \log_2 |\mathcal{X}| - H(X) \geq 0
+  \end{equation*}
+  so we have $H(X) \leq \log_2 |\mathcal{X}|$ with equality if and only if $p(x) = u(x)$ for all $x \in \mathcal{X}$.
+\end{proof}
+
+\begin{theorem}{Condition Reduces Entropy}{Condition Reduces Entropy}
+  Let $(X,Y)$ be a pair of discrete random variables. Then we have
+  \begin{equation}
+    H(X|Y) \leq H(X)
+  \end{equation}
+  with equality if and only if $X$ and $Y$ are independent.
+\end{theorem}
+\begin{proof}
+  We have $I(X;Y) = H(X) - H(X|Y) \geq 0$ with equality if and only if $X$ and $Y$ are independent, so we have $H(X|Y) \leq H(X)$ with equality if and only if $X$ and $Y$ are independent.
+\end{proof}
+
+\begin{remark}
+  Intuitively, the theorem says that knowing another random variable $Y$ can only reduce the uncertainty in $X$. Note that this is true only on the average. Specifically, $H(X|Y=y)$ may be greater than or less than or equal to $H(X)$ for a specific value of $y$, but the average over all $y$ is less than or equal to $H(X)$. For example, in a court case, specific new evidence might increase uncertainty, but on the average evidence decreases uncertainty.
+
+  \medskip
+  A concrete example is the following.
+  \begin{center}
+    \begin{tabular}{c|c|c}
+      $X$ & $Y$ & $\Pr(X, Y)$\\
+      \hline
+      0 & 0 & 0\\
+      0 & 1 & 1/8\\
+      1 & 0 & 3/4\\
+      1 & 1 & 1/8
+    \end{tabular}
+  \end{center}
+  where $H(X) = 0.544$ bits, $H(X|Y=0) = 0$ bits, and $H(X|Y=1) = 1$ bit. So we have $H(X|Y) = 0.25$ bits. The uncertainty in $X$ is reduced if $Y$ is observed to be $0$, but increased if $Y$ is observed to be $1$. However, on the average, the uncertainty in $X$ is reduced by observing $Y$.
+\end{remark}
+
+\begin{theorem}{Independence Bound on Entropy}{Independence Bound on Entropy}
+  Let $(X_1, X_2, \ldots, X_n)$ be a sequence of discrete random variables. Then we have
+  \begin{equation}
+    H(X_1, X_2, \ldots, X_n) \leq H(X_1) + H(X_2) + \ldots + H(X_n)
+  \end{equation}
+  with equality if and only if $X_1, X_2, \ldots, X_n$ are independent.
+\end{theorem}
+\begin{proof}
+  By the chain rule, we have
+  \begin{equation*}
+    \begin{aligned}
+      H(X_1, X_2, \ldots, X_n) &= H(X_1) + H(X_2|X_1) + \cdots + H(X_n|X_1, X_2, \ldots, X_{n-1})\\
+                               &\leq H(X_1) + H(X_2) + \cdots + H(X_n)
+    \end{aligned}
+  \end{equation*}
+  with equality if and only if $X_i$ is independent of $(X_1, X_2, \ldots, X_{i-1})$ for all $i = 2, 3, \ldots, n$, which is equivalent to $X_1, X_2, \ldots, X_n$ being independent.
+\end{proof}
+
+\section{The Log Sum Inequality}
+We now prove a simple consequence of the concavity of the logarithm, which will be used to prove some concavity results for the entropy.
+
+\begin{theorem}{Log Sum Inequality}{Log Sum Inequality}
+  For nonnegative numbers $a_1, a_2, \ldots, a_n$ and $b_1, b_2, \ldots, b_n$, we have
+  \begin{equation}
+    \sum_{i=1}^n a_i \log_2 \frac{a_i}{b_i} \geq \left(\sum_{i=1}^n a_i\right) \log_2 \frac{\sum_{i=1}^n a_i}{\sum_{i=1}^n b_i}
+  \end{equation}
+  with equality if and only if $\displaystyle \frac{a_1}{b_1} = \frac{a_2}{b_2} = \cdots = \frac{a_n}{b_n}$. Where we use the previous convention for zeros and infinities.
+\end{theorem}
+\begin{proof}
+  Just assume $a_i, b_i > 0$ for all $i$, otherwise we can remove the zero terms. We have
+  \begin{equation*}
+    \sum \alpha_i f(t_i) \geq f\left(\sum \alpha_i t_i\right)
+  \end{equation*}
+  for convex functions $f$ and $\alpha_i \geq 0$, $\sum \alpha_i = 1$. Let $f(x) = x \log_2 x$, which is strictly convex, and let $\alpha_i = b_i / \sum b_i$ and $t_i = a_i / b_i$. Then we have
+  \begin{equation}
+    \sum_{i=1}^n \frac{b_i}{\sum_{j=1}^n b_j} \left(\frac{a_i}{b_i} \log_2 \frac{a_i}{b_i}\right) \geq \left(\sum_{i=1}^n \frac{b_i}{\sum_{j=1}^n b_j}\right) \left(\frac{\sum_{i=1}^n a_i}{\sum_{j=1}^n b_j} \log_2 \frac{\sum_{i=1}^n a_i}{\sum_{j=1}^n b_j}\right)
+  \end{equation}
+  which is exactly the log sum inequality.
+\end{proof}
+
+We now use the log sum inequality to prove various convexity results. A direct application is
+\begin{equation*}
+  D(p||q) = \sum_{x \in \mathcal{X}} p(x) \log_2 \frac{p(x)}{q(x)} \geq \left(\sum_{x \in \mathcal{X}} p(x)\right) \log_2 \frac{\sum_{x \in \mathcal{X}} p(x)}{\sum_{x \in \mathcal{X}} q(x)} = 0
+\end{equation*}
+with equality if and only if $p(x) / q(x)$ is constant for all $x \in \mathcal{X}$, i.e., $p(x) = q(x)$ for all $x \in \mathcal{X}$.
+
+\begin{theorem}{Convexity of relative entropy}{Convexity of relative entropy}
+  The relative entropy $D(p||q)$ is jointly convex in the pair $(p,q)$, i.e., for any two pairs of probability mass functions $(p_1,q_1)$ and $(p_2,q_2)$ defined on the same alphabet $\mathcal{X}$, and for any $\lambda \in [0,1]$, we have
+  \begin{equation}
+    D(\lambda p_1 + (1-\lambda) p_2 || \lambda q_1 + (1-\lambda) q_2) \leq \lambda D(p_1||q_1) + (1-\lambda) D(p_2||q_2)
+  \end{equation}
+  with equality if and only if $p_1/q_1 = p_2/q_2$ for all $x \in \mathcal{X}$.
+\end{theorem}
+\begin{proof}
+  A direct application of the log sum inequality gives
+  \begin{equation*}
+    \begin{aligned}
+      &D(\lambda p_1 + (1-\lambda) p_2 || \lambda q_1 + (1-\lambda) q_2)\\
+      &= \sum_{x \in \mathcal{X}} (\lambda p_1(x) + (1-\lambda) p_2(x)) \log_2 \frac{\lambda p_1(x) + (1-\lambda) p_2(x)}{\lambda q_1(x) + (1-\lambda) q_2(x)}\\
+      &\leq \sum_{x \in \mathcal{X}} \left[\lambda p_1(x) \log_2 \frac{p_1(x)}{q_1(x)} + (1-\lambda) p_2(x) \log_2 \frac{p_2(x)}{q_2(x)}\right]\\
+      &= \lambda D(p_1||q_1) + (1-\lambda) D(p_2||q_2)
+    \end{aligned}
+  \end{equation*}
+  with equality if and only if $p_1/q_1 = p_2/q_2$ for all $x \in \mathcal{X}$.
+\end{proof}
+
+\begin{theorem}{Concavity of entropy}{Concavity of entropy}
+  The entropy $H(X)$ is concave in the probability mass function $p(x)$, i.e., for any two probability mass functions $p_1(x)$ and $p_2(x)$ defined on the same alphabet $\mathcal{X}$, and for any $\lambda \in [0,1]$, we have
+  \begin{equation}
+    H(\lambda p_1 + (1-\lambda) p_2) \geq \lambda H(p_1) + (1-\lambda) H(p_2)
+  \end{equation}
+  with equality if and only if $p_1 = p_2$.
+\end{theorem}
+\begin{proof}
+  We have $H(X) = \log_2 |\mathcal{X}| - D(p||u)$, where $u(x) = 1/|\mathcal{X}|$ is the uniform distribution over $\mathcal{X}$. As $D(p||u)$ is convex in $p$, we have $H(X)$ is concave in $p$.
+\end{proof}
+Here is another proof:
+\begin{proof}
+  Let $X_1$ and $X_2$ be two discrete random variables with probability mass functions $p_1(x)$ and $p_2(x)$ defined on the same alphabet $\mathcal{X}$. Let $\theta$ be a Bernoulli random variable independent of $X_1$ and $X_2$ with $\Pr(\theta=1) = \lambda$ and $\Pr(\theta=0) = 1-\lambda$. Let $X$ be a random variable defined as $X = X_1$ if $\theta=1$ and $X = X_2$ if $\theta=0$. Then we have
+  \begin{equation*}
+    H(X) \geq H(X|\theta)
+  \end{equation*}
+  and expanding gives the result.
+\end{proof}
+
+\begin{remark}
+  One of the consequences of the concavity of entropy is that mixing two gases of equal entropy results in a gas with higher entropy.
+\end{remark}
+
+\begin{theorem}{}{}
+  Let $(X, Y) \sim p(x,y)$ be a pair of discrete random variables. Then the mutual information $I(X;Y)$ is concave in $p(x)$ for fixed $p(y|x)$ and convex in $p(y|x)$ for fixed $p(x)$.
+\end{theorem}
+\begin{proof}
+  Just write
+  \begin{equation*}
+    I(X;Y) = H(Y) - H(Y|X) = H(Y) - \sum_{x \in \mathcal{X}} p(x) H(Y|X=x)
+  \end{equation*}
+  If $p(y|x)$ is fixed, then $H(Y|X=x)$ is fixed for all $x \in \mathcal{X}$, and hence $I(X;Y)$ is concave in $p(x)$ (as a linear function is flat).
+
+  For the second part, 
+\end{proof}
+
+
+\end{document}

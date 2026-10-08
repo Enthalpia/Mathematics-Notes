@@ -1,0 +1,241 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\chapter{Channel Capacity}
+What do we mean when we say that $A$ communicates with $B$? We mean the physical act of $A$ can result in a desired physical state of $B$. This transfer of information is a physical process and therefore is subject to the uncontrollable ambient noise and imperfections of the physical signaling process itself. The communication is successful if the receiver $B$ and the transmitter $A$ can agree on the message that was sent.
+
+The mathematical analog of a physical signaling system is given by the following process: The information is first encoded into an input alphabet $\mathcal{X}$, which is then transmitted through a channel $p(y|x)$ to produce an output alphabet $\mathcal{Y}$. The output is then decoded to produce an estimate of the original message. The formal definition is given below.
+
+\begin{definition}{Discrete Channel}{Discrete Channel}
+	We define a discrete channel to be a system consisting of an input alphabet $\mathcal{X}$, an output alphabet $\mathcal{Y}$, and a probability transition matrix $p(y|x)$, that expresses the probability of observing the output symbol $y \in \mathcal{Y}$ given that the input symbol $x \in \mathcal{X}$ was transmitted.
+
+	The channel is said to be \textbf{memoryless} if the probability distribution of the output depends only on the input at that time and is conditionally independent of previous channel inputs or outputs.
+\end{definition}
+
+\begin{definition}{Channel Capacity}{Channel Capacity}
+	The ``information'' channel capacity of a \textbf{discrete memoryless channel} is defined as
+	\begin{equation}
+		C = \max_{p(x)} I(X;Y)
+	\end{equation}
+	where the maximum is taken over all possible input distributions $p(x)$ and $I(X;Y)$ is the mutual information between the input $X$ and output $Y$ of the channel.
+\end{definition}
+
+The definition follows from the intuition about \emph{how much would we know about the input $X$ if we observed the output $Y$?}
+
+\section{Examples of Channel Capacity}
+\subsection{Noiseless Binary Channel}
+Suppose that we have a channel whose the binary input is reproduced exactly at the output: In this case, we have $\mathcal{X} = \mathcal{Y} = \{0,1\}$ and $p(y|x) = 1$ if $y=x$ and $0$ otherwise.
+
+So, we have $H(Y|X) = 0$ and $I(X;Y) = H(X) = H(Y)$. The channel capacity is therefore $C = \max_{p(x)} H(X) = 1$ bit per channel use, which is achieved when $p(x=0) = p(x=1) = 0.5$.
+
+\subsection{Noisy Channel with Nonoverlapping Outputs}
+Take the following channel:
+\begin{figure}[ht]
+	\centering
+	\incfig{noisy-channel-with-nonoverlapping-outputs}
+	\caption{Noisy Channel with Nonoverlapping Outputs}
+	\label{fig:noisy-channel-with-nonoverlapping-outputs}
+\end{figure}
+The channel appears to be noisy, but really is not. Even though the output of the channel is a random consequence of the input, the input can be determined from the output, and hence every transmitted bit can be recovered without error. As $p(x|y)$ is either $0$ or $1$, we have $H(X|Y) = 0$ and $I(X;Y) = H(X)$. So, the channel capacity is $1$ bit per channel use, which is achieved when $p(x=0) = p(x=1) = 0.5$.
+
+\subsection{Noisy Typewriter Channel}
+In this case the channel input is either received unchanged at the output with probability $1/2$, or is received as the next letter in the alphabet with probability $1/2$. (Like $A$ is received as $A$ with probability $1/2$ and as $B$ with probability $1/2$, $B$ is received as $B$ with probability $1/2$ and as $C$ with probability $1/2$, etc.) The channel capacity is given by
+\begin{equation}
+	C = \max_{p(x)} I(X;Y) = \max_{p(x)} (H(Y) - H(Y|X)) = \max_{p(x)} H(Y) - 1 = \log_2 13.
+\end{equation}
+which is achieved when $p(x)$ is uniform over the input alphabet.
+
+\begin{remark}
+	This is fairly intuitive, as the channel can be used to transmit $13$ different symbols noiselessly.
+\end{remark}
+
+\subsection{Binary Symmetric Channel}
+The binary symmetric channel (BSC) is a channel with binary input and output alphabets, with the transition probabilities given by
+\begin{equation}
+	p(y|x) = \begin{cases}
+		1-p & \text{if } y=x      \\
+		p   & \text{if } y \neq x
+	\end{cases}
+\end{equation}
+The channel capacity is given by
+\begin{equation}
+	C = \max_{p(x)} I(X;Y) = \max_{p(x)} (H(Y) - H(Y|X)) = \max_{p(x)} H(Y) - H(p) = 1 - H(p)
+\end{equation}
+where $H(p) = -p \log_2 p - (1-p) \log_2 (1-p)$ is the binary entropy function. The channel capacity is achieved when $p(x=0) = p(x=1) = 0.5$.
+
+\subsection{Binary Erasure Channel}
+In this channel, the input is either received unchanged at the output with probability $1-p$, or is erased with probability $p$ (sent as an erasure symbol $e$). The channel capacity is given by
+\begin{equation*}
+	C = \max_{p(x)} I(X;Y) = \max_{p(x)} (H(Y) - H(Y|X)) = \max_{p(x)} H(Y) - H(p)
+\end{equation*}
+Be careful that the maximum of $H(Y)$ is not $\log_2 3$. Let $E$ be the event that the output is an erasure. Then we have $H(E|Y) = 0$, $H(Y|E=0) = H(X)$, and $H(Y|E=1) = 0$. Therefore, we have
+\begin{equation*}
+	H(Y) = H(Y, E) - H(E|Y) = H(E) + H(Y|E) = H(p) + (1-p)H(X)
+\end{equation*}
+so the channel capacity is given by
+\begin{equation}
+	C = \max_{p(x)} I(X;Y) = \max_{p(x)} (1-p)H(X) = 1-p
+\end{equation}
+which is achieved when $p(x=0) = p(x=1) = 0.5$.
+\begin{remark}
+	If this is too technical, just setting $\Pr(X=0) = q$ and $\Pr(X=1) = 1-q$ gives
+	\begin{equation*}
+		\begin{aligned}
+			\Pr(Y=0) & = (1-p)q     \\
+			\Pr(Y=1) & = (1-p)(1-q) \\
+			\Pr(Y=e) & = p
+		\end{aligned}
+	\end{equation*}
+	and hence
+	\begin{equation*}
+		\begin{aligned}
+			H(Y) & = - (1-p)q \log_2((1-p)q) - (1-p)(1-q) \log_2((1-p)(1-q)) - p \log_2(p)        \\
+			     & = - (1-p)q \log_2(q) - (1-p)(1-q) \log_2(1-q) - (1-p)\log_2(1-p) - p \log_2(p) \\
+			     & = (1-p)H(q) + H(p)
+		\end{aligned}
+	\end{equation*}
+	and we have the same result as above.
+
+	\medskip
+	The expression for the capacity has some intuitive meaning: Since a proportion $p$ of the bits are erased, the effective rate of transmission is $1-p$ bits per channel use. It is not immediately obvious that it is possible to achieve this rate. This will follow from Shannon's second theorem.
+\end{remark}
+
+\section{Symmetric Channels}
+A channel is said to be \textbf{symmetric} by the definition:
+\begin{definition}{Symmetric Channels}{Symmetric Channels}
+	A discrete channel is said to be \textbf{symmetric} if the rows of the transition matrix are permutations of each other and the columns of the transition matrix are permutations of each other. In other words, it can be realized by the model
+	\begin{equation}
+		Y = X + Z \mod N
+	\end{equation}
+	where $\mathcal{X} = \mathcal{Y} = \mathcal{Z} = \{0, 1, \ldots, N-1\}$ and $Z$ is a random variable independent of $X$ with a fixed probability distribution.
+
+	A channel is said to be \textbf{weakly symmetric} if the rows of the transition matrix are permutations of each other and the column sums are all equal.
+\end{definition}
+
+The channel capacity of a symmetric channel is given by
+\begin{equation}
+	C = \max_{p(x)} I(X;Y) = \max_{p(x)} (H(Y) - H(Y|X)) = \max_{p(x)} H(Y) - H(Z) = \log_2 N - H(Z)
+\end{equation}
+which is achieved when $p(x)$ is uniform over the input alphabet. This proof works for weakly symmetric channels as well, as is easily seen.
+
+\section{Properties of Channel Capacity}
+The following properties of channel capacity are useful in practice:
+\begin{itemize}
+	\item $C \geq 0$ for any channel, as $I(X;Y) \geq 0$ for any input distribution $p(x)$.
+	\item $C \leq \log_2 |\mathcal{X}|$ for any channel, as $I(X;Y) \leq H(X) \leq \log_2 |\mathcal{X}|$ for any input distribution $p(x)$.
+	\item $C \leq \log_2 |\mathcal{Y}|$ for the same reason as above.
+	\item The maximum is achievable, as $I(X;Y)$ is continuous and concave in $p(x)$ on a closed convex set, so the supremum is achieved at some $p(x)$, which justifies the use of $\max$ instead of $\sup$ in the definition of channel capacity.
+\end{itemize}
+
+In general, there is no closed-form solution for the capacity. But for many simple channels it is possible to calculate the capacity using properties such as symmetry. Some of the examples considered earlier are of this form.
+
+\section{The Communication System}
+We analyze a communication system as shown below
+\begin{figure}[ht]
+	\centering
+	\incfig{communication-system}
+	\caption{Communication System}
+	\label{fig:communication-system}
+\end{figure}
+
+A message $W$ is drawn from an index set $\{1, 2, \ldots, M\}$ and is encoded into a signal $X^n(W)$, which is transmitted through a channel $p(y|x)$ to produce an output $Y^n \sim p(y^n|x^n)$. The receiver then guesses the index $W$ by some decoding rule $\hat{W} = g(Y^n)$. The error is made if $\hat{W} \neq W$. We now define these ideas formally.
+
+\begin{definition}{Formal Discrete Channel}{Formal Discrete Channel}
+  As said above, a \textbf{discrete channel}, denoted by $(\mathcal{X}, p(y|x), \mathcal{Y})$, consists of two finite sets $\mathcal{X}$ and $\mathcal{Y}$, and a collection of probability mass functions $p(y|x)$.
+
+  The $n$-th extension of the discrete memoryless channel (DMC) is the channel $(\mathcal{X}^n, p(y^n|x^n), \mathcal{Y}^n)$, where
+  \begin{equation}
+    p(y_k|x^k, y^{k-1}) = p(y_k|x_k), \quad k=1,2,\ldots,n
+  \end{equation}
+\end{definition}
+
+\begin{remark}
+  If the channel is used without feedback [i.e., if the input symbols do not depend on the past output symbols, $p(x_k|x^{k-1}, y^{k-1}) = p(x_k|x^{k-1})$], then the channel transition function for the $n$-th extension of the discrete memoryless channel reduces to 
+  \begin{equation}
+      p(y^n|x^n) = \prod_{k=1}^n p(y_k|x_k)
+  \end{equation}
+  When we refer to the discrete memoryless channel, we mean the discrete memoryless channel without feedback unless we state explicitly otherwise.
+\end{remark}
+
+\begin{definition}{Code}{Code}
+  An $(M,n)$ code for the channel $(\mathcal{X}, p(x|y), \mathcal{Y})$ consists of the following:
+  \begin{itemize}
+    \item An indexed set $\{1, \ldots ,M\}$.
+    \item An encoding function $X^n: \{1, \ldots ,M\} \to \mathcal{X}^n$ that maps each message $w \in \{1, \ldots ,M\}$ to a codeword $x^n(w) \in \mathcal{X}^n$. The set of codewords is called the codebook.
+    \item A decoding function $g: \mathcal{Y}^n \to \{1, \ldots ,M\}$ that maps each received sequence $y^n \in \mathcal{Y}^n$ to an estimated message $\hat{w} = g(y^n) \in \{1, \ldots ,M\}$.
+  \end{itemize}
+\end{definition}
+
+\begin{definition}{Conditional probability of error}{Conditional probability of error}
+  Let
+  \begin{equation}
+    \lambda_i = \Pr(g(Y^n) \neq i | X^n = x^n(i)) = \sum_{y^n: g(y^n) \neq i} p(y^n|x^n(i))
+  \end{equation}
+  be the conditional probability of error given that message $i$ was sent.
+
+  The maximal probability of error of a $(M,n)$ code is defined as
+  \begin{equation}
+    \lambda^{(n)} = \max_{i \in \{1, \ldots ,M\}} \lambda_i
+  \end{equation}
+  The (arithmetic) average probability of error $P_e^{(n)}$ is defined as
+  \begin{equation}
+    P_e^{(n)} = \frac{1}{M} \sum_{i=1}^M \lambda_i
+  \end{equation}
+\end{definition}
+This means that if we choose a $W$ message uniformly over $\{1, \ldots ,M\}$, we have
+\begin{equation}
+  P_e^{(n)} = \Pr(g(Y^n) \neq W)
+\end{equation}
+being the probability of error averaged over all messages. Also we have
+\begin{equation}
+  P_e^{(n)} \leq \lambda^{(n)}
+\end{equation}
+obviously.
+
+\begin{remark}
+  One would expect the maximal probability of error to behave quite differently from the average probability. But in the next section we prove that a small average probability of error implies a small maximal probability of error at essentially the same rate.
+\end{remark}
+
+\begin{definition}{Rate}{Rate}
+  The rate $R$ of an $(M,n)$ code is
+  \begin{equation}
+    R = \frac{\log_2 M}{n}.
+  \end{equation}
+  bits per transmission.
+
+  A rate $R$ is said to be achievable if there exists a sequence of $(\lceil 2^{nR} \rceil, n)$ codes such that
+  \begin{equation}
+    \lim_{n \to \infty} \lambda^{(n)} = 0
+  \end{equation}
+  To simplify notation, we will write $(2^{nR}, n)$ to mean $(\lceil 2^{nR} \rceil, n)$.
+\end{definition}
+
+\begin{definition}{Channel Capacity by Rate}{Channel Capacity by Rate}
+  The channel capacity $C$ of a channel is defined as
+  \begin{equation}
+    C = \sup \{ R : R \text{ is achievable} \}.
+  \end{equation}
+\end{definition}
+\begin{remark}
+  This follows the intuition of \emph{How much information can we send through the channel per unit sending?} The channel capacity is the maximum rate at which information can be sent through the channel with arbitrarily small probability of error.
+\end{remark}
+
+\section{Jointly Typical Sequences}
+Roughly speaking, we decode a channel output $Y^n$ to the $i$-th message if the pair $(X^n(i), Y^n)$ is jointly typical. We now define the notion of jointly typical sequences.
+
+\begin{definition}{Jointly Typical Sequences}{Jointly Typical Sequences}
+  The set $A_\epsilon^{(n)}$ of \textbf{jointly typical sequences} $(x^n, y^n)$ with respect to the distribution $p(x,y)$ is defined as the set of sequences $(x^n, y^n) \in \mathcal{X}^n \times \mathcal{Y}^n$ such that the empirical entropies are $\epsilon$-close to the true entropies:
+  \begin{equation}
+    \begin{aligned}
+      \left| -\frac{1}{n} \log_2 p(x^n) - H(X) \right| & < \epsilon, \\
+      \left| -\frac{1}{n} \log_2 p(y^n) - H(Y) \right| & < \epsilon, \\
+      \left| -\frac{1}{n} \log_2 p(x^n, y^n) - H(X,Y) \right| & < \epsilon.
+    \end{aligned}
+  \end{equation}
+  where
+  \begin{equation}
+    p(x^n, y^n) = \prod_{i=1}^n p(x_i, y_i).
+  \end{equation}
+\end{definition}
+
+\end{document}

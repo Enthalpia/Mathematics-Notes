@@ -1,0 +1,40 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\chapter{Channel Capacity}
+What do we mean when we say that $A$ communicates with $B$? We mean the physical act of $A$ can result in a desired physical state of $B$. This transfer of information is a physical process and therefore is subject to the uncontrollable ambient noise and imperfections of the physical signaling process itself. The communication is successful if the receiver $B$ and the transmitter $A$ can agree on the message that was sent.
+
+The mathematical analog of a physical signaling system is given by the following process: The information is first encoded into an input alphabet $\mathcal{X}$, which is then transmitted through a channel $p(y|x)$ to produce an output alphabet $\mathcal{Y}$. The output is then decoded to produce an estimate of the original message. The formal definition is given below.
+
+\begin{definition}{Discrete Channel}{Discrete Channel}
+  We define a discrete channel to be a system consisting of an input alphabet $\mathcal{X}$, an output alphabet $\mathcal{Y}$, and a probability transition matrix $p(y|x)$, that expresses the probability of observing the output symbol $y \in \mathcal{Y}$ given that the input symbol $x \in \mathcal{X}$ was transmitted.
+
+  The channel is said to be \textbf{memoryless} if the probability distribution of the output depends only on the input at that time and is conditionally independent of previous channel inputs or outputs.
+\end{definition}
+
+\begin{definition}{Channel Capacity}{Channel Capacity}
+  The ``information'' channel capacity of a \textbf{discrete memoryless channel} is defined as
+  \begin{equation}
+    C = \max_{p(x)} I(X;Y)
+  \end{equation}
+  where the maximum is taken over all possible input distributions $p(x)$ and $I(X;Y)$ is the mutual information between the input $X$ and output $Y$ of the channel.
+\end{definition}
+
+The definition follows from the intuition about \emph{how much would we know about the input $X$ if we observed the output $Y$?}
+
+\section{Examples of Channel Capacity}
+\subsection{Noiseless Binary Channel}
+Suppose that we have a channel whose the binary input is reproduced exactly at the output: In this case, we have $\mathcal{X} = \mathcal{Y} = \{0,1\}$ and $p(y|x) = 1$ if $y=x$ and $0$ otherwise.
+
+So, we have $H(Y|X) = 0$ and $I(X;Y) = H(X) = H(Y)$. The channel capacity is therefore $C = \max_{p(x)} H(X) = 1$ bit per channel use, which is achieved when $p(x=0) = p(x=1) = 0.5$.
+
+\subsection{Noisy Channel with Nonoverlapping Outputs}
+Take the following channel:
+\begin{figure}[ht]
+    \centering
+    \incfig{noisy-channel-with-nonoverlapping-outputs}
+    \caption{Noisy Channel with Nonoverlapping Outputs}
+    \label{fig:noisy-channel-with-nonoverlapping-outputs}
+\end{figure}
+
+\end{document}
