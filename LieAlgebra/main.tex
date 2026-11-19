@@ -3,11 +3,17 @@
 \DeclareMathOperator{\Int}{Int}
 \DeclareMathOperator{\Ext}{Ext}
 \DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\ad}{ad}
+\DeclareMathOperator{\Ad}{Ad}
 
 
-\coverimage{./cover.jpg}
-\covertitletext{Lie Groups, Lie Algebras, and Representations}
-\date{\today}
+% Edit the vector artwork in Inkscape, then export it for LaTeX:
+% inkscape cover-art.svg --export-type=pdf --export-filename=cover-art.pdf
+\coversetup{
+  title = {Lie Groups,\\Lie Algebras},
+  subtitle = {and Representations},
+  image = {cover-art.pdf}
+}
 
 \begin{document}
 \makecover
@@ -15,6 +21,11 @@
 \tableofcontents
 
 \mainmatter
+
+\subfile{./01/MatrixLieGroups.tex}
+\subfile{./02/MatrixExponential.tex}
+\subfile{./03/LieAlgebras.tex}
+
 
 
 \end{document}

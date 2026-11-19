@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240mm" height="90mm" viewBox="0 0 240 90"><defs><marker id="arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="3.5" markerHeight="3.5" orient="auto"><path d="M1 1 L7 4 L1 7" fill="none" stroke="context-stroke" stroke-width="1"/></marker></defs>
+<text x="120" y="9" text-anchor="middle" style="font-family:serif;font-size:3.5px">Two routes give the same group element</text>
+<ellipse cx="52" cy="31" rx="28" ry="12" fill="#edf0f2" stroke="#b5bfc6" stroke-width=".3"/>
+<ellipse cx="52" cy="69" rx="28" ry="12" fill="#edf0f2" stroke="#b5bfc6" stroke-width=".3"/>
+<ellipse cx="187" cy="31" rx="28" ry="12" fill="#edf0f2" stroke="#b5bfc6" stroke-width=".3"/>
+<ellipse cx="187" cy="69" rx="28" ry="12" fill="#edf0f2" stroke="#b5bfc6" stroke-width=".3"/>
+<text x="52" y="33" text-anchor="middle" style="font-family:serif;font-size:3.5px">$X\in\mathfrak g$</text>
+<text x="187" y="33" text-anchor="middle" style="font-family:serif;font-size:3.5px">$\phi(X)\in\mathfrak h$</text>
+<text x="52" y="71" text-anchor="middle" style="font-family:serif;font-size:3.5px">$e^X\in G$</text>
+<text x="187" y="71" text-anchor="middle" style="font-family:serif;font-size:3.5px">$e^{\phi(X)}\in H$</text>
+<path d="M85.000,31.000 L153.000,31.000" fill="none" stroke="#326c91" stroke-width="0.45" marker-end="url(#arrow)" />
+<text x="120" y="26" text-anchor="middle" style="font-family:serif;font-size:3.5px">$\phi=(d\Phi)_I$</text>
+<path d="M85.000,69.000 L153.000,69.000" fill="none" stroke="#326c91" stroke-width="0.45" marker-end="url(#arrow)" />
+<text x="120" y="64" text-anchor="middle" style="font-family:serif;font-size:3.5px">$\Phi$</text>
+<path d="M52.000,45.000 L52.000,54.000" fill="none" stroke="#326c91" stroke-width="0.45" marker-end="url(#arrow)" />
+<text x="68" y="52" text-anchor="middle" style="font-family:serif;font-size:3.5px">$\exp$</text>
+<path d="M187.000,45.000 L187.000,54.000" fill="none" stroke="#326c91" stroke-width="0.45" marker-end="url(#arrow)" />
+<text x="203" y="52" text-anchor="middle" style="font-family:serif;font-size:3.5px">$\exp$</text>
+</svg>

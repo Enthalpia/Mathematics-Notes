@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240mm" height="90mm" viewBox="0 0 240 90"><defs><marker id="arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="3.5" markerHeight="3.5" orient="auto"><path d="M1 1 L7 4 L1 7" fill="none" stroke="context-stroke" stroke-width="1"/></marker></defs>
+<text x="58" y="9" text-anchor="middle" style="font-family:serif;font-size:3.5px">$SO(2)$: finite rotations</text>
+<text x="182" y="9" text-anchor="middle" style="font-family:serif;font-size:3.5px">$\mathfrak{so}(2)$: angular velocities</text>
+<ellipse cx="53" cy="46" rx="25" ry="25" fill="none" stroke="#b5bfc6" stroke-width=".3"/>
+<path d="M78.000,17.000 L78.000,76.000" fill="none" stroke="#b05c50" stroke-width="0.35" />
+<ellipse cx="78" cy="46" rx="0.8" ry="0.8" fill="#173b56" stroke="#173b56" stroke-width=".3"/>
+<text x="86" y="51" text-anchor="middle" style="font-family:serif;font-size:3.5px">$I$</text>
+<path d="M78.000,46.000 L78.000,28.000" fill="none" stroke="#b05c50" stroke-width="0.7" marker-end="url(#arrow)" />
+<text x="89" y="27" text-anchor="middle" style="font-family:serif;font-size:3.5px">$J$</text>
+<path d="M78.000,46.000 L77.996,45.536 L77.983,45.072 L77.961,44.608 L77.931,44.145 L77.892,43.682 L77.845,43.220 L77.789,42.759 L77.725,42.299 L77.652,41.841 L77.570,41.384 L77.480,40.928 L77.382,40.475 L77.275,40.023 L77.160,39.573 L77.036,39.125 L76.904,38.680 L76.764,38.238 L76.616,37.798 L76.460,37.360 L76.295,36.926 L76.123,36.495 L75.942,36.068 L75.754,35.643 L75.558,35.222 L75.354,34.805 L75.142,34.392 L74.922,33.983 L74.695,33.578 L74.461,33.177 L74.219,32.781 L73.970,32.389 L73.714,32.002 L73.450,31.620 L73.180,31.243 L72.902,30.870" fill="none" stroke="#326c91" stroke-width="0.7" marker-end="url(#arrow)" />
+<text x="61" y="19" text-anchor="middle" style="font-family:serif;font-size:3.5px">$R(t)$</text>
+<path d="M147.000,46.000 L222.000,46.000" fill="none" stroke="#b5bfc6" stroke-width="0.35" />
+<ellipse cx="175" cy="46" rx="0.8" ry="0.8" fill="#173b56" stroke="#173b56" stroke-width=".3"/>
+<text x="175" y="54" text-anchor="middle" style="font-family:serif;font-size:3.5px">$0$</text>
+<path d="M175.000,46.000 L203.000,46.000" fill="none" stroke="#326c91" stroke-width="0.7" marker-end="url(#arrow)" />
+<text x="203" y="38" text-anchor="middle" style="font-family:serif;font-size:3.5px">$tJ$</text>
+<path d="M158.000,64.000 L97.000,64.000" fill="none" stroke="#326c91" stroke-width="0.45" marker-end="url(#arrow)" />
+<text x="128" y="59" text-anchor="middle" style="font-family:serif;font-size:3.5px">$\exp$</text>
+<text x="56" y="86" text-anchor="middle" style="font-family:serif;font-size:3.5px">$R\prime(0)=J$</text>
+<text x="182" y="86" text-anchor="middle" style="font-family:serif;font-size:3.5px">$e^{tJ}=R(t)$</text>
+</svg>

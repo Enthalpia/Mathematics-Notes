@@ -1,0 +1,75 @@
+%% Creator: Inkscape 1.4.4 (dcaf3e7d9e, 2026-05-05), www.inkscape.org
+%% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
+%% Accompanies image file 'adjoint-conjugation-geometry.pdf' (pdf, eps, ps)
+%%
+%% To include the image in your LaTeX document, write
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics{<filename>.pdf}
+%% To scale the image, write
+%%   \def\svgwidth{<desired width>}
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics[width=<desired width>]{<filename>.pdf}
+%%
+%% Images with a different path to the parent latex file can
+%% be accessed with the `import' package (which may need to be
+%% installed) using
+%%   \usepackage{import}
+%% in the preamble, and then including the image with
+%%   \import{<path to file>}{<filename>.pdf_tex}
+%% Alternatively, one can specify
+%%   \graphicspath{{<path to file>/}}
+%% 
+%% For more information, please see info/svg-inkscape on CTAN:
+%%   http://tug.ctan.org/tex-archive/info/svg-inkscape
+%%
+\begingroup%
+  \makeatletter%
+  \providecommand\color[2][]{%
+    \errmessage{(Inkscape) Color is used for the text in Inkscape, but the package 'color.sty' is not loaded}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\transparent[1]{%
+    \errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package 'transparent.sty' is not loaded}%
+    \renewcommand\transparent[1]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \newcommand*\fsize{\dimexpr\f@size pt\relax}%
+  \newcommand*\lineheight[1]{\fontsize{\fsize}{#1\fsize}\selectfont}%
+  \ifx\svgwidth\undefined%
+    \setlength{\unitlength}{680.31496063bp}%
+    \ifx\svgscale\undefined%
+      \relax%
+    \else%
+      \setlength{\unitlength}{\unitlength * \real{\svgscale}}%
+    \fi%
+  \else%
+    \setlength{\unitlength}{\svgwidth}%
+  \fi%
+  \global\let\svgwidth\undefined%
+  \global\let\svgscale\undefined%
+  \makeatother%
+  \begin{picture}(1,0.5)%
+    \lineheight{1}%
+    \setlength\tabcolsep{0pt}%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{adjoint-conjugation-geometry.pdf}}%
+    \put(0.2,0.14166667){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}$I$\end{tabular}}}}%
+    \put(0.40833333,0.28333333){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}$e^{s_0Y}$\end{tabular}}}}%
+    \put(0.225,0.45833333){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Conjugation curves in $G$\end{tabular}}}}%
+    \put(0.225,0.41666667){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}$F(t,s)=e^{tX}e^{sY}e^{-tX}$\end{tabular}}}}%
+    \put(0.225,0.07916667){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Blue: vary $s$, fix $t$\end{tabular}}}}%
+    \put(0.225,0.02916667){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Red: vary $t$, fix $s=s_0$\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=2]{adjoint-conjugation-geometry.pdf}}%
+    \put(0.72916667,0.18333333){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}$0$\end{tabular}}}}%
+    \put(0.9,0.18333333){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}$Y$\end{tabular}}}}%
+    \put(0.79166667,0.34166667){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}$\Ad_{e^{tX}}Y$\end{tabular}}}}%
+    \put(0.9,0.29583333){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}$[X,Y]$\end{tabular}}}}%
+    \put(0.74166667,0.45833333){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Tangent vectors in $T_I G$\end{tabular}}}}%
+    \put(0.74166666,0.41666667){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}$v(t)=\Ad_{e^{tX}}Y$\end{tabular}}}}%
+    \put(0.74166667,0.07916667){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}$v(0)=Y$\end{tabular}}}}%
+    \put(0.74166667,0.02916667){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}$v\prime(0)=\ad_X(Y)=[X,Y]$\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=3]{adjoint-conjugation-geometry.pdf}}%
+    \put(0.52083334,0.22916667){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}$\partial_s|_{s=0}$\end{tabular}}}}%
+  \end{picture}%
+\endgroup%

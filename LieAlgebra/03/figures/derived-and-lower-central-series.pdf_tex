@@ -1,0 +1,80 @@
+%% Creator: Inkscape 1.4.4 (dcaf3e7d9e, 2026-05-05), www.inkscape.org
+%% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
+%% Accompanies image file 'derived-and-lower-central-series.pdf' (pdf, eps, ps)
+%%
+%% To include the image in your LaTeX document, write
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics{<filename>.pdf}
+%% To scale the image, write
+%%   \def\svgwidth{<desired width>}
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics[width=<desired width>]{<filename>.pdf}
+%%
+%% Images with a different path to the parent latex file can
+%% be accessed with the `import' package (which may need to be
+%% installed) using
+%%   \usepackage{import}
+%% in the preamble, and then including the image with
+%%   \import{<path to file>}{<filename>.pdf_tex}
+%% Alternatively, one can specify
+%%   \graphicspath{{<path to file>/}}
+%% 
+%% For more information, please see info/svg-inkscape on CTAN:
+%%   http://tug.ctan.org/tex-archive/info/svg-inkscape
+%%
+\begingroup%
+  \makeatletter%
+  \providecommand\color[2][]{%
+    \errmessage{(Inkscape) Color is used for the text in Inkscape, but the package 'color.sty' is not loaded}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\transparent[1]{%
+    \errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package 'transparent.sty' is not loaded}%
+    \renewcommand\transparent[1]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \newcommand*\fsize{\dimexpr\f@size pt\relax}%
+  \newcommand*\lineheight[1]{\fontsize{\fsize}{#1\fsize}\selectfont}%
+  \ifx\svgwidth\undefined%
+    \setlength{\unitlength}{680.31496063bp}%
+    \ifx\svgscale\undefined%
+      \relax%
+    \else%
+      \setlength{\unitlength}{\unitlength * \real{\svgscale}}%
+    \fi%
+  \else%
+    \setlength{\unitlength}{\svgwidth}%
+  \fi%
+  \global\let\svgwidth\undefined%
+  \global\let\svgscale\undefined%
+  \makeatother%
+  \begin{picture}(1,0.45833333)%
+    \lineheight{1}%
+    \setlength\tabcolsep{0pt}%
+    \put(0.5,0.42083333){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Derived series versus lower central series\end{tabular}}}}%
+    \put(0.50000001,0.3625){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Heisenberg algebra: $[P,Q]=Z$, $Z$ central\end{tabular}}}}%
+    \put(0.1,0.29166667){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}$\mathfrak g_k$\end{tabular}}}}%
+    \put(0.30416666,0.29166667){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}$\langle P,Q,Z\rangle$\end{tabular}}}}%
+    \put(0.62916667,0.29166667){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}$\langle Z\rangle$\end{tabular}}}}%
+    \put(0.9,0.29166667){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}$0$\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{derived-and-lower-central-series.pdf}}%
+    \put(0.1,0.21666667){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}$\mathfrak g^k$\end{tabular}}}}%
+    \put(0.30416666,0.21666667){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}$\langle P,Q,Z\rangle$\end{tabular}}}}%
+    \put(0.62916667,0.21666667){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}$\langle Z\rangle$\end{tabular}}}}%
+    \put(0.9,0.21666667){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}$0$\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=2]{derived-and-lower-central-series.pdf}}%
+    \put(0.5,0.13333333){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Upper triangular $2\times2$: $[D,N]=N$\end{tabular}}}}%
+    \put(0.1,0.07916667){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}$\mathfrak g_k$\end{tabular}}}}%
+    \put(0.30416666,0.07916667){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}$\langle I,D,N\rangle$\end{tabular}}}}%
+    \put(0.62916667,0.07916667){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}$\langle N\rangle$\end{tabular}}}}%
+    \put(0.8875,0.07916667){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}$0$\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=3]{derived-and-lower-central-series.pdf}}%
+    \put(0.1,0.01666667){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}$\mathfrak g^k$\end{tabular}}}}%
+    \put(0.30416666,0.01666667){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}$\langle I,D,N\rangle$\end{tabular}}}}%
+    \put(0.62916667,0.01666667){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}$\langle N\rangle$\end{tabular}}}}%
+    \put(0.8875,0.01666667){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}$\langle N\rangle,\ldots$\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=4]{derived-and-lower-central-series.pdf}}%
+  \end{picture}%
+\endgroup%

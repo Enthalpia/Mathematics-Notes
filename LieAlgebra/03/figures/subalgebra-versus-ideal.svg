@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240mm" height="90mm" viewBox="0 0 240 90"><defs><marker id="arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="3.5" markerHeight="3.5" orient="auto"><path d="M1 1 L7 4 L1 7" fill="none" stroke="context-stroke" stroke-width="1"/></marker></defs>
+<text x="59" y="9" text-anchor="middle" style="font-family:serif;font-size:3.5px">A subalgebra: bracket within the line</text>
+<text x="181" y="9" text-anchor="middle" style="font-family:serif;font-size:3.5px">Test the ideal condition</text>
+<path d="M28.000,66.000 L88.000,66.000" fill="none" stroke="#b5bfc6" stroke-width="0.25" />
+<path d="M59.000,66.000 L39.000,46.000" fill="none" stroke="#b5bfc6" stroke-width="0.25" />
+<path d="M59.000,72.000 L59.000,25.000" fill="none" stroke="#326c91" stroke-width="0.8" marker-end="url(#arrow)" />
+<ellipse cx="59" cy="66" rx="0.8" ry="0.8" fill="#173b56" stroke="#173b56" stroke-width=".3"/>
+<text x="67" y="27" text-anchor="middle" style="font-family:serif;font-size:3.5px">$e_3$</text>
+<text x="59" y="80" text-anchor="middle" style="font-family:serif;font-size:3.5px">$\mathfrak h=\mathbb R e_3$</text>
+<path d="M150.000,66.000 L210.000,66.000" fill="none" stroke="#b5bfc6" stroke-width="0.25" />
+<path d="M181.000,66.000 L161.000,46.000" fill="none" stroke="#b5bfc6" stroke-width="0.25" />
+<path d="M181.000,72.000 L181.000,25.000" fill="none" stroke="#326c91" stroke-width="0.8" marker-end="url(#arrow)" />
+<ellipse cx="181" cy="66" rx="0.8" ry="0.8" fill="#173b56" stroke="#173b56" stroke-width=".3"/>
+<text x="189" y="27" text-anchor="middle" style="font-family:serif;font-size:3.5px">$e_3$</text>
+<text x="181" y="80" text-anchor="middle" style="font-family:serif;font-size:3.5px">$\mathfrak h=\mathbb R e_3$</text>
+<text x="59" y="20" text-anchor="middle" style="font-family:serif;font-size:3.5px">$[ae_3,be_3]=0$</text>
+<path d="M181.000,66.000 L208.000,66.000" fill="none" stroke="#b05c50" stroke-width="0.65" marker-end="url(#arrow)" />
+<text x="213" y="69" text-anchor="middle" style="font-family:serif;font-size:3.5px">$e_1$</text>
+<path d="M181.000,66.000 L163.000,48.000" fill="none" stroke="#b05c50" stroke-width="0.8" marker-end="url(#arrow)" />
+<text x="154" y="43" text-anchor="middle" style="font-family:serif;font-size:3.5px">$-e_2$</text>
+<text x="182" y="20" text-anchor="middle" style="font-family:serif;font-size:3.5px">$[e_1,e_3]=-e_2\notin\mathfrak h$</text>
+</svg>

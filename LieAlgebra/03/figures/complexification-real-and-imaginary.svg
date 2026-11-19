@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240mm" height="90mm" viewBox="0 0 240 90"><defs><marker id="arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="3.5" markerHeight="3.5" orient="auto"><path d="M1 1 L7 4 L1 7" fill="none" stroke="context-stroke" stroke-width="1"/></marker></defs>
+<text x="53" y="9" text-anchor="middle" style="font-family:serif;font-size:3.5px">$V=\mathbb R$</text>
+<text x="181" y="9" text-anchor="middle" style="font-family:serif;font-size:3.5px">$V_{\mathbb C}\cong\mathbb C$</text>
+<path d="M15.000,58.000 L91.000,58.000" fill="none" stroke="#b5bfc6" stroke-width="0.3" marker-end="url(#arrow)" />
+<ellipse cx="35" cy="58" rx="0.8" ry="0.8" fill="#173b56" stroke="#173b56" stroke-width=".3"/>
+<text x="35" y="66" text-anchor="middle" style="font-family:serif;font-size:3.5px">$0$</text>
+<ellipse cx="68" cy="58" rx="0.8" ry="0.8" fill="#173b56" stroke="#173b56" stroke-width=".3"/>
+<text x="68" y="52" text-anchor="middle" style="font-family:serif;font-size:3.5px">$a$</text>
+<path d="M117.000,58.000 L224.000,58.000" fill="none" stroke="#b5bfc6" stroke-width="0.3" marker-end="url(#arrow)" />
+<path d="M146.000,75.000 L146.000,21.000" fill="none" stroke="#b5bfc6" stroke-width="0.3" marker-end="url(#arrow)" />
+<text x="231" y="60" text-anchor="middle" style="font-family:serif;font-size:3.5px">$V$</text>
+<text x="148" y="17" text-anchor="middle" style="font-family:serif;font-size:3.5px">$iV$</text>
+<ellipse cx="146" cy="58" rx="0.8" ry="0.8" fill="#173b56" stroke="#173b56" stroke-width=".3"/>
+<ellipse cx="198" cy="31" rx="0.8" ry="0.8" fill="#173b56" stroke="#173b56" stroke-width=".3"/>
+<path d="M146.000,58.000 L198.000,58.000" fill="none" stroke="#326c91" stroke-width="0.8" marker-end="url(#arrow)" />
+<path d="M198.000,58.000 L198.000,31.000" fill="none" stroke="#b05c50" stroke-width="0.8" marker-end="url(#arrow)" />
+<path d="M146.000,31.000 L198.000,31.000" fill="none" stroke="#b5bfc6" stroke-width="0.25" stroke-dasharray="1.4 1"/>
+<text x="174" y="68" text-anchor="middle" style="font-family:serif;font-size:3.5px">$a$</text>
+<text x="208" y="48" text-anchor="middle" style="font-family:serif;font-size:3.5px">$ib$</text>
+<text x="200" y="24" text-anchor="middle" style="font-family:serif;font-size:3.5px">$a+ib$</text>
+<path d="M92.000,40.000 L122.000,40.000" fill="none" stroke="#326c91" stroke-width="0.45" marker-end="url(#arrow)" />
+<text x="107" y="33" text-anchor="middle" style="font-family:serif;font-size:3.5px">$\otimes_{\mathbb R}\mathbb C$</text>
+<text x="120" y="87" text-anchor="middle" style="font-family:serif;font-size:3.5px">$\dim_{\mathbb C}V_{\mathbb C}=\dim_{\mathbb R}V$</text>
+</svg>
